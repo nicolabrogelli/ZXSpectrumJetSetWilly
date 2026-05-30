@@ -1,0 +1,2517 @@
+# file opened: jet set willy.asm
+  1   0000              ;===========================================================================
+  2   0000              ; main.asm
+  3   0000              ;===========================================================================
+  4   0000
+  5   0000                  SLDOPT COMMENT WPMEM, LOGPOINT, ASSERTION
+  6   0000                  DEVICE ZXSPECTRUM48
+  7   0000
+  8   0000                  org  0x5dad
+  9   5DAD
+ 10   5DAD                  ; Include files
+ 11   5DAD                  include "constants.asm"
+# file opened: constants.asm
+  1+  5DAD              ;===========================================================================
+  2+  5DAD              ; constants.asm
+  3+  5DAD              ;===========================================================================
+  4+  5DAD
+  5+  5DAD              ; Indirizzi ROM
+  6+  5DAD              CLS:        EQU $0daf
+  7+  5DAD              OPENCHAN:   EQU $1601
+  8+  5DAD              ATTR_P:     EQU $5c8d
+  9+  5DAD              ATTR_T:     EQU $5c8f
+ 10+  5DAD              BORDCR:     EQU $5c48
+ 11+  5DAD              UDG:        EQU $5c7b
+ 12+  5DAD
+ 13+  5DAD              ; Coordinate schermo
+ 14+  5DAD              COR_X:      EQU $21
+ 15+  5DAD              COR_Y:      EQU $18
+ 16+  5DAD              MIN_X:      EQU $00
+ 17+  5DAD              MIN_Y:      EQU $00
+ 18+  5DAD              MAX_X:      EQU $1f
+ 19+  5DAD              MAX_Y:      EQU $15
+ 20+  5DAD
+ 21+  5DAD              ; Codici caratteri
+ 22+  5DAD              HEAD_GRAPH_RIGHT:   EQU $41
+ 23+  5DAD              BODY_GRAPH_RIGHT_1: EQU $42
+ 24+  5DAD              BODY_GRAPH_RIGHT_2: EQU $43
+ 25+  5DAD              BODY_GRAPH_RIGHT_3: EQU $44
+ 26+  5DAD              HEAD_GRAPH_LEFT:    EQU $45
+ 27+  5DAD              BODY_GRAPH_LEFT_1:  EQU $46
+ 28+  5DAD              BODY_GRAPH_LEFT_2:  EQU $47
+ 29+  5DAD              BODY_GRAPH_LEFT_3:  EQU $48
+ 30+  5DAD
+ 31+  5DAD              ; Limiti movimento
+ 32+  5DAD              PLAYER_TOP_L:   EQU $1e
+ 33+  5DAD              PLAYER_TOP_R:   EQU $01
+ 34+  5DAD              WHITE_GRAPH:    EQU $7F
+ 35+  5DAD
+ 36+  5DAD              ; Colori
+ 37+  5DAD              BLUE:   EQU $01
+ 38+  5DAD              RED:    EQU $02
+ 39+  5DAD              MAGENTA: EQU $03
+ 40+  5DAD              GREEN:  EQU $04
+ 41+  5DAD              CYAN:   EQU $05
+ 42+  5DAD              YELLOW: EQU $06
+ 43+  5DAD              WHITE:  EQU $07
+ 44+  5DAD
+ 45+  5DAD              ; Interrupt
+ 46+  5DAD              IM2_TABLE   = $FE00
+ 47+  5DAD              IM2_VECTOR  = $FDFD
+ 48+  5DAD              SCREEN_LINE = $4860
+ 49+  5DAD
+ 50+  5DAD              ; Fisica
+ 51+  5DAD              MAX_FALL_SPEED: EQU 12
+ 52+  5DAD              JUMP_STRENGTH:  EQU 12
+ 53+  5DAD              GRAVITY:        EQU 2
+ 54+  5DAD              GROUND_LEVEL:   EQU 128
+ 55+  5DAD              PLATFORM_LEVEL: EQU 104
+ 56+  5DAD              PLATFORM_MIN_X: EQU 57
+ 57+  5DAD              PLATFORM_MAX_X: EQU 192
+ 58+  5DAD              PLATFORM2_LEVEL: EQU 80
+ 59+  5DAD              PLATFORM2_MIN_X: EQU 153
+ 60+  5DAD              PLATFORM2_MAX_X: EQU 232
+ 61+  5DAD
+ 62+  5DAD
+ 63+  5DAD              ; Aggiungi nelle costanti
+ 64+  5DAD              VERTICAL_BORDER: EQU $49  ; Codice del carattere per i bordi verticali ($49 = 73, lettera 'I')
+# file closed: constants.asm
+ 12   5DAD                  include "interrupts.asm"
+# file opened: interrupts.asm
+  1+  5DAD              ;===========================================================================
+  2+  5DAD              ; interrupts.asm
+  3+  5DAD              ;===========================================================================
+  4+  5DAD
+  5+  5DAD              ; -------------------------------------------------------------------
+  6+  5DAD              ; Setup interrupt IM2
+  7+  5DAD              ; -------------------------------------------------------------------
+  8+  5DAD              SetupIM2:
+  9+  5DAD F3               di
+ 10+  5DAE 11 00 FE         ld de,IM2_TABLE
+ 11+  5DB1 21 FD FD         ld hl,IM2_VECTOR
+ 12+  5DB4 7A               ld a,d
+ 13+  5DB5 ED 47            ld i,a
+ 14+  5DB7 7D               ld a,l
+ 15+  5DB8              .fill_loop:
+ 16+  5DB8 12               ld (de),a
+ 17+  5DB9 1C               inc e
+ 18+  5DBA C2 B8 5D         jp nz,.fill_loop
+ 19+  5DBD 14               inc d
+ 20+  5DBE 12               ld (de),a
+ 21+  5DBF 36 C3            ld (hl),$C3
+ 22+  5DC1 2C               inc l
+ 23+  5DC2 36 CB            ld (hl),low im2_handler
+ 24+  5DC4 2C               inc l
+ 25+  5DC5 36 5D            ld (hl),high im2_handler
+ 26+  5DC7 ED 5E            im 2
+ 27+  5DC9 FB               ei
+ 28+  5DCA C9               ret
+ 29+  5DCB
+ 30+  5DCB              ; -------------------------------------------------------------------
+ 31+  5DCB              ; Handler interrupt IM2
+ 32+  5DCB              ; -------------------------------------------------------------------
+ 33+  5DCB              im2_handler:
+ 34+  5DCB F5               push af
+ 35+  5DCC E5               push hl
+ 36+  5DCD
+ 37+  5DCD                  ; Reset interrupt ULA
+ 38+  5DCD DB FE            in a, (0xFE)
+ 39+  5DCF
+ 40+  5DCF                  ; Incrementa il contatore (usato per animazioni/raster bars)
+ 41+  5DCF 2A 2F 6C         ld hl, (counter)
+ 42+  5DD2 23               inc hl
+ 43+  5DD3 22 2F 6C         ld (counter), hl
+ 44+  5DD6
+ 45+  5DD6                  ; Ripristina registri
+ 46+  5DD6 E1               pop hl
+ 47+  5DD7 F1               pop af
+ 48+  5DD8 FB               ei
+ 49+  5DD9 ED 4D            reti
+# file closed: interrupts.asm
+ 13   5DDB                  include "graphics.asm"
+# file opened: graphics.asm
+  1+  5DDB              ;===========================================================================
+  2+  5DDB              ; graphics.asm
+  3+  5DDB              ;===========================================================================
+  4+  5DDB
+  5+  5DDB
+  6+  5DDB              ; -------------------------------------------------------------------
+  7+  5DDB              ; Copia il set dei caratteri dalla ROM alla RAM
+  8+  5DDB              ; -------------------------------------------------------------------
+  9+  5DDB              CopyChars:
+ 10+  5DDB 21 00 3D         ld hl, $3D00  ; Indirizzo del set di caratteri originale in ROM
+ 11+  5DDE 11 00 80         ld de, $8000  ; Indirizzo nella RAM in cui copiare il set di caratteri
+ 12+  5DE1 01 00 03         ld bc, 768    ; Numero di byte da copiare (96 caratteri * 8 byte ciascuno)
+ 13+  5DE4 ED B0            ldir          ; Copiare i dati
+ 14+  5DE6 C9               ret
+ 15+  5DE7
+ 16+  5DE7              ; -------------------------------------------------------------------
+ 17+  5DE7              ; Ridefinisci i caratteri (incluso quello per i bordi)
+ 18+  5DE7              ; -------------------------------------------------------------------
+ 19+  5DE7              DefineChars:
+ 20+  5DE7 21 B3 60         ld hl, TilesDef             ; Indirizzo dei dati del nuovo carattere
+ 21+  5DEA 11 08 82         ld de, $8000 + (65 * 8)     ; Indirizzo di 'B' nel nuovo set di caratteri
+ 22+  5DED 01 48 00         ld bc, 72                   ; Numero di byte da copiare (9 caratteri * 8 byte)
+ 23+  5DF0 ED B0            ldir                        ; Effettua la copia dei caratteri
+ 24+  5DF2 21 00 80         ld hl, $8000                ; Indirizzo del nuovo set di caratteri in RAM
+ 25+  5DF5 22 36 5C         ld ($5C36), hl              ; Aggiornare la variabile di sistema CHARS
+ 26+  5DF8 C9               ret
+ 27+  5DF9
+ 28+  5DF9              ; -------------------------------------------------------------------
+ 29+  5DF9              ; Posiziona il cursore
+ 30+  5DF9              ; Input: B = Y, C = X
+ 31+  5DF9              ; -------------------------------------------------------------------
+ 32+  5DF9              At:
+ 33+  5DF9 C5               push bc
+ 34+  5DFA D9               exx
+ 35+  5DFB C1               pop bc
+ 36+  5DFC CD 23 0A         call $0a23
+ 37+  5DFF D9               exx
+ 38+  5E00 C9               ret
+ 39+  5E01
+ 40+  5E01              ; -------------------------------------------------------------------
+ 41+  5E01              ; Cambia colore inchiostro
+ 42+  5E01              ; Input: A = colore
+ 43+  5E01              ; -------------------------------------------------------------------
+ 44+  5E01              Ink:
+ 45+  5E01 D9               exx
+ 46+  5E02 47               ld   b, a
+ 47+  5E03 3A 8F 5C         ld   a, (ATTR_T)
+ 48+  5E06 E6 F8            and  $f8
+ 49+  5E08 B0               or   b
+ 50+  5E09 32 8F 5C         ld   (ATTR_T), a
+ 51+  5E0C D9               exx
+ 52+  5E0D C9               ret
+ 53+  5E0E
+ 54+  5E0E              ; -------------------------------------------------------------------
+ 55+  5E0E              ; ===================================================================
+ 56+  5E0E              ; NUOVE ROUTINE DI RENDERING PIXEL-BY-PIXEL
+ 57+  5E0E              ; ===================================================================
+ 58+  5E0E
+ 59+  5E0E              ; -------------------------------------------------------------------
+ 60+  5E0E              ; Calcola indirizzo schermo da coordinate pixel (X, Y)
+ 61+  5E0E              ; Input: H = Y (0..191), L = X (0..255)
+ 62+  5E0E              ; Output: HL = indirizzo schermo
+ 63+  5E0E              ; -------------------------------------------------------------------
+ 64+  5E0E              GetScreenAddr:
+ 65+  5E0E 7C               ld a, h
+ 66+  5E0F E6 07            and %00000111     ; A = y2 y1 y0 (scanline offset)
+ 67+  5E11 F6 40            or  %01000000     ; Base dello schermo ($40)
+ 68+  5E13 57               ld  d, a          ; D = high byte parziale
+ 69+  5E14
+ 70+  5E14 7C               ld  a, h
+ 71+  5E15 E6 C0            and %11000000     ; A = y7 y6 000000 (third select)
+ 72+  5E17 0F               rrca
+ 73+  5E18 0F               rrca
+ 74+  5E19 0F               rrca              ; Shift a destra di 3 -> 000 y7 y6 000
+ 75+  5E1A B2               or  d
+ 76+  5E1B 57               ld  d, a          ; D = high byte completo (010 y7 y6 y2 y1 y0)
+ 77+  5E1C
+ 78+  5E1C 7C               ld  a, h
+ 79+  5E1D E6 38            and %00111000     ; A = 00 y5 y4 y3 000 (character row)
+ 80+  5E1F 87               add a, a
+ 81+  5E20 87               add a, a          ; Shift a sinistra di 2 -> y5 y4 y3 00000
+ 82+  5E21 5F               ld  e, a          ; E = low byte parziale
+ 83+  5E22
+ 84+  5E22 7D               ld  a, l
+ 85+  5E23 CB 3F            srl a
+ 86+  5E25 CB 3F            srl a
+ 87+  5E27 CB 3F            srl a              ; A = X / 8 (colonna)
+ 88+  5E29 B3               or  e
+ 89+  5E2A 5F               ld  e, a          ; E = low byte completo
+ 90+  5E2B
+ 91+  5E2B 62               ld  h, d
+ 92+  5E2C 6B               ld  l, e          ; HL = indirizzo finale
+ 93+  5E2D C9               ret
+ 94+  5E2E
+ 95+  5E2E              ; -------------------------------------------------------------------
+ 96+  5E2E              ; Incrementa indirizzo schermo alla riga (scanline) successiva
+ 97+  5E2E              ; Input/Output: HL = indirizzo schermo
+ 98+  5E2E              ; -------------------------------------------------------------------
+ 99+  5E2E              IncScreenLine:
+100+  5E2E 24               inc h             ; Vai alla riga successiva
+101+  5E2F 7C               ld  a, h
+102+  5E30 E6 07            and 7             ; Controlla se la scanline è tornata a 0 (wrap)
+103+  5E32 C0               ret nz            ; Se non è 0, abbiamo finito!
+104+  5E33
+105+  5E33 7D               ld  a, l
+106+  5E34 C6 20            add a, 32         ; Altrimenti passa alla riga di caratteri successiva
+107+  5E36 6F               ld  l, a
+108+  5E37 D8               ret c             ; Se c'è carry, abbiamo cambiato terzo e H è già corretto!
+109+  5E38
+110+  5E38                  ; Se non c'è carry, rimaniamo nello stesso terzo. Ripristina il terzo corretto in H.
+111+  5E38 7C               ld  a, h
+112+  5E39 D6 08            sub 8
+113+  5E3B 67               ld  h, a
+114+  5E3C C9               ret
+115+  5E3D
+116+  5E3D              ; -------------------------------------------------------------------
+117+  5E3D              ; Disegna uno sprite 8x8 a coordinate pixel (X, Y)
+118+  5E3D              ; Input: C = X, B = Y, IX = puntatore dati sprite (8 byte)
+119+  5E3D              ; -------------------------------------------------------------------
+120+  5E3D              DrawPixelSprite8x8:
+121+  5E3D C5               push bc
+122+  5E3E D5               push de
+123+  5E3F E5               push hl
+124+  5E40 DD E5            push ix
+125+  5E42
+126+  5E42                  ; 1. Calcola indirizzo schermo
+127+  5E42 60               ld   h, b
+128+  5E43 69               ld   l, c
+129+  5E44 CD 0E 5E         call GetScreenAddr ; HL = indirizzo schermo
+130+  5E47
+131+  5E47                  ; 2. Calcola offset shift = X & 7
+132+  5E47 79               ld   a, c
+133+  5E48 E6 07            and  7
+134+  5E4A 47               ld   b, a          ; B = shift offset (0..7)
+135+  5E4B
+136+  5E4B 0E 08            ld   c, 8          ; 8 linee
+137+  5E4D              .line_loop:
+138+  5E4D DD 7E 00         ld   a, (ix+0)     ; A = byte dello sprite
+139+  5E50 57               ld   d, a
+140+  5E51 1E 00            ld   e, 0
+141+  5E53
+142+  5E53 78               ld   a, b          ; Shift se necessario
+143+  5E54 B7               or   a
+144+  5E55 28 07            jr   z, .no_shift
+145+  5E57
+146+  5E57              .shift_loop:
+147+  5E57 CB 3A            srl  d
+148+  5E59 CB 1B            rr   e
+149+  5E5B 3D               dec  a
+150+  5E5C 20 F9            jr   nz, .shift_loop
+151+  5E5E
+152+  5E5E              .no_shift:
+153+  5E5E                  ; Scrivi sullo schermo (sovrascrittura diretta)
+154+  5E5E 7A               ld   a, d
+155+  5E5F 77               ld   (hl), a
+156+  5E60 23               inc  hl
+157+  5E61 7B               ld   a, e
+158+  5E62 77               ld   (hl), a
+159+  5E63 2B               dec  hl            ; Ritorna alla colonna iniziale
+160+  5E64
+161+  5E64 CD 2E 5E         call IncScreenLine ; Prossima scanline sullo schermo
+162+  5E67 DD 23            inc  ix            ; Prossimo byte dello sprite
+163+  5E69 0D               dec  c
+164+  5E6A 20 E1            jr   nz, .line_loop
+165+  5E6C
+166+  5E6C DD E1            pop  ix
+167+  5E6E E1               pop  hl
+168+  5E6F D1               pop  de
+169+  5E70 C1               pop  bc
+170+  5E71 C9               ret
+171+  5E72
+172+  5E72              ; -------------------------------------------------------------------
+173+  5E72              ; Cancella uno sprite 8x8 a coordinate pixel (X, Y) scrivendo zeri
+174+  5E72              ; Input: C = X, B = Y
+175+  5E72              ; -------------------------------------------------------------------
+176+  5E72              ErasePixelSprite8x8:
+177+  5E72 C5               push bc
+178+  5E73 D5               push de
+179+  5E74 E5               push hl
+180+  5E75
+181+  5E75 60               ld   h, b
+182+  5E76 69               ld   l, c
+183+  5E77 CD 0E 5E         call GetScreenAddr ; HL = indirizzo schermo
+184+  5E7A
+185+  5E7A 0E 08            ld   c, 8          ; 8 linee
+186+  5E7C              .erase_loop:
+187+  5E7C AF               xor  a
+188+  5E7D 77               ld   (hl), a
+189+  5E7E 23               inc  hl
+190+  5E7F 77               ld   (hl), a
+191+  5E80 2B               dec  hl
+192+  5E81
+193+  5E81 CD 2E 5E         call IncScreenLine
+194+  5E84 0D               dec  c
+195+  5E85 20 F5            jr   nz, .erase_loop
+196+  5E87
+197+  5E87 E1               pop  hl
+198+  5E88 D1               pop  de
+199+  5E89 C1               pop  bc
+200+  5E8A C9               ret
+201+  5E8B
+202+  5E8B              ; -------------------------------------------------------------------
+203+  5E8B              ; Disegna uno sprite 16x16 a coordinate pixel (X, Y)
+204+  5E8B              ; Input: C = X, B = Y, IX = puntatore dati sprite (32 byte)
+205+  5E8B              ; -------------------------------------------------------------------
+206+  5E8B              DrawPixelSprite16x16:
+207+  5E8B C5               push bc
+208+  5E8C D5               push de
+209+  5E8D E5               push hl
+210+  5E8E DD E5            push ix
+211+  5E90
+212+  5E90                  ; 1. Salva la coordinata X per calcolare lo shift
+213+  5E90 79               ld   a, c
+214+  5E91 E6 07            and  7
+215+  5E93 32 26 6C         ld   (sprite_shift), a
+216+  5E96
+217+  5E96                  ; 2. Calcola indirizzo schermo
+218+  5E96 60               ld   h, b
+219+  5E97 69               ld   l, c
+220+  5E98 CD 0E 5E         call GetScreenAddr ; HL = indirizzo schermo
+221+  5E9B
+222+  5E9B 0E 10            ld   c, 16          ; 16 linee/scanline
+223+  5E9D              .line_loop:
+224+  5E9D DD 56 00         ld   d, (ix+0)     ; D = primo byte dello sprite
+225+  5EA0 DD 5E 01         ld   e, (ix+1)     ; E = secondo byte dello sprite
+226+  5EA3
+227+  5EA3                  ; Esegui lo shift a destra se necessario
+228+  5EA3 3A 26 6C         ld   a, (sprite_shift)
+229+  5EA6 B7               or   a
+230+  5EA7 28 15            jr   z, .no_shift
+231+  5EA9
+232+  5EA9 C5               push bc            ; Salva il contatore delle linee (C) e lo shift (B)
+233+  5EAA 47               ld   b, a          ; B = contatore shift
+234+  5EAB AF               xor  a             ; A = terzo byte (inizializzato a 0)
+235+  5EAC
+236+  5EAC              .shift_loop:
+237+  5EAC CB 3A            srl  d
+238+  5EAE CB 1B            rr   e
+239+  5EB0 CB 1F            rr   a
+240+  5EB2 10 F8            djnz .shift_loop
+241+  5EB4
+242+  5EB4 C1               pop  bc            ; Ripristina C (contatore linee)
+243+  5EB5
+244+  5EB5                  ; Scrive i 3 byte sullo schermo
+245+  5EB5 72               ld   (hl), d
+246+  5EB6 23               inc  hl
+247+  5EB7 73               ld   (hl), e
+248+  5EB8 23               inc  hl
+249+  5EB9 77               ld   (hl), a
+250+  5EBA 2B               dec  hl
+251+  5EBB 2B               dec  hl            ; Ripristina HL alla colonna iniziale
+252+  5EBC 18 04            jr   .next_line
+253+  5EBE
+254+  5EBE              .no_shift:
+255+  5EBE                  ; Nessuno shift: scrivi i 2 byte direttamente
+256+  5EBE 72               ld   (hl), d
+257+  5EBF 23               inc  hl
+258+  5EC0 73               ld   (hl), e
+259+  5EC1 2B               dec  hl            ; Ripristina HL alla colonna iniziale
+260+  5EC2
+261+  5EC2              .next_line:
+262+  5EC2 CD 2E 5E         call IncScreenLine ; Vai alla prossima riga dello schermo
+263+  5EC5 DD 23            inc  ix
+264+  5EC7 DD 23            inc  ix            ; Avanza di 2 byte nei dati dello sprite
+265+  5EC9 0D               dec  c
+266+  5ECA 20 D1            jr   nz, .line_loop
+267+  5ECC
+268+  5ECC DD E1            pop  ix
+269+  5ECE E1               pop  hl
+270+  5ECF D1               pop  de
+271+  5ED0 C1               pop  bc
+272+  5ED1 C9               ret
+273+  5ED2
+274+  5ED2              ; -------------------------------------------------------------------
+275+  5ED2              ; Cancella uno sprite 16x16 scrivendo zeri su 3 colonne per 16 scanline
+276+  5ED2              ; Input: C = X, B = Y
+277+  5ED2              ; -------------------------------------------------------------------
+278+  5ED2              ErasePixelSprite16x16:
+279+  5ED2 C5               push bc
+280+  5ED3 D5               push de
+281+  5ED4 E5               push hl
+282+  5ED5
+283+  5ED5 60               ld   h, b
+284+  5ED6 69               ld   l, c
+285+  5ED7 CD 0E 5E         call GetScreenAddr ; HL = indirizzo schermo
+286+  5EDA
+287+  5EDA 0E 10            ld   c, 16          ; 16 linee
+288+  5EDC              .erase_loop:
+289+  5EDC AF               xor  a
+290+  5EDD 77               ld   (hl), a
+291+  5EDE 23               inc  hl
+292+  5EDF 77               ld   (hl), a
+293+  5EE0 23               inc  hl
+294+  5EE1 77               ld   (hl), a
+295+  5EE2 2B               dec  hl
+296+  5EE3 2B               dec  hl
+297+  5EE4
+298+  5EE4 CD 2E 5E         call IncScreenLine
+299+  5EE7 0D               dec  c
+300+  5EE8 20 F2            jr   nz, .erase_loop
+301+  5EEA
+302+  5EEA E1               pop  hl
+303+  5EEB D1               pop  de
+304+  5EEC C1               pop  bc
+305+  5EED C9               ret
+306+  5EEE
+307+  5EEE              ; -------------------------------------------------------------------
+308+  5EEE              ; Disegna il player (testa e corpo) a coordinate pixel
+309+  5EEE              ; -------------------------------------------------------------------
+310+  5EEE              PrintPlayer:
+311+  5EEE DD E5            push ix
+312+  5EF0
+313+  5EF0                  ; 1. Determina sprite per la testa (sinistra o destra)
+314+  5EF0 3A 21 6C         ld   a, (direction)
+315+  5EF3 FE 01            cp   1                 ; Sinistra?
+316+  5EF5 20 06            jr   nz, .right_head
+317+  5EF7
+318+  5EF7 DD 21 D3 60      ld   ix, TilesDef + (4 * 8) ; 5° tile (HEAD_GRAPH_LEFT)
+319+  5EFB 18 04            jr   .draw_head
+320+  5EFD
+321+  5EFD              .right_head:
+322+  5EFD DD 21 B3 60      ld   ix, TilesDef + (0 * 8) ; 1° tile (HEAD_GRAPH_RIGHT)
+323+  5F01
+324+  5F01              .draw_head:
+325+  5F01 ED 4B 0E 6C      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
+326+  5F05 CD 3D 5E         call DrawPixelSprite8x8 ; Disegna testa
+327+  5F08
+328+  5F08                  ; 2. Determina sprite per il corpo (sinistra o destra con frame animazione)
+329+  5F08 3A 21 6C         ld   a, (direction)
+330+  5F0B FE 01            cp   1                 ; Sinistra?
+331+  5F0D 20 13            jr   nz, .right_body
+332+  5F0F
+333+  5F0F                  ; Corpo a sinistra
+334+  5F0F 3A 20 6C         ld   a, (body_state)   ; 0, 1, 2
+335+  5F12 C6 05            add  a, 5              ; offset del tile per il corpo sinistro (5, 6, 7)
+336+  5F14 87               add  a, a              ; *2
+337+  5F15 87               add  a, a              ; *4
+338+  5F16 87               add  a, a              ; *8
+339+  5F17 5F               ld   e, a
+340+  5F18 16 00            ld   d, 0
+341+  5F1A DD 21 B3 60      ld   ix, TilesDef
+342+  5F1E DD 19            add  ix, de
+343+  5F20 18 11            jr   .draw_body
+344+  5F22
+345+  5F22              .right_body:
+346+  5F22                  ; Corpo a destra
+347+  5F22 3A 20 6C         ld   a, (body_state)   ; 0, 1, 2
+348+  5F25 C6 01            add  a, 1              ; offset del tile per il corpo destro (1, 2, 3)
+349+  5F27 87               add  a, a              ; *2
+350+  5F28 87               add  a, a              ; *4
+351+  5F29 87               add  a, a              ; *8
+352+  5F2A 5F               ld   e, a
+353+  5F2B 16 00            ld   d, 0
+354+  5F2D DD 21 B3 60      ld   ix, TilesDef
+355+  5F31 DD 19            add  ix, de
+356+  5F33
+357+  5F33              .draw_body:
+358+  5F33 ED 4B 0E 6C      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
+359+  5F37 78               ld   a, b
+360+  5F38 C6 08            add  a, 8
+361+  5F3A 47               ld   b, a              ; B = PlayerY + 8
+362+  5F3B CD 3D 5E         call DrawPixelSprite8x8 ; Disegna corpo
+363+  5F3E
+364+  5F3E DD E1            pop  ix
+365+  5F40 C9               ret
+366+  5F41
+367+  5F41              ; -------------------------------------------------------------------
+368+  5F41              ; Cancella il player alle vecchie coordinate pixel
+369+  5F41              ; -------------------------------------------------------------------
+370+  5F41              DeleteCharAtOldPos:
+371+  5F41 ED 4B 10 6C      ld   bc, (PlayerPosOld) ; C = PlayerXOld, B = PlayerYOld
+372+  5F45 CD 72 5E         call ErasePixelSprite8x8 ; Cancella testa
+373+  5F48
+374+  5F48 ED 4B 10 6C      ld   bc, (PlayerPosOld)
+375+  5F4C 78               ld   a, b
+376+  5F4D C6 08            add  a, 8
+377+  5F4F 47               ld   b, a
+378+  5F50 CD 72 5E         call ErasePixelSprite8x8 ; Cancella corpo
+379+  5F53 C9               ret
+380+  5F54
+381+  5F54              ; -------------------------------------------------------------------
+382+  5F54              ; Disegna stringa
+383+  5F54              ; Input: HL = stringa, B = lunghezza
+384+  5F54              ; -------------------------------------------------------------------
+385+  5F54              PrintString:
+386+  5F54 7E               ld   a, (hl)
+387+  5F55 D7               rst  $10
+388+  5F56 23               inc  hl
+389+  5F57 10 FB            djnz PrintString
+390+  5F59 C9               ret
+391+  5F5A
+392+  5F5A              ; -------------------------------------------------------------------
+393+  5F5A              ; NUOVA ROUTINE: Disegna bordi verticali
+394+  5F5A              ; Input: B = riga di partenza, C = numero di righe
+395+  5F5A              ; -------------------------------------------------------------------
+396+  5F5A              DrawVerticalBorders:
+397+  5F5A C5               push bc
+398+  5F5B D5               push de
+399+  5F5C E5               push hl
+400+  5F5D DD E5            push ix
+401+  5F5F
+402+  5F5F 06 08            ld   b, 8            ; B = coordinata Y pixel (inizia a Y=8, riga 1)
+403+  5F61 0E 10            ld   c, 16           ; C = numero di righe di caratteri (16)
+404+  5F63
+405+  5F63              .row_loop:
+406+  5F63 C5               push bc              ; Salva contatore riga e Y
+407+  5F64
+408+  5F64                  ; 1. Disegna bordo sinistro (X = 0)
+409+  5F64 60               ld   h, b            ; H = Y
+410+  5F65 2E 00            ld   l, 0            ; L = X (0)
+411+  5F67 CD 0E 5E         call GetScreenAddr   ; HL = indirizzo schermo
+412+  5F6A DD 21 F3 60      ld   ix, TilesDef + 64 ; IX = grafica del bordo (9° carattere)
+413+  5F6E 16 08            ld   d, 8            ; 8 scanline
+414+  5F70              .left_loop:
+415+  5F70 DD 7E 00         ld   a, (ix+0)
+416+  5F73 77               ld   (hl), a         ; Scrivi direttamente in memoria schermo
+417+  5F74 CD 2E 5E         call IncScreenLine   ; Prossima scanline
+418+  5F77 DD 23            inc  ix
+419+  5F79 15               dec  d
+420+  5F7A 20 F4            jr   nz, .left_loop
+421+  5F7C
+422+  5F7C                  ; 2. Disegna bordo destro (X = 248, colonna 31)
+423+  5F7C C1               pop  bc              ; Ripristina Y
+424+  5F7D C5               push bc
+425+  5F7E 60               ld   h, b            ; H = Y
+426+  5F7F 2E F8            ld   l, 248          ; L = X (248, colonna 31)
+427+  5F81 CD 0E 5E         call GetScreenAddr   ; HL = indirizzo schermo
+428+  5F84 DD 21 F3 60      ld   ix, TilesDef + 64
+429+  5F88 16 08            ld   d, 8
+430+  5F8A              .right_loop:
+431+  5F8A DD 7E 00         ld   a, (ix+0)
+432+  5F8D 77               ld   (hl), a
+433+  5F8E CD 2E 5E         call IncScreenLine
+434+  5F91 DD 23            inc  ix
+435+  5F93 15               dec  d
+436+  5F94 20 F4            jr   nz, .right_loop
+437+  5F96
+438+  5F96 C1               pop  bc              ; Ripristina Y e contatore righe
+439+  5F97 78               ld   a, b
+440+  5F98 C6 08            add  a, 8
+441+  5F9A 47               ld   b, a            ; Y = Y + 8
+442+  5F9B 0D               dec  c
+443+  5F9C 20 C5            jr   nz, .row_loop
+444+  5F9E
+445+  5F9E                  ; Imposta gli attributi a ROSSO per le colonne 0 e 31 (righe 1..16)
+446+  5F9E 21 20 58         ld   hl, $5800 + (1 * 32)      ; Riga 1, Colonna 0
+447+  5FA1 11 3F 58         ld   de, $5800 + (1 * 32) + 31 ; Riga 1, Colonna 31
+448+  5FA4 06 10            ld   b, 16                     ; 16 righe
+449+  5FA6              .attr_loop:
+450+  5FA6 36 02            ld   (hl), RED                 ; Colonna 0 = ROSSO
+451+  5FA8 3E 02            ld   a, RED
+452+  5FAA 12               ld   (de), a                   ; Colonna 31 = ROSSO
+453+  5FAB
+454+  5FAB                  ; Prossima riga di attributi (HL = HL + 32, DE = DE + 32)
+455+  5FAB 7D               ld   a, l
+456+  5FAC C6 20            add  a, 32
+457+  5FAE 6F               ld   l, a
+458+  5FAF 7C               ld   a, h
+459+  5FB0 CE 00            adc  a, 0
+460+  5FB2 67               ld   h, a
+461+  5FB3
+462+  5FB3 7B               ld   a, e
+463+  5FB4 C6 20            add  a, 32
+464+  5FB6 5F               ld   e, a
+465+  5FB7 7A               ld   a, d
+466+  5FB8 CE 00            adc  a, 0
+467+  5FBA 57               ld   d, a
+468+  5FBB
+469+  5FBB 05               dec  b
+470+  5FBC 20 E8            jr   nz, .attr_loop
+471+  5FBE
+472+  5FBE DD E1            pop  ix
+473+  5FC0 E1               pop  hl
+474+  5FC1 D1               pop  de
+475+  5FC2 C1               pop  bc
+476+  5FC3 C9               ret
+477+  5FC4
+478+  5FC4              ; -------------------------------------------------------------------
+479+  5FC4              ; Cancella i bordi verticali (colonne 1 e 32)
+480+  5FC4              ; -------------------------------------------------------------------
+481+  5FC4              EraseVerticalBorders:
+482+  5FC4 C5               push bc
+483+  5FC5 D5               push de
+484+  5FC6 E5               push hl
+485+  5FC7 DD E5            push ix
+486+  5FC9
+487+  5FC9 06 08            ld   b, 8            ; B = Y (inizia a Y=8, riga 1)
+488+  5FCB 0E 10            ld   c, 16           ; C = 16 righe
+489+  5FCD
+490+  5FCD              .row_loop:
+491+  5FCD C5               push bc
+492+  5FCE
+493+  5FCE                  ; 1. Cancella bordo sinistro (X = 0)
+494+  5FCE 60               ld   h, b
+495+  5FCF 2E 00            ld   l, 0
+496+  5FD1 CD 0E 5E         call GetScreenAddr   ; HL = indirizzo schermo
+497+  5FD4 16 08            ld   d, 8            ; 8 scanline
+498+  5FD6              .left_loop:
+499+  5FD6 AF               xor  a
+500+  5FD7 77               ld   (hl), a         ; Scrivi 0 (spazio nero)
+501+  5FD8 CD 2E 5E         call IncScreenLine
+502+  5FDB 15               dec  d
+503+  5FDC 20 F8            jr   nz, .left_loop
+504+  5FDE
+505+  5FDE                  ; 2. Cancella bordo destro (X = 248, colonna 31)
+506+  5FDE C1               pop  bc
+507+  5FDF C5               push bc
+508+  5FE0 60               ld   h, b
+509+  5FE1 2E F8            ld   l, 248
+510+  5FE3 CD 0E 5E         call GetScreenAddr
+511+  5FE6 16 08            ld   d, 8
+512+  5FE8              .right_loop:
+513+  5FE8 AF               xor  a
+514+  5FE9 77               ld   (hl), a
+515+  5FEA CD 2E 5E         call IncScreenLine
+516+  5FED 15               dec  d
+517+  5FEE 20 F8            jr   nz, .right_loop
+518+  5FF0
+519+  5FF0 C1               pop  bc
+520+  5FF1 78               ld   a, b
+521+  5FF2 C6 08            add  a, 8
+522+  5FF4 47               ld   b, a            ; Y = Y + 8
+523+  5FF5 0D               dec  c
+524+  5FF6 20 D5            jr   nz, .row_loop
+525+  5FF8
+526+  5FF8                  ; Ripristina gli attributi a BIANCO per le colonne 0 e 31 (righe 1..16)
+527+  5FF8 21 20 58         ld   hl, $5800 + (1 * 32)
+528+  5FFB 11 3F 58         ld   de, $5800 + (1 * 32) + 31
+529+  5FFE 06 10            ld   b, 16
+530+  6000              .attr_loop:
+531+  6000 36 07            ld   (hl), WHITE               ; Colonna 0 = BIANCO
+532+  6002 3E 07            ld   a, WHITE
+533+  6004 12               ld   (de), a                   ; Colonna 31 = BIANCO
+534+  6005
+535+  6005 7D               ld   a, l
+536+  6006 C6 20            add  a, 32
+537+  6008 6F               ld   l, a
+538+  6009 7C               ld   a, h
+539+  600A CE 00            adc  a, 0
+540+  600C 67               ld   h, a
+541+  600D
+542+  600D 7B               ld   a, e
+543+  600E C6 20            add  a, 32
+544+  6010 5F               ld   e, a
+545+  6011 7A               ld   a, d
+546+  6012 CE 00            adc  a, 0
+547+  6014 57               ld   d, a
+548+  6015
+549+  6015 05               dec  b
+550+  6016 20 E8            jr   nz, .attr_loop
+551+  6018
+552+  6018 DD E1            pop  ix
+553+  601A E1               pop  hl
+554+  601B D1               pop  de
+555+  601C C1               pop  bc
+556+  601D C9               ret
+557+  601E
+558+  601E              ; -------------------------------------------------------------------
+559+  601E              ; Disegna la riga/pavimento sotto i piedi degli sprite (Riga 18, Y = 144)
+560+  601E              ; -------------------------------------------------------------------
+561+  601E              DrawFloorDirect:
+562+  601E C5               push bc
+563+  601F D5               push de
+564+  6020 E5               push hl
+565+  6021 DD E5            push ix
+566+  6023
+567+  6023                  ; Disegniamo le 8 scanline della riga 18
+568+  6023 DD 21 F3 60      ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento (9° carattere)
+569+  6027 16 00            ld   d, 0              ; D = offset scanline (0..6)
+570+  6029
+571+  6029              .scanline_loop:
+572+  6029 3E 50            ld   a, $50            ; Base del terzo 2 per scanline 0, riga 18
+573+  602B 82               add  a, d              ; A = $50 + scanline offset (D)
+574+  602C 67               ld   h, a              ; HL high byte = $50 + D
+575+  602D 2E 40            ld   l, $40            ; HL low byte = $40 (Colonna 0 per la riga 18)
+576+  602F
+577+  602F DD 5E 00         ld   e, (ix+0)         ; E = byte grafico per questa scanline
+578+  6032 0E 20            ld   c, 32             ; 32 colonne
+579+  6034
+580+  6034              .col_loop:
+581+  6034 73               ld   (hl), e           ; Scrivi il byte grafico direttamente nello schermo
+582+  6035 2C               inc  l                 ; Vai alla colonna successiva
+583+  6036 0D               dec  c
+584+  6037 20 FB            jr   nz, .col_loop
+585+  6039
+586+  6039 DD 23            inc  ix                ; Prossimo byte grafico
+587+  603B 14               inc  d                 ; Prossima scanline
+588+  603C 7A               ld   a, d
+589+  603D FE 07            cp   7
+590+  603F 20 E8            jr   nz, .scanline_loop
+591+  6041
+592+  6041                  ; Imposta gli attributi di colore per la riga 18
+593+  6041 21 40 5A         ld   hl, $5800 + (18 * 32)
+594+  6044 06 20            ld   b, 32
+595+  6046              .attr_loop:
+596+  6046 36 02            ld   (hl), RED        ; Colore del pavimento = RED
+597+  6048 23               inc  hl
+598+  6049 05               dec  b
+599+  604A 20 FA            jr   nz, .attr_loop
+600+  604C
+601+  604C DD E1            pop  ix
+602+  604E E1               pop  hl
+603+  604F D1               pop  de
+604+  6050 C1               pop  bc
+605+  6051 C9               ret
+606+  6052
+607+  6052              ; -------------------------------------------------------------------
+608+  6052              ; Disegna la piattaforma a riga 15 (Y = 120), colonne da 8 a 23 (CYAN)
+609+  6052              ; e la seconda piattaforma a riga 12 (Y = 96), colonne da 20 a 29 (GREEN)
+610+  6052              ; -------------------------------------------------------------------
+611+  6052              DrawPlatform:
+612+  6052 C5               push bc
+613+  6053 D5               push de
+614+  6054 E5               push hl
+615+  6055 DD E5            push ix
+616+  6057
+617+  6057                  ; --- PIATTAFORMA 1 ---
+618+  6057                  ; Disegniamo le 7 scanline della riga 15
+619+  6057 DD 21 F3 60      ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento (9° carattere)
+620+  605B 16 00            ld   d, 0              ; D = offset scanline (0..6)
+621+  605D
+622+  605D              .scanline_loop1:
+623+  605D 3E 48            ld   a, $48            ; Base del secondo terzo (Third 1) per scanline 0, riga 15
+624+  605F 82               add  a, d              ; A = $48 + scanline offset (D)
+625+  6060 67               ld   h, a              ; HL high byte = $48 + D
+626+  6061 2E E8            ld   l, $E0 + 8        ; HL low byte = $E0 (riga 15) + 8 (colonna 8)
+627+  6063
+628+  6063 DD 5E 00         ld   e, (ix+0)         ; E = byte grafico per questa scanline
+629+  6066 0E 10            ld   c, 16             ; 16 colonne (da colonna 8 a 23 incluse)
+630+  6068
+631+  6068              .col_loop1:
+632+  6068 7E               ld   a, (hl)           ; Leggi byte dallo schermo
+633+  6069 B3               or   e                 ; Combina con la grafica della piattaforma (OR)
+634+  606A 77               ld   (hl), a           ; Scrivi il byte combinato sullo schermo
+635+  606B 2C               inc  l                 ; Vai alla colonna successiva
+636+  606C 0D               dec  c
+637+  606D 20 F9            jr   nz, .col_loop1
+638+  606F
+639+  606F DD 23            inc  ix                ; Prossimo byte grafico
+640+  6071 14               inc  d                 ; Prossima scanline
+641+  6072 7A               ld   a, d
+642+  6073 FE 07            cp   7
+643+  6075 20 E6            jr   nz, .scanline_loop1
+644+  6077
+645+  6077                  ; Imposta gli attributi di colore per la riga 15, colonne 8..23
+646+  6077 21 E8 59         ld   hl, $5800 + (15 * 32) + 8
+647+  607A 06 10            ld   b, 16
+648+  607C              .attr_loop1:
+649+  607C 36 05            ld   (hl), CYAN        ; Colore della piattaforma = CYAN
+650+  607E 23               inc  hl
+651+  607F 05               dec  b
+652+  6080 20 FA            jr   nz, .attr_loop1
+653+  6082
+654+  6082                  ; --- PIATTAFORMA 2 ---
+655+  6082                  ; Disegniamo le 7 scanline della riga 12
+656+  6082 DD 21 F3 60      ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento
+657+  6086 16 00            ld   d, 0              ; D = offset scanline (0..6)
+658+  6088
+659+  6088              .scanline_loop2:
+660+  6088 3E 48            ld   a, $48            ; Base del secondo terzo (Third 1) per scanline 0, riga 12
+661+  608A 82               add  a, d              ; A = $48 + scanline offset (D)
+662+  608B 67               ld   h, a              ; HL high byte = $48 + D
+663+  608C 2E 94            ld   l, $80 + 20       ; HL low byte = $80 (riga 12) + 20 (colonna 20)
+664+  608E
+665+  608E DD 5E 00         ld   e, (ix+0)         ; E = byte grafico per questa scanline
+666+  6091 0E 0A            ld   c, 10             ; 10 colonne (da colonna 20 a 29 incluse)
+667+  6093
+668+  6093              .col_loop2:
+669+  6093 7E               ld   a, (hl)           ; Leggi byte dallo schermo
+670+  6094 B3               or   e                 ; Combina con la grafica (OR)
+671+  6095 77               ld   (hl), a           ; Scrivi il byte combinato
+672+  6096 2C               inc  l                 ; Vai alla colonna successiva
+673+  6097 0D               dec  c
+674+  6098 20 F9            jr   nz, .col_loop2
+675+  609A
+676+  609A DD 23            inc  ix                ; Prossimo byte grafico
+677+  609C 14               inc  d                 ; Prossima scanline
+678+  609D 7A               ld   a, d
+679+  609E FE 07            cp   7
+680+  60A0 20 E6            jr   nz, .scanline_loop2
+681+  60A2
+682+  60A2                  ; Imposta gli attributi di colore per la riga 12, colonne 20..29
+683+  60A2 21 94 59         ld   hl, $5800 + (12 * 32) + 20
+684+  60A5 06 0A            ld   b, 10
+685+  60A7              .attr_loop2:
+686+  60A7 36 04            ld   (hl), GREEN       ; Colore della piattaforma 2 = GREEN
+687+  60A9 23               inc  hl
+688+  60AA 05               dec  b
+689+  60AB 20 FA            jr   nz, .attr_loop2
+690+  60AD
+691+  60AD DD E1            pop  ix
+692+  60AF E1               pop  hl
+693+  60B0 D1               pop  de
+694+  60B1 C1               pop  bc
+695+  60B2 C9               ret
+696+  60B3
+697+  60B3              ; -------------------------------------------------------------------
+698+  60B3              ; Dati grafici (9 caratteri)
+699+  60B3              ; -------------------------------------------------------------------
+700+  60B3              TilesDef:
+701+  60B3                  ; 8 caratteri per il player
+702+  60B3 06 3E 7E 34      db %00000110, %00111110, %01111110, %00110100, %00111110, %00111100, %00011000, %00111100
+702+  60B7 3E 3C 18 3C
+703+  60BB 7E 7E F7 FB      db %01111110, %01111110, %11110111, %11111011, %00111100, %01110110, %01101110, %01110111
+703+  60BF 3C 76 6E 77
+704+  60C3 6E 6E 6E 76      db %01101110, %01101110, %01101110, %01110110, %00111100, %00011000, %00011000, %00011100
+704+  60C7 3C 18 18 1C
+705+  60CB 7E 7E F7 FB      db %01111110, %01111110, %11110111, %11111011, %00111100, %11101101, %11000111, %11100110
+705+  60CF 3C ED C7 E6
+706+  60D3 60 7C 7E 2C      db %01100000, %01111100, %01111110, %00101100, %01111100, %00111100, %00011000, %00111100
+706+  60D7 7C 3C 18 3C
+707+  60DB 7E 7E EF DF      db %01111110, %01111110, %11101111, %11011111, %00111100, %01101110, %01110110, %11101110
+707+  60DF 3C 6E 76 EE
+708+  60E3 76 76 76 6E      db %01110110, %01110110, %01110110, %01101110, %00111100, %00011000, %00011000, %00111000
+708+  60E7 3C 18 18 38
+709+  60EB 7E 7E EF DF      db %01111110, %01111110, %11101111, %11011111, %00111100, %10110111, %11100011, %01100111
+709+  60EF 3C B7 E3 67
+710+  60F3
+711+  60F3                  ; 9° carattere per i bordi verticali
+712+  60F3 FF 88 FF 22      db %11111111, %10001000, %11111111, %00100010, %11111111, %10001000, %11111111 ;, %00100100
+712+  60F7 FF 88 FF
+713+  60FA
+714+  60FA              LamettaSpriteRight: ; appears in Top Landing, Tree Root and West Bedroom.
+715+  60FA 00 00 00 00      db 0,0,0,0,0,0,127,254,64,2,255,255,222,123,192,3
+715+  60FE 00 00 7F FE
+715+  6102 40 02 FF FF
+715+  6106 DE 7B C0 03
+716+  610A C0 03 DE 7B  	db 192,3,222,123,255,255,64,2,127,254,0,0,0,0,0,0
+716+  610E FF FF 40 02
+716+  6112 7F FE 00 00
+716+  6116 00 00 00 00
+717+  611A 0A 00 1D 00  	db 10,0,29,0,54,128,103,64,195,160,113,208,184,104,92,52
+717+  611E 36 80 67 40
+717+  6122 C3 A0 71 D0
+717+  6126 B8 68 5C 34
+718+  612A 2C 3A 16 1D  	db 44,58,22,29,11,142,5,195,2,230,1,108,0,184,0,80
+718+  612E 0B 8E 05 C3
+718+  6132 02 E6 01 6C
+718+  6136 00 B8 00 50
+719+  613A 07 E0 1F F8  	db 7,224,31,248,20,40,22,104,22,104,22,104,22,104,20,40
+719+  613E 14 28 16 68
+719+  6142 16 68 16 68
+719+  6146 16 68 14 28
+720+  614A 14 28 16 68  	db 20,40,22,104,22,104,22,104,22,104,20,40,31,248,7,224
+720+  614E 16 68 16 68
+720+  6152 16 68 14 28
+720+  6156 1F F8 07 E0
+721+  615A 00 50 00 B8  	db 0,80,0,184,1,108,2,230,5,195,11,142,22,29,44,58
+721+  615E 01 6C 02 E6
+721+  6162 05 C3 0B 8E
+721+  6166 16 1D 2C 3A
+722+  616A 5C 34 B8 68  	db 92,52,184,104,113,208,195,160,103,64,54,128,29,0,10,0
+722+  616E 71 D0 C3 A0
+722+  6172 67 40 36 80
+722+  6176 1D 00 0A 00
+723+  617A
+724+  617A              LamettaSpriteLeft:
+725+  617A 00 00 00 00      db 0,0,0,0,0,0,127,254,64,2,255,255,222,123,192,3
+725+  617E 00 00 7F FE
+725+  6182 40 02 FF FF
+725+  6186 DE 7B C0 03
+726+  618A C0 03 DE 7B  	db 192,3,222,123,255,255,64,2,127,254,0,0,0,0,0,0
+726+  618E FF FF 40 02
+726+  6192 7F FE 00 00
+726+  6196 00 00 00 00
+727+  619A 00 50 00 B8  	db 0,80,0,184,1,108,2,230,5,195,11,142,22,29,44,58
+727+  619E 01 6C 02 E6
+727+  61A2 05 C3 0B 8E
+727+  61A6 16 1D 2C 3A
+728+  61AA 5C 34 B8 68  	db 92,52,184,104,113,208,195,160,103,64,54,128,29,0,10,0
+728+  61AE 71 D0 C3 A0
+728+  61B2 67 40 36 80
+728+  61B6 1D 00 0A 00
+729+  61BA 07 E0 1F F8  	db 7,224,31,248,20,40,22,104,22,104,22,104,22,104,20,40
+729+  61BE 14 28 16 68
+729+  61C2 16 68 16 68
+729+  61C6 16 68 14 28
+730+  61CA 14 28 16 68  	db 20,40,22,104,22,104,22,104,22,104,20,40,31,248,7,224
+730+  61CE 16 68 16 68
+730+  61D2 16 68 14 28
+730+  61D6 1F F8 07 E0
+731+  61DA 0A 00 1D 00  	db 10,0,29,0,54,128,103,64,195,160,113,208,184,104,92,52
+731+  61DE 36 80 67 40
+731+  61E2 C3 A0 71 D0
+731+  61E6 B8 68 5C 34
+732+  61EA 2C 3A 16 1D  	db 44,58,22,29,11,142,5,195,2,230,1,108,0,184,0,80
+732+  61EE 0B 8E 05 C3
+732+  61F2 02 E6 01 6C
+732+  61F6 00 B8 00 50
+733+  61FA
+734+  61FA              ChipSprite: ; appears in The Banyan Tree and A bit of tree.
+735+  61FA 00 00 00 00      db 0,0,0,0,42,170,127,255,127,255,124,63,124,63,127,255
+735+  61FE 2A AA 7F FF
+735+  6202 7F FF 7C 3F
+735+  6206 7C 3F 7F FF
+736+  620A 7F FF 7F FF      db 127,255,127,255,0,0,42,170,0,0,42,170,0,0,0,0
+736+  620E 00 00 2A AA
+736+  6212 00 00 2A AA
+736+  6216 00 00 00 00
+737+  621A 00 48 01 2C      db 0,72,1,44,4,188,18,254,75,254,46,127,188,63,254,124
+737+  621E 04 BC 12 FE
+737+  6222 4B FE 2E 7F
+737+  6226 BC 3F FE 7C
+738+  622A FF F2 7F C9      db 255,242,127,201,127,37,60,148,50,80,9,64,5,0,4,0
+738+  622E 7F 25 3C 94
+738+  6232 32 50 09 40
+738+  6236 05 00 04 00
+739+  623A 00 00 07 E0      db 0,0,7,224,15,240,23,232,15,240,22,104,14,112,22,104
+739+  623E 0F F0 17 E8
+739+  6242 0F F0 16 68
+739+  6246 0E 70 16 68
+740+  624A 0F F0 17 E8      db 15,240,23,232,15,240,23,232,8,16,23,232,16,8,0,0
+740+  624E 0F F0 17 E8
+740+  6252 08 10 17 E8
+740+  6256 10 08 00 00
+741+  625A 12 00 34 80      db 18,0,52,128,61,32,127,72,127,210,254,116,252,61,62,127
+741+  625E 3D 20 7F 48
+741+  6262 7F D2 FE 74
+741+  6266 FC 3D 3E 7F
+742+  626A 4F FF 93 FE      db 79,255,147,254,164,254,41,60,10,76,2,144,0,160,0,32
+742+  626E A4 FE 29 3C
+742+  6272 0A 4C 02 90
+742+  6276 00 A0 00 20
+743+  627A
+744+  627A              TheChapelSprite: ;appears in The Chapel and The Banyan Tree.
+745+  627A 00 00 00 00      db  0,0,0,0,0,0,2,2,34,2,169,84,168,216,113,116
+745+  627E 00 00 02 02
+745+  6282 22 02 A9 54
+745+  6286 A8 D8 71 74
+746+  628A 22 DA 3B AE      db 34,218,59,174,46,171,36,249,32,219,32,216,1,84,2,138
+746+  628E 2E AB 24 F9
+746+  6292 20 DB 20 D8
+746+  6296 01 54 02 8A
+747+  629A 00 00 02 02      db 0,0,2,2,2,2,1,116,0,216,81,84,82,250,35,222
+747+  629E 02 02 01 74
+747+  62A2 00 D8 51 54
+747+  62A6 52 FA 23 DE
+748+  62AA E7 AB 1E F9      db 231,171,30,249,24,217,8,217,9,84,6,138,4,0,0,0
+748+  62AE 18 D9 08 D9
+748+  62B2 09 54 06 8A
+748+  62B6 04 00 00 00
+749+  62BA 02 02 03 8E      db 2,2,3,142,0,248,1,84,2,218,3,254,17,139,75,169
+749+  62BE 00 F8 01 54
+749+  62C2 02 DA 03 FE
+749+  62C6 11 8B 4B A9
+750+  62CA 2B FB 96 F8      db 43,251,150,248,108,216,5,84,2,138,1,0,0,128,0,64
+750+  62CE 6C D8 05 54
+750+  62D2 02 8A 01 00
+750+  62D6 00 80 00 40
+751+  62DA 00 00 02 02      db 0,0,2,2,2,2,1,116,0,216,81,84,82,250,35,222
+751+  62DE 02 02 01 74
+751+  62E2 00 D8 51 54
+751+  62E6 52 FA 23 DE
+752+  62EA E7 AB 1E F9      db 231,171,30,249,24,217,8,217,9,84,6,138,4,0,0,0
+752+  62EE 18 D9 08 D9
+752+  62F2 09 54 06 8A
+752+  62F6 04 00 00 00
+753+  62FA
+754+  62FA              WallBaseSprite: ; appears in East Wall Base, The Chapel and West  Wing.
+755+  62FA 20 04 AE EC      db 32,4,174,236,187,125,224,7,189,181,160,4,59,124,0,0
+755+  62FE BB 7D E0 07
+755+  6302 BD B5 A0 04
+755+  6306 3B 7C 00 00
+756+  630A 1D B0 20 04      db 29,176,32,4,59,124,162,68,253,183,160,4,59,220,32,4
+756+  630E 3B 7C A2 44
+756+  6312 FD B7 A0 04
+756+  6316 3B DC 20 04
+757+  631A 20 04 37 B4      db 32,4,55,180,160,4,251,127,160,4,61,180,32,4,27,120
+757+  631E A0 04 FB 7F
+757+  6322 A0 04 3D B4
+757+  6326 20 04 1B 78
+758+  632A 00 00 3D B4      db 0,0,61,180,162,68,187,125,224,7,189,181,183,236,32,4
+758+  632E A2 44 BB 7D
+758+  6332 E0 07 BD B5
+758+  6336 B7 EC 20 04
+759+  633A 20 04 3A DC      db 32,4,58,220,61,189,224,7,59,117,32,4,61,188,0,0
+759+  633E 3D BD E0 07
+759+  6342 3B 75 20 04
+759+  6346 3D BC 00 00
+760+  634A 1B 70 20 04      db 27,112,32,4,61,189,162,69,251,119,160,5,61,237,32,4
+760+  634E 3D BD A2 45
+760+  6352 FB 77 A0 05
+760+  6356 3D ED 20 04
+761+  635A 20 04 3B 75      db 32,4,59,117,160,5,253,191,160,5,59,117,32,4,29,184
+761+  635E A0 05 FD BF
+761+  6362 A0 05 3B 75
+761+  6366 20 04 1D B8
+762+  636A 00 00 3B 74      db 0,0,59,116,36,132,61,189,224,7,59,117,46,236,32,4
+762+  636E 24 84 3D BD
+762+  6372 E0 07 3B 75
+762+  6376 2E EC 20 04
+763+  637A
+764+  637A              SpirlaSprite: ;  appears in The Banyan Tree and Orangery.
+765+  637A 0F F0 17 E8      db 15,240,23,232,24,24,55,204,40,36,83,146,100,74,169,43
+765+  637E 18 18 37 CC
+765+  6382 28 24 53 92
+765+  6386 64 4A A9 2B
+766+  638A AA 2B 6A 4A      db 170,43,106,74,105,146,36,36,51,204,24,24,23,232,15,240
+766+  638E 69 92 24 24
+766+  6392 33 CC 18 18
+766+  6396 17 E8 0F F0
+767+  639A 00 E0 07 F0      db 0,224,7,240,56,24,115,204,100,38,73,147,82,75,212,43
+767+  639E 38 18 73 CC
+767+  63A2 64 26 49 93
+767+  63A6 52 4B D4 2B
+768+  63AA D5 2A D4 CA      db 213,42,212,202,210,18,73,228,36,12,19,244,8,120,7,128
+768+  63AE D2 12 49 E4
+768+  63B2 24 0C 13 F4
+768+  63B6 08 78 07 80
+769+  63BA 01 80 07 E0      db 1,128,7,224,24,24,115,206,164,37,201,149,210,85,212,85
+769+  63BE 18 18 73 CE
+769+  63C2 A4 25 C9 95
+769+  63C6 D2 55 D4 55
+770+  63CA D4 95 D2 25      db 212,149,210,37,201,201,228,19,115,230,24,24,7,224,1,128
+770+  63CE C9 C9 E4 13
+770+  63D2 73 E6 18 18
+770+  63D6 07 E0 01 80
+771+  63DA 07 00 08 E0      db 7,0,8,224,31,220,48,38,103,146,200,74,211,42,212,171
+771+  63DE 1F DC 30 26
+771+  63E2 67 92 C8 4A
+771+  63E6 D3 2A D4 AB
+772+  63EA 54 2B 52 4B      db 84,43,82,75,73,147,36,38,51,204,40,24,31,240,1,224
+772+  63EE 49 93 24 26
+772+  63F2 33 CC 28 18
+772+  63F6 1F F0 01 E0
+773+  63FA
+774+  63FA              CutSprite: ; appears in On a Branch Over the Drive, Conservatory Roof and Tool  Shed.
+775+  63FA 0C 00 0C 00      db 12,0,12,0,12,0,12,0,12,0,30,0,18,0,51,0
+775+  63FE 0C 00 0C 00
+775+  6402 0C 00 1E 00
+775+  6406 12 00 33 00
+776+  640A 3F 00 73 80      db 63,0,115,128,97,128,97,128,192,192,192,192,128,64,128,64
+776+  640E 61 80 61 80
+776+  6412 C0 C0 C0 C0
+776+  6416 80 40 80 40
+777+  641A 08 40 08 40      db 8,64,8,64,12,192,4,128,7,128,7,128,12,192,28,224
+777+  641E 0C C0 04 80
+777+  6422 07 80 07 80
+777+  6426 0C C0 1C E0
+778+  642A 3B 70 30 30      db 59,112,48,48,96,24,96,24,64,8,192,12,128,4,128,4
+778+  642E 60 18 60 18
+778+  6432 40 08 C0 0C
+778+  6436 80 04 80 04
+779+  643A 02 10 02 10      db 2,16,2,16,3,48,1,32,1,224,1,224,3,48,7,56
+779+  643E 03 30 01 20
+779+  6442 01 E0 01 E0
+779+  6446 03 30 07 38
+780+  644A 0E DC 0C 0C      db 14,220,12,12,24,6,24,6,16,2,48,3,32,1,32,1
+780+  644E 18 06 18 06
+780+  6452 10 02 30 03
+780+  6456 20 01 20 01
+781+  645A 00 30 00 30      db 0,48,0,48,0,48,0,48,0,48,0,120,0,72,0,204
+781+  645E 00 30 00 30
+781+  6462 00 30 00 78
+781+  6466 00 48 00 CC
+782+  646A 00 FC 01 CE      db 0,252,1,206,1,134,1,134,3,3,3,3,2,1,2,1
+782+  646E 01 86 01 86
+782+  6472 03 03 03 03
+782+  6476 02 01 02 01
+783+  647A
+784+  647A              PliersSprite: ; appears in To the Kitchens    Main Stairway, Halfway up the East Wall, Conservatory Roof and The Bow.
+785+  647A 7E 00 99 00      db 126,0,153,0,255,0,129,0,126,0,24,0,36,0,36,0
+785+  647E FF 00 81 00
+785+  6482 7E 00 18 00
+785+  6486 24 00 24 00
+786+  648A 42 00 42 00      db 66,0,66,0,129,0,231,0,165,0,195,0,165,0,231,0
+786+  648E 81 00 E7 00
+786+  6492 A5 00 C3 00
+786+  6496 A5 00 E7 00
+787+  649A 00 00 1F 80      db 0,0,31,128,38,64,57,192,48,192,31,128,9,0,16,128
+787+  649E 26 40 39 C0
+787+  64A2 30 C0 1F 80
+787+  64A6 09 00 10 80
+788+  64AA 20 40 40 20      db 32,64,64,32,128,16,224,112,160,80,192,48,160,80,224,112
+788+  64AE 80 10 E0 70
+788+  64B2 A0 50 C0 30
+788+  64B6 A0 50 E0 70
+789+  64BA 00 00 00 00      db 0,0,0,0,0,0,7,224,9,144,14,112,14,112,6,96
+789+  64BE 00 00 07 E0
+789+  64C2 09 90 0E 70
+789+  64C6 0E 70 06 60
+790+  64CA 1B D8 60 06      db 27,216,96,6,128,1,224,7,160,5,192,3,160,5,224,7
+790+  64CE 80 01 E0 07
+790+  64D2 A0 05 C0 03
+790+  64D6 A0 05 E0 07
+791+  64DA 00 00 01 F8      db 0,0,1,248,2,100,3,156,3,12,1,248,0,144,1,8
+791+  64DE 02 64 03 9C
+791+  64E2 03 0C 01 F8
+791+  64E6 00 90 01 08
+792+  64EA 02 04 04 02      db 2,4,4,2,8,1,14,7,10,5,12,3,10,5,14,7
+792+  64EE 08 01 0E 07
+792+  64F2 0A 05 0C 03
+792+  64F6 0A 05 0E 07
+793+  64FA
+794+  64FA              RobotSprite: ; appears in Under the Drive.
+795+  64FA 0C 00 12 00      db 12,0,18,0,33,16,18,32,140,64,82,128,47,0,47,0
+795+  64FE 21 10 12 20
+795+  6502 8C 40 52 80
+795+  6506 2F 00 2F 00
+796+  650A 5F 80 5F 80      db 95,128,95,128,95,128,0,0,255,192,93,128,93,128,255,192
+796+  650E 5F 80 00 00
+796+  6512 FF C0 5D 80
+796+  6516 5D 80 FF C0
+797+  651A 00 01 00 02      db 0,1,0,2,131,4,76,200,35,16,20,160,11,192,11,192
+797+  651E 83 04 4C C8
+797+  6522 23 10 14 A0
+797+  6526 0B C0 0B C0
+798+  652A 17 E0 17 E0      db 23,224,23,224,23,224,0,0,63,240,27,176,27,176,63,240
+798+  652E 17 E0 00 00
+798+  6532 3F F0 1B B0
+798+  6536 1B B0 3F F0
+799+  653A 80 00 40 00      db 128,0,64,0,32,1,17,226,8,196,5,40,2,240,2,240
+799+  653E 20 01 11 E2
+799+  6542 08 C4 05 28
+799+  6546 02 F0 02 F0
+800+  654A 05 F8 05 F8      db 5,248,5,248,5,248,0,0,15,252,11,116,11,116,15,252
+800+  654E 05 F8 00 00
+800+  6552 0F FC 0B 74
+800+  6556 0B 74 0F FC
+801+  655A 00 00 00 00      db 0,0,0,0,8,48,4,204,2,49,1,74,0,188,0,188
+801+  655E 08 30 04 CC
+801+  6562 02 31 01 4A
+801+  6566 00 BC 00 BC
+802+  656A 01 7E 01 7E      db 1,126,1,126,1,126,0,0,3,255,2,237,2,237,3,255
+802+  656E 01 7E 00 00
+802+  6572 03 FF 02 ED
+802+  6576 02 ED 03 FF
+803+  657A
+804+  657A              SwissArmyKife: ; appears in Top Landing, Under the Roof and Tool  Shed.
+805+  657A 38 00 7C 00      db 56,0,124,0,126,0,109,128,68,64,108,64,124,32,124,0
+805+  657E 7E 00 6D 80
+805+  6582 44 40 6C 40
+805+  6586 7C 20 7C 00
+806+  658A 7C 0C 7C 32      db 124,12,124,50,252,204,255,48,252,192,127,0,108,0,56,0
+806+  658E FC CC FF 30
+806+  6592 FC C0 7F 00
+806+  6596 6C 00 38 00
+807+  659A 0E 60 1F 94      db 14,96,31,148,31,8,27,32,17,80,27,80,31,160,31,160
+807+  659E 1F 08 1B 20
+807+  65A2 11 50 1B 50
+807+  65A6 1F A0 1F A0
+808+  65AA 7F 40 DF 40      db 127,64,223,64,223,128,159,128,127,0,31,0,27,0,14,0
+808+  65AE DF 80 9F 80
+808+  65B2 7F 00 1F 00
+808+  65B6 1B 00 0E 00
+809+  65BA 03 80 07 C0      db 3,128,7,192,7,224,6,216,4,68,14,196,127,194,239,192
+809+  65BE 07 E0 06 D8
+809+  65C2 04 44 0E C4
+809+  65C6 7F C2 EF C0
+810+  65CA EF C0 8F C0      db 239,192,143,192,119,192,7,192,7,192,7,192,6,192,3,128
+810+  65CE 77 C0 07 C0
+810+  65D2 07 C0 07 C0
+810+  65D6 06 C0 03 80
+811+  65DA 00 E0 01 F0      db 0,224,1,240,1,240,1,178,1,21,1,181,1,250,1,250
+811+  65DE 01 F0 01 B2
+811+  65E2 01 15 01 B5
+811+  65E6 01 FA 01 FA
+812+  65EA 07 F4 0D F4      db 7,244,13,244,13,248,9,248,7,240,1,240,1,176,0,224
+812+  65EE 0D F8 09 F8
+812+  65F2 07 F0 01 F0
+812+  65F6 01 B0 00 E0
+813+  65FA
+814+  65FA              EggSpriteRight: ; appears in The Drive, Cuckoo's Nest, To the Kitchens    Main Stairway and Back Stairway.
+815+  65FA 0C 00 16 00      db 12,0,22,0,47,0,47,0,79,128,95,128,95,128,159,192
+815+  65FE 2F 00 2F 00
+815+  6602 4F 80 5F 80
+815+  6606 5F 80 9F C0
+816+  660A BF C0 BD C0      db 191,192,189,192,186,192,189,64,90,128,93,128,63,0,12,0
+816+  660E BA C0 BD 40
+816+  6612 5A 80 5D 80
+816+  6616 3F 00 0C 00
+817+  661A 00 00 00 00      db 0,0,0,0,0,0,0,112,3,152,12,120,51,248,71,240
+817+  661E 00 00 00 70
+817+  6622 03 98 0C 78
+817+  6626 33 F8 47 F0
+818+  662A 5F F0 BF F0      db 95,240,191,240,190,160,189,96,90,192,93,64,63,128,14,0
+818+  662E BE A0 BD 60
+818+  6632 5A C0 5D 40
+818+  6636 3F 80 0E 00
+819+  663A 00 00 00 00      db 0,0,0,0,0,0,0,0,3,192,28,120,33,252,79,254
+819+  663E 00 00 00 00
+819+  6642 03 C0 1C 78
+819+  6646 21 FC 4F FE
+820+  664A 5F FE 9F FF      db 95,254,159,255,191,239,95,86,95,174,35,84,31,248,3,192
+820+  664E BF EF 5F 56
+820+  6652 5F AE 23 54
+820+  6656 1F F8 03 C0
+821+  665A 00 00 00 00      db 0,0,0,0,0,0,14,0,23,192,23,240,19,252,11,254
+821+  665E 00 00 0E 00
+821+  6662 17 C0 17 F0
+821+  6666 13 FC 0B FE
+822+  666A 0B FE 0B D7      db 11,254,11,215,5,235,5,215,2,234,2,126,1,140,0,112
+822+  666E 05 EB 05 D7
+822+  6672 02 EA 02 7E
+822+  6676 01 8C 00 70
+823+  667A
+824+  667A              EggSpriteLeft:
+825+  667A 0C 00 16 00      db 12,0,22,0,47,0,47,0,79,128,95,128,95,128,159,192
+825+  667E 2F 00 2F 00
+825+  6682 4F 80 5F 80
+825+  6686 5F 80 9F C0
+826+  668A BF C0 BD C0      db 191,192,189,192,186,192,189,64,90,128,93,128,63,0,12,0
+826+  668E BA C0 BD 40
+826+  6692 5A 80 5D 80
+826+  6696 3F 00 0C 00
+827+  669A 00 00 00 00      db 0,0,0,0,0,0,14,0,23,192,23,240,19,252,11,254
+827+  669E 00 00 0E 00
+827+  66A2 17 C0 17 F0
+827+  66A6 13 FC 0B FE
+828+  66AA 0B FE 0B D7      db 11,254,11,215,5,235,5,215,2,234,2,126,1,140,0,112
+828+  66AE 05 EB 05 D7
+828+  66B2 02 EA 02 7E
+828+  66B6 01 8C 00 70
+829+  66BA 00 00 00 00      db 0,0,0,0,0,0,0,0,3,192,28,120,33,252,79,254
+829+  66BE 00 00 00 00
+829+  66C2 03 C0 1C 78
+829+  66C6 21 FC 4F FE
+830+  66CA 5F FE 9F FF      db 95,254,159,255,191,239,95,86,95,174,35,84,31,248,3,192
+830+  66CE BF EF 5F 56
+830+  66D2 5F AE 23 54
+830+  66D6 1F F8 03 C0
+831+  66DA 00 00 00 00      db 0,0,0,0,0,0,0,112,3,152,12,120,51,248,71,240
+831+  66DE 00 00 00 70
+831+  66E2 03 98 0C 78
+831+  66E6 33 F8 47 F0
+832+  66EA 5F F0 BF F0      db 95,240,191,240,190,160,189,96,90,192,93,64,63,128,14,0
+832+  66EE BE A0 BD 60
+832+  66F2 5A C0 5D 40
+832+  66F6 3F 80 0E 00
+833+  66FA
+834+  66FA              PacManSprite: ; appears in The Attic.
+835+  66FA 07 C0 18 30      db 7,192,24,48,35,136,68,68,136,34,144,19,144,19,136,34
+835+  66FE 23 88 44 44
+835+  6702 88 22 90 13
+835+  6706 90 13 88 22
+836+  670A 44 44 23 88      db 68,68,35,136,24,48,7,192,3,0,3,0,3,0,3,128
+836+  670E 18 30 07 C0
+836+  6712 03 00 03 00
+836+  6716 03 00 03 80
+837+  671A 07 C0 18 30      db 7,192,24,48,32,8,67,132,132,66,136,35,136,35,132,66
+837+  671E 20 08 43 84
+837+  6722 84 42 88 23
+837+  6726 88 23 84 42
+838+  672A 43 84 20 08      db 67,132,32,8,24,48,7,192,15,128,29,208,8,224,4,64
+838+  672E 18 30 07 C0
+838+  6732 0F 80 1D D0
+838+  6736 08 E0 04 40
+839+  673A 07 C0 1F F0      db 7,192,31,240,62,120,124,60,126,124,255,254,255,254,240,0
+839+  673E 3E 78 7C 3C
+839+  6742 7E 7C FF FE
+839+  6746 FF FE F0 00
+840+  674A FF 80 7F F0      db 255,128,127,240,127,252,63,248,31,240,7,192,0,0,0,0
+840+  674E 7F FC 3F F8
+840+  6752 1F F0 07 C0
+840+  6756 00 00 00 00
+841+  675A 07 C0 1F F0      db 7,192,31,240,60,248,120,124,124,252,255,128,252,0,240,0
+841+  675E 3C F8 78 7C
+841+  6762 7C FC FF 80
+841+  6766 FC 00 F0 00
+842+  676A F8 00 7E 00      db 248,0,126,0,127,128,63,224,31,240,7,192,0,0,0,0
+842+  676E 7F 80 3F E0
+842+  6772 1F F0 07 C0
+842+  6776 00 00 00 00
+# file closed: graphics.asm
+ 14   677A                  include "player.asm"
+# file opened: player.asm
+  1+  677A              ;===========================================================================
+  2+  677A              ; player.asm
+  3+  677A              ;===========================================================================
+  4+  677A
+  5+  677A
+  6+  677A              ; -------------------------------------------------------------------
+  7+  677A              ; Muove il player
+  8+  677A              ; Input: D = stato controlli
+  9+  677A              ; -------------------------------------------------------------------
+ 10+  677A              MovePlayer:
+ 11+  677A                  ; Verifica se un tasto di movimento è premuto
+ 12+  677A DD 21 22 6C      ld   ix, flags
+ 13+  677E DD CB 00 46      bit  $00, (ix)
+ 14+  6782 C8               ret  z
+ 15+  6783 DD CB 00 86      res  $00, (ix)
+ 16+  6787
+ 17+  6787 ED 4B 0E 6C      ld   bc, (PlayerPos)   ; C = PlayerX (pixel), B = PlayerY (pixel)
+ 18+  678B
+ 19+  678B CB 4A            bit  $01, d            ; Tasto Destra premuto?
+ 20+  678D 20 11            jr   nz, movePlayer_right
+ 21+  678F
+ 22+  678F CB 42            bit  $00, d            ; Tasto Sinistra premuto?
+ 23+  6791 C8               ret  z
+ 24+  6792
+ 25+  6792              movePlayer_left:
+ 26+  6792 79               ld   a, c
+ 27+  6793 D6 04            sub  4                 ; Prova a muoverti di 4 pixel a sinistra
+ 28+  6795 FE 18            cp   24                ; Confronta con il limite sinistro (24)
+ 29+  6797 38 03            jr   c, .clamp_left    ; Se < 24, clampa a 24
+ 30+  6799 4F               ld   c, a              ; Altrimenti memorizza la nuova posizione
+ 31+  679A 18 12            jr   save_x
+ 32+  679C
+ 33+  679C              .clamp_left:
+ 34+  679C 0E 18            ld   c, 24
+ 35+  679E 18 0E            jr   save_x
+ 36+  67A0
+ 37+  67A0              movePlayer_right:
+ 38+  67A0 79               ld   a, c
+ 39+  67A1 C6 04            add  a, 4              ; Prova a muoverti di 4 pixel a destra
+ 40+  67A3 FE E7            cp   231               ; Confronta con il limite destro (231)
+ 41+  67A5 28 02            jr   z, .ok_right      ; Se == 231, va bene
+ 42+  67A7 30 03            jr   nc, .clamp_right  ; Se > 231 (senza carry, cioè maggiore), clampa a 231
+ 43+  67A9              .ok_right:
+ 44+  67A9 4F               ld   c, a              ; Altrimenti memorizza la nuova posizione
+ 45+  67AA 18 02            jr   save_x
+ 46+  67AC
+ 47+  67AC              .clamp_right:
+ 48+  67AC 0E E7            ld   c, 231
+ 49+  67AE
+ 50+  67AE              save_x:
+ 51+  67AE ED 43 0E 6C      ld   (PlayerPos), bc
+ 52+  67B2
+ 53+  67B2              movePlayer_print:
+ 54+  67B2                  ; Alterna lo stato delle gambe ad ogni movimento (0, 1, 2, 0, 1, 2...)
+ 55+  67B2 3A 20 6C         ld   a, (body_state)
+ 56+  67B5 3C               inc  a
+ 57+  67B6 FE 03            cp   3
+ 58+  67B8 20 02            jr   nz, .save_state
+ 59+  67BA 3E 00            ld   a, 0
+ 60+  67BC              .save_state:
+ 61+  67BC 32 20 6C         ld   (body_state), a
+ 62+  67BF C9               ret
+# file closed: player.asm
+ 15   67C0                  include "input.asm"
+# file opened: input.asm
+  1+  67C0              ;===========================================================================
+  2+  67C0              ; input.asm
+  3+  67C0              ;===========================================================================
+  4+  67C0
+  5+  67C0
+  6+  67C0              ; -------------------------------------------------------------------
+  7+  67C0              ; Controlla input tastiera
+  8+  67C0              ; Output: D = tasti premuti
+  9+  67C0              ; -------------------------------------------------------------------
+ 10+  67C0              CheckCtrl:
+ 11+  67C0 16 00            ld  d, $00
+ 12+  67C2 3E FE            ld  a, $fe
+ 13+  67C4 DB FE            in  a, ($fe)
+ 14+  67C6 DD 21 22 6C      ld  ix,flags
+ 15+  67CA
+ 16+  67CA              checkCtrl_left:
+ 17+  67CA CB 4F            bit $01, a
+ 18+  67CC 20 0D            jr  nz, checkCtrl_right
+ 19+  67CE CB C2            set $00, d
+ 20+  67D0 DD CB 00 C6      set 0,(ix)
+ 21+  67D4 5F               ld  e, a
+ 22+  67D5 3E 01            ld  a, 1
+ 23+  67D7 32 21 6C         ld  (direction), a
+ 24+  67DA 7B               ld  a, e
+ 25+  67DB
+ 26+  67DB              checkCtrl_right:
+ 27+  67DB CB 57            bit $02, a
+ 28+  67DD 20 0D            jr  nz, checkCtrl_jump
+ 29+  67DF CB CA            set $01, d
+ 30+  67E1 DD CB 00 C6      set 0,(ix)
+ 31+  67E5 5F               ld  e, a
+ 32+  67E6 3E 02            ld  a, 2
+ 33+  67E8 32 21 6C         ld  (direction), a
+ 34+  67EB 7B               ld  a, e
+ 35+  67EC
+ 36+  67EC              checkCtrl_jump:
+ 37+  67EC                  ; Controlla tasto P (Porta $DF, Bit 0)
+ 38+  67EC 3E DF            ld  a, $df
+ 39+  67EE DB FE            in  a, ($fe)
+ 40+  67F0 CB 47            bit 0, a
+ 41+  67F2 28 0E            jr  z, .pressed   ; Se P è premuto (bit 0 = 0)
+ 42+  67F4
+ 43+  67F4                  ; Controlla tasto M (Porta $7F, Bit 2)
+ 44+  67F4 3E 7F            ld  a, $7f
+ 45+  67F6 DB FE            in  a, ($fe)
+ 46+  67F8 CB 57            bit 2, a
+ 47+  67FA 28 06            jr  z, .pressed   ; Se M è premuto (bit 2 = 0)
+ 48+  67FC
+ 49+  67FC              .released:
+ 50+  67FC AF               xor a
+ 51+  67FD 32 2E 6C         ld  (jump_prev), a
+ 52+  6800 18 10            jr  .end
+ 53+  6802
+ 54+  6802              .pressed:
+ 55+  6802 3A 2E 6C         ld  a, (jump_prev)
+ 56+  6805 B7               or  a
+ 57+  6806 20 0A            jr  nz, .end
+ 58+  6808 3E 01            ld  a, 1
+ 59+  680A 32 2D 6C         ld  (jump_pressed), a
+ 60+  680D 32 2E 6C         ld  (jump_prev), a
+ 61+  6810 CB D2            set 2, d
+ 62+  6812
+ 63+  6812              .end:
+ 64+  6812 7A               ld   a, d
+ 65+  6813 E6 03            and  $03
+ 66+  6815 D6 03            sub  $03
+ 67+  6817 C0               ret  nz
+ 68+  6818 7A               ld   a, d
+ 69+  6819 E6 04            and  $04
+ 70+  681B 57               ld   d, a
+ 71+  681C C9               ret
+# file closed: input.asm
+ 16   681D                  include "physics.asm"
+# file opened: physics.asm
+  1+  681D              ;===========================================================================
+  2+  681D              ; physics.asm
+  3+  681D              ;===========================================================================
+  4+  681D
+  5+  681D
+  6+  681D              ; -------------------------------------------------------------------
+  7+  681D              ; Applica gravità e gestisce salto
+  8+  681D              ; -------------------------------------------------------------------
+  9+  681D              ApplyGravity:
+ 10+  681D ED 4B 0E 6C      ld  bc, (PlayerPos)
+ 11+  6821 78               ld  a, b              ; B = PlayerY (pixel)
+ 12+  6822
+ 13+  6822                  ; Controlla se siamo a mezz'aria (on_ground == 0)
+ 14+  6822 3A 2C 6C         ld  a, (on_ground)
+ 15+  6825 B7               or  a
+ 16+  6826 CA 7B 68         jp  z, .in_air        ; Se siamo in volo, continua a volare
+ 17+  6829
+ 18+  6829                  ; Se on_ground == 1, controlliamo se siamo al livello del floor o della piattaforma
+ 19+  6829 78               ld  a, b              ; B = PlayerY
+ 20+  682A FE 80            cp  GROUND_LEVEL      ; 128
+ 21+  682C CA 58 68         jp  z, .at_platform_or_ground ; Se siamo a 128, siamo a terra
+ 22+  682F
+ 23+  682F FE 68            cp  PLATFORM_LEVEL    ; 104
+ 24+  6831 28 15            jr  z, .check_platform1
+ 25+  6833
+ 26+  6833 FE 50            cp  PLATFORM2_LEVEL   ; 80
+ 27+  6835 C2 7B 68         jp  nz, .in_air       ; Se non siamo su nessuna, siamo in volo (sicurezza)
+ 28+  6838
+ 29+  6838                  ; --- CONTROLLO PIATTAFORMA 2 (Riga 12) ---
+ 30+  6838 79               ld  a, c              ; C = PlayerX
+ 31+  6839 FE 99            cp  PLATFORM2_MIN_X   ; 153
+ 32+  683B DA 7B 68         jp  c, .in_air        ; Se X < 153, caduta
+ 33+  683E FE E8            cp  PLATFORM2_MAX_X   ; 232
+ 34+  6840 D2 7B 68         jp  nc, .in_air       ; Se X >= 232, caduta
+ 35+  6843
+ 36+  6843 06 50            ld  b, PLATFORM2_LEVEL
+ 37+  6845 C3 58 68         jp  .at_platform_or_ground
+ 38+  6848
+ 39+  6848              .check_platform1:
+ 40+  6848                  ; --- CONTROLLO PIATTAFORMA 1 (Riga 15) ---
+ 41+  6848 79               ld  a, c              ; C = PlayerX
+ 42+  6849 FE 39            cp  PLATFORM_MIN_X    ; 57
+ 43+  684B DA 7B 68         jp  c, .in_air        ; Se X < 57, caduta
+ 44+  684E FE C0            cp  PLATFORM_MAX_X    ; 192
+ 45+  6850 D2 7B 68         jp  nc, .in_air       ; Se X >= 192, caduta
+ 46+  6853
+ 47+  6853 06 68            ld  b, PLATFORM_LEVEL
+ 48+  6855 C3 58 68         jp  .at_platform_or_ground
+ 49+  6858
+ 50+  6858              .at_platform_or_ground:
+ 51+  6858 ED 43 0E 6C      ld  (PlayerPos), bc
+ 52+  685C 3E 01            ld  a, 1
+ 53+  685E 32 2C 6C         ld  (on_ground), a
+ 54+  6861 AF               xor a
+ 55+  6862 32 2B 6C         ld  (velocity_y), a
+ 56+  6865
+ 57+  6865                  ; Gestisci salto
+ 58+  6865 3A 2D 6C         ld  a, (jump_pressed)
+ 59+  6868 B7               or  a
+ 60+  6869 CA F7 68         jp  z, .end
+ 61+  686C
+ 62+  686C 3E 0C            ld  a, JUMP_STRENGTH
+ 63+  686E 32 2B 6C         ld  (velocity_y), a
+ 64+  6871 AF               xor a
+ 65+  6872 32 2C 6C         ld  (on_ground), a
+ 66+  6875 32 2D 6C         ld  (jump_pressed), a
+ 67+  6878 C3 7B 68         jp  .in_air
+ 68+  687B
+ 69+  687B              .in_air:
+ 70+  687B                  ; Applica gravità
+ 71+  687B 3A 2B 6C         ld  a, (velocity_y)
+ 72+  687E D6 02            sub GRAVITY           ; gravity = 2
+ 73+  6880
+ 74+  6880                  ; Controlla se positivo per evitare bug con cp signed
+ 75+  6880 CB 7F            bit 7, a
+ 76+  6882 28 06            jr  z, .store_vel
+ 77+  6884
+ 78+  6884 FE F4            cp  -MAX_FALL_SPEED   ; -12
+ 79+  6886 30 02            jr  nc, .store_vel
+ 80+  6888 3E F4            ld  a, -MAX_FALL_SPEED
+ 81+  688A
+ 82+  688A              .store_vel:
+ 83+  688A 32 2B 6C         ld  (velocity_y), a
+ 84+  688D
+ 85+  688D                  ; Applica movimento verticale: PlayerY = PlayerY - velocity_y
+ 86+  688D ED 4B 0E 6C      ld  bc, (PlayerPos)
+ 87+  6891 57               ld  d, a              ; D = velocity_y (signed)
+ 88+  6892 78               ld  a, b              ; A = PlayerY
+ 89+  6893 92               sub d                 ; A = PlayerY - velocity_y
+ 90+  6894 47               ld  b, a              ; B = new PlayerY
+ 91+  6895
+ 92+  6895                  ; Controlla se stiamo cadendo (velocity_y <= 0)
+ 93+  6895 3A 2B 6C         ld  a, (velocity_y)
+ 94+  6898 CB 7F            bit 7, a              ; Se negativo, bit 7 = 1
+ 95+  689A 20 05            jr  nz, .falling_checks
+ 96+  689C B7               or  a                 ; Se zero
+ 97+  689D 28 02            jr  z, .falling_checks
+ 98+  689F 18 47            jr  .no_collision_checks ; Se stiamo salendo, non controlliamo collisioni
+ 99+  68A1
+100+  68A1              .falling_checks:
+101+  68A1                  ; --- COLLISIONE CON IL FLOOR (ground_level = 128) ---
+102+  68A1                  ; Vecchio Y deve essere <= ground_level (128), e nuovo Y (in B) >= ground_level (128)
+103+  68A1 3A 0F 6C         ld  a, (PlayerPos+1)  ; Vecchio Y
+104+  68A4 FE 81            cp  GROUND_LEVEL+1    ; Se A <= 128, allora A < 129 (carry set)
+105+  68A6 30 0A            jr  nc, .check_platform1_collision ; Se vecchio Y > 128, eravamo sotto, passa a platform 1
+106+  68A8
+107+  68A8 78               ld  a, b              ; Nuovo Y
+108+  68A9 FE 80            cp  GROUND_LEVEL      ; Se B >= 128 (no carry)
+109+  68AB 38 05            jr  c, .check_platform1_collision ; Se non abbiamo ancora toccato il floor, controlla platform 1
+110+  68AD
+111+  68AD                  ; Collisione avvenuta! Atterriamo sul floor
+112+  68AD 06 80            ld  b, GROUND_LEVEL
+113+  68AF C3 58 68         jp  .at_platform_or_ground
+114+  68B2
+115+  68B2              .check_platform1_collision:
+116+  68B2                  ; --- COLLISIONE CON LA PIATTAFORMA 1 ---
+117+  68B2                  ; Siamo dentro l'intervallo X della piattaforma 1?
+118+  68B2 79               ld  a, c              ; C = PlayerX
+119+  68B3 FE 39            cp  PLATFORM_MIN_X    ; 57
+120+  68B5 38 17            jr  c, .check_platform2_collision
+121+  68B7 FE C0            cp  PLATFORM_MAX_X    ; 192
+122+  68B9 30 11            jr  nc, .check_platform1_only_nc  ; If X >= 192, no platform 1 check
+123+  68BB
+124+  68BB                  ; Vecchio Y deve essere <= platform_level, e nuovo Y (in B) >= platform_level
+125+  68BB 3A 0F 6C         ld  a, (PlayerPos+1)  ; Vecchio Y
+126+  68BE FE 69            cp  PLATFORM_LEVEL+1  ; Se A <= platform_level (104), allora A < 105 (carry set)
+127+  68C0 30 0C            jr  nc, .check_platform2_collision ; Se vecchio Y > platform_level, eravamo sotto, passa a platform 2
+128+  68C2
+129+  68C2 78               ld  a, b              ; Nuovo Y
+130+  68C3 FE 68            cp  PLATFORM_LEVEL    ; Se B >= platform_level
+131+  68C5 38 07            jr  c, .check_platform2_collision
+132+  68C7
+133+  68C7                  ; Collisione avvenuta! Atterriamo sulla piattaforma 1
+134+  68C7 06 68            ld  b, PLATFORM_LEVEL
+135+  68C9 C3 58 68         jp  .at_platform_or_ground
+136+  68CC
+137+  68CC              .check_platform1_only_nc:
+138+  68CC                  ; Just helper to jump to check_platform2_collision
+139+  68CC 18 00            jr  .check_platform2_collision
+140+  68CE
+141+  68CE              .check_platform2_collision:
+142+  68CE                  ; --- COLLISIONE CON LA PIATTAFORMA 2 ---
+143+  68CE                  ; Siamo dentro l'intervallo X della piattaforma 2?
+144+  68CE 79               ld  a, c              ; C = PlayerX
+145+  68CF FE 99            cp  PLATFORM2_MIN_X   ; 153
+146+  68D1 38 15            jr  c, .no_collision_checks
+147+  68D3 FE E8            cp  PLATFORM2_MAX_X   ; 232
+148+  68D5 30 11            jr  nc, .no_collision_checks
+149+  68D7
+150+  68D7                  ; Vecchio Y deve essere <= platform2_level (80), e nuovo Y (in B) >= platform2_level (80)
+151+  68D7 3A 0F 6C         ld  a, (PlayerPos+1)  ; Vecchio Y
+152+  68DA FE 51            cp  PLATFORM2_LEVEL+1 ; Se A <= 80, allora A < 81 (carry set)
+153+  68DC 30 0A            jr  nc, .no_collision_checks
+154+  68DE
+155+  68DE 78               ld  a, b              ; Nuovo Y
+156+  68DF FE 50            cp  PLATFORM2_LEVEL   ; Se B >= 80
+157+  68E1 38 05            jr  c, .no_collision_checks
+158+  68E3
+159+  68E3                  ; Collisione avvenuta! Atterriamo sulla piattaforma 2
+160+  68E3 06 50            ld  b, PLATFORM2_LEVEL
+161+  68E5 C3 58 68         jp  .at_platform_or_ground
+162+  68E8
+163+  68E8              .no_collision_checks:
+164+  68E8              .save_pos:
+165+  68E8                  ; Limite soffitto (Y >= 8 pixel per evitare di uscire dallo schermo)
+166+  68E8 78               ld  a, b
+167+  68E9 FE 08            cp  8
+168+  68EB 30 06            jr  nc, .save_ok
+169+  68ED 06 08            ld  b, 8
+170+  68EF AF               xor a
+171+  68F0 32 2B 6C         ld  (velocity_y), a
+172+  68F3
+173+  68F3              .save_ok:
+174+  68F3 ED 43 0E 6C      ld  (PlayerPos), bc
+175+  68F7
+176+  68F7              .end:
+177+  68F7 AF               xor a
+178+  68F8 32 2D 6C         ld  (jump_pressed), a
+179+  68FB C9               ret
+180+  68FC
+181+  68FC              ; -------------------------------------------------------------------
+182+  68FC              ; Verifica la collisione tra player e nemico (bounding box a livello di pixel)
+183+  68FC              ; Output: Carry flag impostato se collisione, altrimenti resettato
+184+  68FC              ; -------------------------------------------------------------------
+185+  68FC              CheckCollision:
+186+  68FC                  ; --- CONTROLLO COLLISIONE CON PRIMO NEMICO (LAMETTA) ---
+187+  68FC                  ; 1. Controllo orizzontale: PlayerX - EnemyX + 7 in [0, 22] (Player width=8, Enemy width=16)
+188+  68FC 3A 0E 6C         ld   a, (PlayerPos)   ; A = PlayerX
+189+  68FF 21 14 6C         ld   hl, EnemyPos
+190+  6902 96               sub  (hl)             ; A = PlayerX - EnemyX
+191+  6903 C6 07            add  a, 7             ; A = PlayerX - EnemyX + 7
+192+  6905 FE 17            cp   23               ; Se >= 23, nessuna collisione con questo, prova con l'altro
+193+  6907 30 0F            jr   nc, .check_egg
+194+  6909
+195+  6909                  ; 2. Controllo verticale: PlayerY - EnemyY + 15 in [0, 30] (Player height=16, Enemy height=16)
+196+  6909 3A 0F 6C         ld   a, (PlayerPos+1) ; A = PlayerY
+197+  690C 21 15 6C         ld   hl, EnemyPos+1
+198+  690F 96               sub  (hl)             ; A = PlayerY - EnemyY
+199+  6910 C6 0F            add  a, 15            ; A = PlayerY - EnemyY + 15
+200+  6912 FE 1F            cp   31               ; Se >= 31, nessuna collisione con questo, prova con l'altro
+201+  6914 30 02            jr   nc, .check_egg
+202+  6916
+203+  6916                  ; Collisione avvenuta con il primo nemico!
+204+  6916 37               scf                   ; Imposta carry flag
+205+  6917 C9               ret
+206+  6918
+207+  6918              .check_egg:
+208+  6918                  ; --- CONTROLLO COLLISIONE CON SECONDO NEMICO (EGG) ---
+209+  6918                  ; 1. Controllo orizzontale: PlayerX - EggX + 7 in [0, 22] (Player width=8, Egg width=16)
+210+  6918 3A 0E 6C         ld   a, (PlayerPos)   ; A = PlayerX
+211+  691B 21 18 6C         ld   hl, EggPos
+212+  691E 96               sub  (hl)             ; A = PlayerX - EggX
+213+  691F C6 07            add  a, 7             ; A = PlayerX - EggX + 7
+214+  6921 FE 17            cp   23               ; Se >= 23, prova con il robot
+215+  6923 30 0F            jr   nc, .check_robot
+216+  6925
+217+  6925                  ; 2. Controllo verticale: PlayerY - EggY + 15 in [0, 30] (Player height=16, Egg height=16)
+218+  6925 3A 0F 6C         ld   a, (PlayerPos+1) ; A = PlayerY
+219+  6928 21 19 6C         ld   hl, EggPos+1
+220+  692B 96               sub  (hl)             ; A = PlayerY - EggY
+221+  692C C6 0F            add  a, 15            ; A = PlayerY - EggY + 15
+222+  692E FE 1F            cp   31               ; Se >= 31, prova con il robot
+223+  6930 30 02            jr   nc, .check_robot
+224+  6932
+225+  6932                  ; Collisione avvenuta con il secondo nemico!
+226+  6932 37               scf                   ; Imposta carry flag
+227+  6933 C9               ret
+228+  6934
+229+  6934              .check_robot:
+230+  6934                  ; --- CONTROLLO COLLISIONE CON TERZO NEMICO (ROBOT) ---
+231+  6934                  ; 1. Controllo orizzontale: PlayerX - RobotX + 7 in [0, 22] (Player width=8, Robot width=16)
+232+  6934 3A 0E 6C         ld   a, (PlayerPos)   ; A = PlayerX
+233+  6937 21 1C 6C         ld   hl, RobotPos
+234+  693A 96               sub  (hl)             ; A = PlayerX - RobotX
+235+  693B C6 07            add  a, 7             ; A = PlayerX - RobotX + 7
+236+  693D FE 17            cp   23               ; Se >= 23, nessuna collisione
+237+  693F 30 0F            jr   nc, .no_collision
+238+  6941
+239+  6941                  ; 2. Controllo verticale: PlayerY - RobotY + 15 in [0, 30] (Player height=16, Robot height=16)
+240+  6941 3A 0F 6C         ld   a, (PlayerPos+1) ; A = PlayerY
+241+  6944 21 1D 6C         ld   hl, RobotPos+1
+242+  6947 96               sub  (hl)             ; A = PlayerY - RobotY
+243+  6948 C6 0F            add  a, 15            ; A = PlayerY - RobotY + 15
+244+  694A FE 1F            cp   31               ; Se >= 31, nessuna collisione
+245+  694C 30 02            jr   nc, .no_collision
+246+  694E
+247+  694E                  ; Collisione avvenuta con il terzo nemico!
+248+  694E 37               scf                   ; Imposta carry flag
+249+  694F C9               ret
+250+  6950
+251+  6950              .no_collision:
+252+  6950 B7               or   a                 ; Reset carry flag
+253+  6951 C9               ret
+# file closed: physics.asm
+ 17   6952                  include "screen.asm"
+# file opened: screen.asm
+  1+  6952              ;===========================================================================
+  2+  6952              ; screen.asm
+  3+  6952              ;===========================================================================
+  4+  6952
+  5+  6952
+  6+  6952              ; -------------------------------------------------------------------
+  7+  6952              ; Disegna cornice
+  8+  6952              ; -------------------------------------------------------------------
+  9+  6952              ;PrintFrame:
+ 10+  6952              ;    ld   hl, frameTopGraph
+ 11+  6952              ;    ld   b, frameEnd - frameTopGraph
+ 12+  6952              ;    call PrintString;
+ 13+  6952              ;
+ 14+  6952              ;    ld   b, COR_Y - $01
+ 15+  6952              ;printFrame_loop:
+ 16+  6952              ;    ld   c, COR_X - MIN_X
+ 17+  6952              ;    call At
+ 18+  6952              ;    ld   a, $99
+ 19+  6952              ;    rst  $10
+ 20+  6952
+ 21+  6952              ;    ld   c, COR_X - MAX_X
+ 22+  6952              ;    call At
+ 23+  6952              ;    ld   a, $9a
+ 24+  6952              ;   rst  $10
+ 25+  6952
+ 26+  6952              ;    dec  b
+ 27+  6952              ;    ld   a, COR_Y - MAX_Y + $01
+ 28+  6952              ;    sub  b
+ 29+  6952              ;    jr   nz, printFrame_loop
+ 30+  6952              ;    ret
+ 31+  6952
+ 32+  6952
+ 33+  6952              PrintFrame:
+ 34+  6952                  ; Disegna il bordo superiore
+ 35+  6952 21 7D 69         ld   hl, frameTopGraph
+ 36+  6955 06 48            ld   b, frameEnd - frameTopGraph
+ 37+  6957 CD 54 5F         call PrintString
+ 38+  695A
+ 39+  695A                  ; Disegna i bordi verticali per 16 righe
+ 40+  695A 06 17            ld   b, COR_Y - $01        ; B = riga di partenza (line 1)
+ 41+  695C 0E 10            ld   c, 16                 ; C = 16 righe
+ 42+  695E CD 5A 5F         call DrawVerticalBorders
+ 43+  6961
+ 44+  6961                  ; Disegna il bordo inferiore
+ 45+  6961 21 A2 69         ld   hl, frameBottomGraph
+ 46+  6964 06 23            ld   b, frameEnd - frameBottomGraph
+ 47+  6966 CD 54 5F         call PrintString
+ 48+  6969
+ 49+  6969 C9               ret
+ 50+  696A
+ 51+  696A              ; -------------------------------------------------------------------
+ 52+  696A              ; Disegna info gioco
+ 53+  696A              ; -------------------------------------------------------------------
+ 54+  696A              PrintInfoGame:
+ 55+  696A 3E 01            ld   a, $01
+ 56+  696C CD 01 16         call OPENCHAN
+ 57+  696F 21 C5 69         ld   hl, infoGame
+ 58+  6972 06 25            ld   b, infoGame_end - infoGame
+ 59+  6974 CD 54 5F         call PrintString
+ 60+  6977 3E 02            ld   a, $02
+ 61+  6979 CD 01 16         call OPENCHAN
+ 62+  697C C9               ret
+ 63+  697D
+ 64+  697D              ; -------------------------------------------------------------------
+ 65+  697D              ; Dati cornice
+ 66+  697D              ; -------------------------------------------------------------------
+ 67+  697D              frameTopGraph:
+ 68+  697D 16 00 00 10      db $16, $00, $00, $10, $01
+ 68+  6981 01
+ 69+  6982 96 97 97 97      db $96, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97
+ 69+  6986 97 97 97 97
+ 69+  698A 97 97 97 97
+ 69+  698E 97
+ 70+  698F 97 97 97 97      db $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97
+ 70+  6993 97 97 97 97
+ 70+  6997 97 97 97 97
+ 70+  699B 97
+ 71+  699C 97 97 97 97      db $97, $97, $97, $97, $97, $98
+ 71+  69A0 97 98
+ 72+  69A2
+ 73+  69A2              frameBottomGraph:
+ 74+  69A2 16 14 00         db $16, $14, $00
+ 75+  69A5 9B 9C 9C 9C      db $9b, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c
+ 75+  69A9 9C 9C 9C 9C
+ 75+  69AD 9C 9C 9C 9C
+ 75+  69B1 9C
+ 76+  69B2 9C 9C 9C 9C      db $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c
+ 76+  69B6 9C 9C 9C 9C
+ 76+  69BA 9C 9C 9C 9C
+ 76+  69BE 9C
+ 77+  69BF 9C 9C 9C 9C      db $9c, $9c, $9c, $9c, $9c, $9d
+ 77+  69C3 9C 9D
+ 78+  69C5              frameEnd:
+ 79+  69C5
+ 80+  69C5              infoGame:
+ 81+  69C5 10 03 16 00      db $10, $03, $16, $00, $00
+ 81+  69C9 00
+ 82+  69CA 4C 69 76 65      db 'Lives   Points   Level   Enemies'
+ 82+  69CE 73 20 20 20
+ 82+  69D2 50 6F 69 6E
+ 82+  69D6 74 73 20 20
+ 82+  69DA 20 4C 65 76
+ 82+  69DE 65 6C 20 20
+ 82+  69E2 20 45 6E 65
+ 82+  69E6 6D 69 65 73
+ 83+  69EA              infoGame_end:
+# file closed: screen.asm
+ 18   69EA                  include "enemy.asm"
+# file opened: enemy.asm
+  1+  69EA              ;=x==========================================================================
+  2+  69EA              ; enemy.asm
+  3+  69EA              ;===========================================================================
+  4+  69EA
+  5+  69EA              ; -------------------------------------------------------------------
+  6+  69EA              ; Muove il nemico in orizzontale (pattugliamento 2 pixel/frame)
+  7+  69EA              ; -------------------------------------------------------------------
+  8+  69EA              MoveEnemy:
+  9+  69EA ED 4B 14 6C      ld   bc, (EnemyPos)   ; C = EnemyX, B = EnemyY
+ 10+  69EE
+ 11+  69EE 3A 24 6C         ld   a, (enemy_direction)
+ 12+  69F1 FE 01            cp   1                ; Sinistra?
+ 13+  69F3 20 15            jr   nz, .move_right
+ 14+  69F5
+ 15+  69F5              .move_left:
+ 16+  69F5 79               ld   a, c
+ 17+  69F6 D6 02            sub  2                ; Muovi a sinistra di 2 pixel
+ 18+  69F8 FE 18            cp   24               ; Limite sinistro (24)
+ 19+  69FA 28 05            jr   z, .reverse_to_right
+ 20+  69FC 38 03            jr   c, .reverse_to_right
+ 21+  69FE 4F               ld   c, a
+ 22+  69FF 18 1C            jr   .save_x
+ 23+  6A01
+ 24+  6A01              .reverse_to_right:
+ 25+  6A01 0E 18            ld   c, 24
+ 26+  6A03 3E 02            ld   a, 2
+ 27+  6A05 32 24 6C         ld   (enemy_direction), a
+ 28+  6A08 18 13            jr   .save_x
+ 29+  6A0A
+ 30+  6A0A              .move_right:
+ 31+  6A0A 79               ld   a, c
+ 32+  6A0B C6 02            add  a, 2                ; Muovi a destra di 2 pixel
+ 33+  6A0D FE E7            cp   231                 ; Limite destro (231)
+ 34+  6A0F 28 05            jr   z, .reverse_to_left
+ 35+  6A11 30 03            jr   nc, .reverse_to_left
+ 36+  6A13 4F               ld   c, a
+ 37+  6A14 18 07            jr   .save_x
+ 38+  6A16
+ 39+  6A16              .reverse_to_left:
+ 40+  6A16 0E E7            ld   c, 231
+ 41+  6A18 3E 01            ld   a, 1
+ 42+  6A1A 32 24 6C         ld   (enemy_direction), a
+ 43+  6A1D
+ 44+  6A1D              .save_x:
+ 45+  6A1D ED 43 14 6C      ld   (EnemyPos), bc
+ 46+  6A21
+ 47+  6A21              .animate:
+ 48+  6A21                  ; Alterna lo stato delle gambe/rotazione ad ogni movimento (0, 1, 2, 3)
+ 49+  6A21 3A 23 6C         ld   a, (enemy_body_state)
+ 50+  6A24 3C               inc  a
+ 51+  6A25 FE 04            cp   4
+ 52+  6A27 20 02            jr   nz, .save_state
+ 53+  6A29 3E 00            ld   a, 0
+ 54+  6A2B              .save_state:
+ 55+  6A2B 32 23 6C         ld   (enemy_body_state), a
+ 56+  6A2E C9               ret
+ 57+  6A2F
+ 58+  6A2F              ; -------------------------------------------------------------------
+ 59+  6A2F              ; Disegna il nemico (lametta) a coordinate pixel
+ 60+  6A2F              ; -------------------------------------------------------------------
+ 61+  6A2F              PrintEnemy:
+ 62+  6A2F DD E5            push ix
+ 63+  6A31
+ 64+  6A31                  ; Determina quale sprite base usare
+ 65+  6A31 3A 24 6C         ld   a, (enemy_direction)
+ 66+  6A34 FE 01            cp   1                 ; Sinistra?
+ 67+  6A36 20 06            jr   nz, .right_enemy
+ 68+  6A38
+ 69+  6A38              .left_enemy:
+ 70+  6A38 DD 21 7A 61      ld   ix, LamettaSpriteLeft
+ 71+  6A3C 18 04            jr   .calc_frame
+ 72+  6A3E
+ 73+  6A3E              .right_enemy:
+ 74+  6A3E DD 21 FA 60      ld   ix, LamettaSpriteRight
+ 75+  6A42
+ 76+  6A42              .calc_frame:
+ 77+  6A42                  ; Calcola il puntatore al frame corrente (body_state * 32)
+ 78+  6A42 3A 23 6C         ld   a, (enemy_body_state) ; A = 0, 1, 2, 3
+ 79+  6A45 87               add  a, a                  ; *2
+ 80+  6A46 87               add  a, a                  ; *4
+ 81+  6A47 87               add  a, a                  ; *8
+ 82+  6A48 87               add  a, a                  ; *16
+ 83+  6A49 87               add  a, a                  ; *32
+ 84+  6A4A 5F               ld   e, a
+ 85+  6A4B 16 00            ld   d, 0                  ; DE = offset del frame
+ 86+  6A4D DD 19            add  ix, de                ; IX = puntatore al frame corretto
+ 87+  6A4F
+ 88+  6A4F ED 4B 14 6C      ld   bc, (EnemyPos)        ; C = EnemyX, B = EnemyY
+ 89+  6A53 CD 8B 5E         call DrawPixelSprite16x16  ; Disegna lametta 16x16
+ 90+  6A56
+ 91+  6A56 DD E1            pop  ix
+ 92+  6A58 C9               ret
+ 93+  6A59
+ 94+  6A59              ; -------------------------------------------------------------------
+ 95+  6A59              ; Cancella il nemico alle vecchie coordinate pixel
+ 96+  6A59              ; -------------------------------------------------------------------
+ 97+  6A59              DeleteEnemyAtOldPos:
+ 98+  6A59 ED 4B 16 6C      ld   bc, (EnemyPosOld)     ; C = EnemyXOld, B = EnemyYOld
+ 99+  6A5D CD D2 5E         call ErasePixelSprite16x16 ; Cancella lametta
+100+  6A60 C9               ret
+101+  6A61
+102+  6A61              ; -------------------------------------------------------------------
+103+  6A61              ; Muove l'Egg in orizzontale sulla seconda piattaforma (pixel 160-224)
+104+  6A61              ; -------------------------------------------------------------------
+105+  6A61              MoveEgg:
+106+  6A61 ED 4B 18 6C      ld   bc, (EggPos)     ; C = EggX, B = EggY
+107+  6A65
+108+  6A65 3A 28 6C         ld   a, (egg_direction)
+109+  6A68 FE 01            cp   1                ; Sinistra?
+110+  6A6A 20 15            jr   nz, .move_right
+111+  6A6C
+112+  6A6C              .move_left:
+113+  6A6C 79               ld   a, c
+114+  6A6D D6 02            sub  2                ; Muovi a sinistra di 2 pixel
+115+  6A6F FE A0            cp   160              ; Limite sinistro (160)
+116+  6A71 28 05            jr   z, .reverse_to_right
+117+  6A73 38 03            jr   c, .reverse_to_right
+118+  6A75 4F               ld   c, a
+119+  6A76 18 1C            jr   .save_x
+120+  6A78
+121+  6A78              .reverse_to_right:
+122+  6A78 0E A0            ld   c, 160
+123+  6A7A 3E 02            ld   a, 2
+124+  6A7C 32 28 6C         ld   (egg_direction), a
+125+  6A7F 18 13            jr   .save_x
+126+  6A81
+127+  6A81              .move_right:
+128+  6A81 79               ld   a, c
+129+  6A82 C6 02            add  a, 2                ; Muovi a destra di 2 pixel
+130+  6A84 FE E0            cp   224                 ; Limite destro (224)
+131+  6A86 28 05            jr   z, .reverse_to_left
+132+  6A88 30 03            jr   nc, .reverse_to_left
+133+  6A8A 4F               ld   c, a
+134+  6A8B 18 07            jr   .save_x
+135+  6A8D
+136+  6A8D              .reverse_to_left:
+137+  6A8D 0E E0            ld   c, 224
+138+  6A8F 3E 01            ld   a, 1
+139+  6A91 32 28 6C         ld   (egg_direction), a
+140+  6A94
+141+  6A94              .save_x:
+142+  6A94 ED 43 18 6C      ld   (EggPos), bc
+143+  6A98
+144+  6A98              .animate:
+145+  6A98                  ; Alterna lo stato di animazione (0, 1, 2, 3)
+146+  6A98 3A 27 6C         ld   a, (egg_body_state)
+147+  6A9B 3C               inc  a
+148+  6A9C FE 04            cp   4
+149+  6A9E 20 02            jr   nz, .save_state
+150+  6AA0 3E 00            ld   a, 0
+151+  6AA2              .save_state:
+152+  6AA2 32 27 6C         ld   (egg_body_state), a
+153+  6AA5 C9               ret
+154+  6AA6
+155+  6AA6              ; -------------------------------------------------------------------
+156+  6AA6              ; Disegna l'Egg a coordinate pixel
+157+  6AA6              ; -------------------------------------------------------------------
+158+  6AA6              PrintEgg:
+159+  6AA6 DD E5            push ix
+160+  6AA8
+161+  6AA8                  ; Determina quale sprite base usare
+162+  6AA8 3A 28 6C         ld   a, (egg_direction)
+163+  6AAB FE 01            cp   1                 ; Sinistra?
+164+  6AAD 20 06            jr   nz, .right_egg
+165+  6AAF
+166+  6AAF              .left_egg:
+167+  6AAF DD 21 7A 66      ld   ix, EggSpriteLeft
+168+  6AB3 18 04            jr   .calc_frame
+169+  6AB5
+170+  6AB5              .right_egg:
+171+  6AB5 DD 21 FA 65      ld   ix, EggSpriteRight
+172+  6AB9
+173+  6AB9              .calc_frame:
+174+  6AB9                  ; Calcola il puntatore al frame corrente (egg_body_state * 32)
+175+  6AB9 3A 27 6C         ld   a, (egg_body_state)   ; A = 0, 1, 2, 3
+176+  6ABC 87               add  a, a                  ; *2
+177+  6ABD 87               add  a, a                  ; *4
+178+  6ABE 87               add  a, a                  ; *8
+179+  6ABF 87               add  a, a                  ; *16
+180+  6AC0 87               add  a, a                  ; *32
+181+  6AC1 5F               ld   e, a
+182+  6AC2 16 00            ld   d, 0                  ; DE = offset del frame
+183+  6AC4 DD 19            add  ix, de                ; IX = puntatore al frame di EggSprite
+184+  6AC6
+185+  6AC6 ED 4B 18 6C      ld   bc, (EggPos)          ; C = EggX, B = EggY
+186+  6ACA CD 8B 5E         call DrawPixelSprite16x16  ; Disegna Egg 16x16
+187+  6ACD
+188+  6ACD DD E1            pop  ix
+189+  6ACF C9               ret
+190+  6AD0
+191+  6AD0              ; -------------------------------------------------------------------
+192+  6AD0              ; Cancella l'Egg alle vecchie coordinate pixel
+193+  6AD0              ; -------------------------------------------------------------------
+194+  6AD0              DeleteEggAtOldPos:
+195+  6AD0 ED 4B 1A 6C      ld   bc, (EggPosOld)       ; C = EggXOld, B = EggYOld
+196+  6AD4 CD D2 5E         call ErasePixelSprite16x16 ; Cancella Egg
+197+  6AD7 C9               ret
+198+  6AD8
+199+  6AD8              ; -------------------------------------------------------------------
+200+  6AD8              ; Muove il Robot in orizzontale sulla piattaforma centrale (pixel 64-176)
+201+  6AD8              ; -------------------------------------------------------------------
+202+  6AD8              MoveRobot:
+203+  6AD8 ED 4B 1C 6C      ld   bc, (RobotPos)   ; C = RobotX, B = RobotY
+204+  6ADC
+205+  6ADC 3A 2A 6C         ld   a, (robot_direction)
+206+  6ADF FE 01            cp   1                ; Sinistra?
+207+  6AE1 20 15            jr   nz, .move_right
+208+  6AE3
+209+  6AE3              .move_left:
+210+  6AE3 79               ld   a, c
+211+  6AE4 D6 02            sub  2                ; Muovi a sinistra di 2 pixel
+212+  6AE6 FE 40            cp   64               ; Limite sinistro (64)
+213+  6AE8 28 05            jr   z, .reverse_to_right
+214+  6AEA 38 03            jr   c, .reverse_to_right
+215+  6AEC 4F               ld   c, a
+216+  6AED 18 1C            jr   .save_x
+217+  6AEF
+218+  6AEF              .reverse_to_right:
+219+  6AEF 0E 40            ld   c, 64
+220+  6AF1 3E 02            ld   a, 2
+221+  6AF3 32 2A 6C         ld   (robot_direction), a
+222+  6AF6 18 13            jr   .save_x
+223+  6AF8
+224+  6AF8              .move_right:
+225+  6AF8 79               ld   a, c
+226+  6AF9 C6 02            add  a, 2                ; Muovi a destra di 2 pixel
+227+  6AFB FE B0            cp   176                 ; Limite destro (176)
+228+  6AFD 28 05            jr   z, .reverse_to_left
+229+  6AFF 30 03            jr   nc, .reverse_to_left
+230+  6B01 4F               ld   c, a
+231+  6B02 18 07            jr   .save_x
+232+  6B04
+233+  6B04              .reverse_to_left:
+234+  6B04 0E B0            ld   c, 176
+235+  6B06 3E 01            ld   a, 1
+236+  6B08 32 2A 6C         ld   (robot_direction), a
+237+  6B0B
+238+  6B0B              .save_x:
+239+  6B0B ED 43 1C 6C      ld   (RobotPos), bc
+240+  6B0F
+241+  6B0F              .animate:
+242+  6B0F                  ; Alterna lo stato di animazione (0, 1, 2, 3)
+243+  6B0F 3A 29 6C         ld   a, (robot_body_state)
+244+  6B12 3C               inc  a
+245+  6B13 FE 04            cp   4
+246+  6B15 20 02            jr   nz, .save_state
+247+  6B17 3E 00            ld   a, 0
+248+  6B19              .save_state:
+249+  6B19 32 29 6C         ld   (robot_body_state), a
+250+  6B1C C9               ret
+251+  6B1D
+252+  6B1D              ; -------------------------------------------------------------------
+253+  6B1D              ; Disegna il Robot a coordinate pixel
+254+  6B1D              ; -------------------------------------------------------------------
+255+  6B1D              PrintRobot:
+256+  6B1D DD E5            push ix
+257+  6B1F
+258+  6B1F                  ; Calcola il puntatore al frame corrente (robot_body_state * 32)
+259+  6B1F 3A 29 6C         ld   a, (robot_body_state) ; A = 0, 1, 2, 3
+260+  6B22 87               add  a, a                  ; *2
+261+  6B23 87               add  a, a                  ; *4
+262+  6B24 87               add  a, a                  ; *8
+263+  6B25 87               add  a, a                  ; *16
+264+  6B26 87               add  a, a                  ; *32
+265+  6B27 5F               ld   e, a
+266+  6B28 16 00            ld   d, 0                  ; DE = offset del frame
+267+  6B2A
+268+  6B2A DD 21 FA 64      ld   ix, RobotSprite
+269+  6B2E DD 19            add  ix, de                ; IX = puntatore al frame di RobotSprite
+270+  6B30
+271+  6B30 ED 4B 1C 6C      ld   bc, (RobotPos)        ; C = RobotX, B = RobotY
+272+  6B34 CD 8B 5E         call DrawPixelSprite16x16  ; Disegna Robot 16x16
+273+  6B37
+274+  6B37 DD E1            pop  ix
+275+  6B39 C9               ret
+276+  6B3A
+277+  6B3A              ; -------------------------------------------------------------------
+278+  6B3A              ; Cancella il Robot alle vecchie coordinate pixel
+279+  6B3A              ; -------------------------------------------------------------------
+280+  6B3A              DeleteRobotAtOldPos:
+281+  6B3A ED 4B 1E 6C      ld   bc, (RobotPosOld)     ; C = RobotXOld, B = RobotYOld
+282+  6B3E CD D2 5E         call ErasePixelSprite16x16 ; Cancella Robot
+283+  6B41 C9               ret
+284+  6B42
+# file closed: enemy.asm
+ 19   6B42                  ;include "level.asm"
+ 20   6B42
+ 21   6B42              start:
+ 22   6B42 CD AD 5D         call SetupIM2
+ 23   6B45
+ 24   6B45
+ 25   6B45
+ 26   6B45              Main:
+ 27   6B45                  ; Inizializza
+ 28   6B45 AF               xor  a
+ 29   6B46 32 20 6C         ld  (body_state), a
+ 30   6B49
+ 31   6B49 CD DB 5D         call CopyChars
+ 32   6B4C CD E7 5D         call DefineChars
+ 33   6B4F
+ 34   6B4F 3E 02            ld   a, $02
+ 35   6B51 CD 01 16         call OPENCHAN
+ 36   6B54 21 00 80         ld   hl, $8000
+ 37   6B57 22 7B 5C         ld   (UDG), hl
+ 38   6B5A
+ 39   6B5A 21 8D 5C         ld   hl, ATTR_P
+ 40   6B5D 36 07            ld   (hl), $07
+ 41   6B5F CD AF 0D         call CLS
+ 42   6B62 CD 1E 60         call DrawFloorDirect
+ 43   6B65 CD 52 60         call DrawPlatform
+ 44   6B68
+ 45   6B68 AF               xor  a
+ 46   6B69 D3 FE            out  ($fe), a
+ 47   6B6B 3A 48 5C         ld   a, (BORDCR)
+ 48   6B6E E6 C7            and  $c7
+ 49   6B70 F6 07            or   $07
+ 50   6B72 32 48 5C         ld   (BORDCR), a
+ 51   6B75
+ 52   6B75                  ; Inizializza nemico
+ 53   6B75 AF               xor  a
+ 54   6B76 32 23 6C         ld   (enemy_body_state), a
+ 55   6B79 3E 02            ld   a, 2              ; Inizia verso destra
+ 56   6B7B 32 24 6C         ld   (enemy_direction), a
+ 57   6B7E CD 2F 6A         call PrintEnemy
+ 58   6B81
+ 59   6B81                  ; Inizializza Egg
+ 60   6B81 AF               xor  a
+ 61   6B82 32 27 6C         ld   (egg_body_state), a
+ 62   6B85 3E 02            ld   a, 2              ; Inizia verso destra
+ 63   6B87 32 28 6C         ld   (egg_direction), a
+ 64   6B8A CD A6 6A         call PrintEgg
+ 65   6B8D
+ 66   6B8D                  ; Inizializza Robot
+ 67   6B8D AF               xor  a
+ 68   6B8E 32 29 6C         ld   (robot_body_state), a
+ 69   6B91 3E 02            ld   a, 2              ; Inizia verso destra
+ 70   6B93 32 2A 6C         ld   (robot_direction), a
+ 71   6B96 CD 1D 6B         call PrintRobot
+ 72   6B99
+ 73   6B99                  ;call DrawVerticalBorders
+ 74   6B99 CD EE 5E         call PrintPlayer
+ 75   6B9C
+ 76   6B9C              Main_loop:
+ 77   6B9C 76               halt
+ 78   6B9D 76               halt
+ 79   6B9E
+ 80   6B9E                  ; 1. Cancella i personaggi alle vecchie posizioni
+ 81   6B9E CD 41 5F         call DeleteCharAtOldPos
+ 82   6BA1 CD 59 6A         call DeleteEnemyAtOldPos
+ 83   6BA4 CD D0 6A         call DeleteEggAtOldPos
+ 84   6BA7 CD 3A 6B         call DeleteRobotAtOldPos
+ 85   6BAA
+ 86   6BAA CD C0 67         call CheckCtrl
+ 87   6BAD
+ 88   6BAD                  ; 2. Aggiorna le posizioni dei personaggi
+ 89   6BAD CD 7A 67         call MovePlayer
+ 90   6BB0 CD 1D 68         call ApplyGravity
+ 91   6BB3 CD EA 69         call MoveEnemy
+ 92   6BB6 CD 61 6A         call MoveEgg
+ 93   6BB9 CD D8 6A         call MoveRobot
+ 94   6BBC
+ 95   6BBC                  ; 3. Salva le nuove posizioni per la cancellazione al prossimo frame
+ 96   6BBC ED 4B 0E 6C      ld   bc, (PlayerPos)
+ 97   6BC0 ED 43 10 6C      ld   (PlayerPosOld), bc
+ 98   6BC4 ED 4B 14 6C      ld   bc, (EnemyPos)
+ 99   6BC8 ED 43 16 6C      ld   (EnemyPosOld), bc
+100   6BCC ED 4B 18 6C      ld   bc, (EggPos)
+101   6BD0 ED 43 1A 6C      ld   (EggPosOld), bc
+102   6BD4 ED 4B 1C 6C      ld   bc, (RobotPos)
+103   6BD8 ED 43 1E 6C      ld   (RobotPosOld), bc
+104   6BDC
+105   6BDC                  ; 4. Disegna i personaggi alle nuove posizioni
+106   6BDC CD EE 5E         call PrintPlayer
+107   6BDF CD 2F 6A         call PrintEnemy
+108   6BE2 CD A6 6A         call PrintEgg
+109   6BE5 CD 1D 6B         call PrintRobot
+110   6BE8 CD 52 60         call DrawPlatform
+111   6BEB
+112   6BEB                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
+113   6BEB CD FC 68         call CheckCollision
+114   6BEE 30 18            jr   nc, .no_collision
+115   6BF0
+116   6BF0                  ; Collisione attiva: disegna le raster bar nel bordo
+117   6BF0 3A 2F 6C         ld   a, (counter)
+118   6BF3 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+119   6BF5 06 1E            ld   b, 30             ; Numero di righe della barra raster
+120   6BF7              .raster_loop:
+121   6BF7 D3 FE            out  ($fe), a
+122   6BF9 3C               inc  a
+123   6BFA E6 07            and  7
+124   6BFC 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+125   6BFE              .delay:
+126   6BFE 0D               dec  c
+127   6BFF 20 FD            jr   nz, .delay
+128   6C01 10 F4            djnz .raster_loop
+129   6C03
+130   6C03                  ; Ripristina il bordo a nero dopo il disegno delle barre
+131   6C03 AF               xor  a
+132   6C04 D3 FE            out  ($fe), a
+133   6C06 18 03            jr   .no_collision_change
+134   6C08
+135   6C08              .no_collision:
+136   6C08                  ; Nessuna collisione: mantieni il bordo nero
+137   6C08 AF               xor  a
+138   6C09 D3 FE            out  ($fe), a
+139   6C0B
+140   6C0B              .no_collision_change:
+141   6C0B C3 9C 6B         jp   Main_loop
+142   6C0E
+143   6C0E              ; -------------------------------------------------------------------
+144   6C0E              ; Variabili
+145   6C0E              ; -------------------------------------------------------------------
+146   6C0E              ; Posizioni
+147   6C0E 88 80        PlayerPos:      db 136, 128
+148   6C10 88 80        PlayerPosOld:   db 136, 128
+149   6C12 11 11        bodyPos:        dw $1111
+150   6C14
+151   6C14              ; Posizioni nemico
+152   6C14 28 80        EnemyPos:       db 40, 128
+153   6C16 28 80        EnemyPosOld:    db 40, 128
+154   6C18
+155   6C18              ; Posizioni Egg
+156   6C18 A0 50        EggPos:         db 160, 80
+157   6C1A A0 50        EggPosOld:      db 160, 80
+158   6C1C
+159   6C1C              ; Posizioni Robot
+160   6C1C 40 68        RobotPos:       db 64, 104
+161   6C1E 40 68        RobotPosOld:    db 64, 104
+162   6C20
+163   6C20              ; Stato player
+164   6C20 00           body_state:     db $00
+165   6C21 00           direction:      db $00
+166   6C22 00           flags:          db $00
+167   6C23
+168   6C23              ; Stato nemico
+169   6C23 00           enemy_body_state: db $00
+170   6C24 00           enemy_direction:  db $00
+171   6C25 00           collision_active: db $00
+172   6C26 00           sprite_shift:     db $00
+173   6C27
+174   6C27              ; Stato Egg
+175   6C27 00           egg_body_state:   db $00
+176   6C28 00           egg_direction:    db $00
+177   6C29
+178   6C29              ; Stato Robot
+179   6C29 00           robot_body_state: db $00
+180   6C2A 00           robot_direction:  db $00
+181   6C2B
+182   6C2B              ; Fisica
+183   6C2B 00           velocity_y:     db $00
+184   6C2C 01           on_ground:      db $01
+185   6C2D 00           jump_pressed:   db $00
+186   6C2E 00           jump_prev:      db $00
+187   6C2F
+188   6C2F              ; Buffer e contatori
+189   6C2F 00 00        counter:        dw 0
+190   6C31 00          > db 0
+190   6C32 00          > db 0
+190   6C33 00          > db 0
+190   6C34 00          > db 0
+190   6C35 00          > db 0
+190   6C36 00          > db 0
+190   6C37 00          > db 0
+190   6C38 00          > db 0
+190   6C39 00          > db 0
+190   6C3A 00          > db 0
+190   6C3B 00          > db 0
+190   6C3C 00          > db 0
+190   6C3D 00          > db 0
+190   6C3E 00          > db 0
+190   6C3F 00          > db 0
+190   6C40 00          > db 0
+190   6C41 00          > db 0
+190   6C42 00          > db 0
+190   6C43 00          > db 0
+190   6C44 00          > db 0
+190   6C45 00          > db 0
+190   6C46 00          > db 0
+190   6C47 00          > db 0
+190   6C48 00          > db 0
+190   6C49 00          > db 0
+190   6C4A 00          > db 0
+190   6C4B 00          > db 0
+190   6C4C 00          > db 0
+190   6C4D 00          > db 0
+190   6C4E 00          > db 0
+190   6C4F 00          > db 0
+190   6C50 00          > db 0
+190   6C51 00          > db 0
+190   6C52 00          > db 0
+190   6C53 00          > db 0
+190   6C54 00          > db 0
+190   6C55 00          > db 0
+190   6C56 00          > db 0
+190   6C57 00          > db 0
+190   6C58 00          > db 0
+190   6C59 00          > db 0
+190   6C5A 00          > db 0
+190   6C5B 00          > db 0
+190   6C5C 00          > db 0
+190   6C5D 00          > db 0
+190   6C5E 00          > db 0
+190   6C5F 00          > db 0
+190   6C60 00          > db 0
+190   6C61 00          > db 0
+190   6C62 00          > db 0
+190   6C63 00          > db 0
+190   6C64 00          > db 0
+190   6C65 00          > db 0
+190   6C66 00          > db 0
+190   6C67 00          > db 0
+190   6C68 00          > db 0
+190   6C69 00          > db 0
+190   6C6A 00          > db 0
+190   6C6B 00          > db 0
+190   6C6C 00          > db 0
+190   6C6D 00          > db 0
+190   6C6E 00          > db 0
+190   6C6F 00          > db 0
+190   6C70 00          > db 0
+190   6C71 00          > db 0
+190   6C72 00          > db 0
+190   6C73 00          > db 0
+190   6C74 00          > db 0
+190   6C75 00          > db 0
+190   6C76 00          > db 0
+190   6C77 00          > db 0
+190   6C78 00          > db 0
+190   6C79 00          > db 0
+190   6C7A 00          > db 0
+190   6C7B 00          > db 0
+190   6C7C 00          > db 0
+190   6C7D 00          > db 0
+190   6C7E 00          > db 0
+190   6C7F 00          > db 0
+190   6C80 00          > db 0
+190   6C81 00          > db 0
+190   6C82 00          > db 0
+190   6C83 00          > db 0
+190   6C84 00          > db 0
+190   6C85 00          > db 0
+190   6C86 00          > db 0
+190   6C87 00          > db 0
+190   6C88 00          > db 0
+190   6C89 00          > db 0
+190   6C8A 00          > db 0
+190   6C8B 00          > db 0
+190   6C8C 00          > db 0
+190   6C8D 00          > db 0
+190   6C8E 00          > db 0
+190   6C8F 00          > db 0
+190   6C90 00          > db 0
+190   6C91 00          > db 0
+190   6C92 00          > db 0
+190   6C93 00          > db 0
+190   6C94 00          > db 0
+190   6C95 00          > db 0
+190   6C96 00          > db 0
+190   6C97 00          > db 0
+190   6C98 00          > db 0
+190   6C99 00          > db 0
+190   6C9A 00          > db 0
+190   6C9B 00          > db 0
+190   6C9C 00          > db 0
+190   6C9D 00          > db 0
+190   6C9E 00          > db 0
+190   6C9F 00          > db 0
+190   6CA0 00          > db 0
+190   6CA1 00          > db 0
+190   6CA2 00          > db 0
+190   6CA3 00          > db 0
+190   6CA4 00          > db 0
+190   6CA5 00          > db 0
+190   6CA6 00          > db 0
+190   6CA7 00          > db 0
+190   6CA8 00          > db 0
+190   6CA9 00          > db 0
+190   6CAA 00          > db 0
+190   6CAB 00          > db 0
+190   6CAC 00          > db 0
+190   6CAD 00          > db 0
+190   6CAE 00          > db 0
+190   6CAF 00          > db 0
+190   6CB0 00          > db 0
+190   6CB1 00          > db 0
+190   6CB2 00          > db 0
+190   6CB3 00          > db 0
+190   6CB4 00          > db 0
+190   6CB5 00          > db 0
+190   6CB6 00          > db 0
+190   6CB7 00          > db 0
+190   6CB8 00          > db 0
+190   6CB9 00          > db 0
+190   6CBA 00          > db 0
+190   6CBB 00          > db 0
+190   6CBC 00          > db 0
+190   6CBD 00          > db 0
+190   6CBE 00          > db 0
+190   6CBF 00          > db 0
+190   6CC0 00          > db 0
+190   6CC1 00          > db 0
+190   6CC2 00          > db 0
+190   6CC3 00          > db 0
+190   6CC4 00          > db 0
+190   6CC5 00          > db 0
+190   6CC6 00          > db 0
+190   6CC7 00          > db 0
+190   6CC8 00          > db 0
+190   6CC9 00          > db 0
+190   6CCA 00          > db 0
+190   6CCB 00          > db 0
+190   6CCC 00          > db 0
+190   6CCD 00          > db 0
+190   6CCE 00          > db 0
+190   6CCF 00          > db 0
+190   6CD0 00          > db 0
+190   6CD1 00          > db 0
+190   6CD2 00          > db 0
+190   6CD3 00          > db 0
+190   6CD4 00          > db 0
+190   6CD5 00          > db 0
+190   6CD6 00          > db 0
+190   6CD7 00          > db 0
+190   6CD8 00          > db 0
+190   6CD9 00          > db 0
+190   6CDA 00          > db 0
+190   6CDB 00          > db 0
+190   6CDC 00          > db 0
+190   6CDD 00          > db 0
+190   6CDE 00          > db 0
+190   6CDF 00          > db 0
+190   6CE0 00          > db 0
+190   6CE1 00          > db 0
+190   6CE2 00          > db 0
+190   6CE3 00          > db 0
+190   6CE4 00          > db 0
+190   6CE5 00          > db 0
+190   6CE6 00          > db 0
+190   6CE7 00          > db 0
+190   6CE8 00          > db 0
+190   6CE9 00          > db 0
+190   6CEA 00          > db 0
+190   6CEB 00          > db 0
+190   6CEC 00          > db 0
+190   6CED 00          > db 0
+190   6CEE 00          > db 0
+190   6CEF 00          > db 0
+190   6CF0 00          > db 0
+190   6CF1 00          > db 0
+190   6CF2 00          > db 0
+190   6CF3 00          > db 0
+190   6CF4 00          > db 0
+190   6CF5 00          > db 0
+190   6CF6 00          > db 0
+190   6CF7 00          > db 0
+190   6CF8 00          > db 0
+190   6CF9 00          > db 0
+190   6CFA 00          > db 0
+190   6CFB 00          > db 0
+190   6CFC 00          > db 0
+190   6CFD 00          > db 0
+190   6CFE 00          > db 0
+190   6CFF 00          > db 0
+190   6D00 00          > db 0
+190   6D01 00          > db 0
+190   6D02 00          > db 0
+190   6D03 00          > db 0
+190   6D04 00          > db 0
+190   6D05 00          > db 0
+190   6D06 00          > db 0
+190   6D07 00          > db 0
+190   6D08 00          > db 0
+190   6D09 00          > db 0
+190   6D0A 00          > db 0
+190   6D0B 00          > db 0
+190   6D0C 00          > db 0
+190   6D0D 00          > db 0
+190   6D0E 00          > db 0
+190   6D0F 00          > db 0
+190   6D10 00          > db 0
+190   6D11 00          > db 0
+190   6D12 00          > db 0
+190   6D13 00          > db 0
+190   6D14 00          > db 0
+190   6D15 00          > db 0
+190   6D16 00          > db 0
+190   6D17 00          > db 0
+190   6D18 00          > db 0
+190   6D19 00          > db 0
+190   6D1A 00          > db 0
+190   6D1B 00          > db 0
+190   6D1C 00          > db 0
+190   6D1D 00          > db 0
+190   6D1E 00          > db 0
+190   6D1F 00          > db 0
+190   6D20 00          > db 0
+190   6D21 00          > db 0
+190   6D22 00          > db 0
+190   6D23 00          > db 0
+190   6D24 00          > db 0
+190   6D25 00          > db 0
+190   6D26 00          > db 0
+190   6D27 00          > db 0
+190   6D28 00          > db 0
+190   6D29 00          > db 0
+190   6D2A 00          > db 0
+190   6D2B 00          > db 0
+190   6D2C 00          > db 0
+190   6D2D 00          > db 0
+190   6D2E 00          > db 0
+190   6D2F 00          > db 0
+190   6D30 00          > db 0
+191   6D31
+192   6D31                  SAVESNA "jet set willy.sna", start
+# file closed: jet set willy.asm

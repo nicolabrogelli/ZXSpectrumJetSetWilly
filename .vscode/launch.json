@@ -1,0 +1,68 @@
+{
+    "rootFolder": "${workspaceFolder}",
+      "version": "0.2.0",
+      "configurations": [
+        {
+          "type": "dezog",
+          "rootFolder": "${workspaceFolder}",
+          "request": "launch",
+          "name": "Internal Emulator",
+          "remoteType": "zsim",
+          "zsim": {
+                "preset": "spectrum",
+                "memoryModel": "ZX48K",
+          },
+          "startAutomatically": true,
+          "preLaunchTask": "buildZXSpectrum",
+          "load":"${workspaceFolder}/jet set willy.sna",
+          "sjasmplus": [
+          {
+            "path": "${workspaceFolder}/jet set willy.sld"
+          }],
+        },
+        {
+          "type": "dezog",
+          "request": "launch",
+          "name": "ZEsarUX",
+          "remoteType": "zrcp",
+          "sjasmplus": [
+              {
+                  "path": "${workspaceFolder}/jet set willy.sld"
+              }
+          ],
+          "history": {
+              "reverseDebugInstructionCount": 1000000,
+              "spotCount": 10,
+          },
+          "startAutomatically": false,
+          "commandsAfterLaunch": [
+          ],
+          "rootFolder": "${workspaceFolder}",
+          "load": "${workspaceFolder}/jet set willy.sna",
+          "smallValuesMaximum": 513,
+          "tmpDir": ".tmp"
+      },        
+      {
+        "type": "dezog",
+        "request": "launch",
+        "name": "CSpect",
+        "remoteType": "cspect",
+        "sjasmplus": [
+            {
+                "path": "${workspaceFolder}/jet set willy.sld"
+            }
+        ],
+        "history": {
+            "reverseDebugInstructionCount": 1000000,
+            "spotCount": 10
+        },
+        "startAutomatically": false,
+        "commandsAfterLaunch": [
+        ],
+        "rootFolder": "${workspaceFolder}",
+        "load": "${workspaceFolder}/jet set willy.sna",
+        "smallValuesMaximum": 513,
+        "tmpDir": ".tmp"
+    }     
+      ]
+    }
