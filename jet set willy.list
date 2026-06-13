@@ -55,30 +55,54 @@
  42+  5DAD              YELLOW: EQU $06
  43+  5DAD              WHITE:  EQU $07
  44+  5DAD
- 45+  5DAD              ; Interrupt
- 46+  5DAD              IM2_TABLE   = $FE00
- 47+  5DAD              IM2_VECTOR  = $FDFD
- 48+  5DAD              SCREEN_LINE = $4860
- 49+  5DAD
- 50+  5DAD              ; Fisica
- 51+  5DAD              MAX_FALL_SPEED: EQU 12
- 52+  5DAD              JUMP_STRENGTH:  EQU 12
- 53+  5DAD              GRAVITY:        EQU 2
- 54+  5DAD              GROUND_LEVEL:   EQU 128
- 55+  5DAD              PLATFORM_LEVEL: EQU 104
- 56+  5DAD              PLATFORM_MIN_X: EQU 57
- 57+  5DAD              PLATFORM_MAX_X: EQU 192
- 58+  5DAD              PLATFORM2_LEVEL: EQU 80
- 59+  5DAD              PLATFORM2_MIN_X: EQU 153
- 60+  5DAD              PLATFORM2_MAX_X: EQU 232
- 61+  5DAD              PLATFORM3_LEVEL: EQU 80
- 62+  5DAD              PLATFORM3_MIN_X: EQU 24
- 63+  5DAD              PLATFORM3_MAX_X: EQU 104
- 64+  5DAD
+ 45+  5DAD              ; Parametri Geometrici e Visivi (Piattaforme e Pavimento)
+ 46+  5DAD              FLOOR_Y:             EQU 144
+ 47+  5DAD              FLOOR_CHAR_ROW:      EQU 18
+ 48+  5DAD
+ 49+  5DAD              PLATFORM_Y:          EQU 120
+ 50+  5DAD              PLATFORM_COL:        EQU 8
+ 51+  5DAD              PLATFORM_WIDTH_COLS: EQU 16
+ 52+  5DAD
+ 53+  5DAD              PLATFORM2_Y:          EQU 96
+ 54+  5DAD              PLATFORM2_COL:        EQU 20
+ 55+  5DAD              PLATFORM2_WIDTH_COLS: EQU 10
+ 56+  5DAD
+ 57+  5DAD              PLATFORM3_Y:          EQU 96
+ 58+  5DAD              PLATFORM3_COL:        EQU 3
+ 59+  5DAD              PLATFORM3_WIDTH_COLS: EQU 10
+ 60+  5DAD
+ 61+  5DAD              ; Interrupt
+ 62+  5DAD              IM2_TABLE   = $FE00
+ 63+  5DAD              IM2_VECTOR  = $FDFD
+ 64+  5DAD              SCREEN_LINE = $4860
  65+  5DAD
- 66+  5DAD              ; Aggiungi nelle costanti
- 67+  5DAD              VERTICAL_BORDER: EQU $49  ; Codice del carattere per i bordi verticali ($49 = 73, lettera 'I')
- 68+  5DAD
+ 66+  5DAD              ; Fisica (Derivata dai parametri geometrici)
+ 67+  5DAD              MAX_FALL_SPEED: EQU 12
+ 68+  5DAD              JUMP_STRENGTH:  EQU 12
+ 69+  5DAD              GRAVITY:        EQU 2
+ 70+  5DAD
+ 71+  5DAD              GROUND_LEVEL:    EQU (FLOOR_Y - 16)
+ 72+  5DAD
+ 73+  5DAD              PLATFORM_LEVEL:  EQU (PLATFORM_Y - 16)
+ 74+  5DAD              PLATFORM_MIN_X:  EQU (PLATFORM_COL * 8 - 7)
+ 75+  5DAD              PLATFORM_MAX_X:  EQU ((PLATFORM_COL + PLATFORM_WIDTH_COLS) * 8)
+ 76+  5DAD
+ 77+  5DAD              PLATFORM2_LEVEL: EQU (PLATFORM2_Y - 16)
+ 78+  5DAD              PLATFORM2_MIN_X: EQU (PLATFORM2_COL * 8 - 7)
+ 79+  5DAD              PLATFORM2_MAX_X: EQU ((PLATFORM2_COL + PLATFORM2_WIDTH_COLS) * 8)
+ 80+  5DAD
+ 81+  5DAD              PLATFORM3_LEVEL: EQU (PLATFORM3_Y - 16)
+ 82+  5DAD              PLATFORM3_MIN_X: EQU (PLATFORM3_COL * 8 - 7)
+ 83+  5DAD              PLATFORM3_MAX_X: EQU ((PLATFORM3_COL + PLATFORM3_WIDTH_COLS) * 8)
+ 84+  5DAD
+ 85+  5DAD              ; Limiti schermo del Player
+ 86+  5DAD              PLAYER_MIN_X:    EQU 8
+ 87+  5DAD              PLAYER_MAX_X:    EQU 240
+ 88+  5DAD
+ 89+  5DAD              ; Aggiungi nelle costanti
+ 90+  5DAD              VERTICAL_BORDER: EQU $49  ; Codice del carattere per i bordi verticali ($49 = 73, lettera 'I')
+ 91+  5DAD
+ 92+  5DAD
 # file closed: constants.asm
  12   5DAD                  include "interrupts.asm"
 # file opened: interrupts.asm
@@ -315,57 +339,57 @@
 179+  5E73 D5               push de
 180+  5E74 47               ld   b, a              ; B = X byte in pixel
 181+  5E75
-182+  5E75                  ; Pavimento: riga carattere 18, Y = 144..150, tutte le colonne
+182+  5E75                  ; Pavimento: riga carattere FLOOR_CHAR_ROW, Y = FLOOR_Y..FLOOR_Y+6, tutte le colonne
 183+  5E75 7A               ld   a, d
-184+  5E76 FE 90            cp   144
+184+  5E76 FE 90            cp   FLOOR_Y
 185+  5E78 38 08            jr   c, .check_platform1
-186+  5E7A FE 97            cp   151
+186+  5E7A FE 97            cp   FLOOR_Y + 7
 187+  5E7C 30 04            jr   nc, .check_platform1
-188+  5E7E D6 90            sub  144
+188+  5E7E D6 90            sub  FLOOR_Y
 189+  5E80 18 35            jr   .load_tile_byte
 190+  5E82
 191+  5E82              .check_platform1:
-192+  5E82                  ; Piattaforma 1: riga carattere 15, Y = 120..126, colonne 8..23
+192+  5E82                  ; Piattaforma 1: riga carattere (PLATFORM_Y/8), Y = PLATFORM_Y..PLATFORM_Y+6, colonne PLATFORM_COL..PLATFORM_COL+PLATFORM_WIDTH_COLS-1
 193+  5E82 7A               ld   a, d
-194+  5E83 FE 78            cp   120
+194+  5E83 FE 78            cp   PLATFORM_Y
 195+  5E85 38 12            jr   c, .check_platform2
-196+  5E87 FE 7F            cp   127
+196+  5E87 FE 7F            cp   PLATFORM_Y + 7
 197+  5E89 30 0E            jr   nc, .check_platform2
 198+  5E8B 78               ld   a, b
-199+  5E8C FE 40            cp   64
+199+  5E8C FE 40            cp   PLATFORM_COL * 8
 200+  5E8E 38 32            jr   c, .blank
-201+  5E90 FE C0            cp   192
+201+  5E90 FE C0            cp   (PLATFORM_COL + PLATFORM_WIDTH_COLS) * 8
 202+  5E92 30 2E            jr   nc, .blank
 203+  5E94 7A               ld   a, d
-204+  5E95 D6 78            sub  120
+204+  5E95 D6 78            sub  PLATFORM_Y
 205+  5E97 18 1E            jr   .load_tile_byte
 206+  5E99
 207+  5E99              .check_platform2:
-208+  5E99                  ; Piattaforme alte: riga carattere 12, Y = 96..102
+208+  5E99                  ; Piattaforme alte: riga carattere 12, Y = PLATFORM2_Y..PLATFORM2_Y+6
 209+  5E99 7A               ld   a, d
-210+  5E9A FE 60            cp   96
+210+  5E9A FE 60            cp   PLATFORM2_Y
 211+  5E9C 38 24            jr   c, .blank
-212+  5E9E FE 67            cp   103
+212+  5E9E FE 67            cp   PLATFORM2_Y + 7
 213+  5EA0 30 20            jr   nc, .blank
 214+  5EA2
-215+  5EA2                  ; Piattaforma 2: colonne 20..29
+215+  5EA2                  ; Piattaforma 2: colonne PLATFORM2_COL..PLATFORM2_COL+PLATFORM2_WIDTH_COLS-1
 216+  5EA2 78               ld   a, b
-217+  5EA3 FE A0            cp   160
+217+  5EA3 FE A0            cp   PLATFORM2_COL * 8
 218+  5EA5 38 04            jr   c, .check_platform3
-219+  5EA7 FE F0            cp   240
+219+  5EA7 FE F0            cp   (PLATFORM2_COL + PLATFORM2_WIDTH_COLS) * 8
 220+  5EA9 38 09            jr   c, .platform_high
 221+  5EAB
 222+  5EAB              .check_platform3:
-223+  5EAB                  ; Piattaforma 3 sinistra: colonne 3..12
+223+  5EAB                  ; Piattaforma 3 sinistra: colonne PLATFORM3_COL..PLATFORM3_COL+PLATFORM3_WIDTH_COLS-1
 224+  5EAB 78               ld   a, b
-225+  5EAC FE 18            cp   24
+225+  5EAC FE 18            cp   PLATFORM3_COL * 8
 226+  5EAE 38 12            jr   c, .blank
-227+  5EB0 FE 68            cp   104
+227+  5EB0 FE 68            cp   (PLATFORM3_COL + PLATFORM3_WIDTH_COLS) * 8
 228+  5EB2 30 0E            jr   nc, .blank
 229+  5EB4
 230+  5EB4              .platform_high:
 231+  5EB4 7A               ld   a, d
-232+  5EB5 D6 60            sub  96
+232+  5EB5 D6 60            sub  PLATFORM2_Y
 233+  5EB7
 234+  5EB7              .load_tile_byte:
 235+  5EB7 5F               ld   e, a
@@ -801,15 +825,15 @@
 665+  6098 E5               push hl
 666+  6099 DD E5            push ix
 667+  609B
-668+  609B                  ; Disegniamo le 8 scanline della riga 18
+668+  609B                  ; Disegniamo le 8 scanline della riga FLOOR_CHAR_ROW
 669+  609B DD 21 96 61      ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento (9° carattere)
 670+  609F 16 00            ld   d, 0              ; D = offset scanline (0..6)
 671+  60A1
 672+  60A1              .scanline_loop:
-673+  60A1 3E 50            ld   a, $50            ; Base del terzo 2 per scanline 0, riga 18
-674+  60A3 82               add  a, d              ; A = $50 + scanline offset (D)
-675+  60A4 67               ld   h, a              ; HL high byte = $50 + D
-676+  60A5 2E 40            ld   l, $40            ; HL low byte = $40 (Colonna 0 per la riga 18)
+673+  60A1 3E 50            ld   a, $40 + (FLOOR_CHAR_ROW & $18) ; Base del terzo per scanline 0, riga FLOOR_CHAR_ROW
+674+  60A3 82               add  a, d              ; A = base + scanline offset (D)
+675+  60A4 67               ld   h, a              ; HL high byte = base + D
+676+  60A5 2E 40            ld   l, ((FLOOR_CHAR_ROW & 7) * 32) + 0 ; HL low byte
 677+  60A7
 678+  60A7 DD 5E 00         ld   e, (ix+0)         ; E = byte grafico per questa scanline
 679+  60AA 0E 20            ld   c, 32             ; 32 colonne
@@ -826,8 +850,8 @@
 690+  60B5 FE 07            cp   7
 691+  60B7 20 E8            jr   nz, .scanline_loop
 692+  60B9
-693+  60B9                  ; Imposta gli attributi di colore per la riga 18
-694+  60B9 21 40 5A         ld   hl, $5800 + (18 * 32)
+693+  60B9                  ; Imposta gli attributi di colore per la riga FLOOR_CHAR_ROW
+694+  60B9 21 40 5A         ld   hl, $5800 + (FLOOR_CHAR_ROW * 32)
 695+  60BC 06 20            ld   b, 32
 696+  60BE              .attr_loop:
 697+  60BE 36 02            ld   (hl), RED        ; Colore del pavimento = RED
@@ -841,601 +865,597 @@
 705+  60C8 C1               pop  bc
 706+  60C9 C9               ret
 707+  60CA
-708+  60CA              ; -------------------------------------------------------------------
-709+  60CA              ; Disegna la piattaforma a riga 15 (Y = 120), colonne da 8 a 23 (CYAN)
-710+  60CA              ; e le piattaforme alte a riga 12 (Y = 96), colonne 20..29 e 3..12 (GREEN)
-711+  60CA              ; -------------------------------------------------------------------
-712+  60CA              DrawPlatform:
-713+  60CA C5               push bc
-714+  60CB D5               push de
-715+  60CC E5               push hl
-716+  60CD DD E5            push ix
-717+  60CF
-718+  60CF                  ; --- PIATTAFORMA 1 ---
-719+  60CF                  ; Disegniamo le 7 scanline della riga 15
-720+  60CF DD 21 96 61      ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento (9° carattere)
-721+  60D3 16 00            ld   d, 0              ; D = offset scanline (0..6)
-722+  60D5
-723+  60D5              .scanline_loop1:
-724+  60D5 3E 48            ld   a, $48            ; Base del secondo terzo (Third 1) per scanline 0, riga 15
-725+  60D7 82               add  a, d              ; A = $48 + scanline offset (D)
-726+  60D8 67               ld   h, a              ; HL high byte = $48 + D
-727+  60D9 2E E8            ld   l, $E0 + 8        ; HL low byte = $E0 (riga 15) + 8 (colonna 8)
-728+  60DB
-729+  60DB DD 5E 00         ld   e, (ix+0)         ; E = byte grafico per questa scanline
-730+  60DE 0E 10            ld   c, 16             ; 16 colonne (da colonna 8 a 23 incluse)
-731+  60E0
-732+  60E0              .col_loop1:
-733+  60E0 7E               ld   a, (hl)           ; Leggi byte dallo schermo
-734+  60E1 B3               or   e                 ; Combina con la grafica della piattaforma (OR)
-735+  60E2 77               ld   (hl), a           ; Scrivi il byte combinato sullo schermo
-736+  60E3 2C               inc  l                 ; Vai alla colonna successiva
-737+  60E4 0D               dec  c
-738+  60E5 20 F9            jr   nz, .col_loop1
-739+  60E7
-740+  60E7 DD 23            inc  ix                ; Prossimo byte grafico
-741+  60E9 14               inc  d                 ; Prossima scanline
-742+  60EA 7A               ld   a, d
-743+  60EB FE 07            cp   7
-744+  60ED 20 E6            jr   nz, .scanline_loop1
-745+  60EF
-746+  60EF                  ; Imposta gli attributi di colore per la riga 15, colonne 8..23
-747+  60EF 21 E8 59         ld   hl, $5800 + (15 * 32) + 8
-748+  60F2 06 10            ld   b, 16
-749+  60F4              .attr_loop1:
-750+  60F4 36 05            ld   (hl), CYAN        ; Colore della piattaforma = CYAN
-751+  60F6 23               inc  hl
-752+  60F7 05               dec  b
-753+  60F8 20 FA            jr   nz, .attr_loop1
-754+  60FA
-755+  60FA                  ; --- PIATTAFORMA 2 ---
-756+  60FA                  ; Disegniamo le 7 scanline della riga 12
-757+  60FA DD 21 96 61      ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento
-758+  60FE 16 00            ld   d, 0              ; D = offset scanline (0..6)
-759+  6100
-760+  6100              .scanline_loop2:
-761+  6100 3E 48            ld   a, $48            ; Base del secondo terzo (Third 1) per scanline 0, riga 12
-762+  6102 82               add  a, d              ; A = $48 + scanline offset (D)
-763+  6103 67               ld   h, a              ; HL high byte = $48 + D
-764+  6104 2E 94            ld   l, $80 + 20       ; HL low byte = $80 (riga 12) + 20 (colonna 20)
-765+  6106
-766+  6106 DD 5E 00         ld   e, (ix+0)         ; E = byte grafico per questa scanline
-767+  6109 0E 0A            ld   c, 10             ; 10 colonne (da colonna 20 a 29 incluse)
-768+  610B
-769+  610B              .col_loop2:
-770+  610B 7E               ld   a, (hl)           ; Leggi byte dallo schermo
-771+  610C B3               or   e                 ; Combina con la grafica (OR)
-772+  610D 77               ld   (hl), a           ; Scrivi il byte combinato
-773+  610E 2C               inc  l                 ; Vai alla colonna successiva
-774+  610F 0D               dec  c
-775+  6110 20 F9            jr   nz, .col_loop2
-776+  6112
-777+  6112 DD 23            inc  ix                ; Prossimo byte grafico
-778+  6114 14               inc  d                 ; Prossima scanline
-779+  6115 7A               ld   a, d
-780+  6116 FE 07            cp   7
-781+  6118 20 E6            jr   nz, .scanline_loop2
-782+  611A
-783+  611A                  ; Imposta gli attributi di colore per la riga 12, colonne 20..29
-784+  611A 21 94 59         ld   hl, $5800 + (12 * 32) + 20
-785+  611D 06 0A            ld   b, 10
-786+  611F              .attr_loop2:
-787+  611F 36 04            ld   (hl), GREEN       ; Colore della piattaforma 2 = GREEN
-788+  6121 23               inc  hl
-789+  6122 05               dec  b
-790+  6123 20 FA            jr   nz, .attr_loop2
-791+  6125
-792+  6125                  ; --- PIATTAFORMA 3 SINISTRA ---
-793+  6125                  ; Disegniamo le 7 scanline della riga 12
-794+  6125 DD 21 96 61      ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento
-795+  6129 16 00            ld   d, 0              ; D = offset scanline (0..6)
-796+  612B
-797+  612B              .scanline_loop3:
-798+  612B 3E 48            ld   a, $48            ; Base del secondo terzo (Third 1) per scanline 0, riga 12
-799+  612D 82               add  a, d              ; A = $48 + scanline offset (D)
-800+  612E 67               ld   h, a              ; HL high byte = $48 + D
-801+  612F 2E 83            ld   l, $80 + 3        ; HL low byte = $80 (riga 12) + 3 (colonna 3)
-802+  6131
-803+  6131 DD 5E 00         ld   e, (ix+0)         ; E = byte grafico per questa scanline
-804+  6134 0E 0A            ld   c, 10             ; 10 colonne (da colonna 3 a 12 incluse)
-805+  6136
-806+  6136              .col_loop3:
-807+  6136 7E               ld   a, (hl)           ; Leggi byte dallo schermo
-808+  6137 B3               or   e                 ; Combina con la grafica
-809+  6138 77               ld   (hl), a           ; Scrivi il byte combinato
-810+  6139 2C               inc  l                 ; Vai alla colonna successiva
-811+  613A 0D               dec  c
-812+  613B 20 F9            jr   nz, .col_loop3
-813+  613D
-814+  613D DD 23            inc  ix                ; Prossimo byte grafico
-815+  613F 14               inc  d                 ; Prossima scanline
-816+  6140 7A               ld   a, d
-817+  6141 FE 07            cp   7
-818+  6143 20 E6            jr   nz, .scanline_loop3
-819+  6145
-820+  6145                  ; Imposta gli attributi di colore per la riga 12, colonne 3..12
-821+  6145 21 83 59         ld   hl, $5800 + (12 * 32) + 3
-822+  6148 06 0A            ld   b, 10
-823+  614A              .attr_loop3:
-824+  614A 36 04            ld   (hl), GREEN       ; Colore della piattaforma 3 = GREEN
-825+  614C 23               inc  hl
-826+  614D 05               dec  b
-827+  614E 20 FA            jr   nz, .attr_loop3
-828+  6150
-829+  6150 DD E1            pop  ix
-830+  6152 E1               pop  hl
-831+  6153 D1               pop  de
-832+  6154 C1               pop  bc
-833+  6155 C9               ret
-834+  6156
-835+  6156              ; -------------------------------------------------------------------
-836+  6156              ; Dati grafici (9 caratteri)
-837+  6156              ; -------------------------------------------------------------------
-838+  6156              TilesDef:
-839+  6156                  ; 8 caratteri per il player
-840+  6156 06 3E 7E 34      db %00000110, %00111110, %01111110, %00110100, %00111110, %00111100, %00011000, %00111100
-840+  615A 3E 3C 18 3C
-841+  615E 7E 7E F7 FB      db %01111110, %01111110, %11110111, %11111011, %00111100, %01110110, %01101110, %01110111
-841+  6162 3C 76 6E 77
-842+  6166 6E 6E 6E 76      db %01101110, %01101110, %01101110, %01110110, %00111100, %00011000, %00011000, %00011100
-842+  616A 3C 18 18 1C
-843+  616E 7E 7E F7 FB      db %01111110, %01111110, %11110111, %11111011, %00111100, %11101101, %11000111, %11100110
-843+  6172 3C ED C7 E6
-844+  6176 60 7C 7E 2C      db %01100000, %01111100, %01111110, %00101100, %01111100, %00111100, %00011000, %00111100
-844+  617A 7C 3C 18 3C
-845+  617E 7E 7E EF DF      db %01111110, %01111110, %11101111, %11011111, %00111100, %01101110, %01110110, %11101110
-845+  6182 3C 6E 76 EE
-846+  6186 76 76 76 6E      db %01110110, %01110110, %01110110, %01101110, %00111100, %00011000, %00011000, %00111000
-846+  618A 3C 18 18 38
-847+  618E 7E 7E EF DF      db %01111110, %01111110, %11101111, %11011111, %00111100, %10110111, %11100011, %01100111
-847+  6192 3C B7 E3 67
-848+  6196
-849+  6196                  ; 9° carattere per i bordi verticali
-850+  6196 FF 88 FF 22      db %11111111, %10001000, %11111111, %00100010, %11111111, %10001000, %11111111, %00100100
-850+  619A FF 88 FF 24
-851+  619E
-852+  619E              LamettaSpriteRight: ; appears in Top Landing, Tree Root and West Bedroom.
-853+  619E 00 00 00 00      db 0,0,0,0,0,0,127,254,64,2,255,255,222,123,192,3
-853+  61A2 00 00 7F FE
-853+  61A6 40 02 FF FF
-853+  61AA DE 7B C0 03
-854+  61AE C0 03 DE 7B  	db 192,3,222,123,255,255,64,2,127,254,0,0,0,0,0,0
-854+  61B2 FF FF 40 02
-854+  61B6 7F FE 00 00
-854+  61BA 00 00 00 00
-855+  61BE 0A 00 1D 00  	db 10,0,29,0,54,128,103,64,195,160,113,208,184,104,92,52
-855+  61C2 36 80 67 40
-855+  61C6 C3 A0 71 D0
-855+  61CA B8 68 5C 34
-856+  61CE 2C 3A 16 1D  	db 44,58,22,29,11,142,5,195,2,230,1,108,0,184,0,80
-856+  61D2 0B 8E 05 C3
-856+  61D6 02 E6 01 6C
-856+  61DA 00 B8 00 50
-857+  61DE 07 E0 1F F8  	db 7,224,31,248,20,40,22,104,22,104,22,104,22,104,20,40
-857+  61E2 14 28 16 68
-857+  61E6 16 68 16 68
-857+  61EA 16 68 14 28
-858+  61EE 14 28 16 68  	db 20,40,22,104,22,104,22,104,22,104,20,40,31,248,7,224
-858+  61F2 16 68 16 68
-858+  61F6 16 68 14 28
-858+  61FA 1F F8 07 E0
-859+  61FE 00 50 00 B8  	db 0,80,0,184,1,108,2,230,5,195,11,142,22,29,44,58
-859+  6202 01 6C 02 E6
-859+  6206 05 C3 0B 8E
-859+  620A 16 1D 2C 3A
-860+  620E 5C 34 B8 68  	db 92,52,184,104,113,208,195,160,103,64,54,128,29,0,10,0
-860+  6212 71 D0 C3 A0
-860+  6216 67 40 36 80
-860+  621A 1D 00 0A 00
-861+  621E
-862+  621E              LamettaSpriteLeft:
-863+  621E 00 00 00 00      db 0,0,0,0,0,0,127,254,64,2,255,255,222,123,192,3
-863+  6222 00 00 7F FE
-863+  6226 40 02 FF FF
-863+  622A DE 7B C0 03
-864+  622E C0 03 DE 7B  	db 192,3,222,123,255,255,64,2,127,254,0,0,0,0,0,0
-864+  6232 FF FF 40 02
-864+  6236 7F FE 00 00
-864+  623A 00 00 00 00
-865+  623E 00 50 00 B8  	db 0,80,0,184,1,108,2,230,5,195,11,142,22,29,44,58
-865+  6242 01 6C 02 E6
-865+  6246 05 C3 0B 8E
-865+  624A 16 1D 2C 3A
-866+  624E 5C 34 B8 68  	db 92,52,184,104,113,208,195,160,103,64,54,128,29,0,10,0
-866+  6252 71 D0 C3 A0
-866+  6256 67 40 36 80
-866+  625A 1D 00 0A 00
-867+  625E 07 E0 1F F8  	db 7,224,31,248,20,40,22,104,22,104,22,104,22,104,20,40
-867+  6262 14 28 16 68
-867+  6266 16 68 16 68
-867+  626A 16 68 14 28
-868+  626E 14 28 16 68  	db 20,40,22,104,22,104,22,104,22,104,20,40,31,248,7,224
-868+  6272 16 68 16 68
-868+  6276 16 68 14 28
-868+  627A 1F F8 07 E0
-869+  627E 0A 00 1D 00  	db 10,0,29,0,54,128,103,64,195,160,113,208,184,104,92,52
-869+  6282 36 80 67 40
-869+  6286 C3 A0 71 D0
-869+  628A B8 68 5C 34
-870+  628E 2C 3A 16 1D  	db 44,58,22,29,11,142,5,195,2,230,1,108,0,184,0,80
-870+  6292 0B 8E 05 C3
-870+  6296 02 E6 01 6C
-870+  629A 00 B8 00 50
-871+  629E
-872+  629E              ChipSprite: ; appears in The Banyan Tree and A bit of tree.
-873+  629E 00 00 00 00      db 0,0,0,0,42,170,127,255,127,255,124,63,124,63,127,255
-873+  62A2 2A AA 7F FF
-873+  62A6 7F FF 7C 3F
-873+  62AA 7C 3F 7F FF
-874+  62AE 7F FF 7F FF      db 127,255,127,255,0,0,42,170,0,0,42,170,0,0,0,0
-874+  62B2 00 00 2A AA
-874+  62B6 00 00 2A AA
-874+  62BA 00 00 00 00
-875+  62BE 00 48 01 2C      db 0,72,1,44,4,188,18,254,75,254,46,127,188,63,254,124
-875+  62C2 04 BC 12 FE
-875+  62C6 4B FE 2E 7F
-875+  62CA BC 3F FE 7C
-876+  62CE FF F2 7F C9      db 255,242,127,201,127,37,60,148,50,80,9,64,5,0,4,0
-876+  62D2 7F 25 3C 94
-876+  62D6 32 50 09 40
-876+  62DA 05 00 04 00
-877+  62DE 00 00 07 E0      db 0,0,7,224,15,240,23,232,15,240,22,104,14,112,22,104
-877+  62E2 0F F0 17 E8
-877+  62E6 0F F0 16 68
-877+  62EA 0E 70 16 68
-878+  62EE 0F F0 17 E8      db 15,240,23,232,15,240,23,232,8,16,23,232,16,8,0,0
-878+  62F2 0F F0 17 E8
-878+  62F6 08 10 17 E8
-878+  62FA 10 08 00 00
-879+  62FE 12 00 34 80      db 18,0,52,128,61,32,127,72,127,210,254,116,252,61,62,127
-879+  6302 3D 20 7F 48
-879+  6306 7F D2 FE 74
-879+  630A FC 3D 3E 7F
-880+  630E 4F FF 93 FE      db 79,255,147,254,164,254,41,60,10,76,2,144,0,160,0,32
-880+  6312 A4 FE 29 3C
-880+  6316 0A 4C 02 90
-880+  631A 00 A0 00 20
-881+  631E
-882+  631E              TheChapelSprite: ;appears in The Chapel and The Banyan Tree.
-883+  631E 00 00 00 00      db  0,0,0,0,0,0,2,2,34,2,169,84,168,216,113,116
-883+  6322 00 00 02 02
-883+  6326 22 02 A9 54
-883+  632A A8 D8 71 74
-884+  632E 22 DA 3B AE      db 34,218,59,174,46,171,36,249,32,219,32,216,1,84,2,138
-884+  6332 2E AB 24 F9
-884+  6336 20 DB 20 D8
-884+  633A 01 54 02 8A
-885+  633E 00 00 02 02      db 0,0,2,2,2,2,1,116,0,216,81,84,82,250,35,222
-885+  6342 02 02 01 74
-885+  6346 00 D8 51 54
-885+  634A 52 FA 23 DE
-886+  634E E7 AB 1E F9      db 231,171,30,249,24,217,8,217,9,84,6,138,4,0,0,0
-886+  6352 18 D9 08 D9
-886+  6356 09 54 06 8A
-886+  635A 04 00 00 00
-887+  635E 02 02 03 8E      db 2,2,3,142,0,248,1,84,2,218,3,254,17,139,75,169
-887+  6362 00 F8 01 54
-887+  6366 02 DA 03 FE
-887+  636A 11 8B 4B A9
-888+  636E 2B FB 96 F8      db 43,251,150,248,108,216,5,84,2,138,1,0,0,128,0,64
-888+  6372 6C D8 05 54
-888+  6376 02 8A 01 00
-888+  637A 00 80 00 40
-889+  637E 00 00 02 02      db 0,0,2,2,2,2,1,116,0,216,81,84,82,250,35,222
-889+  6382 02 02 01 74
-889+  6386 00 D8 51 54
-889+  638A 52 FA 23 DE
-890+  638E E7 AB 1E F9      db 231,171,30,249,24,217,8,217,9,84,6,138,4,0,0,0
-890+  6392 18 D9 08 D9
-890+  6396 09 54 06 8A
-890+  639A 04 00 00 00
-891+  639E
-892+  639E              WallBaseSprite: ; appears in East Wall Base, The Chapel and West  Wing.
-893+  639E 20 04 AE EC      db 32,4,174,236,187,125,224,7,189,181,160,4,59,124,0,0
-893+  63A2 BB 7D E0 07
-893+  63A6 BD B5 A0 04
-893+  63AA 3B 7C 00 00
-894+  63AE 1D B0 20 04      db 29,176,32,4,59,124,162,68,253,183,160,4,59,220,32,4
-894+  63B2 3B 7C A2 44
-894+  63B6 FD B7 A0 04
-894+  63BA 3B DC 20 04
-895+  63BE 20 04 37 B4      db 32,4,55,180,160,4,251,127,160,4,61,180,32,4,27,120
-895+  63C2 A0 04 FB 7F
-895+  63C6 A0 04 3D B4
-895+  63CA 20 04 1B 78
-896+  63CE 00 00 3D B4      db 0,0,61,180,162,68,187,125,224,7,189,181,183,236,32,4
-896+  63D2 A2 44 BB 7D
-896+  63D6 E0 07 BD B5
-896+  63DA B7 EC 20 04
-897+  63DE 20 04 3A DC      db 32,4,58,220,61,189,224,7,59,117,32,4,61,188,0,0
-897+  63E2 3D BD E0 07
-897+  63E6 3B 75 20 04
-897+  63EA 3D BC 00 00
-898+  63EE 1B 70 20 04      db 27,112,32,4,61,189,162,69,251,119,160,5,61,237,32,4
-898+  63F2 3D BD A2 45
-898+  63F6 FB 77 A0 05
-898+  63FA 3D ED 20 04
-899+  63FE 20 04 3B 75      db 32,4,59,117,160,5,253,191,160,5,59,117,32,4,29,184
-899+  6402 A0 05 FD BF
-899+  6406 A0 05 3B 75
-899+  640A 20 04 1D B8
-900+  640E 00 00 3B 74      db 0,0,59,116,36,132,61,189,224,7,59,117,46,236,32,4
-900+  6412 24 84 3D BD
-900+  6416 E0 07 3B 75
-900+  641A 2E EC 20 04
-901+  641E
-902+  641E              SpirlaSprite: ;  appears in The Banyan Tree and Orangery.
-903+  641E 0F F0 17 E8      db 15,240,23,232,24,24,55,204,40,36,83,146,100,74,169,43
-903+  6422 18 18 37 CC
-903+  6426 28 24 53 92
-903+  642A 64 4A A9 2B
-904+  642E AA 2B 6A 4A      db 170,43,106,74,105,146,36,36,51,204,24,24,23,232,15,240
-904+  6432 69 92 24 24
-904+  6436 33 CC 18 18
-904+  643A 17 E8 0F F0
-905+  643E 00 E0 07 F0      db 0,224,7,240,56,24,115,204,100,38,73,147,82,75,212,43
-905+  6442 38 18 73 CC
-905+  6446 64 26 49 93
-905+  644A 52 4B D4 2B
-906+  644E D5 2A D4 CA      db 213,42,212,202,210,18,73,228,36,12,19,244,8,120,7,128
-906+  6452 D2 12 49 E4
-906+  6456 24 0C 13 F4
-906+  645A 08 78 07 80
-907+  645E 01 80 07 E0      db 1,128,7,224,24,24,115,206,164,37,201,149,210,85,212,85
-907+  6462 18 18 73 CE
-907+  6466 A4 25 C9 95
-907+  646A D2 55 D4 55
-908+  646E D4 95 D2 25      db 212,149,210,37,201,201,228,19,115,230,24,24,7,224,1,128
-908+  6472 C9 C9 E4 13
-908+  6476 73 E6 18 18
-908+  647A 07 E0 01 80
-909+  647E 07 00 08 E0      db 7,0,8,224,31,220,48,38,103,146,200,74,211,42,212,171
-909+  6482 1F DC 30 26
-909+  6486 67 92 C8 4A
-909+  648A D3 2A D4 AB
-910+  648E 54 2B 52 4B      db 84,43,82,75,73,147,36,38,51,204,40,24,31,240,1,224
-910+  6492 49 93 24 26
-910+  6496 33 CC 28 18
-910+  649A 1F F0 01 E0
-911+  649E
-912+  649E              CutSprite: ; appears in On a Branch Over the Drive, Conservatory Roof and Tool  Shed.
-913+  649E 0C 00 0C 00      db 12,0,12,0,12,0,12,0,12,0,30,0,18,0,51,0
-913+  64A2 0C 00 0C 00
-913+  64A6 0C 00 1E 00
-913+  64AA 12 00 33 00
-914+  64AE 3F 00 73 80      db 63,0,115,128,97,128,97,128,192,192,192,192,128,64,128,64
-914+  64B2 61 80 61 80
-914+  64B6 C0 C0 C0 C0
-914+  64BA 80 40 80 40
-915+  64BE 08 40 08 40      db 8,64,8,64,12,192,4,128,7,128,7,128,12,192,28,224
-915+  64C2 0C C0 04 80
-915+  64C6 07 80 07 80
-915+  64CA 0C C0 1C E0
-916+  64CE 3B 70 30 30      db 59,112,48,48,96,24,96,24,64,8,192,12,128,4,128,4
-916+  64D2 60 18 60 18
-916+  64D6 40 08 C0 0C
-916+  64DA 80 04 80 04
-917+  64DE 02 10 02 10      db 2,16,2,16,3,48,1,32,1,224,1,224,3,48,7,56
-917+  64E2 03 30 01 20
-917+  64E6 01 E0 01 E0
-917+  64EA 03 30 07 38
-918+  64EE 0E DC 0C 0C      db 14,220,12,12,24,6,24,6,16,2,48,3,32,1,32,1
-918+  64F2 18 06 18 06
-918+  64F6 10 02 30 03
-918+  64FA 20 01 20 01
-919+  64FE 00 30 00 30      db 0,48,0,48,0,48,0,48,0,48,0,120,0,72,0,204
-919+  6502 00 30 00 30
-919+  6506 00 30 00 78
-919+  650A 00 48 00 CC
-920+  650E 00 FC 01 CE      db 0,252,1,206,1,134,1,134,3,3,3,3,2,1,2,1
-920+  6512 01 86 01 86
-920+  6516 03 03 03 03
-920+  651A 02 01 02 01
-921+  651E
-922+  651E              PliersSprite: ; appears in To the Kitchens    Main Stairway, Halfway up the East Wall, Conservatory Roof and The Bow.
-923+  651E 7E 00 99 00      db 126,0,153,0,255,0,129,0,126,0,24,0,36,0,36,0
-923+  6522 FF 00 81 00
-923+  6526 7E 00 18 00
-923+  652A 24 00 24 00
-924+  652E 42 00 42 00      db 66,0,66,0,129,0,231,0,165,0,195,0,165,0,231,0
-924+  6532 81 00 E7 00
-924+  6536 A5 00 C3 00
-924+  653A A5 00 E7 00
-925+  653E 00 00 1F 80      db 0,0,31,128,38,64,57,192,48,192,31,128,9,0,16,128
-925+  6542 26 40 39 C0
-925+  6546 30 C0 1F 80
-925+  654A 09 00 10 80
-926+  654E 20 40 40 20      db 32,64,64,32,128,16,224,112,160,80,192,48,160,80,224,112
-926+  6552 80 10 E0 70
-926+  6556 A0 50 C0 30
-926+  655A A0 50 E0 70
-927+  655E 00 00 00 00      db 0,0,0,0,0,0,7,224,9,144,14,112,14,112,6,96
-927+  6562 00 00 07 E0
-927+  6566 09 90 0E 70
-927+  656A 0E 70 06 60
-928+  656E 1B D8 60 06      db 27,216,96,6,128,1,224,7,160,5,192,3,160,5,224,7
-928+  6572 80 01 E0 07
-928+  6576 A0 05 C0 03
-928+  657A A0 05 E0 07
-929+  657E 00 00 01 F8      db 0,0,1,248,2,100,3,156,3,12,1,248,0,144,1,8
-929+  6582 02 64 03 9C
-929+  6586 03 0C 01 F8
-929+  658A 00 90 01 08
-930+  658E 02 04 04 02      db 2,4,4,2,8,1,14,7,10,5,12,3,10,5,14,7
-930+  6592 08 01 0E 07
-930+  6596 0A 05 0C 03
-930+  659A 0A 05 0E 07
-931+  659E
-932+  659E              RobotSprite: ; appears in Under the Drive.
-933+  659E 0C 00 12 00      db 12,0,18,0,33,16,18,32,140,64,82,128,47,0,47,0
-933+  65A2 21 10 12 20
-933+  65A6 8C 40 52 80
-933+  65AA 2F 00 2F 00
-934+  65AE 5F 80 5F 80      db 95,128,95,128,95,128,0,0,255,192,93,128,93,128,255,192
-934+  65B2 5F 80 00 00
-934+  65B6 FF C0 5D 80
-934+  65BA 5D 80 FF C0
-935+  65BE 00 01 00 02      db 0,1,0,2,131,4,76,200,35,16,20,160,11,192,11,192
-935+  65C2 83 04 4C C8
-935+  65C6 23 10 14 A0
-935+  65CA 0B C0 0B C0
-936+  65CE 17 E0 17 E0      db 23,224,23,224,23,224,0,0,63,240,27,176,27,176,63,240
-936+  65D2 17 E0 00 00
-936+  65D6 3F F0 1B B0
-936+  65DA 1B B0 3F F0
-937+  65DE 80 00 40 00      db 128,0,64,0,32,1,17,226,8,196,5,40,2,240,2,240
-937+  65E2 20 01 11 E2
-937+  65E6 08 C4 05 28
-937+  65EA 02 F0 02 F0
-938+  65EE 05 F8 05 F8      db 5,248,5,248,5,248,0,0,15,252,11,116,11,116,15,252
-938+  65F2 05 F8 00 00
-938+  65F6 0F FC 0B 74
-938+  65FA 0B 74 0F FC
-939+  65FE 00 00 00 00      db 0,0,0,0,8,48,4,204,2,49,1,74,0,188,0,188
-939+  6602 08 30 04 CC
-939+  6606 02 31 01 4A
-939+  660A 00 BC 00 BC
-940+  660E 01 7E 01 7E      db 1,126,1,126,1,126,0,0,3,255,2,237,2,237,3,255
-940+  6612 01 7E 00 00
-940+  6616 03 FF 02 ED
-940+  661A 02 ED 03 FF
-941+  661E
-942+  661E              SwissArmyKife: ; appears in Top Landing, Under the Roof and Tool  Shed.
-943+  661E 38 00 7C 00      db 56,0,124,0,126,0,109,128,68,64,108,64,124,32,124,0
-943+  6622 7E 00 6D 80
-943+  6626 44 40 6C 40
-943+  662A 7C 20 7C 00
-944+  662E 7C 0C 7C 32      db 124,12,124,50,252,204,255,48,252,192,127,0,108,0,56,0
-944+  6632 FC CC FF 30
-944+  6636 FC C0 7F 00
-944+  663A 6C 00 38 00
-945+  663E 0E 60 1F 94      db 14,96,31,148,31,8,27,32,17,80,27,80,31,160,31,160
-945+  6642 1F 08 1B 20
-945+  6646 11 50 1B 50
-945+  664A 1F A0 1F A0
-946+  664E 7F 40 DF 40      db 127,64,223,64,223,128,159,128,127,0,31,0,27,0,14,0
-946+  6652 DF 80 9F 80
-946+  6656 7F 00 1F 00
-946+  665A 1B 00 0E 00
-947+  665E 03 80 07 C0      db 3,128,7,192,7,224,6,216,4,68,14,196,127,194,239,192
-947+  6662 07 E0 06 D8
-947+  6666 04 44 0E C4
-947+  666A 7F C2 EF C0
-948+  666E EF C0 8F C0      db 239,192,143,192,119,192,7,192,7,192,7,192,6,192,3,128
-948+  6672 77 C0 07 C0
-948+  6676 07 C0 07 C0
-948+  667A 06 C0 03 80
-949+  667E 00 E0 01 F0      db 0,224,1,240,1,240,1,178,1,21,1,181,1,250,1,250
-949+  6682 01 F0 01 B2
-949+  6686 01 15 01 B5
-949+  668A 01 FA 01 FA
-950+  668E 07 F4 0D F4      db 7,244,13,244,13,248,9,248,7,240,1,240,1,176,0,224
-950+  6692 0D F8 09 F8
-950+  6696 07 F0 01 F0
-950+  669A 01 B0 00 E0
-951+  669E
-952+  669E              EggSpriteRight: ; appears in The Drive, Cuckoo's Nest, To the Kitchens    Main Stairway and Back Stairway.
-953+  669E 0C 00 16 00      db 12,0,22,0,47,0,47,0,79,128,95,128,95,128,159,192
-953+  66A2 2F 00 2F 00
-953+  66A6 4F 80 5F 80
-953+  66AA 5F 80 9F C0
-954+  66AE BF C0 BD C0      db 191,192,189,192,186,192,189,64,90,128,93,128,63,0,12,0
-954+  66B2 BA C0 BD 40
-954+  66B6 5A 80 5D 80
-954+  66BA 3F 00 0C 00
-955+  66BE 00 00 00 00      db 0,0,0,0,0,0,0,112,3,152,12,120,51,248,71,240
-955+  66C2 00 00 00 70
-955+  66C6 03 98 0C 78
-955+  66CA 33 F8 47 F0
-956+  66CE 5F F0 BF F0      db 95,240,191,240,190,160,189,96,90,192,93,64,63,128,14,0
-956+  66D2 BE A0 BD 60
-956+  66D6 5A C0 5D 40
-956+  66DA 3F 80 0E 00
-957+  66DE 00 00 00 00      db 0,0,0,0,0,0,0,0,3,192,28,120,33,252,79,254
-957+  66E2 00 00 00 00
-957+  66E6 03 C0 1C 78
-957+  66EA 21 FC 4F FE
-958+  66EE 5F FE 9F FF      db 95,254,159,255,191,239,95,86,95,174,35,84,31,248,3,192
-958+  66F2 BF EF 5F 56
-958+  66F6 5F AE 23 54
-958+  66FA 1F F8 03 C0
-959+  66FE 00 00 00 00      db 0,0,0,0,0,0,14,0,23,192,23,240,19,252,11,254
-959+  6702 00 00 0E 00
-959+  6706 17 C0 17 F0
-959+  670A 13 FC 0B FE
-960+  670E 0B FE 0B D7      db 11,254,11,215,5,235,5,215,2,234,2,126,1,140,0,112
-960+  6712 05 EB 05 D7
-960+  6716 02 EA 02 7E
-960+  671A 01 8C 00 70
-961+  671E
-962+  671E              EggSpriteLeft:
-963+  671E 0C 00 16 00      db 12,0,22,0,47,0,47,0,79,128,95,128,95,128,159,192
-963+  6722 2F 00 2F 00
-963+  6726 4F 80 5F 80
-963+  672A 5F 80 9F C0
-964+  672E BF C0 BD C0      db 191,192,189,192,186,192,189,64,90,128,93,128,63,0,12,0
-964+  6732 BA C0 BD 40
-964+  6736 5A 80 5D 80
-964+  673A 3F 00 0C 00
-965+  673E 00 00 00 00      db 0,0,0,0,0,0,14,0,23,192,23,240,19,252,11,254
-965+  6742 00 00 0E 00
-965+  6746 17 C0 17 F0
-965+  674A 13 FC 0B FE
-966+  674E 0B FE 0B D7      db 11,254,11,215,5,235,5,215,2,234,2,126,1,140,0,112
-966+  6752 05 EB 05 D7
-966+  6756 02 EA 02 7E
-966+  675A 01 8C 00 70
-967+  675E 00 00 00 00      db 0,0,0,0,0,0,0,0,3,192,28,120,33,252,79,254
-967+  6762 00 00 00 00
-967+  6766 03 C0 1C 78
-967+  676A 21 FC 4F FE
-968+  676E 5F FE 9F FF      db 95,254,159,255,191,239,95,86,95,174,35,84,31,248,3,192
-968+  6772 BF EF 5F 56
-968+  6776 5F AE 23 54
-968+  677A 1F F8 03 C0
-969+  677E 00 00 00 00      db 0,0,0,0,0,0,0,112,3,152,12,120,51,248,71,240
-969+  6782 00 00 00 70
-969+  6786 03 98 0C 78
-969+  678A 33 F8 47 F0
-970+  678E 5F F0 BF F0      db 95,240,191,240,190,160,189,96,90,192,93,64,63,128,14,0
-970+  6792 BE A0 BD 60
-970+  6796 5A C0 5D 40
-970+  679A 3F 80 0E 00
-971+  679E
-972+  679E              PacManSprite: ; appears in The Attic.
-973+  679E 07 C0 18 30      db 7,192,24,48,35,136,68,68,136,34,144,19,144,19,136,34
-973+  67A2 23 88 44 44
-973+  67A6 88 22 90 13
-973+  67AA 90 13 88 22
-974+  67AE 44 44 23 88      db 68,68,35,136,24,48,7,192,3,0,3,0,3,0,3,128
-974+  67B2 18 30 07 C0
-974+  67B6 03 00 03 00
-974+  67BA 03 00 03 80
-975+  67BE 07 C0 18 30      db 7,192,24,48,32,8,67,132,132,66,136,35,136,35,132,66
-975+  67C2 20 08 43 84
-975+  67C6 84 42 88 23
-975+  67CA 88 23 84 42
-976+  67CE 43 84 20 08      db 67,132,32,8,24,48,7,192,15,128,29,208,8,224,4,64
-976+  67D2 18 30 07 C0
-976+  67D6 0F 80 1D D0
-976+  67DA 08 E0 04 40
-977+  67DE 07 C0 1F F0      db 7,192,31,240,62,120,124,60,126,124,255,254,255,254,240,0
-977+  67E2 3E 78 7C 3C
-977+  67E6 7E 7C FF FE
-977+  67EA FF FE F0 00
-978+  67EE FF 80 7F F0      db 255,128,127,240,127,252,63,248,31,240,7,192,0,0,0,0
-978+  67F2 7F FC 3F F8
-978+  67F6 1F F0 07 C0
-978+  67FA 00 00 00 00
-979+  67FE 07 C0 1F F0      db 7,192,31,240,60,248,120,124,124,252,255,128,252,0,240,0
-979+  6802 3C F8 78 7C
-979+  6806 7C FC FF 80
-979+  680A FC 00 F0 00
-980+  680E F8 00 7E 00      db 248,0,126,0,127,128,63,224,31,240,7,192,0,0,0,0
-980+  6812 7F 80 3F E0
-980+  6816 1F F0 07 C0
-980+  681A 00 00 00 00
-981+  681E
+708+  60CA              DrawPlatform:
+709+  60CA C5               push bc
+710+  60CB D5               push de
+711+  60CC E5               push hl
+712+  60CD DD E5            push ix
+713+  60CF
+714+  60CF                  ; --- PIATTAFORMA 1 ---
+715+  60CF                  ; Disegniamo le 7 scanline
+716+  60CF DD 21 96 61      ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento (9° carattere)
+717+  60D3 16 00            ld   d, 0              ; D = offset scanline (0..6)
+718+  60D5
+719+  60D5              .scanline_loop1:
+720+  60D5 3E 48            ld   a, $40 + ((PLATFORM_Y / 8) & $18) ; Base del terzo per scanline 0
+721+  60D7 82               add  a, d              ; A = base + scanline offset (D)
+722+  60D8 67               ld   h, a              ; HL high byte
+723+  60D9 2E E8            ld   l, (((PLATFORM_Y / 8) & 7) * 32) + PLATFORM_COL ; HL low byte
+724+  60DB
+725+  60DB DD 5E 00         ld   e, (ix+0)         ; E = byte grafico per questa scanline
+726+  60DE 0E 10            ld   c, PLATFORM_WIDTH_COLS ; colonne
+727+  60E0
+728+  60E0              .col_loop1:
+729+  60E0 7E               ld   a, (hl)           ; Leggi byte dallo schermo
+730+  60E1 B3               or   e                 ; Combina con la grafica della piattaforma (OR)
+731+  60E2 77               ld   (hl), a           ; Scrivi il byte combinato sullo schermo
+732+  60E3 2C               inc  l                 ; Vai alla colonna successiva
+733+  60E4 0D               dec  c
+734+  60E5 20 F9            jr   nz, .col_loop1
+735+  60E7
+736+  60E7 DD 23            inc  ix                ; Prossimo byte grafico
+737+  60E9 14               inc  d                 ; Prossima scanline
+738+  60EA 7A               ld   a, d
+739+  60EB FE 07            cp   7
+740+  60ED 20 E6            jr   nz, .scanline_loop1
+741+  60EF
+742+  60EF                  ; Imposta gli attributi di colore per la piattaforma 1
+743+  60EF 21 E8 59         ld   hl, $5800 + ((PLATFORM_Y / 8) * 32) + PLATFORM_COL
+744+  60F2 06 10            ld   b, PLATFORM_WIDTH_COLS
+745+  60F4              .attr_loop1:
+746+  60F4 36 05            ld   (hl), CYAN        ; Colore della piattaforma = CYAN
+747+  60F6 23               inc  hl
+748+  60F7 05               dec  b
+749+  60F8 20 FA            jr   nz, .attr_loop1
+750+  60FA
+751+  60FA                  ; --- PIATTAFORMA 2 ---
+752+  60FA                  ; Disegniamo le 7 scanline
+753+  60FA DD 21 96 61      ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento
+754+  60FE 16 00            ld   d, 0              ; D = offset scanline (0..6)
+755+  6100
+756+  6100              .scanline_loop2:
+757+  6100 3E 48            ld   a, $40 + ((PLATFORM2_Y / 8) & $18) ; Base del terzo per scanline 0
+758+  6102 82               add  a, d              ; A = base + scanline offset (D)
+759+  6103 67               ld   h, a              ; HL high byte
+760+  6104 2E 94            ld   l, (((PLATFORM2_Y / 8) & 7) * 32) + PLATFORM2_COL ; HL low byte
+761+  6106
+762+  6106 DD 5E 00         ld   e, (ix+0)         ; E = byte grafico per questa scanline
+763+  6109 0E 0A            ld   c, PLATFORM2_WIDTH_COLS ; colonne
+764+  610B
+765+  610B              .col_loop2:
+766+  610B 7E               ld   a, (hl)           ; Leggi byte dallo schermo
+767+  610C B3               or   e                 ; Combina con la grafica (OR)
+768+  610D 77               ld   (hl), a           ; Scrivi il byte combinato
+769+  610E 2C               inc  l                 ; Vai alla colonna successiva
+770+  610F 0D               dec  c
+771+  6110 20 F9            jr   nz, .col_loop2
+772+  6112
+773+  6112 DD 23            inc  ix                ; Prossimo byte grafico
+774+  6114 14               inc  d                 ; Prossima scanline
+775+  6115 7A               ld   a, d
+776+  6116 FE 07            cp   7
+777+  6118 20 E6            jr   nz, .scanline_loop2
+778+  611A
+779+  611A                  ; Imposta gli attributi di colore per la piattaforma 2
+780+  611A 21 94 59         ld   hl, $5800 + ((PLATFORM2_Y / 8) * 32) + PLATFORM2_COL
+781+  611D 06 0A            ld   b, PLATFORM2_WIDTH_COLS
+782+  611F              .attr_loop2:
+783+  611F 36 04            ld   (hl), GREEN       ; Colore della piattaforma 2 = GREEN
+784+  6121 23               inc  hl
+785+  6122 05               dec  b
+786+  6123 20 FA            jr   nz, .attr_loop2
+787+  6125
+788+  6125                  ; --- PIATTAFORMA 3 SINISTRA ---
+789+  6125                  ; Disegniamo le 7 scanline
+790+  6125 DD 21 96 61      ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento
+791+  6129 16 00            ld   d, 0              ; D = offset scanline (0..6)
+792+  612B
+793+  612B              .scanline_loop3:
+794+  612B 3E 48            ld   a, $40 + ((PLATFORM3_Y / 8) & $18) ; Base del terzo per scanline 0
+795+  612D 82               add  a, d              ; A = base + scanline offset (D)
+796+  612E 67               ld   h, a              ; HL high byte
+797+  612F 2E 83            ld   l, (((PLATFORM3_Y / 8) & 7) * 32) + PLATFORM3_COL ; HL low byte
+798+  6131
+799+  6131 DD 5E 00         ld   e, (ix+0)         ; E = byte grafico per questa scanline
+800+  6134 0E 0A            ld   c, PLATFORM3_WIDTH_COLS ; colonne
+801+  6136
+802+  6136              .col_loop3:
+803+  6136 7E               ld   a, (hl)           ; Leggi byte dallo schermo
+804+  6137 B3               or   e                 ; Combina con la grafica
+805+  6138 77               ld   (hl), a           ; Scrivi il byte combinato
+806+  6139 2C               inc  l                 ; Vai alla colonna successiva
+807+  613A 0D               dec  c
+808+  613B 20 F9            jr   nz, .col_loop3
+809+  613D
+810+  613D DD 23            inc  ix                ; Prossimo byte grafico
+811+  613F 14               inc  d                 ; Prossima scanline
+812+  6140 7A               ld   a, d
+813+  6141 FE 07            cp   7
+814+  6143 20 E6            jr   nz, .scanline_loop3
+815+  6145
+816+  6145                  ; Imposta gli attributi di colore per la piattaforma 3
+817+  6145 21 83 59         ld   hl, $5800 + ((PLATFORM3_Y / 8) * 32) + PLATFORM3_COL
+818+  6148 06 0A            ld   b, PLATFORM3_WIDTH_COLS
+819+  614A              .attr_loop3:
+820+  614A 36 04            ld   (hl), GREEN       ; Colore della piattaforma 3 = GREEN
+821+  614C 23               inc  hl
+822+  614D 05               dec  b
+823+  614E 20 FA            jr   nz, .attr_loop3
+824+  6150
+825+  6150 DD E1            pop  ix
+826+  6152 E1               pop  hl
+827+  6153 D1               pop  de
+828+  6154 C1               pop  bc
+829+  6155 C9               ret
+830+  6156
+831+  6156              ; -------------------------------------------------------------------
+832+  6156              ; Dati grafici (9 caratteri)
+833+  6156              ; -------------------------------------------------------------------
+834+  6156              TilesDef:
+835+  6156                  ; 8 caratteri per il player
+836+  6156 06 3E 7E 34      db %00000110, %00111110, %01111110, %00110100, %00111110, %00111100, %00011000, %00111100
+836+  615A 3E 3C 18 3C
+837+  615E 7E 7E F7 FB      db %01111110, %01111110, %11110111, %11111011, %00111100, %01110110, %01101110, %01110111
+837+  6162 3C 76 6E 77
+838+  6166 6E 6E 6E 76      db %01101110, %01101110, %01101110, %01110110, %00111100, %00011000, %00011000, %00011100
+838+  616A 3C 18 18 1C
+839+  616E 7E 7E F7 FB      db %01111110, %01111110, %11110111, %11111011, %00111100, %11101101, %11000111, %11100110
+839+  6172 3C ED C7 E6
+840+  6176 60 7C 7E 2C      db %01100000, %01111100, %01111110, %00101100, %01111100, %00111100, %00011000, %00111100
+840+  617A 7C 3C 18 3C
+841+  617E 7E 7E EF DF      db %01111110, %01111110, %11101111, %11011111, %00111100, %01101110, %01110110, %11101110
+841+  6182 3C 6E 76 EE
+842+  6186 76 76 76 6E      db %01110110, %01110110, %01110110, %01101110, %00111100, %00011000, %00011000, %00111000
+842+  618A 3C 18 18 38
+843+  618E 7E 7E EF DF      db %01111110, %01111110, %11101111, %11011111, %00111100, %10110111, %11100011, %01100111
+843+  6192 3C B7 E3 67
+844+  6196
+845+  6196                  ; 9° carattere per i bordi verticali
+846+  6196 FF 88 FF 22      db %11111111, %10001000, %11111111, %00100010, %11111111, %10001000, %11111111, %00100100
+846+  619A FF 88 FF 24
+847+  619E
+848+  619E              LamettaSpriteRight: ; appears in Top Landing, Tree Root and West Bedroom.
+849+  619E 00 00 00 00      db 0,0,0,0,0,0,127,254,64,2,255,255,222,123,192,3
+849+  61A2 00 00 7F FE
+849+  61A6 40 02 FF FF
+849+  61AA DE 7B C0 03
+850+  61AE C0 03 DE 7B  	db 192,3,222,123,255,255,64,2,127,254,0,0,0,0,0,0
+850+  61B2 FF FF 40 02
+850+  61B6 7F FE 00 00
+850+  61BA 00 00 00 00
+851+  61BE 0A 00 1D 00  	db 10,0,29,0,54,128,103,64,195,160,113,208,184,104,92,52
+851+  61C2 36 80 67 40
+851+  61C6 C3 A0 71 D0
+851+  61CA B8 68 5C 34
+852+  61CE 2C 3A 16 1D  	db 44,58,22,29,11,142,5,195,2,230,1,108,0,184,0,80
+852+  61D2 0B 8E 05 C3
+852+  61D6 02 E6 01 6C
+852+  61DA 00 B8 00 50
+853+  61DE 07 E0 1F F8  	db 7,224,31,248,20,40,22,104,22,104,22,104,22,104,20,40
+853+  61E2 14 28 16 68
+853+  61E6 16 68 16 68
+853+  61EA 16 68 14 28
+854+  61EE 14 28 16 68  	db 20,40,22,104,22,104,22,104,22,104,20,40,31,248,7,224
+854+  61F2 16 68 16 68
+854+  61F6 16 68 14 28
+854+  61FA 1F F8 07 E0
+855+  61FE 00 50 00 B8  	db 0,80,0,184,1,108,2,230,5,195,11,142,22,29,44,58
+855+  6202 01 6C 02 E6
+855+  6206 05 C3 0B 8E
+855+  620A 16 1D 2C 3A
+856+  620E 5C 34 B8 68  	db 92,52,184,104,113,208,195,160,103,64,54,128,29,0,10,0
+856+  6212 71 D0 C3 A0
+856+  6216 67 40 36 80
+856+  621A 1D 00 0A 00
+857+  621E
+858+  621E              LamettaSpriteLeft:
+859+  621E 00 00 00 00      db 0,0,0,0,0,0,127,254,64,2,255,255,222,123,192,3
+859+  6222 00 00 7F FE
+859+  6226 40 02 FF FF
+859+  622A DE 7B C0 03
+860+  622E C0 03 DE 7B  	db 192,3,222,123,255,255,64,2,127,254,0,0,0,0,0,0
+860+  6232 FF FF 40 02
+860+  6236 7F FE 00 00
+860+  623A 00 00 00 00
+861+  623E 00 50 00 B8  	db 0,80,0,184,1,108,2,230,5,195,11,142,22,29,44,58
+861+  6242 01 6C 02 E6
+861+  6246 05 C3 0B 8E
+861+  624A 16 1D 2C 3A
+862+  624E 5C 34 B8 68  	db 92,52,184,104,113,208,195,160,103,64,54,128,29,0,10,0
+862+  6252 71 D0 C3 A0
+862+  6256 67 40 36 80
+862+  625A 1D 00 0A 00
+863+  625E 07 E0 1F F8  	db 7,224,31,248,20,40,22,104,22,104,22,104,22,104,20,40
+863+  6262 14 28 16 68
+863+  6266 16 68 16 68
+863+  626A 16 68 14 28
+864+  626E 14 28 16 68  	db 20,40,22,104,22,104,22,104,22,104,20,40,31,248,7,224
+864+  6272 16 68 16 68
+864+  6276 16 68 14 28
+864+  627A 1F F8 07 E0
+865+  627E 0A 00 1D 00  	db 10,0,29,0,54,128,103,64,195,160,113,208,184,104,92,52
+865+  6282 36 80 67 40
+865+  6286 C3 A0 71 D0
+865+  628A B8 68 5C 34
+866+  628E 2C 3A 16 1D  	db 44,58,22,29,11,142,5,195,2,230,1,108,0,184,0,80
+866+  6292 0B 8E 05 C3
+866+  6296 02 E6 01 6C
+866+  629A 00 B8 00 50
+867+  629E
+868+  629E              ChipSprite: ; appears in The Banyan Tree and A bit of tree.
+869+  629E 00 00 00 00      db 0,0,0,0,42,170,127,255,127,255,124,63,124,63,127,255
+869+  62A2 2A AA 7F FF
+869+  62A6 7F FF 7C 3F
+869+  62AA 7C 3F 7F FF
+870+  62AE 7F FF 7F FF      db 127,255,127,255,0,0,42,170,0,0,42,170,0,0,0,0
+870+  62B2 00 00 2A AA
+870+  62B6 00 00 2A AA
+870+  62BA 00 00 00 00
+871+  62BE 00 48 01 2C      db 0,72,1,44,4,188,18,254,75,254,46,127,188,63,254,124
+871+  62C2 04 BC 12 FE
+871+  62C6 4B FE 2E 7F
+871+  62CA BC 3F FE 7C
+872+  62CE FF F2 7F C9      db 255,242,127,201,127,37,60,148,50,80,9,64,5,0,4,0
+872+  62D2 7F 25 3C 94
+872+  62D6 32 50 09 40
+872+  62DA 05 00 04 00
+873+  62DE 00 00 07 E0      db 0,0,7,224,15,240,23,232,15,240,22,104,14,112,22,104
+873+  62E2 0F F0 17 E8
+873+  62E6 0F F0 16 68
+873+  62EA 0E 70 16 68
+874+  62EE 0F F0 17 E8      db 15,240,23,232,15,240,23,232,8,16,23,232,16,8,0,0
+874+  62F2 0F F0 17 E8
+874+  62F6 08 10 17 E8
+874+  62FA 10 08 00 00
+875+  62FE 12 00 34 80      db 18,0,52,128,61,32,127,72,127,210,254,116,252,61,62,127
+875+  6302 3D 20 7F 48
+875+  6306 7F D2 FE 74
+875+  630A FC 3D 3E 7F
+876+  630E 4F FF 93 FE      db 79,255,147,254,164,254,41,60,10,76,2,144,0,160,0,32
+876+  6312 A4 FE 29 3C
+876+  6316 0A 4C 02 90
+876+  631A 00 A0 00 20
+877+  631E
+878+  631E              TheChapelSprite: ;appears in The Chapel and The Banyan Tree.
+879+  631E 00 00 00 00      db  0,0,0,0,0,0,2,2,34,2,169,84,168,216,113,116
+879+  6322 00 00 02 02
+879+  6326 22 02 A9 54
+879+  632A A8 D8 71 74
+880+  632E 22 DA 3B AE      db 34,218,59,174,46,171,36,249,32,219,32,216,1,84,2,138
+880+  6332 2E AB 24 F9
+880+  6336 20 DB 20 D8
+880+  633A 01 54 02 8A
+881+  633E 00 00 02 02      db 0,0,2,2,2,2,1,116,0,216,81,84,82,250,35,222
+881+  6342 02 02 01 74
+881+  6346 00 D8 51 54
+881+  634A 52 FA 23 DE
+882+  634E E7 AB 1E F9      db 231,171,30,249,24,217,8,217,9,84,6,138,4,0,0,0
+882+  6352 18 D9 08 D9
+882+  6356 09 54 06 8A
+882+  635A 04 00 00 00
+883+  635E 02 02 03 8E      db 2,2,3,142,0,248,1,84,2,218,3,254,17,139,75,169
+883+  6362 00 F8 01 54
+883+  6366 02 DA 03 FE
+883+  636A 11 8B 4B A9
+884+  636E 2B FB 96 F8      db 43,251,150,248,108,216,5,84,2,138,1,0,0,128,0,64
+884+  6372 6C D8 05 54
+884+  6376 02 8A 01 00
+884+  637A 00 80 00 40
+885+  637E 00 00 02 02      db 0,0,2,2,2,2,1,116,0,216,81,84,82,250,35,222
+885+  6382 02 02 01 74
+885+  6386 00 D8 51 54
+885+  638A 52 FA 23 DE
+886+  638E E7 AB 1E F9      db 231,171,30,249,24,217,8,217,9,84,6,138,4,0,0,0
+886+  6392 18 D9 08 D9
+886+  6396 09 54 06 8A
+886+  639A 04 00 00 00
+887+  639E
+888+  639E              WallBaseSprite: ; appears in East Wall Base, The Chapel and West  Wing.
+889+  639E 20 04 AE EC      db 32,4,174,236,187,125,224,7,189,181,160,4,59,124,0,0
+889+  63A2 BB 7D E0 07
+889+  63A6 BD B5 A0 04
+889+  63AA 3B 7C 00 00
+890+  63AE 1D B0 20 04      db 29,176,32,4,59,124,162,68,253,183,160,4,59,220,32,4
+890+  63B2 3B 7C A2 44
+890+  63B6 FD B7 A0 04
+890+  63BA 3B DC 20 04
+891+  63BE 20 04 37 B4      db 32,4,55,180,160,4,251,127,160,4,61,180,32,4,27,120
+891+  63C2 A0 04 FB 7F
+891+  63C6 A0 04 3D B4
+891+  63CA 20 04 1B 78
+892+  63CE 00 00 3D B4      db 0,0,61,180,162,68,187,125,224,7,189,181,183,236,32,4
+892+  63D2 A2 44 BB 7D
+892+  63D6 E0 07 BD B5
+892+  63DA B7 EC 20 04
+893+  63DE 20 04 3A DC      db 32,4,58,220,61,189,224,7,59,117,32,4,61,188,0,0
+893+  63E2 3D BD E0 07
+893+  63E6 3B 75 20 04
+893+  63EA 3D BC 00 00
+894+  63EE 1B 70 20 04      db 27,112,32,4,61,189,162,69,251,119,160,5,61,237,32,4
+894+  63F2 3D BD A2 45
+894+  63F6 FB 77 A0 05
+894+  63FA 3D ED 20 04
+895+  63FE 20 04 3B 75      db 32,4,59,117,160,5,253,191,160,5,59,117,32,4,29,184
+895+  6402 A0 05 FD BF
+895+  6406 A0 05 3B 75
+895+  640A 20 04 1D B8
+896+  640E 00 00 3B 74      db 0,0,59,116,36,132,61,189,224,7,59,117,46,236,32,4
+896+  6412 24 84 3D BD
+896+  6416 E0 07 3B 75
+896+  641A 2E EC 20 04
+897+  641E
+898+  641E              SpirlaSprite: ;  appears in The Banyan Tree and Orangery.
+899+  641E 0F F0 17 E8      db 15,240,23,232,24,24,55,204,40,36,83,146,100,74,169,43
+899+  6422 18 18 37 CC
+899+  6426 28 24 53 92
+899+  642A 64 4A A9 2B
+900+  642E AA 2B 6A 4A      db 170,43,106,74,105,146,36,36,51,204,24,24,23,232,15,240
+900+  6432 69 92 24 24
+900+  6436 33 CC 18 18
+900+  643A 17 E8 0F F0
+901+  643E 00 E0 07 F0      db 0,224,7,240,56,24,115,204,100,38,73,147,82,75,212,43
+901+  6442 38 18 73 CC
+901+  6446 64 26 49 93
+901+  644A 52 4B D4 2B
+902+  644E D5 2A D4 CA      db 213,42,212,202,210,18,73,228,36,12,19,244,8,120,7,128
+902+  6452 D2 12 49 E4
+902+  6456 24 0C 13 F4
+902+  645A 08 78 07 80
+903+  645E 01 80 07 E0      db 1,128,7,224,24,24,115,206,164,37,201,149,210,85,212,85
+903+  6462 18 18 73 CE
+903+  6466 A4 25 C9 95
+903+  646A D2 55 D4 55
+904+  646E D4 95 D2 25      db 212,149,210,37,201,201,228,19,115,230,24,24,7,224,1,128
+904+  6472 C9 C9 E4 13
+904+  6476 73 E6 18 18
+904+  647A 07 E0 01 80
+905+  647E 07 00 08 E0      db 7,0,8,224,31,220,48,38,103,146,200,74,211,42,212,171
+905+  6482 1F DC 30 26
+905+  6486 67 92 C8 4A
+905+  648A D3 2A D4 AB
+906+  648E 54 2B 52 4B      db 84,43,82,75,73,147,36,38,51,204,40,24,31,240,1,224
+906+  6492 49 93 24 26
+906+  6496 33 CC 28 18
+906+  649A 1F F0 01 E0
+907+  649E
+908+  649E              CutSprite: ; appears in On a Branch Over the Drive, Conservatory Roof and Tool  Shed.
+909+  649E 0C 00 0C 00      db 12,0,12,0,12,0,12,0,12,0,30,0,18,0,51,0
+909+  64A2 0C 00 0C 00
+909+  64A6 0C 00 1E 00
+909+  64AA 12 00 33 00
+910+  64AE 3F 00 73 80      db 63,0,115,128,97,128,97,128,192,192,192,192,128,64,128,64
+910+  64B2 61 80 61 80
+910+  64B6 C0 C0 C0 C0
+910+  64BA 80 40 80 40
+911+  64BE 08 40 08 40      db 8,64,8,64,12,192,4,128,7,128,7,128,12,192,28,224
+911+  64C2 0C C0 04 80
+911+  64C6 07 80 07 80
+911+  64CA 0C C0 1C E0
+912+  64CE 3B 70 30 30      db 59,112,48,48,96,24,96,24,64,8,192,12,128,4,128,4
+912+  64D2 60 18 60 18
+912+  64D6 40 08 C0 0C
+912+  64DA 80 04 80 04
+913+  64DE 02 10 02 10      db 2,16,2,16,3,48,1,32,1,224,1,224,3,48,7,56
+913+  64E2 03 30 01 20
+913+  64E6 01 E0 01 E0
+913+  64EA 03 30 07 38
+914+  64EE 0E DC 0C 0C      db 14,220,12,12,24,6,24,6,16,2,48,3,32,1,32,1
+914+  64F2 18 06 18 06
+914+  64F6 10 02 30 03
+914+  64FA 20 01 20 01
+915+  64FE 00 30 00 30      db 0,48,0,48,0,48,0,48,0,48,0,120,0,72,0,204
+915+  6502 00 30 00 30
+915+  6506 00 30 00 78
+915+  650A 00 48 00 CC
+916+  650E 00 FC 01 CE      db 0,252,1,206,1,134,1,134,3,3,3,3,2,1,2,1
+916+  6512 01 86 01 86
+916+  6516 03 03 03 03
+916+  651A 02 01 02 01
+917+  651E
+918+  651E              PliersSprite: ; appears in To the Kitchens    Main Stairway, Halfway up the East Wall, Conservatory Roof and The Bow.
+919+  651E 7E 00 99 00      db 126,0,153,0,255,0,129,0,126,0,24,0,36,0,36,0
+919+  6522 FF 00 81 00
+919+  6526 7E 00 18 00
+919+  652A 24 00 24 00
+920+  652E 42 00 42 00      db 66,0,66,0,129,0,231,0,165,0,195,0,165,0,231,0
+920+  6532 81 00 E7 00
+920+  6536 A5 00 C3 00
+920+  653A A5 00 E7 00
+921+  653E 00 00 1F 80      db 0,0,31,128,38,64,57,192,48,192,31,128,9,0,16,128
+921+  6542 26 40 39 C0
+921+  6546 30 C0 1F 80
+921+  654A 09 00 10 80
+922+  654E 20 40 40 20      db 32,64,64,32,128,16,224,112,160,80,192,48,160,80,224,112
+922+  6552 80 10 E0 70
+922+  6556 A0 50 C0 30
+922+  655A A0 50 E0 70
+923+  655E 00 00 00 00      db 0,0,0,0,0,0,7,224,9,144,14,112,14,112,6,96
+923+  6562 00 00 07 E0
+923+  6566 09 90 0E 70
+923+  656A 0E 70 06 60
+924+  656E 1B D8 60 06      db 27,216,96,6,128,1,224,7,160,5,192,3,160,5,224,7
+924+  6572 80 01 E0 07
+924+  6576 A0 05 C0 03
+924+  657A A0 05 E0 07
+925+  657E 00 00 01 F8      db 0,0,1,248,2,100,3,156,3,12,1,248,0,144,1,8
+925+  6582 02 64 03 9C
+925+  6586 03 0C 01 F8
+925+  658A 00 90 01 08
+926+  658E 02 04 04 02      db 2,4,4,2,8,1,14,7,10,5,12,3,10,5,14,7
+926+  6592 08 01 0E 07
+926+  6596 0A 05 0C 03
+926+  659A 0A 05 0E 07
+927+  659E
+928+  659E              RobotSprite: ; appears in Under the Drive.
+929+  659E 0C 00 12 00      db 12,0,18,0,33,16,18,32,140,64,82,128,47,0,47,0
+929+  65A2 21 10 12 20
+929+  65A6 8C 40 52 80
+929+  65AA 2F 00 2F 00
+930+  65AE 5F 80 5F 80      db 95,128,95,128,95,128,0,0,255,192,93,128,93,128,255,192
+930+  65B2 5F 80 00 00
+930+  65B6 FF C0 5D 80
+930+  65BA 5D 80 FF C0
+931+  65BE 00 01 00 02      db 0,1,0,2,131,4,76,200,35,16,20,160,11,192,11,192
+931+  65C2 83 04 4C C8
+931+  65C6 23 10 14 A0
+931+  65CA 0B C0 0B C0
+932+  65CE 17 E0 17 E0      db 23,224,23,224,23,224,0,0,63,240,27,176,27,176,63,240
+932+  65D2 17 E0 00 00
+932+  65D6 3F F0 1B B0
+932+  65DA 1B B0 3F F0
+933+  65DE 80 00 40 00      db 128,0,64,0,32,1,17,226,8,196,5,40,2,240,2,240
+933+  65E2 20 01 11 E2
+933+  65E6 08 C4 05 28
+933+  65EA 02 F0 02 F0
+934+  65EE 05 F8 05 F8      db 5,248,5,248,5,248,0,0,15,252,11,116,11,116,15,252
+934+  65F2 05 F8 00 00
+934+  65F6 0F FC 0B 74
+934+  65FA 0B 74 0F FC
+935+  65FE 00 00 00 00      db 0,0,0,0,8,48,4,204,2,49,1,74,0,188,0,188
+935+  6602 08 30 04 CC
+935+  6606 02 31 01 4A
+935+  660A 00 BC 00 BC
+936+  660E 01 7E 01 7E      db 1,126,1,126,1,126,0,0,3,255,2,237,2,237,3,255
+936+  6612 01 7E 00 00
+936+  6616 03 FF 02 ED
+936+  661A 02 ED 03 FF
+937+  661E
+938+  661E              SwissArmyKife: ; appears in Top Landing, Under the Roof and Tool  Shed.
+939+  661E 38 00 7C 00      db 56,0,124,0,126,0,109,128,68,64,108,64,124,32,124,0
+939+  6622 7E 00 6D 80
+939+  6626 44 40 6C 40
+939+  662A 7C 20 7C 00
+940+  662E 7C 0C 7C 32      db 124,12,124,50,252,204,255,48,252,192,127,0,108,0,56,0
+940+  6632 FC CC FF 30
+940+  6636 FC C0 7F 00
+940+  663A 6C 00 38 00
+941+  663E 0E 60 1F 94      db 14,96,31,148,31,8,27,32,17,80,27,80,31,160,31,160
+941+  6642 1F 08 1B 20
+941+  6646 11 50 1B 50
+941+  664A 1F A0 1F A0
+942+  664E 7F 40 DF 40      db 127,64,223,64,223,128,159,128,127,0,31,0,27,0,14,0
+942+  6652 DF 80 9F 80
+942+  6656 7F 00 1F 00
+942+  665A 1B 00 0E 00
+943+  665E 03 80 07 C0      db 3,128,7,192,7,224,6,216,4,68,14,196,127,194,239,192
+943+  6662 07 E0 06 D8
+943+  6666 04 44 0E C4
+943+  666A 7F C2 EF C0
+944+  666E EF C0 8F C0      db 239,192,143,192,119,192,7,192,7,192,7,192,6,192,3,128
+944+  6672 77 C0 07 C0
+944+  6676 07 C0 07 C0
+944+  667A 06 C0 03 80
+945+  667E 00 E0 01 F0      db 0,224,1,240,1,240,1,178,1,21,1,181,1,250,1,250
+945+  6682 01 F0 01 B2
+945+  6686 01 15 01 B5
+945+  668A 01 FA 01 FA
+946+  668E 07 F4 0D F4      db 7,244,13,244,13,248,9,248,7,240,1,240,1,176,0,224
+946+  6692 0D F8 09 F8
+946+  6696 07 F0 01 F0
+946+  669A 01 B0 00 E0
+947+  669E
+948+  669E              EggSpriteRight: ; appears in The Drive, Cuckoo's Nest, To the Kitchens    Main Stairway and Back Stairway.
+949+  669E 0C 00 16 00      db 12,0,22,0,47,0,47,0,79,128,95,128,95,128,159,192
+949+  66A2 2F 00 2F 00
+949+  66A6 4F 80 5F 80
+949+  66AA 5F 80 9F C0
+950+  66AE BF C0 BD C0      db 191,192,189,192,186,192,189,64,90,128,93,128,63,0,12,0
+950+  66B2 BA C0 BD 40
+950+  66B6 5A 80 5D 80
+950+  66BA 3F 00 0C 00
+951+  66BE 00 00 00 00      db 0,0,0,0,0,0,0,112,3,152,12,120,51,248,71,240
+951+  66C2 00 00 00 70
+951+  66C6 03 98 0C 78
+951+  66CA 33 F8 47 F0
+952+  66CE 5F F0 BF F0      db 95,240,191,240,190,160,189,96,90,192,93,64,63,128,14,0
+952+  66D2 BE A0 BD 60
+952+  66D6 5A C0 5D 40
+952+  66DA 3F 80 0E 00
+953+  66DE 00 00 00 00      db 0,0,0,0,0,0,0,0,3,192,28,120,33,252,79,254
+953+  66E2 00 00 00 00
+953+  66E6 03 C0 1C 78
+953+  66EA 21 FC 4F FE
+954+  66EE 5F FE 9F FF      db 95,254,159,255,191,239,95,86,95,174,35,84,31,248,3,192
+954+  66F2 BF EF 5F 56
+954+  66F6 5F AE 23 54
+954+  66FA 1F F8 03 C0
+955+  66FE 00 00 00 00      db 0,0,0,0,0,0,14,0,23,192,23,240,19,252,11,254
+955+  6702 00 00 0E 00
+955+  6706 17 C0 17 F0
+955+  670A 13 FC 0B FE
+956+  670E 0B FE 0B D7      db 11,254,11,215,5,235,5,215,2,234,2,126,1,140,0,112
+956+  6712 05 EB 05 D7
+956+  6716 02 EA 02 7E
+956+  671A 01 8C 00 70
+957+  671E
+958+  671E              EggSpriteLeft:
+959+  671E 0C 00 16 00      db 12,0,22,0,47,0,47,0,79,128,95,128,95,128,159,192
+959+  6722 2F 00 2F 00
+959+  6726 4F 80 5F 80
+959+  672A 5F 80 9F C0
+960+  672E BF C0 BD C0      db 191,192,189,192,186,192,189,64,90,128,93,128,63,0,12,0
+960+  6732 BA C0 BD 40
+960+  6736 5A 80 5D 80
+960+  673A 3F 00 0C 00
+961+  673E 00 00 00 00      db 0,0,0,0,0,0,14,0,23,192,23,240,19,252,11,254
+961+  6742 00 00 0E 00
+961+  6746 17 C0 17 F0
+961+  674A 13 FC 0B FE
+962+  674E 0B FE 0B D7      db 11,254,11,215,5,235,5,215,2,234,2,126,1,140,0,112
+962+  6752 05 EB 05 D7
+962+  6756 02 EA 02 7E
+962+  675A 01 8C 00 70
+963+  675E 00 00 00 00      db 0,0,0,0,0,0,0,0,3,192,28,120,33,252,79,254
+963+  6762 00 00 00 00
+963+  6766 03 C0 1C 78
+963+  676A 21 FC 4F FE
+964+  676E 5F FE 9F FF      db 95,254,159,255,191,239,95,86,95,174,35,84,31,248,3,192
+964+  6772 BF EF 5F 56
+964+  6776 5F AE 23 54
+964+  677A 1F F8 03 C0
+965+  677E 00 00 00 00      db 0,0,0,0,0,0,0,112,3,152,12,120,51,248,71,240
+965+  6782 00 00 00 70
+965+  6786 03 98 0C 78
+965+  678A 33 F8 47 F0
+966+  678E 5F F0 BF F0      db 95,240,191,240,190,160,189,96,90,192,93,64,63,128,14,0
+966+  6792 BE A0 BD 60
+966+  6796 5A C0 5D 40
+966+  679A 3F 80 0E 00
+967+  679E
+968+  679E              PacManSprite: ; appears in The Attic.
+969+  679E 07 C0 18 30      db 7,192,24,48,35,136,68,68,136,34,144,19,144,19,136,34
+969+  67A2 23 88 44 44
+969+  67A6 88 22 90 13
+969+  67AA 90 13 88 22
+970+  67AE 44 44 23 88      db 68,68,35,136,24,48,7,192,3,0,3,0,3,0,3,128
+970+  67B2 18 30 07 C0
+970+  67B6 03 00 03 00
+970+  67BA 03 00 03 80
+971+  67BE 07 C0 18 30      db 7,192,24,48,32,8,67,132,132,66,136,35,136,35,132,66
+971+  67C2 20 08 43 84
+971+  67C6 84 42 88 23
+971+  67CA 88 23 84 42
+972+  67CE 43 84 20 08      db 67,132,32,8,24,48,7,192,15,128,29,208,8,224,4,64
+972+  67D2 18 30 07 C0
+972+  67D6 0F 80 1D D0
+972+  67DA 08 E0 04 40
+973+  67DE 07 C0 1F F0      db 7,192,31,240,62,120,124,60,126,124,255,254,255,254,240,0
+973+  67E2 3E 78 7C 3C
+973+  67E6 7E 7C FF FE
+973+  67EA FF FE F0 00
+974+  67EE FF 80 7F F0      db 255,128,127,240,127,252,63,248,31,240,7,192,0,0,0,0
+974+  67F2 7F FC 3F F8
+974+  67F6 1F F0 07 C0
+974+  67FA 00 00 00 00
+975+  67FE 07 C0 1F F0      db 7,192,31,240,60,248,120,124,124,252,255,128,252,0,240,0
+975+  6802 3C F8 78 7C
+975+  6806 7C FC FF 80
+975+  680A FC 00 F0 00
+976+  680E F8 00 7E 00      db 248,0,126,0,127,128,63,224,31,240,7,192,0,0,0,0
+976+  6812 7F 80 3F E0
+976+  6816 1F F0 07 C0
+976+  681A 00 00 00 00
+977+  681E
 # file closed: graphics.asm
  14   681E                  include "player.asm"
 # file opened: player.asm
@@ -1466,27 +1486,27 @@
  25+  6836              movePlayer_left:
  26+  6836 79               ld   a, c
  27+  6837 D6 02            sub  2                 ; Prova a muoverti di 2 pixel a sinistra
- 28+  6839 FE 18            cp   24                ; Confronta con il limite sinistro (24)
- 29+  683B 38 03            jr   c, .clamp_left    ; Se < 24, clampa a 24
+ 28+  6839 FE 08            cp   PLAYER_MIN_X      ; Confronta con il limite sinistro
+ 29+  683B 38 03            jr   c, .clamp_left    ; Se < PLAYER_MIN_X, clampa
  30+  683D 4F               ld   c, a              ; Altrimenti memorizza la nuova posizione
  31+  683E 18 12            jr   save_x
  32+  6840
  33+  6840              .clamp_left:
- 34+  6840 0E 18            ld   c, 24
+ 34+  6840 0E 08            ld   c, PLAYER_MIN_X
  35+  6842 18 0E            jr   save_x
  36+  6844
  37+  6844              movePlayer_right:
  38+  6844 79               ld   a, c
  39+  6845 C6 02            add  a, 2              ; Prova a muoverti di 2 pixel a destra
- 40+  6847 FE E7            cp   231               ; Confronta con il limite destro (231)
- 41+  6849 28 02            jr   z, .ok_right      ; Se == 231, va bene
- 42+  684B 30 03            jr   nc, .clamp_right  ; Se > 231 (senza carry, cioè maggiore), clampa a 231
+ 40+  6847 FE F0            cp   PLAYER_MAX_X      ; Confronta con il limite destro
+ 41+  6849 28 02            jr   z, .ok_right      ; Se == PLAYER_MAX_X, va bene
+ 42+  684B 30 03            jr   nc, .clamp_right  ; Se > PLAYER_MAX_X (senza carry, cioè maggiore), clampa
  43+  684D              .ok_right:
  44+  684D 4F               ld   c, a              ; Altrimenti memorizza la nuova posizione
  45+  684E 18 02            jr   save_x
  46+  6850
  47+  6850              .clamp_right:
- 48+  6850 0E E7            ld   c, 231
+ 48+  6850 0E F0            ld   c, PLAYER_MAX_X
  49+  6852
  50+  6852              save_x:
  51+  6852 ED 43 DC 6C      ld   (PlayerPos), bc
@@ -1610,7 +1630,7 @@
  30+  68DC 79               ld  a, c              ; C = PlayerX
  31+  68DD FE 99            cp  PLATFORM2_MIN_X   ; 153
  32+  68DF DA EC 68         jp  c, .check_platform3
- 33+  68E2 FE E8            cp  PLATFORM2_MAX_X   ; 232
+ 33+  68E2 FE F0            cp  PLATFORM2_MAX_X   ; 232
  34+  68E4 D2 EC 68         jp  nc, .check_platform3
  35+  68E7
  36+  68E7 06 50            ld  b, PLATFORM2_LEVEL
@@ -1619,7 +1639,7 @@
  39+  68EC              .check_platform3:
  40+  68EC                  ; --- CONTROLLO PIATTAFORMA 3 SINISTRA (Riga 12) ---
  41+  68EC 79               ld  a, c              ; C = PlayerX
- 42+  68ED FE 18            cp  PLATFORM3_MIN_X   ; 24
+ 42+  68ED FE 11            cp  PLATFORM3_MIN_X   ; 24
  43+  68EF DA 2F 69         jp  c, .in_air        ; Se X < 24, caduta
  44+  68F2 FE 68            cp  PLATFORM3_MAX_X   ; 104
  45+  68F4 D2 2F 69         jp  nc, .in_air       ; Se X >= 104, caduta
@@ -1735,7 +1755,7 @@
 155+  6982 79               ld  a, c              ; C = PlayerX
 156+  6983 FE 99            cp  PLATFORM2_MIN_X   ; 153
 157+  6985 38 15            jr  c, .check_platform3_collision
-158+  6987 FE E8            cp  PLATFORM2_MAX_X   ; 232
+158+  6987 FE F0            cp  PLATFORM2_MAX_X   ; 232
 159+  6989 30 11            jr  nc, .check_platform3_collision
 160+  698B
 161+  698B                  ; Vecchio Y deve essere <= platform2_level (80), e nuovo Y (in B) >= platform2_level (80)
@@ -1755,7 +1775,7 @@
 175+  699C                  ; --- COLLISIONE CON LA PIATTAFORMA 3 SINISTRA ---
 176+  699C                  ; Siamo dentro l'intervallo X della piattaforma 3?
 177+  699C 79               ld  a, c              ; C = PlayerX
-178+  699D FE 18            cp  PLATFORM3_MIN_X   ; 24
+178+  699D FE 11            cp  PLATFORM3_MIN_X   ; 24
 179+  699F 38 15            jr  c, .no_collision_checks
 180+  69A1 FE 68            cp  PLATFORM3_MAX_X   ; 104
 181+  69A3 30 11            jr  nc, .no_collision_checks

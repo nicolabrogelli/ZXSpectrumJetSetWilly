@@ -25,27 +25,27 @@ MovePlayer:
 movePlayer_left:
     ld   a, c
     sub  2                 ; Prova a muoverti di 2 pixel a sinistra
-    cp   24                ; Confronta con il limite sinistro (24)
-    jr   c, .clamp_left    ; Se < 24, clampa a 24
+    cp   PLAYER_MIN_X      ; Confronta con il limite sinistro
+    jr   c, .clamp_left    ; Se < PLAYER_MIN_X, clampa
     ld   c, a              ; Altrimenti memorizza la nuova posizione
     jr   save_x
 
 .clamp_left:
-    ld   c, 24
+    ld   c, PLAYER_MIN_X
     jr   save_x
 
 movePlayer_right:
     ld   a, c
     add  a, 2              ; Prova a muoverti di 2 pixel a destra
-    cp   231               ; Confronta con il limite destro (231)
-    jr   z, .ok_right      ; Se == 231, va bene
-    jr   nc, .clamp_right  ; Se > 231 (senza carry, cioè maggiore), clampa a 231
+    cp   PLAYER_MAX_X      ; Confronta con il limite destro
+    jr   z, .ok_right      ; Se == PLAYER_MAX_X, va bene
+    jr   nc, .clamp_right  ; Se > PLAYER_MAX_X (senza carry, cioè maggiore), clampa
 .ok_right:
     ld   c, a              ; Altrimenti memorizza la nuova posizione
     jr   save_x
 
 .clamp_right:
-    ld   c, 231
+    ld   c, PLAYER_MAX_X
 
 save_x:
     ld   (PlayerPos), bc

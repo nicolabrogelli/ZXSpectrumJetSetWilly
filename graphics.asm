@@ -179,57 +179,57 @@ GetBackgroundByte:
     push de
     ld   b, a              ; B = X byte in pixel
 
-    ; Pavimento: riga carattere 18, Y = 144..150, tutte le colonne
+    ; Pavimento: riga carattere FLOOR_CHAR_ROW, Y = FLOOR_Y..FLOOR_Y+6, tutte le colonne
     ld   a, d
-    cp   144
+    cp   FLOOR_Y
     jr   c, .check_platform1
-    cp   151
+    cp   FLOOR_Y + 7
     jr   nc, .check_platform1
-    sub  144
+    sub  FLOOR_Y
     jr   .load_tile_byte
 
 .check_platform1:
-    ; Piattaforma 1: riga carattere 15, Y = 120..126, colonne 8..23
+    ; Piattaforma 1: riga carattere (PLATFORM_Y/8), Y = PLATFORM_Y..PLATFORM_Y+6, colonne PLATFORM_COL..PLATFORM_COL+PLATFORM_WIDTH_COLS-1
     ld   a, d
-    cp   120
+    cp   PLATFORM_Y
     jr   c, .check_platform2
-    cp   127
+    cp   PLATFORM_Y + 7
     jr   nc, .check_platform2
     ld   a, b
-    cp   64
+    cp   PLATFORM_COL * 8
     jr   c, .blank
-    cp   192
+    cp   (PLATFORM_COL + PLATFORM_WIDTH_COLS) * 8
     jr   nc, .blank
     ld   a, d
-    sub  120
+    sub  PLATFORM_Y
     jr   .load_tile_byte
 
 .check_platform2:
-    ; Piattaforme alte: riga carattere 12, Y = 96..102
+    ; Piattaforme alte: riga carattere 12, Y = PLATFORM2_Y..PLATFORM2_Y+6
     ld   a, d
-    cp   96
+    cp   PLATFORM2_Y
     jr   c, .blank
-    cp   103
+    cp   PLATFORM2_Y + 7
     jr   nc, .blank
 
-    ; Piattaforma 2: colonne 20..29
+    ; Piattaforma 2: colonne PLATFORM2_COL..PLATFORM2_COL+PLATFORM2_WIDTH_COLS-1
     ld   a, b
-    cp   160
+    cp   PLATFORM2_COL * 8
     jr   c, .check_platform3
-    cp   240
+    cp   (PLATFORM2_COL + PLATFORM2_WIDTH_COLS) * 8
     jr   c, .platform_high
 
 .check_platform3:
-    ; Piattaforma 3 sinistra: colonne 3..12
+    ; Piattaforma 3 sinistra: colonne PLATFORM3_COL..PLATFORM3_COL+PLATFORM3_WIDTH_COLS-1
     ld   a, b
-    cp   24
+    cp   PLATFORM3_COL * 8
     jr   c, .blank
-    cp   104
+    cp   (PLATFORM3_COL + PLATFORM3_WIDTH_COLS) * 8
     jr   nc, .blank
 
 .platform_high:
     ld   a, d
-    sub  96
+    sub  PLATFORM2_Y
 
 .load_tile_byte:
     ld   e, a
@@ -665,15 +665,15 @@ DrawFloorDirect:
     push hl
     push ix
     
-    ; Disegniamo le 8 scanline della riga 18
+    ; Disegniamo le 8 scanline della riga FLOOR_CHAR_ROW
     ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento (9° carattere)
     ld   d, 0              ; D = offset scanline (0..6)
     
 .scanline_loop:
-    ld   a, $50            ; Base del terzo 2 per scanline 0, riga 18
-    add  a, d              ; A = $50 + scanline offset (D)
-    ld   h, a              ; HL high byte = $50 + D
-    ld   l, $40            ; HL low byte = $40 (Colonna 0 per la riga 18)
+    ld   a, $40 + (FLOOR_CHAR_ROW & $18) ; Base del terzo per scanline 0, riga FLOOR_CHAR_ROW
+    add  a, d              ; A = base + scanline offset (D)
+    ld   h, a              ; HL high byte = base + D
+    ld   l, ((FLOOR_CHAR_ROW & 7) * 32) + 0 ; HL low byte
     
     ld   e, (ix+0)         ; E = byte grafico per questa scanline
     ld   c, 32             ; 32 colonne
@@ -690,8 +690,8 @@ DrawFloorDirect:
     cp   7
     jr   nz, .scanline_loop
     
-    ; Imposta gli attributi di colore per la riga 18
-    ld   hl, $5800 + (18 * 32)
+    ; Imposta gli attributi di colore per la riga FLOOR_CHAR_ROW
+    ld   hl, $5800 + (FLOOR_CHAR_ROW * 32)
     ld   b, 32
 .attr_loop:
     ld   (hl), RED        ; Colore del pavimento = RED
@@ -705,10 +705,6 @@ DrawFloorDirect:
     pop  bc
     ret
 
-; -------------------------------------------------------------------
-; Disegna la piattaforma a riga 15 (Y = 120), colonne da 8 a 23 (CYAN)
-; e le piattaforme alte a riga 12 (Y = 96), colonne 20..29 e 3..12 (GREEN)
-; -------------------------------------------------------------------
 DrawPlatform:
     push bc
     push de
@@ -716,18 +712,18 @@ DrawPlatform:
     push ix
     
     ; --- PIATTAFORMA 1 ---
-    ; Disegniamo le 7 scanline della riga 15
+    ; Disegniamo le 7 scanline
     ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento (9° carattere)
     ld   d, 0              ; D = offset scanline (0..6)
     
 .scanline_loop1:
-    ld   a, $48            ; Base del secondo terzo (Third 1) per scanline 0, riga 15
-    add  a, d              ; A = $48 + scanline offset (D)
-    ld   h, a              ; HL high byte = $48 + D
-    ld   l, $E0 + 8        ; HL low byte = $E0 (riga 15) + 8 (colonna 8)
+    ld   a, $40 + ((PLATFORM_Y / 8) & $18) ; Base del terzo per scanline 0
+    add  a, d              ; A = base + scanline offset (D)
+    ld   h, a              ; HL high byte
+    ld   l, (((PLATFORM_Y / 8) & 7) * 32) + PLATFORM_COL ; HL low byte
     
     ld   e, (ix+0)         ; E = byte grafico per questa scanline
-    ld   c, 16             ; 16 colonne (da colonna 8 a 23 incluse)
+    ld   c, PLATFORM_WIDTH_COLS ; colonne
     
 .col_loop1:
     ld   a, (hl)           ; Leggi byte dallo schermo
@@ -743,9 +739,9 @@ DrawPlatform:
     cp   7
     jr   nz, .scanline_loop1
     
-    ; Imposta gli attributi di colore per la riga 15, colonne 8..23
-    ld   hl, $5800 + (15 * 32) + 8
-    ld   b, 16
+    ; Imposta gli attributi di colore per la piattaforma 1
+    ld   hl, $5800 + ((PLATFORM_Y / 8) * 32) + PLATFORM_COL
+    ld   b, PLATFORM_WIDTH_COLS
 .attr_loop1:
     ld   (hl), CYAN        ; Colore della piattaforma = CYAN
     inc  hl
@@ -753,18 +749,18 @@ DrawPlatform:
     jr   nz, .attr_loop1
 
     ; --- PIATTAFORMA 2 ---
-    ; Disegniamo le 7 scanline della riga 12
+    ; Disegniamo le 7 scanline
     ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento
     ld   d, 0              ; D = offset scanline (0..6)
     
 .scanline_loop2:
-    ld   a, $48            ; Base del secondo terzo (Third 1) per scanline 0, riga 12
-    add  a, d              ; A = $48 + scanline offset (D)
-    ld   h, a              ; HL high byte = $48 + D
-    ld   l, $80 + 20       ; HL low byte = $80 (riga 12) + 20 (colonna 20)
+    ld   a, $40 + ((PLATFORM2_Y / 8) & $18) ; Base del terzo per scanline 0
+    add  a, d              ; A = base + scanline offset (D)
+    ld   h, a              ; HL high byte
+    ld   l, (((PLATFORM2_Y / 8) & 7) * 32) + PLATFORM2_COL ; HL low byte
     
     ld   e, (ix+0)         ; E = byte grafico per questa scanline
-    ld   c, 10             ; 10 colonne (da colonna 20 a 29 incluse)
+    ld   c, PLATFORM2_WIDTH_COLS ; colonne
     
 .col_loop2:
     ld   a, (hl)           ; Leggi byte dallo schermo
@@ -780,9 +776,9 @@ DrawPlatform:
     cp   7
     jr   nz, .scanline_loop2
     
-    ; Imposta gli attributi di colore per la riga 12, colonne 20..29
-    ld   hl, $5800 + (12 * 32) + 20
-    ld   b, 10
+    ; Imposta gli attributi di colore per la piattaforma 2
+    ld   hl, $5800 + ((PLATFORM2_Y / 8) * 32) + PLATFORM2_COL
+    ld   b, PLATFORM2_WIDTH_COLS
 .attr_loop2:
     ld   (hl), GREEN       ; Colore della piattaforma 2 = GREEN
     inc  hl
@@ -790,18 +786,18 @@ DrawPlatform:
     jr   nz, .attr_loop2
 
     ; --- PIATTAFORMA 3 SINISTRA ---
-    ; Disegniamo le 7 scanline della riga 12
+    ; Disegniamo le 7 scanline
     ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento
     ld   d, 0              ; D = offset scanline (0..6)
     
 .scanline_loop3:
-    ld   a, $48            ; Base del secondo terzo (Third 1) per scanline 0, riga 12
-    add  a, d              ; A = $48 + scanline offset (D)
-    ld   h, a              ; HL high byte = $48 + D
-    ld   l, $80 + 3        ; HL low byte = $80 (riga 12) + 3 (colonna 3)
+    ld   a, $40 + ((PLATFORM3_Y / 8) & $18) ; Base del terzo per scanline 0
+    add  a, d              ; A = base + scanline offset (D)
+    ld   h, a              ; HL high byte
+    ld   l, (((PLATFORM3_Y / 8) & 7) * 32) + PLATFORM3_COL ; HL low byte
     
     ld   e, (ix+0)         ; E = byte grafico per questa scanline
-    ld   c, 10             ; 10 colonne (da colonna 3 a 12 incluse)
+    ld   c, PLATFORM3_WIDTH_COLS ; colonne
     
 .col_loop3:
     ld   a, (hl)           ; Leggi byte dallo schermo
@@ -817,9 +813,9 @@ DrawPlatform:
     cp   7
     jr   nz, .scanline_loop3
     
-    ; Imposta gli attributi di colore per la riga 12, colonne 3..12
-    ld   hl, $5800 + (12 * 32) + 3
-    ld   b, 10
+    ; Imposta gli attributi di colore per la piattaforma 3
+    ld   hl, $5800 + ((PLATFORM3_Y / 8) * 32) + PLATFORM3_COL
+    ld   b, PLATFORM3_WIDTH_COLS
 .attr_loop3:
     ld   (hl), GREEN       ; Colore della piattaforma 3 = GREEN
     inc  hl
