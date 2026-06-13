@@ -76,25 +76,10 @@ Room1Unused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 Room1Enemy1:
-    DEFB 20,8	                            ;Guardian no. 20 (horizontal), base sprite 0, initial x=8 (41120)
-
+    DEFB $80, 8, 120, 200         ; Enemy 1 (Lametta), horizontal, Starts X=8, Y=120, Limit X=200
 Room1Enemy2:
-    DEFB 21,20	                            ;Guardian no. 21 (horizontal), base sprite 0, initial x=20 (41128)
-
+    DEFB $80, 80, 80, 180         ; Enemy 2 (Lametta), horizontal, Starts X=80, Y=80, Limit X=180
 Room1Enemy3:
-    DEFB 14,140	                            ;Guardian no. 14 (vertical), base sprite 4, x=12 (41072)
-
+    DEFB $C1, 120, 40, 130        ; Enemy 3 (Egg), vertical, Starts X=120, Y=40, Limit Y=130
 Room1Enemy4:
-    DEFB 255,0	                            ;Terminator (41976)
-
-Room1Enemy5:
-    DEFB 0,0	                            ;Nothing (40960)
-
-Room1Enemy6:
-    DEFB 0,0	                            ;Nothing (40960)
-
-Room1Enemy7:
-    DEFB 0,0	                            ;Nothing (40960)
-
-Room1Enemy8:
-    DEFB 0,0	                            ;Nothing (40960)
+    DEFB 0,0,0,0                  ; Empty slot

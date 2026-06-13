@@ -278,71 +278,49 @@ ApplyGravity:
 ; Output: Carry flag impostato se collisione, altrimenti resettato
 ; -------------------------------------------------------------------
 CheckCollision:
-    ; --- CONTROLLO COLLISIONE CON PRIMO NEMICO (LAMETTA) ---
-    ; 1. Controllo orizzontale: PlayerX - EnemyX + 7 in [0, 22] (Player width=8, Enemy width=16)
-    ld   a, (PlayerPos)   ; A = PlayerX
-    ld   hl, EnemyPos
-    sub  (hl)             ; A = PlayerX - EnemyX
-    add  a, 7             ; A = PlayerX - EnemyX + 7
-    cp   23               ; Se >= 23, nessuna collisione con questo, prova con l'altro
-    jr   nc, .check_egg
+    push hl
+    push de
+    push bc
+    push ix
     
-    ; 2. Controllo verticale: PlayerY - EnemyY + 15 in [0, 30] (Player height=16, Enemy height=16)
-    ld   a, (PlayerPos+1) ; A = PlayerY
-    ld   hl, EnemyPos+1
-    sub  (hl)             ; A = PlayerY - EnemyY
-    add  a, 15            ; A = PlayerY - EnemyY + 15
-    cp   31               ; Se >= 31, nessuna collisione con questo, prova con l'altro
-    jr   nc, .check_egg
+    ld   ix, ActiveEnemies
+    ld   b, 4              ; 4 slot
+.loop:
+    ld   a, (ix+0)         ; Flags
+    and  $80               ; Active?
+    jr   z, .next
     
-    ; Collisione avvenuta con il primo nemico!
-    scf                   ; Imposta carry flag
+    ; 1. Controllo orizzontale: PlayerX - EnemyX + 7 in [0, 22]
+    ld   a, (PlayerPos)    ; A = PlayerX
+    sub  (ix+1)            ; A = PlayerX - EnemyX
+    add  a, 7              ; A = PlayerX - EnemyX + 7
+    cp   23                ; Se >= 23, nessuna collisione con questo
+    jr   nc, .next
+    
+    ; 2. Controllo verticale: PlayerY - EnemyY + 15 in [0, 30]
+    ld   a, (PlayerPos+1)  ; A = PlayerY
+    sub  (ix+2)            ; A = PlayerY - EnemyY
+    add  a, 15             ; A = PlayerY - EnemyY + 15
+    cp   31                ; Se >= 31, nessuna collisione con questo
+    jr   nc, .next
+    
+    ; Collisione avvenuta!
+    pop  ix
+    pop  bc
+    pop  de
+    pop  hl
+    scf                    ; Imposta carry flag
     ret
     
-.check_egg:
-    ; --- CONTROLLO COLLISIONE CON SECONDO NEMICO (EGG) ---
-    ; 1. Controllo orizzontale: PlayerX - EggX + 7 in [0, 22] (Player width=8, Egg width=16)
-    ld   a, (PlayerPos)   ; A = PlayerX
-    ld   hl, EggPos
-    sub  (hl)             ; A = PlayerX - EggX
-    add  a, 7             ; A = PlayerX - EggX + 7
-    cp   23               ; Se >= 23, prova con il robot
-    jr   nc, .check_robot
+.next:
+    ld   de, 8
+    add  ix, de            ; Prossimo slot
+    dec  b
+    jr   nz, .loop
     
-    ; 2. Controllo verticale: PlayerY - EggY + 15 in [0, 30] (Player height=16, Egg height=16)
-    ld   a, (PlayerPos+1) ; A = PlayerY
-    ld   hl, EggPos+1
-    sub  (hl)             ; A = PlayerY - EggY
-    add  a, 15            ; A = PlayerY - EggY + 15
-    cp   31               ; Se >= 31, prova con il robot
-    jr   nc, .check_robot
-    
-    ; Collisione avvenuta con il secondo nemico!
-    scf                   ; Imposta carry flag
-    ret
-
-.check_robot:
-    ; --- CONTROLLO COLLISIONE CON TERZO NEMICO (ROBOT) ---
-    ; 1. Controllo orizzontale: PlayerX - RobotX + 7 in [0, 22] (Player width=8, Robot width=16)
-    ld   a, (PlayerPos)   ; A = PlayerX
-    ld   hl, RobotPos
-    sub  (hl)             ; A = PlayerX - RobotX
-    add  a, 7             ; A = PlayerX - RobotX + 7
-    cp   23               ; Se >= 23, nessuna collisione
-    jr   nc, .no_collision
-    
-    ; 2. Controllo verticale: PlayerY - RobotY + 15 in [0, 30] (Player height=16, Robot height=16)
-    ld   a, (PlayerPos+1) ; A = PlayerY
-    ld   hl, RobotPos+1
-    sub  (hl)             ; A = PlayerY - RobotY
-    add  a, 15            ; A = PlayerY - RobotY + 15
-    cp   31               ; Se >= 31, nessuna collisione
-    jr   nc, .no_collision
-    
-    ; Collisione avvenuta con il terzo nemico!
-    scf                   ; Imposta carry flag
-    ret
-    
-.no_collision:
+    pop  ix
+    pop  bc
+    pop  de
+    pop  hl
     or   a                 ; Reset carry flag
     ret

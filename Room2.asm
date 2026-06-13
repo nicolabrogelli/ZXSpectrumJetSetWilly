@@ -67,18 +67,10 @@ Room2Unused:
     DEFB 0,0,0
 
 Room2Enemy1:
-    DEFB 10,138
+    DEFB $82, 40, 128, 180        ; Enemy 1 (Robot), horizontal, Starts X=40, Y=128, Limit X=180
 Room2Enemy2:
-    DEFB 12,29
+    DEFB $80, 100, 80, 200        ; Enemy 2 (Lametta), horizontal, Starts X=100, Y=80, Limit X=200
 Room2Enemy3:
-    DEFB 44,39
+    DEFB $81, 60, 104, 160        ; Enemy 3 (Egg), horizontal, Starts X=60, Y=104, Limit X=160
 Room2Enemy4:
-    DEFB 255,0
-Room2Enemy5:
-    DEFB 0,0
-Room2Enemy6:
-    DEFB 0,0
-Room2Enemy7:
-    DEFB 0,0
-Room2Enemy8:
-    DEFB 0,0
+    DEFB 0,0,0,0                  ; Empty slot

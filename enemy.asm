@@ -1,283 +1,395 @@
-;=x==========================================================================
+;===========================================================================
 ; enemy.asm
 ;===========================================================================
 
 ; -------------------------------------------------------------------
-; Muove il nemico in orizzontale (pattugliamento 2 pixel/frame)
+; Struttura dati per i nemici attivi della stanza corrente (RAM)
+; 4 slot, 10 byte ciascuno:
+; Offset 0: Flags (Active, Vertical, Sprite)
+; Offset 1: Current X
+; Offset 2: Current Y
+; Offset 3: Min Limit
+; Offset 4: Max Limit
+; Offset 5: Direction
+; Offset 6: Anim State
+; Offset 7: Old X
+; Offset 8: Old Y
+; Offset 9: Reserved
 ; -------------------------------------------------------------------
-MoveEnemy:
-    ld   bc, (EnemyPos)   ; C = EnemyX, B = EnemyY
+ActiveEnemies:
+    .40 db 0
+
+; -------------------------------------------------------------------
+; Carica i nemici della stanza corrente in ActiveEnemies.
+; Chiamato quando si entra in una stanza.
+; -------------------------------------------------------------------
+LoadRoomEnemies:
+    push hl
+    push de
+    push bc
     
-    ld   a, (enemy_direction)
-    cp   1                ; Sinistra?
-    jr   nz, .move_right
+    ld   hl, (room_ptr)
+    ld   de, 240           ; Offset degli enemy nella stanza
+    add  hl, de            ; HL = indirizzo di RoomXEnemy1
     
-.move_left:
+    ld   de, ActiveEnemies
+    ld   b, 4              ; 4 slot per stanza
+.loop:
+    ; 1. Copia Flags, StartX, StartY
+    ld   a, (hl)           ; A = Flags
+    ld   (de), a           ; Offset 0
+    inc  hl
+    inc  de
+    
+    ld   a, (hl)           ; A = StartX
+    ld   (de), a           ; Offset 1
+    inc  hl
+    inc  de
+    
+    ld   a, (hl)           ; A = StartY
+    ld   (de), a           ; Offset 2
+    inc  hl
+    inc  de
+    
+    ; 2. Determina se orizzontale o verticale per calcolare Min e Max Limit
+    push hl
+    dec  hl
+    dec  hl
+    dec  hl                ; HL = Flags address
+    ld   a, (hl)           ; A = Flags
+    and  $40               ; Vertical? (Bit 6)
+    jr   nz, .is_vert
+    
+.is_horiz:
+    inc  hl                ; HL = StartX address
+    ld   a, (hl)           ; A = StartX
+    inc  hl
+    inc  hl                ; HL = Limit address
+    ld   c, (hl)           ; C = Limit
+    
+    ; Confronta StartX (A) con Limit (C)
+    cp   c
+    jr   c, .h_start_smaller
+    ; StartX >= Limit
+    push af
     ld   a, c
-    sub  2                ; Muovi a sinistra di 2 pixel
-    cp   24               ; Limite sinistro (24)
-    jr   z, .reverse_to_right
-    jr   c, .reverse_to_right
-    ld   c, a
-    jr   .save_x
+    ld   (de), a           ; Offset 3: Min Limit = Limit
+    inc  de
+    pop  af
+    ld   (de), a           ; Offset 4: Max Limit = StartX
+    inc  de
+    jr   .done_min_max
     
-.reverse_to_right:
-    ld   c, 24
+.h_start_smaller:
+    ld   (de), a           ; Offset 3: Min Limit = StartX
+    inc  de
+    ld   a, c
+    ld   (de), a           ; Offset 4: Max Limit = Limit
+    inc  de
+    jr   .done_min_max
+    
+.is_vert:
+    inc  hl
+    inc  hl                ; HL = StartY address
+    ld   a, (hl)           ; A = StartY
+    inc  hl                ; HL = Limit address
+    ld   c, (hl)           ; C = Limit
+    
+    ; Confronta StartY (A) con Limit (C)
+    cp   c
+    jr   c, .v_start_smaller
+    ; StartY >= Limit
+    push af
+    ld   a, c
+    ld   (de), a           ; Offset 3: Min Limit = Limit
+    inc  de
+    pop  af
+    ld   (de), a           ; Offset 4: Max Limit = StartY
+    inc  de
+    jr   .done_min_max
+    
+.v_start_smaller:
+    ld   (de), a           ; Offset 3: Min Limit = StartY
+    inc  de
+    ld   a, c
+    ld   (de), a           ; Offset 4: Max Limit = Limit
+    inc  de
+    
+.done_min_max:
+    pop  hl                ; HL = Limit address in Room data
+    inc  hl                ; HL = inizio del prossimo slot
+    
+    ; Imposta Direction = 2 (Destra/Giù)
     ld   a, 2
-    ld   (enemy_direction), a
-    jr   .save_x
-
-.move_right:
-    ld   a, c
-    add  a, 2                ; Muovi a destra di 2 pixel
-    cp   231                 ; Limite destro (231)
-    jr   z, .reverse_to_left
-    jr   nc, .reverse_to_left
-    ld   c, a
-    jr   .save_x
+    ld   (de), a           ; Offset 5: Direction
+    inc  de
     
-.reverse_to_left:
-    ld   c, 231
-    ld   a, 1
-    ld   (enemy_direction), a
-
-.save_x:
-    ld   (EnemyPos), bc
-
-.animate:
-    ; Alterna lo stato delle gambe/rotazione ad ogni movimento (0, 1, 2, 3)
-    ld   a, (enemy_body_state)
-    inc  a
-    cp   4
-    jr   nz, .save_state
-    ld   a, 0
-.save_state:
-    ld   (enemy_body_state), a
+    ; Imposta Anim State = 0
+    xor  a
+    ld   (de), a           ; Offset 6: Anim State
+    inc  de
+    
+    ; Imposta Old X = Start X
+    push hl
+    dec  hl
+    dec  hl
+    dec  hl                ; HL = Start X
+    ld   a, (hl)
+    ld   (de), a           ; Offset 7: Old X
+    inc  de
+    
+    ; Imposta Old Y = Start Y
+    inc  hl                ; HL = Start Y
+    ld   a, (hl)
+    ld   (de), a           ; Offset 8: Old Y
+    inc  de
+    
+    pop  hl
+    
+    ; Offset 9: Riservato
+    xor  a
+    ld   (de), a           ; Offset 9
+    inc  de
+    
+    dec  b
+    jp   nz, .loop
+    
+    pop  bc
+    pop  de
+    pop  hl
     ret
 
 ; -------------------------------------------------------------------
-; Disegna il nemico (lametta) a coordinate pixel
+; Cancella tutti i nemici attivi ripristinando lo sfondo statico
 ; -------------------------------------------------------------------
-PrintEnemy:
+EraseRoomEnemies:
+    push hl
+    push de
+    push bc
     push ix
     
-    ; Determina quale sprite base usare
-    ld   a, (enemy_direction)
+    ld   ix, ActiveEnemies
+    ld   b, 4              ; 4 slot
+.loop:
+    ld   a, (ix+0)         ; Flags
+    and  $80               ; Active?
+    jr   z, .next
+    
+    push bc                ; Salva contatore ciclo
+    ld   c, (ix+7)         ; C = Old X
+    ld   b, (ix+8)         ; B = Old Y
+    call ErasePixelSprite16x16
+    pop  bc
+    
+.next:
+    ld   de, 10
+    add  ix, de            ; Prossimo slot
+    dec  b
+    jr   nz, .loop
+    
+    pop  ix
+    pop  bc
+    pop  de
+    pop  hl
+    ret
+
+; -------------------------------------------------------------------
+; Disegna tutti i nemici attivi
+; -------------------------------------------------------------------
+DrawRoomEnemies:
+    push hl
+    push de
+    push bc
+    push ix
+    
+    ld   ix, ActiveEnemies
+    ld   b, 4              ; 4 slot
+.loop:
+    ld   a, (ix+0)         ; Flags
+    and  $80               ; Active?
+    jp   z, .next
+    
+    push bc                ; Salva contatore ciclo
+    
+    ; Determina quale sprite usare basato sul tipo (Bit 1-0)
+    ld   a, (ix+0)         ; Flags
+    and  3                 ; Tipo (0=Lametta, 1=Uovo, 2=Robot)
+    jp   nz, .not_lametta
+    
+    ; Lametta (Tipo 0)
+    ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
-    jr   nz, .right_enemy
+    ld   hl, LamettaSpriteLeft
+    jr   z, .got_sprite
+    ld   hl, LamettaSpriteRight
+    jr   .got_sprite
     
-.left_enemy:
-    ld   ix, LamettaSpriteLeft
-    jr   .calc_frame
+.not_lametta:
+    dec  a
+    jp   nz, .not_egg
     
-.right_enemy:
-    ld   ix, LamettaSpriteRight
-
-.calc_frame:
-    ; Calcola il puntatore al frame corrente (body_state * 32)
-    ld   a, (enemy_body_state) ; A = 0, 1, 2, 3
-    add  a, a                  ; *2
-    add  a, a                  ; *4
-    add  a, a                  ; *8
-    add  a, a                  ; *16
-    add  a, a                  ; *32
-    ld   e, a
-    ld   d, 0                  ; DE = offset del frame
-    add  ix, de                ; IX = puntatore al frame corretto
-    
-    ld   bc, (EnemyPos)        ; C = EnemyX, B = EnemyY
-    call DrawPixelSprite16x16  ; Disegna lametta 16x16
-    
-    pop  ix
-    ret
-
-; -------------------------------------------------------------------
-; Cancella il nemico alle vecchie coordinate pixel
-; -------------------------------------------------------------------
-DeleteEnemyAtOldPos:
-    ld   bc, (EnemyPosOld)     ; C = EnemyXOld, B = EnemyYOld
-    call ErasePixelSprite16x16 ; Cancella lametta
-    ret
-
-; -------------------------------------------------------------------
-; Muove l'Egg in orizzontale sulla seconda piattaforma (pixel 160-224)
-; -------------------------------------------------------------------
-MoveEgg:
-    ld   bc, (EggPos)     ; C = EggX, B = EggY
-    
-    ld   a, (egg_direction)
-    cp   1                ; Sinistra?
-    jr   nz, .move_right
-    
-.move_left:
-    ld   a, c
-    sub  2                ; Muovi a sinistra di 2 pixel
-    cp   160              ; Limite sinistro (160)
-    jr   z, .reverse_to_right
-    jr   c, .reverse_to_right
-    ld   c, a
-    jr   .save_x
-    
-.reverse_to_right:
-    ld   c, 160
-    ld   a, 2
-    ld   (egg_direction), a
-    jr   .save_x
-
-.move_right:
-    ld   a, c
-    add  a, 2                ; Muovi a destra di 2 pixel
-    cp   224                 ; Limite destro (224)
-    jr   z, .reverse_to_left
-    jr   nc, .reverse_to_left
-    ld   c, a
-    jr   .save_x
-    
-.reverse_to_left:
-    ld   c, 224
-    ld   a, 1
-    ld   (egg_direction), a
-
-.save_x:
-    ld   (EggPos), bc
-
-.animate:
-    ; Alterna lo stato di animazione (0, 1, 2, 3)
-    ld   a, (egg_body_state)
-    inc  a
-    cp   4
-    jr   nz, .save_state
-    ld   a, 0
-.save_state:
-    ld   (egg_body_state), a
-    ret
-
-; -------------------------------------------------------------------
-; Disegna l'Egg a coordinate pixel
-; -------------------------------------------------------------------
-PrintEgg:
-    push ix
-    
-    ; Determina quale sprite base usare
-    ld   a, (egg_direction)
+    ; Uovo (Tipo 1)
+    ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
-    jr   nz, .right_egg
+    ld   hl, EggSpriteLeft
+    jr   z, .got_sprite
+    ld   hl, EggSpriteRight
+    jr   .got_sprite
     
-.left_egg:
-    ld   ix, EggSpriteLeft
-    jr   .calc_frame
+.not_egg:
+    ; Robot (Tipo 2)
+    ld   hl, RobotSprite
     
-.right_egg:
-    ld   ix, EggSpriteRight
-
-.calc_frame:
-    ; Calcola il puntatore al frame corrente (egg_body_state * 32)
-    ld   a, (egg_body_state)   ; A = 0, 1, 2, 3
-    add  a, a                  ; *2
-    add  a, a                  ; *4
-    add  a, a                  ; *8
-    add  a, a                  ; *16
-    add  a, a                  ; *32
+.got_sprite:
+    ; Calcola il frame dell'animazione: Anim State * 32
+    ld   a, (ix+6)         ; Anim State (0..3)
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    add  a, a              ; *16
+    add  a, a              ; *32
     ld   e, a
-    ld   d, 0                  ; DE = offset del frame
-    add  ix, de                ; IX = puntatore al frame di EggSprite
+    ld   d, 0              ; DE = offset del frame
+    add  hl, de            ; HL = indirizzo del frame corretto
     
-    ld   bc, (EggPos)          ; C = EggX, B = EggY
-    call DrawPixelSprite16x16  ; Disegna Egg 16x16
+    ; Disegna alla coordinata corrente
+    ld   c, (ix+1)         ; C = Current X
+    ld   b, (ix+2)         ; B = Current Y
+    
+    push ix                ; Salva slot pointer
+    push hl
+    pop  ix                ; IX = sprite data pointer
+    call DrawPixelSprite16x16
+    pop  ix                ; Ripristina slot pointer
+    
+    pop  bc                ; Ripristina contatore ciclo
+    
+.next:
+    ld   de, 10
+    add  ix, de            ; Prossimo slot
+    dec  b
+    jp   nz, .loop
     
     pop  ix
+    pop  bc
+    pop  de
+    pop  hl
     ret
 
 ; -------------------------------------------------------------------
-; Cancella l'Egg alle vecchie coordinate pixel
+; Aggiorna le posizioni dei nemici attivi per il prossimo frame
 ; -------------------------------------------------------------------
-DeleteEggAtOldPos:
-    ld   bc, (EggPosOld)       ; C = EggXOld, B = EggYOld
-    call ErasePixelSprite16x16 ; Cancella Egg
-    ret
-
-; -------------------------------------------------------------------
-; Muove il Robot in orizzontale sulla piattaforma centrale (pixel 64-176)
-; -------------------------------------------------------------------
-MoveRobot:
-    ld   bc, (RobotPos)   ; C = RobotX, B = RobotY
-    
-    ld   a, (robot_direction)
-    cp   1                ; Sinistra?
-    jr   nz, .move_right
-    
-.move_left:
-    ld   a, c
-    sub  2                ; Muovi a sinistra di 2 pixel
-    cp   64               ; Limite sinistro (64)
-    jr   z, .reverse_to_right
-    jr   c, .reverse_to_right
-    ld   c, a
-    jr   .save_x
-    
-.reverse_to_right:
-    ld   c, 64
-    ld   a, 2
-    ld   (robot_direction), a
-    jr   .save_x
-
-.move_right:
-    ld   a, c
-    add  a, 2                ; Muovi a destra di 2 pixel
-    cp   176                 ; Limite destro (176)
-    jr   z, .reverse_to_left
-    jr   nc, .reverse_to_left
-    ld   c, a
-    jr   .save_x
-    
-.reverse_to_left:
-    ld   c, 176
-    ld   a, 1
-    ld   (robot_direction), a
-
-.save_x:
-    ld   (RobotPos), bc
-
-.animate:
-    ; Alterna lo stato di animazione (0, 1, 2, 3)
-    ld   a, (robot_body_state)
-    inc  a
-    cp   4
-    jr   nz, .save_state
-    ld   a, 0
-.save_state:
-    ld   (robot_body_state), a
-    ret
-
-; -------------------------------------------------------------------
-; Disegna il Robot a coordinate pixel
-; -------------------------------------------------------------------
-PrintRobot:
+UpdateRoomEnemies:
+    push hl
+    push de
+    push bc
     push ix
     
-    ; Calcola il puntatore al frame corrente (robot_body_state * 32)
-    ld   a, (robot_body_state) ; A = 0, 1, 2, 3
-    add  a, a                  ; *2
-    add  a, a                  ; *4
-    add  a, a                  ; *8
-    add  a, a                  ; *16
-    add  a, a                  ; *32
-    ld   e, a
-    ld   d, 0                  ; DE = offset del frame
+    ld   ix, ActiveEnemies
+    ld   b, 4              ; 4 slot
+.loop:
+    ld   a, (ix+0)         ; Flags
+    and  $80               ; Active?
+    jp   z, .next
     
-    ld   ix, RobotSprite
-    add  ix, de                ; IX = puntatore al frame di RobotSprite
+    ; 1. Salva la posizione corrente in Old X/Y per la cancellazione nel prossimo frame
+    ld   a, (ix+1)
+    ld   (ix+7), a         ; Old X = Current X
+    ld   a, (ix+2)
+    ld   (ix+8), a         ; Old Y = Current Y
     
-    ld   bc, (RobotPos)        ; C = RobotX, B = RobotY
-    call DrawPixelSprite16x16  ; Disegna Robot 16x16
+    ; 2. Aggiorna Anim State
+    ld   a, (ix+6)         ; Anim State (0..3)
+    inc  a
+    and  3                 ; Alterna 0..3
+    ld   (ix+6), a
+    
+    ; 3. Determina se orizzontale o verticale
+    ld   a, (ix+0)         ; Flags
+    and  $40               ; Vertical? (Bit 6)
+    jp   nz, .vertical
+    
+.horizontal:
+    ld   a, (ix+5)         ; Direction (1=Left, 2=Right)
+    cp   1
+    jr   nz, .horiz_right
+    
+.horiz_left:
+    ld   a, (ix+1)         ; Current X
+    sub  2                 ; Muovi a sinistra di 2 pixel
+    cp   (ix+3)            ; Min Limit
+    jr   z, .h_rev_right
+    jr   c, .h_rev_right
+    ld   (ix+1), a
+    jp   .next
+    
+.h_rev_right:
+    ld   a, (ix+3)         ; Min Limit
+    ld   (ix+1), a
+    ld   a, 2
+    ld   (ix+5), a         ; Cambia direzione a Destra
+    jp   .next
+    
+.horiz_right:
+    ld   a, (ix+1)         ; Current X
+    add  a, 2              ; Muovi a destra di 2 pixel
+    cp   (ix+4)            ; Max Limit
+    jr   z, .h_rev_left
+    jr   nc, .h_rev_left
+    ld   (ix+1), a
+    jp   .next
+    
+.h_rev_left:
+    ld   a, (ix+4)         ; Max Limit
+    ld   (ix+1), a
+    ld   a, 1
+    ld   (ix+5), a         ; Cambia direzione a Sinistra
+    jp   .next
+
+.vertical:
+    ld   a, (ix+5)         ; Direction (1=Up, 2=Down)
+    cp   1
+    jr   nz, .vert_down
+    
+.vert_up:
+    ld   a, (ix+2)         ; Current Y
+    sub  2                 ; Muovi in alto di 2 pixel
+    cp   (ix+3)            ; Min Limit (Top)
+    jr   z, .v_rev_down
+    jr   c, .v_rev_down
+    ld   (ix+2), a
+    jp   .next
+    
+.v_rev_down:
+    ld   a, (ix+3)         ; Min Limit
+    ld   (ix+2), a
+    ld   a, 2
+    ld   (ix+5), a         ; Cambia direzione in Basso
+    jp   .next
+    
+.vert_down:
+    ld   a, (ix+2)         ; Current Y
+    add  a, 2              ; Muovi in basso di 2 pixel
+    cp   (ix+4)            ; Max Limit (Bottom)
+    jr   z, .v_rev_up
+    jr   nc, .v_rev_up
+    ld   (ix+2), a
+    jp   .next
+    
+.v_rev_up:
+    ld   a, (ix+4)         ; Max Limit
+    ld   (ix+2), a
+    ld   a, 1
+    ld   (ix+5), a         ; Cambia direzione in Alto
+    
+.next:
+    ld   de, 10
+    add  ix, de            ; Prossimo slot (10 byte)
+    dec  b
+    jp   nz, .loop
     
     pop  ix
-    ret
-
-; -------------------------------------------------------------------
-; Cancella il Robot alle vecchie coordinate pixel
-; -------------------------------------------------------------------
-DeleteRobotAtOldPos:
-    ld   bc, (RobotPosOld)     ; C = RobotXOld, B = RobotYOld
-    call ErasePixelSprite16x16 ; Cancella Robot
+    pop  bc
+    pop  de
+    pop  hl
     ret

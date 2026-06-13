@@ -77,25 +77,10 @@ Room0Unused:
 
 ; Room entities slots (ropes, arrows, guardians)
 Room0Enemy1:
-    DEFB 255,0                    ; Terminator (end of active list)
-
+    DEFB $80, 24, 128, 231        ; Enemy 1 (Lametta), horizontal, Starts X=24, Y=128, Limit X=231
 Room0Enemy2:
-    DEFB 0,0
-
+    DEFB $81, 160, 80, 224        ; Enemy 2 (Egg), horizontal, Starts X=160, Y=80, Limit X=224
 Room0Enemy3:
-    DEFB 0,0
-
+    DEFB $82, 64, 104, 176        ; Enemy 3 (Robot), horizontal, Starts X=64, Y=104, Limit X=176
 Room0Enemy4:
-    DEFB 0,0
-
-Room0Enemy5:
-    DEFB 0,0
-
-Room0Enemy6:
-    DEFB 0,0
-
-Room0Enemy7:
-    DEFB 0,0
-
-Room0Enemy8:
-    DEFB 0,0
+    DEFB 0,0,0,0                  ; Empty slot

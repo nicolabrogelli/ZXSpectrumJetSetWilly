@@ -40,6 +40,7 @@ Main:
     ld   (hl), $07
     call CLS
     call DrawRoom
+    call LoadRoomEnemies
 
     xor  a
     out  ($fe), a
@@ -47,27 +48,6 @@ Main:
     and  $c7
     or   $07
     ld   (BORDCR), a
-
-    ; Inizializza nemico
-    xor  a
-    ld   (enemy_body_state), a
-    ld   a, 2              ; Inizia verso destra
-    ld   (enemy_direction), a
-    call PrintEnemy
-
-    ; Inizializza Egg
-    xor  a
-    ld   (egg_body_state), a
-    ld   a, 2              ; Inizia verso destra
-    ld   (egg_direction), a
-    call PrintEgg
-
-    ; Inizializza Robot
-    xor  a
-    ld   (robot_body_state), a
-    ld   a, 2              ; Inizia verso destra
-    ld   (robot_direction), a
-    call PrintRobot
 
     ;call DrawVerticalBorders
     call PrintPlayer
@@ -79,32 +59,18 @@ Main_loop:
     call DeleteCharAtOldPos
     call PrintPlayer
 
-    call DeleteEnemyAtOldPos
-    call PrintEnemy
-
-    call DeleteEggAtOldPos
-    call PrintEgg
-
-    call DeleteRobotAtOldPos
-    call PrintRobot
+    call EraseRoomEnemies
+    call DrawRoomEnemies
     
-    ; 3. Salva le posizioni correnti come vecchie posizioni per il prossimo frame
+    ; 3. Salva le posizioni correnti del player per il prossimo frame
     ld   bc, (PlayerPos)
     ld   (PlayerPosOld), bc
-    ld   bc, (EnemyPos)
-    ld   (EnemyPosOld), bc
-    ld   bc, (EggPos)
-    ld   (EggPosOld), bc
-    ld   bc, (RobotPos)
-    ld   (RobotPosOld), bc
     
     ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
     call CheckCtrl
     call MovePlayer
     call ApplyGravity
-    call MoveEnemy
-    call MoveEgg
-    call MoveRobot
+    call UpdateRoomEnemies
     
     ; 5. Gestisci la collisione (disegna le raster bar se collide)
     call CheckCollision
@@ -145,36 +111,13 @@ PlayerPos:      db 136, 128
 PlayerPosOld:   db 136, 128
 bodyPos:        dw $1111
 
-; Posizioni nemico
-EnemyPos:       db 40, 128
-EnemyPosOld:    db 40, 128
-
-; Posizioni Egg
-EggPos:         db 160, 80
-EggPosOld:      db 160, 80
-
-; Posizioni Robot
-RobotPos:       db 64, 104
-RobotPosOld:    db 64, 104
-
 ; Stato player
 body_state:     db $00
 direction:      db $00
 flags:          db $00
 
-; Stato nemico
-enemy_body_state: db $00
-enemy_direction:  db $00
 collision_active: db $00
 sprite_shift:     db $00
-
-; Stato Egg
-egg_body_state:   db $00
-egg_direction:    db $00
-
-; Stato Robot
-robot_body_state: db $00
-robot_direction:  db $00
 
 ; Fisica
 velocity_y:     db $00
@@ -188,7 +131,7 @@ line_buffer:    .256 db 0
 
 ; Gestione Stanze
 current_room:   db 0
-room_ptr:       dw Room1Layout
+room_ptr:       dw Room0Layout
 
     ALIGN 256
 RoomsStart:
