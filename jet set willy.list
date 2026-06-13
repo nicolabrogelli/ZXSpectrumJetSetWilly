@@ -2900,377 +2900,377 @@
  131  6E7B
  132  6E7B              ; Gestione Stanze
  133  6E7B 00           current_room:   db 0
- 134  6E7C 00 70        room_ptr:       dw Room1Layout
+ 134  6E7C 00 71        room_ptr:       dw Room99Layout
  135  6E7E
  136  6E7E 00 00 00...      ALIGN 256
  137  6F00              RoomsStart:
- 138  6F00                  include "Room0.asm"
-# file opened: Room0.asm
-   1+ 6F00              ; Room layout for the TEST level with its platforms and floor
-   2+ 6F00              Room0Layout:
-   3+ 6F00 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 0
-   3+ 6F04 00 00 00 00
-   4+ 6F08 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 1
-   4+ 6F0C 00 00 00 00
-   5+ 6F10 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 2
-   5+ 6F14 00 00 00 00
-   6+ 6F18 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 3
-   6+ 6F1C 00 00 00 00
-   7+ 6F20 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 4
-   7+ 6F24 00 00 00 00
-   8+ 6F28 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 5
-   8+ 6F2C 00 00 00 00
-   9+ 6F30 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 6
-   9+ 6F34 00 00 00 00
-  10+ 6F38 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 7
-  10+ 6F3C 00 00 00 00
-  11+ 6F40 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 8
-  11+ 6F44 00 00 00 00
-  12+ 6F48 01 55 55 40      DEFB 1,85,85,64,0,85,85,80    ; Row 9 (Platform 3: cols 3..12; Platform 2: cols 20..29)
-  12+ 6F4C 00 55 55 50
-  13+ 6F50 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 10
-  13+ 6F54 00 00 00 00
-  14+ 6F58 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 11
-  14+ 6F5C 00 00 00 00
-  15+ 6F60 00 00 55 55      DEFB 0,0,85,85,85,85,0,0      ; Row 12 (Platform 1: cols 8..23)
-  15+ 6F64 55 55 00 00
-  16+ 6F68 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 13
-  16+ 6F6C 00 00 00 00
-  17+ 6F70 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 14
-  17+ 6F74 00 00 00 00
-  18+ 6F78 55 55 55 55      DEFB 85,85,85,85,85,85,85,85  ; Row 15 (Floor: cols 0..31)
-  18+ 6F7C 55 55 55 55
-  19+ 6F80
-  20+ 6F80              Room0Tile:
-  21+ 6F80              ; 32 bytes for the room name
-  22+ 6F80 20 20 20 20      DEFM "          TEST LEVEL            "
-  22+ 6F84 20 20 20 20
-  22+ 6F88 20 20 54 45
-  22+ 6F8C 53 54 20 4C
-  22+ 6F90 45 56 45 4C
-  22+ 6F94 20 20 20 20
-  22+ 6F98 20 20 20 20
-  22+ 6F9C 20 20 20 20
-  23+ 6FA0
-  24+ 6FA0              ; Attributes and graphic data for the tiles (1 byte attribute + 8 bytes bitmap)
-  25+ 6FA0              Room0Background:
-  26+ 6FA0 07 00 00 00      DEFB $07, 0,0,0,0,0,0,0,0
-  26+ 6FA4 00 00 00 00
-  26+ 6FA8 00
-  27+ 6FA9
-  28+ 6FA9              Room0Floor:
-  29+ 6FA9 02 FF 88 FF      DEFB $02, 255, 136, 255, 34, 255, 136, 255, 36
-  29+ 6FAD 22 FF 88 FF
-  29+ 6FB1 24
-  30+ 6FB2
-  31+ 6FB2              Room0Wall:
-  32+ 6FB2 06 22 77 22      DEFB $06, 34,119,34,136,34,119,34,136
-  32+ 6FB6 88 22 77 22
-  32+ 6FBA 88
-  33+ 6FBB
-  34+ 6FBB              Room0Nasty:
-  35+ 6FBB 02 F8 88 9E      DEFB $02, 248,136,158,189,189,158,136,248
-  35+ 6FBF BD BD 9E 88
-  35+ 6FC3 F8
-  36+ 6FC4
-  37+ 6FC4              Room0Ramp:
-  38+ 6FC4 07 03 03 0C      DEFB $07, 3,3,12,13,50,55,194,200
-  38+ 6FC8 0D 32 37 C2
-  38+ 6FCC C8
-  39+ 6FCD
-  40+ 6FCD              Room0Conveyor:
-  41+ 6FCD 05 01 40 04      DEFB $05, 1,64,4,70,79,121,240,249
-  41+ 6FD1 46 4F 79 F0
-  41+ 6FD5 F9
-  42+ 6FD6
-  43+ 6FD6              ; Conveyor specs (direction, location, length)
-  44+ 6FD6              Room0ConveyorData:
-  45+ 6FD6 00               DEFB 0
-  46+ 6FD7 00 00            DEFW 0
-  47+ 6FD9 00               DEFB 0
-  48+ 6FDA
-  49+ 6FDA              ; Ramp specs (direction, location, length)
-  50+ 6FDA              Room0RampData:
-  51+ 6FDA 00               DEFB 0
-  52+ 6FDB 00 00            DEFW 0
-  53+ 6FDD 00               DEFB 0
-  54+ 6FDE
-  55+ 6FDE              ; Border color
-  56+ 6FDE              Room0BorderColor:
-  57+ 6FDE 00               DEFB 0                        ; Black border
-  58+ 6FDF
-  59+ 6FDF              ; Reserved bytes
-  60+ 6FDF              Room0Reserved:
-  61+ 6FDF 00 00            DEFB 0,0
-  62+ 6FE1
-  63+ 6FE1              ; Item graphic
-  64+ 6FE1              Room0Item:
-  65+ 6FE1 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; No item defined yet
-  65+ 6FE5 00 00 00 00
-  66+ 6FE9
-  67+ 6FE9              ; Room connections (left, right, above, below)
-  68+ 6FE9              Room0Direction:
-  69+ 6FE9 01               DEFB 1                        ; Left: The Bridge (Room 1)
-  70+ 6FEA 02               DEFB 2                        ; Right: The Off Licence (Room 2)
-  71+ 6FEB 00               DEFB 0                        ; Above: Self
-  72+ 6FEC 00               DEFB 0                        ; Below: Self
-  73+ 6FED
-  74+ 6FED              ; Unused
-  75+ 6FED              Room0Unused:
-  76+ 6FED 00 00 00         DEFB 0,0,0
-  77+ 6FF0
-  78+ 6FF0              ; Room entities slots (ropes, arrows, guardians)
-  79+ 6FF0              Room0Enemy1:
-  80+ 6FF0 80 18 80 E7      DEFB $80, 24, 128, 231        ; Enemy 1 (Lametta), horizontal, Starts X=24, Y=128, Limit X=231
-  81+ 6FF4              Room0Enemy2:
-  82+ 6FF4 81 A0 50 E0      DEFB $81, 160, 80, 224        ; Enemy 2 (Egg), horizontal, Starts X=160, Y=80, Limit X=224
-  83+ 6FF8              Room0Enemy3:
-  84+ 6FF8 82 40 68 B0      DEFB $82, 64, 104, 176        ; Enemy 3 (Robot), horizontal, Starts X=64, Y=104, Limit X=176
-  85+ 6FFC              Room0Enemy4:
-  86+ 6FFC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
-  87+ 7000
-# file closed: Room0.asm
- 139  7000                  include "Room1.asm"
-# file opened: Room1.asm
-   1+ 7000              Room1Layout:
-   2+ 7000 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   2+ 7004 00 00 00 00
-   3+ 7008 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   3+ 700C 00 00 00 00
-   4+ 7010 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   4+ 7014 00 00 00 00
-   5+ 7018 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   5+ 701C 00 00 00 00
-   6+ 7020 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   6+ 7024 00 00 00 00
-   7+ 7028 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   7+ 702C 00 00 00 00
-   8+ 7030 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   8+ 7034 00 00 00 00
-   9+ 7038 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   9+ 703C 00 00 00 00
-  10+ 7040 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  10+ 7044 00 00 00 00
-  11+ 7048 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  11+ 704C 00 00 00 00
-  12+ 7050 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  12+ 7054 00 00 00 00
-  13+ 7058 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  13+ 705C 00 00 00 00
-  14+ 7060 00 00 0A 00      DEFB 0,0,10,0,42,0,0,0
-  14+ 7064 2A 00 00 00
-  15+ 7068 00 00 2A 00      DEFB 0,0,42,0,42,128,0,0
-  15+ 706C 2A 80 00 00
-  16+ 7070 00 00 AA FF      DEFB 0,0,170,255,234,160,0,0
-  16+ 7074 EA A0 00 00
-  17+ 7078 55 55 AA FF      DEFB 85,85,170,255,234,165,85,85
-  17+ 707C EA A5 55 55
-  18+ 7080
-  19+ 7080              Room1Tile:
-  20+ 7080              ;The next 32 bytes are copied to 32896 and specify the room name.
-  21+ 7080 20 20 20 20      DEFM "         The Bridge             "	    ;Room name
+ 138  6F00                  include "TheBridge.asm"
+# file opened: TheBridge.asm
+   1+ 6F00              Room1Layout:
+   2+ 6F00 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   2+ 6F04 00 00 00 00
+   3+ 6F08 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   3+ 6F0C 00 00 00 00
+   4+ 6F10 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   4+ 6F14 00 00 00 00
+   5+ 6F18 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   5+ 6F1C 00 00 00 00
+   6+ 6F20 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   6+ 6F24 00 00 00 00
+   7+ 6F28 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   7+ 6F2C 00 00 00 00
+   8+ 6F30 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   8+ 6F34 00 00 00 00
+   9+ 6F38 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   9+ 6F3C 00 00 00 00
+  10+ 6F40 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  10+ 6F44 00 00 00 00
+  11+ 6F48 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  11+ 6F4C 00 00 00 00
+  12+ 6F50 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  12+ 6F54 00 00 00 00
+  13+ 6F58 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  13+ 6F5C 00 00 00 00
+  14+ 6F60 00 00 0A 00      DEFB 0,0,10,0,42,0,0,0
+  14+ 6F64 2A 00 00 00
+  15+ 6F68 00 00 2A 00      DEFB 0,0,42,0,42,128,0,0
+  15+ 6F6C 2A 80 00 00
+  16+ 6F70 00 00 AA FF      DEFB 0,0,170,255,234,160,0,0
+  16+ 6F74 EA A0 00 00
+  17+ 6F78 55 55 AA FF      DEFB 85,85,170,255,234,165,85,85
+  17+ 6F7C EA A5 55 55
+  18+ 6F80
+  19+ 6F80              Room1Tile:
+  20+ 6F80              ;The next 32 bytes are copied to 32896 and specify the room name.
+  21+ 6F80 20 20 20 20      DEFM "         The Bridge             "	    ;Room name
+  21+ 6F84 20 20 20 20
+  21+ 6F88 20 54 68 65
+  21+ 6F8C 20 42 72 69
+  21+ 6F90 64 67 65 20
+  21+ 6F94 20 20 20 20
+  21+ 6F98 20 20 20 20
+  21+ 6F9C 20 20 20 20
+  22+ 6FA0
+  23+ 6FA0              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  24+ 6FA0              Room1Background:
+  25+ 6FA0 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0	                ;Background
+  25+ 6FA4 00 00 00 00
+  25+ 6FA8 00
+  26+ 6FA9
+  27+ 6FA9              Room1Floor:
+  28+ 6FA9 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64	;Floor
+  28+ 6FAD BB D6 72 60
+  28+ 6FB1 40
+  29+ 6FB2
+  30+ 6FB2              Room1Wall:
+  31+ 6FB2 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136	    ;Wall
+  31+ 6FB6 88 22 77 22
+  31+ 6FBA 88
+  32+ 6FBB
+  33+ 6FBB              Room1Nasty:
+  34+ 6FBB 2F 03 84 48      DEFB 47,3,132,72,48,3,132,72,48	        ;Nasty
+  34+ 6FBF 30 03 84 48
+  34+ 6FC3 30
+  35+ 6FC4
+  36+ 6FC4              Room1Ramp:
+  37+ 6FC4 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200	        ;Ramp
+  37+ 6FC8 0D 32 37 C2
+  37+ 6FCC C8
+  38+ 6FCD
+  39+ 6FCD              Room1Conveyor:
+  40+ 6FCD 2C 01 40 04      DEFB 44,1,64,4,70,79,121,240,249	    ;Conveyor
+  40+ 6FD1 46 4F 79 F0
+  40+ 6FD5 F9
+  41+ 6FD6
+  42+ 6FD6              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  43+ 6FD6              Room1ConveyorData:
+  44+ 6FD6 01               DEFB 1	                                ;Direction (right)
+  45+ 6FD7 EC 5F            DEFW 24556	                            ;Location in the attribute buffer at 24064: (15,12)
+  46+ 6FD9 05               DEFB 5	                                ;Length
+  47+ 6FDA
+  48+ 6FDA              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  49+ 6FDA              Room1RampData:
+  50+ 6FDA 01               DEFB 1	                                ;Direction (up to the right)
+  51+ 6FDB C7 5F            DEFW 24519	                            ;Location in the attribute buffer at 24064: (14,7)
+  52+ 6FDD 03               DEFB 3	                                ;Length
+  53+ 6FDE
+  54+ 6FDE              ;The next byte is copied to 32990 and specifies the border colour.
+  55+ 6FDE              Room1BorderColor:
+  56+ 6FDE 04               DEFB 4	                                ;Border colour
+  57+ 6FDF
+  58+ 6FDF              ;The next two bytes are copied to 32991, but are not used.
+  59+ 6FDF              Room1Reserved:
+  60+ 6FDF 40 A0            DEFB 64,160	                            ;Unused
+  61+ 6FE1
+  62+ 6FE1              ;The next eight bytes are copied to 32993 and define the item graphic.
+  63+ 6FE1              Room1Item:
+  64+ 6FE1 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
+  64+ 6FE5 00 00 00 00
+  65+ 6FE9
+  66+ 6FE9              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  67+ 6FE9              Room1Direction:
+  68+ 6FE9 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
+  69+ 6FEA 00               DEFB 0	                                ;Room to the right (The Off Licence)
+  70+ 6FEB 00               DEFB 0	                                ;Room above (The Off Licence)
+  71+ 6FEC 00               DEFB 0	                                ;Room below (The Off Licence)
+  72+ 6FED
+  73+ 6FED              ;The next three bytes are copied to 33005, but are not used.
+  74+ 6FED              Room1Unused:
+  75+ 6FED 00 00 00         DEFB 0,0,0	                            ;Unused
+  76+ 6FF0
+  77+ 6FF0              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+  78+ 6FF0              Room1Enemy1:
+  79+ 6FF0 80 08 78 C8      DEFB $80, 8, 120, 200         ; Enemy 1 (Lametta), horizontal, Starts X=8, Y=120, Limit X=200
+  80+ 6FF4              Room1Enemy2:
+  81+ 6FF4 80 50 50 B4      DEFB $80, 80, 80, 180         ; Enemy 2 (Lametta), horizontal, Starts X=80, Y=80, Limit X=180
+  82+ 6FF8              Room1Enemy3:
+  83+ 6FF8 C1 78 28 82      DEFB $C1, 120, 40, 130        ; Enemy 3 (Egg), vertical, Starts X=120, Y=40, Limit Y=130
+  84+ 6FFC              Room1Enemy4:
+  85+ 6FFC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
+  86+ 7000
+# file closed: TheBridge.asm
+ 139  7000                  include "TheOffLicence.asm"
+# file opened: TheOffLicence.asm
+   1+ 7000              ; Room layout for Room 2 (The Off Licence)
+   2+ 7000              Room0Layout:
+   3+ 7000 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
+   3+ 7004 00 00 00 00
+   4+ 7008 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
+   4+ 700C 00 00 00 00
+   5+ 7010 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
+   5+ 7014 00 00 00 00
+   6+ 7018 00 00 00 AA      DEFB  0,0,0,170,170,170,170,170
+   6+ 701C AA AA AA AA
+   7+ 7020 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+   7+ 7024 00 00 00 02
+   8+ 7028 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+   8+ 702C 00 00 00 02
+   9+ 7030 00 00 00 8C      DEFB  0,0,0,140,0,0,0,2
+   9+ 7034 00 00 00 02
+  10+ 7038 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  10+ 703C 00 00 00 02
+  11+ 7040 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  11+ 7044 00 00 00 02
+  12+ 7048 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  12+ 704C 00 00 00 02
+  13+ 7050 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  13+ 7054 00 00 00 02
+  14+ 7058 00 00 00 AA      DEFB  0,0,0,170,0,0,2,170
+  14+ 705C 00 00 02 AA
+  15+ 7060 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
+  15+ 7064 00 00 00 02
+  16+ 7068 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
+  16+ 706C 00 00 00 02
+  17+ 7070 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
+  17+ 7074 00 00 00 02
+  18+ 7078 55 55 55 55      DEFB  85,85,85,85,85,85,85,85
+  18+ 707C 55 55 55 55
+  19+ 7080
+  20+ 7080              Room0Tile:
+  21+ 7080 20 20 20 20      DEFM "         The Off Licence        "
   21+ 7084 20 20 20 20
   21+ 7088 20 54 68 65
-  21+ 708C 20 42 72 69
-  21+ 7090 64 67 65 20
-  21+ 7094 20 20 20 20
+  21+ 708C 20 4F 66 66
+  21+ 7090 20 4C 69 63
+  21+ 7094 65 6E 63 65
   21+ 7098 20 20 20 20
   21+ 709C 20 20 20 20
   22+ 70A0
-  23+ 70A0              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  24+ 70A0              Room1Background:
-  25+ 70A0 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0	                ;Background
-  25+ 70A4 00 00 00 00
-  25+ 70A8 00
-  26+ 70A9
-  27+ 70A9              Room1Floor:
-  28+ 70A9 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64	;Floor
-  28+ 70AD BB D6 72 60
-  28+ 70B1 40
-  29+ 70B2
-  30+ 70B2              Room1Wall:
-  31+ 70B2 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136	    ;Wall
-  31+ 70B6 88 22 77 22
-  31+ 70BA 88
-  32+ 70BB
-  33+ 70BB              Room1Nasty:
-  34+ 70BB 2F 03 84 48      DEFB 47,3,132,72,48,3,132,72,48	        ;Nasty
-  34+ 70BF 30 03 84 48
-  34+ 70C3 30
-  35+ 70C4
-  36+ 70C4              Room1Ramp:
-  37+ 70C4 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200	        ;Ramp
-  37+ 70C8 0D 32 37 C2
-  37+ 70CC C8
-  38+ 70CD
-  39+ 70CD              Room1Conveyor:
-  40+ 70CD 2C 01 40 04      DEFB 44,1,64,4,70,79,121,240,249	    ;Conveyor
-  40+ 70D1 46 4F 79 F0
-  40+ 70D5 F9
-  41+ 70D6
-  42+ 70D6              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  43+ 70D6              Room1ConveyorData:
-  44+ 70D6 01               DEFB 1	                                ;Direction (right)
-  45+ 70D7 EC 5F            DEFW 24556	                            ;Location in the attribute buffer at 24064: (15,12)
-  46+ 70D9 05               DEFB 5	                                ;Length
-  47+ 70DA
-  48+ 70DA              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  49+ 70DA              Room1RampData:
-  50+ 70DA 01               DEFB 1	                                ;Direction (up to the right)
-  51+ 70DB C7 5F            DEFW 24519	                            ;Location in the attribute buffer at 24064: (14,7)
-  52+ 70DD 03               DEFB 3	                                ;Length
-  53+ 70DE
-  54+ 70DE              ;The next byte is copied to 32990 and specifies the border colour.
-  55+ 70DE              Room1BorderColor:
-  56+ 70DE 04               DEFB 4	                                ;Border colour
-  57+ 70DF
-  58+ 70DF              ;The next two bytes are copied to 32991, but are not used.
-  59+ 70DF              Room1Reserved:
-  60+ 70DF 40 A0            DEFB 64,160	                            ;Unused
-  61+ 70E1
-  62+ 70E1              ;The next eight bytes are copied to 32993 and define the item graphic.
-  63+ 70E1              Room1Item:
-  64+ 70E1 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
-  64+ 70E5 00 00 00 00
-  65+ 70E9
-  66+ 70E9              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  67+ 70E9              Room1Direction:
-  68+ 70E9 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
-  69+ 70EA 00               DEFB 0	                                ;Room to the right (The Off Licence)
-  70+ 70EB 00               DEFB 0	                                ;Room above (The Off Licence)
-  71+ 70EC 00               DEFB 0	                                ;Room below (The Off Licence)
-  72+ 70ED
-  73+ 70ED              ;The next three bytes are copied to 33005, but are not used.
-  74+ 70ED              Room1Unused:
-  75+ 70ED 00 00 00         DEFB 0,0,0	                            ;Unused
-  76+ 70F0
-  77+ 70F0              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
-  78+ 70F0              Room1Enemy1:
-  79+ 70F0 80 08 78 C8      DEFB $80, 8, 120, 200         ; Enemy 1 (Lametta), horizontal, Starts X=8, Y=120, Limit X=200
-  80+ 70F4              Room1Enemy2:
-  81+ 70F4 80 50 50 B4      DEFB $80, 80, 80, 180         ; Enemy 2 (Lametta), horizontal, Starts X=80, Y=80, Limit X=180
-  82+ 70F8              Room1Enemy3:
-  83+ 70F8 C1 78 28 82      DEFB $C1, 120, 40, 130        ; Enemy 3 (Egg), vertical, Starts X=120, Y=40, Limit Y=130
-  84+ 70FC              Room1Enemy4:
-  85+ 70FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
-  86+ 7100
-# file closed: Room1.asm
- 140  7100                  include "Room2.asm"
-# file opened: Room2.asm
-   1+ 7100              ; Room layout for Room 2 (The Off Licence)
-   2+ 7100              Room2Layout:
-   3+ 7100 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
+  23+ 70A0              Room0Background:
+  24+ 70A0 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0
+  24+ 70A4 00 00 00 00
+  24+ 70A8 00
+  25+ 70A9
+  26+ 70A9              Room0Floor:
+  27+ 70A9 44 FF DE 6C      DEFB 68,255,222,108,136,18,64,4,0
+  27+ 70AD 88 12 40 04
+  27+ 70B1 00
+  28+ 70B2
+  29+ 70B2              Room0Wall:
+  30+ 70B2 16 22 FF 88      DEFB 22,34,255,136,255,34,255,136,255
+  30+ 70B6 FF 22 FF 88
+  30+ 70BA FF
+  31+ 70BB
+  32+ 70BB              Room0Nasty:
+  33+ 70BB 05 F8 88 9E      DEFB 5,248,136,158,189,189,158,136,248
+  33+ 70BF BD BD 9E 88
+  33+ 70C3 F8
+  34+ 70C4
+  35+ 70C4              Room0Ramp:
+  36+ 70C4 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0
+  36+ 70C8 00 30 00 C0
+  36+ 70CC 00
+  37+ 70CD
+  38+ 70CD              Room0Conveyor:
+  39+ 70CD 43 33 FF 33      DEFB 67,51,255,51,0,255,0,170,0
+  39+ 70D1 00 FF 00 AA
+  39+ 70D5 00
+  40+ 70D6
+  41+ 70D6              Room0ConveyorData:
+  42+ 70D6 00               DEFB 0
+  43+ 70D7 33 5F            DEFW 24371
+  44+ 70D9 0C               DEFB 12
+  45+ 70DA
+  46+ 70DA              Room0RampData:
+  47+ 70DA 01               DEFB 1
+  48+ 70DB D7 5F            DEFW 24535
+  49+ 70DD 04               DEFB 4
+  50+ 70DE
+  51+ 70DE              Room0BorderColor:
+  52+ 70DE 05               DEFB 5
+  53+ 70DF
+  54+ 70DF              Room0Reserved:
+  55+ 70DF 00 A0            DEFB 0,160
+  56+ 70E1
+  57+ 70E1              Room0Item:
+  58+ 70E1 18 18 3C 7E      DEFB 24,24,60,126,98,98,98,126
+  58+ 70E5 62 62 62 7E
+  59+ 70E9
+  60+ 70E9              Room0Direction:
+  61+ 70E9 01               DEFB 1
+  62+ 70EA 00               DEFB 0
+  63+ 70EB 00               DEFB 0
+  64+ 70EC 00               DEFB 0
+  65+ 70ED
+  66+ 70ED              Room0Unused:
+  67+ 70ED 00 00 00         DEFB 0,0,0
+  68+ 70F0
+  69+ 70F0              Room0Enemy1:
+  70+ 70F0 82 28 80 B4      DEFB $82, 40, 128, 180        ; Enemy 1 (Robot), horizontal, Starts X=40, Y=128, Limit X=180
+  71+ 70F4              Room0Enemy2:
+  72+ 70F4 80 64 50 C8      DEFB $80, 100, 80, 200        ; Enemy 2 (Lametta), horizontal, Starts X=100, Y=80, Limit X=200
+  73+ 70F8              Room0Enemy3:
+  74+ 70F8 81 3C 68 A0      DEFB $81, 60, 104, 160        ; Enemy 3 (Egg), horizontal, Starts X=60, Y=104, Limit X=160
+  75+ 70FC              Room0Enemy4:
+  76+ 70FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
+  77+ 7100
+# file closed: TheOffLicence.asm
+ 140  7100                  include "Room99.asm"
+# file opened: Room99.asm
+   1+ 7100              ; Room layout for the TEST level with its platforms and floor
+   2+ 7100              Room99Layout:
+   3+ 7100 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 0
    3+ 7104 00 00 00 00
-   4+ 7108 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
+   4+ 7108 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 1
    4+ 710C 00 00 00 00
-   5+ 7110 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
+   5+ 7110 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 2
    5+ 7114 00 00 00 00
-   6+ 7118 00 00 00 AA      DEFB  0,0,0,170,170,170,170,170
-   6+ 711C AA AA AA AA
-   7+ 7120 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-   7+ 7124 00 00 00 02
-   8+ 7128 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-   8+ 712C 00 00 00 02
-   9+ 7130 00 00 00 8C      DEFB  0,0,0,140,0,0,0,2
-   9+ 7134 00 00 00 02
-  10+ 7138 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  10+ 713C 00 00 00 02
-  11+ 7140 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  11+ 7144 00 00 00 02
-  12+ 7148 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  12+ 714C 00 00 00 02
-  13+ 7150 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  13+ 7154 00 00 00 02
-  14+ 7158 00 00 00 AA      DEFB  0,0,0,170,0,0,2,170
-  14+ 715C 00 00 02 AA
-  15+ 7160 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
-  15+ 7164 00 00 00 02
-  16+ 7168 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
-  16+ 716C 00 00 00 02
-  17+ 7170 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
-  17+ 7174 00 00 00 02
-  18+ 7178 55 55 55 55      DEFB  85,85,85,85,85,85,85,85
+   6+ 7118 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 3
+   6+ 711C 00 00 00 00
+   7+ 7120 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 4
+   7+ 7124 00 00 00 00
+   8+ 7128 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 5
+   8+ 712C 00 00 00 00
+   9+ 7130 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 6
+   9+ 7134 00 00 00 00
+  10+ 7138 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 7
+  10+ 713C 00 00 00 00
+  11+ 7140 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 8
+  11+ 7144 00 00 00 00
+  12+ 7148 01 55 55 40      DEFB 1,85,85,64,0,85,85,80    ; Row 9 (Platform 3: cols 3..12; Platform 2: cols 20..29)
+  12+ 714C 00 55 55 50
+  13+ 7150 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 10
+  13+ 7154 00 00 00 00
+  14+ 7158 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 11
+  14+ 715C 00 00 00 00
+  15+ 7160 00 00 55 55      DEFB 0,0,85,85,85,85,0,0      ; Row 12 (Platform 1: cols 8..23)
+  15+ 7164 55 55 00 00
+  16+ 7168 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 13
+  16+ 716C 00 00 00 00
+  17+ 7170 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 14
+  17+ 7174 00 00 00 00
+  18+ 7178 55 55 55 55      DEFB 85,85,85,85,85,85,85,85  ; Row 15 (Floor: cols 0..31)
   18+ 717C 55 55 55 55
   19+ 7180
-  20+ 7180              Room2Tile:
-  21+ 7180 20 20 20 20      DEFM "         The Off Licence        "
-  21+ 7184 20 20 20 20
-  21+ 7188 20 54 68 65
-  21+ 718C 20 4F 66 66
-  21+ 7190 20 4C 69 63
-  21+ 7194 65 6E 63 65
-  21+ 7198 20 20 20 20
-  21+ 719C 20 20 20 20
-  22+ 71A0
-  23+ 71A0              Room2Background:
-  24+ 71A0 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0
-  24+ 71A4 00 00 00 00
-  24+ 71A8 00
-  25+ 71A9
-  26+ 71A9              Room2Floor:
-  27+ 71A9 44 FF DE 6C      DEFB 68,255,222,108,136,18,64,4,0
-  27+ 71AD 88 12 40 04
-  27+ 71B1 00
-  28+ 71B2
-  29+ 71B2              Room2Wall:
-  30+ 71B2 16 22 FF 88      DEFB 22,34,255,136,255,34,255,136,255
-  30+ 71B6 FF 22 FF 88
-  30+ 71BA FF
-  31+ 71BB
-  32+ 71BB              Room2Nasty:
-  33+ 71BB 05 F8 88 9E      DEFB 5,248,136,158,189,189,158,136,248
-  33+ 71BF BD BD 9E 88
-  33+ 71C3 F8
-  34+ 71C4
-  35+ 71C4              Room2Ramp:
-  36+ 71C4 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0
-  36+ 71C8 00 30 00 C0
-  36+ 71CC 00
-  37+ 71CD
-  38+ 71CD              Room2Conveyor:
-  39+ 71CD 43 33 FF 33      DEFB 67,51,255,51,0,255,0,170,0
-  39+ 71D1 00 FF 00 AA
-  39+ 71D5 00
-  40+ 71D6
-  41+ 71D6              Room2ConveyorData:
-  42+ 71D6 00               DEFB 0
-  43+ 71D7 33 5F            DEFW 24371
-  44+ 71D9 0C               DEFB 12
-  45+ 71DA
-  46+ 71DA              Room2RampData:
-  47+ 71DA 01               DEFB 1
-  48+ 71DB D7 5F            DEFW 24535
-  49+ 71DD 04               DEFB 4
-  50+ 71DE
-  51+ 71DE              Room2BorderColor:
-  52+ 71DE 05               DEFB 5
-  53+ 71DF
-  54+ 71DF              Room2Reserved:
-  55+ 71DF 00 A0            DEFB 0,160
-  56+ 71E1
-  57+ 71E1              Room2Item:
-  58+ 71E1 18 18 3C 7E      DEFB 24,24,60,126,98,98,98,126
-  58+ 71E5 62 62 62 7E
-  59+ 71E9
-  60+ 71E9              Room2Direction:
-  61+ 71E9 01               DEFB 1
-  62+ 71EA 00               DEFB 0
-  63+ 71EB 00               DEFB 0
-  64+ 71EC 00               DEFB 0
-  65+ 71ED
-  66+ 71ED              Room2Unused:
-  67+ 71ED 00 00 00         DEFB 0,0,0
-  68+ 71F0
-  69+ 71F0              Room2Enemy1:
-  70+ 71F0 82 28 80 B4      DEFB $82, 40, 128, 180        ; Enemy 1 (Robot), horizontal, Starts X=40, Y=128, Limit X=180
-  71+ 71F4              Room2Enemy2:
-  72+ 71F4 80 64 50 C8      DEFB $80, 100, 80, 200        ; Enemy 2 (Lametta), horizontal, Starts X=100, Y=80, Limit X=200
-  73+ 71F8              Room2Enemy3:
-  74+ 71F8 81 3C 68 A0      DEFB $81, 60, 104, 160        ; Enemy 3 (Egg), horizontal, Starts X=60, Y=104, Limit X=160
-  75+ 71FC              Room2Enemy4:
-  76+ 71FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
-  77+ 7200
-# file closed: Room2.asm
+  20+ 7180              Room99Tile:
+  21+ 7180              ; 32 bytes for the room name
+  22+ 7180 20 20 20 20      DEFM "          TEST LEVEL            "
+  22+ 7184 20 20 20 20
+  22+ 7188 20 20 54 45
+  22+ 718C 53 54 20 4C
+  22+ 7190 45 56 45 4C
+  22+ 7194 20 20 20 20
+  22+ 7198 20 20 20 20
+  22+ 719C 20 20 20 20
+  23+ 71A0
+  24+ 71A0              ; Attributes and graphic data for the tiles (1 byte attribute + 8 bytes bitmap)
+  25+ 71A0              Room99Background:
+  26+ 71A0 07 00 00 00      DEFB $07, 0,0,0,0,0,0,0,0
+  26+ 71A4 00 00 00 00
+  26+ 71A8 00
+  27+ 71A9
+  28+ 71A9              Room99Floor:
+  29+ 71A9 02 FF 88 FF      DEFB $02, 255, 136, 255, 34, 255, 136, 255, 36
+  29+ 71AD 22 FF 88 FF
+  29+ 71B1 24
+  30+ 71B2
+  31+ 71B2              Room99Wall:
+  32+ 71B2 06 22 77 22      DEFB $06, 34,119,34,136,34,119,34,136
+  32+ 71B6 88 22 77 22
+  32+ 71BA 88
+  33+ 71BB
+  34+ 71BB              Room99Nasty:
+  35+ 71BB 02 F8 88 9E      DEFB $02, 248,136,158,189,189,158,136,248
+  35+ 71BF BD BD 9E 88
+  35+ 71C3 F8
+  36+ 71C4
+  37+ 71C4              Room99Ramp:
+  38+ 71C4 07 03 03 0C      DEFB $07, 3,3,12,13,50,55,194,200
+  38+ 71C8 0D 32 37 C2
+  38+ 71CC C8
+  39+ 71CD
+  40+ 71CD              Room99Conveyor:
+  41+ 71CD 05 01 40 04      DEFB $05, 1,64,4,70,79,121,240,249
+  41+ 71D1 46 4F 79 F0
+  41+ 71D5 F9
+  42+ 71D6
+  43+ 71D6              ; Conveyor specs (direction, location, length)
+  44+ 71D6              Room99ConveyorData:
+  45+ 71D6 00               DEFB 0
+  46+ 71D7 00 00            DEFW 0
+  47+ 71D9 00               DEFB 0
+  48+ 71DA
+  49+ 71DA              ; Ramp specs (direction, location, length)
+  50+ 71DA              Room99RampData:
+  51+ 71DA 00               DEFB 0
+  52+ 71DB 00 00            DEFW 0
+  53+ 71DD 00               DEFB 0
+  54+ 71DE
+  55+ 71DE              ; Border color
+  56+ 71DE              Room99BorderColor:
+  57+ 71DE 00               DEFB 0                        ; Black border
+  58+ 71DF
+  59+ 71DF              ; Reserved bytes
+  60+ 71DF              Room99Reserved:
+  61+ 71DF 00 00            DEFB 0,0
+  62+ 71E1
+  63+ 71E1              ; Item graphic
+  64+ 71E1              Room99Item:
+  65+ 71E1 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; No item defined yet
+  65+ 71E5 00 00 00 00
+  66+ 71E9
+  67+ 71E9              ; Room connections (left, right, above, below)
+  68+ 71E9              Room99Direction:
+  69+ 71E9 01               DEFB 1                        ; Left: The Bridge (Room 1)
+  70+ 71EA 02               DEFB 2                        ; Right: The Off Licence (Room 2)
+  71+ 71EB 00               DEFB 0                        ; Above: Self
+  72+ 71EC 00               DEFB 0                        ; Below: Self
+  73+ 71ED
+  74+ 71ED              ; Unused
+  75+ 71ED              Room99Unused:
+  76+ 71ED 00 00 00         DEFB 0,0,0
+  77+ 71F0
+  78+ 71F0              ; Room entities slots (ropes, arrows, guardians)
+  79+ 71F0              Room99Enemy1:
+  80+ 71F0 80 18 80 E7      DEFB $80, 24, 128, 231        ; Enemy 1 (Lametta), horizontal, Starts X=24, Y=128, Limit X=231
+  81+ 71F4              Room99Enemy2:
+  82+ 71F4 81 A0 50 E0      DEFB $81, 160, 80, 224        ; Enemy 2 (Egg), horizontal, Starts X=160, Y=80, Limit X=224
+  83+ 71F8              Room99Enemy3:
+  84+ 71F8 82 40 68 B0      DEFB $82, 64, 104, 176        ; Enemy 3 (Robot), horizontal, Starts X=64, Y=104, Limit X=176
+  85+ 71FC              Room99Enemy4:
+  86+ 71FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
+  87+ 7200
+# file closed: Room99.asm
  141  7200
  142  7200                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm

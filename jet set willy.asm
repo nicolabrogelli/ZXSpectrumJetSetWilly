@@ -131,12 +131,12 @@ line_buffer:    .256 db 0
 
 ; Gestione Stanze
 current_room:   db 0
-room_ptr:       dw Room0Layout
+room_ptr:       dw Room99Layout
 
     ALIGN 256
 RoomsStart:
-    include "Room0.asm"
-    include "Room1.asm"
-    include "Room2.asm"
+    include "TheBridge.asm"
+    include "TheOffLicence.asm"
+    include "Room99.asm"
 
     SAVESNA "jet set willy.sna", start
