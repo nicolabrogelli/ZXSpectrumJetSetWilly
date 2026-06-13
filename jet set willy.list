@@ -1322,7 +1322,7 @@
  24+  6792
  25+  6792              movePlayer_left:
  26+  6792 79               ld   a, c
- 27+  6793 D6 04            sub  4                 ; Prova a muoverti di 4 pixel a sinistra
+ 27+  6793 D6 02            sub  2                 ; Prova a muoverti di 4 pixel a sinistra
  28+  6795 FE 18            cp   24                ; Confronta con il limite sinistro (24)
  29+  6797 38 03            jr   c, .clamp_left    ; Se < 24, clampa a 24
  30+  6799 4F               ld   c, a              ; Altrimenti memorizza la nuova posizione
@@ -1334,7 +1334,7 @@
  36+  67A0
  37+  67A0              movePlayer_right:
  38+  67A0 79               ld   a, c
- 39+  67A1 C6 04            add  a, 4              ; Prova a muoverti di 4 pixel a destra
+ 39+  67A1 C6 02            add  a, 2              ; Prova a muoverti di 4 pixel a destra
  40+  67A3 FE E7            cp   231               ; Confronta con il limite destro (231)
  41+  67A5 28 02            jr   z, .ok_right      ; Se == 231, va bene
  42+  67A7 30 03            jr   nc, .clamp_right  ; Se > 231 (senza carry, cioè maggiore), clampa a 231

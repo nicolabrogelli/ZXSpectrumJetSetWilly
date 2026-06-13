@@ -24,7 +24,7 @@ MovePlayer:
 
 movePlayer_left:
     ld   a, c
-    sub  4                 ; Prova a muoverti di 4 pixel a sinistra
+    sub  2                 ; Prova a muoverti di 2 pixel a sinistra
     cp   24                ; Confronta con il limite sinistro (24)
     jr   c, .clamp_left    ; Se < 24, clampa a 24
     ld   c, a              ; Altrimenti memorizza la nuova posizione
@@ -36,7 +36,7 @@ movePlayer_left:
 
 movePlayer_right:
     ld   a, c
-    add  a, 4              ; Prova a muoverti di 4 pixel a destra
+    add  a, 2              ; Prova a muoverti di 2 pixel a destra
     cp   231               ; Confronta con il limite destro (231)
     jr   z, .ok_right      ; Se == 231, va bene
     jr   nc, .clamp_right  ; Se > 231 (senza carry, cioè maggiore), clampa a 231
