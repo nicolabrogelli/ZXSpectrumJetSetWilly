@@ -1,99 +1,101 @@
-; Room layout
+; Room layout for the TEST level with its platforms and floor
 Room0Layout:
-db  0,0,0,0,0,0,0,0	
-db  0,0,0,0,0,0,0,0
-db  0,0,0,0,0,0,0,0
-db  0,0,0,170,170,170,170,170
-db  0,0,0,128,0,0,0,2
-db  0,0,0,128,0,0,0,2
-db  0,0,0,140,0,0,0,2
-db  0,0,0,128,0,0,0,2
-db  0,0,0,128,0,0,0,2
-db  0,0,0,128,0,0,0,2
-db  0,0,0,128,0,0,0,2
-db  0,0,0,170,0,0,2,170
-db  0,0,0,0,0,0,0,2
-db  0,0,0,0,0,0,0,2
-db  0,0,0,0,0,0,0,2
-db  85,85,85,85,85,85,85,85
+    DEFB 0,0,0,0,0,0,0,0          ; Row 0
+    DEFB 0,0,0,0,0,0,0,0          ; Row 1
+    DEFB 0,0,0,0,0,0,0,0          ; Row 2
+    DEFB 0,0,0,0,0,0,0,0          ; Row 3
+    DEFB 0,0,0,0,0,0,0,0          ; Row 4
+    DEFB 0,0,0,0,0,0,0,0          ; Row 5
+    DEFB 0,0,0,0,0,0,0,0          ; Row 6
+    DEFB 0,0,0,0,0,0,0,0          ; Row 7
+    DEFB 0,0,0,0,0,0,0,0          ; Row 8
+    DEFB 1,85,85,64,0,85,85,80    ; Row 9 (Platform 3: cols 3..12; Platform 2: cols 20..29)
+    DEFB 0,0,0,0,0,0,0,0          ; Row 10
+    DEFB 0,0,0,0,0,0,0,0          ; Row 11
+    DEFB 0,0,85,85,85,85,0,0      ; Row 12 (Platform 1: cols 8..23)
+    DEFB 0,0,0,0,0,0,0,0          ; Row 13
+    DEFB 0,0,0,0,0,0,0,0          ; Row 14
+    DEFB 85,85,85,85,85,85,85,85  ; Row 15 (Floor: cols 0..31)
 
 Room0Tile:
-DEFM "         The Off Licence        "	    ;Room name
+; 32 bytes for the room name
+    DEFM "          TEST LEVEL            "
 
+; Attributes and graphic data for the tiles (1 byte attribute + 8 bytes bitmap)
 Room0Background:
-db 0,0,0,0,0,0,0,0,0	                ; Background
+    DEFB $07, 0,0,0,0,0,0,0,0
 
 Room0Floor:
-db 68,255,222,108,136,18,64,4,0	        ; Floor
+    DEFB $02, 255, 136, 255, 34, 255, 136, 255, 36
 
 Room0Wall:
-db 22,34,255,136,255,34,255,136,255	    ; Wall
+    DEFB $06, 70,34,119,34,136,34,119,34,136
 
 Room0Nasty:
-db 5,248,136,158,189,189,158,136,248	; Nasty
+    DEFB $02, 5,248,136,158,189,189,158,136,248
 
 Room0Ramp:
-db 7,3,0,12,0,48,0,192,0	            ; Ramp
+    DEFB $07, 7,3,3,12,13,50,55,194,200
 
 Room0Conveyor:
-db 67,51,255,51,0,255,0,170,0	        ; Conveyor
+    DEFB $05, 44,1,64,4,70,79,121,240,249
 
-
-;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+; Conveyor specs (direction, location, length)
 Room0ConveyorData:
-DEFB 0	                                ; Direction (left)
-DEFW 24371	                            ; Location in the attribute buffer at 24064: (9,19)
-DEFB 12	                                ; Length
+    DEFB 0
+    DEFW 0
+    DEFB 0
 
-;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+; Ramp specs (direction, location, length)
 Room0RampData:
-DEFB 1	                                ; Direction (up to the right)
-DEFW 24535	                            ; Location in the attribute buffer at 24064: (14,23)
-DEFB 4	                                ; Length
+    DEFB 0
+    DEFW 0
+    DEFB 0
 
-;The next byte is copied to 32990 and specifies the border colour.
+; Border color
 Room0BorderColor:
-DEFB 5	                                ; Border colour
+    DEFB 0                        ; Black border
 
-;The next two bytes are copied to 32991, but are not used.
+; Reserved bytes
 Room0Reserved:
-DEFB 0,160	                            ; Unused
+    DEFB 0,0
 
-;The next eight bytes are copied to 32993 and define the item graphic.
+; Item graphic
 Room0Item:
-DEFB 24,24,60,126,98,98,98,126	        ; Item graphic
+    DEFB 0,0,0,0,0,0,0,0          ; No item defined yet
 
-;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+; Room connections (left, right, above, below)
 Room0Direction:
-DEFB 1	                                ; Room to the left (The Bridge)
-DEFB 0	                                ; Room to the right (The Off Licence)
-DEFB 0	                                ; Room above (The Off Licence)
-DEFB 0	                                ; Room below (The Off Licence)
+    DEFB 1                        ; Left: The Bridge (Room 1)
+    DEFB 2                        ; Right: The Off Licence (Room 2)
+    DEFB 0                        ; Above: Self
+    DEFB 0                        ; Below: Self
 
-;The next three bytes are copied to 33005, but are not used.
+; Unused
 Room0Unused:
-DEFB 0,0,0	                            ; Unused
+    DEFB 0,0,0
 
-;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+; Room entities slots (ropes, arrows, guardians)
 Room0Enemy1:
-DEFB 10,138                             ; Guardian no. 10 (vertical), base sprite 4, x=10 (41040)
+    DEFB 255,0                    ; Terminator (end of active list)
+
 Room0Enemy2:
-DEFB 12,29                              ; Guardian no. 12 (horizontal), base sprite 0, initial x=29 (41056)
+    DEFB 0,0
 
 Room0Enemy3:
-DEFB 44,39                              ; Guardian no. 44 (vertical), base sprite 1, x=7 (41312)
+    DEFB 0,0
 
 Room0Enemy4:
-DEFB 255,0                              ; Terminator (41976)
+    DEFB 0,0
 
 Room0Enemy5:
-DEFB 0,0	                            ; Nothing (40960)
+    DEFB 0,0
 
 Room0Enemy6:
-DEFB 0,0	                            ; Nothing (40960)
+    DEFB 0,0
 
 Room0Enemy7:
-DEFB 0,0	                            ; Nothing (40960)
+    DEFB 0,0
 
 Room0Enemy8:
-DEFB 0,0	                            ; Nothing (40960)
+    DEFB 0,0
