@@ -29,11 +29,22 @@ ApplyGravity:
     ; --- CONTROLLO PIATTAFORMA 2 (Riga 12) ---
     ld  a, c              ; C = PlayerX
     cp  PLATFORM2_MIN_X   ; 153
-    jp  c, .in_air        ; Se X < 153, caduta
+    jp  c, .check_platform3
     cp  PLATFORM2_MAX_X   ; 232
-    jp  nc, .in_air       ; Se X >= 232, caduta
+    jp  nc, .check_platform3
     
     ld  b, PLATFORM2_LEVEL
+    jp  .at_platform_or_ground
+
+.check_platform3:
+    ; --- CONTROLLO PIATTAFORMA 3 SINISTRA (Riga 12) ---
+    ld  a, c              ; C = PlayerX
+    cp  PLATFORM3_MIN_X   ; 24
+    jp  c, .in_air        ; Se X < 24, caduta
+    cp  PLATFORM3_MAX_X   ; 104
+    jp  nc, .in_air       ; Se X >= 104, caduta
+
+    ld  b, PLATFORM3_LEVEL
     jp  .at_platform_or_ground
 
 .check_platform1:
@@ -143,21 +154,43 @@ ApplyGravity:
     ; Siamo dentro l'intervallo X della piattaforma 2?
     ld  a, c              ; C = PlayerX
     cp  PLATFORM2_MIN_X   ; 153
-    jr  c, .no_collision_checks
+    jr  c, .check_platform3_collision
     cp  PLATFORM2_MAX_X   ; 232
-    jr  nc, .no_collision_checks
+    jr  nc, .check_platform3_collision
     
     ; Vecchio Y deve essere <= platform2_level (80), e nuovo Y (in B) >= platform2_level (80)
     ld  a, (PlayerPos+1)  ; Vecchio Y
     cp  PLATFORM2_LEVEL+1 ; Se A <= 80, allora A < 81 (carry set)
-    jr  nc, .no_collision_checks
+    jr  nc, .check_platform3_collision
     
     ld  a, b              ; Nuovo Y
     cp  PLATFORM2_LEVEL   ; Se B >= 80
-    jr  c, .no_collision_checks
+    jr  c, .check_platform3_collision
     
     ; Collisione avvenuta! Atterriamo sulla piattaforma 2
     ld  b, PLATFORM2_LEVEL
+    jp  .at_platform_or_ground
+
+.check_platform3_collision:
+    ; --- COLLISIONE CON LA PIATTAFORMA 3 SINISTRA ---
+    ; Siamo dentro l'intervallo X della piattaforma 3?
+    ld  a, c              ; C = PlayerX
+    cp  PLATFORM3_MIN_X   ; 24
+    jr  c, .no_collision_checks
+    cp  PLATFORM3_MAX_X   ; 104
+    jr  nc, .no_collision_checks
+    
+    ; Vecchio Y deve essere <= platform3_level (80), e nuovo Y (in B) >= platform3_level (80)
+    ld  a, (PlayerPos+1)  ; Vecchio Y
+    cp  PLATFORM3_LEVEL+1 ; Se A <= 80, allora A < 81 (carry set)
+    jr  nc, .no_collision_checks
+    
+    ld  a, b              ; Nuovo Y
+    cp  PLATFORM3_LEVEL   ; Se B >= 80
+    jr  c, .no_collision_checks
+    
+    ; Collisione avvenuta! Atterriamo sulla piattaforma 3
+    ld  b, PLATFORM3_LEVEL
     jp  .at_platform_or_ground
     
 .no_collision_checks:

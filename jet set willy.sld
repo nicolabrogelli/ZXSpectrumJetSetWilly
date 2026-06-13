@@ -81,8 +81,14 @@ constants.asm|59||0|-1|153|D|PLATFORM2_MIN_X
 constants.asm|59||0|-1|153|L|,PLATFORM2_MIN_X,,+equ,+used
 constants.asm|60||0|-1|232|D|PLATFORM2_MAX_X
 constants.asm|60||0|-1|232|L|,PLATFORM2_MAX_X,,+equ,+used
-constants.asm|64||0|-1|73|D|VERTICAL_BORDER
-constants.asm|64||0|-1|73|L|,VERTICAL_BORDER,,+equ
+constants.asm|61||0|-1|80|D|PLATFORM3_LEVEL
+constants.asm|61||0|-1|80|L|,PLATFORM3_LEVEL,,+equ,+used
+constants.asm|62||0|-1|24|D|PLATFORM3_MIN_X
+constants.asm|62||0|-1|24|L|,PLATFORM3_MIN_X,,+equ,+used
+constants.asm|63||0|-1|104|D|PLATFORM3_MAX_X
+constants.asm|63||0|-1|104|L|,PLATFORM3_MAX_X,,+equ,+used
+constants.asm|67||0|-1|73|D|VERTICAL_BORDER
+constants.asm|67||0|-1|73|L|,VERTICAL_BORDER,,+equ
 interrupts.asm|8||0|1|23981|F|SetupIM2
 interrupts.asm|8||0|1|23981|L|,SetupIM2,,+used
 interrupts.asm|9||0|1|23981|T|
@@ -271,1203 +277,1267 @@ graphics.asm|210||0|1|24218|T|
 graphics.asm|211||0|1|24220|T|
 graphics.asm|212||0|1|24222|T|
 graphics.asm|213||0|1|24224|T|
-graphics.asm|214||0|1|24226|T|
-graphics.asm|215||0|1|24227|T|
-graphics.asm|216||0|1|24229|T|
-graphics.asm|217||0|1|24231|T|
-graphics.asm|218||0|1|24233|T|
-graphics.asm|219||0|1|24235|T|
-graphics.asm|220||0|1|24236|T|
-graphics.asm|222||0|1|24238|F|GetBackgroundByte.load_tile_byte
-graphics.asm|222||0|1|24238|L|,GetBackgroundByte,load_tile_byte,+used
-graphics.asm|223||0|1|24238|T|
-graphics.asm|224||0|1|24239|T|
-graphics.asm|225||0|1|24241|T|
-graphics.asm|226||0|1|24244|T|
-graphics.asm|227||0|1|24245|T|
-graphics.asm|228||0|1|24246|T|
-graphics.asm|229||0|1|24247|T|
-graphics.asm|230||0|1|24248|T|
-graphics.asm|232||0|1|24249|F|GetBackgroundByte.blank
-graphics.asm|232||0|1|24249|L|,GetBackgroundByte,blank,+used
-graphics.asm|233||0|1|24249|T|
-graphics.asm|234||0|1|24250|T|
-graphics.asm|235||0|1|24251|T|
-graphics.asm|236||0|1|24252|T|
-graphics.asm|242||0|1|24253|F|ErasePixelSprite8x8
-graphics.asm|242||0|1|24253|L|,ErasePixelSprite8x8,,+used
-graphics.asm|243||0|1|24253|T|
-graphics.asm|244||0|1|24254|T|
-graphics.asm|245||0|1|24255|T|
-graphics.asm|247||0|1|24256|T|
-graphics.asm|248||0|1|24257|T|
-graphics.asm|249||0|1|24258|T|
-graphics.asm|250||0|1|24260|T|
-graphics.asm|252||0|1|24261|T|
-graphics.asm|253||0|1|24262|T|
-graphics.asm|254||0|1|24263|T|
-graphics.asm|256||0|1|24266|T|
-graphics.asm|257||0|1|24268|F|ErasePixelSprite8x8.erase_loop
-graphics.asm|257||0|1|24268|L|,ErasePixelSprite8x8,erase_loop,+used
-graphics.asm|258||0|1|24268|T|
-graphics.asm|259||0|1|24269|T|
-graphics.asm|260||0|1|24272|T|
-graphics.asm|261||0|1|24273|T|
-graphics.asm|262||0|1|24274|T|
-graphics.asm|263||0|1|24275|T|
-graphics.asm|264||0|1|24277|T|
-graphics.asm|265||0|1|24280|T|
-graphics.asm|266||0|1|24281|T|
-graphics.asm|268||0|1|24282|T|
-graphics.asm|269||0|1|24285|T|
-graphics.asm|270||0|1|24286|T|
-graphics.asm|271||0|1|24287|T|
-graphics.asm|273||0|1|24289|T|
-graphics.asm|274||0|1|24290|T|
-graphics.asm|275||0|1|24291|T|
-graphics.asm|276||0|1|24292|T|
-graphics.asm|282||0|1|24293|F|DrawPixelSprite16x16
-graphics.asm|282||0|1|24293|L|,DrawPixelSprite16x16,,+used
-graphics.asm|283||0|1|24293|T|
-graphics.asm|284||0|1|24294|T|
-graphics.asm|285||0|1|24295|T|
-graphics.asm|286||0|1|24296|T|
-graphics.asm|289||0|1|24298|T|
-graphics.asm|290||0|1|24299|T|
-graphics.asm|291||0|1|24301|T|
-graphics.asm|294||0|1|24304|T|
-graphics.asm|295||0|1|24305|T|
-graphics.asm|296||0|1|24306|T|
-graphics.asm|298||0|1|24309|T|
-graphics.asm|299||0|1|24311|F|DrawPixelSprite16x16.line_loop
-graphics.asm|299||0|1|24311|L|,DrawPixelSprite16x16,line_loop,+used
-graphics.asm|300||0|1|24311|T|
-graphics.asm|301||0|1|24314|T|
-graphics.asm|304||0|1|24317|T|
-graphics.asm|305||0|1|24320|T|
-graphics.asm|306||0|1|24321|T|
-graphics.asm|308||0|1|24323|T|
-graphics.asm|309||0|1|24324|T|
-graphics.asm|310||0|1|24325|T|
-graphics.asm|312||0|1|24326|F|DrawPixelSprite16x16.shift_loop
-graphics.asm|312||0|1|24326|L|,DrawPixelSprite16x16,shift_loop,+used
-graphics.asm|313||0|1|24326|T|
-graphics.asm|314||0|1|24328|T|
-graphics.asm|315||0|1|24330|T|
-graphics.asm|316||0|1|24332|T|
-graphics.asm|318||0|1|24334|T|
-graphics.asm|321||0|1|24335|T|
-graphics.asm|322||0|1|24336|T|
-graphics.asm|323||0|1|24337|T|
-graphics.asm|324||0|1|24338|T|
-graphics.asm|325||0|1|24339|T|
-graphics.asm|326||0|1|24340|T|
-graphics.asm|327||0|1|24341|T|
-graphics.asm|328||0|1|24342|T|
-graphics.asm|330||0|1|24344|F|DrawPixelSprite16x16.no_shift
-graphics.asm|330||0|1|24344|L|,DrawPixelSprite16x16,no_shift,+used
-graphics.asm|332||0|1|24344|T|
-graphics.asm|333||0|1|24345|T|
-graphics.asm|334||0|1|24346|T|
-graphics.asm|335||0|1|24347|T|
-graphics.asm|337||0|1|24348|F|DrawPixelSprite16x16.next_line
-graphics.asm|337||0|1|24348|L|,DrawPixelSprite16x16,next_line,+used
-graphics.asm|338||0|1|24348|T|
-graphics.asm|339||0|1|24351|T|
-graphics.asm|340||0|1|24353|T|
-graphics.asm|341||0|1|24355|T|
-graphics.asm|342||0|1|24356|T|
-graphics.asm|344||0|1|24358|T|
-graphics.asm|345||0|1|24360|T|
-graphics.asm|346||0|1|24361|T|
-graphics.asm|347||0|1|24362|T|
-graphics.asm|348||0|1|24363|T|
-graphics.asm|354||0|1|24364|F|ErasePixelSprite16x16
-graphics.asm|354||0|1|24364|L|,ErasePixelSprite16x16,,+used
-graphics.asm|355||0|1|24364|T|
-graphics.asm|356||0|1|24365|T|
-graphics.asm|357||0|1|24366|T|
-graphics.asm|359||0|1|24367|T|
-graphics.asm|360||0|1|24368|T|
-graphics.asm|361||0|1|24369|T|
-graphics.asm|362||0|1|24371|T|
-graphics.asm|364||0|1|24372|T|
-graphics.asm|365||0|1|24373|T|
-graphics.asm|366||0|1|24374|T|
-graphics.asm|368||0|1|24377|T|
-graphics.asm|369||0|1|24379|F|ErasePixelSprite16x16.erase_loop
-graphics.asm|369||0|1|24379|L|,ErasePixelSprite16x16,erase_loop,+used
-graphics.asm|370||0|1|24379|T|
-graphics.asm|371||0|1|24380|T|
-graphics.asm|372||0|1|24383|T|
-graphics.asm|373||0|1|24384|T|
-graphics.asm|374||0|1|24385|T|
-graphics.asm|375||0|1|24386|T|
-graphics.asm|376||0|1|24388|T|
-graphics.asm|377||0|1|24391|T|
-graphics.asm|378||0|1|24392|T|
-graphics.asm|379||0|1|24393|T|
-graphics.asm|380||0|1|24394|T|
-graphics.asm|381||0|1|24396|T|
-graphics.asm|382||0|1|24399|T|
-graphics.asm|383||0|1|24400|T|
-graphics.asm|384||0|1|24401|T|
-graphics.asm|386||0|1|24402|T|
-graphics.asm|387||0|1|24405|T|
-graphics.asm|388||0|1|24406|T|
-graphics.asm|389||0|1|24407|T|
-graphics.asm|391||0|1|24409|T|
-graphics.asm|392||0|1|24410|T|
-graphics.asm|393||0|1|24411|T|
-graphics.asm|394||0|1|24412|T|
-graphics.asm|399||0|1|24413|F|PrintPlayer
-graphics.asm|399||0|1|24413|L|,PrintPlayer,,+used
-graphics.asm|400||0|1|24413|T|
-graphics.asm|403||0|1|24415|T|
-graphics.asm|404||0|1|24418|T|
+graphics.asm|216||0|1|24226|T|
+graphics.asm|217||0|1|24227|T|
+graphics.asm|218||0|1|24229|T|
+graphics.asm|219||0|1|24231|T|
+graphics.asm|220||0|1|24233|T|
+graphics.asm|222||0|1|24235|F|GetBackgroundByte.check_platform3
+graphics.asm|222||0|1|24235|L|,GetBackgroundByte,check_platform3,+used
+graphics.asm|224||0|1|24235|T|
+graphics.asm|225||0|1|24236|T|
+graphics.asm|226||0|1|24238|T|
+graphics.asm|227||0|1|24240|T|
+graphics.asm|228||0|1|24242|T|
+graphics.asm|230||0|1|24244|F|GetBackgroundByte.platform_high
+graphics.asm|230||0|1|24244|L|,GetBackgroundByte,platform_high,+used
+graphics.asm|231||0|1|24244|T|
+graphics.asm|232||0|1|24245|T|
+graphics.asm|234||0|1|24247|F|GetBackgroundByte.load_tile_byte
+graphics.asm|234||0|1|24247|L|,GetBackgroundByte,load_tile_byte,+used
+graphics.asm|235||0|1|24247|T|
+graphics.asm|236||0|1|24248|T|
+graphics.asm|237||0|1|24250|T|
+graphics.asm|238||0|1|24253|T|
+graphics.asm|239||0|1|24254|T|
+graphics.asm|240||0|1|24255|T|
+graphics.asm|241||0|1|24256|T|
+graphics.asm|242||0|1|24257|T|
+graphics.asm|244||0|1|24258|F|GetBackgroundByte.blank
+graphics.asm|244||0|1|24258|L|,GetBackgroundByte,blank,+used
+graphics.asm|245||0|1|24258|T|
+graphics.asm|246||0|1|24259|T|
+graphics.asm|247||0|1|24260|T|
+graphics.asm|248||0|1|24261|T|
+graphics.asm|254||0|1|24262|F|ErasePixelSprite8x8
+graphics.asm|254||0|1|24262|L|,ErasePixelSprite8x8,,+used
+graphics.asm|255||0|1|24262|T|
+graphics.asm|256||0|1|24263|T|
+graphics.asm|257||0|1|24264|T|
+graphics.asm|259||0|1|24265|T|
+graphics.asm|260||0|1|24266|T|
+graphics.asm|261||0|1|24267|T|
+graphics.asm|262||0|1|24269|T|
+graphics.asm|264||0|1|24270|T|
+graphics.asm|265||0|1|24271|T|
+graphics.asm|266||0|1|24272|T|
+graphics.asm|268||0|1|24275|T|
+graphics.asm|269||0|1|24277|F|ErasePixelSprite8x8.erase_loop
+graphics.asm|269||0|1|24277|L|,ErasePixelSprite8x8,erase_loop,+used
+graphics.asm|270||0|1|24277|T|
+graphics.asm|271||0|1|24278|T|
+graphics.asm|272||0|1|24281|T|
+graphics.asm|273||0|1|24282|T|
+graphics.asm|274||0|1|24283|T|
+graphics.asm|275||0|1|24284|T|
+graphics.asm|276||0|1|24286|T|
+graphics.asm|277||0|1|24289|T|
+graphics.asm|278||0|1|24290|T|
+graphics.asm|280||0|1|24291|T|
+graphics.asm|281||0|1|24294|T|
+graphics.asm|282||0|1|24295|T|
+graphics.asm|283||0|1|24296|T|
+graphics.asm|285||0|1|24298|T|
+graphics.asm|286||0|1|24299|T|
+graphics.asm|287||0|1|24300|T|
+graphics.asm|288||0|1|24301|T|
+graphics.asm|294||0|1|24302|F|DrawPixelSprite16x16
+graphics.asm|294||0|1|24302|L|,DrawPixelSprite16x16,,+used
+graphics.asm|295||0|1|24302|T|
+graphics.asm|296||0|1|24303|T|
+graphics.asm|297||0|1|24304|T|
+graphics.asm|298||0|1|24305|T|
+graphics.asm|301||0|1|24307|T|
+graphics.asm|302||0|1|24308|T|
+graphics.asm|303||0|1|24310|T|
+graphics.asm|306||0|1|24313|T|
+graphics.asm|307||0|1|24314|T|
+graphics.asm|308||0|1|24315|T|
+graphics.asm|310||0|1|24318|T|
+graphics.asm|311||0|1|24320|F|DrawPixelSprite16x16.line_loop
+graphics.asm|311||0|1|24320|L|,DrawPixelSprite16x16,line_loop,+used
+graphics.asm|312||0|1|24320|T|
+graphics.asm|313||0|1|24323|T|
+graphics.asm|316||0|1|24326|T|
+graphics.asm|317||0|1|24329|T|
+graphics.asm|318||0|1|24330|T|
+graphics.asm|320||0|1|24332|T|
+graphics.asm|321||0|1|24333|T|
+graphics.asm|322||0|1|24334|T|
+graphics.asm|324||0|1|24335|F|DrawPixelSprite16x16.shift_loop
+graphics.asm|324||0|1|24335|L|,DrawPixelSprite16x16,shift_loop,+used
+graphics.asm|325||0|1|24335|T|
+graphics.asm|326||0|1|24337|T|
+graphics.asm|327||0|1|24339|T|
+graphics.asm|328||0|1|24341|T|
+graphics.asm|330||0|1|24343|T|
+graphics.asm|333||0|1|24344|T|
+graphics.asm|334||0|1|24345|T|
+graphics.asm|335||0|1|24346|T|
+graphics.asm|336||0|1|24347|T|
+graphics.asm|337||0|1|24348|T|
+graphics.asm|338||0|1|24349|T|
+graphics.asm|339||0|1|24350|T|
+graphics.asm|340||0|1|24351|T|
+graphics.asm|342||0|1|24353|F|DrawPixelSprite16x16.no_shift
+graphics.asm|342||0|1|24353|L|,DrawPixelSprite16x16,no_shift,+used
+graphics.asm|344||0|1|24353|T|
+graphics.asm|345||0|1|24354|T|
+graphics.asm|346||0|1|24355|T|
+graphics.asm|347||0|1|24356|T|
+graphics.asm|349||0|1|24357|F|DrawPixelSprite16x16.next_line
+graphics.asm|349||0|1|24357|L|,DrawPixelSprite16x16,next_line,+used
+graphics.asm|350||0|1|24357|T|
+graphics.asm|351||0|1|24360|T|
+graphics.asm|352||0|1|24362|T|
+graphics.asm|353||0|1|24364|T|
+graphics.asm|354||0|1|24365|T|
+graphics.asm|356||0|1|24367|T|
+graphics.asm|357||0|1|24369|T|
+graphics.asm|358||0|1|24370|T|
+graphics.asm|359||0|1|24371|T|
+graphics.asm|360||0|1|24372|T|
+graphics.asm|366||0|1|24373|F|ErasePixelSprite16x16
+graphics.asm|366||0|1|24373|L|,ErasePixelSprite16x16,,+used
+graphics.asm|367||0|1|24373|T|
+graphics.asm|368||0|1|24374|T|
+graphics.asm|369||0|1|24375|T|
+graphics.asm|371||0|1|24376|T|
+graphics.asm|372||0|1|24377|T|
+graphics.asm|373||0|1|24378|T|
+graphics.asm|374||0|1|24380|T|
+graphics.asm|376||0|1|24381|T|
+graphics.asm|377||0|1|24382|T|
+graphics.asm|378||0|1|24383|T|
+graphics.asm|380||0|1|24386|T|
+graphics.asm|381||0|1|24388|F|ErasePixelSprite16x16.erase_loop
+graphics.asm|381||0|1|24388|L|,ErasePixelSprite16x16,erase_loop,+used
+graphics.asm|382||0|1|24388|T|
+graphics.asm|383||0|1|24389|T|
+graphics.asm|384||0|1|24392|T|
+graphics.asm|385||0|1|24393|T|
+graphics.asm|386||0|1|24394|T|
+graphics.asm|387||0|1|24395|T|
+graphics.asm|388||0|1|24397|T|
+graphics.asm|389||0|1|24400|T|
+graphics.asm|390||0|1|24401|T|
+graphics.asm|391||0|1|24402|T|
+graphics.asm|392||0|1|24403|T|
+graphics.asm|393||0|1|24405|T|
+graphics.asm|394||0|1|24408|T|
+graphics.asm|395||0|1|24409|T|
+graphics.asm|396||0|1|24410|T|
+graphics.asm|398||0|1|24411|T|
+graphics.asm|399||0|1|24414|T|
+graphics.asm|400||0|1|24415|T|
+graphics.asm|401||0|1|24416|T|
+graphics.asm|403||0|1|24418|T|
+graphics.asm|404||0|1|24419|T|
 graphics.asm|405||0|1|24420|T|
-graphics.asm|407||0|1|24422|T|
-graphics.asm|408||0|1|24426|T|
-graphics.asm|410||0|1|24428|F|PrintPlayer.right_head
-graphics.asm|410||0|1|24428|L|,PrintPlayer,right_head,+used
-graphics.asm|411||0|1|24428|T|
-graphics.asm|413||0|1|24432|F|PrintPlayer.draw_head
-graphics.asm|413||0|1|24432|L|,PrintPlayer,draw_head,+used
-graphics.asm|414||0|1|24432|T|
-graphics.asm|415||0|1|24436|T|
-graphics.asm|418||0|1|24439|T|
-graphics.asm|419||0|1|24442|T|
-graphics.asm|420||0|1|24444|T|
-graphics.asm|423||0|1|24446|T|
-graphics.asm|424||0|1|24449|T|
-graphics.asm|425||0|1|24451|T|
-graphics.asm|426||0|1|24452|T|
-graphics.asm|427||0|1|24453|T|
-graphics.asm|428||0|1|24454|T|
-graphics.asm|429||0|1|24455|T|
-graphics.asm|430||0|1|24457|T|
-graphics.asm|431||0|1|24461|T|
-graphics.asm|432||0|1|24463|T|
-graphics.asm|434||0|1|24465|F|PrintPlayer.right_body
-graphics.asm|434||0|1|24465|L|,PrintPlayer,right_body,+used
-graphics.asm|436||0|1|24465|T|
-graphics.asm|437||0|1|24468|T|
-graphics.asm|438||0|1|24470|T|
-graphics.asm|439||0|1|24471|T|
-graphics.asm|440||0|1|24472|T|
-graphics.asm|441||0|1|24473|T|
-graphics.asm|442||0|1|24474|T|
-graphics.asm|443||0|1|24476|T|
-graphics.asm|444||0|1|24480|T|
-graphics.asm|446||0|1|24482|F|PrintPlayer.draw_body
-graphics.asm|446||0|1|24482|L|,PrintPlayer,draw_body,+used
-graphics.asm|447||0|1|24482|T|
-graphics.asm|448||0|1|24486|T|
-graphics.asm|449||0|1|24487|T|
-graphics.asm|450||0|1|24489|T|
-graphics.asm|451||0|1|24490|T|
-graphics.asm|453||0|1|24493|T|
-graphics.asm|454||0|1|24495|T|
-graphics.asm|459||0|1|24496|F|DeleteCharAtOldPos
-graphics.asm|459||0|1|24496|L|,DeleteCharAtOldPos,,+used
-graphics.asm|460||0|1|24496|T|
-graphics.asm|461||0|1|24500|T|
-graphics.asm|463||0|1|24503|T|
-graphics.asm|464||0|1|24507|T|
-graphics.asm|465||0|1|24508|T|
-graphics.asm|466||0|1|24510|T|
-graphics.asm|467||0|1|24511|T|
-graphics.asm|468||0|1|24514|T|
-graphics.asm|474||0|1|24515|F|PrintString
-graphics.asm|474||0|1|24515|L|,PrintString,,+used
-graphics.asm|475||0|1|24515|T|
+graphics.asm|406||0|1|24421|T|
+graphics.asm|411||0|1|24422|F|PrintPlayer
+graphics.asm|411||0|1|24422|L|,PrintPlayer,,+used
+graphics.asm|412||0|1|24422|T|
+graphics.asm|415||0|1|24424|T|
+graphics.asm|416||0|1|24427|T|
+graphics.asm|417||0|1|24429|T|
+graphics.asm|419||0|1|24431|T|
+graphics.asm|420||0|1|24435|T|
+graphics.asm|422||0|1|24437|F|PrintPlayer.right_head
+graphics.asm|422||0|1|24437|L|,PrintPlayer,right_head,+used
+graphics.asm|423||0|1|24437|T|
+graphics.asm|425||0|1|24441|F|PrintPlayer.draw_head
+graphics.asm|425||0|1|24441|L|,PrintPlayer,draw_head,+used
+graphics.asm|426||0|1|24441|T|
+graphics.asm|427||0|1|24445|T|
+graphics.asm|430||0|1|24448|T|
+graphics.asm|431||0|1|24451|T|
+graphics.asm|432||0|1|24453|T|
+graphics.asm|435||0|1|24455|T|
+graphics.asm|436||0|1|24458|T|
+graphics.asm|437||0|1|24460|T|
+graphics.asm|438||0|1|24461|T|
+graphics.asm|439||0|1|24462|T|
+graphics.asm|440||0|1|24463|T|
+graphics.asm|441||0|1|24464|T|
+graphics.asm|442||0|1|24466|T|
+graphics.asm|443||0|1|24470|T|
+graphics.asm|444||0|1|24472|T|
+graphics.asm|446||0|1|24474|F|PrintPlayer.right_body
+graphics.asm|446||0|1|24474|L|,PrintPlayer,right_body,+used
+graphics.asm|448||0|1|24474|T|
+graphics.asm|449||0|1|24477|T|
+graphics.asm|450||0|1|24479|T|
+graphics.asm|451||0|1|24480|T|
+graphics.asm|452||0|1|24481|T|
+graphics.asm|453||0|1|24482|T|
+graphics.asm|454||0|1|24483|T|
+graphics.asm|455||0|1|24485|T|
+graphics.asm|456||0|1|24489|T|
+graphics.asm|458||0|1|24491|F|PrintPlayer.draw_body
+graphics.asm|458||0|1|24491|L|,PrintPlayer,draw_body,+used
+graphics.asm|459||0|1|24491|T|
+graphics.asm|460||0|1|24495|T|
+graphics.asm|461||0|1|24496|T|
+graphics.asm|462||0|1|24498|T|
+graphics.asm|463||0|1|24499|T|
+graphics.asm|465||0|1|24502|T|
+graphics.asm|466||0|1|24504|T|
+graphics.asm|471||0|1|24505|F|DeleteCharAtOldPos
+graphics.asm|471||0|1|24505|L|,DeleteCharAtOldPos,,+used
+graphics.asm|472||0|1|24505|T|
+graphics.asm|473||0|1|24509|T|
+graphics.asm|475||0|1|24512|T|
 graphics.asm|476||0|1|24516|T|
 graphics.asm|477||0|1|24517|T|
-graphics.asm|478||0|1|24518|T|
+graphics.asm|478||0|1|24519|T|
 graphics.asm|479||0|1|24520|T|
-graphics.asm|485||0|1|24521|F|DrawVerticalBorders
-graphics.asm|485||0|1|24521|L|,DrawVerticalBorders,,+used
-graphics.asm|486||0|1|24521|T|
-graphics.asm|487||0|1|24522|T|
-graphics.asm|488||0|1|24523|T|
-graphics.asm|489||0|1|24524|T|
-graphics.asm|491||0|1|24526|T|
-graphics.asm|492||0|1|24528|T|
-graphics.asm|494||0|1|24530|F|DrawVerticalBorders.row_loop
-graphics.asm|494||0|1|24530|L|,DrawVerticalBorders,row_loop,+used
-graphics.asm|495||0|1|24530|T|
-graphics.asm|498||0|1|24531|T|
-graphics.asm|499||0|1|24532|T|
-graphics.asm|500||0|1|24534|T|
-graphics.asm|501||0|1|24537|T|
-graphics.asm|502||0|1|24541|T|
-graphics.asm|503||0|1|24543|F|DrawVerticalBorders.left_loop
-graphics.asm|503||0|1|24543|L|,DrawVerticalBorders,left_loop,+used
-graphics.asm|504||0|1|24543|T|
-graphics.asm|505||0|1|24546|T|
-graphics.asm|506||0|1|24547|T|
-graphics.asm|507||0|1|24550|T|
-graphics.asm|508||0|1|24552|T|
-graphics.asm|509||0|1|24553|T|
-graphics.asm|512||0|1|24555|T|
-graphics.asm|513||0|1|24556|T|
-graphics.asm|514||0|1|24557|T|
-graphics.asm|515||0|1|24558|T|
-graphics.asm|516||0|1|24560|T|
-graphics.asm|517||0|1|24563|T|
-graphics.asm|518||0|1|24567|T|
-graphics.asm|519||0|1|24569|F|DrawVerticalBorders.right_loop
-graphics.asm|519||0|1|24569|L|,DrawVerticalBorders,right_loop,+used
-graphics.asm|520||0|1|24569|T|
-graphics.asm|521||0|1|24572|T|
-graphics.asm|522||0|1|24573|T|
-graphics.asm|523||0|1|24576|T|
-graphics.asm|524||0|1|24578|T|
-graphics.asm|525||0|1|24579|T|
-graphics.asm|527||0|1|24581|T|
-graphics.asm|528||0|1|24582|T|
-graphics.asm|529||0|1|24583|T|
-graphics.asm|530||0|1|24585|T|
-graphics.asm|531||0|1|24586|T|
-graphics.asm|532||0|1|24587|T|
-graphics.asm|535||0|1|24589|T|
-graphics.asm|536||0|1|24592|T|
-graphics.asm|537||0|1|24595|T|
-graphics.asm|538||0|1|24597|F|DrawVerticalBorders.attr_loop
-graphics.asm|538||0|1|24597|L|,DrawVerticalBorders,attr_loop,+used
-graphics.asm|539||0|1|24597|T|
-graphics.asm|540||0|1|24599|T|
-graphics.asm|541||0|1|24601|T|
-graphics.asm|544||0|1|24602|T|
-graphics.asm|545||0|1|24603|T|
-graphics.asm|546||0|1|24605|T|
-graphics.asm|547||0|1|24606|T|
-graphics.asm|548||0|1|24607|T|
-graphics.asm|549||0|1|24609|T|
-graphics.asm|551||0|1|24610|T|
-graphics.asm|552||0|1|24611|T|
-graphics.asm|553||0|1|24613|T|
-graphics.asm|554||0|1|24614|T|
-graphics.asm|555||0|1|24615|T|
-graphics.asm|556||0|1|24617|T|
-graphics.asm|558||0|1|24618|T|
-graphics.asm|559||0|1|24619|T|
-graphics.asm|561||0|1|24621|T|
-graphics.asm|562||0|1|24623|T|
-graphics.asm|563||0|1|24624|T|
-graphics.asm|564||0|1|24625|T|
-graphics.asm|565||0|1|24626|T|
-graphics.asm|570||0|1|24627|F|EraseVerticalBorders
-graphics.asm|570||0|1|24627|L|,EraseVerticalBorders,
-graphics.asm|571||0|1|24627|T|
-graphics.asm|572||0|1|24628|T|
-graphics.asm|573||0|1|24629|T|
-graphics.asm|574||0|1|24630|T|
-graphics.asm|576||0|1|24632|T|
-graphics.asm|577||0|1|24634|T|
-graphics.asm|579||0|1|24636|F|EraseVerticalBorders.row_loop
-graphics.asm|579||0|1|24636|L|,EraseVerticalBorders,row_loop,+used
-graphics.asm|580||0|1|24636|T|
-graphics.asm|583||0|1|24637|T|
-graphics.asm|584||0|1|24638|T|
-graphics.asm|585||0|1|24640|T|
-graphics.asm|586||0|1|24643|T|
-graphics.asm|587||0|1|24645|F|EraseVerticalBorders.left_loop
-graphics.asm|587||0|1|24645|L|,EraseVerticalBorders,left_loop,+used
-graphics.asm|588||0|1|24645|T|
-graphics.asm|589||0|1|24646|T|
-graphics.asm|590||0|1|24647|T|
-graphics.asm|591||0|1|24650|T|
-graphics.asm|592||0|1|24651|T|
-graphics.asm|595||0|1|24653|T|
-graphics.asm|596||0|1|24654|T|
-graphics.asm|597||0|1|24655|T|
-graphics.asm|598||0|1|24656|T|
-graphics.asm|599||0|1|24658|T|
-graphics.asm|600||0|1|24661|T|
-graphics.asm|601||0|1|24663|F|EraseVerticalBorders.right_loop
-graphics.asm|601||0|1|24663|L|,EraseVerticalBorders,right_loop,+used
-graphics.asm|602||0|1|24663|T|
-graphics.asm|603||0|1|24664|T|
-graphics.asm|604||0|1|24665|T|
-graphics.asm|605||0|1|24668|T|
-graphics.asm|606||0|1|24669|T|
-graphics.asm|608||0|1|24671|T|
-graphics.asm|609||0|1|24672|T|
-graphics.asm|610||0|1|24673|T|
-graphics.asm|611||0|1|24675|T|
-graphics.asm|612||0|1|24676|T|
-graphics.asm|613||0|1|24677|T|
-graphics.asm|616||0|1|24679|T|
-graphics.asm|617||0|1|24682|T|
-graphics.asm|618||0|1|24685|T|
-graphics.asm|619||0|1|24687|F|EraseVerticalBorders.attr_loop
-graphics.asm|619||0|1|24687|L|,EraseVerticalBorders,attr_loop,+used
-graphics.asm|620||0|1|24687|T|
-graphics.asm|621||0|1|24689|T|
-graphics.asm|622||0|1|24691|T|
-graphics.asm|624||0|1|24692|T|
-graphics.asm|625||0|1|24693|T|
-graphics.asm|626||0|1|24695|T|
-graphics.asm|627||0|1|24696|T|
-graphics.asm|628||0|1|24697|T|
-graphics.asm|629||0|1|24699|T|
-graphics.asm|631||0|1|24700|T|
-graphics.asm|632||0|1|24701|T|
-graphics.asm|633||0|1|24703|T|
-graphics.asm|634||0|1|24704|T|
-graphics.asm|635||0|1|24705|T|
-graphics.asm|636||0|1|24707|T|
-graphics.asm|638||0|1|24708|T|
-graphics.asm|639||0|1|24709|T|
-graphics.asm|641||0|1|24711|T|
-graphics.asm|642||0|1|24713|T|
-graphics.asm|643||0|1|24714|T|
-graphics.asm|644||0|1|24715|T|
-graphics.asm|645||0|1|24716|T|
-graphics.asm|650||0|1|24717|F|DrawFloorDirect
-graphics.asm|650||0|1|24717|L|,DrawFloorDirect,,+used
-graphics.asm|651||0|1|24717|T|
-graphics.asm|652||0|1|24718|T|
-graphics.asm|653||0|1|24719|T|
-graphics.asm|654||0|1|24720|T|
-graphics.asm|657||0|1|24722|T|
-graphics.asm|658||0|1|24726|T|
-graphics.asm|660||0|1|24728|F|DrawFloorDirect.scanline_loop
-graphics.asm|660||0|1|24728|L|,DrawFloorDirect,scanline_loop,+used
-graphics.asm|661||0|1|24728|T|
-graphics.asm|662||0|1|24730|T|
-graphics.asm|663||0|1|24731|T|
-graphics.asm|664||0|1|24732|T|
-graphics.asm|666||0|1|24734|T|
-graphics.asm|667||0|1|24737|T|
-graphics.asm|669||0|1|24739|F|DrawFloorDirect.col_loop
-graphics.asm|669||0|1|24739|L|,DrawFloorDirect,col_loop,+used
-graphics.asm|670||0|1|24739|T|
-graphics.asm|671||0|1|24740|T|
-graphics.asm|672||0|1|24741|T|
-graphics.asm|673||0|1|24742|T|
-graphics.asm|675||0|1|24744|T|
-graphics.asm|676||0|1|24746|T|
-graphics.asm|677||0|1|24747|T|
-graphics.asm|678||0|1|24748|T|
-graphics.asm|679||0|1|24750|T|
-graphics.asm|682||0|1|24752|T|
-graphics.asm|683||0|1|24755|T|
-graphics.asm|684||0|1|24757|F|DrawFloorDirect.attr_loop
-graphics.asm|684||0|1|24757|L|,DrawFloorDirect,attr_loop,+used
-graphics.asm|685||0|1|24757|T|
-graphics.asm|686||0|1|24759|T|
-graphics.asm|687||0|1|24760|T|
-graphics.asm|688||0|1|24761|T|
-graphics.asm|690||0|1|24763|T|
-graphics.asm|691||0|1|24765|T|
-graphics.asm|692||0|1|24766|T|
-graphics.asm|693||0|1|24767|T|
-graphics.asm|694||0|1|24768|T|
-graphics.asm|700||0|1|24769|F|DrawPlatform
-graphics.asm|700||0|1|24769|L|,DrawPlatform,,+used
-graphics.asm|701||0|1|24769|T|
-graphics.asm|702||0|1|24770|T|
-graphics.asm|703||0|1|24771|T|
-graphics.asm|704||0|1|24772|T|
-graphics.asm|708||0|1|24774|T|
-graphics.asm|709||0|1|24778|T|
-graphics.asm|711||0|1|24780|F|DrawPlatform.scanline_loop1
-graphics.asm|711||0|1|24780|L|,DrawPlatform,scanline_loop1,+used
-graphics.asm|712||0|1|24780|T|
-graphics.asm|713||0|1|24782|T|
-graphics.asm|714||0|1|24783|T|
-graphics.asm|715||0|1|24784|T|
-graphics.asm|717||0|1|24786|T|
-graphics.asm|718||0|1|24789|T|
-graphics.asm|720||0|1|24791|F|DrawPlatform.col_loop1
-graphics.asm|720||0|1|24791|L|,DrawPlatform,col_loop1,+used
-graphics.asm|721||0|1|24791|T|
-graphics.asm|722||0|1|24792|T|
-graphics.asm|723||0|1|24793|T|
-graphics.asm|724||0|1|24794|T|
-graphics.asm|725||0|1|24795|T|
-graphics.asm|726||0|1|24796|T|
-graphics.asm|728||0|1|24798|T|
-graphics.asm|729||0|1|24800|T|
-graphics.asm|730||0|1|24801|T|
-graphics.asm|731||0|1|24802|T|
-graphics.asm|732||0|1|24804|T|
-graphics.asm|735||0|1|24806|T|
-graphics.asm|736||0|1|24809|T|
-graphics.asm|737||0|1|24811|F|DrawPlatform.attr_loop1
-graphics.asm|737||0|1|24811|L|,DrawPlatform,attr_loop1,+used
-graphics.asm|738||0|1|24811|T|
-graphics.asm|739||0|1|24813|T|
-graphics.asm|740||0|1|24814|T|
-graphics.asm|741||0|1|24815|T|
-graphics.asm|745||0|1|24817|T|
-graphics.asm|746||0|1|24821|T|
-graphics.asm|748||0|1|24823|F|DrawPlatform.scanline_loop2
-graphics.asm|748||0|1|24823|L|,DrawPlatform,scanline_loop2,+used
-graphics.asm|749||0|1|24823|T|
-graphics.asm|750||0|1|24825|T|
-graphics.asm|751||0|1|24826|T|
-graphics.asm|752||0|1|24827|T|
-graphics.asm|754||0|1|24829|T|
-graphics.asm|755||0|1|24832|T|
-graphics.asm|757||0|1|24834|F|DrawPlatform.col_loop2
-graphics.asm|757||0|1|24834|L|,DrawPlatform,col_loop2,+used
-graphics.asm|758||0|1|24834|T|
-graphics.asm|759||0|1|24835|T|
-graphics.asm|760||0|1|24836|T|
-graphics.asm|761||0|1|24837|T|
-graphics.asm|762||0|1|24838|T|
-graphics.asm|763||0|1|24839|T|
-graphics.asm|765||0|1|24841|T|
-graphics.asm|766||0|1|24843|T|
-graphics.asm|767||0|1|24844|T|
-graphics.asm|768||0|1|24845|T|
-graphics.asm|769||0|1|24847|T|
-graphics.asm|772||0|1|24849|T|
-graphics.asm|773||0|1|24852|T|
-graphics.asm|774||0|1|24854|F|DrawPlatform.attr_loop2
-graphics.asm|774||0|1|24854|L|,DrawPlatform,attr_loop2,+used
-graphics.asm|775||0|1|24854|T|
-graphics.asm|776||0|1|24856|T|
-graphics.asm|777||0|1|24857|T|
-graphics.asm|778||0|1|24858|T|
-graphics.asm|780||0|1|24860|T|
-graphics.asm|781||0|1|24862|T|
-graphics.asm|782||0|1|24863|T|
-graphics.asm|783||0|1|24864|T|
-graphics.asm|784||0|1|24865|T|
-graphics.asm|789||0|1|24866|F|TilesDef
-graphics.asm|789||0|1|24866|L|,TilesDef,,+used
-graphics.asm|803||0|1|24938|F|LamettaSpriteRight
-graphics.asm|803||0|1|24938|L|,LamettaSpriteRight,,+used
-graphics.asm|813||0|1|25066|F|LamettaSpriteLeft
-graphics.asm|813||0|1|25066|L|,LamettaSpriteLeft,,+used
-graphics.asm|823||0|1|25194|F|ChipSprite
-graphics.asm|823||0|1|25194|L|,ChipSprite,
-graphics.asm|833||0|1|25322|F|TheChapelSprite
-graphics.asm|833||0|1|25322|L|,TheChapelSprite,
-graphics.asm|843||0|1|25450|F|WallBaseSprite
-graphics.asm|843||0|1|25450|L|,WallBaseSprite,
-graphics.asm|853||0|1|25578|F|SpirlaSprite
-graphics.asm|853||0|1|25578|L|,SpirlaSprite,
-graphics.asm|863||0|1|25706|F|CutSprite
-graphics.asm|863||0|1|25706|L|,CutSprite,
-graphics.asm|873||0|1|25834|F|PliersSprite
-graphics.asm|873||0|1|25834|L|,PliersSprite,
-graphics.asm|883||0|1|25962|F|RobotSprite
-graphics.asm|883||0|1|25962|L|,RobotSprite,,+used
-graphics.asm|893||0|1|26090|F|SwissArmyKife
-graphics.asm|893||0|1|26090|L|,SwissArmyKife,
-graphics.asm|903||0|1|26218|F|EggSpriteRight
-graphics.asm|903||0|1|26218|L|,EggSpriteRight,,+used
-graphics.asm|913||0|1|26346|F|EggSpriteLeft
-graphics.asm|913||0|1|26346|L|,EggSpriteLeft,,+used
-graphics.asm|923||0|1|26474|F|PacManSprite
-graphics.asm|923||0|1|26474|L|,PacManSprite,
-player.asm|10||0|1|26602|F|MovePlayer
-player.asm|10||0|1|26602|L|,MovePlayer,,+used
-player.asm|12||0|1|26602|T|
-player.asm|13||0|1|26606|T|
-player.asm|14||0|1|26610|T|
-player.asm|15||0|1|26611|T|
-player.asm|17||0|1|26615|T|
-player.asm|19||0|1|26619|T|
-player.asm|20||0|1|26621|T|
-player.asm|22||0|1|26623|T|
-player.asm|23||0|1|26625|T|
-player.asm|25||0|1|26626|F|movePlayer_left
-player.asm|25||0|1|26626|L|,movePlayer_left,
-player.asm|26||0|1|26626|T|
-player.asm|27||0|1|26627|T|
-player.asm|28||0|1|26629|T|
-player.asm|29||0|1|26631|T|
-player.asm|30||0|1|26633|T|
-player.asm|31||0|1|26634|T|
-player.asm|33||0|1|26636|F|movePlayer_left.clamp_left
-player.asm|33||0|1|26636|L|,movePlayer_left,clamp_left,+used
-player.asm|34||0|1|26636|T|
-player.asm|35||0|1|26638|T|
-player.asm|37||0|1|26640|F|movePlayer_right
-player.asm|37||0|1|26640|L|,movePlayer_right,,+used
-player.asm|38||0|1|26640|T|
-player.asm|39||0|1|26641|T|
-player.asm|40||0|1|26643|T|
-player.asm|41||0|1|26645|T|
-player.asm|42||0|1|26647|T|
-player.asm|43||0|1|26649|F|movePlayer_right.ok_right
-player.asm|43||0|1|26649|L|,movePlayer_right,ok_right,+used
-player.asm|44||0|1|26649|T|
-player.asm|45||0|1|26650|T|
-player.asm|47||0|1|26652|F|movePlayer_right.clamp_right
-player.asm|47||0|1|26652|L|,movePlayer_right,clamp_right,+used
-player.asm|48||0|1|26652|T|
-player.asm|50||0|1|26654|F|save_x
-player.asm|50||0|1|26654|L|,save_x,,+used
-player.asm|51||0|1|26654|T|
-player.asm|53||0|1|26658|F|movePlayer_print
-player.asm|53||0|1|26658|L|,movePlayer_print,
-player.asm|55||0|1|26658|T|
-player.asm|56||0|1|26661|T|
-player.asm|57||0|1|26662|T|
-player.asm|58||0|1|26664|T|
-player.asm|59||0|1|26666|T|
-player.asm|60||0|1|26668|F|movePlayer_print.save_state
-player.asm|60||0|1|26668|L|,movePlayer_print,save_state,+used
-player.asm|61||0|1|26668|T|
-player.asm|62||0|1|26671|T|
-input.asm|10||0|1|26672|F|CheckCtrl
-input.asm|10||0|1|26672|L|,CheckCtrl,,+used
-input.asm|11||0|1|26672|T|
-input.asm|12||0|1|26674|T|
-input.asm|13||0|1|26676|T|
-input.asm|14||0|1|26678|T|
-input.asm|16||0|1|26682|F|checkCtrl_left
-input.asm|16||0|1|26682|L|,checkCtrl_left,
-input.asm|17||0|1|26682|T|
-input.asm|18||0|1|26684|T|
-input.asm|19||0|1|26686|T|
-input.asm|20||0|1|26688|T|
-input.asm|21||0|1|26692|T|
-input.asm|22||0|1|26693|T|
-input.asm|23||0|1|26695|T|
-input.asm|24||0|1|26698|T|
-input.asm|26||0|1|26699|F|checkCtrl_right
-input.asm|26||0|1|26699|L|,checkCtrl_right,,+used
-input.asm|27||0|1|26699|T|
-input.asm|28||0|1|26701|T|
-input.asm|29||0|1|26703|T|
-input.asm|30||0|1|26705|T|
-input.asm|31||0|1|26709|T|
-input.asm|32||0|1|26710|T|
-input.asm|33||0|1|26712|T|
-input.asm|34||0|1|26715|T|
-input.asm|36||0|1|26716|F|checkCtrl_jump
-input.asm|36||0|1|26716|L|,checkCtrl_jump,,+used
-input.asm|38||0|1|26716|T|
-input.asm|39||0|1|26718|T|
-input.asm|40||0|1|26720|T|
-input.asm|41||0|1|26722|T|
-input.asm|44||0|1|26724|T|
-input.asm|45||0|1|26726|T|
-input.asm|46||0|1|26728|T|
-input.asm|47||0|1|26730|T|
-input.asm|49||0|1|26732|F|checkCtrl_jump.released
-input.asm|49||0|1|26732|L|,checkCtrl_jump,released
-input.asm|50||0|1|26732|T|
-input.asm|51||0|1|26733|T|
-input.asm|52||0|1|26736|T|
-input.asm|54||0|1|26738|F|checkCtrl_jump.pressed
-input.asm|54||0|1|26738|L|,checkCtrl_jump,pressed,+used
-input.asm|55||0|1|26738|T|
-input.asm|56||0|1|26741|T|
-input.asm|57||0|1|26742|T|
-input.asm|58||0|1|26744|T|
-input.asm|59||0|1|26746|T|
-input.asm|60||0|1|26749|T|
-input.asm|61||0|1|26752|T|
-input.asm|63||0|1|26754|F|checkCtrl_jump.end
-input.asm|63||0|1|26754|L|,checkCtrl_jump,end,+used
-input.asm|64||0|1|26754|T|
-input.asm|65||0|1|26755|T|
-input.asm|66||0|1|26757|T|
-input.asm|67||0|1|26759|T|
-input.asm|68||0|1|26760|T|
-input.asm|69||0|1|26761|T|
-input.asm|70||0|1|26763|T|
-input.asm|71||0|1|26764|T|
-physics.asm|9||0|1|26765|F|ApplyGravity
-physics.asm|9||0|1|26765|L|,ApplyGravity,,+used
-physics.asm|10||0|1|26765|T|
-physics.asm|11||0|1|26769|T|
-physics.asm|14||0|1|26770|T|
-physics.asm|15||0|1|26773|T|
-physics.asm|16||0|1|26774|T|
-physics.asm|19||0|1|26777|T|
-physics.asm|20||0|1|26778|T|
-physics.asm|21||0|1|26780|T|
-physics.asm|23||0|1|26783|T|
-physics.asm|24||0|1|26785|T|
-physics.asm|26||0|1|26787|T|
-physics.asm|27||0|1|26789|T|
-physics.asm|30||0|1|26792|T|
-physics.asm|31||0|1|26793|T|
-physics.asm|32||0|1|26795|T|
-physics.asm|33||0|1|26798|T|
-physics.asm|34||0|1|26800|T|
-physics.asm|36||0|1|26803|T|
-physics.asm|37||0|1|26805|T|
-physics.asm|39||0|1|26808|F|ApplyGravity.check_platform1
-physics.asm|39||0|1|26808|L|,ApplyGravity,check_platform1,+used
-physics.asm|41||0|1|26808|T|
-physics.asm|42||0|1|26809|T|
-physics.asm|43||0|1|26811|T|
-physics.asm|44||0|1|26814|T|
-physics.asm|45||0|1|26816|T|
-physics.asm|47||0|1|26819|T|
-physics.asm|48||0|1|26821|T|
-physics.asm|50||0|1|26824|F|ApplyGravity.at_platform_or_ground
-physics.asm|50||0|1|26824|L|,ApplyGravity,at_platform_or_ground,+used
-physics.asm|51||0|1|26824|T|
-physics.asm|52||0|1|26828|T|
-physics.asm|53||0|1|26830|T|
-physics.asm|54||0|1|26833|T|
-physics.asm|55||0|1|26834|T|
-physics.asm|58||0|1|26837|T|
-physics.asm|59||0|1|26840|T|
-physics.asm|60||0|1|26841|T|
-physics.asm|62||0|1|26844|T|
-physics.asm|63||0|1|26846|T|
-physics.asm|64||0|1|26849|T|
-physics.asm|65||0|1|26850|T|
-physics.asm|66||0|1|26853|T|
-physics.asm|67||0|1|26856|T|
-physics.asm|69||0|1|26859|F|ApplyGravity.in_air
-physics.asm|69||0|1|26859|L|,ApplyGravity,in_air,+used
-physics.asm|71||0|1|26859|T|
-physics.asm|72||0|1|26862|T|
-physics.asm|75||0|1|26864|T|
-physics.asm|76||0|1|26866|T|
-physics.asm|78||0|1|26868|T|
-physics.asm|79||0|1|26870|T|
-physics.asm|80||0|1|26872|T|
-physics.asm|82||0|1|26874|F|ApplyGravity.store_vel
-physics.asm|82||0|1|26874|L|,ApplyGravity,store_vel,+used
-physics.asm|83||0|1|26874|T|
-physics.asm|86||0|1|26877|T|
-physics.asm|87||0|1|26881|T|
-physics.asm|88||0|1|26882|T|
-physics.asm|89||0|1|26883|T|
-physics.asm|90||0|1|26884|T|
-physics.asm|93||0|1|26885|T|
-physics.asm|94||0|1|26888|T|
-physics.asm|95||0|1|26890|T|
-physics.asm|96||0|1|26892|T|
-physics.asm|97||0|1|26893|T|
-physics.asm|98||0|1|26895|T|
-physics.asm|100||0|1|26897|F|ApplyGravity.falling_checks
-physics.asm|100||0|1|26897|L|,ApplyGravity,falling_checks,+used
-physics.asm|103||0|1|26897|T|
-physics.asm|104||0|1|26900|T|
-physics.asm|105||0|1|26902|T|
-physics.asm|107||0|1|26904|T|
-physics.asm|108||0|1|26905|T|
-physics.asm|109||0|1|26907|T|
-physics.asm|112||0|1|26909|T|
-physics.asm|113||0|1|26911|T|
-physics.asm|115||0|1|26914|F|ApplyGravity.check_platform1_collision
-physics.asm|115||0|1|26914|L|,ApplyGravity,check_platform1_collision,+used
-physics.asm|118||0|1|26914|T|
-physics.asm|119||0|1|26915|T|
-physics.asm|120||0|1|26917|T|
-physics.asm|121||0|1|26919|T|
-physics.asm|122||0|1|26921|T|
-physics.asm|125||0|1|26923|T|
-physics.asm|126||0|1|26926|T|
-physics.asm|127||0|1|26928|T|
-physics.asm|129||0|1|26930|T|
-physics.asm|130||0|1|26931|T|
-physics.asm|131||0|1|26933|T|
-physics.asm|134||0|1|26935|T|
-physics.asm|135||0|1|26937|T|
-physics.asm|137||0|1|26940|F|ApplyGravity.check_platform1_only_nc
-physics.asm|137||0|1|26940|L|,ApplyGravity,check_platform1_only_nc,+used
-physics.asm|139||0|1|26940|T|
-physics.asm|141||0|1|26942|F|ApplyGravity.check_platform2_collision
-physics.asm|141||0|1|26942|L|,ApplyGravity,check_platform2_collision,+used
-physics.asm|144||0|1|26942|T|
-physics.asm|145||0|1|26943|T|
-physics.asm|146||0|1|26945|T|
-physics.asm|147||0|1|26947|T|
-physics.asm|148||0|1|26949|T|
-physics.asm|151||0|1|26951|T|
-physics.asm|152||0|1|26954|T|
-physics.asm|153||0|1|26956|T|
-physics.asm|155||0|1|26958|T|
-physics.asm|156||0|1|26959|T|
-physics.asm|157||0|1|26961|T|
-physics.asm|160||0|1|26963|T|
-physics.asm|161||0|1|26965|T|
-physics.asm|163||0|1|26968|F|ApplyGravity.no_collision_checks
-physics.asm|163||0|1|26968|L|,ApplyGravity,no_collision_checks,+used
-physics.asm|164||0|1|26968|F|ApplyGravity.save_pos
-physics.asm|164||0|1|26968|L|,ApplyGravity,save_pos
-physics.asm|166||0|1|26968|T|
-physics.asm|167||0|1|26969|T|
-physics.asm|168||0|1|26971|T|
-physics.asm|169||0|1|26973|T|
-physics.asm|170||0|1|26975|T|
-physics.asm|171||0|1|26976|T|
-physics.asm|173||0|1|26979|F|ApplyGravity.save_ok
-physics.asm|173||0|1|26979|L|,ApplyGravity,save_ok,+used
-physics.asm|174||0|1|26979|T|
-physics.asm|176||0|1|26983|F|ApplyGravity.end
-physics.asm|176||0|1|26983|L|,ApplyGravity,end,+used
-physics.asm|177||0|1|26983|T|
-physics.asm|178||0|1|26984|T|
-physics.asm|179||0|1|26987|T|
-physics.asm|185||0|1|26988|F|CheckCollision
-physics.asm|185||0|1|26988|L|,CheckCollision,,+used
-physics.asm|188||0|1|26988|T|
-physics.asm|189||0|1|26991|T|
-physics.asm|190||0|1|26994|T|
-physics.asm|191||0|1|26995|T|
-physics.asm|192||0|1|26997|T|
-physics.asm|193||0|1|26999|T|
-physics.asm|196||0|1|27001|T|
-physics.asm|197||0|1|27004|T|
-physics.asm|198||0|1|27007|T|
-physics.asm|199||0|1|27008|T|
-physics.asm|200||0|1|27010|T|
-physics.asm|201||0|1|27012|T|
-physics.asm|204||0|1|27014|T|
-physics.asm|205||0|1|27015|T|
-physics.asm|207||0|1|27016|F|CheckCollision.check_egg
-physics.asm|207||0|1|27016|L|,CheckCollision,check_egg,+used
-physics.asm|210||0|1|27016|T|
-physics.asm|211||0|1|27019|T|
-physics.asm|212||0|1|27022|T|
-physics.asm|213||0|1|27023|T|
-physics.asm|214||0|1|27025|T|
-physics.asm|215||0|1|27027|T|
-physics.asm|218||0|1|27029|T|
-physics.asm|219||0|1|27032|T|
-physics.asm|220||0|1|27035|T|
-physics.asm|221||0|1|27036|T|
-physics.asm|222||0|1|27038|T|
-physics.asm|223||0|1|27040|T|
-physics.asm|226||0|1|27042|T|
-physics.asm|227||0|1|27043|T|
-physics.asm|229||0|1|27044|F|CheckCollision.check_robot
-physics.asm|229||0|1|27044|L|,CheckCollision,check_robot,+used
-physics.asm|232||0|1|27044|T|
-physics.asm|233||0|1|27047|T|
-physics.asm|234||0|1|27050|T|
-physics.asm|235||0|1|27051|T|
-physics.asm|236||0|1|27053|T|
-physics.asm|237||0|1|27055|T|
-physics.asm|240||0|1|27057|T|
-physics.asm|241||0|1|27060|T|
-physics.asm|242||0|1|27063|T|
-physics.asm|243||0|1|27064|T|
-physics.asm|244||0|1|27066|T|
-physics.asm|245||0|1|27068|T|
-physics.asm|248||0|1|27070|T|
-physics.asm|249||0|1|27071|T|
-physics.asm|251||0|1|27072|F|CheckCollision.no_collision
-physics.asm|251||0|1|27072|L|,CheckCollision,no_collision,+used
-physics.asm|252||0|1|27072|T|
-physics.asm|253||0|1|27073|T|
-screen.asm|33||0|1|27074|F|PrintFrame
-screen.asm|33||0|1|27074|L|,PrintFrame,
-screen.asm|35||0|1|27074|T|
-screen.asm|36||0|1|27077|T|
-screen.asm|37||0|1|27079|T|
-screen.asm|40||0|1|27082|T|
-screen.asm|41||0|1|27084|T|
-screen.asm|42||0|1|27086|T|
-screen.asm|45||0|1|27089|T|
-screen.asm|46||0|1|27092|T|
-screen.asm|47||0|1|27094|T|
-screen.asm|49||0|1|27097|T|
-screen.asm|54||0|1|27098|F|PrintInfoGame
-screen.asm|54||0|1|27098|L|,PrintInfoGame,
-screen.asm|55||0|1|27098|T|
-screen.asm|56||0|1|27100|T|
-screen.asm|57||0|1|27103|T|
-screen.asm|58||0|1|27106|T|
-screen.asm|59||0|1|27108|T|
-screen.asm|60||0|1|27111|T|
-screen.asm|61||0|1|27113|T|
-screen.asm|62||0|1|27116|T|
-screen.asm|67||0|1|27117|F|frameTopGraph
-screen.asm|67||0|1|27117|L|,frameTopGraph,,+used
-screen.asm|73||0|1|27154|F|frameBottomGraph
-screen.asm|73||0|1|27154|L|,frameBottomGraph,,+used
-screen.asm|78||0|1|27189|F|frameEnd
-screen.asm|78||0|1|27189|L|,frameEnd,,+used
-screen.asm|80||0|1|27189|F|infoGame
-screen.asm|80||0|1|27189|L|,infoGame,,+used
-screen.asm|83||0|1|27226|F|infoGame_end
-screen.asm|83||0|1|27226|L|,infoGame_end,,+used
-enemy.asm|8||0|1|27226|F|MoveEnemy
-enemy.asm|8||0|1|27226|L|,MoveEnemy,,+used
-enemy.asm|9||0|1|27226|T|
-enemy.asm|11||0|1|27230|T|
-enemy.asm|12||0|1|27233|T|
-enemy.asm|13||0|1|27235|T|
-enemy.asm|15||0|1|27237|F|MoveEnemy.move_left
-enemy.asm|15||0|1|27237|L|,MoveEnemy,move_left
-enemy.asm|16||0|1|27237|T|
-enemy.asm|17||0|1|27238|T|
-enemy.asm|18||0|1|27240|T|
-enemy.asm|19||0|1|27242|T|
-enemy.asm|20||0|1|27244|T|
-enemy.asm|21||0|1|27246|T|
-enemy.asm|22||0|1|27247|T|
-enemy.asm|24||0|1|27249|F|MoveEnemy.reverse_to_right
-enemy.asm|24||0|1|27249|L|,MoveEnemy,reverse_to_right,+used
-enemy.asm|25||0|1|27249|T|
-enemy.asm|26||0|1|27251|T|
-enemy.asm|27||0|1|27253|T|
-enemy.asm|28||0|1|27256|T|
-enemy.asm|30||0|1|27258|F|MoveEnemy.move_right
-enemy.asm|30||0|1|27258|L|,MoveEnemy,move_right,+used
-enemy.asm|31||0|1|27258|T|
-enemy.asm|32||0|1|27259|T|
-enemy.asm|33||0|1|27261|T|
-enemy.asm|34||0|1|27263|T|
-enemy.asm|35||0|1|27265|T|
-enemy.asm|36||0|1|27267|T|
-enemy.asm|37||0|1|27268|T|
-enemy.asm|39||0|1|27270|F|MoveEnemy.reverse_to_left
-enemy.asm|39||0|1|27270|L|,MoveEnemy,reverse_to_left,+used
-enemy.asm|40||0|1|27270|T|
-enemy.asm|41||0|1|27272|T|
-enemy.asm|42||0|1|27274|T|
-enemy.asm|44||0|1|27277|F|MoveEnemy.save_x
-enemy.asm|44||0|1|27277|L|,MoveEnemy,save_x,+used
-enemy.asm|45||0|1|27277|T|
-enemy.asm|47||0|1|27281|F|MoveEnemy.animate
-enemy.asm|47||0|1|27281|L|,MoveEnemy,animate
-enemy.asm|49||0|1|27281|T|
-enemy.asm|50||0|1|27284|T|
-enemy.asm|51||0|1|27285|T|
-enemy.asm|52||0|1|27287|T|
-enemy.asm|53||0|1|27289|T|
-enemy.asm|54||0|1|27291|F|MoveEnemy.save_state
-enemy.asm|54||0|1|27291|L|,MoveEnemy,save_state,+used
-enemy.asm|55||0|1|27291|T|
-enemy.asm|56||0|1|27294|T|
-enemy.asm|61||0|1|27295|F|PrintEnemy
-enemy.asm|61||0|1|27295|L|,PrintEnemy,,+used
-enemy.asm|62||0|1|27295|T|
-enemy.asm|65||0|1|27297|T|
-enemy.asm|66||0|1|27300|T|
-enemy.asm|67||0|1|27302|T|
-enemy.asm|69||0|1|27304|F|PrintEnemy.left_enemy
-enemy.asm|69||0|1|27304|L|,PrintEnemy,left_enemy
-enemy.asm|70||0|1|27304|T|
-enemy.asm|71||0|1|27308|T|
-enemy.asm|73||0|1|27310|F|PrintEnemy.right_enemy
-enemy.asm|73||0|1|27310|L|,PrintEnemy,right_enemy,+used
-enemy.asm|74||0|1|27310|T|
-enemy.asm|76||0|1|27314|F|PrintEnemy.calc_frame
-enemy.asm|76||0|1|27314|L|,PrintEnemy,calc_frame,+used
-enemy.asm|78||0|1|27314|T|
-enemy.asm|79||0|1|27317|T|
-enemy.asm|80||0|1|27318|T|
-enemy.asm|81||0|1|27319|T|
-enemy.asm|82||0|1|27320|T|
-enemy.asm|83||0|1|27321|T|
-enemy.asm|84||0|1|27322|T|
-enemy.asm|85||0|1|27323|T|
-enemy.asm|86||0|1|27325|T|
-enemy.asm|88||0|1|27327|T|
-enemy.asm|89||0|1|27331|T|
-enemy.asm|91||0|1|27334|T|
-enemy.asm|92||0|1|27336|T|
-enemy.asm|97||0|1|27337|F|DeleteEnemyAtOldPos
-enemy.asm|97||0|1|27337|L|,DeleteEnemyAtOldPos,,+used
-enemy.asm|98||0|1|27337|T|
-enemy.asm|99||0|1|27341|T|
-enemy.asm|100||0|1|27344|T|
-enemy.asm|105||0|1|27345|F|MoveEgg
-enemy.asm|105||0|1|27345|L|,MoveEgg,,+used
-enemy.asm|106||0|1|27345|T|
-enemy.asm|108||0|1|27349|T|
-enemy.asm|109||0|1|27352|T|
-enemy.asm|110||0|1|27354|T|
-enemy.asm|112||0|1|27356|F|MoveEgg.move_left
-enemy.asm|112||0|1|27356|L|,MoveEgg,move_left
-enemy.asm|113||0|1|27356|T|
-enemy.asm|114||0|1|27357|T|
-enemy.asm|115||0|1|27359|T|
-enemy.asm|116||0|1|27361|T|
-enemy.asm|117||0|1|27363|T|
-enemy.asm|118||0|1|27365|T|
-enemy.asm|119||0|1|27366|T|
-enemy.asm|121||0|1|27368|F|MoveEgg.reverse_to_right
-enemy.asm|121||0|1|27368|L|,MoveEgg,reverse_to_right,+used
-enemy.asm|122||0|1|27368|T|
-enemy.asm|123||0|1|27370|T|
-enemy.asm|124||0|1|27372|T|
-enemy.asm|125||0|1|27375|T|
-enemy.asm|127||0|1|27377|F|MoveEgg.move_right
-enemy.asm|127||0|1|27377|L|,MoveEgg,move_right,+used
-enemy.asm|128||0|1|27377|T|
-enemy.asm|129||0|1|27378|T|
-enemy.asm|130||0|1|27380|T|
-enemy.asm|131||0|1|27382|T|
-enemy.asm|132||0|1|27384|T|
-enemy.asm|133||0|1|27386|T|
-enemy.asm|134||0|1|27387|T|
-enemy.asm|136||0|1|27389|F|MoveEgg.reverse_to_left
-enemy.asm|136||0|1|27389|L|,MoveEgg,reverse_to_left,+used
-enemy.asm|137||0|1|27389|T|
-enemy.asm|138||0|1|27391|T|
-enemy.asm|139||0|1|27393|T|
-enemy.asm|141||0|1|27396|F|MoveEgg.save_x
-enemy.asm|141||0|1|27396|L|,MoveEgg,save_x,+used
-enemy.asm|142||0|1|27396|T|
-enemy.asm|144||0|1|27400|F|MoveEgg.animate
-enemy.asm|144||0|1|27400|L|,MoveEgg,animate
-enemy.asm|146||0|1|27400|T|
-enemy.asm|147||0|1|27403|T|
-enemy.asm|148||0|1|27404|T|
-enemy.asm|149||0|1|27406|T|
-enemy.asm|150||0|1|27408|T|
-enemy.asm|151||0|1|27410|F|MoveEgg.save_state
-enemy.asm|151||0|1|27410|L|,MoveEgg,save_state,+used
-enemy.asm|152||0|1|27410|T|
-enemy.asm|153||0|1|27413|T|
-enemy.asm|158||0|1|27414|F|PrintEgg
-enemy.asm|158||0|1|27414|L|,PrintEgg,,+used
-enemy.asm|159||0|1|27414|T|
-enemy.asm|162||0|1|27416|T|
-enemy.asm|163||0|1|27419|T|
-enemy.asm|164||0|1|27421|T|
-enemy.asm|166||0|1|27423|F|PrintEgg.left_egg
-enemy.asm|166||0|1|27423|L|,PrintEgg,left_egg
-enemy.asm|167||0|1|27423|T|
-enemy.asm|168||0|1|27427|T|
-enemy.asm|170||0|1|27429|F|PrintEgg.right_egg
-enemy.asm|170||0|1|27429|L|,PrintEgg,right_egg,+used
-enemy.asm|171||0|1|27429|T|
-enemy.asm|173||0|1|27433|F|PrintEgg.calc_frame
-enemy.asm|173||0|1|27433|L|,PrintEgg,calc_frame,+used
-enemy.asm|175||0|1|27433|T|
-enemy.asm|176||0|1|27436|T|
-enemy.asm|177||0|1|27437|T|
-enemy.asm|178||0|1|27438|T|
-enemy.asm|179||0|1|27439|T|
-enemy.asm|180||0|1|27440|T|
-enemy.asm|181||0|1|27441|T|
-enemy.asm|182||0|1|27442|T|
-enemy.asm|183||0|1|27444|T|
-enemy.asm|185||0|1|27446|T|
-enemy.asm|186||0|1|27450|T|
-enemy.asm|188||0|1|27453|T|
-enemy.asm|189||0|1|27455|T|
-enemy.asm|194||0|1|27456|F|DeleteEggAtOldPos
-enemy.asm|194||0|1|27456|L|,DeleteEggAtOldPos,,+used
-enemy.asm|195||0|1|27456|T|
-enemy.asm|196||0|1|27460|T|
-enemy.asm|197||0|1|27463|T|
-enemy.asm|202||0|1|27464|F|MoveRobot
-enemy.asm|202||0|1|27464|L|,MoveRobot,,+used
-enemy.asm|203||0|1|27464|T|
-enemy.asm|205||0|1|27468|T|
-enemy.asm|206||0|1|27471|T|
-enemy.asm|207||0|1|27473|T|
-enemy.asm|209||0|1|27475|F|MoveRobot.move_left
-enemy.asm|209||0|1|27475|L|,MoveRobot,move_left
-enemy.asm|210||0|1|27475|T|
-enemy.asm|211||0|1|27476|T|
-enemy.asm|212||0|1|27478|T|
-enemy.asm|213||0|1|27480|T|
-enemy.asm|214||0|1|27482|T|
-enemy.asm|215||0|1|27484|T|
-enemy.asm|216||0|1|27485|T|
-enemy.asm|218||0|1|27487|F|MoveRobot.reverse_to_right
-enemy.asm|218||0|1|27487|L|,MoveRobot,reverse_to_right,+used
-enemy.asm|219||0|1|27487|T|
-enemy.asm|220||0|1|27489|T|
-enemy.asm|221||0|1|27491|T|
-enemy.asm|222||0|1|27494|T|
-enemy.asm|224||0|1|27496|F|MoveRobot.move_right
-enemy.asm|224||0|1|27496|L|,MoveRobot,move_right,+used
-enemy.asm|225||0|1|27496|T|
-enemy.asm|226||0|1|27497|T|
-enemy.asm|227||0|1|27499|T|
-enemy.asm|228||0|1|27501|T|
-enemy.asm|229||0|1|27503|T|
-enemy.asm|230||0|1|27505|T|
-enemy.asm|231||0|1|27506|T|
-enemy.asm|233||0|1|27508|F|MoveRobot.reverse_to_left
-enemy.asm|233||0|1|27508|L|,MoveRobot,reverse_to_left,+used
-enemy.asm|234||0|1|27508|T|
-enemy.asm|235||0|1|27510|T|
-enemy.asm|236||0|1|27512|T|
-enemy.asm|238||0|1|27515|F|MoveRobot.save_x
-enemy.asm|238||0|1|27515|L|,MoveRobot,save_x,+used
-enemy.asm|239||0|1|27515|T|
-enemy.asm|241||0|1|27519|F|MoveRobot.animate
-enemy.asm|241||0|1|27519|L|,MoveRobot,animate
-enemy.asm|243||0|1|27519|T|
-enemy.asm|244||0|1|27522|T|
-enemy.asm|245||0|1|27523|T|
-enemy.asm|246||0|1|27525|T|
-enemy.asm|247||0|1|27527|T|
-enemy.asm|248||0|1|27529|F|MoveRobot.save_state
-enemy.asm|248||0|1|27529|L|,MoveRobot,save_state,+used
-enemy.asm|249||0|1|27529|T|
-enemy.asm|250||0|1|27532|T|
-enemy.asm|255||0|1|27533|F|PrintRobot
-enemy.asm|255||0|1|27533|L|,PrintRobot,,+used
-enemy.asm|256||0|1|27533|T|
-enemy.asm|259||0|1|27535|T|
-enemy.asm|260||0|1|27538|T|
-enemy.asm|261||0|1|27539|T|
-enemy.asm|262||0|1|27540|T|
-enemy.asm|263||0|1|27541|T|
-enemy.asm|264||0|1|27542|T|
-enemy.asm|265||0|1|27543|T|
-enemy.asm|266||0|1|27544|T|
-enemy.asm|268||0|1|27546|T|
-enemy.asm|269||0|1|27550|T|
-enemy.asm|271||0|1|27552|T|
-enemy.asm|272||0|1|27556|T|
-enemy.asm|274||0|1|27559|T|
-enemy.asm|275||0|1|27561|T|
-enemy.asm|280||0|1|27562|F|DeleteRobotAtOldPos
-enemy.asm|280||0|1|27562|L|,DeleteRobotAtOldPos,,+used
-enemy.asm|281||0|1|27562|T|
-enemy.asm|282||0|1|27566|T|
-enemy.asm|283||0|1|27569|T|
-jet set willy.asm|21||0|1|27570|F|start
-jet set willy.asm|21||0|1|27570|L|,start,
-jet set willy.asm|22||0|1|27570|T|
-jet set willy.asm|26||0|1|27573|F|Main
-jet set willy.asm|26||0|1|27573|L|,Main,
-jet set willy.asm|28||0|1|27573|T|
-jet set willy.asm|29||0|1|27574|T|
-jet set willy.asm|31||0|1|27577|T|
-jet set willy.asm|32||0|1|27580|T|
-jet set willy.asm|34||0|1|27583|T|
-jet set willy.asm|35||0|1|27585|T|
-jet set willy.asm|36||0|1|27588|T|
-jet set willy.asm|37||0|1|27591|T|
-jet set willy.asm|39||0|1|27594|T|
-jet set willy.asm|40||0|1|27597|T|
-jet set willy.asm|41||0|1|27599|T|
-jet set willy.asm|42||0|1|27602|T|
-jet set willy.asm|43||0|1|27605|T|
-jet set willy.asm|45||0|1|27608|T|
-jet set willy.asm|46||0|1|27609|T|
-jet set willy.asm|47||0|1|27611|T|
-jet set willy.asm|48||0|1|27614|T|
-jet set willy.asm|49||0|1|27616|T|
-jet set willy.asm|50||0|1|27618|T|
-jet set willy.asm|53||0|1|27621|T|
-jet set willy.asm|54||0|1|27622|T|
-jet set willy.asm|55||0|1|27625|T|
-jet set willy.asm|56||0|1|27627|T|
-jet set willy.asm|57||0|1|27630|T|
-jet set willy.asm|60||0|1|27633|T|
-jet set willy.asm|61||0|1|27634|T|
-jet set willy.asm|62||0|1|27637|T|
-jet set willy.asm|63||0|1|27639|T|
-jet set willy.asm|64||0|1|27642|T|
-jet set willy.asm|67||0|1|27645|T|
-jet set willy.asm|68||0|1|27646|T|
-jet set willy.asm|69||0|1|27649|T|
-jet set willy.asm|70||0|1|27651|T|
-jet set willy.asm|71||0|1|27654|T|
-jet set willy.asm|74||0|1|27657|T|
-jet set willy.asm|76||0|1|27660|F|Main_loop
-jet set willy.asm|76||0|1|27660|L|,Main_loop,,+used
-jet set willy.asm|77||0|1|27660|T|
-jet set willy.asm|78||0|1|27661|T|
-jet set willy.asm|81||0|1|27662|T|
-jet set willy.asm|82||0|1|27665|T|
-jet set willy.asm|83||0|1|27668|T|
-jet set willy.asm|84||0|1|27671|T|
-jet set willy.asm|86||0|1|27674|T|
-jet set willy.asm|89||0|1|27677|T|
-jet set willy.asm|90||0|1|27680|T|
-jet set willy.asm|91||0|1|27683|T|
-jet set willy.asm|92||0|1|27686|T|
-jet set willy.asm|93||0|1|27689|T|
-jet set willy.asm|96||0|1|27692|T|
-jet set willy.asm|97||0|1|27696|T|
-jet set willy.asm|98||0|1|27700|T|
-jet set willy.asm|99||0|1|27704|T|
-jet set willy.asm|100||0|1|27708|T|
-jet set willy.asm|101||0|1|27712|T|
-jet set willy.asm|102||0|1|27716|T|
-jet set willy.asm|103||0|1|27720|T|
-jet set willy.asm|106||0|1|27724|T|
-jet set willy.asm|107||0|1|27727|T|
-jet set willy.asm|108||0|1|27730|T|
-jet set willy.asm|109||0|1|27733|T|
-jet set willy.asm|110||0|1|27736|T|
-jet set willy.asm|113||0|1|27739|T|
-jet set willy.asm|114||0|1|27742|T|
-jet set willy.asm|117||0|1|27744|T|
-jet set willy.asm|118||0|1|27747|T|
-jet set willy.asm|119||0|1|27749|T|
-jet set willy.asm|120||0|1|27751|F|Main_loop.raster_loop
-jet set willy.asm|120||0|1|27751|L|,Main_loop,raster_loop,+used
-jet set willy.asm|121||0|1|27751|T|
-jet set willy.asm|122||0|1|27753|T|
-jet set willy.asm|123||0|1|27754|T|
-jet set willy.asm|124||0|1|27756|T|
-jet set willy.asm|125||0|1|27758|F|Main_loop.delay
-jet set willy.asm|125||0|1|27758|L|,Main_loop,delay,+used
-jet set willy.asm|126||0|1|27758|T|
-jet set willy.asm|127||0|1|27759|T|
-jet set willy.asm|128||0|1|27761|T|
-jet set willy.asm|131||0|1|27763|T|
-jet set willy.asm|132||0|1|27764|T|
-jet set willy.asm|133||0|1|27766|T|
-jet set willy.asm|135||0|1|27768|F|Main_loop.no_collision
-jet set willy.asm|135||0|1|27768|L|,Main_loop,no_collision,+used
-jet set willy.asm|137||0|1|27768|T|
-jet set willy.asm|138||0|1|27769|T|
-jet set willy.asm|140||0|1|27771|F|Main_loop.no_collision_change
-jet set willy.asm|140||0|1|27771|L|,Main_loop,no_collision_change,+used
-jet set willy.asm|141||0|1|27771|T|
-jet set willy.asm|147||0|1|27774|F|PlayerPos
-jet set willy.asm|147||0|1|27774|L|,PlayerPos,,+used
-jet set willy.asm|148||0|1|27776|F|PlayerPosOld
-jet set willy.asm|148||0|1|27776|L|,PlayerPosOld,,+used
-jet set willy.asm|149||0|1|27778|F|bodyPos
-jet set willy.asm|149||0|1|27778|L|,bodyPos,
-jet set willy.asm|152||0|1|27780|F|EnemyPos
-jet set willy.asm|152||0|1|27780|L|,EnemyPos,,+used
-jet set willy.asm|153||0|1|27782|F|EnemyPosOld
-jet set willy.asm|153||0|1|27782|L|,EnemyPosOld,,+used
-jet set willy.asm|156||0|1|27784|F|EggPos
-jet set willy.asm|156||0|1|27784|L|,EggPos,,+used
-jet set willy.asm|157||0|1|27786|F|EggPosOld
-jet set willy.asm|157||0|1|27786|L|,EggPosOld,,+used
-jet set willy.asm|160||0|1|27788|F|RobotPos
-jet set willy.asm|160||0|1|27788|L|,RobotPos,,+used
-jet set willy.asm|161||0|1|27790|F|RobotPosOld
-jet set willy.asm|161||0|1|27790|L|,RobotPosOld,,+used
-jet set willy.asm|164||0|1|27792|F|body_state
-jet set willy.asm|164||0|1|27792|L|,body_state,,+used
-jet set willy.asm|165||0|1|27793|F|direction
-jet set willy.asm|165||0|1|27793|L|,direction,,+used
-jet set willy.asm|166||0|1|27794|F|flags
-jet set willy.asm|166||0|1|27794|L|,flags,,+used
-jet set willy.asm|169||0|1|27795|F|enemy_body_state
-jet set willy.asm|169||0|1|27795|L|,enemy_body_state,,+used
-jet set willy.asm|170||0|1|27796|F|enemy_direction
-jet set willy.asm|170||0|1|27796|L|,enemy_direction,,+used
-jet set willy.asm|171||0|1|27797|F|collision_active
-jet set willy.asm|171||0|1|27797|L|,collision_active,
-jet set willy.asm|172||0|1|27798|F|sprite_shift
-jet set willy.asm|172||0|1|27798|L|,sprite_shift,,+used
-jet set willy.asm|175||0|1|27799|F|egg_body_state
-jet set willy.asm|175||0|1|27799|L|,egg_body_state,,+used
-jet set willy.asm|176||0|1|27800|F|egg_direction
-jet set willy.asm|176||0|1|27800|L|,egg_direction,,+used
-jet set willy.asm|179||0|1|27801|F|robot_body_state
-jet set willy.asm|179||0|1|27801|L|,robot_body_state,,+used
-jet set willy.asm|180||0|1|27802|F|robot_direction
-jet set willy.asm|180||0|1|27802|L|,robot_direction,,+used
-jet set willy.asm|183||0|1|27803|F|velocity_y
-jet set willy.asm|183||0|1|27803|L|,velocity_y,,+used
-jet set willy.asm|184||0|1|27804|F|on_ground
-jet set willy.asm|184||0|1|27804|L|,on_ground,,+used
-jet set willy.asm|185||0|1|27805|F|jump_pressed
-jet set willy.asm|185||0|1|27805|L|,jump_pressed,,+used
-jet set willy.asm|186||0|1|27806|F|jump_prev
-jet set willy.asm|186||0|1|27806|L|,jump_prev,,+used
-jet set willy.asm|189||0|1|27807|F|counter
-jet set willy.asm|189||0|1|27807|L|,counter,,+used
-jet set willy.asm|190||0|1|27809|F|line_buffer
-jet set willy.asm|190||0|1|27809|L|,line_buffer,
+graphics.asm|480||0|1|24523|T|
+graphics.asm|486||0|1|24524|F|PrintString
+graphics.asm|486||0|1|24524|L|,PrintString,,+used
+graphics.asm|487||0|1|24524|T|
+graphics.asm|488||0|1|24525|T|
+graphics.asm|489||0|1|24526|T|
+graphics.asm|490||0|1|24527|T|
+graphics.asm|491||0|1|24529|T|
+graphics.asm|497||0|1|24530|F|DrawVerticalBorders
+graphics.asm|497||0|1|24530|L|,DrawVerticalBorders,,+used
+graphics.asm|498||0|1|24530|T|
+graphics.asm|499||0|1|24531|T|
+graphics.asm|500||0|1|24532|T|
+graphics.asm|501||0|1|24533|T|
+graphics.asm|503||0|1|24535|T|
+graphics.asm|504||0|1|24537|T|
+graphics.asm|506||0|1|24539|F|DrawVerticalBorders.row_loop
+graphics.asm|506||0|1|24539|L|,DrawVerticalBorders,row_loop,+used
+graphics.asm|507||0|1|24539|T|
+graphics.asm|510||0|1|24540|T|
+graphics.asm|511||0|1|24541|T|
+graphics.asm|512||0|1|24543|T|
+graphics.asm|513||0|1|24546|T|
+graphics.asm|514||0|1|24550|T|
+graphics.asm|515||0|1|24552|F|DrawVerticalBorders.left_loop
+graphics.asm|515||0|1|24552|L|,DrawVerticalBorders,left_loop,+used
+graphics.asm|516||0|1|24552|T|
+graphics.asm|517||0|1|24555|T|
+graphics.asm|518||0|1|24556|T|
+graphics.asm|519||0|1|24559|T|
+graphics.asm|520||0|1|24561|T|
+graphics.asm|521||0|1|24562|T|
+graphics.asm|524||0|1|24564|T|
+graphics.asm|525||0|1|24565|T|
+graphics.asm|526||0|1|24566|T|
+graphics.asm|527||0|1|24567|T|
+graphics.asm|528||0|1|24569|T|
+graphics.asm|529||0|1|24572|T|
+graphics.asm|530||0|1|24576|T|
+graphics.asm|531||0|1|24578|F|DrawVerticalBorders.right_loop
+graphics.asm|531||0|1|24578|L|,DrawVerticalBorders,right_loop,+used
+graphics.asm|532||0|1|24578|T|
+graphics.asm|533||0|1|24581|T|
+graphics.asm|534||0|1|24582|T|
+graphics.asm|535||0|1|24585|T|
+graphics.asm|536||0|1|24587|T|
+graphics.asm|537||0|1|24588|T|
+graphics.asm|539||0|1|24590|T|
+graphics.asm|540||0|1|24591|T|
+graphics.asm|541||0|1|24592|T|
+graphics.asm|542||0|1|24594|T|
+graphics.asm|543||0|1|24595|T|
+graphics.asm|544||0|1|24596|T|
+graphics.asm|547||0|1|24598|T|
+graphics.asm|548||0|1|24601|T|
+graphics.asm|549||0|1|24604|T|
+graphics.asm|550||0|1|24606|F|DrawVerticalBorders.attr_loop
+graphics.asm|550||0|1|24606|L|,DrawVerticalBorders,attr_loop,+used
+graphics.asm|551||0|1|24606|T|
+graphics.asm|552||0|1|24608|T|
+graphics.asm|553||0|1|24610|T|
+graphics.asm|556||0|1|24611|T|
+graphics.asm|557||0|1|24612|T|
+graphics.asm|558||0|1|24614|T|
+graphics.asm|559||0|1|24615|T|
+graphics.asm|560||0|1|24616|T|
+graphics.asm|561||0|1|24618|T|
+graphics.asm|563||0|1|24619|T|
+graphics.asm|564||0|1|24620|T|
+graphics.asm|565||0|1|24622|T|
+graphics.asm|566||0|1|24623|T|
+graphics.asm|567||0|1|24624|T|
+graphics.asm|568||0|1|24626|T|
+graphics.asm|570||0|1|24627|T|
+graphics.asm|571||0|1|24628|T|
+graphics.asm|573||0|1|24630|T|
+graphics.asm|574||0|1|24632|T|
+graphics.asm|575||0|1|24633|T|
+graphics.asm|576||0|1|24634|T|
+graphics.asm|577||0|1|24635|T|
+graphics.asm|582||0|1|24636|F|EraseVerticalBorders
+graphics.asm|582||0|1|24636|L|,EraseVerticalBorders,
+graphics.asm|583||0|1|24636|T|
+graphics.asm|584||0|1|24637|T|
+graphics.asm|585||0|1|24638|T|
+graphics.asm|586||0|1|24639|T|
+graphics.asm|588||0|1|24641|T|
+graphics.asm|589||0|1|24643|T|
+graphics.asm|591||0|1|24645|F|EraseVerticalBorders.row_loop
+graphics.asm|591||0|1|24645|L|,EraseVerticalBorders,row_loop,+used
+graphics.asm|592||0|1|24645|T|
+graphics.asm|595||0|1|24646|T|
+graphics.asm|596||0|1|24647|T|
+graphics.asm|597||0|1|24649|T|
+graphics.asm|598||0|1|24652|T|
+graphics.asm|599||0|1|24654|F|EraseVerticalBorders.left_loop
+graphics.asm|599||0|1|24654|L|,EraseVerticalBorders,left_loop,+used
+graphics.asm|600||0|1|24654|T|
+graphics.asm|601||0|1|24655|T|
+graphics.asm|602||0|1|24656|T|
+graphics.asm|603||0|1|24659|T|
+graphics.asm|604||0|1|24660|T|
+graphics.asm|607||0|1|24662|T|
+graphics.asm|608||0|1|24663|T|
+graphics.asm|609||0|1|24664|T|
+graphics.asm|610||0|1|24665|T|
+graphics.asm|611||0|1|24667|T|
+graphics.asm|612||0|1|24670|T|
+graphics.asm|613||0|1|24672|F|EraseVerticalBorders.right_loop
+graphics.asm|613||0|1|24672|L|,EraseVerticalBorders,right_loop,+used
+graphics.asm|614||0|1|24672|T|
+graphics.asm|615||0|1|24673|T|
+graphics.asm|616||0|1|24674|T|
+graphics.asm|617||0|1|24677|T|
+graphics.asm|618||0|1|24678|T|
+graphics.asm|620||0|1|24680|T|
+graphics.asm|621||0|1|24681|T|
+graphics.asm|622||0|1|24682|T|
+graphics.asm|623||0|1|24684|T|
+graphics.asm|624||0|1|24685|T|
+graphics.asm|625||0|1|24686|T|
+graphics.asm|628||0|1|24688|T|
+graphics.asm|629||0|1|24691|T|
+graphics.asm|630||0|1|24694|T|
+graphics.asm|631||0|1|24696|F|EraseVerticalBorders.attr_loop
+graphics.asm|631||0|1|24696|L|,EraseVerticalBorders,attr_loop,+used
+graphics.asm|632||0|1|24696|T|
+graphics.asm|633||0|1|24698|T|
+graphics.asm|634||0|1|24700|T|
+graphics.asm|636||0|1|24701|T|
+graphics.asm|637||0|1|24702|T|
+graphics.asm|638||0|1|24704|T|
+graphics.asm|639||0|1|24705|T|
+graphics.asm|640||0|1|24706|T|
+graphics.asm|641||0|1|24708|T|
+graphics.asm|643||0|1|24709|T|
+graphics.asm|644||0|1|24710|T|
+graphics.asm|645||0|1|24712|T|
+graphics.asm|646||0|1|24713|T|
+graphics.asm|647||0|1|24714|T|
+graphics.asm|648||0|1|24716|T|
+graphics.asm|650||0|1|24717|T|
+graphics.asm|651||0|1|24718|T|
+graphics.asm|653||0|1|24720|T|
+graphics.asm|654||0|1|24722|T|
+graphics.asm|655||0|1|24723|T|
+graphics.asm|656||0|1|24724|T|
+graphics.asm|657||0|1|24725|T|
+graphics.asm|662||0|1|24726|F|DrawFloorDirect
+graphics.asm|662||0|1|24726|L|,DrawFloorDirect,,+used
+graphics.asm|663||0|1|24726|T|
+graphics.asm|664||0|1|24727|T|
+graphics.asm|665||0|1|24728|T|
+graphics.asm|666||0|1|24729|T|
+graphics.asm|669||0|1|24731|T|
+graphics.asm|670||0|1|24735|T|
+graphics.asm|672||0|1|24737|F|DrawFloorDirect.scanline_loop
+graphics.asm|672||0|1|24737|L|,DrawFloorDirect,scanline_loop,+used
+graphics.asm|673||0|1|24737|T|
+graphics.asm|674||0|1|24739|T|
+graphics.asm|675||0|1|24740|T|
+graphics.asm|676||0|1|24741|T|
+graphics.asm|678||0|1|24743|T|
+graphics.asm|679||0|1|24746|T|
+graphics.asm|681||0|1|24748|F|DrawFloorDirect.col_loop
+graphics.asm|681||0|1|24748|L|,DrawFloorDirect,col_loop,+used
+graphics.asm|682||0|1|24748|T|
+graphics.asm|683||0|1|24749|T|
+graphics.asm|684||0|1|24750|T|
+graphics.asm|685||0|1|24751|T|
+graphics.asm|687||0|1|24753|T|
+graphics.asm|688||0|1|24755|T|
+graphics.asm|689||0|1|24756|T|
+graphics.asm|690||0|1|24757|T|
+graphics.asm|691||0|1|24759|T|
+graphics.asm|694||0|1|24761|T|
+graphics.asm|695||0|1|24764|T|
+graphics.asm|696||0|1|24766|F|DrawFloorDirect.attr_loop
+graphics.asm|696||0|1|24766|L|,DrawFloorDirect,attr_loop,+used
+graphics.asm|697||0|1|24766|T|
+graphics.asm|698||0|1|24768|T|
+graphics.asm|699||0|1|24769|T|
+graphics.asm|700||0|1|24770|T|
+graphics.asm|702||0|1|24772|T|
+graphics.asm|703||0|1|24774|T|
+graphics.asm|704||0|1|24775|T|
+graphics.asm|705||0|1|24776|T|
+graphics.asm|706||0|1|24777|T|
+graphics.asm|712||0|1|24778|F|DrawPlatform
+graphics.asm|712||0|1|24778|L|,DrawPlatform,,+used
+graphics.asm|713||0|1|24778|T|
+graphics.asm|714||0|1|24779|T|
+graphics.asm|715||0|1|24780|T|
+graphics.asm|716||0|1|24781|T|
+graphics.asm|720||0|1|24783|T|
+graphics.asm|721||0|1|24787|T|
+graphics.asm|723||0|1|24789|F|DrawPlatform.scanline_loop1
+graphics.asm|723||0|1|24789|L|,DrawPlatform,scanline_loop1,+used
+graphics.asm|724||0|1|24789|T|
+graphics.asm|725||0|1|24791|T|
+graphics.asm|726||0|1|24792|T|
+graphics.asm|727||0|1|24793|T|
+graphics.asm|729||0|1|24795|T|
+graphics.asm|730||0|1|24798|T|
+graphics.asm|732||0|1|24800|F|DrawPlatform.col_loop1
+graphics.asm|732||0|1|24800|L|,DrawPlatform,col_loop1,+used
+graphics.asm|733||0|1|24800|T|
+graphics.asm|734||0|1|24801|T|
+graphics.asm|735||0|1|24802|T|
+graphics.asm|736||0|1|24803|T|
+graphics.asm|737||0|1|24804|T|
+graphics.asm|738||0|1|24805|T|
+graphics.asm|740||0|1|24807|T|
+graphics.asm|741||0|1|24809|T|
+graphics.asm|742||0|1|24810|T|
+graphics.asm|743||0|1|24811|T|
+graphics.asm|744||0|1|24813|T|
+graphics.asm|747||0|1|24815|T|
+graphics.asm|748||0|1|24818|T|
+graphics.asm|749||0|1|24820|F|DrawPlatform.attr_loop1
+graphics.asm|749||0|1|24820|L|,DrawPlatform,attr_loop1,+used
+graphics.asm|750||0|1|24820|T|
+graphics.asm|751||0|1|24822|T|
+graphics.asm|752||0|1|24823|T|
+graphics.asm|753||0|1|24824|T|
+graphics.asm|757||0|1|24826|T|
+graphics.asm|758||0|1|24830|T|
+graphics.asm|760||0|1|24832|F|DrawPlatform.scanline_loop2
+graphics.asm|760||0|1|24832|L|,DrawPlatform,scanline_loop2,+used
+graphics.asm|761||0|1|24832|T|
+graphics.asm|762||0|1|24834|T|
+graphics.asm|763||0|1|24835|T|
+graphics.asm|764||0|1|24836|T|
+graphics.asm|766||0|1|24838|T|
+graphics.asm|767||0|1|24841|T|
+graphics.asm|769||0|1|24843|F|DrawPlatform.col_loop2
+graphics.asm|769||0|1|24843|L|,DrawPlatform,col_loop2,+used
+graphics.asm|770||0|1|24843|T|
+graphics.asm|771||0|1|24844|T|
+graphics.asm|772||0|1|24845|T|
+graphics.asm|773||0|1|24846|T|
+graphics.asm|774||0|1|24847|T|
+graphics.asm|775||0|1|24848|T|
+graphics.asm|777||0|1|24850|T|
+graphics.asm|778||0|1|24852|T|
+graphics.asm|779||0|1|24853|T|
+graphics.asm|780||0|1|24854|T|
+graphics.asm|781||0|1|24856|T|
+graphics.asm|784||0|1|24858|T|
+graphics.asm|785||0|1|24861|T|
+graphics.asm|786||0|1|24863|F|DrawPlatform.attr_loop2
+graphics.asm|786||0|1|24863|L|,DrawPlatform,attr_loop2,+used
+graphics.asm|787||0|1|24863|T|
+graphics.asm|788||0|1|24865|T|
+graphics.asm|789||0|1|24866|T|
+graphics.asm|790||0|1|24867|T|
+graphics.asm|794||0|1|24869|T|
+graphics.asm|795||0|1|24873|T|
+graphics.asm|797||0|1|24875|F|DrawPlatform.scanline_loop3
+graphics.asm|797||0|1|24875|L|,DrawPlatform,scanline_loop3,+used
+graphics.asm|798||0|1|24875|T|
+graphics.asm|799||0|1|24877|T|
+graphics.asm|800||0|1|24878|T|
+graphics.asm|801||0|1|24879|T|
+graphics.asm|803||0|1|24881|T|
+graphics.asm|804||0|1|24884|T|
+graphics.asm|806||0|1|24886|F|DrawPlatform.col_loop3
+graphics.asm|806||0|1|24886|L|,DrawPlatform,col_loop3,+used
+graphics.asm|807||0|1|24886|T|
+graphics.asm|808||0|1|24887|T|
+graphics.asm|809||0|1|24888|T|
+graphics.asm|810||0|1|24889|T|
+graphics.asm|811||0|1|24890|T|
+graphics.asm|812||0|1|24891|T|
+graphics.asm|814||0|1|24893|T|
+graphics.asm|815||0|1|24895|T|
+graphics.asm|816||0|1|24896|T|
+graphics.asm|817||0|1|24897|T|
+graphics.asm|818||0|1|24899|T|
+graphics.asm|821||0|1|24901|T|
+graphics.asm|822||0|1|24904|T|
+graphics.asm|823||0|1|24906|F|DrawPlatform.attr_loop3
+graphics.asm|823||0|1|24906|L|,DrawPlatform,attr_loop3,+used
+graphics.asm|824||0|1|24906|T|
+graphics.asm|825||0|1|24908|T|
+graphics.asm|826||0|1|24909|T|
+graphics.asm|827||0|1|24910|T|
+graphics.asm|829||0|1|24912|T|
+graphics.asm|830||0|1|24914|T|
+graphics.asm|831||0|1|24915|T|
+graphics.asm|832||0|1|24916|T|
+graphics.asm|833||0|1|24917|T|
+graphics.asm|838||0|1|24918|F|TilesDef
+graphics.asm|838||0|1|24918|L|,TilesDef,,+used
+graphics.asm|852||0|1|24990|F|LamettaSpriteRight
+graphics.asm|852||0|1|24990|L|,LamettaSpriteRight,,+used
+graphics.asm|862||0|1|25118|F|LamettaSpriteLeft
+graphics.asm|862||0|1|25118|L|,LamettaSpriteLeft,,+used
+graphics.asm|872||0|1|25246|F|ChipSprite
+graphics.asm|872||0|1|25246|L|,ChipSprite,
+graphics.asm|882||0|1|25374|F|TheChapelSprite
+graphics.asm|882||0|1|25374|L|,TheChapelSprite,
+graphics.asm|892||0|1|25502|F|WallBaseSprite
+graphics.asm|892||0|1|25502|L|,WallBaseSprite,
+graphics.asm|902||0|1|25630|F|SpirlaSprite
+graphics.asm|902||0|1|25630|L|,SpirlaSprite,
+graphics.asm|912||0|1|25758|F|CutSprite
+graphics.asm|912||0|1|25758|L|,CutSprite,
+graphics.asm|922||0|1|25886|F|PliersSprite
+graphics.asm|922||0|1|25886|L|,PliersSprite,
+graphics.asm|932||0|1|26014|F|RobotSprite
+graphics.asm|932||0|1|26014|L|,RobotSprite,,+used
+graphics.asm|942||0|1|26142|F|SwissArmyKife
+graphics.asm|942||0|1|26142|L|,SwissArmyKife,
+graphics.asm|952||0|1|26270|F|EggSpriteRight
+graphics.asm|952||0|1|26270|L|,EggSpriteRight,,+used
+graphics.asm|962||0|1|26398|F|EggSpriteLeft
+graphics.asm|962||0|1|26398|L|,EggSpriteLeft,,+used
+graphics.asm|972||0|1|26526|F|PacManSprite
+graphics.asm|972||0|1|26526|L|,PacManSprite,
+player.asm|10||0|1|26654|F|MovePlayer
+player.asm|10||0|1|26654|L|,MovePlayer,,+used
+player.asm|12||0|1|26654|T|
+player.asm|13||0|1|26658|T|
+player.asm|14||0|1|26662|T|
+player.asm|15||0|1|26663|T|
+player.asm|17||0|1|26667|T|
+player.asm|19||0|1|26671|T|
+player.asm|20||0|1|26673|T|
+player.asm|22||0|1|26675|T|
+player.asm|23||0|1|26677|T|
+player.asm|25||0|1|26678|F|movePlayer_left
+player.asm|25||0|1|26678|L|,movePlayer_left,
+player.asm|26||0|1|26678|T|
+player.asm|27||0|1|26679|T|
+player.asm|28||0|1|26681|T|
+player.asm|29||0|1|26683|T|
+player.asm|30||0|1|26685|T|
+player.asm|31||0|1|26686|T|
+player.asm|33||0|1|26688|F|movePlayer_left.clamp_left
+player.asm|33||0|1|26688|L|,movePlayer_left,clamp_left,+used
+player.asm|34||0|1|26688|T|
+player.asm|35||0|1|26690|T|
+player.asm|37||0|1|26692|F|movePlayer_right
+player.asm|37||0|1|26692|L|,movePlayer_right,,+used
+player.asm|38||0|1|26692|T|
+player.asm|39||0|1|26693|T|
+player.asm|40||0|1|26695|T|
+player.asm|41||0|1|26697|T|
+player.asm|42||0|1|26699|T|
+player.asm|43||0|1|26701|F|movePlayer_right.ok_right
+player.asm|43||0|1|26701|L|,movePlayer_right,ok_right,+used
+player.asm|44||0|1|26701|T|
+player.asm|45||0|1|26702|T|
+player.asm|47||0|1|26704|F|movePlayer_right.clamp_right
+player.asm|47||0|1|26704|L|,movePlayer_right,clamp_right,+used
+player.asm|48||0|1|26704|T|
+player.asm|50||0|1|26706|F|save_x
+player.asm|50||0|1|26706|L|,save_x,,+used
+player.asm|51||0|1|26706|T|
+player.asm|53||0|1|26710|F|movePlayer_print
+player.asm|53||0|1|26710|L|,movePlayer_print,
+player.asm|55||0|1|26710|T|
+player.asm|56||0|1|26713|T|
+player.asm|57||0|1|26714|T|
+player.asm|58||0|1|26716|T|
+player.asm|59||0|1|26718|T|
+player.asm|60||0|1|26720|F|movePlayer_print.save_state
+player.asm|60||0|1|26720|L|,movePlayer_print,save_state,+used
+player.asm|61||0|1|26720|T|
+player.asm|62||0|1|26723|T|
+input.asm|10||0|1|26724|F|CheckCtrl
+input.asm|10||0|1|26724|L|,CheckCtrl,,+used
+input.asm|11||0|1|26724|T|
+input.asm|12||0|1|26726|T|
+input.asm|13||0|1|26728|T|
+input.asm|14||0|1|26730|T|
+input.asm|16||0|1|26734|F|checkCtrl_left
+input.asm|16||0|1|26734|L|,checkCtrl_left,
+input.asm|17||0|1|26734|T|
+input.asm|18||0|1|26736|T|
+input.asm|19||0|1|26738|T|
+input.asm|20||0|1|26740|T|
+input.asm|21||0|1|26744|T|
+input.asm|22||0|1|26745|T|
+input.asm|23||0|1|26747|T|
+input.asm|24||0|1|26750|T|
+input.asm|26||0|1|26751|F|checkCtrl_right
+input.asm|26||0|1|26751|L|,checkCtrl_right,,+used
+input.asm|27||0|1|26751|T|
+input.asm|28||0|1|26753|T|
+input.asm|29||0|1|26755|T|
+input.asm|30||0|1|26757|T|
+input.asm|31||0|1|26761|T|
+input.asm|32||0|1|26762|T|
+input.asm|33||0|1|26764|T|
+input.asm|34||0|1|26767|T|
+input.asm|36||0|1|26768|F|checkCtrl_jump
+input.asm|36||0|1|26768|L|,checkCtrl_jump,,+used
+input.asm|38||0|1|26768|T|
+input.asm|39||0|1|26770|T|
+input.asm|40||0|1|26772|T|
+input.asm|41||0|1|26774|T|
+input.asm|44||0|1|26776|T|
+input.asm|45||0|1|26778|T|
+input.asm|46||0|1|26780|T|
+input.asm|47||0|1|26782|T|
+input.asm|49||0|1|26784|F|checkCtrl_jump.released
+input.asm|49||0|1|26784|L|,checkCtrl_jump,released
+input.asm|50||0|1|26784|T|
+input.asm|51||0|1|26785|T|
+input.asm|52||0|1|26788|T|
+input.asm|54||0|1|26790|F|checkCtrl_jump.pressed
+input.asm|54||0|1|26790|L|,checkCtrl_jump,pressed,+used
+input.asm|55||0|1|26790|T|
+input.asm|56||0|1|26793|T|
+input.asm|57||0|1|26794|T|
+input.asm|58||0|1|26796|T|
+input.asm|59||0|1|26798|T|
+input.asm|60||0|1|26801|T|
+input.asm|61||0|1|26804|T|
+input.asm|63||0|1|26806|F|checkCtrl_jump.end
+input.asm|63||0|1|26806|L|,checkCtrl_jump,end,+used
+input.asm|64||0|1|26806|T|
+input.asm|65||0|1|26807|T|
+input.asm|66||0|1|26809|T|
+input.asm|67||0|1|26811|T|
+input.asm|68||0|1|26812|T|
+input.asm|69||0|1|26813|T|
+input.asm|70||0|1|26815|T|
+input.asm|71||0|1|26816|T|
+physics.asm|9||0|1|26817|F|ApplyGravity
+physics.asm|9||0|1|26817|L|,ApplyGravity,,+used
+physics.asm|10||0|1|26817|T|
+physics.asm|11||0|1|26821|T|
+physics.asm|14||0|1|26822|T|
+physics.asm|15||0|1|26825|T|
+physics.asm|16||0|1|26826|T|
+physics.asm|19||0|1|26829|T|
+physics.asm|20||0|1|26830|T|
+physics.asm|21||0|1|26832|T|
+physics.asm|23||0|1|26835|T|
+physics.asm|24||0|1|26837|T|
+physics.asm|26||0|1|26839|T|
+physics.asm|27||0|1|26841|T|
+physics.asm|30||0|1|26844|T|
+physics.asm|31||0|1|26845|T|
+physics.asm|32||0|1|26847|T|
+physics.asm|33||0|1|26850|T|
+physics.asm|34||0|1|26852|T|
+physics.asm|36||0|1|26855|T|
+physics.asm|37||0|1|26857|T|
+physics.asm|39||0|1|26860|F|ApplyGravity.check_platform3
+physics.asm|39||0|1|26860|L|,ApplyGravity,check_platform3,+used
+physics.asm|41||0|1|26860|T|
+physics.asm|42||0|1|26861|T|
+physics.asm|43||0|1|26863|T|
+physics.asm|44||0|1|26866|T|
+physics.asm|45||0|1|26868|T|
+physics.asm|47||0|1|26871|T|
+physics.asm|48||0|1|26873|T|
+physics.asm|50||0|1|26876|F|ApplyGravity.check_platform1
+physics.asm|50||0|1|26876|L|,ApplyGravity,check_platform1,+used
+physics.asm|52||0|1|26876|T|
+physics.asm|53||0|1|26877|T|
+physics.asm|54||0|1|26879|T|
+physics.asm|55||0|1|26882|T|
+physics.asm|56||0|1|26884|T|
+physics.asm|58||0|1|26887|T|
+physics.asm|59||0|1|26889|T|
+physics.asm|61||0|1|26892|F|ApplyGravity.at_platform_or_ground
+physics.asm|61||0|1|26892|L|,ApplyGravity,at_platform_or_ground,+used
+physics.asm|62||0|1|26892|T|
+physics.asm|63||0|1|26896|T|
+physics.asm|64||0|1|26898|T|
+physics.asm|65||0|1|26901|T|
+physics.asm|66||0|1|26902|T|
+physics.asm|69||0|1|26905|T|
+physics.asm|70||0|1|26908|T|
+physics.asm|71||0|1|26909|T|
+physics.asm|73||0|1|26912|T|
+physics.asm|74||0|1|26914|T|
+physics.asm|75||0|1|26917|T|
+physics.asm|76||0|1|26918|T|
+physics.asm|77||0|1|26921|T|
+physics.asm|78||0|1|26924|T|
+physics.asm|80||0|1|26927|F|ApplyGravity.in_air
+physics.asm|80||0|1|26927|L|,ApplyGravity,in_air,+used
+physics.asm|82||0|1|26927|T|
+physics.asm|83||0|1|26930|T|
+physics.asm|86||0|1|26932|T|
+physics.asm|87||0|1|26934|T|
+physics.asm|89||0|1|26936|T|
+physics.asm|90||0|1|26938|T|
+physics.asm|91||0|1|26940|T|
+physics.asm|93||0|1|26942|F|ApplyGravity.store_vel
+physics.asm|93||0|1|26942|L|,ApplyGravity,store_vel,+used
+physics.asm|94||0|1|26942|T|
+physics.asm|97||0|1|26945|T|
+physics.asm|98||0|1|26949|T|
+physics.asm|99||0|1|26950|T|
+physics.asm|100||0|1|26951|T|
+physics.asm|101||0|1|26952|T|
+physics.asm|104||0|1|26953|T|
+physics.asm|105||0|1|26956|T|
+physics.asm|106||0|1|26958|T|
+physics.asm|107||0|1|26960|T|
+physics.asm|108||0|1|26961|T|
+physics.asm|109||0|1|26963|T|
+physics.asm|111||0|1|26965|F|ApplyGravity.falling_checks
+physics.asm|111||0|1|26965|L|,ApplyGravity,falling_checks,+used
+physics.asm|114||0|1|26965|T|
+physics.asm|115||0|1|26968|T|
+physics.asm|116||0|1|26970|T|
+physics.asm|118||0|1|26972|T|
+physics.asm|119||0|1|26973|T|
+physics.asm|120||0|1|26975|T|
+physics.asm|123||0|1|26977|T|
+physics.asm|124||0|1|26979|T|
+physics.asm|126||0|1|26982|F|ApplyGravity.check_platform1_collision
+physics.asm|126||0|1|26982|L|,ApplyGravity,check_platform1_collision,+used
+physics.asm|129||0|1|26982|T|
+physics.asm|130||0|1|26983|T|
+physics.asm|131||0|1|26985|T|
+physics.asm|132||0|1|26987|T|
+physics.asm|133||0|1|26989|T|
+physics.asm|136||0|1|26991|T|
+physics.asm|137||0|1|26994|T|
+physics.asm|138||0|1|26996|T|
+physics.asm|140||0|1|26998|T|
+physics.asm|141||0|1|26999|T|
+physics.asm|142||0|1|27001|T|
+physics.asm|145||0|1|27003|T|
+physics.asm|146||0|1|27005|T|
+physics.asm|148||0|1|27008|F|ApplyGravity.check_platform1_only_nc
+physics.asm|148||0|1|27008|L|,ApplyGravity,check_platform1_only_nc,+used
+physics.asm|150||0|1|27008|T|
+physics.asm|152||0|1|27010|F|ApplyGravity.check_platform2_collision
+physics.asm|152||0|1|27010|L|,ApplyGravity,check_platform2_collision,+used
+physics.asm|155||0|1|27010|T|
+physics.asm|156||0|1|27011|T|
+physics.asm|157||0|1|27013|T|
+physics.asm|158||0|1|27015|T|
+physics.asm|159||0|1|27017|T|
+physics.asm|162||0|1|27019|T|
+physics.asm|163||0|1|27022|T|
+physics.asm|164||0|1|27024|T|
+physics.asm|166||0|1|27026|T|
+physics.asm|167||0|1|27027|T|
+physics.asm|168||0|1|27029|T|
+physics.asm|171||0|1|27031|T|
+physics.asm|172||0|1|27033|T|
+physics.asm|174||0|1|27036|F|ApplyGravity.check_platform3_collision
+physics.asm|174||0|1|27036|L|,ApplyGravity,check_platform3_collision,+used
+physics.asm|177||0|1|27036|T|
+physics.asm|178||0|1|27037|T|
+physics.asm|179||0|1|27039|T|
+physics.asm|180||0|1|27041|T|
+physics.asm|181||0|1|27043|T|
+physics.asm|184||0|1|27045|T|
+physics.asm|185||0|1|27048|T|
+physics.asm|186||0|1|27050|T|
+physics.asm|188||0|1|27052|T|
+physics.asm|189||0|1|27053|T|
+physics.asm|190||0|1|27055|T|
+physics.asm|193||0|1|27057|T|
+physics.asm|194||0|1|27059|T|
+physics.asm|196||0|1|27062|F|ApplyGravity.no_collision_checks
+physics.asm|196||0|1|27062|L|,ApplyGravity,no_collision_checks,+used
+physics.asm|197||0|1|27062|F|ApplyGravity.save_pos
+physics.asm|197||0|1|27062|L|,ApplyGravity,save_pos
+physics.asm|199||0|1|27062|T|
+physics.asm|200||0|1|27063|T|
+physics.asm|201||0|1|27065|T|
+physics.asm|202||0|1|27067|T|
+physics.asm|203||0|1|27069|T|
+physics.asm|204||0|1|27070|T|
+physics.asm|206||0|1|27073|F|ApplyGravity.save_ok
+physics.asm|206||0|1|27073|L|,ApplyGravity,save_ok,+used
+physics.asm|207||0|1|27073|T|
+physics.asm|209||0|1|27077|F|ApplyGravity.end
+physics.asm|209||0|1|27077|L|,ApplyGravity,end,+used
+physics.asm|210||0|1|27077|T|
+physics.asm|211||0|1|27078|T|
+physics.asm|212||0|1|27081|T|
+physics.asm|218||0|1|27082|F|CheckCollision
+physics.asm|218||0|1|27082|L|,CheckCollision,,+used
+physics.asm|221||0|1|27082|T|
+physics.asm|222||0|1|27085|T|
+physics.asm|223||0|1|27088|T|
+physics.asm|224||0|1|27089|T|
+physics.asm|225||0|1|27091|T|
+physics.asm|226||0|1|27093|T|
+physics.asm|229||0|1|27095|T|
+physics.asm|230||0|1|27098|T|
+physics.asm|231||0|1|27101|T|
+physics.asm|232||0|1|27102|T|
+physics.asm|233||0|1|27104|T|
+physics.asm|234||0|1|27106|T|
+physics.asm|237||0|1|27108|T|
+physics.asm|238||0|1|27109|T|
+physics.asm|240||0|1|27110|F|CheckCollision.check_egg
+physics.asm|240||0|1|27110|L|,CheckCollision,check_egg,+used
+physics.asm|243||0|1|27110|T|
+physics.asm|244||0|1|27113|T|
+physics.asm|245||0|1|27116|T|
+physics.asm|246||0|1|27117|T|
+physics.asm|247||0|1|27119|T|
+physics.asm|248||0|1|27121|T|
+physics.asm|251||0|1|27123|T|
+physics.asm|252||0|1|27126|T|
+physics.asm|253||0|1|27129|T|
+physics.asm|254||0|1|27130|T|
+physics.asm|255||0|1|27132|T|
+physics.asm|256||0|1|27134|T|
+physics.asm|259||0|1|27136|T|
+physics.asm|260||0|1|27137|T|
+physics.asm|262||0|1|27138|F|CheckCollision.check_robot
+physics.asm|262||0|1|27138|L|,CheckCollision,check_robot,+used
+physics.asm|265||0|1|27138|T|
+physics.asm|266||0|1|27141|T|
+physics.asm|267||0|1|27144|T|
+physics.asm|268||0|1|27145|T|
+physics.asm|269||0|1|27147|T|
+physics.asm|270||0|1|27149|T|
+physics.asm|273||0|1|27151|T|
+physics.asm|274||0|1|27154|T|
+physics.asm|275||0|1|27157|T|
+physics.asm|276||0|1|27158|T|
+physics.asm|277||0|1|27160|T|
+physics.asm|278||0|1|27162|T|
+physics.asm|281||0|1|27164|T|
+physics.asm|282||0|1|27165|T|
+physics.asm|284||0|1|27166|F|CheckCollision.no_collision
+physics.asm|284||0|1|27166|L|,CheckCollision,no_collision,+used
+physics.asm|285||0|1|27166|T|
+physics.asm|286||0|1|27167|T|
+screen.asm|33||0|1|27168|F|PrintFrame
+screen.asm|33||0|1|27168|L|,PrintFrame,
+screen.asm|35||0|1|27168|T|
+screen.asm|36||0|1|27171|T|
+screen.asm|37||0|1|27173|T|
+screen.asm|40||0|1|27176|T|
+screen.asm|41||0|1|27178|T|
+screen.asm|42||0|1|27180|T|
+screen.asm|45||0|1|27183|T|
+screen.asm|46||0|1|27186|T|
+screen.asm|47||0|1|27188|T|
+screen.asm|49||0|1|27191|T|
+screen.asm|54||0|1|27192|F|PrintInfoGame
+screen.asm|54||0|1|27192|L|,PrintInfoGame,
+screen.asm|55||0|1|27192|T|
+screen.asm|56||0|1|27194|T|
+screen.asm|57||0|1|27197|T|
+screen.asm|58||0|1|27200|T|
+screen.asm|59||0|1|27202|T|
+screen.asm|60||0|1|27205|T|
+screen.asm|61||0|1|27207|T|
+screen.asm|62||0|1|27210|T|
+screen.asm|67||0|1|27211|F|frameTopGraph
+screen.asm|67||0|1|27211|L|,frameTopGraph,,+used
+screen.asm|73||0|1|27248|F|frameBottomGraph
+screen.asm|73||0|1|27248|L|,frameBottomGraph,,+used
+screen.asm|78||0|1|27283|F|frameEnd
+screen.asm|78||0|1|27283|L|,frameEnd,,+used
+screen.asm|80||0|1|27283|F|infoGame
+screen.asm|80||0|1|27283|L|,infoGame,,+used
+screen.asm|83||0|1|27320|F|infoGame_end
+screen.asm|83||0|1|27320|L|,infoGame_end,,+used
+enemy.asm|8||0|1|27320|F|MoveEnemy
+enemy.asm|8||0|1|27320|L|,MoveEnemy,,+used
+enemy.asm|9||0|1|27320|T|
+enemy.asm|11||0|1|27324|T|
+enemy.asm|12||0|1|27327|T|
+enemy.asm|13||0|1|27329|T|
+enemy.asm|15||0|1|27331|F|MoveEnemy.move_left
+enemy.asm|15||0|1|27331|L|,MoveEnemy,move_left
+enemy.asm|16||0|1|27331|T|
+enemy.asm|17||0|1|27332|T|
+enemy.asm|18||0|1|27334|T|
+enemy.asm|19||0|1|27336|T|
+enemy.asm|20||0|1|27338|T|
+enemy.asm|21||0|1|27340|T|
+enemy.asm|22||0|1|27341|T|
+enemy.asm|24||0|1|27343|F|MoveEnemy.reverse_to_right
+enemy.asm|24||0|1|27343|L|,MoveEnemy,reverse_to_right,+used
+enemy.asm|25||0|1|27343|T|
+enemy.asm|26||0|1|27345|T|
+enemy.asm|27||0|1|27347|T|
+enemy.asm|28||0|1|27350|T|
+enemy.asm|30||0|1|27352|F|MoveEnemy.move_right
+enemy.asm|30||0|1|27352|L|,MoveEnemy,move_right,+used
+enemy.asm|31||0|1|27352|T|
+enemy.asm|32||0|1|27353|T|
+enemy.asm|33||0|1|27355|T|
+enemy.asm|34||0|1|27357|T|
+enemy.asm|35||0|1|27359|T|
+enemy.asm|36||0|1|27361|T|
+enemy.asm|37||0|1|27362|T|
+enemy.asm|39||0|1|27364|F|MoveEnemy.reverse_to_left
+enemy.asm|39||0|1|27364|L|,MoveEnemy,reverse_to_left,+used
+enemy.asm|40||0|1|27364|T|
+enemy.asm|41||0|1|27366|T|
+enemy.asm|42||0|1|27368|T|
+enemy.asm|44||0|1|27371|F|MoveEnemy.save_x
+enemy.asm|44||0|1|27371|L|,MoveEnemy,save_x,+used
+enemy.asm|45||0|1|27371|T|
+enemy.asm|47||0|1|27375|F|MoveEnemy.animate
+enemy.asm|47||0|1|27375|L|,MoveEnemy,animate
+enemy.asm|49||0|1|27375|T|
+enemy.asm|50||0|1|27378|T|
+enemy.asm|51||0|1|27379|T|
+enemy.asm|52||0|1|27381|T|
+enemy.asm|53||0|1|27383|T|
+enemy.asm|54||0|1|27385|F|MoveEnemy.save_state
+enemy.asm|54||0|1|27385|L|,MoveEnemy,save_state,+used
+enemy.asm|55||0|1|27385|T|
+enemy.asm|56||0|1|27388|T|
+enemy.asm|61||0|1|27389|F|PrintEnemy
+enemy.asm|61||0|1|27389|L|,PrintEnemy,,+used
+enemy.asm|62||0|1|27389|T|
+enemy.asm|65||0|1|27391|T|
+enemy.asm|66||0|1|27394|T|
+enemy.asm|67||0|1|27396|T|
+enemy.asm|69||0|1|27398|F|PrintEnemy.left_enemy
+enemy.asm|69||0|1|27398|L|,PrintEnemy,left_enemy
+enemy.asm|70||0|1|27398|T|
+enemy.asm|71||0|1|27402|T|
+enemy.asm|73||0|1|27404|F|PrintEnemy.right_enemy
+enemy.asm|73||0|1|27404|L|,PrintEnemy,right_enemy,+used
+enemy.asm|74||0|1|27404|T|
+enemy.asm|76||0|1|27408|F|PrintEnemy.calc_frame
+enemy.asm|76||0|1|27408|L|,PrintEnemy,calc_frame,+used
+enemy.asm|78||0|1|27408|T|
+enemy.asm|79||0|1|27411|T|
+enemy.asm|80||0|1|27412|T|
+enemy.asm|81||0|1|27413|T|
+enemy.asm|82||0|1|27414|T|
+enemy.asm|83||0|1|27415|T|
+enemy.asm|84||0|1|27416|T|
+enemy.asm|85||0|1|27417|T|
+enemy.asm|86||0|1|27419|T|
+enemy.asm|88||0|1|27421|T|
+enemy.asm|89||0|1|27425|T|
+enemy.asm|91||0|1|27428|T|
+enemy.asm|92||0|1|27430|T|
+enemy.asm|97||0|1|27431|F|DeleteEnemyAtOldPos
+enemy.asm|97||0|1|27431|L|,DeleteEnemyAtOldPos,,+used
+enemy.asm|98||0|1|27431|T|
+enemy.asm|99||0|1|27435|T|
+enemy.asm|100||0|1|27438|T|
+enemy.asm|105||0|1|27439|F|MoveEgg
+enemy.asm|105||0|1|27439|L|,MoveEgg,,+used
+enemy.asm|106||0|1|27439|T|
+enemy.asm|108||0|1|27443|T|
+enemy.asm|109||0|1|27446|T|
+enemy.asm|110||0|1|27448|T|
+enemy.asm|112||0|1|27450|F|MoveEgg.move_left
+enemy.asm|112||0|1|27450|L|,MoveEgg,move_left
+enemy.asm|113||0|1|27450|T|
+enemy.asm|114||0|1|27451|T|
+enemy.asm|115||0|1|27453|T|
+enemy.asm|116||0|1|27455|T|
+enemy.asm|117||0|1|27457|T|
+enemy.asm|118||0|1|27459|T|
+enemy.asm|119||0|1|27460|T|
+enemy.asm|121||0|1|27462|F|MoveEgg.reverse_to_right
+enemy.asm|121||0|1|27462|L|,MoveEgg,reverse_to_right,+used
+enemy.asm|122||0|1|27462|T|
+enemy.asm|123||0|1|27464|T|
+enemy.asm|124||0|1|27466|T|
+enemy.asm|125||0|1|27469|T|
+enemy.asm|127||0|1|27471|F|MoveEgg.move_right
+enemy.asm|127||0|1|27471|L|,MoveEgg,move_right,+used
+enemy.asm|128||0|1|27471|T|
+enemy.asm|129||0|1|27472|T|
+enemy.asm|130||0|1|27474|T|
+enemy.asm|131||0|1|27476|T|
+enemy.asm|132||0|1|27478|T|
+enemy.asm|133||0|1|27480|T|
+enemy.asm|134||0|1|27481|T|
+enemy.asm|136||0|1|27483|F|MoveEgg.reverse_to_left
+enemy.asm|136||0|1|27483|L|,MoveEgg,reverse_to_left,+used
+enemy.asm|137||0|1|27483|T|
+enemy.asm|138||0|1|27485|T|
+enemy.asm|139||0|1|27487|T|
+enemy.asm|141||0|1|27490|F|MoveEgg.save_x
+enemy.asm|141||0|1|27490|L|,MoveEgg,save_x,+used
+enemy.asm|142||0|1|27490|T|
+enemy.asm|144||0|1|27494|F|MoveEgg.animate
+enemy.asm|144||0|1|27494|L|,MoveEgg,animate
+enemy.asm|146||0|1|27494|T|
+enemy.asm|147||0|1|27497|T|
+enemy.asm|148||0|1|27498|T|
+enemy.asm|149||0|1|27500|T|
+enemy.asm|150||0|1|27502|T|
+enemy.asm|151||0|1|27504|F|MoveEgg.save_state
+enemy.asm|151||0|1|27504|L|,MoveEgg,save_state,+used
+enemy.asm|152||0|1|27504|T|
+enemy.asm|153||0|1|27507|T|
+enemy.asm|158||0|1|27508|F|PrintEgg
+enemy.asm|158||0|1|27508|L|,PrintEgg,,+used
+enemy.asm|159||0|1|27508|T|
+enemy.asm|162||0|1|27510|T|
+enemy.asm|163||0|1|27513|T|
+enemy.asm|164||0|1|27515|T|
+enemy.asm|166||0|1|27517|F|PrintEgg.left_egg
+enemy.asm|166||0|1|27517|L|,PrintEgg,left_egg
+enemy.asm|167||0|1|27517|T|
+enemy.asm|168||0|1|27521|T|
+enemy.asm|170||0|1|27523|F|PrintEgg.right_egg
+enemy.asm|170||0|1|27523|L|,PrintEgg,right_egg,+used
+enemy.asm|171||0|1|27523|T|
+enemy.asm|173||0|1|27527|F|PrintEgg.calc_frame
+enemy.asm|173||0|1|27527|L|,PrintEgg,calc_frame,+used
+enemy.asm|175||0|1|27527|T|
+enemy.asm|176||0|1|27530|T|
+enemy.asm|177||0|1|27531|T|
+enemy.asm|178||0|1|27532|T|
+enemy.asm|179||0|1|27533|T|
+enemy.asm|180||0|1|27534|T|
+enemy.asm|181||0|1|27535|T|
+enemy.asm|182||0|1|27536|T|
+enemy.asm|183||0|1|27538|T|
+enemy.asm|185||0|1|27540|T|
+enemy.asm|186||0|1|27544|T|
+enemy.asm|188||0|1|27547|T|
+enemy.asm|189||0|1|27549|T|
+enemy.asm|194||0|1|27550|F|DeleteEggAtOldPos
+enemy.asm|194||0|1|27550|L|,DeleteEggAtOldPos,,+used
+enemy.asm|195||0|1|27550|T|
+enemy.asm|196||0|1|27554|T|
+enemy.asm|197||0|1|27557|T|
+enemy.asm|202||0|1|27558|F|MoveRobot
+enemy.asm|202||0|1|27558|L|,MoveRobot,,+used
+enemy.asm|203||0|1|27558|T|
+enemy.asm|205||0|1|27562|T|
+enemy.asm|206||0|1|27565|T|
+enemy.asm|207||0|1|27567|T|
+enemy.asm|209||0|1|27569|F|MoveRobot.move_left
+enemy.asm|209||0|1|27569|L|,MoveRobot,move_left
+enemy.asm|210||0|1|27569|T|
+enemy.asm|211||0|1|27570|T|
+enemy.asm|212||0|1|27572|T|
+enemy.asm|213||0|1|27574|T|
+enemy.asm|214||0|1|27576|T|
+enemy.asm|215||0|1|27578|T|
+enemy.asm|216||0|1|27579|T|
+enemy.asm|218||0|1|27581|F|MoveRobot.reverse_to_right
+enemy.asm|218||0|1|27581|L|,MoveRobot,reverse_to_right,+used
+enemy.asm|219||0|1|27581|T|
+enemy.asm|220||0|1|27583|T|
+enemy.asm|221||0|1|27585|T|
+enemy.asm|222||0|1|27588|T|
+enemy.asm|224||0|1|27590|F|MoveRobot.move_right
+enemy.asm|224||0|1|27590|L|,MoveRobot,move_right,+used
+enemy.asm|225||0|1|27590|T|
+enemy.asm|226||0|1|27591|T|
+enemy.asm|227||0|1|27593|T|
+enemy.asm|228||0|1|27595|T|
+enemy.asm|229||0|1|27597|T|
+enemy.asm|230||0|1|27599|T|
+enemy.asm|231||0|1|27600|T|
+enemy.asm|233||0|1|27602|F|MoveRobot.reverse_to_left
+enemy.asm|233||0|1|27602|L|,MoveRobot,reverse_to_left,+used
+enemy.asm|234||0|1|27602|T|
+enemy.asm|235||0|1|27604|T|
+enemy.asm|236||0|1|27606|T|
+enemy.asm|238||0|1|27609|F|MoveRobot.save_x
+enemy.asm|238||0|1|27609|L|,MoveRobot,save_x,+used
+enemy.asm|239||0|1|27609|T|
+enemy.asm|241||0|1|27613|F|MoveRobot.animate
+enemy.asm|241||0|1|27613|L|,MoveRobot,animate
+enemy.asm|243||0|1|27613|T|
+enemy.asm|244||0|1|27616|T|
+enemy.asm|245||0|1|27617|T|
+enemy.asm|246||0|1|27619|T|
+enemy.asm|247||0|1|27621|T|
+enemy.asm|248||0|1|27623|F|MoveRobot.save_state
+enemy.asm|248||0|1|27623|L|,MoveRobot,save_state,+used
+enemy.asm|249||0|1|27623|T|
+enemy.asm|250||0|1|27626|T|
+enemy.asm|255||0|1|27627|F|PrintRobot
+enemy.asm|255||0|1|27627|L|,PrintRobot,,+used
+enemy.asm|256||0|1|27627|T|
+enemy.asm|259||0|1|27629|T|
+enemy.asm|260||0|1|27632|T|
+enemy.asm|261||0|1|27633|T|
+enemy.asm|262||0|1|27634|T|
+enemy.asm|263||0|1|27635|T|
+enemy.asm|264||0|1|27636|T|
+enemy.asm|265||0|1|27637|T|
+enemy.asm|266||0|1|27638|T|
+enemy.asm|268||0|1|27640|T|
+enemy.asm|269||0|1|27644|T|
+enemy.asm|271||0|1|27646|T|
+enemy.asm|272||0|1|27650|T|
+enemy.asm|274||0|1|27653|T|
+enemy.asm|275||0|1|27655|T|
+enemy.asm|280||0|1|27656|F|DeleteRobotAtOldPos
+enemy.asm|280||0|1|27656|L|,DeleteRobotAtOldPos,,+used
+enemy.asm|281||0|1|27656|T|
+enemy.asm|282||0|1|27660|T|
+enemy.asm|283||0|1|27663|T|
+jet set willy.asm|21||0|1|27664|F|start
+jet set willy.asm|21||0|1|27664|L|,start,
+jet set willy.asm|22||0|1|27664|T|
+jet set willy.asm|26||0|1|27667|F|Main
+jet set willy.asm|26||0|1|27667|L|,Main,
+jet set willy.asm|28||0|1|27667|T|
+jet set willy.asm|29||0|1|27668|T|
+jet set willy.asm|31||0|1|27671|T|
+jet set willy.asm|32||0|1|27674|T|
+jet set willy.asm|34||0|1|27677|T|
+jet set willy.asm|35||0|1|27679|T|
+jet set willy.asm|36||0|1|27682|T|
+jet set willy.asm|37||0|1|27685|T|
+jet set willy.asm|39||0|1|27688|T|
+jet set willy.asm|40||0|1|27691|T|
+jet set willy.asm|41||0|1|27693|T|
+jet set willy.asm|42||0|1|27696|T|
+jet set willy.asm|43||0|1|27699|T|
+jet set willy.asm|45||0|1|27702|T|
+jet set willy.asm|46||0|1|27703|T|
+jet set willy.asm|47||0|1|27705|T|
+jet set willy.asm|48||0|1|27708|T|
+jet set willy.asm|49||0|1|27710|T|
+jet set willy.asm|50||0|1|27712|T|
+jet set willy.asm|53||0|1|27715|T|
+jet set willy.asm|54||0|1|27716|T|
+jet set willy.asm|55||0|1|27719|T|
+jet set willy.asm|56||0|1|27721|T|
+jet set willy.asm|57||0|1|27724|T|
+jet set willy.asm|60||0|1|27727|T|
+jet set willy.asm|61||0|1|27728|T|
+jet set willy.asm|62||0|1|27731|T|
+jet set willy.asm|63||0|1|27733|T|
+jet set willy.asm|64||0|1|27736|T|
+jet set willy.asm|67||0|1|27739|T|
+jet set willy.asm|68||0|1|27740|T|
+jet set willy.asm|69||0|1|27743|T|
+jet set willy.asm|70||0|1|27745|T|
+jet set willy.asm|71||0|1|27748|T|
+jet set willy.asm|74||0|1|27751|T|
+jet set willy.asm|76||0|1|27754|F|Main_loop
+jet set willy.asm|76||0|1|27754|L|,Main_loop,,+used
+jet set willy.asm|77||0|1|27754|T|
+jet set willy.asm|78||0|1|27755|T|
+jet set willy.asm|81||0|1|27756|T|
+jet set willy.asm|82||0|1|27759|T|
+jet set willy.asm|83||0|1|27762|T|
+jet set willy.asm|84||0|1|27765|T|
+jet set willy.asm|86||0|1|27768|T|
+jet set willy.asm|89||0|1|27771|T|
+jet set willy.asm|90||0|1|27774|T|
+jet set willy.asm|91||0|1|27777|T|
+jet set willy.asm|92||0|1|27780|T|
+jet set willy.asm|93||0|1|27783|T|
+jet set willy.asm|96||0|1|27786|T|
+jet set willy.asm|97||0|1|27790|T|
+jet set willy.asm|98||0|1|27794|T|
+jet set willy.asm|99||0|1|27798|T|
+jet set willy.asm|100||0|1|27802|T|
+jet set willy.asm|101||0|1|27806|T|
+jet set willy.asm|102||0|1|27810|T|
+jet set willy.asm|103||0|1|27814|T|
+jet set willy.asm|106||0|1|27818|T|
+jet set willy.asm|107||0|1|27821|T|
+jet set willy.asm|108||0|1|27824|T|
+jet set willy.asm|109||0|1|27827|T|
+jet set willy.asm|110||0|1|27830|T|
+jet set willy.asm|113||0|1|27833|T|
+jet set willy.asm|114||0|1|27836|T|
+jet set willy.asm|117||0|1|27838|T|
+jet set willy.asm|118||0|1|27841|T|
+jet set willy.asm|119||0|1|27843|T|
+jet set willy.asm|120||0|1|27845|F|Main_loop.raster_loop
+jet set willy.asm|120||0|1|27845|L|,Main_loop,raster_loop,+used
+jet set willy.asm|121||0|1|27845|T|
+jet set willy.asm|122||0|1|27847|T|
+jet set willy.asm|123||0|1|27848|T|
+jet set willy.asm|124||0|1|27850|T|
+jet set willy.asm|125||0|1|27852|F|Main_loop.delay
+jet set willy.asm|125||0|1|27852|L|,Main_loop,delay,+used
+jet set willy.asm|126||0|1|27852|T|
+jet set willy.asm|127||0|1|27853|T|
+jet set willy.asm|128||0|1|27855|T|
+jet set willy.asm|131||0|1|27857|T|
+jet set willy.asm|132||0|1|27858|T|
+jet set willy.asm|133||0|1|27860|T|
+jet set willy.asm|135||0|1|27862|F|Main_loop.no_collision
+jet set willy.asm|135||0|1|27862|L|,Main_loop,no_collision,+used
+jet set willy.asm|137||0|1|27862|T|
+jet set willy.asm|138||0|1|27863|T|
+jet set willy.asm|140||0|1|27865|F|Main_loop.no_collision_change
+jet set willy.asm|140||0|1|27865|L|,Main_loop,no_collision_change,+used
+jet set willy.asm|141||0|1|27865|T|
+jet set willy.asm|147||0|1|27868|F|PlayerPos
+jet set willy.asm|147||0|1|27868|L|,PlayerPos,,+used
+jet set willy.asm|148||0|1|27870|F|PlayerPosOld
+jet set willy.asm|148||0|1|27870|L|,PlayerPosOld,,+used
+jet set willy.asm|149||0|1|27872|F|bodyPos
+jet set willy.asm|149||0|1|27872|L|,bodyPos,
+jet set willy.asm|152||0|1|27874|F|EnemyPos
+jet set willy.asm|152||0|1|27874|L|,EnemyPos,,+used
+jet set willy.asm|153||0|1|27876|F|EnemyPosOld
+jet set willy.asm|153||0|1|27876|L|,EnemyPosOld,,+used
+jet set willy.asm|156||0|1|27878|F|EggPos
+jet set willy.asm|156||0|1|27878|L|,EggPos,,+used
+jet set willy.asm|157||0|1|27880|F|EggPosOld
+jet set willy.asm|157||0|1|27880|L|,EggPosOld,,+used
+jet set willy.asm|160||0|1|27882|F|RobotPos
+jet set willy.asm|160||0|1|27882|L|,RobotPos,,+used
+jet set willy.asm|161||0|1|27884|F|RobotPosOld
+jet set willy.asm|161||0|1|27884|L|,RobotPosOld,,+used
+jet set willy.asm|164||0|1|27886|F|body_state
+jet set willy.asm|164||0|1|27886|L|,body_state,,+used
+jet set willy.asm|165||0|1|27887|F|direction
+jet set willy.asm|165||0|1|27887|L|,direction,,+used
+jet set willy.asm|166||0|1|27888|F|flags
+jet set willy.asm|166||0|1|27888|L|,flags,,+used
+jet set willy.asm|169||0|1|27889|F|enemy_body_state
+jet set willy.asm|169||0|1|27889|L|,enemy_body_state,,+used
+jet set willy.asm|170||0|1|27890|F|enemy_direction
+jet set willy.asm|170||0|1|27890|L|,enemy_direction,,+used
+jet set willy.asm|171||0|1|27891|F|collision_active
+jet set willy.asm|171||0|1|27891|L|,collision_active,
+jet set willy.asm|172||0|1|27892|F|sprite_shift
+jet set willy.asm|172||0|1|27892|L|,sprite_shift,,+used
+jet set willy.asm|175||0|1|27893|F|egg_body_state
+jet set willy.asm|175||0|1|27893|L|,egg_body_state,,+used
+jet set willy.asm|176||0|1|27894|F|egg_direction
+jet set willy.asm|176||0|1|27894|L|,egg_direction,,+used
+jet set willy.asm|179||0|1|27895|F|robot_body_state
+jet set willy.asm|179||0|1|27895|L|,robot_body_state,,+used
+jet set willy.asm|180||0|1|27896|F|robot_direction
+jet set willy.asm|180||0|1|27896|L|,robot_direction,,+used
+jet set willy.asm|183||0|1|27897|F|velocity_y
+jet set willy.asm|183||0|1|27897|L|,velocity_y,,+used
+jet set willy.asm|184||0|1|27898|F|on_ground
+jet set willy.asm|184||0|1|27898|L|,on_ground,,+used
+jet set willy.asm|185||0|1|27899|F|jump_pressed
+jet set willy.asm|185||0|1|27899|L|,jump_pressed,,+used
+jet set willy.asm|186||0|1|27900|F|jump_prev
+jet set willy.asm|186||0|1|27900|L|,jump_prev,,+used
+jet set willy.asm|189||0|1|27901|F|counter
+jet set willy.asm|189||0|1|27901|L|,counter,,+used
+jet set willy.asm|190||0|1|27903|F|line_buffer
+jet set willy.asm|190||0|1|27903|L|,line_buffer,

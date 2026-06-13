@@ -205,17 +205,29 @@ GetBackgroundByte:
     jr   .load_tile_byte
 
 .check_platform2:
-    ; Piattaforma 2: riga carattere 12, Y = 96..102, colonne 20..29
+    ; Piattaforme alte: riga carattere 12, Y = 96..102
     ld   a, d
     cp   96
     jr   c, .blank
     cp   103
     jr   nc, .blank
+
+    ; Piattaforma 2: colonne 20..29
     ld   a, b
     cp   160
-    jr   c, .blank
+    jr   c, .check_platform3
     cp   240
+    jr   c, .platform_high
+
+.check_platform3:
+    ; Piattaforma 3 sinistra: colonne 3..12
+    ld   a, b
+    cp   24
+    jr   c, .blank
+    cp   104
     jr   nc, .blank
+
+.platform_high:
     ld   a, d
     sub  96
 
@@ -695,7 +707,7 @@ DrawFloorDirect:
 
 ; -------------------------------------------------------------------
 ; Disegna la piattaforma a riga 15 (Y = 120), colonne da 8 a 23 (CYAN)
-; e la seconda piattaforma a riga 12 (Y = 96), colonne da 20 a 29 (GREEN)
+; e le piattaforme alte a riga 12 (Y = 96), colonne 20..29 e 3..12 (GREEN)
 ; -------------------------------------------------------------------
 DrawPlatform:
     push bc
@@ -776,6 +788,43 @@ DrawPlatform:
     inc  hl
     dec  b
     jr   nz, .attr_loop2
+
+    ; --- PIATTAFORMA 3 SINISTRA ---
+    ; Disegniamo le 7 scanline della riga 12
+    ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento
+    ld   d, 0              ; D = offset scanline (0..6)
+    
+.scanline_loop3:
+    ld   a, $48            ; Base del secondo terzo (Third 1) per scanline 0, riga 12
+    add  a, d              ; A = $48 + scanline offset (D)
+    ld   h, a              ; HL high byte = $48 + D
+    ld   l, $80 + 3        ; HL low byte = $80 (riga 12) + 3 (colonna 3)
+    
+    ld   e, (ix+0)         ; E = byte grafico per questa scanline
+    ld   c, 10             ; 10 colonne (da colonna 3 a 12 incluse)
+    
+.col_loop3:
+    ld   a, (hl)           ; Leggi byte dallo schermo
+    or   e                 ; Combina con la grafica
+    ld   (hl), a           ; Scrivi il byte combinato
+    inc  l                 ; Vai alla colonna successiva
+    dec  c
+    jr   nz, .col_loop3
+    
+    inc  ix                ; Prossimo byte grafico
+    inc  d                 ; Prossima scanline
+    ld   a, d
+    cp   7
+    jr   nz, .scanline_loop3
+    
+    ; Imposta gli attributi di colore per la riga 12, colonne 3..12
+    ld   hl, $5800 + (12 * 32) + 3
+    ld   b, 10
+.attr_loop3:
+    ld   (hl), GREEN       ; Colore della piattaforma 3 = GREEN
+    inc  hl
+    dec  b
+    jr   nz, .attr_loop3
     
     pop  ix
     pop  hl
