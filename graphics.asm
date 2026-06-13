@@ -150,11 +150,13 @@ DrawPixelSprite8x8:
     jr   nz, .shift_loop
     
 .no_shift:
-    ; Scrivi sullo schermo (sovrascrittura diretta)
+    ; Scrivi sullo schermo (OR trasparente)
     ld   a, d
+    or   (hl)
     ld   (hl), a
     inc  hl
     ld   a, e
+    or   (hl)
     ld   (hl), a
     dec  hl            ; Ritorna alla colonna iniziale
     
@@ -379,21 +381,32 @@ DrawPixelSprite16x16:
     
     pop  bc            ; Ripristina C (contatore linee)
     
-    ; Scrive i 3 byte sullo schermo
-    ld   (hl), d
+    ; Scrive i 3 byte sullo schermo (OR trasparente)
+    ld   b, a          ; Salva il 3° byte dello sprite in B
+    ld   a, d
+    or   (hl)
+    ld   (hl), a
     inc  hl
-    ld   (hl), e
+    ld   a, e
+    or   (hl)
+    ld   (hl), a
     inc  hl
+    ld   a, b          ; Recupera il 3° byte dello sprite
+    or   (hl)
     ld   (hl), a
     dec  hl
     dec  hl            ; Ripristina HL alla colonna iniziale
     jr   .next_line
     
 .no_shift:
-    ; Nessuno shift: scrivi i 2 byte direttamente
-    ld   (hl), d
+    ; Nessuno shift: scrivi i 2 byte direttamente (OR trasparente)
+    ld   a, d
+    or   (hl)
+    ld   (hl), a
     inc  hl
-    ld   (hl), e
+    ld   a, e
+    or   (hl)
+    ld   (hl), a
     dec  hl            ; Ripristina HL alla colonna iniziale
     
 .next_line:
