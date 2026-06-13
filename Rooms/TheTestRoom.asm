@@ -54,7 +54,7 @@ TheTestRoomRampData:
 
 ; Border color
 TheTestRoomBorderColor:
-    DEFB 0                        ; Black border
+    DEFB 5                        ; Black border
 
 ; Reserved bytes
 TheTestRoomReserved:

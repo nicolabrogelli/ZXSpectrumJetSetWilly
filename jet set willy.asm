@@ -42,11 +42,23 @@ Main:
     call DrawRoom
     call LoadRoomEnemies
 
-    xor  a
-    out  ($fe), a
+    ; Leggi il colore del bordo dalla stanza corrente e impostalo
+    ld   hl, (room_ptr)
+    ld   de, OFFSET_BORDER_COLOR
+    add  hl, de
+    ld   a, (hl)
+    ld   (room_border_color), a
+    out  ($fe), a          ; Imposta colore bordo hardware
+    
+    ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
+    add  a, a
+    add  a, a
+    add  a, a              ; Sposta nei bit 3-5
+    ld   b, a
     ld   a, (BORDCR)
-    and  $c7
-    or   $07
+    and  $c7               ; Pulisce vecchi bit del bordo
+    or   b                 ; Imposta nuovo colore bordo
+    or   $07               ; Imposta ink a bianco
     ld   (BORDCR), a
 
     ;call DrawVerticalBorders
@@ -90,14 +102,14 @@ Main_loop:
     jr   nz, .delay
     djnz .raster_loop
     
-    ; Ripristina il bordo a nero dopo il disegno delle barre
-    xor  a
+    ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+    ld   a, (room_border_color)
     out  ($fe), a
     jr   .no_collision_change
     
 .no_collision:
-    ; Nessuna collisione: mantieni il bordo nero
-    xor  a
+    ; Nessuna collisione: mantieni il bordo al colore della stanza
+    ld   a, (room_border_color)
     out  ($fe), a
     
 .no_collision_change:
@@ -118,6 +130,7 @@ flags:          db $00
 
 collision_active: db $00
 sprite_shift:     db $00
+room_border_color: db $00
 
 ; Fisica
 velocity_y:     db $00

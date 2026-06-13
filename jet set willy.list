@@ -104,11 +104,12 @@
   91+ 5DAD              OFFSET_FLOOR:    EQU 169
   92+ 5DAD              OFFSET_WALL:     EQU 178
   93+ 5DAD              OFFSET_NASTY:    EQU 187
-  94+ 5DAD
-  95+ 5DAD              ; Aggiungi nelle costanti
-  96+ 5DAD              VERTICAL_BORDER: EQU $49  ; Codice del carattere per i bordi verticali ($49 = 73, lettera 'I')
-  97+ 5DAD
+  94+ 5DAD              OFFSET_BORDER_COLOR: EQU 222
+  95+ 5DAD
+  96+ 5DAD              ; Aggiungi nelle costanti
+  97+ 5DAD              VERTICAL_BORDER: EQU $49  ; Codice del carattere per i bordi verticali ($49 = 73, lettera 'I')
   98+ 5DAD
+  99+ 5DAD
 # file closed: constants.asm
   12  5DAD                  include "interrupts.asm"
 # file opened: interrupts.asm
@@ -152,9 +153,9 @@
   38+ 5DCD DB FE            in a, (0xFE)
   39+ 5DCF
   40+ 5DCF                  ; Incrementa il contatore (usato per animazioni/raster bars)
-  41+ 5DCF 2A 86 6D         ld hl, (counter)
+  41+ 5DCF 2A 9A 6D         ld hl, (counter)
   42+ 5DD2 23               inc hl
-  43+ 5DD3 22 86 6D         ld (counter), hl
+  43+ 5DD3 22 9A 6D         ld (counter), hl
   44+ 5DD6
   45+ 5DD6                  ; Ripristina registri
   46+ 5DD6 E1               pop hl
@@ -383,7 +384,7 @@
  217+ 5E9C 6F               ld   l, a              ; HL = r * 8 + (c / 4)
  218+ 5E9D
  219+ 5E9D D5               push de
- 220+ 5E9E ED 5B 89 6E      ld   de, (room_ptr)
+ 220+ 5E9E ED 5B 9D 6E      ld   de, (room_ptr)
  221+ 5EA2 19               add  hl, de            ; HL = layout byte address
  222+ 5EA3 D1               pop  de
  223+ 5EA4 7E               ld   a, (hl)           ; A = layout byte
@@ -438,7 +439,7 @@
  272+ 5EDD 21 BB 00         ld   hl, OFFSET_NASTY
  273+ 5EE0              .load_tile:
  274+ 5EE0 D5               push de
- 275+ 5EE1 ED 5B 89 6E      ld   de, (room_ptr)
+ 275+ 5EE1 ED 5B 9D 6E      ld   de, (room_ptr)
  276+ 5EE5 19               add  hl, de            ; HL = tile pointer
  277+ 5EE6 D1               pop  de
  278+ 5EE7
@@ -518,7 +519,7 @@
  352+ 5F27                  ; 1. Salva la coordinata X per calcolare lo shift
  353+ 5F27 79               ld   a, c
  354+ 5F28 E6 07            and  7
- 355+ 5F2A 32 81 6D         ld   (sprite_shift), a
+ 355+ 5F2A 32 94 6D         ld   (sprite_shift), a
  356+ 5F2D
  357+ 5F2D                  ; 2. Calcola indirizzo schermo
  358+ 5F2D 60               ld   h, b
@@ -531,7 +532,7 @@
  365+ 5F37 DD 5E 01         ld   e, (ix+1)     ; E = secondo byte dello sprite
  366+ 5F3A
  367+ 5F3A                  ; Esegui lo shift a destra se necessario
- 368+ 5F3A 3A 81 6D         ld   a, (sprite_shift)
+ 368+ 5F3A 3A 94 6D         ld   a, (sprite_shift)
  369+ 5F3D B7               or   a
  370+ 5F3E 28 1C            jr   z, .no_shift
  371+ 5F40
@@ -641,7 +642,7 @@
  475+ 5FA5 DD E5            push ix
  476+ 5FA7
  477+ 5FA7                  ; 1. Determina sprite per la testa (sinistra o destra)
- 478+ 5FA7 3A 7E 6D         ld   a, (direction)
+ 478+ 5FA7 3A 91 6D         ld   a, (direction)
  479+ 5FAA FE 01            cp   1                 ; Sinistra?
  480+ 5FAC 20 06            jr   nz, .right_head
  481+ 5FAE
@@ -652,16 +653,16 @@
  486+ 5FB4 DD 21 8C 61      ld   ix, TilesDef + (0 * 8) ; 1° tile (HEAD_GRAPH_RIGHT)
  487+ 5FB8
  488+ 5FB8              .draw_head:
- 489+ 5FB8 ED 4B 77 6D      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
+ 489+ 5FB8 ED 4B 8A 6D      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
  490+ 5FBC CD 3D 5E         call DrawPixelSprite8x8 ; Disegna testa
  491+ 5FBF
  492+ 5FBF                  ; 2. Determina sprite per il corpo (sinistra o destra con frame animazione)
- 493+ 5FBF 3A 7E 6D         ld   a, (direction)
+ 493+ 5FBF 3A 91 6D         ld   a, (direction)
  494+ 5FC2 FE 01            cp   1                 ; Sinistra?
  495+ 5FC4 20 13            jr   nz, .right_body
  496+ 5FC6
  497+ 5FC6                  ; Corpo a sinistra
- 498+ 5FC6 3A 7D 6D         ld   a, (body_state)   ; 0, 1, 2
+ 498+ 5FC6 3A 90 6D         ld   a, (body_state)   ; 0, 1, 2
  499+ 5FC9 C6 05            add  a, 5              ; offset del tile per il corpo sinistro (5, 6, 7)
  500+ 5FCB 87               add  a, a              ; *2
  501+ 5FCC 87               add  a, a              ; *4
@@ -674,7 +675,7 @@
  508+ 5FD9
  509+ 5FD9              .right_body:
  510+ 5FD9                  ; Corpo a destra
- 511+ 5FD9 3A 7D 6D         ld   a, (body_state)   ; 0, 1, 2
+ 511+ 5FD9 3A 90 6D         ld   a, (body_state)   ; 0, 1, 2
  512+ 5FDC C6 01            add  a, 1              ; offset del tile per il corpo destro (1, 2, 3)
  513+ 5FDE 87               add  a, a              ; *2
  514+ 5FDF 87               add  a, a              ; *4
@@ -685,7 +686,7 @@
  519+ 5FE8 DD 19            add  ix, de
  520+ 5FEA
  521+ 5FEA              .draw_body:
- 522+ 5FEA ED 4B 77 6D      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
+ 522+ 5FEA ED 4B 8A 6D      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
  523+ 5FEE 78               ld   a, b
  524+ 5FEF C6 08            add  a, 8
  525+ 5FF1 47               ld   b, a              ; B = PlayerY + 8
@@ -698,10 +699,10 @@
  532+ 5FF8              ; Cancella il player alle vecchie coordinate pixel
  533+ 5FF8              ; -------------------------------------------------------------------
  534+ 5FF8              DeleteCharAtOldPos:
- 535+ 5FF8 ED 4B 79 6D      ld   bc, (PlayerPosOld) ; C = PlayerXOld, B = PlayerYOld
+ 535+ 5FF8 ED 4B 8C 6D      ld   bc, (PlayerPosOld) ; C = PlayerXOld, B = PlayerYOld
  536+ 5FFC CD FA 5E         call ErasePixelSprite8x8 ; Cancella testa
  537+ 5FFF
- 538+ 5FFF ED 4B 79 6D      ld   bc, (PlayerPosOld)
+ 538+ 5FFF ED 4B 8C 6D      ld   bc, (PlayerPosOld)
  539+ 6003 78               ld   a, b
  540+ 6004 C6 08            add  a, 8
  541+ 6006 47               ld   b, a
@@ -972,7 +973,7 @@
  806+ 6121 16 00            ld   d, 0
  807+ 6123 59               ld   e, c              ; DE = C
  808+ 6124 19               add  hl, de            ; HL = B * 8 + C
- 809+ 6125 ED 5B 89 6E      ld   de, (room_ptr)
+ 809+ 6125 ED 5B 9D 6E      ld   de, (room_ptr)
  810+ 6129 19               add  hl, de            ; HL = layout byte address
  811+ 612A 7E               ld   a, (hl)           ; A = layout byte
  812+ 612B 57               ld   d, a              ; D = salva il byte di layout
@@ -988,7 +989,7 @@
  822+ 6134 D5               push de
  823+ 6135 C5               push bc
  824+ 6136
- 825+ 6136 ED 5B 89 6E      ld   de, (room_ptr)
+ 825+ 6136 ED 5B 9D 6E      ld   de, (room_ptr)
  826+ 613A B7               or   a
  827+ 613B 20 06            jr   nz, .not_bg
  828+ 613D 21 A0 00         ld   hl, OFFSET_BG
@@ -1540,12 +1541,12 @@
    9+ 6854              ; -------------------------------------------------------------------
   10+ 6854              MovePlayer:
   11+ 6854                  ; Verifica se un tasto di movimento è premuto
-  12+ 6854 DD 21 7F 6D      ld   ix, flags
+  12+ 6854 DD 21 92 6D      ld   ix, flags
   13+ 6858 DD CB 00 46      bit  $00, (ix)
   14+ 685C C8               ret  z
   15+ 685D DD CB 00 86      res  $00, (ix)
   16+ 6861
-  17+ 6861 ED 4B 77 6D      ld   bc, (PlayerPos)   ; C = PlayerX (pixel), B = PlayerY (pixel)
+  17+ 6861 ED 4B 8A 6D      ld   bc, (PlayerPos)   ; C = PlayerX (pixel), B = PlayerY (pixel)
   18+ 6865
   19+ 6865 CB 4A            bit  $01, d            ; Tasto Destra premuto?
   20+ 6867 20 11            jr   nz, movePlayer_right
@@ -1579,17 +1580,17 @@
   48+ 6886 0E F0            ld   c, PLAYER_MAX_X
   49+ 6888
   50+ 6888              save_x:
-  51+ 6888 ED 43 77 6D      ld   (PlayerPos), bc
+  51+ 6888 ED 43 8A 6D      ld   (PlayerPos), bc
   52+ 688C
   53+ 688C              movePlayer_print:
   54+ 688C                  ; Alterna lo stato delle gambe ad ogni movimento (0, 1, 2, 0, 1, 2...)
-  55+ 688C 3A 7D 6D         ld   a, (body_state)
+  55+ 688C 3A 90 6D         ld   a, (body_state)
   56+ 688F 3C               inc  a
   57+ 6890 FE 03            cp   3
   58+ 6892 20 02            jr   nz, .save_state
   59+ 6894 3E 00            ld   a, 0
   60+ 6896              .save_state:
-  61+ 6896 32 7D 6D         ld   (body_state), a
+  61+ 6896 32 90 6D         ld   (body_state), a
   62+ 6899 C9               ret
 # file closed: player.asm
   15  689A                  include "input.asm"
@@ -1607,7 +1608,7 @@
   11+ 689A 16 00            ld  d, $00
   12+ 689C 3E FE            ld  a, $fe
   13+ 689E DB FE            in  a, ($fe)
-  14+ 68A0 DD 21 7F 6D      ld  ix,flags
+  14+ 68A0 DD 21 92 6D      ld  ix,flags
   15+ 68A4
   16+ 68A4              checkCtrl_left:
   17+ 68A4 CB 4F            bit $01, a
@@ -1616,7 +1617,7 @@
   20+ 68AA DD CB 00 C6      set 0,(ix)
   21+ 68AE 5F               ld  e, a
   22+ 68AF 3E 01            ld  a, 1
-  23+ 68B1 32 7E 6D         ld  (direction), a
+  23+ 68B1 32 91 6D         ld  (direction), a
   24+ 68B4 7B               ld  a, e
   25+ 68B5
   26+ 68B5              checkCtrl_right:
@@ -1626,7 +1627,7 @@
   30+ 68BB DD CB 00 C6      set 0,(ix)
   31+ 68BF 5F               ld  e, a
   32+ 68C0 3E 02            ld  a, 2
-  33+ 68C2 32 7E 6D         ld  (direction), a
+  33+ 68C2 32 91 6D         ld  (direction), a
   34+ 68C5 7B               ld  a, e
   35+ 68C6
   36+ 68C6              checkCtrl_jump:
@@ -1644,16 +1645,16 @@
   48+ 68D6
   49+ 68D6              .released:
   50+ 68D6 AF               xor a
-  51+ 68D7 32 85 6D         ld  (jump_prev), a
+  51+ 68D7 32 99 6D         ld  (jump_prev), a
   52+ 68DA 18 10            jr  .end
   53+ 68DC
   54+ 68DC              .pressed:
-  55+ 68DC 3A 85 6D         ld  a, (jump_prev)
+  55+ 68DC 3A 99 6D         ld  a, (jump_prev)
   56+ 68DF B7               or  a
   57+ 68E0 20 0A            jr  nz, .end
   58+ 68E2 3E 01            ld  a, 1
-  59+ 68E4 32 84 6D         ld  (jump_pressed), a
-  60+ 68E7 32 85 6D         ld  (jump_prev), a
+  59+ 68E4 32 98 6D         ld  (jump_pressed), a
+  60+ 68E7 32 99 6D         ld  (jump_prev), a
   61+ 68EA CB D2            set 2, d
   62+ 68EC
   63+ 68EC              .end:
@@ -1716,7 +1717,7 @@
   46+ 691D 85               add  a, l
   47+ 691E 6F               ld   l, a              ; HL = r * 8 + c / 4
   48+ 691F
-  49+ 691F ED 5B 89 6E      ld   de, (room_ptr)
+  49+ 691F ED 5B 9D 6E      ld   de, (room_ptr)
   50+ 6923 19               add  hl, de            ; HL = layout byte address
   51+ 6924 7E               ld   a, (hl)           ; A = layout byte
   52+ 6925
@@ -1775,11 +1776,11 @@
  105+ 6957              ; Applica gravità e gestisce salto
  106+ 6957              ; -------------------------------------------------------------------
  107+ 6957              ApplyGravity:
- 108+ 6957 ED 4B 77 6D      ld  bc, (PlayerPos)
+ 108+ 6957 ED 4B 8A 6D      ld  bc, (PlayerPos)
  109+ 695B 78               ld  a, b              ; B = PlayerY (pixel)
  110+ 695C
  111+ 695C                  ; Controlla se siamo a mezz'aria (on_ground == 0)
- 112+ 695C 3A 83 6D         ld  a, (on_ground)
+ 112+ 695C 3A 97 6D         ld  a, (on_ground)
  113+ 695F B7               or  a
  114+ 6960 CA 99 69         jp  z, .in_air        ; Se siamo in volo, continua a volare
  115+ 6963
@@ -1803,30 +1804,30 @@
  133+ 6975
  134+ 6975                  ; Se nessuna delle due è solida, iniziamo a cadere!
  135+ 6975 AF               xor  a
- 136+ 6976 32 83 6D         ld   (on_ground), a
- 137+ 6979 32 82 6D         ld   (velocity_y), a   ; Inizia la caduta con velocità 0
+ 136+ 6976 32 97 6D         ld   (on_ground), a
+ 137+ 6979 32 96 6D         ld   (velocity_y), a   ; Inizia la caduta con velocità 0
  138+ 697C C3 99 69         jp   .in_air
  139+ 697F
  140+ 697F              .still_on_ground:
  141+ 697F                  ; Siamo ancora sulla piattaforma o sul pavimento
  142+ 697F                  ; Ripristina bc originale (PlayerPos)
- 143+ 697F ED 4B 77 6D      ld   bc, (PlayerPos)
+ 143+ 697F ED 4B 8A 6D      ld   bc, (PlayerPos)
  144+ 6983
  145+ 6983                  ; Gestisci il salto
- 146+ 6983 3A 84 6D         ld   a, (jump_pressed)
+ 146+ 6983 3A 98 6D         ld   a, (jump_pressed)
  147+ 6986 B7               or   a
  148+ 6987 CA 24 6A         jp   z, .end
  149+ 698A
  150+ 698A 3E 0C            ld   a, JUMP_STRENGTH
- 151+ 698C 32 82 6D         ld   (velocity_y), a
+ 151+ 698C 32 96 6D         ld   (velocity_y), a
  152+ 698F AF               xor  a
- 153+ 6990 32 83 6D         ld   (on_ground), a
- 154+ 6993 32 84 6D         ld   (jump_pressed), a
+ 153+ 6990 32 97 6D         ld   (on_ground), a
+ 154+ 6993 32 98 6D         ld   (jump_pressed), a
  155+ 6996 C3 99 69         jp   .in_air
  156+ 6999
  157+ 6999              .in_air:
  158+ 6999                  ; Applica gravità
- 159+ 6999 3A 82 6D         ld  a, (velocity_y)
+ 159+ 6999 3A 96 6D         ld  a, (velocity_y)
  160+ 699C D6 02            sub GRAVITY           ; gravity = 2
  161+ 699E
  162+ 699E                  ; Controlla se positivo per evitare bug con cp signed
@@ -1838,17 +1839,17 @@
  168+ 69A6 3E F4            ld  a, -MAX_FALL_SPEED
  169+ 69A8
  170+ 69A8              .store_vel:
- 171+ 69A8 32 82 6D         ld  (velocity_y), a
+ 171+ 69A8 32 96 6D         ld  (velocity_y), a
  172+ 69AB
  173+ 69AB                  ; Applica movimento verticale: PlayerY = PlayerY - velocity_y
- 174+ 69AB ED 4B 77 6D      ld  bc, (PlayerPos)
+ 174+ 69AB ED 4B 8A 6D      ld  bc, (PlayerPos)
  175+ 69AF 57               ld  d, a              ; D = velocity_y (signed)
  176+ 69B0 78               ld  a, b              ; A = PlayerY
  177+ 69B1 92               sub d                 ; A = PlayerY - velocity_y
  178+ 69B2 47               ld  b, a              ; B = new PlayerY
  179+ 69B3
  180+ 69B3                  ; Controlla se stiamo cadendo (velocity_y <= 0)
- 181+ 69B3 3A 82 6D         ld  a, (velocity_y)
+ 181+ 69B3 3A 96 6D         ld  a, (velocity_y)
  182+ 69B6 CB 7F            bit 7, a              ; Se negativo, bit 7 = 1
  183+ 69B8 20 05            jr  nz, .falling_checks
  184+ 69BA B7               or  a                 ; Se zero
@@ -1892,7 +1893,7 @@
  222+ 69E2 57               ld   d, a              ; D = limite superiore
  223+ 69E3
  224+ 69E3                  ; Vecchio Y + 16
- 225+ 69E3 3A 78 6D         ld   a, (PlayerPos+1)  ; A = Vecchio Y
+ 225+ 69E3 3A 8B 6D         ld   a, (PlayerPos+1)  ; A = Vecchio Y
  226+ 69E6 C6 10            add  a, 16             ; A = Vecchio Y + 16
  227+ 69E8
  228+ 69E8 BA               cp   d                 ; Confronta Vecchio Y + 16 con il limite
@@ -1909,20 +1910,20 @@
  239+ 69F2 87               add  a, a              ; *8
  240+ 69F3 C6 08            add  a, 8              ; A = PlayerY di atterraggio
  241+ 69F5
- 242+ 69F5 ED 4B 77 6D      ld   bc, (PlayerPos)   ; Ripristina C = PlayerX
+ 242+ 69F5 ED 4B 8A 6D      ld   bc, (PlayerPos)   ; Ripristina C = PlayerX
  243+ 69F9 47               ld   b, a              ; B = Nuovo PlayerY
  244+ 69FA
- 245+ 69FA ED 43 77 6D      ld   (PlayerPos), bc
+ 245+ 69FA ED 43 8A 6D      ld   (PlayerPos), bc
  246+ 69FE 3E 01            ld   a, 1
- 247+ 6A00 32 83 6D         ld   (on_ground), a
+ 247+ 6A00 32 97 6D         ld   (on_ground), a
  248+ 6A03 AF               xor  a
- 249+ 6A04 32 82 6D         ld   (velocity_y), a
+ 249+ 6A04 32 96 6D         ld   (velocity_y), a
  250+ 6A07 C3 24 6A         jp   .end
  251+ 6A0A
  252+ 6A0A              .no_collision_checks:
- 253+ 6A0A 3A 82 6D         ld   a, (velocity_y)
+ 253+ 6A0A 3A 96 6D         ld   a, (velocity_y)
  254+ 6A0D 57               ld   d, a                  ; Ripristina D = velocity_y (evita corruzione se proveniamo da .check_landing)
- 255+ 6A0E ED 4B 77 6D      ld   bc, (PlayerPos)
+ 255+ 6A0E ED 4B 8A 6D      ld   bc, (PlayerPos)
  256+ 6A12 78               ld   a, b
  257+ 6A13 92               sub  d                 ; A = Nuovo Y (calcolato in .store_vel)
  258+ 6A14 47               ld   b, a              ; B = Nuovo Y
@@ -1933,14 +1934,14 @@
  263+ 6A18 30 06            jr   nc, .save_ok
  264+ 6A1A 06 08            ld   b, 8
  265+ 6A1C AF               xor  a
- 266+ 6A1D 32 82 6D         ld   (velocity_y), a
+ 266+ 6A1D 32 96 6D         ld   (velocity_y), a
  267+ 6A20
  268+ 6A20              .save_ok:
- 269+ 6A20 ED 43 77 6D      ld   (PlayerPos), bc
+ 269+ 6A20 ED 43 8A 6D      ld   (PlayerPos), bc
  270+ 6A24
  271+ 6A24              .end:
  272+ 6A24 AF               xor  a
- 273+ 6A25 32 84 6D         ld   (jump_pressed), a
+ 273+ 6A25 32 98 6D         ld   (jump_pressed), a
  274+ 6A28 C9               ret
  275+ 6A29
  276+ 6A29              ; -------------------------------------------------------------------
@@ -1961,14 +1962,14 @@
  291+ 6A39 28 1F            jr   z, .next
  292+ 6A3B
  293+ 6A3B                  ; 1. Controllo orizzontale: PlayerX - EnemyX + 7 in [0, 22]
- 294+ 6A3B 3A 77 6D         ld   a, (PlayerPos)    ; A = PlayerX
+ 294+ 6A3B 3A 8A 6D         ld   a, (PlayerPos)    ; A = PlayerX
  295+ 6A3E DD 96 01         sub  (ix+1)            ; A = PlayerX - EnemyX
  296+ 6A41 C6 07            add  a, 7              ; A = PlayerX - EnemyX + 7
  297+ 6A43 FE 17            cp   23                ; Se >= 23, nessuna collisione con questo
  298+ 6A45 30 13            jr   nc, .next
  299+ 6A47
  300+ 6A47                  ; 2. Controllo verticale: PlayerY - EnemyY + 15 in [0, 30]
- 301+ 6A47 3A 78 6D         ld   a, (PlayerPos+1)  ; A = PlayerY
+ 301+ 6A47 3A 8B 6D         ld   a, (PlayerPos+1)  ; A = PlayerY
  302+ 6A4A DD 96 02         sub  (ix+2)            ; A = PlayerY - EnemyY
  303+ 6A4D C6 0F            add  a, 15             ; A = PlayerY - EnemyY + 15
  304+ 6A4F FE 1F            cp   31                ; Se >= 31, nessuna collisione con questo
@@ -2176,7 +2177,7 @@
   28+ 6B2A D5               push de
   29+ 6B2B C5               push bc
   30+ 6B2C
-  31+ 6B2C 2A 89 6E         ld   hl, (room_ptr)
+  31+ 6B2C 2A 9D 6E         ld   hl, (room_ptr)
   32+ 6B2F 11 F0 00         ld   de, 240           ; Offset degli enemy nella stanza
   33+ 6B32 19               add  hl, de            ; HL = indirizzo di RoomXEnemy1
   34+ 6B33
@@ -2553,7 +2554,7 @@
   26  6D00              Main:
   27  6D00                  ; Inizializza
   28  6D00 AF               xor  a
-  29  6D01 32 7D 6D         ld  (body_state), a
+  29  6D01 32 90 6D         ld  (body_state), a
   30  6D04
   31  6D04 CD DB 5D         call CopyChars
   32  6D07 CD E7 5D         call DefineChars
@@ -2569,355 +2570,368 @@
   42  6D1D CD 12 61         call DrawRoom
   43  6D20 CD 29 6B         call LoadRoomEnemies
   44  6D23
-  45  6D23 AF               xor  a
-  46  6D24 D3 FE            out  ($fe), a
-  47  6D26 3A 48 5C         ld   a, (BORDCR)
-  48  6D29 E6 C7            and  $c7
-  49  6D2B F6 07            or   $07
-  50  6D2D 32 48 5C         ld   (BORDCR), a
-  51  6D30
-  52  6D30                  ;call DrawVerticalBorders
-  53  6D30 CD A5 5F         call PrintPlayer
-  54  6D33
-  55  6D33              Main_loop:
-  56  6D33 76               halt
-  57  6D34
-  58  6D34                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
-  59  6D34 CD F8 5F         call DeleteCharAtOldPos
-  60  6D37 CD A5 5F         call PrintPlayer
-  61  6D3A
-  62  6D3A CD 9B 6B         call EraseRoomEnemies
-  63  6D3D CD C6 6B         call DrawRoomEnemies
-  64  6D40
-  65  6D40                  ; 3. Salva le posizioni correnti del player per il prossimo frame
-  66  6D40 ED 4B 77 6D      ld   bc, (PlayerPos)
-  67  6D44 ED 43 79 6D      ld   (PlayerPosOld), bc
-  68  6D48
-  69  6D48                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
-  70  6D48 CD 9A 68         call CheckCtrl
-  71  6D4B CD 54 68         call MovePlayer
-  72  6D4E CD 57 69         call ApplyGravity
-  73  6D51 CD 33 6C         call UpdateRoomEnemies
-  74  6D54
-  75  6D54                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
-  76  6D54 CD 29 6A         call CheckCollision
-  77  6D57 30 18            jr   nc, .no_collision
-  78  6D59
-  79  6D59                  ; Collisione attiva: disegna le raster bar nel bordo
-  80  6D59 3A 86 6D         ld   a, (counter)
-  81  6D5C E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
-  82  6D5E 06 1E            ld   b, 30             ; Numero di righe della barra raster
-  83  6D60              .raster_loop:
-  84  6D60 D3 FE            out  ($fe), a
-  85  6D62 3C               inc  a
-  86  6D63 E6 07            and  7
-  87  6D65 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
-  88  6D67              .delay:
-  89  6D67 0D               dec  c
-  90  6D68 20 FD            jr   nz, .delay
-  91  6D6A 10 F4            djnz .raster_loop
-  92  6D6C
-  93  6D6C                  ; Ripristina il bordo a nero dopo il disegno delle barre
-  94  6D6C AF               xor  a
-  95  6D6D D3 FE            out  ($fe), a
-  96  6D6F 18 03            jr   .no_collision_change
-  97  6D71
-  98  6D71              .no_collision:
-  99  6D71                  ; Nessuna collisione: mantieni il bordo nero
- 100  6D71 AF               xor  a
- 101  6D72 D3 FE            out  ($fe), a
- 102  6D74
- 103  6D74              .no_collision_change:
- 104  6D74 C3 33 6D         jp   Main_loop
- 105  6D77
- 106  6D77              ; -------------------------------------------------------------------
- 107  6D77              ; Variabili
- 108  6D77              ; -------------------------------------------------------------------
- 109  6D77              ; Posizioni
- 110  6D77 88 80        PlayerPos:      db 136, 128
- 111  6D79 88 80        PlayerPosOld:   db 136, 128
- 112  6D7B 11 11        bodyPos:        dw $1111
- 113  6D7D
- 114  6D7D              ; Stato player
- 115  6D7D 00           body_state:     db $00
- 116  6D7E 00           direction:      db $00
- 117  6D7F 00           flags:          db $00
- 118  6D80
- 119  6D80 00           collision_active: db $00
- 120  6D81 00           sprite_shift:     db $00
- 121  6D82
- 122  6D82              ; Fisica
- 123  6D82 00           velocity_y:     db $00
- 124  6D83 01           on_ground:      db $01
- 125  6D84 00           jump_pressed:   db $00
- 126  6D85 00           jump_prev:      db $00
- 127  6D86
- 128  6D86              ; Buffer e contatori
- 129  6D86 00 00        counter:        dw 0
- 130  6D88 00          > db 0
- 130  6D89 00          > db 0
- 130  6D8A 00          > db 0
- 130  6D8B 00          > db 0
- 130  6D8C 00          > db 0
- 130  6D8D 00          > db 0
- 130  6D8E 00          > db 0
- 130  6D8F 00          > db 0
- 130  6D90 00          > db 0
- 130  6D91 00          > db 0
- 130  6D92 00          > db 0
- 130  6D93 00          > db 0
- 130  6D94 00          > db 0
- 130  6D95 00          > db 0
- 130  6D96 00          > db 0
- 130  6D97 00          > db 0
- 130  6D98 00          > db 0
- 130  6D99 00          > db 0
- 130  6D9A 00          > db 0
- 130  6D9B 00          > db 0
- 130  6D9C 00          > db 0
- 130  6D9D 00          > db 0
- 130  6D9E 00          > db 0
- 130  6D9F 00          > db 0
- 130  6DA0 00          > db 0
- 130  6DA1 00          > db 0
- 130  6DA2 00          > db 0
- 130  6DA3 00          > db 0
- 130  6DA4 00          > db 0
- 130  6DA5 00          > db 0
- 130  6DA6 00          > db 0
- 130  6DA7 00          > db 0
- 130  6DA8 00          > db 0
- 130  6DA9 00          > db 0
- 130  6DAA 00          > db 0
- 130  6DAB 00          > db 0
- 130  6DAC 00          > db 0
- 130  6DAD 00          > db 0
- 130  6DAE 00          > db 0
- 130  6DAF 00          > db 0
- 130  6DB0 00          > db 0
- 130  6DB1 00          > db 0
- 130  6DB2 00          > db 0
- 130  6DB3 00          > db 0
- 130  6DB4 00          > db 0
- 130  6DB5 00          > db 0
- 130  6DB6 00          > db 0
- 130  6DB7 00          > db 0
- 130  6DB8 00          > db 0
- 130  6DB9 00          > db 0
- 130  6DBA 00          > db 0
- 130  6DBB 00          > db 0
- 130  6DBC 00          > db 0
- 130  6DBD 00          > db 0
- 130  6DBE 00          > db 0
- 130  6DBF 00          > db 0
- 130  6DC0 00          > db 0
- 130  6DC1 00          > db 0
- 130  6DC2 00          > db 0
- 130  6DC3 00          > db 0
- 130  6DC4 00          > db 0
- 130  6DC5 00          > db 0
- 130  6DC6 00          > db 0
- 130  6DC7 00          > db 0
- 130  6DC8 00          > db 0
- 130  6DC9 00          > db 0
- 130  6DCA 00          > db 0
- 130  6DCB 00          > db 0
- 130  6DCC 00          > db 0
- 130  6DCD 00          > db 0
- 130  6DCE 00          > db 0
- 130  6DCF 00          > db 0
- 130  6DD0 00          > db 0
- 130  6DD1 00          > db 0
- 130  6DD2 00          > db 0
- 130  6DD3 00          > db 0
- 130  6DD4 00          > db 0
- 130  6DD5 00          > db 0
- 130  6DD6 00          > db 0
- 130  6DD7 00          > db 0
- 130  6DD8 00          > db 0
- 130  6DD9 00          > db 0
- 130  6DDA 00          > db 0
- 130  6DDB 00          > db 0
- 130  6DDC 00          > db 0
- 130  6DDD 00          > db 0
- 130  6DDE 00          > db 0
- 130  6DDF 00          > db 0
- 130  6DE0 00          > db 0
- 130  6DE1 00          > db 0
- 130  6DE2 00          > db 0
- 130  6DE3 00          > db 0
- 130  6DE4 00          > db 0
- 130  6DE5 00          > db 0
- 130  6DE6 00          > db 0
- 130  6DE7 00          > db 0
- 130  6DE8 00          > db 0
- 130  6DE9 00          > db 0
- 130  6DEA 00          > db 0
- 130  6DEB 00          > db 0
- 130  6DEC 00          > db 0
- 130  6DED 00          > db 0
- 130  6DEE 00          > db 0
- 130  6DEF 00          > db 0
- 130  6DF0 00          > db 0
- 130  6DF1 00          > db 0
- 130  6DF2 00          > db 0
- 130  6DF3 00          > db 0
- 130  6DF4 00          > db 0
- 130  6DF5 00          > db 0
- 130  6DF6 00          > db 0
- 130  6DF7 00          > db 0
- 130  6DF8 00          > db 0
- 130  6DF9 00          > db 0
- 130  6DFA 00          > db 0
- 130  6DFB 00          > db 0
- 130  6DFC 00          > db 0
- 130  6DFD 00          > db 0
- 130  6DFE 00          > db 0
- 130  6DFF 00          > db 0
- 130  6E00 00          > db 0
- 130  6E01 00          > db 0
- 130  6E02 00          > db 0
- 130  6E03 00          > db 0
- 130  6E04 00          > db 0
- 130  6E05 00          > db 0
- 130  6E06 00          > db 0
- 130  6E07 00          > db 0
- 130  6E08 00          > db 0
- 130  6E09 00          > db 0
- 130  6E0A 00          > db 0
- 130  6E0B 00          > db 0
- 130  6E0C 00          > db 0
- 130  6E0D 00          > db 0
- 130  6E0E 00          > db 0
- 130  6E0F 00          > db 0
- 130  6E10 00          > db 0
- 130  6E11 00          > db 0
- 130  6E12 00          > db 0
- 130  6E13 00          > db 0
- 130  6E14 00          > db 0
- 130  6E15 00          > db 0
- 130  6E16 00          > db 0
- 130  6E17 00          > db 0
- 130  6E18 00          > db 0
- 130  6E19 00          > db 0
- 130  6E1A 00          > db 0
- 130  6E1B 00          > db 0
- 130  6E1C 00          > db 0
- 130  6E1D 00          > db 0
- 130  6E1E 00          > db 0
- 130  6E1F 00          > db 0
- 130  6E20 00          > db 0
- 130  6E21 00          > db 0
- 130  6E22 00          > db 0
- 130  6E23 00          > db 0
- 130  6E24 00          > db 0
- 130  6E25 00          > db 0
- 130  6E26 00          > db 0
- 130  6E27 00          > db 0
- 130  6E28 00          > db 0
- 130  6E29 00          > db 0
- 130  6E2A 00          > db 0
- 130  6E2B 00          > db 0
- 130  6E2C 00          > db 0
- 130  6E2D 00          > db 0
- 130  6E2E 00          > db 0
- 130  6E2F 00          > db 0
- 130  6E30 00          > db 0
- 130  6E31 00          > db 0
- 130  6E32 00          > db 0
- 130  6E33 00          > db 0
- 130  6E34 00          > db 0
- 130  6E35 00          > db 0
- 130  6E36 00          > db 0
- 130  6E37 00          > db 0
- 130  6E38 00          > db 0
- 130  6E39 00          > db 0
- 130  6E3A 00          > db 0
- 130  6E3B 00          > db 0
- 130  6E3C 00          > db 0
- 130  6E3D 00          > db 0
- 130  6E3E 00          > db 0
- 130  6E3F 00          > db 0
- 130  6E40 00          > db 0
- 130  6E41 00          > db 0
- 130  6E42 00          > db 0
- 130  6E43 00          > db 0
- 130  6E44 00          > db 0
- 130  6E45 00          > db 0
- 130  6E46 00          > db 0
- 130  6E47 00          > db 0
- 130  6E48 00          > db 0
- 130  6E49 00          > db 0
- 130  6E4A 00          > db 0
- 130  6E4B 00          > db 0
- 130  6E4C 00          > db 0
- 130  6E4D 00          > db 0
- 130  6E4E 00          > db 0
- 130  6E4F 00          > db 0
- 130  6E50 00          > db 0
- 130  6E51 00          > db 0
- 130  6E52 00          > db 0
- 130  6E53 00          > db 0
- 130  6E54 00          > db 0
- 130  6E55 00          > db 0
- 130  6E56 00          > db 0
- 130  6E57 00          > db 0
- 130  6E58 00          > db 0
- 130  6E59 00          > db 0
- 130  6E5A 00          > db 0
- 130  6E5B 00          > db 0
- 130  6E5C 00          > db 0
- 130  6E5D 00          > db 0
- 130  6E5E 00          > db 0
- 130  6E5F 00          > db 0
- 130  6E60 00          > db 0
- 130  6E61 00          > db 0
- 130  6E62 00          > db 0
- 130  6E63 00          > db 0
- 130  6E64 00          > db 0
- 130  6E65 00          > db 0
- 130  6E66 00          > db 0
- 130  6E67 00          > db 0
- 130  6E68 00          > db 0
- 130  6E69 00          > db 0
- 130  6E6A 00          > db 0
- 130  6E6B 00          > db 0
- 130  6E6C 00          > db 0
- 130  6E6D 00          > db 0
- 130  6E6E 00          > db 0
- 130  6E6F 00          > db 0
- 130  6E70 00          > db 0
- 130  6E71 00          > db 0
- 130  6E72 00          > db 0
- 130  6E73 00          > db 0
- 130  6E74 00          > db 0
- 130  6E75 00          > db 0
- 130  6E76 00          > db 0
- 130  6E77 00          > db 0
- 130  6E78 00          > db 0
- 130  6E79 00          > db 0
- 130  6E7A 00          > db 0
- 130  6E7B 00          > db 0
- 130  6E7C 00          > db 0
- 130  6E7D 00          > db 0
- 130  6E7E 00          > db 0
- 130  6E7F 00          > db 0
- 130  6E80 00          > db 0
- 130  6E81 00          > db 0
- 130  6E82 00          > db 0
- 130  6E83 00          > db 0
- 130  6E84 00          > db 0
- 130  6E85 00          > db 0
- 130  6E86 00          > db 0
- 130  6E87 00          > db 0
- 131  6E88
- 132  6E88              ; Gestione Stanze
- 133  6E88 00           current_room:   db 0
- 134  6E89 00 71        room_ptr:       dw TheTestRoomLayout
- 135  6E8B
- 136  6E8B 00 00 00...      ALIGN 256
- 137  6F00              RoomsStart:
- 138  6F00                  include "Rooms/TheBridge.asm"
+  45  6D23                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
+  46  6D23 2A 9D 6E         ld   hl, (room_ptr)
+  47  6D26 11 DE 00         ld   de, OFFSET_BORDER_COLOR
+  48  6D29 19               add  hl, de
+  49  6D2A 7E               ld   a, (hl)
+  50  6D2B 32 95 6D         ld   (room_border_color), a
+  51  6D2E D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
+  52  6D30
+  53  6D30                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
+  54  6D30 87               add  a, a
+  55  6D31 87               add  a, a
+  56  6D32 87               add  a, a              ; Sposta nei bit 3-5
+  57  6D33 47               ld   b, a
+  58  6D34 3A 48 5C         ld   a, (BORDCR)
+  59  6D37 E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
+  60  6D39 B0               or   b                 ; Imposta nuovo colore bordo
+  61  6D3A F6 07            or   $07               ; Imposta ink a bianco
+  62  6D3C 32 48 5C         ld   (BORDCR), a
+  63  6D3F
+  64  6D3F                  ;call DrawVerticalBorders
+  65  6D3F CD A5 5F         call PrintPlayer
+  66  6D42
+  67  6D42              Main_loop:
+  68  6D42 76               halt
+  69  6D43
+  70  6D43                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
+  71  6D43 CD F8 5F         call DeleteCharAtOldPos
+  72  6D46 CD A5 5F         call PrintPlayer
+  73  6D49
+  74  6D49 CD 9B 6B         call EraseRoomEnemies
+  75  6D4C CD C6 6B         call DrawRoomEnemies
+  76  6D4F
+  77  6D4F                  ; 3. Salva le posizioni correnti del player per il prossimo frame
+  78  6D4F ED 4B 8A 6D      ld   bc, (PlayerPos)
+  79  6D53 ED 43 8C 6D      ld   (PlayerPosOld), bc
+  80  6D57
+  81  6D57                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
+  82  6D57 CD 9A 68         call CheckCtrl
+  83  6D5A CD 54 68         call MovePlayer
+  84  6D5D CD 57 69         call ApplyGravity
+  85  6D60 CD 33 6C         call UpdateRoomEnemies
+  86  6D63
+  87  6D63                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
+  88  6D63 CD 29 6A         call CheckCollision
+  89  6D66 30 1A            jr   nc, .no_collision
+  90  6D68
+  91  6D68                  ; Collisione attiva: disegna le raster bar nel bordo
+  92  6D68 3A 9A 6D         ld   a, (counter)
+  93  6D6B E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+  94  6D6D 06 1E            ld   b, 30             ; Numero di righe della barra raster
+  95  6D6F              .raster_loop:
+  96  6D6F D3 FE            out  ($fe), a
+  97  6D71 3C               inc  a
+  98  6D72 E6 07            and  7
+  99  6D74 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+ 100  6D76              .delay:
+ 101  6D76 0D               dec  c
+ 102  6D77 20 FD            jr   nz, .delay
+ 103  6D79 10 F4            djnz .raster_loop
+ 104  6D7B
+ 105  6D7B                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+ 106  6D7B 3A 95 6D         ld   a, (room_border_color)
+ 107  6D7E D3 FE            out  ($fe), a
+ 108  6D80 18 05            jr   .no_collision_change
+ 109  6D82
+ 110  6D82              .no_collision:
+ 111  6D82                  ; Nessuna collisione: mantieni il bordo al colore della stanza
+ 112  6D82 3A 95 6D         ld   a, (room_border_color)
+ 113  6D85 D3 FE            out  ($fe), a
+ 114  6D87
+ 115  6D87              .no_collision_change:
+ 116  6D87 C3 42 6D         jp   Main_loop
+ 117  6D8A
+ 118  6D8A              ; -------------------------------------------------------------------
+ 119  6D8A              ; Variabili
+ 120  6D8A              ; -------------------------------------------------------------------
+ 121  6D8A              ; Posizioni
+ 122  6D8A 88 80        PlayerPos:      db 136, 128
+ 123  6D8C 88 80        PlayerPosOld:   db 136, 128
+ 124  6D8E 11 11        bodyPos:        dw $1111
+ 125  6D90
+ 126  6D90              ; Stato player
+ 127  6D90 00           body_state:     db $00
+ 128  6D91 00           direction:      db $00
+ 129  6D92 00           flags:          db $00
+ 130  6D93
+ 131  6D93 00           collision_active: db $00
+ 132  6D94 00           sprite_shift:     db $00
+ 133  6D95 00           room_border_color: db $00
+ 134  6D96
+ 135  6D96              ; Fisica
+ 136  6D96 00           velocity_y:     db $00
+ 137  6D97 01           on_ground:      db $01
+ 138  6D98 00           jump_pressed:   db $00
+ 139  6D99 00           jump_prev:      db $00
+ 140  6D9A
+ 141  6D9A              ; Buffer e contatori
+ 142  6D9A 00 00        counter:        dw 0
+ 143  6D9C 00          > db 0
+ 143  6D9D 00          > db 0
+ 143  6D9E 00          > db 0
+ 143  6D9F 00          > db 0
+ 143  6DA0 00          > db 0
+ 143  6DA1 00          > db 0
+ 143  6DA2 00          > db 0
+ 143  6DA3 00          > db 0
+ 143  6DA4 00          > db 0
+ 143  6DA5 00          > db 0
+ 143  6DA6 00          > db 0
+ 143  6DA7 00          > db 0
+ 143  6DA8 00          > db 0
+ 143  6DA9 00          > db 0
+ 143  6DAA 00          > db 0
+ 143  6DAB 00          > db 0
+ 143  6DAC 00          > db 0
+ 143  6DAD 00          > db 0
+ 143  6DAE 00          > db 0
+ 143  6DAF 00          > db 0
+ 143  6DB0 00          > db 0
+ 143  6DB1 00          > db 0
+ 143  6DB2 00          > db 0
+ 143  6DB3 00          > db 0
+ 143  6DB4 00          > db 0
+ 143  6DB5 00          > db 0
+ 143  6DB6 00          > db 0
+ 143  6DB7 00          > db 0
+ 143  6DB8 00          > db 0
+ 143  6DB9 00          > db 0
+ 143  6DBA 00          > db 0
+ 143  6DBB 00          > db 0
+ 143  6DBC 00          > db 0
+ 143  6DBD 00          > db 0
+ 143  6DBE 00          > db 0
+ 143  6DBF 00          > db 0
+ 143  6DC0 00          > db 0
+ 143  6DC1 00          > db 0
+ 143  6DC2 00          > db 0
+ 143  6DC3 00          > db 0
+ 143  6DC4 00          > db 0
+ 143  6DC5 00          > db 0
+ 143  6DC6 00          > db 0
+ 143  6DC7 00          > db 0
+ 143  6DC8 00          > db 0
+ 143  6DC9 00          > db 0
+ 143  6DCA 00          > db 0
+ 143  6DCB 00          > db 0
+ 143  6DCC 00          > db 0
+ 143  6DCD 00          > db 0
+ 143  6DCE 00          > db 0
+ 143  6DCF 00          > db 0
+ 143  6DD0 00          > db 0
+ 143  6DD1 00          > db 0
+ 143  6DD2 00          > db 0
+ 143  6DD3 00          > db 0
+ 143  6DD4 00          > db 0
+ 143  6DD5 00          > db 0
+ 143  6DD6 00          > db 0
+ 143  6DD7 00          > db 0
+ 143  6DD8 00          > db 0
+ 143  6DD9 00          > db 0
+ 143  6DDA 00          > db 0
+ 143  6DDB 00          > db 0
+ 143  6DDC 00          > db 0
+ 143  6DDD 00          > db 0
+ 143  6DDE 00          > db 0
+ 143  6DDF 00          > db 0
+ 143  6DE0 00          > db 0
+ 143  6DE1 00          > db 0
+ 143  6DE2 00          > db 0
+ 143  6DE3 00          > db 0
+ 143  6DE4 00          > db 0
+ 143  6DE5 00          > db 0
+ 143  6DE6 00          > db 0
+ 143  6DE7 00          > db 0
+ 143  6DE8 00          > db 0
+ 143  6DE9 00          > db 0
+ 143  6DEA 00          > db 0
+ 143  6DEB 00          > db 0
+ 143  6DEC 00          > db 0
+ 143  6DED 00          > db 0
+ 143  6DEE 00          > db 0
+ 143  6DEF 00          > db 0
+ 143  6DF0 00          > db 0
+ 143  6DF1 00          > db 0
+ 143  6DF2 00          > db 0
+ 143  6DF3 00          > db 0
+ 143  6DF4 00          > db 0
+ 143  6DF5 00          > db 0
+ 143  6DF6 00          > db 0
+ 143  6DF7 00          > db 0
+ 143  6DF8 00          > db 0
+ 143  6DF9 00          > db 0
+ 143  6DFA 00          > db 0
+ 143  6DFB 00          > db 0
+ 143  6DFC 00          > db 0
+ 143  6DFD 00          > db 0
+ 143  6DFE 00          > db 0
+ 143  6DFF 00          > db 0
+ 143  6E00 00          > db 0
+ 143  6E01 00          > db 0
+ 143  6E02 00          > db 0
+ 143  6E03 00          > db 0
+ 143  6E04 00          > db 0
+ 143  6E05 00          > db 0
+ 143  6E06 00          > db 0
+ 143  6E07 00          > db 0
+ 143  6E08 00          > db 0
+ 143  6E09 00          > db 0
+ 143  6E0A 00          > db 0
+ 143  6E0B 00          > db 0
+ 143  6E0C 00          > db 0
+ 143  6E0D 00          > db 0
+ 143  6E0E 00          > db 0
+ 143  6E0F 00          > db 0
+ 143  6E10 00          > db 0
+ 143  6E11 00          > db 0
+ 143  6E12 00          > db 0
+ 143  6E13 00          > db 0
+ 143  6E14 00          > db 0
+ 143  6E15 00          > db 0
+ 143  6E16 00          > db 0
+ 143  6E17 00          > db 0
+ 143  6E18 00          > db 0
+ 143  6E19 00          > db 0
+ 143  6E1A 00          > db 0
+ 143  6E1B 00          > db 0
+ 143  6E1C 00          > db 0
+ 143  6E1D 00          > db 0
+ 143  6E1E 00          > db 0
+ 143  6E1F 00          > db 0
+ 143  6E20 00          > db 0
+ 143  6E21 00          > db 0
+ 143  6E22 00          > db 0
+ 143  6E23 00          > db 0
+ 143  6E24 00          > db 0
+ 143  6E25 00          > db 0
+ 143  6E26 00          > db 0
+ 143  6E27 00          > db 0
+ 143  6E28 00          > db 0
+ 143  6E29 00          > db 0
+ 143  6E2A 00          > db 0
+ 143  6E2B 00          > db 0
+ 143  6E2C 00          > db 0
+ 143  6E2D 00          > db 0
+ 143  6E2E 00          > db 0
+ 143  6E2F 00          > db 0
+ 143  6E30 00          > db 0
+ 143  6E31 00          > db 0
+ 143  6E32 00          > db 0
+ 143  6E33 00          > db 0
+ 143  6E34 00          > db 0
+ 143  6E35 00          > db 0
+ 143  6E36 00          > db 0
+ 143  6E37 00          > db 0
+ 143  6E38 00          > db 0
+ 143  6E39 00          > db 0
+ 143  6E3A 00          > db 0
+ 143  6E3B 00          > db 0
+ 143  6E3C 00          > db 0
+ 143  6E3D 00          > db 0
+ 143  6E3E 00          > db 0
+ 143  6E3F 00          > db 0
+ 143  6E40 00          > db 0
+ 143  6E41 00          > db 0
+ 143  6E42 00          > db 0
+ 143  6E43 00          > db 0
+ 143  6E44 00          > db 0
+ 143  6E45 00          > db 0
+ 143  6E46 00          > db 0
+ 143  6E47 00          > db 0
+ 143  6E48 00          > db 0
+ 143  6E49 00          > db 0
+ 143  6E4A 00          > db 0
+ 143  6E4B 00          > db 0
+ 143  6E4C 00          > db 0
+ 143  6E4D 00          > db 0
+ 143  6E4E 00          > db 0
+ 143  6E4F 00          > db 0
+ 143  6E50 00          > db 0
+ 143  6E51 00          > db 0
+ 143  6E52 00          > db 0
+ 143  6E53 00          > db 0
+ 143  6E54 00          > db 0
+ 143  6E55 00          > db 0
+ 143  6E56 00          > db 0
+ 143  6E57 00          > db 0
+ 143  6E58 00          > db 0
+ 143  6E59 00          > db 0
+ 143  6E5A 00          > db 0
+ 143  6E5B 00          > db 0
+ 143  6E5C 00          > db 0
+ 143  6E5D 00          > db 0
+ 143  6E5E 00          > db 0
+ 143  6E5F 00          > db 0
+ 143  6E60 00          > db 0
+ 143  6E61 00          > db 0
+ 143  6E62 00          > db 0
+ 143  6E63 00          > db 0
+ 143  6E64 00          > db 0
+ 143  6E65 00          > db 0
+ 143  6E66 00          > db 0
+ 143  6E67 00          > db 0
+ 143  6E68 00          > db 0
+ 143  6E69 00          > db 0
+ 143  6E6A 00          > db 0
+ 143  6E6B 00          > db 0
+ 143  6E6C 00          > db 0
+ 143  6E6D 00          > db 0
+ 143  6E6E 00          > db 0
+ 143  6E6F 00          > db 0
+ 143  6E70 00          > db 0
+ 143  6E71 00          > db 0
+ 143  6E72 00          > db 0
+ 143  6E73 00          > db 0
+ 143  6E74 00          > db 0
+ 143  6E75 00          > db 0
+ 143  6E76 00          > db 0
+ 143  6E77 00          > db 0
+ 143  6E78 00          > db 0
+ 143  6E79 00          > db 0
+ 143  6E7A 00          > db 0
+ 143  6E7B 00          > db 0
+ 143  6E7C 00          > db 0
+ 143  6E7D 00          > db 0
+ 143  6E7E 00          > db 0
+ 143  6E7F 00          > db 0
+ 143  6E80 00          > db 0
+ 143  6E81 00          > db 0
+ 143  6E82 00          > db 0
+ 143  6E83 00          > db 0
+ 143  6E84 00          > db 0
+ 143  6E85 00          > db 0
+ 143  6E86 00          > db 0
+ 143  6E87 00          > db 0
+ 143  6E88 00          > db 0
+ 143  6E89 00          > db 0
+ 143  6E8A 00          > db 0
+ 143  6E8B 00          > db 0
+ 143  6E8C 00          > db 0
+ 143  6E8D 00          > db 0
+ 143  6E8E 00          > db 0
+ 143  6E8F 00          > db 0
+ 143  6E90 00          > db 0
+ 143  6E91 00          > db 0
+ 143  6E92 00          > db 0
+ 143  6E93 00          > db 0
+ 143  6E94 00          > db 0
+ 143  6E95 00          > db 0
+ 143  6E96 00          > db 0
+ 143  6E97 00          > db 0
+ 143  6E98 00          > db 0
+ 143  6E99 00          > db 0
+ 143  6E9A 00          > db 0
+ 143  6E9B 00          > db 0
+ 144  6E9C
+ 145  6E9C              ; Gestione Stanze
+ 146  6E9C 00           current_room:   db 0
+ 147  6E9D 00 71        room_ptr:       dw TheTestRoomLayout
+ 148  6E9F
+ 149  6E9F 00 00 00...      ALIGN 256
+ 150  6F00              RoomsStart:
+ 151  6F00                  include "Rooms/TheBridge.asm"
 # file opened: Rooms/TheBridge.asm
    1+ 6F00              TheBridgeLayout:
    2+ 6F00 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
@@ -3042,7 +3056,7 @@
   85+ 6FFC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
   86+ 7000
 # file closed: Rooms/TheBridge.asm
- 139  7000                  include "Rooms/TheOffLicence.asm"
+ 152  7000                  include "Rooms/TheOffLicence.asm"
 # file opened: Rooms/TheOffLicence.asm
    1+ 7000              ; Room layout for Room 2 (The Off Licence)
    2+ 7000              TheOffLicenceLayout:
@@ -3158,7 +3172,7 @@
   76+ 70FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
   77+ 7100
 # file closed: Rooms/TheOffLicence.asm
- 140  7100                  include "Rooms/TheTestRoom.asm"
+ 153  7100                  include "Rooms/TheTestRoom.asm"
 # file opened: Rooms/TheTestRoom.asm
    1+ 7100              ; Room layout for the TEST level with its platforms and floor
    2+ 7100              TheTestRoomLayout:
@@ -3251,7 +3265,7 @@
   54+ 71DE
   55+ 71DE              ; Border color
   56+ 71DE              TheTestRoomBorderColor:
-  57+ 71DE 00               DEFB 0                        ; Black border
+  57+ 71DE 05               DEFB 5                        ; Black border
   58+ 71DF
   59+ 71DF              ; Reserved bytes
   60+ 71DF              TheTestRoomReserved:
@@ -3284,6 +3298,6 @@
   86+ 71FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
   87+ 7200
 # file closed: Rooms/TheTestRoom.asm
- 141  7200
- 142  7200                  SAVESNA "jet set willy.sna", start
+ 154  7200
+ 155  7200                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm
