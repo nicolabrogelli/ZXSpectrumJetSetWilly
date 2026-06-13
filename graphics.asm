@@ -170,7 +170,73 @@ DrawPixelSprite8x8:
     ret
 
 ; -------------------------------------------------------------------
-; Cancella uno sprite 8x8 a coordinate pixel (X, Y) scrivendo zeri
+; Ripristina un byte dello sfondo statico.
+; Input: A = X del byte schermo in pixel (0, 8, 16...), D = Y pixel
+; Output: A = byte di sfondo
+; -------------------------------------------------------------------
+GetBackgroundByte:
+    push hl
+    push de
+    ld   b, a              ; B = X byte in pixel
+
+    ; Pavimento: riga carattere 18, Y = 144..150, tutte le colonne
+    ld   a, d
+    cp   144
+    jr   c, .check_platform1
+    cp   151
+    jr   nc, .check_platform1
+    sub  144
+    jr   .load_tile_byte
+
+.check_platform1:
+    ; Piattaforma 1: riga carattere 15, Y = 120..126, colonne 8..23
+    ld   a, d
+    cp   120
+    jr   c, .check_platform2
+    cp   127
+    jr   nc, .check_platform2
+    ld   a, b
+    cp   64
+    jr   c, .blank
+    cp   192
+    jr   nc, .blank
+    ld   a, d
+    sub  120
+    jr   .load_tile_byte
+
+.check_platform2:
+    ; Piattaforma 2: riga carattere 12, Y = 96..102, colonne 20..29
+    ld   a, d
+    cp   96
+    jr   c, .blank
+    cp   103
+    jr   nc, .blank
+    ld   a, b
+    cp   160
+    jr   c, .blank
+    cp   240
+    jr   nc, .blank
+    ld   a, d
+    sub  96
+
+.load_tile_byte:
+    ld   e, a
+    ld   d, 0
+    ld   hl, TilesDef + 64
+    add  hl, de
+    ld   a, (hl)
+    pop  de
+    pop  hl
+    ret
+
+.blank:
+    xor  a
+    pop  de
+    pop  hl
+    ret
+
+; -------------------------------------------------------------------
+; Cancella uno sprite 8x8 a coordinate pixel (X, Y) ripristinando lo sfondo
 ; Input: C = X, B = Y
 ; -------------------------------------------------------------------
 ErasePixelSprite8x8:
@@ -178,19 +244,29 @@ ErasePixelSprite8x8:
     push de
     push hl
     
+    ld   d, b          ; D = Y corrente
+    ld   a, c
+    and  $f8
+    ld   e, a          ; E = X del primo byte schermo in pixel
+
     ld   h, b
     ld   l, c
     call GetScreenAddr ; HL = indirizzo schermo
     
     ld   c, 8          ; 8 linee
 .erase_loop:
-    xor  a
+    ld   a, e
+    call GetBackgroundByte
     ld   (hl), a
     inc  hl
+    ld   a, e
+    add  a, 8
+    call GetBackgroundByte
     ld   (hl), a
     dec  hl
     
     call IncScreenLine
+    inc  d
     dec  c
     jr   nz, .erase_loop
     
@@ -272,7 +348,7 @@ DrawPixelSprite16x16:
     ret
 
 ; -------------------------------------------------------------------
-; Cancella uno sprite 16x16 scrivendo zeri su 3 colonne per 16 scanline
+; Cancella uno sprite 16x16 ripristinando lo sfondo statico su 3 colonne
 ; Input: C = X, B = Y
 ; -------------------------------------------------------------------
 ErasePixelSprite16x16:
@@ -280,22 +356,35 @@ ErasePixelSprite16x16:
     push de
     push hl
     
+    ld   d, b          ; D = Y corrente
+    ld   a, c
+    and  $f8
+    ld   e, a          ; E = X del primo byte schermo in pixel
+
     ld   h, b
     ld   l, c
     call GetScreenAddr ; HL = indirizzo schermo
     
     ld   c, 16          ; 16 linee
 .erase_loop:
-    xor  a
+    ld   a, e
+    call GetBackgroundByte
     ld   (hl), a
     inc  hl
+    ld   a, e
+    add  a, 8
+    call GetBackgroundByte
     ld   (hl), a
     inc  hl
+    ld   a, e
+    add  a, 16
+    call GetBackgroundByte
     ld   (hl), a
     dec  hl
     dec  hl
     
     call IncScreenLine
+    inc  d
     dec  c
     jr   nz, .erase_loop
     
@@ -709,7 +798,7 @@ TilesDef:
     db %01111110, %01111110, %11101111, %11011111, %00111100, %10110111, %11100011, %01100111
     
     ; 9° carattere per i bordi verticali
-    db %11111111, %10001000, %11111111, %00100010, %11111111, %10001000, %11111111 ;, %00100100
+    db %11111111, %10001000, %11111111, %00100010, %11111111, %10001000, %11111111, %00100100
 
 LamettaSpriteRight: ; appears in Top Landing, Tree Root and West Bedroom.
     db 0,0,0,0,0,0,127,254,64,2,255,255,222,123,192,3	
