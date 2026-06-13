@@ -40,6 +40,7 @@ Main:
     ld   (hl), $07
     call CLS
     call DrawRoom
+    call PrintRoomName
     call LoadRoomEnemies
 
     ; Leggi il colore del bordo dalla stanza corrente e impostalo
@@ -144,7 +145,7 @@ line_buffer:    .256 db 0
 
 ; Gestione Stanze
 current_room:   db 0
-room_ptr:       dw TheTestRoomLayout
+room_ptr:       dw  TheBridgeLayout ;TheTestRoomLayout
 
     ALIGN 256
 RoomsStart:

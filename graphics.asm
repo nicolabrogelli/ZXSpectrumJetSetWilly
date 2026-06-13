@@ -18,10 +18,10 @@ CopyChars:
 ; -------------------------------------------------------------------
 DefineChars:
     ld hl, TilesDef             ; Indirizzo dei dati del nuovo carattere
-    ld de, $8000 + (65 * 8)     ; Indirizzo di 'B' nel nuovo set di caratteri
+    ld de, $7F00 + (1 * 8)      ; Indirizzo di ASCII 1 nel nuovo set di caratteri
     ld bc, 72                   ; Numero di byte da copiare (9 caratteri * 8 byte)
     ldir                        ; Effettua la copia dei caratteri
-    ld hl, $8000                ; Indirizzo del nuovo set di caratteri in RAM
+    ld hl, $7F00                ; Indirizzo del nuovo set di caratteri in RAM (font start - 256)
     ld ($5C36), hl              ; Aggiornare la variabile di sistema CHARS
     ret
 
@@ -552,6 +552,29 @@ PrintString:
     inc  hl
     djnz PrintString
     ret
+
+; -------------------------------------------------------------------
+; Disegna il nome della stanza sotto la piattaforma di base (Riga 19)
+; -------------------------------------------------------------------
+PrintRoomName:
+    ; Posiziona il cursore a Y = 19, X = 0 usando i codici di controllo rst $10
+    ld   a, 22             ; Codice di controllo AT (22)
+    rst  $10
+    ld   a, 19             ; Riga 19
+    rst  $10
+    ld   a, 0              ; Colonna 0
+    rst  $10
+    
+    ld   a, YELLOW         ; Inchiostro Giallo
+    call Ink
+    
+    ld   hl, (room_ptr)    ; HL = indirizzo stanza
+    ld   de, 128           ; Offset del nome stanza (32 byte)
+    add  hl, de            ; HL = indirizzo nome stanza
+    ld   b, 32             ; B = 32 caratteri
+    call PrintString
+    ret
+
 
 ; -------------------------------------------------------------------
 ; NUOVA ROUTINE: Disegna bordi verticali
