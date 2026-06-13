@@ -39,8 +39,7 @@ Main:
     ld   hl, ATTR_P
     ld   (hl), $07
     call CLS
-    call DrawFloorDirect
-    call DrawPlatform
+    call DrawRoom
 
     xor  a
     out  ($fe), a
@@ -75,24 +74,21 @@ Main:
 
 Main_loop:
     halt
-    halt
     
-    ; 1. Cancella i personaggi alle vecchie posizioni
+    ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
     call DeleteCharAtOldPos
+    call PrintPlayer
+
     call DeleteEnemyAtOldPos
+    call PrintEnemy
+
     call DeleteEggAtOldPos
+    call PrintEgg
+
     call DeleteRobotAtOldPos
+    call PrintRobot
     
-    call CheckCtrl
-    
-    ; 2. Aggiorna le posizioni dei personaggi
-    call MovePlayer
-    call ApplyGravity
-    call MoveEnemy
-    call MoveEgg
-    call MoveRobot
-    
-    ; 3. Salva le nuove posizioni per la cancellazione al prossimo frame
+    ; 3. Salva le posizioni correnti come vecchie posizioni per il prossimo frame
     ld   bc, (PlayerPos)
     ld   (PlayerPosOld), bc
     ld   bc, (EnemyPos)
@@ -102,12 +98,13 @@ Main_loop:
     ld   bc, (RobotPos)
     ld   (RobotPosOld), bc
     
-    ; 4. Disegna i personaggi alle nuove posizioni
-    call PrintPlayer
-    call PrintEnemy
-    call PrintEgg
-    call PrintRobot
-    call DrawPlatform
+    ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
+    call CheckCtrl
+    call MovePlayer
+    call ApplyGravity
+    call MoveEnemy
+    call MoveEgg
+    call MoveRobot
     
     ; 5. Gestisci la collisione (disegna le raster bar se collide)
     call CheckCollision
@@ -188,5 +185,15 @@ jump_prev:      db $00
 ; Buffer e contatori
 counter:        dw 0
 line_buffer:    .256 db 0
+
+; Gestione Stanze
+current_room:   db 0
+room_ptr:       dw Room1Layout
+
+    ALIGN 256
+RoomsStart:
+    include "Room0.asm"
+    include "Room1.asm"
+    include "Room2.asm"
 
     SAVESNA "jet set willy.sna", start

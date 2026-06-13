@@ -86,6 +86,12 @@ PLATFORM3_MAX_X: EQU ((PLATFORM3_COL + PLATFORM3_WIDTH_COLS) * 8)
 PLAYER_MIN_X:    EQU 8
 PLAYER_MAX_X:    EQU 240
 
+; Offsets all'interno della struttura dati della Stanza (256 byte)
+OFFSET_BG:       EQU 160
+OFFSET_FLOOR:    EQU 169
+OFFSET_WALL:     EQU 178
+OFFSET_NASTY:    EQU 187
+
 ; Aggiungi nelle costanti
 VERTICAL_BORDER: EQU $49  ; Codice del carattere per i bordi verticali ($49 = 73, lettera 'I')
 

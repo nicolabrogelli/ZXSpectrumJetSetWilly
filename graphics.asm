@@ -173,76 +173,126 @@ DrawPixelSprite8x8:
 ; Ripristina un byte dello sfondo statico.
 ; Input: A = X del byte schermo in pixel (0, 8, 16...), D = Y pixel
 ; Output: A = byte di sfondo
-; -------------------------------------------------------------------
+; ---------------------------------------------------------------
 GetBackgroundByte:
     push hl
     push de
-    ld   b, a              ; B = X byte in pixel
+    push bc
 
-    ; Pavimento: riga carattere FLOOR_CHAR_ROW, Y = FLOOR_Y..FLOOR_Y+6, tutte le colonne
+    ld   b, a              ; B = X (pixel)
+    
+    ; 1. Controlla se Y (in D) è fuori dalla griglia di layout (Y < 24 o Y >= 152)
     ld   a, d
-    cp   FLOOR_Y
-    jr   c, .check_platform1
-    cp   FLOOR_Y + 7
-    jr   nc, .check_platform1
-    sub  FLOOR_Y
-    jr   .load_tile_byte
-
-.check_platform1:
-    ; Piattaforma 1: riga carattere (PLATFORM_Y/8), Y = PLATFORM_Y..PLATFORM_Y+6, colonne PLATFORM_COL..PLATFORM_COL+PLATFORM_WIDTH_COLS-1
-    ld   a, d
-    cp   PLATFORM_Y
-    jr   c, .check_platform2
-    cp   PLATFORM_Y + 7
-    jr   nc, .check_platform2
-    ld   a, b
-    cp   PLATFORM_COL * 8
+    cp   24
     jr   c, .blank
-    cp   (PLATFORM_COL + PLATFORM_WIDTH_COLS) * 8
+    cp   152
     jr   nc, .blank
-    ld   a, d
-    sub  PLATFORM_Y
-    jr   .load_tile_byte
-
-.check_platform2:
-    ; Piattaforme alte: riga carattere 12, Y = PLATFORM2_Y..PLATFORM2_Y+6
-    ld   a, d
-    cp   PLATFORM2_Y
-    jr   c, .blank
-    cp   PLATFORM2_Y + 7
-    jr   nc, .blank
-
-    ; Piattaforma 2: colonne PLATFORM2_COL..PLATFORM2_COL+PLATFORM2_WIDTH_COLS-1
+    
+    ; 2. Calcola riga di layout: r = (Y - 24) / 8
+    sub  24
+    srl  a
+    srl  a
+    srl  a                 ; A = r (0..15)
+    
+    ; 3. HL = r * 8
+    ld   l, a
+    ld   h, 0
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl            ; HL = r * 8
+    
+    ; 4. Calcola colonna di layout: c = X / 8 (in B)
     ld   a, b
-    cp   PLATFORM2_COL * 8
-    jr   c, .check_platform3
-    cp   (PLATFORM2_COL + PLATFORM2_WIDTH_COLS) * 8
-    jr   c, .platform_high
-
-.check_platform3:
-    ; Piattaforma 3 sinistra: colonne PLATFORM3_COL..PLATFORM3_COL+PLATFORM3_WIDTH_COLS-1
+    srl  a
+    srl  a
+    srl  a                 ; A = c (0..31)
+    ld   b, a              ; B = c
+    
+    ; HL = r * 8 + c / 4
+    srl  a
+    srl  a                 ; A = c / 4 (0..7)
+    add  a, l
+    ld   l, a              ; HL = r * 8 + (c / 4)
+    
+    push de
+    ld   de, (room_ptr)
+    add  hl, de            ; HL = layout byte address
+    pop  de
+    ld   a, (hl)           ; A = layout byte
+    
+    ; Estrai il bit-pair corrispondente a c % 4
+    ld   c, a              ; C = layout byte
     ld   a, b
-    cp   PLATFORM3_COL * 8
-    jr   c, .blank
-    cp   (PLATFORM3_COL + PLATFORM3_WIDTH_COLS) * 8
-    jr   nc, .blank
-
-.platform_high:
+    and  3                 ; A = c % 4
+    jr   z, .shift_0
+    dec  a
+    jr   z, .shift_1
+    dec  a
+    jr   z, .shift_2
+    ; Case 3 (c % 4 = 3)
+    ld   a, c
+    jr   .got_type
+.shift_2:
+    ld   a, c
+    rrca
+    rrca
+    jr   .got_type
+.shift_1:
+    ld   a, c
+    rrca
+    rrca
+    rrca
+    rrca
+    jr   .got_type
+.shift_0:
+    ld   a, c
+    rlca
+    rlca
+.got_type:
+    and  3                 ; A = cell type (0..3)
+    
+    ; 5. Ottieni il puntatore al tile corrispondente
+    or   a
+    jr   nz, .not_bg
+    ld   hl, OFFSET_BG
+    jr   .load_tile
+.not_bg:
+    dec  a
+    jr   nz, .not_floor
+    ld   hl, OFFSET_FLOOR
+    jr   .load_tile
+.not_floor:
+    dec  a
+    jr   nz, .not_wall
+    ld   hl, OFFSET_WALL
+    jr   .load_tile
+.not_wall:
+    ld   hl, OFFSET_NASTY
+.load_tile:
+    push de
+    ld   de, (room_ptr)
+    add  hl, de            ; HL = tile pointer
+    pop  de
+    
+    ; 6. Calcola offset scanline: s = Y % 8 (in D)
     ld   a, d
-    sub  PLATFORM2_Y
-
-.load_tile_byte:
-    ld   e, a
-    ld   d, 0
-    ld   hl, TilesDef + 64
-    add  hl, de
-    ld   a, (hl)
+    and  7                 ; A = s (0..7)
+    inc  a                 ; A = 1 + s
+    add  a, l
+    ld   l, a
+    jr   nc, .no_carry
+    inc  h
+.no_carry:
+    ld   a, (hl)           ; A = byte dello sfondo
+    
+    pop  bc
     pop  de
     pop  hl
     ret
 
 .blank:
     xor  a
+    pop  bc
     pop  de
     pop  hl
     ret
@@ -256,14 +306,14 @@ ErasePixelSprite8x8:
     push de
     push hl
     
+    ld   h, b
+    ld   l, c
+    call GetScreenAddr ; HL = indirizzo schermo (modifica D ed E)
+    
     ld   d, b          ; D = Y corrente
     ld   a, c
     and  $f8
     ld   e, a          ; E = X del primo byte schermo in pixel
-
-    ld   h, b
-    ld   l, c
-    call GetScreenAddr ; HL = indirizzo schermo
     
     ld   c, 8          ; 8 linee
 .erase_loop:
@@ -368,14 +418,14 @@ ErasePixelSprite16x16:
     push de
     push hl
     
+    ld   h, b
+    ld   l, c
+    call GetScreenAddr ; HL = indirizzo schermo (modifica D ed E)
+    
     ld   d, b          ; D = Y corrente
     ld   a, c
     and  $f8
     ld   e, a          ; E = X del primo byte schermo in pixel
-
-    ld   h, b
-    ld   l, c
-    call GetScreenAddr ; HL = indirizzo schermo
     
     ld   c, 16          ; 16 linee
 .erase_loop:
@@ -659,168 +709,169 @@ EraseVerticalBorders:
 ; -------------------------------------------------------------------
 ; Disegna la riga/pavimento sotto i piedi degli sprite (Riga 18, Y = 144)
 ; -------------------------------------------------------------------
-DrawFloorDirect:
+; -------------------------------------------------------------------
+; Disegna un tile 8x8 sullo schermo
+; Input: B = Row (0..23), C = Col (0..31), IX = Puntatore al Tile (9 byte: 1 attr + 8 bitmap)
+; -------------------------------------------------------------------
+DrawTile:
     push bc
     push de
     push hl
+    
+    ; 1. Calcola indirizzo dello schermo (bitmap) per Row B, Col C, scanline 0
+    ; HighByte = $40 + (B & $18)
+    ld   a, b
+    and  $18
+    add  a, $40
+    ld   h, a              ; H = High byte
+    
+    ; LowByte = ((B & 7) * 32) + C
+    ld   a, b
+    and  7
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    add  a, a              ; *16
+    add  a, a              ; *32
+    add  a, c              ; + Col C
+    ld   l, a              ; L = Low byte
+    
+    ; 2. Copia gli 8 byte del bitmap
+    ld   d, 8              ; 8 scanline
     push ix
-    
-    ; Disegniamo le 8 scanline della riga FLOOR_CHAR_ROW
-    ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento (9° carattere)
-    ld   d, 0              ; D = offset scanline (0..6)
-    
-.scanline_loop:
-    ld   a, $40 + (FLOOR_CHAR_ROW & $18) ; Base del terzo per scanline 0, riga FLOOR_CHAR_ROW
-    add  a, d              ; A = base + scanline offset (D)
-    ld   h, a              ; HL high byte = base + D
-    ld   l, ((FLOOR_CHAR_ROW & 7) * 32) + 0 ; HL low byte
-    
-    ld   e, (ix+0)         ; E = byte grafico per questa scanline
-    ld   c, 32             ; 32 colonne
-    
-.col_loop:
-    ld   (hl), e           ; Scrivi il byte grafico direttamente nello schermo
-    inc  l                 ; Vai alla colonna successiva
-    dec  c
-    jr   nz, .col_loop
-    
-    inc  ix                ; Prossimo byte grafico
-    inc  d                 ; Prossima scanline
-    ld   a, d
-    cp   7
-    jr   nz, .scanline_loop
-    
-    ; Imposta gli attributi di colore per la riga FLOOR_CHAR_ROW
-    ld   hl, $5800 + (FLOOR_CHAR_ROW * 32)
-    ld   b, 32
-.attr_loop:
-    ld   (hl), RED        ; Colore del pavimento = RED
-    inc  hl
-    dec  b
-    jr   nz, .attr_loop
-    
+    inc  ix                ; Salta l'attributo, vai al bitmap
+.line_loop:
+    ld   a, (ix+0)
+    ld   (hl), a
+    inc  h                 ; Prossima scanline (stessa riga di caratteri)
+    inc  ix
+    dec  d
+    jr   nz, .line_loop
     pop  ix
+    
+    ; 3. Scrivi l'attributo
+    ; AttrAddr = $5800 + B * 32 + C
+    ld   h, 0
+    ld   l, b              ; HL = B (Row)
+    add  hl, hl            ; *2
+    add  hl, hl            ; *4
+    add  hl, hl            ; *8
+    add  hl, hl            ; *16
+    add  hl, hl            ; *32
+    ld   d, 0
+    ld   e, c              ; DE = C (Col)
+    add  hl, de            ; HL = B * 32 + C
+    ld   de, $5800
+    add  hl, de            ; HL = AttrAddr
+    
+    ld   a, (ix+0)         ; A = attribute byte
+    ld   (hl), a           ; Scrivi in memoria attributi
+    
     pop  hl
     pop  de
     pop  bc
     ret
 
-DrawPlatform:
+; -------------------------------------------------------------------
+; Disegna la stanza corrente leggendola dalla struttura dati
+; -------------------------------------------------------------------
+DrawRoom:
     push bc
     push de
     push hl
     push ix
     
-    ; --- PIATTAFORMA 1 ---
-    ; Disegniamo le 7 scanline
-    ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento (9° carattere)
-    ld   d, 0              ; D = offset scanline (0..6)
+    ld   b, 0              ; B = layout row (0..15)
+.row_loop:
+    ld   c, 0              ; C = layout column group (0..7 bytes)
+.col_byte_loop:
+    ld   h, 0
+    ld   l, b
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl            ; HL = B * 8
+    ld   d, 0
+    ld   e, c              ; DE = C
+    add  hl, de            ; HL = B * 8 + C
+    ld   de, (room_ptr)
+    add  hl, de            ; HL = layout byte address
+    ld   a, (hl)           ; A = layout byte
+    ld   d, a              ; D = salva il byte di layout
     
-.scanline_loop1:
-    ld   a, $40 + ((PLATFORM_Y / 8) & $18) ; Base del terzo per scanline 0
-    add  a, d              ; A = base + scanline offset (D)
-    ld   h, a              ; HL high byte
-    ld   l, (((PLATFORM_Y / 8) & 7) * 32) + PLATFORM_COL ; HL low byte
-    
-    ld   e, (ix+0)         ; E = byte grafico per questa scanline
-    ld   c, PLATFORM_WIDTH_COLS ; colonne
-    
-.col_loop1:
-    ld   a, (hl)           ; Leggi byte dallo schermo
-    or   e                 ; Combina con la grafica della piattaforma (OR)
-    ld   (hl), a           ; Scrivi il byte combinato sullo schermo
-    inc  l                 ; Vai alla colonna successiva
-    dec  c
-    jr   nz, .col_loop1
-    
-    inc  ix                ; Prossimo byte grafico
-    inc  d                 ; Prossima scanline
+    ld   e, 4              ; 4 celle per byte
+.cell_loop:
     ld   a, d
-    cp   7
-    jr   nz, .scanline_loop1
+    rlca
+    rlca
+    ld   d, a              ; D ruotato di 2
+    and  3                 ; A = cell type (0..3)
     
-    ; Imposta gli attributi di colore per la piattaforma 1
-    ld   hl, $5800 + ((PLATFORM_Y / 8) * 32) + PLATFORM_COL
-    ld   b, PLATFORM_WIDTH_COLS
-.attr_loop1:
-    ld   (hl), CYAN        ; Colore della piattaforma = CYAN
-    inc  hl
-    dec  b
-    jr   nz, .attr_loop1
+    push de
+    push bc
+    
+    ld   de, (room_ptr)
+    or   a
+    jr   nz, .not_bg
+    ld   hl, OFFSET_BG
+    add  hl, de
+    jr   .draw_cell
+.not_bg:
+    dec  a
+    jr   nz, .not_floor
+    ld   hl, OFFSET_FLOOR
+    add  hl, de
+    jr   .draw_cell
+.not_floor:
+    dec  a
+    jr   nz, .not_wall
+    ld   hl, OFFSET_WALL
+    add  hl, de
+    jr   .draw_cell
+.not_wall:
+    ld   hl, OFFSET_NASTY
+    add  hl, de
 
-    ; --- PIATTAFORMA 2 ---
-    ; Disegniamo le 7 scanline
-    ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento
-    ld   d, 0              ; D = offset scanline (0..6)
+.draw_cell:
+    push hl
+    pop  ix                ; IX = tile pointer
     
-.scanline_loop2:
-    ld   a, $40 + ((PLATFORM2_Y / 8) & $18) ; Base del terzo per scanline 0
-    add  a, d              ; A = base + scanline offset (D)
-    ld   h, a              ; HL high byte
-    ld   l, (((PLATFORM2_Y / 8) & 7) * 32) + PLATFORM2_COL ; HL low byte
+    pop  bc                ; BC = original BC
+    pop  de                ; DE = original DE
+    push de                ; Save for next iteration
+    push bc                ; Save for next iteration
     
-    ld   e, (ix+0)         ; E = byte grafico per questa scanline
-    ld   c, PLATFORM2_WIDTH_COLS ; colonne
+    ld   a, b
+    add  a, 3              ; A = screen Row (R = r + 3)
+    ld   h, a
     
-.col_loop2:
-    ld   a, (hl)           ; Leggi byte dallo schermo
-    or   e                 ; Combina con la grafica (OR)
-    ld   (hl), a           ; Scrivi il byte combinato
-    inc  l                 ; Vai alla colonna successiva
-    dec  c
-    jr   nz, .col_loop2
+    ld   a, c
+    add  a, a              ; *2
+    add  a, a              ; *4 (Col group * 4)
+    ld   l, a              ; L = Col group * 4
     
-    inc  ix                ; Prossimo byte grafico
-    inc  d                 ; Prossima scanline
-    ld   a, d
-    cp   7
-    jr   nz, .scanline_loop2
+    ld   a, 4
+    sub  e                 ; A = 4 - E (0..3)
+    add  a, l              ; A = Col group * 4 + (4 - E)
+    ld   l, a              ; L = Col
     
-    ; Imposta gli attributi di colore per la piattaforma 2
-    ld   hl, $5800 + ((PLATFORM2_Y / 8) * 32) + PLATFORM2_COL
-    ld   b, PLATFORM2_WIDTH_COLS
-.attr_loop2:
-    ld   (hl), GREEN       ; Colore della piattaforma 2 = GREEN
-    inc  hl
-    dec  b
-    jr   nz, .attr_loop2
-
-    ; --- PIATTAFORMA 3 SINISTRA ---
-    ; Disegniamo le 7 scanline
-    ld   ix, TilesDef + 64 ; Puntatore alla grafica del bordo/pavimento
-    ld   d, 0              ; D = offset scanline (0..6)
+    ld   b, h
+    ld   c, l
+    call DrawTile
     
-.scanline_loop3:
-    ld   a, $40 + ((PLATFORM3_Y / 8) & $18) ; Base del terzo per scanline 0
-    add  a, d              ; A = base + scanline offset (D)
-    ld   h, a              ; HL high byte
-    ld   l, (((PLATFORM3_Y / 8) & 7) * 32) + PLATFORM3_COL ; HL low byte
+    pop  bc
+    pop  de
+    dec  e
+    jp   nz, .cell_loop
     
-    ld   e, (ix+0)         ; E = byte grafico per questa scanline
-    ld   c, PLATFORM3_WIDTH_COLS ; colonne
+    inc  c
+    ld   a, c
+    cp   8
+    jp   nz, .col_byte_loop
     
-.col_loop3:
-    ld   a, (hl)           ; Leggi byte dallo schermo
-    or   e                 ; Combina con la grafica
-    ld   (hl), a           ; Scrivi il byte combinato
-    inc  l                 ; Vai alla colonna successiva
-    dec  c
-    jr   nz, .col_loop3
-    
-    inc  ix                ; Prossimo byte grafico
-    inc  d                 ; Prossima scanline
-    ld   a, d
-    cp   7
-    jr   nz, .scanline_loop3
-    
-    ; Imposta gli attributi di colore per la piattaforma 3
-    ld   hl, $5800 + ((PLATFORM3_Y / 8) * 32) + PLATFORM3_COL
-    ld   b, PLATFORM3_WIDTH_COLS
-.attr_loop3:
-    ld   (hl), GREEN       ; Colore della piattaforma 3 = GREEN
-    inc  hl
-    dec  b
-    jr   nz, .attr_loop3
+    inc  b
+    ld   a, b
+    cp   16
+    jp   nz, .row_loop
     
     pop  ix
     pop  hl
