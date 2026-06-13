@@ -1,5 +1,5 @@
 ; Room layout for the TEST level with its platforms and floor
-Room99Layout:
+TheTestRoomLayout:
     DEFB 0,0,0,0,0,0,0,0          ; Row 0
     DEFB 0,0,0,0,0,0,0,0          ; Row 1
     DEFB 0,0,0,0,0,0,0,0          ; Row 2
@@ -17,55 +17,55 @@ Room99Layout:
     DEFB 0,0,0,0,0,0,0,0          ; Row 14
     DEFB 85,85,85,85,85,85,85,85  ; Row 15 (Floor: cols 0..31)
 
-Room99Tile:
+TheTestRoomTile:
 ; 32 bytes for the room name
     DEFM "          TEST LEVEL            "
 
 ; Attributes and graphic data for the tiles (1 byte attribute + 8 bytes bitmap)
-Room99Background:
+TheTestRoomBackground:
     DEFB $07, 0,0,0,0,0,0,0,0
 
-Room99Floor:
+TheTestRoomFloor:
     DEFB $02, 255, 136, 255, 34, 255, 136, 255, 36
 
-Room99Wall:
+TheTestRoomWall:
     DEFB $06, 34,119,34,136,34,119,34,136
 
-Room99Nasty:
+TheTestRoomNasty:
     DEFB $02, 248,136,158,189,189,158,136,248
 
-Room99Ramp:
+TheTestRoomRamp:
     DEFB $07, 3,3,12,13,50,55,194,200
 
-Room99Conveyor:
+TheTestRoomConveyor:
     DEFB $05, 1,64,4,70,79,121,240,249
 
 ; Conveyor specs (direction, location, length)
-Room99ConveyorData:
+TheTestRoomConveyorData:
     DEFB 0
     DEFW 0
     DEFB 0
 
 ; Ramp specs (direction, location, length)
-Room99RampData:
+TheTestRoomRampData:
     DEFB 0
     DEFW 0
     DEFB 0
 
 ; Border color
-Room99BorderColor:
+TheTestRoomBorderColor:
     DEFB 0                        ; Black border
 
 ; Reserved bytes
-Room99Reserved:
+TheTestRoomReserved:
     DEFB 0,0
 
 ; Item graphic
-Room99Item:
+TheTestRoomItem:
     DEFB 0,0,0,0,0,0,0,0          ; No item defined yet
 
 ; Room connections (left, right, above, below)
-Room99Direction:
+TheTestRoomDirection:
     DEFB 1                        ; Left: The Bridge (Room 1)
     DEFB 2                        ; Right: The Off Licence (Room 2)
     DEFB 0                        ; Above: Self
@@ -76,11 +76,11 @@ Room99Unused:
     DEFB 0,0,0
 
 ; Room entities slots (ropes, arrows, guardians)
-Room99Enemy1:
+TheTestRoomEnemy1:
     DEFB $80, 24, 128, 231        ; Enemy 1 (Lametta), horizontal, Starts X=24, Y=128, Limit X=231
-Room99Enemy2:
+TheTestRoomEnemy2:
     DEFB $81, 160, 80, 224        ; Enemy 2 (Egg), horizontal, Starts X=160, Y=80, Limit X=224
-Room99Enemy3:
+TheTestRoomEnemy3:
     DEFB $82, 64, 104, 176        ; Enemy 3 (Robot), horizontal, Starts X=64, Y=104, Limit X=176
-Room99Enemy4:
+TheTestRoomEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
