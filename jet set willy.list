@@ -153,9 +153,9 @@
   38+ 5DCD DB FE            in a, (0xFE)
   39+ 5DCF
   40+ 5DCF                  ; Incrementa il contatore (usato per animazioni/raster bars)
-  41+ 5DCF 2A 12 71         ld hl, (counter)
+  41+ 5DCF 2A 70 72         ld hl, (counter)
   42+ 5DD2 23               inc hl
-  43+ 5DD3 22 12 71         ld (counter), hl
+  43+ 5DD3 22 70 72         ld (counter), hl
   44+ 5DD6
   45+ 5DD6                  ; Ripristina registri
   46+ 5DD6 E1               pop hl
@@ -384,7 +384,7 @@
  217+ 5E9C 6F               ld   l, a              ; HL = r * 8 + (c / 4)
  218+ 5E9D
  219+ 5E9D D5               push de
- 220+ 5E9E ED 5B 15 72      ld   de, (room_ptr)
+ 220+ 5E9E ED 5B 73 73      ld   de, (room_ptr)
  221+ 5EA2 19               add  hl, de            ; HL = layout byte address
  222+ 5EA3 D1               pop  de
  223+ 5EA4 7E               ld   a, (hl)           ; A = layout byte
@@ -439,7 +439,7 @@
  272+ 5EDD 21 BB 00         ld   hl, OFFSET_NASTY
  273+ 5EE0              .load_tile:
  274+ 5EE0 D5               push de
- 275+ 5EE1 ED 5B 15 72      ld   de, (room_ptr)
+ 275+ 5EE1 ED 5B 73 73      ld   de, (room_ptr)
  276+ 5EE5 19               add  hl, de            ; HL = tile pointer
  277+ 5EE6 D1               pop  de
  278+ 5EE7
@@ -519,7 +519,7 @@
  352+ 5F27                  ; 1. Salva la coordinata X per calcolare lo shift
  353+ 5F27 79               ld   a, c
  354+ 5F28 E6 07            and  7
- 355+ 5F2A 32 0C 71         ld   (sprite_shift), a
+ 355+ 5F2A 32 6A 72         ld   (sprite_shift), a
  356+ 5F2D
  357+ 5F2D                  ; 2. Calcola indirizzo schermo
  358+ 5F2D 60               ld   h, b
@@ -532,7 +532,7 @@
  365+ 5F37 DD 5E 01         ld   e, (ix+1)     ; E = secondo byte dello sprite
  366+ 5F3A
  367+ 5F3A                  ; Esegui lo shift a destra se necessario
- 368+ 5F3A 3A 0C 71         ld   a, (sprite_shift)
+ 368+ 5F3A 3A 6A 72         ld   a, (sprite_shift)
  369+ 5F3D B7               or   a
  370+ 5F3E 28 1C            jr   z, .no_shift
  371+ 5F40
@@ -642,7 +642,7 @@
  475+ 5FA5 DD E5            push ix
  476+ 5FA7
  477+ 5FA7                  ; 1. Determina sprite per la testa (sinistra o destra)
- 478+ 5FA7 3A 09 71         ld   a, (direction)
+ 478+ 5FA7 3A 67 72         ld   a, (direction)
  479+ 5FAA FE 01            cp   1                 ; Sinistra?
  480+ 5FAC 20 06            jr   nz, .right_head
  481+ 5FAE
@@ -653,16 +653,16 @@
  486+ 5FB4 DD 21 A7 61      ld   ix, TilesDef + (0 * 8) ; 1° tile (HEAD_GRAPH_RIGHT)
  487+ 5FB8
  488+ 5FB8              .draw_head:
- 489+ 5FB8 ED 4B 02 71      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
+ 489+ 5FB8 ED 4B 60 72      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
  490+ 5FBC CD 3D 5E         call DrawPixelSprite8x8 ; Disegna testa
  491+ 5FBF
  492+ 5FBF                  ; 2. Determina sprite per il corpo (sinistra o destra con frame animazione)
- 493+ 5FBF 3A 09 71         ld   a, (direction)
+ 493+ 5FBF 3A 67 72         ld   a, (direction)
  494+ 5FC2 FE 01            cp   1                 ; Sinistra?
  495+ 5FC4 20 13            jr   nz, .right_body
  496+ 5FC6
  497+ 5FC6                  ; Corpo a sinistra
- 498+ 5FC6 3A 08 71         ld   a, (body_state)   ; 0, 1, 2
+ 498+ 5FC6 3A 66 72         ld   a, (body_state)   ; 0, 1, 2
  499+ 5FC9 C6 05            add  a, 5              ; offset del tile per il corpo sinistro (5, 6, 7)
  500+ 5FCB 87               add  a, a              ; *2
  501+ 5FCC 87               add  a, a              ; *4
@@ -675,7 +675,7 @@
  508+ 5FD9
  509+ 5FD9              .right_body:
  510+ 5FD9                  ; Corpo a destra
- 511+ 5FD9 3A 08 71         ld   a, (body_state)   ; 0, 1, 2
+ 511+ 5FD9 3A 66 72         ld   a, (body_state)   ; 0, 1, 2
  512+ 5FDC C6 01            add  a, 1              ; offset del tile per il corpo destro (1, 2, 3)
  513+ 5FDE 87               add  a, a              ; *2
  514+ 5FDF 87               add  a, a              ; *4
@@ -686,7 +686,7 @@
  519+ 5FE8 DD 19            add  ix, de
  520+ 5FEA
  521+ 5FEA              .draw_body:
- 522+ 5FEA ED 4B 02 71      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
+ 522+ 5FEA ED 4B 60 72      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
  523+ 5FEE 78               ld   a, b
  524+ 5FEF C6 08            add  a, 8
  525+ 5FF1 47               ld   b, a              ; B = PlayerY + 8
@@ -699,10 +699,10 @@
  532+ 5FF8              ; Cancella il player alle vecchie coordinate pixel
  533+ 5FF8              ; -------------------------------------------------------------------
  534+ 5FF8              DeleteCharAtOldPos:
- 535+ 5FF8 ED 4B 04 71      ld   bc, (PlayerPosOld) ; C = PlayerXOld, B = PlayerYOld
+ 535+ 5FF8 ED 4B 62 72      ld   bc, (PlayerPosOld) ; C = PlayerXOld, B = PlayerYOld
  536+ 5FFC CD FA 5E         call ErasePixelSprite8x8 ; Cancella testa
  537+ 5FFF
- 538+ 5FFF ED 4B 04 71      ld   bc, (PlayerPosOld)
+ 538+ 5FFF ED 4B 62 72      ld   bc, (PlayerPosOld)
  539+ 6003 78               ld   a, b
  540+ 6004 C6 08            add  a, 8
  541+ 6006 47               ld   b, a
@@ -735,7 +735,7 @@
  568+ 601A 3E 06            ld   a, YELLOW         ; Inchiostro Giallo
  569+ 601C CD 01 5E         call Ink
  570+ 601F
- 571+ 601F 2A 15 72         ld   hl, (room_ptr)    ; HL = indirizzo stanza
+ 571+ 601F 2A 73 73         ld   hl, (room_ptr)    ; HL = indirizzo stanza
  572+ 6022 11 80 00         ld   de, 128           ; Offset del nome stanza (32 byte)
  573+ 6025 19               add  hl, de            ; HL = indirizzo nome stanza
  574+ 6026 06 20            ld   b, 32             ; B = 32 caratteri
@@ -996,7 +996,7 @@
  829+ 613C 16 00            ld   d, 0
  830+ 613E 59               ld   e, c              ; DE = C
  831+ 613F 19               add  hl, de            ; HL = B * 8 + C
- 832+ 6140 ED 5B 15 72      ld   de, (room_ptr)
+ 832+ 6140 ED 5B 73 73      ld   de, (room_ptr)
  833+ 6144 19               add  hl, de            ; HL = layout byte address
  834+ 6145 7E               ld   a, (hl)           ; A = layout byte
  835+ 6146 57               ld   d, a              ; D = salva il byte di layout
@@ -1012,7 +1012,7 @@
  845+ 614F D5               push de
  846+ 6150 C5               push bc
  847+ 6151
- 848+ 6151 ED 5B 15 72      ld   de, (room_ptr)
+ 848+ 6151 ED 5B 73 73      ld   de, (room_ptr)
  849+ 6155 B7               or   a
  850+ 6156 20 06            jr   nz, .not_bg
  851+ 6158 21 A0 00         ld   hl, OFFSET_BG
@@ -1754,1832 +1754,2170 @@
 1124+ 6B63 3F DC 1F 38
 1124+ 6B67 0F F0 07 E0
 1124+ 6B6B 01 80 00 00
+1125+ 6B6F
+1126+ 6B6F              ; -------------------------------------------------------------------
+1127+ 6B6F              ; Ottiene l'attributo colore originale dello sfondo per una cella
+1128+ 6B6F              ; Input: H = Row (0..23), B = Col (0..31)
+1129+ 6B6F              ; Output: A = Attributo colore
+1130+ 6B6F              ; -------------------------------------------------------------------
+1131+ 6B6F              GetCellAttribute:
+1132+ 6B6F E5               push hl
+1133+ 6B70 D5               push de
+1134+ 6B71 C5               push bc
+1135+ 6B72
+1136+ 6B72                  ; 1. Controlla se Row (H) è fuori dal layout (H < 3 o H >= 19)
+1137+ 6B72 7C               ld   a, h
+1138+ 6B73 FE 03            cp   3
+1139+ 6B75 38 5E            jr   c, .blank
+1140+ 6B77 FE 13            cp   19
+1141+ 6B79 30 5A            jr   nc, .blank
+1142+ 6B7B
+1143+ 6B7B                  ; 2. Calcola riga di layout: r = H - 3
+1144+ 6B7B D6 03            sub  3
+1145+ 6B7D
+1146+ 6B7D                  ; 3. HL = r * 8
+1147+ 6B7D 6F               ld   l, a
+1148+ 6B7E 26 00            ld   h, 0
+1149+ 6B80 29               add  hl, hl
+1150+ 6B81 29               add  hl, hl
+1151+ 6B82 29               add  hl, hl            ; HL = r * 8
+1152+ 6B83
+1153+ 6B83                  ; 4. HL = r * 8 + c / 4
+1154+ 6B83 78               ld   a, b              ; A = Col
+1155+ 6B84 CB 3F            srl  a
+1156+ 6B86 CB 3F            srl  a                 ; A = c / 4
+1157+ 6B88 85               add  a, l
+1158+ 6B89 6F               ld   l, a              ; HL = r * 8 + c / 4
+1159+ 6B8A
+1160+ 6B8A ED 5B 73 73      ld   de, (room_ptr)
+1161+ 6B8E 19               add  hl, de            ; HL = layout byte address
+1162+ 6B8F 7E               ld   a, (hl)           ; A = layout byte
+1163+ 6B90
+1164+ 6B90                  ; Estrai il bit-pair corrispondente a c % 4
+1165+ 6B90 4F               ld   c, a              ; C = layout byte
+1166+ 6B91 78               ld   a, b              ; A = Col
+1167+ 6B92 E6 03            and  3                 ; A = c % 4
+1168+ 6B94 28 15            jr   z, .shift_0
+1169+ 6B96 3D               dec  a
+1170+ 6B97 28 0B            jr   z, .shift_1
+1171+ 6B99 3D               dec  a
+1172+ 6B9A 28 03            jr   z, .shift_2
+1173+ 6B9C                  ; Case 3 (c % 4 = 3)
+1174+ 6B9C 79               ld   a, c
+1175+ 6B9D 18 0F            jr   .got_type
+1176+ 6B9F              .shift_2:
+1177+ 6B9F 79               ld   a, c
+1178+ 6BA0 0F               rrca
+1179+ 6BA1 0F               rrca
+1180+ 6BA2 18 0A            jr   .got_type
+1181+ 6BA4              .shift_1:
+1182+ 6BA4 79               ld   a, c
+1183+ 6BA5 0F               rrca
+1184+ 6BA6 0F               rrca
+1185+ 6BA7 0F               rrca
+1186+ 6BA8 0F               rrca
+1187+ 6BA9 18 03            jr   .got_type
+1188+ 6BAB              .shift_0:
+1189+ 6BAB 79               ld   a, c
+1190+ 6BAC 07               rlca
+1191+ 6BAD 07               rlca
+1192+ 6BAE              .got_type:
+1193+ 6BAE E6 03            and  3                 ; A = cell type (0..3)
+1194+ 6BB0
+1195+ 6BB0                  ; Ottieni l'offset del tile corrispondente e leggi l'attributo (il primo byte del tile)
+1196+ 6BB0 B7               or   a
+1197+ 6BB1 20 05            jr   nz, .not_bg
+1198+ 6BB3 21 A0 00         ld   hl, OFFSET_BG
+1199+ 6BB6 18 13            jr   .load_attr
+1200+ 6BB8              .not_bg:
+1201+ 6BB8 3D               dec  a
+1202+ 6BB9 20 05            jr   nz, .not_floor
+1203+ 6BBB 21 A9 00         ld   hl, OFFSET_FLOOR
+1204+ 6BBE 18 0B            jr   .load_attr
+1205+ 6BC0              .not_floor:
+1206+ 6BC0 3D               dec  a
+1207+ 6BC1 20 05            jr   nz, .not_wall
+1208+ 6BC3 21 B2 00         ld   hl, OFFSET_WALL
+1209+ 6BC6 18 03            jr   .load_attr
+1210+ 6BC8              .not_wall:
+1211+ 6BC8 21 BB 00         ld   hl, OFFSET_NASTY
+1212+ 6BCB
+1213+ 6BCB              .load_attr:
+1214+ 6BCB ED 5B 73 73      ld   de, (room_ptr)
+1215+ 6BCF 19               add  hl, de            ; HL = tile pointer
+1216+ 6BD0 7E               ld   a, (hl)           ; A = primo byte del tile (l'attributo colore)
+1217+ 6BD1
+1218+ 6BD1 C1               pop  bc
+1219+ 6BD2 D1               pop  de
+1220+ 6BD3 E1               pop  hl
+1221+ 6BD4 C9               ret
+1222+ 6BD5
+1223+ 6BD5              .blank:
+1224+ 6BD5 3E 07            ld   a, $07            ; Sfondo di default (bianco su nero)
+1225+ 6BD7 C1               pop  bc
+1226+ 6BD8 D1               pop  de
+1227+ 6BD9 E1               pop  hl
+1228+ 6BDA C9               ret
+1229+ 6BDB
+1230+ 6BDB              ; -------------------------------------------------------------------
+1231+ 6BDB              ; Imposta gli attributi colore per la cella occupata da un nemico 16x16
+1232+ 6BDB              ; Input: C = X pixel, B = Y pixel, A = Colore Ink (0..7)
+1233+ 6BDB              ; -------------------------------------------------------------------
+1234+ 6BDB              SetEnemyColorAttributes:
+1235+ 6BDB E5               push hl
+1236+ 6BDC D5               push de
+1237+ 6BDD C5               push bc
+1238+ 6BDE
+1239+ 6BDE 57               ld   d, a              ; D = Colore Ink (salvato)
+1240+ 6BDF
+1241+ 6BDF                  ; Se Y è fuori dai limiti della griglia di gioco, non fare nulla
+1242+ 6BDF 78               ld   a, b
+1243+ 6BE0 FE 18            cp   24
+1244+ 6BE2 38 58            jr   c, .done
+1245+ 6BE4 FE 98            cp   152
+1246+ 6BE6 30 54            jr   nc, .done
+1247+ 6BE8
+1248+ 6BE8                  ; Calcola ColStart: col = X / 8
+1249+ 6BE8 79               ld   a, c
+1250+ 6BE9 CB 3F            srl  a
+1251+ 6BEB CB 3F            srl  a
+1252+ 6BED CB 3F            srl  a
+1253+ 6BEF 5F               ld   e, a              ; E = ColStart
+1254+ 6BF0
+1255+ 6BF0                  ; Calcola ColEnd: col_end = (X + 15) / 8
+1256+ 6BF0 79               ld   a, c
+1257+ 6BF1 C6 0F            add  a, 15
+1258+ 6BF3 CB 3F            srl  a
+1259+ 6BF5 CB 3F            srl  a
+1260+ 6BF7 CB 3F            srl  a
+1261+ 6BF9 4F               ld   c, a              ; C = ColEnd
+1262+ 6BFA
+1263+ 6BFA                  ; Calcola RowStart: row = Y / 8
+1264+ 6BFA 78               ld   a, b
+1265+ 6BFB CB 3F            srl  a
+1266+ 6BFD CB 3F            srl  a
+1267+ 6BFF CB 3F            srl  a
+1268+ 6C01 67               ld   h, a              ; H = RowStart
+1269+ 6C02
+1270+ 6C02                  ; Calcola RowEnd: row_end = (Y + 15) / 8
+1271+ 6C02 78               ld   a, b
+1272+ 6C03 C6 0F            add  a, 15
+1273+ 6C05 CB 3F            srl  a
+1274+ 6C07 CB 3F            srl  a
+1275+ 6C09 CB 3F            srl  a
+1276+ 6C0B 6F               ld   l, a              ; L = RowEnd
+1277+ 6C0C
+1278+ 6C0C                  ; Loop righe: Row corrente in H, fino a L
+1279+ 6C0C              .row_loop:
+1280+ 6C0C 7C               ld   a, h
+1281+ 6C0D BD               cp   l
+1282+ 6C0E 28 02            jr   z, .ok_row
+1283+ 6C10 30 2A            jr   nc, .done
+1284+ 6C12              .ok_row:
+1285+ 6C12 C5               push bc
+1286+ 6C13 D5               push de
+1287+ 6C14
+1288+ 6C14                  ; Col loop from E (ColStart) to C (ColEnd)
+1289+ 6C14 43               ld   b, e              ; B = Col corrente
+1290+ 6C15              .col_loop:
+1291+ 6C15 78               ld   a, b
+1292+ 6C16 B9               cp   c
+1293+ 6C17 28 02            jr   z, .ok_col
+1294+ 6C19 30 1C            jr   nc, .col_done
+1295+ 6C1B              .ok_col:
+1296+ 6C1B                  ; Processa la cella a H (Row), B (Col)
+1297+ 6C1B E5               push hl
+1298+ 6C1C 6C               ld   l, h
+1299+ 6C1D 26 00            ld   h, 0
+1300+ 6C1F 29               add  hl, hl
+1301+ 6C20 29               add  hl, hl
+1302+ 6C21 29               add  hl, hl
+1303+ 6C22 29               add  hl, hl
+1304+ 6C23 29               add  hl, hl            ; HL = Row * 32
+1305+ 6C24
+1306+ 6C24 78               ld   a, b              ; A = Col corrente
+1307+ 6C25 85               add  a, l
+1308+ 6C26 6F               ld   l, a
+1309+ 6C27 30 01            jr   nc, .no_c_s
+1310+ 6C29 24               inc  h
+1311+ 6C2A              .no_c_s:
+1312+ 6C2A 7C               ld   a, h
+1313+ 6C2B C6 58            add  a, $58
+1314+ 6C2D 67               ld   h, a              ; HL = Attribute screen address ($5800 + Row * 32 + Col)
+1315+ 6C2E
+1316+ 6C2E 7E               ld   a, (hl)
+1317+ 6C2F E6 F8            and  $f8
+1318+ 6C31 B2               or   d                 ; D has the enemy color
+1319+ 6C32 77               ld   (hl), a
+1320+ 6C33 E1               pop  hl
+1321+ 6C34
+1322+ 6C34 04               inc  b                 ; Prossima colonna
+1323+ 6C35 18 DE            jr   .col_loop
+1324+ 6C37
+1325+ 6C37              .col_done:
+1326+ 6C37 D1               pop  de
+1327+ 6C38 C1               pop  bc
+1328+ 6C39 24               inc  h                 ; Prossima riga
+1329+ 6C3A 18 D0            jr   .row_loop
+1330+ 6C3C
+1331+ 6C3C              .done:
+1332+ 6C3C C1               pop  bc
+1333+ 6C3D D1               pop  de
+1334+ 6C3E E1               pop  hl
+1335+ 6C3F C9               ret
+1336+ 6C40
+1337+ 6C40              ; -------------------------------------------------------------------
+1338+ 6C40              ; Ripristina gli attributi colore originali dello sfondo per la cella occupata da un nemico
+1339+ 6C40              ; Input: C = X pixel, B = Y pixel
+1340+ 6C40              ; -------------------------------------------------------------------
+1341+ 6C40              RestoreEnemyColorAttributes:
+1342+ 6C40 E5               push hl
+1343+ 6C41 D5               push de
+1344+ 6C42 C5               push bc
+1345+ 6C43
+1346+ 6C43                  ; Se Y è fuori dai limiti della griglia di gioco, non fare nulla
+1347+ 6C43 78               ld   a, b
+1348+ 6C44 FE 18            cp   24
+1349+ 6C46 38 58            jr   c, .done
+1350+ 6C48 FE 98            cp   152
+1351+ 6C4A 30 54            jr   nc, .done
+1352+ 6C4C
+1353+ 6C4C                  ; Calcola ColStart: col = X / 8
+1354+ 6C4C 79               ld   a, c
+1355+ 6C4D CB 3F            srl  a
+1356+ 6C4F CB 3F            srl  a
+1357+ 6C51 CB 3F            srl  a
+1358+ 6C53 5F               ld   e, a              ; E = ColStart
+1359+ 6C54
+1360+ 6C54                  ; Calcola ColEnd: col_end = (X + 15) / 8
+1361+ 6C54 79               ld   a, c
+1362+ 6C55 C6 0F            add  a, 15
+1363+ 6C57 CB 3F            srl  a
+1364+ 6C59 CB 3F            srl  a
+1365+ 6C5B CB 3F            srl  a
+1366+ 6C5D 4F               ld   c, a              ; C = ColEnd
+1367+ 6C5E
+1368+ 6C5E                  ; Calcola RowStart: row = Y / 8
+1369+ 6C5E 78               ld   a, b
+1370+ 6C5F CB 3F            srl  a
+1371+ 6C61 CB 3F            srl  a
+1372+ 6C63 CB 3F            srl  a
+1373+ 6C65 67               ld   h, a              ; H = RowStart
+1374+ 6C66
+1375+ 6C66                  ; Calcola RowEnd: row_end = (Y + 15) / 8
+1376+ 6C66 78               ld   a, b
+1377+ 6C67 C6 0F            add  a, 15
+1378+ 6C69 CB 3F            srl  a
+1379+ 6C6B CB 3F            srl  a
+1380+ 6C6D CB 3F            srl  a
+1381+ 6C6F 6F               ld   l, a              ; L = RowEnd
+1382+ 6C70
+1383+ 6C70                  ; Loop righe: Row corrente in H, fino a L
+1384+ 6C70              .row_loop:
+1385+ 6C70 7C               ld   a, h
+1386+ 6C71 BD               cp   l
+1387+ 6C72 28 02            jr   z, .ok_row
+1388+ 6C74 30 2A            jr   nc, .done
+1389+ 6C76              .ok_row:
+1390+ 6C76 C5               push bc
+1391+ 6C77 D5               push de
+1392+ 6C78
+1393+ 6C78                  ; Col loop from E (ColStart) to C (ColEnd)
+1394+ 6C78 43               ld   b, e              ; B = Col corrente
+1395+ 6C79              .col_loop:
+1396+ 6C79 78               ld   a, b
+1397+ 6C7A B9               cp   c
+1398+ 6C7B 28 02            jr   z, .ok_col
+1399+ 6C7D 30 1C            jr   nc, .col_done
+1400+ 6C7F              .ok_col:
+1401+ 6C7F                  ; Ottieni attributo originale dello sfondo per cella H (Row), B (Col)
+1402+ 6C7F CD 6F 6B         call GetCellAttribute  ; A = attributo originale
+1403+ 6C82 57               ld   d, a              ; D = attributo originale
+1404+ 6C83
+1405+ 6C83 E5               push hl                ; Salva Row pointer
+1406+ 6C84 6C               ld   l, h
+1407+ 6C85 26 00            ld   h, 0
+1408+ 6C87 29               add  hl, hl
+1409+ 6C88 29               add  hl, hl
+1410+ 6C89 29               add  hl, hl
+1411+ 6C8A 29               add  hl, hl
+1412+ 6C8B 29               add  hl, hl            ; HL = Row * 32
+1413+ 6C8C
+1414+ 6C8C 78               ld   a, b              ; A = Col corrente
+1415+ 6C8D 85               add  a, l
+1416+ 6C8E 6F               ld   l, a
+1417+ 6C8F 30 01            jr   nc, .no_c_r
+1418+ 6C91 24               inc  h
+1419+ 6C92              .no_c_r:
+1420+ 6C92 7C               ld   a, h
+1421+ 6C93 C6 58            add  a, $58
+1422+ 6C95 67               ld   h, a              ; HL = Attribute screen address ($5800 + Row * 32 + Col)
+1423+ 6C96
+1424+ 6C96 72               ld   (hl), d           ; Ripristina l'attributo colore dello sfondo
+1425+ 6C97 E1               pop  hl                ; Ripristina Row pointer
+1426+ 6C98
+1427+ 6C98 04               inc  b                 ; Prossima colonna
+1428+ 6C99 18 DE            jr   .col_loop
+1429+ 6C9B
+1430+ 6C9B              .col_done:
+1431+ 6C9B D1               pop  de
+1432+ 6C9C C1               pop  bc
+1433+ 6C9D 24               inc  h                 ; Prossima riga
+1434+ 6C9E 18 D0            jr   .row_loop
+1435+ 6CA0
+1436+ 6CA0              .done:
+1437+ 6CA0 C1               pop  bc
+1438+ 6CA1 D1               pop  de
+1439+ 6CA2 E1               pop  hl
+1440+ 6CA3 C9               ret
 # file closed: graphics.asm
-  14  6B6F                  include "player.asm"
+  14  6CA4                  include "player.asm"
 # file opened: player.asm
-   1+ 6B6F              ;===========================================================================z
-   2+ 6B6F              ; player.asm
-   3+ 6B6F              ;===========================================================================
-   4+ 6B6F
-   5+ 6B6F
-   6+ 6B6F              ; -------------------------------------------------------------------
-   7+ 6B6F              ; Muove il player
-   8+ 6B6F              ; Input: D = stato controlli
-   9+ 6B6F              ; -------------------------------------------------------------------
-  10+ 6B6F              MovePlayer:
-  11+ 6B6F                  ; Verifica se un tasto di movimento è premuto
-  12+ 6B6F DD 21 0A 71      ld   ix, flags
-  13+ 6B73 DD CB 00 46      bit  $00, (ix)
-  14+ 6B77 C8               ret  z
-  15+ 6B78 DD CB 00 86      res  $00, (ix)
-  16+ 6B7C
-  17+ 6B7C ED 4B 02 71      ld   bc, (PlayerPos)   ; C = PlayerX (pixel), B = PlayerY (pixel)
-  18+ 6B80
-  19+ 6B80 CB 4A            bit  $01, d            ; Tasto Destra premuto?
-  20+ 6B82 20 11            jr   nz, movePlayer_right
-  21+ 6B84
-  22+ 6B84 CB 42            bit  $00, d            ; Tasto Sinistra premuto?
-  23+ 6B86 C8               ret  z
-  24+ 6B87
-  25+ 6B87              movePlayer_left:
-  26+ 6B87 79               ld   a, c
-  27+ 6B88 D6 02            sub  2                 ; Prova a muoverti di 2 pixel a sinistra
-  28+ 6B8A FE 08            cp   PLAYER_MIN_X      ; Confronta con il limite sinistro
-  29+ 6B8C 38 03            jr   c, .clamp_left    ; Se < PLAYER_MIN_X, clampa
-  30+ 6B8E 4F               ld   c, a              ; Altrimenti memorizza la nuova posizione
-  31+ 6B8F 18 12            jr   save_x
-  32+ 6B91
-  33+ 6B91              .clamp_left:
-  34+ 6B91 0E 08            ld   c, PLAYER_MIN_X
-  35+ 6B93 18 0E            jr   save_x
-  36+ 6B95
-  37+ 6B95              movePlayer_right:
-  38+ 6B95 79               ld   a, c
-  39+ 6B96 C6 02            add  a, 2              ; Prova a muoverti di 2 pixel a destra
-  40+ 6B98 FE F0            cp   PLAYER_MAX_X      ; Confronta con il limite destro
-  41+ 6B9A 28 02            jr   z, .ok_right      ; Se == PLAYER_MAX_X, va bene
-  42+ 6B9C 30 03            jr   nc, .clamp_right  ; Se > PLAYER_MAX_X (senza carry, cioè maggiore), clampa
-  43+ 6B9E              .ok_right:
-  44+ 6B9E 4F               ld   c, a              ; Altrimenti memorizza la nuova posizione
-  45+ 6B9F 18 02            jr   save_x
-  46+ 6BA1
-  47+ 6BA1              .clamp_right:
-  48+ 6BA1 0E F0            ld   c, PLAYER_MAX_X
-  49+ 6BA3
-  50+ 6BA3              save_x:
-  51+ 6BA3 ED 43 02 71      ld   (PlayerPos), bc
-  52+ 6BA7
-  53+ 6BA7              movePlayer_print:
-  54+ 6BA7                  ; Alterna lo stato delle gambe ad ogni movimento (0, 1, 2, 0, 1, 2...)
-  55+ 6BA7 3A 08 71         ld   a, (body_state)
-  56+ 6BAA 3C               inc  a
-  57+ 6BAB FE 03            cp   3
-  58+ 6BAD 20 02            jr   nz, .save_state
-  59+ 6BAF 3E 00            ld   a, 0
-  60+ 6BB1              .save_state:
-  61+ 6BB1 32 08 71         ld   (body_state), a
-  62+ 6BB4 C9               ret
+   1+ 6CA4              ;===========================================================================z
+   2+ 6CA4              ; player.asm
+   3+ 6CA4              ;===========================================================================
+   4+ 6CA4
+   5+ 6CA4
+   6+ 6CA4              ; -------------------------------------------------------------------
+   7+ 6CA4              ; Muove il player
+   8+ 6CA4              ; Input: D = stato controlli
+   9+ 6CA4              ; -------------------------------------------------------------------
+  10+ 6CA4              MovePlayer:
+  11+ 6CA4                  ; Verifica se un tasto di movimento è premuto
+  12+ 6CA4 DD 21 68 72      ld   ix, flags
+  13+ 6CA8 DD CB 00 46      bit  $00, (ix)
+  14+ 6CAC C8               ret  z
+  15+ 6CAD DD CB 00 86      res  $00, (ix)
+  16+ 6CB1
+  17+ 6CB1 ED 4B 60 72      ld   bc, (PlayerPos)   ; C = PlayerX (pixel), B = PlayerY (pixel)
+  18+ 6CB5
+  19+ 6CB5 CB 4A            bit  $01, d            ; Tasto Destra premuto?
+  20+ 6CB7 20 11            jr   nz, movePlayer_right
+  21+ 6CB9
+  22+ 6CB9 CB 42            bit  $00, d            ; Tasto Sinistra premuto?
+  23+ 6CBB C8               ret  z
+  24+ 6CBC
+  25+ 6CBC              movePlayer_left:
+  26+ 6CBC 79               ld   a, c
+  27+ 6CBD D6 02            sub  2                 ; Prova a muoverti di 2 pixel a sinistra
+  28+ 6CBF FE 08            cp   PLAYER_MIN_X      ; Confronta con il limite sinistro
+  29+ 6CC1 38 03            jr   c, .clamp_left    ; Se < PLAYER_MIN_X, clampa
+  30+ 6CC3 4F               ld   c, a              ; Altrimenti memorizza la nuova posizione
+  31+ 6CC4 18 12            jr   save_x
+  32+ 6CC6
+  33+ 6CC6              .clamp_left:
+  34+ 6CC6 0E 08            ld   c, PLAYER_MIN_X
+  35+ 6CC8 18 0E            jr   save_x
+  36+ 6CCA
+  37+ 6CCA              movePlayer_right:
+  38+ 6CCA 79               ld   a, c
+  39+ 6CCB C6 02            add  a, 2              ; Prova a muoverti di 2 pixel a destra
+  40+ 6CCD FE F0            cp   PLAYER_MAX_X      ; Confronta con il limite destro
+  41+ 6CCF 28 02            jr   z, .ok_right      ; Se == PLAYER_MAX_X, va bene
+  42+ 6CD1 30 03            jr   nc, .clamp_right  ; Se > PLAYER_MAX_X (senza carry, cioè maggiore), clampa
+  43+ 6CD3              .ok_right:
+  44+ 6CD3 4F               ld   c, a              ; Altrimenti memorizza la nuova posizione
+  45+ 6CD4 18 02            jr   save_x
+  46+ 6CD6
+  47+ 6CD6              .clamp_right:
+  48+ 6CD6 0E F0            ld   c, PLAYER_MAX_X
+  49+ 6CD8
+  50+ 6CD8              save_x:
+  51+ 6CD8 ED 43 60 72      ld   (PlayerPos), bc
+  52+ 6CDC
+  53+ 6CDC              movePlayer_print:
+  54+ 6CDC                  ; Alterna lo stato delle gambe ad ogni movimento (0, 1, 2, 0, 1, 2...)
+  55+ 6CDC 3A 66 72         ld   a, (body_state)
+  56+ 6CDF 3C               inc  a
+  57+ 6CE0 FE 03            cp   3
+  58+ 6CE2 20 02            jr   nz, .save_state
+  59+ 6CE4 3E 00            ld   a, 0
+  60+ 6CE6              .save_state:
+  61+ 6CE6 32 66 72         ld   (body_state), a
+  62+ 6CE9 C9               ret
 # file closed: player.asm
-  15  6BB5                  include "input.asm"
+  15  6CEA                  include "input.asm"
 # file opened: input.asm
-   1+ 6BB5              ;===========================================================================
-   2+ 6BB5              ; input.asm
-   3+ 6BB5              ;===========================================================================
-   4+ 6BB5
-   5+ 6BB5
-   6+ 6BB5              ; -------------------------------------------------------------------
-   7+ 6BB5              ; Controlla input tastiera
-   8+ 6BB5              ; Output: D = tasti premuti
-   9+ 6BB5              ; -------------------------------------------------------------------
-  10+ 6BB5              CheckCtrl:
-  11+ 6BB5 16 00            ld  d, $00
-  12+ 6BB7 3E FE            ld  a, $fe
-  13+ 6BB9 DB FE            in  a, ($fe)
-  14+ 6BBB DD 21 0A 71      ld  ix,flags
-  15+ 6BBF
-  16+ 6BBF              checkCtrl_left:
-  17+ 6BBF CB 4F            bit $01, a
-  18+ 6BC1 20 0D            jr  nz, checkCtrl_right
-  19+ 6BC3 CB C2            set $00, d
-  20+ 6BC5 DD CB 00 C6      set 0,(ix)
-  21+ 6BC9 5F               ld  e, a
-  22+ 6BCA 3E 01            ld  a, 1
-  23+ 6BCC 32 09 71         ld  (direction), a
-  24+ 6BCF 7B               ld  a, e
-  25+ 6BD0
-  26+ 6BD0              checkCtrl_right:
-  27+ 6BD0 CB 57            bit $02, a
-  28+ 6BD2 20 0D            jr  nz, checkCtrl_jump
-  29+ 6BD4 CB CA            set $01, d
-  30+ 6BD6 DD CB 00 C6      set 0,(ix)
-  31+ 6BDA 5F               ld  e, a
-  32+ 6BDB 3E 02            ld  a, 2
-  33+ 6BDD 32 09 71         ld  (direction), a
-  34+ 6BE0 7B               ld  a, e
-  35+ 6BE1
-  36+ 6BE1              checkCtrl_jump:
-  37+ 6BE1                  ; Controlla tasto P (Porta $DF, Bit 0)
-  38+ 6BE1 3E DF            ld  a, $df
-  39+ 6BE3 DB FE            in  a, ($fe)
-  40+ 6BE5 CB 47            bit 0, a
-  41+ 6BE7 28 0E            jr  z, .pressed   ; Se P è premuto (bit 0 = 0)
-  42+ 6BE9
-  43+ 6BE9                  ; Controlla tasto M (Porta $7F, Bit 2)
-  44+ 6BE9 3E 7F            ld  a, $7f
-  45+ 6BEB DB FE            in  a, ($fe)
-  46+ 6BED CB 57            bit 2, a
-  47+ 6BEF 28 06            jr  z, .pressed   ; Se M è premuto (bit 2 = 0)
-  48+ 6BF1
-  49+ 6BF1              .released:
-  50+ 6BF1 AF               xor a
-  51+ 6BF2 32 11 71         ld  (jump_prev), a
-  52+ 6BF5 18 10            jr  .end
-  53+ 6BF7
-  54+ 6BF7              .pressed:
-  55+ 6BF7 3A 11 71         ld  a, (jump_prev)
-  56+ 6BFA B7               or  a
-  57+ 6BFB 20 0A            jr  nz, .end
-  58+ 6BFD 3E 01            ld  a, 1
-  59+ 6BFF 32 10 71         ld  (jump_pressed), a
-  60+ 6C02 32 11 71         ld  (jump_prev), a
-  61+ 6C05 CB D2            set 2, d
-  62+ 6C07
-  63+ 6C07              .end:
-  64+ 6C07 7A               ld   a, d
-  65+ 6C08 E6 03            and  $03
-  66+ 6C0A D6 03            sub  $03
-  67+ 6C0C C0               ret  nz
-  68+ 6C0D 7A               ld   a, d
-  69+ 6C0E E6 04            and  $04
-  70+ 6C10 57               ld   d, a
-  71+ 6C11 C9               ret
+   1+ 6CEA              ;===========================================================================
+   2+ 6CEA              ; input.asm
+   3+ 6CEA              ;===========================================================================
+   4+ 6CEA
+   5+ 6CEA
+   6+ 6CEA              ; -------------------------------------------------------------------
+   7+ 6CEA              ; Controlla input tastiera
+   8+ 6CEA              ; Output: D = tasti premuti
+   9+ 6CEA              ; -------------------------------------------------------------------
+  10+ 6CEA              CheckCtrl:
+  11+ 6CEA 16 00            ld  d, $00
+  12+ 6CEC 3E FE            ld  a, $fe
+  13+ 6CEE DB FE            in  a, ($fe)
+  14+ 6CF0 DD 21 68 72      ld  ix,flags
+  15+ 6CF4
+  16+ 6CF4              checkCtrl_left:
+  17+ 6CF4 CB 4F            bit $01, a
+  18+ 6CF6 20 0D            jr  nz, checkCtrl_right
+  19+ 6CF8 CB C2            set $00, d
+  20+ 6CFA DD CB 00 C6      set 0,(ix)
+  21+ 6CFE 5F               ld  e, a
+  22+ 6CFF 3E 01            ld  a, 1
+  23+ 6D01 32 67 72         ld  (direction), a
+  24+ 6D04 7B               ld  a, e
+  25+ 6D05
+  26+ 6D05              checkCtrl_right:
+  27+ 6D05 CB 57            bit $02, a
+  28+ 6D07 20 0D            jr  nz, checkCtrl_jump
+  29+ 6D09 CB CA            set $01, d
+  30+ 6D0B DD CB 00 C6      set 0,(ix)
+  31+ 6D0F 5F               ld  e, a
+  32+ 6D10 3E 02            ld  a, 2
+  33+ 6D12 32 67 72         ld  (direction), a
+  34+ 6D15 7B               ld  a, e
+  35+ 6D16
+  36+ 6D16              checkCtrl_jump:
+  37+ 6D16                  ; Controlla tasto P (Porta $DF, Bit 0)
+  38+ 6D16 3E DF            ld  a, $df
+  39+ 6D18 DB FE            in  a, ($fe)
+  40+ 6D1A CB 47            bit 0, a
+  41+ 6D1C 28 0E            jr  z, .pressed   ; Se P è premuto (bit 0 = 0)
+  42+ 6D1E
+  43+ 6D1E                  ; Controlla tasto M (Porta $7F, Bit 2)
+  44+ 6D1E 3E 7F            ld  a, $7f
+  45+ 6D20 DB FE            in  a, ($fe)
+  46+ 6D22 CB 57            bit 2, a
+  47+ 6D24 28 06            jr  z, .pressed   ; Se M è premuto (bit 2 = 0)
+  48+ 6D26
+  49+ 6D26              .released:
+  50+ 6D26 AF               xor a
+  51+ 6D27 32 6F 72         ld  (jump_prev), a
+  52+ 6D2A 18 10            jr  .end
+  53+ 6D2C
+  54+ 6D2C              .pressed:
+  55+ 6D2C 3A 6F 72         ld  a, (jump_prev)
+  56+ 6D2F B7               or  a
+  57+ 6D30 20 0A            jr  nz, .end
+  58+ 6D32 3E 01            ld  a, 1
+  59+ 6D34 32 6E 72         ld  (jump_pressed), a
+  60+ 6D37 32 6F 72         ld  (jump_prev), a
+  61+ 6D3A CB D2            set 2, d
+  62+ 6D3C
+  63+ 6D3C              .end:
+  64+ 6D3C 7A               ld   a, d
+  65+ 6D3D E6 03            and  $03
+  66+ 6D3F D6 03            sub  $03
+  67+ 6D41 C0               ret  nz
+  68+ 6D42 7A               ld   a, d
+  69+ 6D43 E6 04            and  $04
+  70+ 6D45 57               ld   d, a
+  71+ 6D46 C9               ret
 # file closed: input.asm
-  16  6C12                  include "physics.asm"
+  16  6D47                  include "physics.asm"
 # file opened: physics.asm
-   1+ 6C12              ;===========================================================================
-   2+ 6C12              ; physics.asm
-   3+ 6C12              ;===========================================================================
-   4+ 6C12
-   5+ 6C12
-   6+ 6C12              ; -------------------------------------------------------------------
-   7+ 6C12              ; Verifica se c'è una cella solida (Floor o Wall) alle coordinate pixel (X, Y)
-   8+ 6C12              ; Input: C = X, B = Y
-   9+ 6C12              ; Output: Carry flag impostato se solida, altrimenti resettato
-  10+ 6C12              ; -------------------------------------------------------------------
-  11+ 6C12              CheckSolidCell:
-  12+ 6C12 E5               push hl
-  13+ 6C13 D5               push de
-  14+ 6C14 C5               push bc
-  15+ 6C15
-  16+ 6C15                  ; 1. Controlla se Y (in B) è fuori dalla griglia di layout (Y < 24 o Y >= 152)
-  17+ 6C15 78               ld   a, b
-  18+ 6C16 FE 18            cp   24
-  19+ 6C18 38 4E            jr   c, .not_solid
-  20+ 6C1A FE 98            cp   152
-  21+ 6C1C 30 4A            jr   nc, .not_solid
-  22+ 6C1E
-  23+ 6C1E                  ; 2. Calcola riga di layout: r = (Y - 24) / 8
-  24+ 6C1E D6 18            sub  24
-  25+ 6C20 CB 3F            srl  a
-  26+ 6C22 CB 3F            srl  a
-  27+ 6C24 CB 3F            srl  a                 ; A = r (0..15)
-  28+ 6C26
-  29+ 6C26                  ; 3. HL = r * 8
-  30+ 6C26 6F               ld   l, a
-  31+ 6C27 26 00            ld   h, 0
-  32+ 6C29 29               add  hl, hl
-  33+ 6C2A 29               add  hl, hl
-  34+ 6C2B 29               add  hl, hl            ; HL = r * 8
-  35+ 6C2C
-  36+ 6C2C                  ; 4. Calcola colonna di layout: c = X / 8 (in C)
-  37+ 6C2C 79               ld   a, c
-  38+ 6C2D CB 3F            srl  a
-  39+ 6C2F CB 3F            srl  a
-  40+ 6C31 CB 3F            srl  a                 ; A = c (0..31)
-  41+ 6C33 4F               ld   c, a              ; C = c (salva colonna)
-  42+ 6C34
-  43+ 6C34                  ; HL = r * 8 + c / 4
-  44+ 6C34 CB 3F            srl  a
-  45+ 6C36 CB 3F            srl  a                 ; A = c / 4
-  46+ 6C38 85               add  a, l
-  47+ 6C39 6F               ld   l, a              ; HL = r * 8 + c / 4
-  48+ 6C3A
-  49+ 6C3A ED 5B 15 72      ld   de, (room_ptr)
-  50+ 6C3E 19               add  hl, de            ; HL = layout byte address
-  51+ 6C3F 7E               ld   a, (hl)           ; A = layout byte
-  52+ 6C40
-  53+ 6C40                  ; Estrai il bit-pair corrispondente a c % 4
-  54+ 6C40 57               ld   d, a              ; D = layout byte
-  55+ 6C41 79               ld   a, c
-  56+ 6C42 E6 03            and  3                 ; A = c % 4
-  57+ 6C44 28 15            jr   z, .shift_0
-  58+ 6C46 3D               dec  a
-  59+ 6C47 28 0B            jr   z, .shift_1
-  60+ 6C49 3D               dec  a
-  61+ 6C4A 28 03            jr   z, .shift_2
-  62+ 6C4C                  ; Case 3 (c % 4 = 3)
-  63+ 6C4C 7A               ld   a, d
-  64+ 6C4D 18 0F            jr   .got_type
-  65+ 6C4F              .shift_2:
-  66+ 6C4F 7A               ld   a, d
-  67+ 6C50 0F               rrca
-  68+ 6C51 0F               rrca
-  69+ 6C52 18 0A            jr   .got_type
-  70+ 6C54              .shift_1:
-  71+ 6C54 7A               ld   a, d
-  72+ 6C55 0F               rrca
-  73+ 6C56 0F               rrca
-  74+ 6C57 0F               rrca
-  75+ 6C58 0F               rrca
-  76+ 6C59 18 03            jr   .got_type
-  77+ 6C5B              .shift_0:
-  78+ 6C5B 7A               ld   a, d
-  79+ 6C5C 07               rlca
-  80+ 6C5D 07               rlca
-  81+ 6C5E              .got_type:
-  82+ 6C5E E6 03            and  3                 ; A = cell type (0..3)
-  83+ 6C60
-  84+ 6C60                  ; 5. Controlla se è solida: Floor (1) o Wall (2)
-  85+ 6C60 FE 01            cp   1
-  86+ 6C62 28 09            jr   z, .solid
-  87+ 6C64 FE 02            cp   2
-  88+ 6C66 28 05            jr   z, .solid
-  89+ 6C68
-  90+ 6C68              .not_solid:
-  91+ 6C68 C1               pop  bc
-  92+ 6C69 D1               pop  de
-  93+ 6C6A E1               pop  hl
-  94+ 6C6B B7               or   a                 ; Clear carry
-  95+ 6C6C C9               ret
-  96+ 6C6D
-  97+ 6C6D              .solid:
-  98+ 6C6D C1               pop  bc
-  99+ 6C6E D1               pop  de
- 100+ 6C6F E1               pop  hl
- 101+ 6C70 37               scf                    ; Set carry
- 102+ 6C71 C9               ret
- 103+ 6C72
- 104+ 6C72              ; -------------------------------------------------------------------
- 105+ 6C72              ; Applica gravità e gestisce salto
- 106+ 6C72              ; -------------------------------------------------------------------
- 107+ 6C72              ApplyGravity:
- 108+ 6C72 ED 4B 02 71      ld  bc, (PlayerPos)
- 109+ 6C76 78               ld  a, b              ; B = PlayerY (pixel)
- 110+ 6C77
- 111+ 6C77                  ; Controlla se siamo a mezz'aria (on_ground == 0)
- 112+ 6C77 3A 0F 71         ld  a, (on_ground)
- 113+ 6C7A B7               or  a
- 114+ 6C7B CA B4 6C         jp  z, .in_air        ; Se siamo in volo, continua a volare
- 115+ 6C7E
- 116+ 6C7E                  ; Se on_ground == 1, controlliamo se siamo ancora su terreno solido
- 117+ 6C7E                  ; Dobbiamo controllare i pixel direttamente sotto i piedi del player:
- 118+ 6C7E                  ; (PlayerX, PlayerY + 16) e (PlayerX + 7, PlayerY + 16)
- 119+ 6C7E 78               ld  a, b
- 120+ 6C7F C6 10            add  a, 16
- 121+ 6C81 47               ld  b, a              ; B = PlayerY + 16
- 122+ 6C82
- 123+ 6C82                  ; Controlla se la cella sotto il piede sinistro (PlayerX, PlayerY + 16) è solida
- 124+ 6C82 CD 12 6C         call CheckSolidCell
- 125+ 6C85 38 13            jr   c, .still_on_ground
- 126+ 6C87
- 127+ 6C87                  ; Controlla se la cella sotto il piede destro (PlayerX + 7, PlayerY + 16) è solida
- 128+ 6C87 79               ld   a, c
- 129+ 6C88 C6 07            add  a, 7
- 130+ 6C8A 4F               ld   c, a              ; C = PlayerX + 7
- 131+ 6C8B CD 12 6C         call CheckSolidCell
- 132+ 6C8E 38 0A            jr   c, .still_on_ground
- 133+ 6C90
- 134+ 6C90                  ; Se nessuna delle due è solida, iniziamo a cadere!
- 135+ 6C90 AF               xor  a
- 136+ 6C91 32 0F 71         ld   (on_ground), a
- 137+ 6C94 32 0E 71         ld   (velocity_y), a   ; Inizia la caduta con velocità 0
- 138+ 6C97 C3 B4 6C         jp   .in_air
- 139+ 6C9A
- 140+ 6C9A              .still_on_ground:
- 141+ 6C9A                  ; Siamo ancora sulla piattaforma o sul pavimento
- 142+ 6C9A                  ; Ripristina bc originale (PlayerPos)
- 143+ 6C9A ED 4B 02 71      ld   bc, (PlayerPos)
- 144+ 6C9E
- 145+ 6C9E                  ; Gestisci il salto
- 146+ 6C9E 3A 10 71         ld   a, (jump_pressed)
- 147+ 6CA1 B7               or   a
- 148+ 6CA2 CA 3F 6D         jp   z, .end
- 149+ 6CA5
- 150+ 6CA5 3E 0C            ld   a, JUMP_STRENGTH
- 151+ 6CA7 32 0E 71         ld   (velocity_y), a
- 152+ 6CAA AF               xor  a
- 153+ 6CAB 32 0F 71         ld   (on_ground), a
- 154+ 6CAE 32 10 71         ld   (jump_pressed), a
- 155+ 6CB1 C3 B4 6C         jp   .in_air
- 156+ 6CB4
- 157+ 6CB4              .in_air:
- 158+ 6CB4                  ; Applica gravità
- 159+ 6CB4 3A 0E 71         ld  a, (velocity_y)
- 160+ 6CB7 D6 02            sub GRAVITY           ; gravity = 2
- 161+ 6CB9
- 162+ 6CB9                  ; Controlla se positivo per evitare bug con cp signed
- 163+ 6CB9 CB 7F            bit 7, a
- 164+ 6CBB 28 06            jr  z, .store_vel
- 165+ 6CBD
- 166+ 6CBD FE F4            cp  -MAX_FALL_SPEED   ; -12
- 167+ 6CBF 30 02            jr  nc, .store_vel
- 168+ 6CC1 3E F4            ld  a, -MAX_FALL_SPEED
- 169+ 6CC3
- 170+ 6CC3              .store_vel:
- 171+ 6CC3 32 0E 71         ld  (velocity_y), a
- 172+ 6CC6
- 173+ 6CC6                  ; Applica movimento verticale: PlayerY = PlayerY - velocity_y
- 174+ 6CC6 ED 4B 02 71      ld  bc, (PlayerPos)
- 175+ 6CCA 57               ld  d, a              ; D = velocity_y (signed)
- 176+ 6CCB 78               ld  a, b              ; A = PlayerY
- 177+ 6CCC 92               sub d                 ; A = PlayerY - velocity_y
- 178+ 6CCD 47               ld  b, a              ; B = new PlayerY
- 179+ 6CCE
- 180+ 6CCE                  ; Controlla se stiamo cadendo (velocity_y <= 0)
- 181+ 6CCE 3A 0E 71         ld  a, (velocity_y)
- 182+ 6CD1 CB 7F            bit 7, a              ; Se negativo, bit 7 = 1
- 183+ 6CD3 20 05            jr  nz, .falling_checks
- 184+ 6CD5 B7               or  a                 ; Se zero
- 185+ 6CD6 28 02            jr  z, .falling_checks
- 186+ 6CD8 18 4B            jr  .no_collision_checks ; Se stiamo salendo, non controlliamo collisioni
- 187+ 6CDA
- 188+ 6CDA              .falling_checks:
- 189+ 6CDA                  ; --- CONTROLLO COLLISIONE CON IL TERRENO DURANTE LA CADUTA ---
- 190+ 6CDA 78               ld   a, b
- 191+ 6CDB C6 10            add  a, 16
- 192+ 6CDD 47               ld   b, a              ; B = Nuovo Y + 16
- 193+ 6CDE
- 194+ 6CDE                  ; Controlla se il piede sinistro tocca solido
- 195+ 6CDE CD 12 6C         call CheckSolidCell
- 196+ 6CE1 38 0B            jr   c, .check_landing
- 197+ 6CE3
- 198+ 6CE3                  ; Controlla se il piede destro tocca solido
- 199+ 6CE3 79               ld   a, c
- 200+ 6CE4 C6 07            add  a, 7
- 201+ 6CE6 4F               ld   c, a              ; C = PlayerX + 7
- 202+ 6CE7 CD 12 6C         call CheckSolidCell
- 203+ 6CEA 38 02            jr   c, .check_landing
- 204+ 6CEC
- 205+ 6CEC                  ; Nessun atterraggio
- 206+ 6CEC 18 37            jr   .no_collision_checks
- 207+ 6CEE
- 208+ 6CEE              .check_landing:
- 209+ 6CEE                  ; Abbiamo toccato una cella solida!
- 210+ 6CEE 78               ld   a, b
- 211+ 6CEF D6 18            sub  24
- 212+ 6CF1 CB 3F            srl  a
- 213+ 6CF3 CB 3F            srl  a
- 214+ 6CF5 CB 3F            srl  a                 ; A = r (0..15)
- 215+ 6CF7
- 216+ 6CF7                  ; Controlliamo se Vecchio Y + 16 <= r * 8 + 24
- 217+ 6CF7 5F               ld   e, a              ; E = r
- 218+ 6CF8 87               add  a, a              ; *2
- 219+ 6CF9 87               add  a, a              ; *4
- 220+ 6CFA 87               add  a, a              ; *8
- 221+ 6CFB C6 18            add  a, 24             ; A = r * 8 + 24 (limite superiore della riga)
- 222+ 6CFD 57               ld   d, a              ; D = limite superiore
- 223+ 6CFE
- 224+ 6CFE                  ; Vecchio Y + 16
- 225+ 6CFE 3A 03 71         ld   a, (PlayerPos+1)  ; A = Vecchio Y
- 226+ 6D01 C6 10            add  a, 16             ; A = Vecchio Y + 16
- 227+ 6D03
- 228+ 6D03 BA               cp   d                 ; Confronta Vecchio Y + 16 con il limite
- 229+ 6D04 28 04            jr   z, .do_landing    ; Se ==, atterra
- 230+ 6D06 38 02            jr   c, .do_landing    ; Se <, atterra (eravamo sopra)
- 231+ 6D08
- 232+ 6D08 18 1B            jr   .no_collision_checks
- 233+ 6D0A
- 234+ 6D0A              .do_landing:
- 235+ 6D0A                  ; Atterra sulla riga di layout E!
- 236+ 6D0A 7B               ld   a, e
- 237+ 6D0B 87               add  a, a              ; *2
- 238+ 6D0C 87               add  a, a              ; *4
- 239+ 6D0D 87               add  a, a              ; *8
- 240+ 6D0E C6 08            add  a, 8              ; A = PlayerY di atterraggio
- 241+ 6D10
- 242+ 6D10 ED 4B 02 71      ld   bc, (PlayerPos)   ; Ripristina C = PlayerX
- 243+ 6D14 47               ld   b, a              ; B = Nuovo PlayerY
- 244+ 6D15
- 245+ 6D15 ED 43 02 71      ld   (PlayerPos), bc
- 246+ 6D19 3E 01            ld   a, 1
- 247+ 6D1B 32 0F 71         ld   (on_ground), a
- 248+ 6D1E AF               xor  a
- 249+ 6D1F 32 0E 71         ld   (velocity_y), a
- 250+ 6D22 C3 3F 6D         jp   .end
- 251+ 6D25
- 252+ 6D25              .no_collision_checks:
- 253+ 6D25 3A 0E 71         ld   a, (velocity_y)
- 254+ 6D28 57               ld   d, a                  ; Ripristina D = velocity_y (evita corruzione se proveniamo da .check_landing)
- 255+ 6D29 ED 4B 02 71      ld   bc, (PlayerPos)
- 256+ 6D2D 78               ld   a, b
- 257+ 6D2E 92               sub  d                 ; A = Nuovo Y (calcolato in .store_vel)
- 258+ 6D2F 47               ld   b, a              ; B = Nuovo Y
- 259+ 6D30
- 260+ 6D30              .save_pos:
- 261+ 6D30 78               ld   a, b
- 262+ 6D31 FE 08            cp   8
- 263+ 6D33 30 06            jr   nc, .save_ok
- 264+ 6D35 06 08            ld   b, 8
- 265+ 6D37 AF               xor  a
- 266+ 6D38 32 0E 71         ld   (velocity_y), a
- 267+ 6D3B
- 268+ 6D3B              .save_ok:
- 269+ 6D3B ED 43 02 71      ld   (PlayerPos), bc
- 270+ 6D3F
- 271+ 6D3F              .end:
- 272+ 6D3F AF               xor  a
- 273+ 6D40 32 10 71         ld   (jump_pressed), a
- 274+ 6D43 C9               ret
- 275+ 6D44
- 276+ 6D44              ; -------------------------------------------------------------------
- 277+ 6D44              ; Verifica la collisione tra player e nemico (bounding box a livello di pixel)
- 278+ 6D44              ; Output: Carry flag impostato se collisione, altrimenti resettato
- 279+ 6D44              ; -------------------------------------------------------------------
- 280+ 6D44              CheckCollision:
- 281+ 6D44 E5               push hl
- 282+ 6D45 D5               push de
- 283+ 6D46 C5               push bc
- 284+ 6D47 DD E5            push ix
- 285+ 6D49
- 286+ 6D49 DD 21 1C 6E      ld   ix, ActiveEnemies
- 287+ 6D4D 06 04            ld   b, 4              ; 4 slot
- 288+ 6D4F              .loop:
- 289+ 6D4F DD 7E 00         ld   a, (ix+0)         ; Flags
- 290+ 6D52 E6 80            and  $80               ; Active?
- 291+ 6D54 28 1F            jr   z, .next
- 292+ 6D56
- 293+ 6D56                  ; 1. Controllo orizzontale: PlayerX - EnemyX + 7 in [0, 22]
- 294+ 6D56 3A 02 71         ld   a, (PlayerPos)    ; A = PlayerX
- 295+ 6D59 DD 96 01         sub  (ix+1)            ; A = PlayerX - EnemyX
- 296+ 6D5C C6 07            add  a, 7              ; A = PlayerX - EnemyX + 7
- 297+ 6D5E FE 17            cp   23                ; Se >= 23, nessuna collisione con questo
- 298+ 6D60 30 13            jr   nc, .next
- 299+ 6D62
- 300+ 6D62                  ; 2. Controllo verticale: PlayerY - EnemyY + 15 in [0, 30]
- 301+ 6D62 3A 03 71         ld   a, (PlayerPos+1)  ; A = PlayerY
- 302+ 6D65 DD 96 02         sub  (ix+2)            ; A = PlayerY - EnemyY
- 303+ 6D68 C6 0F            add  a, 15             ; A = PlayerY - EnemyY + 15
- 304+ 6D6A FE 1F            cp   31                ; Se >= 31, nessuna collisione con questo
- 305+ 6D6C 30 07            jr   nc, .next
- 306+ 6D6E
- 307+ 6D6E                  ; Collisione avvenuta!
- 308+ 6D6E DD E1            pop  ix
- 309+ 6D70 C1               pop  bc
- 310+ 6D71 D1               pop  de
- 311+ 6D72 E1               pop  hl
- 312+ 6D73 37               scf                    ; Imposta carry flag
- 313+ 6D74 C9               ret
- 314+ 6D75
- 315+ 6D75              .next:
- 316+ 6D75 11 08 00         ld   de, 8
- 317+ 6D78 DD 19            add  ix, de            ; Prossimo slot
- 318+ 6D7A 05               dec  b
- 319+ 6D7B 20 D2            jr   nz, .loop
- 320+ 6D7D
- 321+ 6D7D DD E1            pop  ix
- 322+ 6D7F C1               pop  bc
- 323+ 6D80 D1               pop  de
- 324+ 6D81 E1               pop  hl
- 325+ 6D82 B7               or   a                 ; Reset carry flag
- 326+ 6D83 C9               ret
- 327+ 6D84
+   1+ 6D47              ;===========================================================================
+   2+ 6D47              ; physics.asm
+   3+ 6D47              ;===========================================================================
+   4+ 6D47
+   5+ 6D47
+   6+ 6D47              ; -------------------------------------------------------------------
+   7+ 6D47              ; Verifica se c'è una cella solida (Floor o Wall) alle coordinate pixel (X, Y)
+   8+ 6D47              ; Input: C = X, B = Y
+   9+ 6D47              ; Output: Carry flag impostato se solida, altrimenti resettato
+  10+ 6D47              ; -------------------------------------------------------------------
+  11+ 6D47              CheckSolidCell:
+  12+ 6D47 E5               push hl
+  13+ 6D48 D5               push de
+  14+ 6D49 C5               push bc
+  15+ 6D4A
+  16+ 6D4A                  ; 1. Controlla se Y (in B) è fuori dalla griglia di layout (Y < 24 o Y >= 152)
+  17+ 6D4A 78               ld   a, b
+  18+ 6D4B FE 18            cp   24
+  19+ 6D4D 38 4E            jr   c, .not_solid
+  20+ 6D4F FE 98            cp   152
+  21+ 6D51 30 4A            jr   nc, .not_solid
+  22+ 6D53
+  23+ 6D53                  ; 2. Calcola riga di layout: r = (Y - 24) / 8
+  24+ 6D53 D6 18            sub  24
+  25+ 6D55 CB 3F            srl  a
+  26+ 6D57 CB 3F            srl  a
+  27+ 6D59 CB 3F            srl  a                 ; A = r (0..15)
+  28+ 6D5B
+  29+ 6D5B                  ; 3. HL = r * 8
+  30+ 6D5B 6F               ld   l, a
+  31+ 6D5C 26 00            ld   h, 0
+  32+ 6D5E 29               add  hl, hl
+  33+ 6D5F 29               add  hl, hl
+  34+ 6D60 29               add  hl, hl            ; HL = r * 8
+  35+ 6D61
+  36+ 6D61                  ; 4. Calcola colonna di layout: c = X / 8 (in C)
+  37+ 6D61 79               ld   a, c
+  38+ 6D62 CB 3F            srl  a
+  39+ 6D64 CB 3F            srl  a
+  40+ 6D66 CB 3F            srl  a                 ; A = c (0..31)
+  41+ 6D68 4F               ld   c, a              ; C = c (salva colonna)
+  42+ 6D69
+  43+ 6D69                  ; HL = r * 8 + c / 4
+  44+ 6D69 CB 3F            srl  a
+  45+ 6D6B CB 3F            srl  a                 ; A = c / 4
+  46+ 6D6D 85               add  a, l
+  47+ 6D6E 6F               ld   l, a              ; HL = r * 8 + c / 4
+  48+ 6D6F
+  49+ 6D6F ED 5B 73 73      ld   de, (room_ptr)
+  50+ 6D73 19               add  hl, de            ; HL = layout byte address
+  51+ 6D74 7E               ld   a, (hl)           ; A = layout byte
+  52+ 6D75
+  53+ 6D75                  ; Estrai il bit-pair corrispondente a c % 4
+  54+ 6D75 57               ld   d, a              ; D = layout byte
+  55+ 6D76 79               ld   a, c
+  56+ 6D77 E6 03            and  3                 ; A = c % 4
+  57+ 6D79 28 15            jr   z, .shift_0
+  58+ 6D7B 3D               dec  a
+  59+ 6D7C 28 0B            jr   z, .shift_1
+  60+ 6D7E 3D               dec  a
+  61+ 6D7F 28 03            jr   z, .shift_2
+  62+ 6D81                  ; Case 3 (c % 4 = 3)
+  63+ 6D81 7A               ld   a, d
+  64+ 6D82 18 0F            jr   .got_type
+  65+ 6D84              .shift_2:
+  66+ 6D84 7A               ld   a, d
+  67+ 6D85 0F               rrca
+  68+ 6D86 0F               rrca
+  69+ 6D87 18 0A            jr   .got_type
+  70+ 6D89              .shift_1:
+  71+ 6D89 7A               ld   a, d
+  72+ 6D8A 0F               rrca
+  73+ 6D8B 0F               rrca
+  74+ 6D8C 0F               rrca
+  75+ 6D8D 0F               rrca
+  76+ 6D8E 18 03            jr   .got_type
+  77+ 6D90              .shift_0:
+  78+ 6D90 7A               ld   a, d
+  79+ 6D91 07               rlca
+  80+ 6D92 07               rlca
+  81+ 6D93              .got_type:
+  82+ 6D93 E6 03            and  3                 ; A = cell type (0..3)
+  83+ 6D95
+  84+ 6D95                  ; 5. Controlla se è solida: Floor (1) o Wall (2)
+  85+ 6D95 FE 01            cp   1
+  86+ 6D97 28 09            jr   z, .solid
+  87+ 6D99 FE 02            cp   2
+  88+ 6D9B 28 05            jr   z, .solid
+  89+ 6D9D
+  90+ 6D9D              .not_solid:
+  91+ 6D9D C1               pop  bc
+  92+ 6D9E D1               pop  de
+  93+ 6D9F E1               pop  hl
+  94+ 6DA0 B7               or   a                 ; Clear carry
+  95+ 6DA1 C9               ret
+  96+ 6DA2
+  97+ 6DA2              .solid:
+  98+ 6DA2 C1               pop  bc
+  99+ 6DA3 D1               pop  de
+ 100+ 6DA4 E1               pop  hl
+ 101+ 6DA5 37               scf                    ; Set carry
+ 102+ 6DA6 C9               ret
+ 103+ 6DA7
+ 104+ 6DA7              ; -------------------------------------------------------------------
+ 105+ 6DA7              ; Applica gravità e gestisce salto
+ 106+ 6DA7              ; -------------------------------------------------------------------
+ 107+ 6DA7              ApplyGravity:
+ 108+ 6DA7 ED 4B 60 72      ld  bc, (PlayerPos)
+ 109+ 6DAB 78               ld  a, b              ; B = PlayerY (pixel)
+ 110+ 6DAC
+ 111+ 6DAC                  ; Controlla se siamo a mezz'aria (on_ground == 0)
+ 112+ 6DAC 3A 6D 72         ld  a, (on_ground)
+ 113+ 6DAF B7               or  a
+ 114+ 6DB0 CA E9 6D         jp  z, .in_air        ; Se siamo in volo, continua a volare
+ 115+ 6DB3
+ 116+ 6DB3                  ; Se on_ground == 1, controlliamo se siamo ancora su terreno solido
+ 117+ 6DB3                  ; Dobbiamo controllare i pixel direttamente sotto i piedi del player:
+ 118+ 6DB3                  ; (PlayerX, PlayerY + 16) e (PlayerX + 7, PlayerY + 16)
+ 119+ 6DB3 78               ld  a, b
+ 120+ 6DB4 C6 10            add  a, 16
+ 121+ 6DB6 47               ld  b, a              ; B = PlayerY + 16
+ 122+ 6DB7
+ 123+ 6DB7                  ; Controlla se la cella sotto il piede sinistro (PlayerX, PlayerY + 16) è solida
+ 124+ 6DB7 CD 47 6D         call CheckSolidCell
+ 125+ 6DBA 38 13            jr   c, .still_on_ground
+ 126+ 6DBC
+ 127+ 6DBC                  ; Controlla se la cella sotto il piede destro (PlayerX + 7, PlayerY + 16) è solida
+ 128+ 6DBC 79               ld   a, c
+ 129+ 6DBD C6 07            add  a, 7
+ 130+ 6DBF 4F               ld   c, a              ; C = PlayerX + 7
+ 131+ 6DC0 CD 47 6D         call CheckSolidCell
+ 132+ 6DC3 38 0A            jr   c, .still_on_ground
+ 133+ 6DC5
+ 134+ 6DC5                  ; Se nessuna delle due è solida, iniziamo a cadere!
+ 135+ 6DC5 AF               xor  a
+ 136+ 6DC6 32 6D 72         ld   (on_ground), a
+ 137+ 6DC9 32 6C 72         ld   (velocity_y), a   ; Inizia la caduta con velocità 0
+ 138+ 6DCC C3 E9 6D         jp   .in_air
+ 139+ 6DCF
+ 140+ 6DCF              .still_on_ground:
+ 141+ 6DCF                  ; Siamo ancora sulla piattaforma o sul pavimento
+ 142+ 6DCF                  ; Ripristina bc originale (PlayerPos)
+ 143+ 6DCF ED 4B 60 72      ld   bc, (PlayerPos)
+ 144+ 6DD3
+ 145+ 6DD3                  ; Gestisci il salto
+ 146+ 6DD3 3A 6E 72         ld   a, (jump_pressed)
+ 147+ 6DD6 B7               or   a
+ 148+ 6DD7 CA 74 6E         jp   z, .end
+ 149+ 6DDA
+ 150+ 6DDA 3E 0C            ld   a, JUMP_STRENGTH
+ 151+ 6DDC 32 6C 72         ld   (velocity_y), a
+ 152+ 6DDF AF               xor  a
+ 153+ 6DE0 32 6D 72         ld   (on_ground), a
+ 154+ 6DE3 32 6E 72         ld   (jump_pressed), a
+ 155+ 6DE6 C3 E9 6D         jp   .in_air
+ 156+ 6DE9
+ 157+ 6DE9              .in_air:
+ 158+ 6DE9                  ; Applica gravità
+ 159+ 6DE9 3A 6C 72         ld  a, (velocity_y)
+ 160+ 6DEC D6 02            sub GRAVITY           ; gravity = 2
+ 161+ 6DEE
+ 162+ 6DEE                  ; Controlla se positivo per evitare bug con cp signed
+ 163+ 6DEE CB 7F            bit 7, a
+ 164+ 6DF0 28 06            jr  z, .store_vel
+ 165+ 6DF2
+ 166+ 6DF2 FE F4            cp  -MAX_FALL_SPEED   ; -12
+ 167+ 6DF4 30 02            jr  nc, .store_vel
+ 168+ 6DF6 3E F4            ld  a, -MAX_FALL_SPEED
+ 169+ 6DF8
+ 170+ 6DF8              .store_vel:
+ 171+ 6DF8 32 6C 72         ld  (velocity_y), a
+ 172+ 6DFB
+ 173+ 6DFB                  ; Applica movimento verticale: PlayerY = PlayerY - velocity_y
+ 174+ 6DFB ED 4B 60 72      ld  bc, (PlayerPos)
+ 175+ 6DFF 57               ld  d, a              ; D = velocity_y (signed)
+ 176+ 6E00 78               ld  a, b              ; A = PlayerY
+ 177+ 6E01 92               sub d                 ; A = PlayerY - velocity_y
+ 178+ 6E02 47               ld  b, a              ; B = new PlayerY
+ 179+ 6E03
+ 180+ 6E03                  ; Controlla se stiamo cadendo (velocity_y <= 0)
+ 181+ 6E03 3A 6C 72         ld  a, (velocity_y)
+ 182+ 6E06 CB 7F            bit 7, a              ; Se negativo, bit 7 = 1
+ 183+ 6E08 20 05            jr  nz, .falling_checks
+ 184+ 6E0A B7               or  a                 ; Se zero
+ 185+ 6E0B 28 02            jr  z, .falling_checks
+ 186+ 6E0D 18 4B            jr  .no_collision_checks ; Se stiamo salendo, non controlliamo collisioni
+ 187+ 6E0F
+ 188+ 6E0F              .falling_checks:
+ 189+ 6E0F                  ; --- CONTROLLO COLLISIONE CON IL TERRENO DURANTE LA CADUTA ---
+ 190+ 6E0F 78               ld   a, b
+ 191+ 6E10 C6 10            add  a, 16
+ 192+ 6E12 47               ld   b, a              ; B = Nuovo Y + 16
+ 193+ 6E13
+ 194+ 6E13                  ; Controlla se il piede sinistro tocca solido
+ 195+ 6E13 CD 47 6D         call CheckSolidCell
+ 196+ 6E16 38 0B            jr   c, .check_landing
+ 197+ 6E18
+ 198+ 6E18                  ; Controlla se il piede destro tocca solido
+ 199+ 6E18 79               ld   a, c
+ 200+ 6E19 C6 07            add  a, 7
+ 201+ 6E1B 4F               ld   c, a              ; C = PlayerX + 7
+ 202+ 6E1C CD 47 6D         call CheckSolidCell
+ 203+ 6E1F 38 02            jr   c, .check_landing
+ 204+ 6E21
+ 205+ 6E21                  ; Nessun atterraggio
+ 206+ 6E21 18 37            jr   .no_collision_checks
+ 207+ 6E23
+ 208+ 6E23              .check_landing:
+ 209+ 6E23                  ; Abbiamo toccato una cella solida!
+ 210+ 6E23 78               ld   a, b
+ 211+ 6E24 D6 18            sub  24
+ 212+ 6E26 CB 3F            srl  a
+ 213+ 6E28 CB 3F            srl  a
+ 214+ 6E2A CB 3F            srl  a                 ; A = r (0..15)
+ 215+ 6E2C
+ 216+ 6E2C                  ; Controlliamo se Vecchio Y + 16 <= r * 8 + 24
+ 217+ 6E2C 5F               ld   e, a              ; E = r
+ 218+ 6E2D 87               add  a, a              ; *2
+ 219+ 6E2E 87               add  a, a              ; *4
+ 220+ 6E2F 87               add  a, a              ; *8
+ 221+ 6E30 C6 18            add  a, 24             ; A = r * 8 + 24 (limite superiore della riga)
+ 222+ 6E32 57               ld   d, a              ; D = limite superiore
+ 223+ 6E33
+ 224+ 6E33                  ; Vecchio Y + 16
+ 225+ 6E33 3A 61 72         ld   a, (PlayerPos+1)  ; A = Vecchio Y
+ 226+ 6E36 C6 10            add  a, 16             ; A = Vecchio Y + 16
+ 227+ 6E38
+ 228+ 6E38 BA               cp   d                 ; Confronta Vecchio Y + 16 con il limite
+ 229+ 6E39 28 04            jr   z, .do_landing    ; Se ==, atterra
+ 230+ 6E3B 38 02            jr   c, .do_landing    ; Se <, atterra (eravamo sopra)
+ 231+ 6E3D
+ 232+ 6E3D 18 1B            jr   .no_collision_checks
+ 233+ 6E3F
+ 234+ 6E3F              .do_landing:
+ 235+ 6E3F                  ; Atterra sulla riga di layout E!
+ 236+ 6E3F 7B               ld   a, e
+ 237+ 6E40 87               add  a, a              ; *2
+ 238+ 6E41 87               add  a, a              ; *4
+ 239+ 6E42 87               add  a, a              ; *8
+ 240+ 6E43 C6 08            add  a, 8              ; A = PlayerY di atterraggio
+ 241+ 6E45
+ 242+ 6E45 ED 4B 60 72      ld   bc, (PlayerPos)   ; Ripristina C = PlayerX
+ 243+ 6E49 47               ld   b, a              ; B = Nuovo PlayerY
+ 244+ 6E4A
+ 245+ 6E4A ED 43 60 72      ld   (PlayerPos), bc
+ 246+ 6E4E 3E 01            ld   a, 1
+ 247+ 6E50 32 6D 72         ld   (on_ground), a
+ 248+ 6E53 AF               xor  a
+ 249+ 6E54 32 6C 72         ld   (velocity_y), a
+ 250+ 6E57 C3 74 6E         jp   .end
+ 251+ 6E5A
+ 252+ 6E5A              .no_collision_checks:
+ 253+ 6E5A 3A 6C 72         ld   a, (velocity_y)
+ 254+ 6E5D 57               ld   d, a                  ; Ripristina D = velocity_y (evita corruzione se proveniamo da .check_landing)
+ 255+ 6E5E ED 4B 60 72      ld   bc, (PlayerPos)
+ 256+ 6E62 78               ld   a, b
+ 257+ 6E63 92               sub  d                 ; A = Nuovo Y (calcolato in .store_vel)
+ 258+ 6E64 47               ld   b, a              ; B = Nuovo Y
+ 259+ 6E65
+ 260+ 6E65              .save_pos:
+ 261+ 6E65 78               ld   a, b
+ 262+ 6E66 FE 08            cp   8
+ 263+ 6E68 30 06            jr   nc, .save_ok
+ 264+ 6E6A 06 08            ld   b, 8
+ 265+ 6E6C AF               xor  a
+ 266+ 6E6D 32 6C 72         ld   (velocity_y), a
+ 267+ 6E70
+ 268+ 6E70              .save_ok:
+ 269+ 6E70 ED 43 60 72      ld   (PlayerPos), bc
+ 270+ 6E74
+ 271+ 6E74              .end:
+ 272+ 6E74 AF               xor  a
+ 273+ 6E75 32 6E 72         ld   (jump_pressed), a
+ 274+ 6E78 C9               ret
+ 275+ 6E79
+ 276+ 6E79              ; -------------------------------------------------------------------
+ 277+ 6E79              ; Verifica la collisione tra player e nemico (bounding box a livello di pixel)
+ 278+ 6E79              ; Output: Carry flag impostato se collisione, altrimenti resettato
+ 279+ 6E79              ; -------------------------------------------------------------------
+ 280+ 6E79              CheckCollision:
+ 281+ 6E79 E5               push hl
+ 282+ 6E7A D5               push de
+ 283+ 6E7B C5               push bc
+ 284+ 6E7C DD E5            push ix
+ 285+ 6E7E
+ 286+ 6E7E DD 21 51 6F      ld   ix, ActiveEnemies
+ 287+ 6E82 06 04            ld   b, 4              ; 4 slot
+ 288+ 6E84              .loop:
+ 289+ 6E84 DD 7E 00         ld   a, (ix+0)         ; Flags
+ 290+ 6E87 E6 80            and  $80               ; Active?
+ 291+ 6E89 28 1F            jr   z, .next
+ 292+ 6E8B
+ 293+ 6E8B                  ; 1. Controllo orizzontale: PlayerX - EnemyX + 7 in [0, 22]
+ 294+ 6E8B 3A 60 72         ld   a, (PlayerPos)    ; A = PlayerX
+ 295+ 6E8E DD 96 01         sub  (ix+1)            ; A = PlayerX - EnemyX
+ 296+ 6E91 C6 07            add  a, 7              ; A = PlayerX - EnemyX + 7
+ 297+ 6E93 FE 17            cp   23                ; Se >= 23, nessuna collisione con questo
+ 298+ 6E95 30 13            jr   nc, .next
+ 299+ 6E97
+ 300+ 6E97                  ; 2. Controllo verticale: PlayerY - EnemyY + 15 in [0, 30]
+ 301+ 6E97 3A 61 72         ld   a, (PlayerPos+1)  ; A = PlayerY
+ 302+ 6E9A DD 96 02         sub  (ix+2)            ; A = PlayerY - EnemyY
+ 303+ 6E9D C6 0F            add  a, 15             ; A = PlayerY - EnemyY + 15
+ 304+ 6E9F FE 1F            cp   31                ; Se >= 31, nessuna collisione con questo
+ 305+ 6EA1 30 07            jr   nc, .next
+ 306+ 6EA3
+ 307+ 6EA3                  ; Collisione avvenuta!
+ 308+ 6EA3 DD E1            pop  ix
+ 309+ 6EA5 C1               pop  bc
+ 310+ 6EA6 D1               pop  de
+ 311+ 6EA7 E1               pop  hl
+ 312+ 6EA8 37               scf                    ; Imposta carry flag
+ 313+ 6EA9 C9               ret
+ 314+ 6EAA
+ 315+ 6EAA              .next:
+ 316+ 6EAA 11 08 00         ld   de, 8
+ 317+ 6EAD DD 19            add  ix, de            ; Prossimo slot
+ 318+ 6EAF 05               dec  b
+ 319+ 6EB0 20 D2            jr   nz, .loop
+ 320+ 6EB2
+ 321+ 6EB2 DD E1            pop  ix
+ 322+ 6EB4 C1               pop  bc
+ 323+ 6EB5 D1               pop  de
+ 324+ 6EB6 E1               pop  hl
+ 325+ 6EB7 B7               or   a                 ; Reset carry flag
+ 326+ 6EB8 C9               ret
+ 327+ 6EB9
 # file closed: physics.asm
-  17  6D84                  include "screen.asm"
+  17  6EB9                  include "screen.asm"
 # file opened: screen.asm
-   1+ 6D84              ;===========================================================================
-   2+ 6D84              ; screen.asm
-   3+ 6D84              ;===========================================================================
-   4+ 6D84
-   5+ 6D84
-   6+ 6D84              ; -------------------------------------------------------------------
-   7+ 6D84              ; Disegna cornice
-   8+ 6D84              ; -------------------------------------------------------------------
-   9+ 6D84              ;PrintFrame:
-  10+ 6D84              ;    ld   hl, frameTopGraph
-  11+ 6D84              ;    ld   b, frameEnd - frameTopGraph
-  12+ 6D84              ;    call PrintString;
-  13+ 6D84              ;
-  14+ 6D84              ;    ld   b, COR_Y - $01
-  15+ 6D84              ;printFrame_loop:
-  16+ 6D84              ;    ld   c, COR_X - MIN_X
-  17+ 6D84              ;    call At
-  18+ 6D84              ;    ld   a, $99
-  19+ 6D84              ;    rst  $10
-  20+ 6D84
-  21+ 6D84              ;    ld   c, COR_X - MAX_X
-  22+ 6D84              ;    call At
-  23+ 6D84              ;    ld   a, $9a
-  24+ 6D84              ;   rst  $10
-  25+ 6D84
-  26+ 6D84              ;    dec  b
-  27+ 6D84              ;    ld   a, COR_Y - MAX_Y + $01
-  28+ 6D84              ;    sub  b
-  29+ 6D84              ;    jr   nz, printFrame_loop
-  30+ 6D84              ;    ret
-  31+ 6D84
-  32+ 6D84
-  33+ 6D84              PrintFrame:
-  34+ 6D84                  ; Disegna il bordo superiore
-  35+ 6D84 21 AF 6D         ld   hl, frameTopGraph
-  36+ 6D87 06 48            ld   b, frameEnd - frameTopGraph
-  37+ 6D89 CD 0B 60         call PrintString
-  38+ 6D8C
-  39+ 6D8C                  ; Disegna i bordi verticali per 16 righe
-  40+ 6D8C 06 17            ld   b, COR_Y - $01        ; B = riga di partenza (line 1)
-  41+ 6D8E 0E 10            ld   c, 16                 ; C = 16 righe
-  42+ 6D90 CD 2C 60         call DrawVerticalBorders
-  43+ 6D93
-  44+ 6D93                  ; Disegna il bordo inferiore
-  45+ 6D93 21 D4 6D         ld   hl, frameBottomGraph
-  46+ 6D96 06 23            ld   b, frameEnd - frameBottomGraph
-  47+ 6D98 CD 0B 60         call PrintString
-  48+ 6D9B
-  49+ 6D9B C9               ret
-  50+ 6D9C
-  51+ 6D9C              ; -------------------------------------------------------------------
-  52+ 6D9C              ; Disegna info gioco
-  53+ 6D9C              ; -------------------------------------------------------------------
-  54+ 6D9C              PrintInfoGame:
-  55+ 6D9C 3E 01            ld   a, $01
-  56+ 6D9E CD 01 16         call OPENCHAN
-  57+ 6DA1 21 F7 6D         ld   hl, infoGame
-  58+ 6DA4 06 25            ld   b, infoGame_end - infoGame
-  59+ 6DA6 CD 0B 60         call PrintString
-  60+ 6DA9 3E 02            ld   a, $02
-  61+ 6DAB CD 01 16         call OPENCHAN
-  62+ 6DAE C9               ret
-  63+ 6DAF
-  64+ 6DAF              ; -------------------------------------------------------------------
-  65+ 6DAF              ; Dati cornice
-  66+ 6DAF              ; -------------------------------------------------------------------
-  67+ 6DAF              frameTopGraph:
-  68+ 6DAF 16 00 00 10      db $16, $00, $00, $10, $01
-  68+ 6DB3 01
-  69+ 6DB4 96 97 97 97      db $96, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97
-  69+ 6DB8 97 97 97 97
-  69+ 6DBC 97 97 97 97
-  69+ 6DC0 97
-  70+ 6DC1 97 97 97 97      db $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97
-  70+ 6DC5 97 97 97 97
-  70+ 6DC9 97 97 97 97
-  70+ 6DCD 97
-  71+ 6DCE 97 97 97 97      db $97, $97, $97, $97, $97, $98
-  71+ 6DD2 97 98
-  72+ 6DD4
-  73+ 6DD4              frameBottomGraph:
-  74+ 6DD4 16 14 00         db $16, $14, $00
-  75+ 6DD7 9B 9C 9C 9C      db $9b, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c
-  75+ 6DDB 9C 9C 9C 9C
-  75+ 6DDF 9C 9C 9C 9C
-  75+ 6DE3 9C
-  76+ 6DE4 9C 9C 9C 9C      db $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c
-  76+ 6DE8 9C 9C 9C 9C
-  76+ 6DEC 9C 9C 9C 9C
-  76+ 6DF0 9C
-  77+ 6DF1 9C 9C 9C 9C      db $9c, $9c, $9c, $9c, $9c, $9d
-  77+ 6DF5 9C 9D
-  78+ 6DF7              frameEnd:
-  79+ 6DF7
-  80+ 6DF7              infoGame:
-  81+ 6DF7 10 03 16 00      db $10, $03, $16, $00, $00
-  81+ 6DFB 00
-  82+ 6DFC 4C 69 76 65      db 'Lives   Points   Level   Enemies'
-  82+ 6E00 73 20 20 20
-  82+ 6E04 50 6F 69 6E
-  82+ 6E08 74 73 20 20
-  82+ 6E0C 20 4C 65 76
-  82+ 6E10 65 6C 20 20
-  82+ 6E14 20 45 6E 65
-  82+ 6E18 6D 69 65 73
-  83+ 6E1C              infoGame_end:
+   1+ 6EB9              ;===========================================================================
+   2+ 6EB9              ; screen.asm
+   3+ 6EB9              ;===========================================================================
+   4+ 6EB9
+   5+ 6EB9
+   6+ 6EB9              ; -------------------------------------------------------------------
+   7+ 6EB9              ; Disegna cornice
+   8+ 6EB9              ; -------------------------------------------------------------------
+   9+ 6EB9              ;PrintFrame:
+  10+ 6EB9              ;    ld   hl, frameTopGraph
+  11+ 6EB9              ;    ld   b, frameEnd - frameTopGraph
+  12+ 6EB9              ;    call PrintString;
+  13+ 6EB9              ;
+  14+ 6EB9              ;    ld   b, COR_Y - $01
+  15+ 6EB9              ;printFrame_loop:
+  16+ 6EB9              ;    ld   c, COR_X - MIN_X
+  17+ 6EB9              ;    call At
+  18+ 6EB9              ;    ld   a, $99
+  19+ 6EB9              ;    rst  $10
+  20+ 6EB9
+  21+ 6EB9              ;    ld   c, COR_X - MAX_X
+  22+ 6EB9              ;    call At
+  23+ 6EB9              ;    ld   a, $9a
+  24+ 6EB9              ;   rst  $10
+  25+ 6EB9
+  26+ 6EB9              ;    dec  b
+  27+ 6EB9              ;    ld   a, COR_Y - MAX_Y + $01
+  28+ 6EB9              ;    sub  b
+  29+ 6EB9              ;    jr   nz, printFrame_loop
+  30+ 6EB9              ;    ret
+  31+ 6EB9
+  32+ 6EB9
+  33+ 6EB9              PrintFrame:
+  34+ 6EB9                  ; Disegna il bordo superiore
+  35+ 6EB9 21 E4 6E         ld   hl, frameTopGraph
+  36+ 6EBC 06 48            ld   b, frameEnd - frameTopGraph
+  37+ 6EBE CD 0B 60         call PrintString
+  38+ 6EC1
+  39+ 6EC1                  ; Disegna i bordi verticali per 16 righe
+  40+ 6EC1 06 17            ld   b, COR_Y - $01        ; B = riga di partenza (line 1)
+  41+ 6EC3 0E 10            ld   c, 16                 ; C = 16 righe
+  42+ 6EC5 CD 2C 60         call DrawVerticalBorders
+  43+ 6EC8
+  44+ 6EC8                  ; Disegna il bordo inferiore
+  45+ 6EC8 21 09 6F         ld   hl, frameBottomGraph
+  46+ 6ECB 06 23            ld   b, frameEnd - frameBottomGraph
+  47+ 6ECD CD 0B 60         call PrintString
+  48+ 6ED0
+  49+ 6ED0 C9               ret
+  50+ 6ED1
+  51+ 6ED1              ; -------------------------------------------------------------------
+  52+ 6ED1              ; Disegna info gioco
+  53+ 6ED1              ; -------------------------------------------------------------------
+  54+ 6ED1              PrintInfoGame:
+  55+ 6ED1 3E 01            ld   a, $01
+  56+ 6ED3 CD 01 16         call OPENCHAN
+  57+ 6ED6 21 2C 6F         ld   hl, infoGame
+  58+ 6ED9 06 25            ld   b, infoGame_end - infoGame
+  59+ 6EDB CD 0B 60         call PrintString
+  60+ 6EDE 3E 02            ld   a, $02
+  61+ 6EE0 CD 01 16         call OPENCHAN
+  62+ 6EE3 C9               ret
+  63+ 6EE4
+  64+ 6EE4              ; -------------------------------------------------------------------
+  65+ 6EE4              ; Dati cornice
+  66+ 6EE4              ; -------------------------------------------------------------------
+  67+ 6EE4              frameTopGraph:
+  68+ 6EE4 16 00 00 10      db $16, $00, $00, $10, $01
+  68+ 6EE8 01
+  69+ 6EE9 96 97 97 97      db $96, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97
+  69+ 6EED 97 97 97 97
+  69+ 6EF1 97 97 97 97
+  69+ 6EF5 97
+  70+ 6EF6 97 97 97 97      db $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97, $97
+  70+ 6EFA 97 97 97 97
+  70+ 6EFE 97 97 97 97
+  70+ 6F02 97
+  71+ 6F03 97 97 97 97      db $97, $97, $97, $97, $97, $98
+  71+ 6F07 97 98
+  72+ 6F09
+  73+ 6F09              frameBottomGraph:
+  74+ 6F09 16 14 00         db $16, $14, $00
+  75+ 6F0C 9B 9C 9C 9C      db $9b, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c
+  75+ 6F10 9C 9C 9C 9C
+  75+ 6F14 9C 9C 9C 9C
+  75+ 6F18 9C
+  76+ 6F19 9C 9C 9C 9C      db $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c, $9c
+  76+ 6F1D 9C 9C 9C 9C
+  76+ 6F21 9C 9C 9C 9C
+  76+ 6F25 9C
+  77+ 6F26 9C 9C 9C 9C      db $9c, $9c, $9c, $9c, $9c, $9d
+  77+ 6F2A 9C 9D
+  78+ 6F2C              frameEnd:
+  79+ 6F2C
+  80+ 6F2C              infoGame:
+  81+ 6F2C 10 03 16 00      db $10, $03, $16, $00, $00
+  81+ 6F30 00
+  82+ 6F31 4C 69 76 65      db 'Lives   Points   Level   Enemies'
+  82+ 6F35 73 20 20 20
+  82+ 6F39 50 6F 69 6E
+  82+ 6F3D 74 73 20 20
+  82+ 6F41 20 4C 65 76
+  82+ 6F45 65 6C 20 20
+  82+ 6F49 20 45 6E 65
+  82+ 6F4D 6D 69 65 73
+  83+ 6F51              infoGame_end:
 # file closed: screen.asm
-  18  6E1C                  include "enemy.asm"
+  18  6F51                  include "enemy.asm"
 # file opened: enemy.asm
-   1+ 6E1C              ;===========================================================================
-   2+ 6E1C              ; enemy.asm
-   3+ 6E1C              ;===========================================================================
-   4+ 6E1C
-   5+ 6E1C              ; -------------------------------------------------------------------
-   6+ 6E1C              ; Struttura dati per i nemici attivi della stanza corrente (RAM)
-   7+ 6E1C              ; 4 slot, 10 byte ciascuno:
-   8+ 6E1C              ; Offset 0: Flags (Active, Vertical, Sprite)
-   9+ 6E1C              ; Offset 1: Current X
-  10+ 6E1C              ; Offset 2: Current Y
-  11+ 6E1C              ; Offset 3: Min Limit
-  12+ 6E1C              ; Offset 4: Max Limit
-  13+ 6E1C              ; Offset 5: Direction
-  14+ 6E1C              ; Offset 6: Anim State
-  15+ 6E1C              ; Offset 7: Old X
-  16+ 6E1C              ; Offset 8: Old Y
-  17+ 6E1C              ; Offset 9: Reserved
-  18+ 6E1C              ; -------------------------------------------------------------------
-  19+ 6E1C              ActiveEnemies:
-  20+ 6E1C 00          > db 0
-  20+ 6E1D 00          > db 0
-  20+ 6E1E 00          > db 0
-  20+ 6E1F 00          > db 0
-  20+ 6E20 00          > db 0
-  20+ 6E21 00          > db 0
-  20+ 6E22 00          > db 0
-  20+ 6E23 00          > db 0
-  20+ 6E24 00          > db 0
-  20+ 6E25 00          > db 0
-  20+ 6E26 00          > db 0
-  20+ 6E27 00          > db 0
-  20+ 6E28 00          > db 0
-  20+ 6E29 00          > db 0
-  20+ 6E2A 00          > db 0
-  20+ 6E2B 00          > db 0
-  20+ 6E2C 00          > db 0
-  20+ 6E2D 00          > db 0
-  20+ 6E2E 00          > db 0
-  20+ 6E2F 00          > db 0
-  20+ 6E30 00          > db 0
-  20+ 6E31 00          > db 0
-  20+ 6E32 00          > db 0
-  20+ 6E33 00          > db 0
-  20+ 6E34 00          > db 0
-  20+ 6E35 00          > db 0
-  20+ 6E36 00          > db 0
-  20+ 6E37 00          > db 0
-  20+ 6E38 00          > db 0
-  20+ 6E39 00          > db 0
-  20+ 6E3A 00          > db 0
-  20+ 6E3B 00          > db 0
-  20+ 6E3C 00          > db 0
-  20+ 6E3D 00          > db 0
-  20+ 6E3E 00          > db 0
-  20+ 6E3F 00          > db 0
-  20+ 6E40 00          > db 0
-  20+ 6E41 00          > db 0
-  20+ 6E42 00          > db 0
-  20+ 6E43 00          > db 0
-  21+ 6E44
-  22+ 6E44              ; -------------------------------------------------------------------
-  23+ 6E44              ; Carica i nemici della stanza corrente in ActiveEnemies.
-  24+ 6E44              ; Chiamato quando si entra in una stanza.
-  25+ 6E44              ; -------------------------------------------------------------------
-  26+ 6E44              LoadRoomEnemies:
-  27+ 6E44 E5               push hl
-  28+ 6E45 D5               push de
-  29+ 6E46 C5               push bc
-  30+ 6E47
-  31+ 6E47 2A 15 72         ld   hl, (room_ptr)
-  32+ 6E4A 11 F0 00         ld   de, 240           ; Offset degli enemy nella stanza
-  33+ 6E4D 19               add  hl, de            ; HL = indirizzo di RoomXEnemy1
-  34+ 6E4E
-  35+ 6E4E 11 1C 6E         ld   de, ActiveEnemies
-  36+ 6E51 06 04            ld   b, 4              ; 4 slot per stanza
-  37+ 6E53              .loop:
-  38+ 6E53                  ; 1. Copia Flags, StartX, StartY
-  39+ 6E53 7E               ld   a, (hl)           ; A = Flags
-  40+ 6E54 12               ld   (de), a           ; Offset 0
-  41+ 6E55 23               inc  hl
-  42+ 6E56 13               inc  de
-  43+ 6E57
-  44+ 6E57 7E               ld   a, (hl)           ; A = StartX
-  45+ 6E58 12               ld   (de), a           ; Offset 1
-  46+ 6E59 23               inc  hl
-  47+ 6E5A 13               inc  de
-  48+ 6E5B
-  49+ 6E5B 7E               ld   a, (hl)           ; A = StartY
-  50+ 6E5C 12               ld   (de), a           ; Offset 2
-  51+ 6E5D 23               inc  hl
-  52+ 6E5E 13               inc  de
-  53+ 6E5F
-  54+ 6E5F                  ; 2. Determina se orizzontale o verticale per calcolare Min e Max Limit
-  55+ 6E5F E5               push hl
-  56+ 6E60 2B               dec  hl
-  57+ 6E61 2B               dec  hl
-  58+ 6E62 2B               dec  hl                ; HL = Flags address
-  59+ 6E63 7E               ld   a, (hl)           ; A = Flags
-  60+ 6E64 E6 40            and  $40               ; Vertical? (Bit 6)
-  61+ 6E66 20 18            jr   nz, .is_vert
-  62+ 6E68
-  63+ 6E68              .is_horiz:
-  64+ 6E68 23               inc  hl                ; HL = StartX address
-  65+ 6E69 7E               ld   a, (hl)           ; A = StartX
-  66+ 6E6A 23               inc  hl
-  67+ 6E6B 23               inc  hl                ; HL = Limit address
-  68+ 6E6C 4E               ld   c, (hl)           ; C = Limit
-  69+ 6E6D
-  70+ 6E6D                  ; Confronta StartX (A) con Limit (C)
-  71+ 6E6D B9               cp   c
-  72+ 6E6E 38 09            jr   c, .h_start_smaller
-  73+ 6E70                  ; StartX >= Limit
-  74+ 6E70 F5               push af
-  75+ 6E71 79               ld   a, c
-  76+ 6E72 12               ld   (de), a           ; Offset 3: Min Limit = Limit
-  77+ 6E73 13               inc  de
-  78+ 6E74 F1               pop  af
-  79+ 6E75 12               ld   (de), a           ; Offset 4: Max Limit = StartX
-  80+ 6E76 13               inc  de
-  81+ 6E77 18 1D            jr   .done_min_max
-  82+ 6E79
-  83+ 6E79              .h_start_smaller:
-  84+ 6E79 12               ld   (de), a           ; Offset 3: Min Limit = StartX
-  85+ 6E7A 13               inc  de
-  86+ 6E7B 79               ld   a, c
-  87+ 6E7C 12               ld   (de), a           ; Offset 4: Max Limit = Limit
-  88+ 6E7D 13               inc  de
-  89+ 6E7E 18 16            jr   .done_min_max
-  90+ 6E80
-  91+ 6E80              .is_vert:
-  92+ 6E80 23               inc  hl
-  93+ 6E81 23               inc  hl                ; HL = StartY address
-  94+ 6E82 7E               ld   a, (hl)           ; A = StartY
-  95+ 6E83 23               inc  hl                ; HL = Limit address
-  96+ 6E84 4E               ld   c, (hl)           ; C = Limit
-  97+ 6E85
-  98+ 6E85                  ; Confronta StartY (A) con Limit (C)
-  99+ 6E85 B9               cp   c
- 100+ 6E86 38 09            jr   c, .v_start_smaller
- 101+ 6E88                  ; StartY >= Limit
- 102+ 6E88 F5               push af
- 103+ 6E89 79               ld   a, c
- 104+ 6E8A 12               ld   (de), a           ; Offset 3: Min Limit = Limit
- 105+ 6E8B 13               inc  de
- 106+ 6E8C F1               pop  af
- 107+ 6E8D 12               ld   (de), a           ; Offset 4: Max Limit = StartY
- 108+ 6E8E 13               inc  de
- 109+ 6E8F 18 05            jr   .done_min_max
- 110+ 6E91
- 111+ 6E91              .v_start_smaller:
- 112+ 6E91 12               ld   (de), a           ; Offset 3: Min Limit = StartY
- 113+ 6E92 13               inc  de
- 114+ 6E93 79               ld   a, c
- 115+ 6E94 12               ld   (de), a           ; Offset 4: Max Limit = Limit
- 116+ 6E95 13               inc  de
- 117+ 6E96
- 118+ 6E96              .done_min_max:
- 119+ 6E96 E1               pop  hl                ; HL = Limit address in Room data
- 120+ 6E97 23               inc  hl                ; HL = inizio del prossimo slot
- 121+ 6E98
- 122+ 6E98                  ; Imposta Direction = 2 (Destra/Giù)
- 123+ 6E98 3E 02            ld   a, 2
- 124+ 6E9A 12               ld   (de), a           ; Offset 5: Direction
- 125+ 6E9B 13               inc  de
- 126+ 6E9C
- 127+ 6E9C                  ; Imposta Anim State = 0
- 128+ 6E9C AF               xor  a
- 129+ 6E9D 12               ld   (de), a           ; Offset 6: Anim State
- 130+ 6E9E 13               inc  de
- 131+ 6E9F
- 132+ 6E9F                  ; Imposta Old X = Start X
- 133+ 6E9F E5               push hl
- 134+ 6EA0 2B               dec  hl
- 135+ 6EA1 2B               dec  hl
- 136+ 6EA2 2B               dec  hl                ; HL = Start X
- 137+ 6EA3 7E               ld   a, (hl)
- 138+ 6EA4 12               ld   (de), a           ; Offset 7: Old X
- 139+ 6EA5 13               inc  de
- 140+ 6EA6
- 141+ 6EA6                  ; Imposta Old Y = Start Y
- 142+ 6EA6 23               inc  hl                ; HL = Start Y
- 143+ 6EA7 7E               ld   a, (hl)
- 144+ 6EA8 12               ld   (de), a           ; Offset 8: Old Y
- 145+ 6EA9 13               inc  de
- 146+ 6EAA
- 147+ 6EAA E1               pop  hl
- 148+ 6EAB
- 149+ 6EAB                  ; Offset 9: Riservato
- 150+ 6EAB AF               xor  a
- 151+ 6EAC 12               ld   (de), a           ; Offset 9
- 152+ 6EAD 13               inc  de
- 153+ 6EAE
- 154+ 6EAE 05               dec  b
- 155+ 6EAF C2 53 6E         jp   nz, .loop
- 156+ 6EB2
- 157+ 6EB2 C1               pop  bc
- 158+ 6EB3 D1               pop  de
- 159+ 6EB4 E1               pop  hl
- 160+ 6EB5 C9               ret
- 161+ 6EB6
- 162+ 6EB6              ; -------------------------------------------------------------------
- 163+ 6EB6              ; Cancella tutti i nemici attivi ripristinando lo sfondo statico
- 164+ 6EB6              ; -------------------------------------------------------------------
- 165+ 6EB6              EraseRoomEnemies:
- 166+ 6EB6 E5               push hl
- 167+ 6EB7 D5               push de
- 168+ 6EB8 C5               push bc
- 169+ 6EB9 DD E5            push ix
- 170+ 6EBB
- 171+ 6EBB DD 21 1C 6E      ld   ix, ActiveEnemies
- 172+ 6EBF 06 04            ld   b, 4              ; 4 slot
- 173+ 6EC1              .loop:
- 174+ 6EC1 DD 7E 00         ld   a, (ix+0)         ; Flags
- 175+ 6EC4 E6 80            and  $80               ; Active?
- 176+ 6EC6 28 0B            jr   z, .next
- 177+ 6EC8
- 178+ 6EC8 C5               push bc                ; Salva contatore ciclo
- 179+ 6EC9 DD 4E 07         ld   c, (ix+7)         ; C = Old X
- 180+ 6ECC DD 46 08         ld   b, (ix+8)         ; B = Old Y
- 181+ 6ECF CD 74 5F         call ErasePixelSprite16x16
- 182+ 6ED2 C1               pop  bc
- 183+ 6ED3
- 184+ 6ED3              .next:
- 185+ 6ED3 11 0A 00         ld   de, 10
- 186+ 6ED6 DD 19            add  ix, de            ; Prossimo slot
- 187+ 6ED8 05               dec  b
- 188+ 6ED9 20 E6            jr   nz, .loop
- 189+ 6EDB
- 190+ 6EDB DD E1            pop  ix
- 191+ 6EDD C1               pop  bc
- 192+ 6EDE D1               pop  de
- 193+ 6EDF E1               pop  hl
- 194+ 6EE0 C9               ret
- 195+ 6EE1
- 196+ 6EE1              ; -------------------------------------------------------------------
- 197+ 6EE1              ; Disegna tutti i nemici attivi
- 198+ 6EE1              ; -------------------------------------------------------------------
- 199+ 6EE1              DrawRoomEnemies:
- 200+ 6EE1 E5               push hl
- 201+ 6EE2 D5               push de
- 202+ 6EE3 C5               push bc
- 203+ 6EE4 DD E5            push ix
- 204+ 6EE6
- 205+ 6EE6 DD 21 1C 6E      ld   ix, ActiveEnemies
- 206+ 6EEA 06 04            ld   b, 4              ; 4 slot
- 207+ 6EEC              .loop:
- 208+ 6EEC DD 7E 00         ld   a, (ix+0)         ; Flags
- 209+ 6EEF E6 80            and  $80               ; Active?
- 210+ 6EF1 CA 99 6F         jp   z, .next
- 211+ 6EF4
- 212+ 6EF4 C5               push bc                ; Salva contatore ciclo
- 213+ 6EF5
- 214+ 6EF5                  ; Determina quale sprite usare basato sul tipo (Bit 1-0)
- 215+ 6EF5 DD 7E 00         ld   a, (ix+0)         ; Flags
- 216+ 6EF8 E6 03            and  3                 ; Tipo (0=Lametta, 1=Uovo, 2=Robot)
- 217+ 6EFA C2 36 6F         jp   nz, .not_lametta
- 218+ 6EFD
- 219+ 6EFD                  ; Lametta (Tipo 0)
- 220+ 6EFD 2A 15 72         ld   hl, (room_ptr)
- 221+ 6F00 11 00 73         ld   de, TheBridgeLayout
- 222+ 6F03 B7               or   a
- 223+ 6F04 ED 52            sbc  hl, de
- 224+ 6F06 28 1A            jr   z, .bridge_lametta
- 225+ 6F08
- 226+ 6F08 2A 15 72         ld   hl, (room_ptr)
- 227+ 6F0B 11 00 74         ld   de, TheOffLicenceLayout
- 228+ 6F0E B7               or   a
- 229+ 6F0F ED 52            sbc  hl, de
- 230+ 6F11 28 1E            jr   z, .offlicence_radar
- 231+ 6F13
- 232+ 6F13 DD 7E 05         ld   a, (ix+5)         ; Direction
- 233+ 6F16 FE 01            cp   1                 ; Sinistra?
- 234+ 6F18 21 6F 62         ld   hl, LamettaSpriteLeft
- 235+ 6F1B 28 5F            jr   z, .got_sprite
- 236+ 6F1D 21 EF 61         ld   hl, LamettaSpriteRight
- 237+ 6F20 18 5A            jr   .got_sprite
- 238+ 6F22
- 239+ 6F22              .bridge_lametta:
- 240+ 6F22 DD 7E 05         ld   a, (ix+5)         ; Direction
- 241+ 6F25 FE 01            cp   1                 ; Sinistra?
- 242+ 6F27 21 EF 68         ld   hl, UccelloSpriteLeft
- 243+ 6F2A 28 50            jr   z, .got_sprite
- 244+ 6F2C 21 6F 69         ld   hl, UccelloSpriteRight
- 245+ 6F2F 18 4B            jr   .got_sprite
- 246+ 6F31
- 247+ 6F31              .offlicence_radar:
- 248+ 6F31 21 6F 6A         ld   hl, RadarSprite
- 249+ 6F34 18 46            jr   .got_sprite
- 250+ 6F36
- 251+ 6F36              .not_lametta:
- 252+ 6F36 3D               dec  a
- 253+ 6F37 C2 69 6F         jp   nz, .not_egg
- 254+ 6F3A
- 255+ 6F3A                  ; Uovo (Tipo 1)
- 256+ 6F3A 2A 15 72         ld   hl, (room_ptr)
- 257+ 6F3D 11 00 73         ld   de, TheBridgeLayout
- 258+ 6F40 B7               or   a
- 259+ 6F41 ED 52            sbc  hl, de
- 260+ 6F43 28 1A            jr   z, .bridge_egg
- 261+ 6F45
- 262+ 6F45 2A 15 72         ld   hl, (room_ptr)
- 263+ 6F48 11 00 74         ld   de, TheOffLicenceLayout
- 264+ 6F4B B7               or   a
- 265+ 6F4C ED 52            sbc  hl, de
- 266+ 6F4E 28 14            jr   z, .offlicence_face
- 267+ 6F50
- 268+ 6F50 DD 7E 05         ld   a, (ix+5)         ; Direction
- 269+ 6F53 FE 01            cp   1                 ; Sinistra?
- 270+ 6F55 21 6F 67         ld   hl, EggSpriteLeft
- 271+ 6F58 28 22            jr   z, .got_sprite
- 272+ 6F5A 21 EF 66         ld   hl, EggSpriteRight
- 273+ 6F5D 18 1D            jr   .got_sprite
- 274+ 6F5F
- 275+ 6F5F              .bridge_egg:
- 276+ 6F5F 21 6F 68         ld   hl, UfoSprite
- 277+ 6F62 18 18            jr   .got_sprite
- 278+ 6F64
- 279+ 6F64              .offlicence_face:
- 280+ 6F64 21 EF 69         ld   hl, FaceSprite
- 281+ 6F67 18 13            jr   .got_sprite
- 282+ 6F69
- 283+ 6F69              .not_egg:
- 284+ 6F69                  ; Robot (Tipo 2)
- 285+ 6F69 2A 15 72         ld   hl, (room_ptr)
- 286+ 6F6C 11 00 74         ld   de, TheOffLicenceLayout
- 287+ 6F6F B7               or   a
- 288+ 6F70 ED 52            sbc  hl, de
- 289+ 6F72 28 05            jr   z, .offlicence_ball
- 290+ 6F74
- 291+ 6F74 21 EF 65         ld   hl, RobotSprite
- 292+ 6F77 18 03            jr   .got_sprite
- 293+ 6F79
- 294+ 6F79              .offlicence_ball:
- 295+ 6F79 21 EF 6A         ld   hl, BallSprite
- 296+ 6F7C
- 297+ 6F7C              .got_sprite:
- 298+ 6F7C                  ; Calcola il frame dell'animazione: Anim State * 32
- 299+ 6F7C DD 7E 06         ld   a, (ix+6)         ; Anim State (0..3)
- 300+ 6F7F 87               add  a, a              ; *2
- 301+ 6F80 87               add  a, a              ; *4
- 302+ 6F81 87               add  a, a              ; *8
- 303+ 6F82 87               add  a, a              ; *16
- 304+ 6F83 87               add  a, a              ; *32
- 305+ 6F84 5F               ld   e, a
- 306+ 6F85 16 00            ld   d, 0              ; DE = offset del frame
- 307+ 6F87 19               add  hl, de            ; HL = indirizzo del frame corretto
- 308+ 6F88
- 309+ 6F88                  ; Disegna alla coordinata corrente
- 310+ 6F88 DD 4E 01         ld   c, (ix+1)         ; C = Current X
- 311+ 6F8B DD 46 02         ld   b, (ix+2)         ; B = Current Y
- 312+ 6F8E
- 313+ 6F8E DD E5            push ix                ; Salva slot pointer
- 314+ 6F90 E5               push hl
- 315+ 6F91 DD E1            pop  ix                ; IX = sprite data pointer
- 316+ 6F93 CD 22 5F         call DrawPixelSprite16x16
- 317+ 6F96 DD E1            pop  ix                ; Ripristina slot pointer
- 318+ 6F98
- 319+ 6F98 C1               pop  bc                ; Ripristina contatore ciclo
- 320+ 6F99
- 321+ 6F99              .next:
- 322+ 6F99 11 0A 00         ld   de, 10
- 323+ 6F9C DD 19            add  ix, de            ; Prossimo slot
- 324+ 6F9E 05               dec  b
- 325+ 6F9F C2 EC 6E         jp   nz, .loop
- 326+ 6FA2
- 327+ 6FA2 DD E1            pop  ix
- 328+ 6FA4 C1               pop  bc
- 329+ 6FA5 D1               pop  de
- 330+ 6FA6 E1               pop  hl
- 331+ 6FA7 C9               ret
- 332+ 6FA8
- 333+ 6FA8              ; -------------------------------------------------------------------
- 334+ 6FA8              ; Aggiorna le posizioni dei nemici attivi per il prossimo frame
- 335+ 6FA8              ; -------------------------------------------------------------------
- 336+ 6FA8              UpdateRoomEnemies:
- 337+ 6FA8 E5               push hl
- 338+ 6FA9 D5               push de
- 339+ 6FAA C5               push bc
- 340+ 6FAB DD E5            push ix
- 341+ 6FAD
- 342+ 6FAD DD 21 1C 6E      ld   ix, ActiveEnemies
- 343+ 6FB1 06 04            ld   b, 4              ; 4 slot
- 344+ 6FB3              .loop:
- 345+ 6FB3 DD 7E 00         ld   a, (ix+0)         ; Flags
- 346+ 6FB6 E6 80            and  $80               ; Active?
- 347+ 6FB8 CA 63 70         jp   z, .next
- 348+ 6FBB
- 349+ 6FBB                  ; 1. Salva la posizione corrente in Old X/Y per la cancellazione nel prossimo frame
- 350+ 6FBB DD 7E 01         ld   a, (ix+1)
- 351+ 6FBE DD 77 07         ld   (ix+7), a         ; Old X = Current X
- 352+ 6FC1 DD 7E 02         ld   a, (ix+2)
- 353+ 6FC4 DD 77 08         ld   (ix+8), a         ; Old Y = Current Y
- 354+ 6FC7
- 355+ 6FC7                  ; 2. Aggiorna Anim State
- 356+ 6FC7 DD 7E 06         ld   a, (ix+6)         ; Anim State (0..3)
- 357+ 6FCA 3C               inc  a
- 358+ 6FCB E6 03            and  3                 ; Alterna 0..3
- 359+ 6FCD DD 77 06         ld   (ix+6), a
- 360+ 6FD0
- 361+ 6FD0                  ; 3. Determina se orizzontale o verticale
- 362+ 6FD0 DD 7E 00         ld   a, (ix+0)         ; Flags
- 363+ 6FD3 E6 40            and  $40               ; Vertical? (Bit 6)
- 364+ 6FD5 C2 1F 70         jp   nz, .vertical
- 365+ 6FD8
- 366+ 6FD8              .horizontal:
- 367+ 6FD8 DD 7E 05         ld   a, (ix+5)         ; Direction (1=Left, 2=Right)
- 368+ 6FDB FE 01            cp   1
- 369+ 6FDD 20 20            jr   nz, .horiz_right
- 370+ 6FDF
- 371+ 6FDF              .horiz_left:
- 372+ 6FDF DD 7E 01         ld   a, (ix+1)         ; Current X
- 373+ 6FE2 D6 02            sub  2                 ; Muovi a sinistra di 2 pixel
- 374+ 6FE4 DD BE 03         cp   (ix+3)            ; Min Limit
- 375+ 6FE7 28 08            jr   z, .h_rev_right
- 376+ 6FE9 38 06            jr   c, .h_rev_right
- 377+ 6FEB DD 77 01         ld   (ix+1), a
- 378+ 6FEE C3 63 70         jp   .next
- 379+ 6FF1
- 380+ 6FF1              .h_rev_right:
- 381+ 6FF1 DD 7E 03         ld   a, (ix+3)         ; Min Limit
- 382+ 6FF4 DD 77 01         ld   (ix+1), a
- 383+ 6FF7 3E 02            ld   a, 2
- 384+ 6FF9 DD 77 05         ld   (ix+5), a         ; Cambia direzione a Destra
- 385+ 6FFC C3 63 70         jp   .next
- 386+ 6FFF
- 387+ 6FFF              .horiz_right:
- 388+ 6FFF DD 7E 01         ld   a, (ix+1)         ; Current X
- 389+ 7002 C6 02            add  a, 2              ; Muovi a destra di 2 pixel
- 390+ 7004 DD BE 04         cp   (ix+4)            ; Max Limit
- 391+ 7007 28 08            jr   z, .h_rev_left
- 392+ 7009 30 06            jr   nc, .h_rev_left
- 393+ 700B DD 77 01         ld   (ix+1), a
- 394+ 700E C3 63 70         jp   .next
- 395+ 7011
- 396+ 7011              .h_rev_left:
- 397+ 7011 DD 7E 04         ld   a, (ix+4)         ; Max Limit
- 398+ 7014 DD 77 01         ld   (ix+1), a
- 399+ 7017 3E 01            ld   a, 1
- 400+ 7019 DD 77 05         ld   (ix+5), a         ; Cambia direzione a Sinistra
- 401+ 701C C3 63 70         jp   .next
- 402+ 701F
- 403+ 701F              .vertical:
- 404+ 701F DD 7E 05         ld   a, (ix+5)         ; Direction (1=Up, 2=Down)
- 405+ 7022 FE 01            cp   1
- 406+ 7024 20 20            jr   nz, .vert_down
- 407+ 7026
- 408+ 7026              .vert_up:
- 409+ 7026 DD 7E 02         ld   a, (ix+2)         ; Current Y
- 410+ 7029 D6 02            sub  2                 ; Muovi in alto di 2 pixel
- 411+ 702B DD BE 03         cp   (ix+3)            ; Min Limit (Top)
- 412+ 702E 28 08            jr   z, .v_rev_down
- 413+ 7030 38 06            jr   c, .v_rev_down
- 414+ 7032 DD 77 02         ld   (ix+2), a
- 415+ 7035 C3 63 70         jp   .next
- 416+ 7038
- 417+ 7038              .v_rev_down:
- 418+ 7038 DD 7E 03         ld   a, (ix+3)         ; Min Limit
- 419+ 703B DD 77 02         ld   (ix+2), a
- 420+ 703E 3E 02            ld   a, 2
- 421+ 7040 DD 77 05         ld   (ix+5), a         ; Cambia direzione in Basso
- 422+ 7043 C3 63 70         jp   .next
- 423+ 7046
- 424+ 7046              .vert_down:
- 425+ 7046 DD 7E 02         ld   a, (ix+2)         ; Current Y
- 426+ 7049 C6 02            add  a, 2              ; Muovi in basso di 2 pixel
- 427+ 704B DD BE 04         cp   (ix+4)            ; Max Limit (Bottom)
- 428+ 704E 28 08            jr   z, .v_rev_up
- 429+ 7050 30 06            jr   nc, .v_rev_up
- 430+ 7052 DD 77 02         ld   (ix+2), a
- 431+ 7055 C3 63 70         jp   .next
- 432+ 7058
- 433+ 7058              .v_rev_up:
- 434+ 7058 DD 7E 04         ld   a, (ix+4)         ; Max Limit
- 435+ 705B DD 77 02         ld   (ix+2), a
- 436+ 705E 3E 01            ld   a, 1
- 437+ 7060 DD 77 05         ld   (ix+5), a         ; Cambia direzione in Alto
- 438+ 7063
- 439+ 7063              .next:
- 440+ 7063 11 0A 00         ld   de, 10
- 441+ 7066 DD 19            add  ix, de            ; Prossimo slot (10 byte)
- 442+ 7068 05               dec  b
- 443+ 7069 C2 B3 6F         jp   nz, .loop
- 444+ 706C
- 445+ 706C DD E1            pop  ix
- 446+ 706E C1               pop  bc
- 447+ 706F D1               pop  de
- 448+ 7070 E1               pop  hl
- 449+ 7071 C9               ret
- 450+ 7072
+   1+ 6F51              ;===========================================================================
+   2+ 6F51              ; enemy.asm
+   3+ 6F51              ;===========================================================================
+   4+ 6F51
+   5+ 6F51              ; -------------------------------------------------------------------
+   6+ 6F51              ; Struttura dati per i nemici attivi della stanza corrente (RAM)
+   7+ 6F51              ; 4 slot, 10 byte ciascuno:
+   8+ 6F51              ; Offset 0: Flags (Active, Vertical, Sprite)
+   9+ 6F51              ; Offset 1: Current X
+  10+ 6F51              ; Offset 2: Current Y
+  11+ 6F51              ; Offset 3: Min Limit
+  12+ 6F51              ; Offset 4: Max Limit
+  13+ 6F51              ; Offset 5: Direction
+  14+ 6F51              ; Offset 6: Anim State
+  15+ 6F51              ; Offset 7: Old X
+  16+ 6F51              ; Offset 8: Old Y
+  17+ 6F51              ; Offset 9: Reserved
+  18+ 6F51              ; -------------------------------------------------------------------
+  19+ 6F51              ActiveEnemies:
+  20+ 6F51 00          > db 0
+  20+ 6F52 00          > db 0
+  20+ 6F53 00          > db 0
+  20+ 6F54 00          > db 0
+  20+ 6F55 00          > db 0
+  20+ 6F56 00          > db 0
+  20+ 6F57 00          > db 0
+  20+ 6F58 00          > db 0
+  20+ 6F59 00          > db 0
+  20+ 6F5A 00          > db 0
+  20+ 6F5B 00          > db 0
+  20+ 6F5C 00          > db 0
+  20+ 6F5D 00          > db 0
+  20+ 6F5E 00          > db 0
+  20+ 6F5F 00          > db 0
+  20+ 6F60 00          > db 0
+  20+ 6F61 00          > db 0
+  20+ 6F62 00          > db 0
+  20+ 6F63 00          > db 0
+  20+ 6F64 00          > db 0
+  20+ 6F65 00          > db 0
+  20+ 6F66 00          > db 0
+  20+ 6F67 00          > db 0
+  20+ 6F68 00          > db 0
+  20+ 6F69 00          > db 0
+  20+ 6F6A 00          > db 0
+  20+ 6F6B 00          > db 0
+  20+ 6F6C 00          > db 0
+  20+ 6F6D 00          > db 0
+  20+ 6F6E 00          > db 0
+  20+ 6F6F 00          > db 0
+  20+ 6F70 00          > db 0
+  20+ 6F71 00          > db 0
+  20+ 6F72 00          > db 0
+  20+ 6F73 00          > db 0
+  20+ 6F74 00          > db 0
+  20+ 6F75 00          > db 0
+  20+ 6F76 00          > db 0
+  20+ 6F77 00          > db 0
+  20+ 6F78 00          > db 0
+  21+ 6F79
+  22+ 6F79              ; -------------------------------------------------------------------
+  23+ 6F79              ; Carica i nemici della stanza corrente in ActiveEnemies.
+  24+ 6F79              ; Chiamato quando si entra in una stanza.
+  25+ 6F79              ; -------------------------------------------------------------------
+  26+ 6F79              LoadRoomEnemies:
+  27+ 6F79 E5               push hl
+  28+ 6F7A D5               push de
+  29+ 6F7B C5               push bc
+  30+ 6F7C DD E5            push ix
+  31+ 6F7E
+  32+ 6F7E                  ; 1. Imposta IX all'indirizzo dell'array dei colori in ROM (room_ptr + 223)
+  33+ 6F7E 2A 73 73         ld   hl, (room_ptr)
+  34+ 6F81 11 DF 00         ld   de, 223
+  35+ 6F84 19               add  hl, de
+  36+ 6F85 E5               push hl
+  37+ 6F86 DD E1            pop  ix                ; IX = color pointer
+  38+ 6F88
+  39+ 6F88                  ; 2. Imposta HL all'indirizzo dei dati dei nemici (room_ptr + 240)
+  40+ 6F88 2A 73 73         ld   hl, (room_ptr)
+  41+ 6F8B 11 F0 00         ld   de, 240           ; Offset degli enemy nella stanza
+  42+ 6F8E 19               add  hl, de            ; HL = indirizzo di RoomXEnemy1
+  43+ 6F8F
+  44+ 6F8F 11 51 6F         ld   de, ActiveEnemies
+  45+ 6F92 06 04            ld   b, 4              ; 4 slot per stanza
+  46+ 6F94              .loop:
+  47+ 6F94                  ; Leggi il colore per questo nemico dal puntatore IX e salvalo sullo stack
+  48+ 6F94 DD 7E 00         ld   a, (ix+0)
+  49+ 6F97 DD 23            inc  ix
+  50+ 6F99 F5               push af                ; Salva colore sullo stack
+  51+ 6F9A
+  52+ 6F9A                  ; 1. Copia Flags, StartX, StartY
+  53+ 6F9A 7E               ld   a, (hl)           ; A = Flags
+  54+ 6F9B 12               ld   (de), a           ; Offset 0
+  55+ 6F9C 23               inc  hl
+  56+ 6F9D 13               inc  de
+  57+ 6F9E
+  58+ 6F9E 7E               ld   a, (hl)           ; A = StartX
+  59+ 6F9F 12               ld   (de), a           ; Offset 1
+  60+ 6FA0 23               inc  hl
+  61+ 6FA1 13               inc  de
+  62+ 6FA2
+  63+ 6FA2 7E               ld   a, (hl)           ; A = StartY
+  64+ 6FA3 12               ld   (de), a           ; Offset 2
+  65+ 6FA4 23               inc  hl
+  66+ 6FA5 13               inc  de
+  67+ 6FA6
+  68+ 6FA6                  ; 2. Determina se orizzontale o verticale per calcolare Min e Max Limit
+  69+ 6FA6 E5               push hl
+  70+ 6FA7 2B               dec  hl
+  71+ 6FA8 2B               dec  hl
+  72+ 6FA9 2B               dec  hl                ; HL = Flags address
+  73+ 6FAA 7E               ld   a, (hl)           ; A = Flags
+  74+ 6FAB E6 40            and  $40               ; Vertical? (Bit 6)
+  75+ 6FAD 20 18            jr   nz, .is_vert
+  76+ 6FAF
+  77+ 6FAF              .is_horiz:
+  78+ 6FAF 23               inc  hl                ; HL = StartX address
+  79+ 6FB0 7E               ld   a, (hl)           ; A = StartX
+  80+ 6FB1 23               inc  hl
+  81+ 6FB2 23               inc  hl                ; HL = Limit address
+  82+ 6FB3 4E               ld   c, (hl)           ; C = Limit
+  83+ 6FB4
+  84+ 6FB4                  ; Confronta StartX (A) con Limit (C)
+  85+ 6FB4 B9               cp   c
+  86+ 6FB5 38 09            jr   c, .h_start_smaller
+  87+ 6FB7                  ; StartX >= Limit
+  88+ 6FB7 F5               push af
+  89+ 6FB8 79               ld   a, c
+  90+ 6FB9 12               ld   (de), a           ; Offset 3: Min Limit = Limit
+  91+ 6FBA 13               inc  de
+  92+ 6FBB F1               pop  af
+  93+ 6FBC 12               ld   (de), a           ; Offset 4: Max Limit = StartX
+  94+ 6FBD 13               inc  de
+  95+ 6FBE 18 1D            jr   .done_min_max
+  96+ 6FC0
+  97+ 6FC0              .h_start_smaller:
+  98+ 6FC0 12               ld   (de), a           ; Offset 3: Min Limit = StartX
+  99+ 6FC1 13               inc  de
+ 100+ 6FC2 79               ld   a, c
+ 101+ 6FC3 12               ld   (de), a           ; Offset 4: Max Limit = Limit
+ 102+ 6FC4 13               inc  de
+ 103+ 6FC5 18 16            jr   .done_min_max
+ 104+ 6FC7
+ 105+ 6FC7              .is_vert:
+ 106+ 6FC7 23               inc  hl
+ 107+ 6FC8 23               inc  hl                ; HL = StartY address
+ 108+ 6FC9 7E               ld   a, (hl)           ; A = StartY
+ 109+ 6FCA 23               inc  hl                ; HL = Limit address
+ 110+ 6FCB 4E               ld   c, (hl)           ; C = Limit
+ 111+ 6FCC
+ 112+ 6FCC                  ; Confronta StartY (A) con Limit (C)
+ 113+ 6FCC B9               cp   c
+ 114+ 6FCD 38 09            jr   c, .v_start_smaller
+ 115+ 6FCF                  ; StartY >= Limit
+ 116+ 6FCF F5               push af
+ 117+ 6FD0 79               ld   a, c
+ 118+ 6FD1 12               ld   (de), a           ; Offset 3: Min Limit = Limit
+ 119+ 6FD2 13               inc  de
+ 120+ 6FD3 F1               pop  af
+ 121+ 6FD4 12               ld   (de), a           ; Offset 4: Max Limit = StartY
+ 122+ 6FD5 13               inc  de
+ 123+ 6FD6 18 05            jr   .done_min_max
+ 124+ 6FD8
+ 125+ 6FD8              .v_start_smaller:
+ 126+ 6FD8 12               ld   (de), a           ; Offset 3: Min Limit = StartY
+ 127+ 6FD9 13               inc  de
+ 128+ 6FDA 79               ld   a, c
+ 129+ 6FDB 12               ld   (de), a           ; Offset 4: Max Limit = Limit
+ 130+ 6FDC 13               inc  de
+ 131+ 6FDD
+ 132+ 6FDD              .done_min_max:
+ 133+ 6FDD E1               pop  hl                ; HL = Limit address in Room data
+ 134+ 6FDE 23               inc  hl                ; HL = inizio del prossimo slot
+ 135+ 6FDF
+ 136+ 6FDF                  ; Imposta Direction = 2 (Destra/Giù)
+ 137+ 6FDF 3E 02            ld   a, 2
+ 138+ 6FE1 12               ld   (de), a           ; Offset 5: Direction
+ 139+ 6FE2 13               inc  de
+ 140+ 6FE3
+ 141+ 6FE3                  ; Imposta Anim State = 0
+ 142+ 6FE3 AF               xor  a
+ 143+ 6FE4 12               ld   (de), a           ; Offset 6: Anim State
+ 144+ 6FE5 13               inc  de
+ 145+ 6FE6
+ 146+ 6FE6                  ; Imposta Old X = Start X
+ 147+ 6FE6 E5               push hl
+ 148+ 6FE7 2B               dec  hl
+ 149+ 6FE8 2B               dec  hl
+ 150+ 6FE9 2B               dec  hl                ; HL = Start X
+ 151+ 6FEA 7E               ld   a, (hl)
+ 152+ 6FEB 12               ld   (de), a           ; Offset 7: Old X
+ 153+ 6FEC 13               inc  de
+ 154+ 6FED
+ 155+ 6FED                  ; Imposta Old Y = Start Y
+ 156+ 6FED 23               inc  hl                ; HL = Start Y
+ 157+ 6FEE 7E               ld   a, (hl)
+ 158+ 6FEF 12               ld   (de), a           ; Offset 8: Old Y
+ 159+ 6FF0 13               inc  de
+ 160+ 6FF1
+ 161+ 6FF1 E1               pop  hl
+ 162+ 6FF2
+ 163+ 6FF2                  ; Offset 9: Color
+ 164+ 6FF2 F1               pop  af                ; Ripristina colore dallo stack
+ 165+ 6FF3 12               ld   (de), a           ; Offset 9: Color
+ 166+ 6FF4 13               inc  de
+ 167+ 6FF5
+ 168+ 6FF5 05               dec  b
+ 169+ 6FF6 C2 94 6F         jp   nz, .loop
+ 170+ 6FF9
+ 171+ 6FF9 DD E1            pop  ix
+ 172+ 6FFB C1               pop  bc
+ 173+ 6FFC D1               pop  de
+ 174+ 6FFD E1               pop  hl
+ 175+ 6FFE C9               ret
+ 176+ 6FFF
+ 177+ 6FFF              ; -------------------------------------------------------------------
+ 178+ 6FFF              ; Cancella tutti i nemici attivi ripristinando lo sfondo statico
+ 179+ 6FFF              ; -------------------------------------------------------------------
+ 180+ 6FFF              EraseRoomEnemies:
+ 181+ 6FFF E5               push hl
+ 182+ 7000 D5               push de
+ 183+ 7001 C5               push bc
+ 184+ 7002 DD E5            push ix
+ 185+ 7004
+ 186+ 7004 DD 21 51 6F      ld   ix, ActiveEnemies
+ 187+ 7008 06 04            ld   b, 4              ; 4 slot
+ 188+ 700A              .loop:
+ 189+ 700A DD 7E 00         ld   a, (ix+0)         ; Flags
+ 190+ 700D E6 80            and  $80               ; Active?
+ 191+ 700F 28 14            jr   z, .next
+ 192+ 7011
+ 193+ 7011 C5               push bc                ; Salva contatore ciclo
+ 194+ 7012 DD 4E 07         ld   c, (ix+7)         ; C = Old X
+ 195+ 7015 DD 46 08         ld   b, (ix+8)         ; B = Old Y
+ 196+ 7018 CD 74 5F         call ErasePixelSprite16x16
+ 197+ 701B DD 4E 07         ld   c, (ix+7)         ; C = Old X
+ 198+ 701E DD 46 08         ld   b, (ix+8)         ; B = Old Y
+ 199+ 7021 CD 40 6C         call RestoreEnemyColorAttributes
+ 200+ 7024 C1               pop  bc
+ 201+ 7025
+ 202+ 7025              .next:
+ 203+ 7025 11 0A 00         ld   de, 10
+ 204+ 7028 DD 19            add  ix, de            ; Prossimo slot
+ 205+ 702A 05               dec  b
+ 206+ 702B 20 DD            jr   nz, .loop
+ 207+ 702D
+ 208+ 702D DD E1            pop  ix
+ 209+ 702F C1               pop  bc
+ 210+ 7030 D1               pop  de
+ 211+ 7031 E1               pop  hl
+ 212+ 7032 C9               ret
+ 213+ 7033
+ 214+ 7033              ; -------------------------------------------------------------------
+ 215+ 7033              ; Disegna tutti i nemici attivi
+ 216+ 7033              ; -------------------------------------------------------------------
+ 217+ 7033              DrawRoomEnemies:
+ 218+ 7033 E5               push hl
+ 219+ 7034 D5               push de
+ 220+ 7035 C5               push bc
+ 221+ 7036 DD E5            push ix
+ 222+ 7038
+ 223+ 7038 DD 21 51 6F      ld   ix, ActiveEnemies
+ 224+ 703C 06 04            ld   b, 4              ; 4 slot
+ 225+ 703E              .loop:
+ 226+ 703E DD 7E 00         ld   a, (ix+0)         ; Flags
+ 227+ 7041 E6 80            and  $80               ; Active?
+ 228+ 7043 CA F7 70         jp   z, .next
+ 229+ 7046
+ 230+ 7046 C5               push bc                ; Salva contatore ciclo
+ 231+ 7047
+ 232+ 7047                  ; Determina quale sprite usare basato sul tipo (Bit 1-0)
+ 233+ 7047 DD 7E 00         ld   a, (ix+0)         ; Flags
+ 234+ 704A E6 03            and  3                 ; Tipo (0=Lametta, 1=Uovo, 2=Robot)
+ 235+ 704C C2 88 70         jp   nz, .not_lametta
+ 236+ 704F
+ 237+ 704F                  ; Lametta (Tipo 0)
+ 238+ 704F 2A 73 73         ld   hl, (room_ptr)
+ 239+ 7052 11 00 74         ld   de, TheBridgeLayout
+ 240+ 7055 B7               or   a
+ 241+ 7056 ED 52            sbc  hl, de
+ 242+ 7058 28 1A            jr   z, .bridge_lametta
+ 243+ 705A
+ 244+ 705A 2A 73 73         ld   hl, (room_ptr)
+ 245+ 705D 11 00 75         ld   de, TheOffLicenceLayout
+ 246+ 7060 B7               or   a
+ 247+ 7061 ED 52            sbc  hl, de
+ 248+ 7063 28 1E            jr   z, .offlicence_radar
+ 249+ 7065
+ 250+ 7065 DD 7E 05         ld   a, (ix+5)         ; Direction
+ 251+ 7068 FE 01            cp   1                 ; Sinistra?
+ 252+ 706A 21 6F 62         ld   hl, LamettaSpriteLeft
+ 253+ 706D 28 5F            jr   z, .got_sprite
+ 254+ 706F 21 EF 61         ld   hl, LamettaSpriteRight
+ 255+ 7072 18 5A            jr   .got_sprite
+ 256+ 7074
+ 257+ 7074              .bridge_lametta:
+ 258+ 7074 DD 7E 05         ld   a, (ix+5)         ; Direction
+ 259+ 7077 FE 01            cp   1                 ; Sinistra?
+ 260+ 7079 21 EF 68         ld   hl, UccelloSpriteLeft
+ 261+ 707C 28 50            jr   z, .got_sprite
+ 262+ 707E 21 6F 69         ld   hl, UccelloSpriteRight
+ 263+ 7081 18 4B            jr   .got_sprite
+ 264+ 7083
+ 265+ 7083              .offlicence_radar:
+ 266+ 7083 21 6F 6A         ld   hl, RadarSprite
+ 267+ 7086 18 46            jr   .got_sprite
+ 268+ 7088
+ 269+ 7088              .not_lametta:
+ 270+ 7088 3D               dec  a
+ 271+ 7089 C2 BB 70         jp   nz, .not_egg
+ 272+ 708C
+ 273+ 708C                  ; Uovo (Tipo 1)
+ 274+ 708C 2A 73 73         ld   hl, (room_ptr)
+ 275+ 708F 11 00 74         ld   de, TheBridgeLayout
+ 276+ 7092 B7               or   a
+ 277+ 7093 ED 52            sbc  hl, de
+ 278+ 7095 28 1A            jr   z, .bridge_egg
+ 279+ 7097
+ 280+ 7097 2A 73 73         ld   hl, (room_ptr)
+ 281+ 709A 11 00 75         ld   de, TheOffLicenceLayout
+ 282+ 709D B7               or   a
+ 283+ 709E ED 52            sbc  hl, de
+ 284+ 70A0 28 14            jr   z, .offlicence_face
+ 285+ 70A2
+ 286+ 70A2 DD 7E 05         ld   a, (ix+5)         ; Direction
+ 287+ 70A5 FE 01            cp   1                 ; Sinistra?
+ 288+ 70A7 21 6F 67         ld   hl, EggSpriteLeft
+ 289+ 70AA 28 22            jr   z, .got_sprite
+ 290+ 70AC 21 EF 66         ld   hl, EggSpriteRight
+ 291+ 70AF 18 1D            jr   .got_sprite
+ 292+ 70B1
+ 293+ 70B1              .bridge_egg:
+ 294+ 70B1 21 6F 68         ld   hl, UfoSprite
+ 295+ 70B4 18 18            jr   .got_sprite
+ 296+ 70B6
+ 297+ 70B6              .offlicence_face:
+ 298+ 70B6 21 EF 69         ld   hl, FaceSprite
+ 299+ 70B9 18 13            jr   .got_sprite
+ 300+ 70BB
+ 301+ 70BB              .not_egg:
+ 302+ 70BB                  ; Robot (Tipo 2)
+ 303+ 70BB 2A 73 73         ld   hl, (room_ptr)
+ 304+ 70BE 11 00 75         ld   de, TheOffLicenceLayout
+ 305+ 70C1 B7               or   a
+ 306+ 70C2 ED 52            sbc  hl, de
+ 307+ 70C4 28 05            jr   z, .offlicence_ball
+ 308+ 70C6
+ 309+ 70C6 21 EF 65         ld   hl, RobotSprite
+ 310+ 70C9 18 03            jr   .got_sprite
+ 311+ 70CB
+ 312+ 70CB              .offlicence_ball:
+ 313+ 70CB 21 EF 6A         ld   hl, BallSprite
+ 314+ 70CE
+ 315+ 70CE              .got_sprite:
+ 316+ 70CE                  ; Calcola il frame dell'animazione: Anim State * 32
+ 317+ 70CE DD 7E 06         ld   a, (ix+6)         ; Anim State (0..3)
+ 318+ 70D1 87               add  a, a              ; *2
+ 319+ 70D2 87               add  a, a              ; *4
+ 320+ 70D3 87               add  a, a              ; *8
+ 321+ 70D4 87               add  a, a              ; *16
+ 322+ 70D5 87               add  a, a              ; *32
+ 323+ 70D6 5F               ld   e, a
+ 324+ 70D7 16 00            ld   d, 0              ; DE = offset del frame
+ 325+ 70D9 19               add  hl, de            ; HL = indirizzo del frame corretto
+ 326+ 70DA
+ 327+ 70DA                  ; Disegna alla coordinata corrente
+ 328+ 70DA DD 4E 01         ld   c, (ix+1)         ; C = Current X
+ 329+ 70DD DD 46 02         ld   b, (ix+2)         ; B = Current Y
+ 330+ 70E0
+ 331+ 70E0 DD E5            push ix                ; Salva slot pointer
+ 332+ 70E2 E5               push hl
+ 333+ 70E3 DD E1            pop  ix                ; IX = sprite data pointer
+ 334+ 70E5 CD 22 5F         call DrawPixelSprite16x16
+ 335+ 70E8 DD E1            pop  ix                ; Ripristina slot pointer
+ 336+ 70EA
+ 337+ 70EA                  ; Applica gli attributi colore per la posizione corrente
+ 338+ 70EA DD 4E 01         ld   c, (ix+1)         ; C = Current X
+ 339+ 70ED DD 46 02         ld   b, (ix+2)         ; B = Current Y
+ 340+ 70F0 DD 7E 09         ld   a, (ix+9)         ; A = Color
+ 341+ 70F3 CD DB 6B         call SetEnemyColorAttributes
+ 342+ 70F6
+ 343+ 70F6 C1               pop  bc                ; Ripristina contatore ciclo
+ 344+ 70F7
+ 345+ 70F7              .next:
+ 346+ 70F7 11 0A 00         ld   de, 10
+ 347+ 70FA DD 19            add  ix, de            ; Prossimo slot
+ 348+ 70FC 05               dec  b
+ 349+ 70FD C2 3E 70         jp   nz, .loop
+ 350+ 7100
+ 351+ 7100 DD E1            pop  ix
+ 352+ 7102 C1               pop  bc
+ 353+ 7103 D1               pop  de
+ 354+ 7104 E1               pop  hl
+ 355+ 7105 C9               ret
+ 356+ 7106
+ 357+ 7106              ; -------------------------------------------------------------------
+ 358+ 7106              ; Aggiorna le posizioni dei nemici attivi per il prossimo frame
+ 359+ 7106              ; -------------------------------------------------------------------
+ 360+ 7106              UpdateRoomEnemies:
+ 361+ 7106 E5               push hl
+ 362+ 7107 D5               push de
+ 363+ 7108 C5               push bc
+ 364+ 7109 DD E5            push ix
+ 365+ 710B
+ 366+ 710B DD 21 51 6F      ld   ix, ActiveEnemies
+ 367+ 710F 06 04            ld   b, 4              ; 4 slot
+ 368+ 7111              .loop:
+ 369+ 7111 DD 7E 00         ld   a, (ix+0)         ; Flags
+ 370+ 7114 E6 80            and  $80               ; Active?
+ 371+ 7116 CA C1 71         jp   z, .next
+ 372+ 7119
+ 373+ 7119                  ; 1. Salva la posizione corrente in Old X/Y per la cancellazione nel prossimo frame
+ 374+ 7119 DD 7E 01         ld   a, (ix+1)
+ 375+ 711C DD 77 07         ld   (ix+7), a         ; Old X = Current X
+ 376+ 711F DD 7E 02         ld   a, (ix+2)
+ 377+ 7122 DD 77 08         ld   (ix+8), a         ; Old Y = Current Y
+ 378+ 7125
+ 379+ 7125                  ; 2. Aggiorna Anim State
+ 380+ 7125 DD 7E 06         ld   a, (ix+6)         ; Anim State (0..3)
+ 381+ 7128 3C               inc  a
+ 382+ 7129 E6 03            and  3                 ; Alterna 0..3
+ 383+ 712B DD 77 06         ld   (ix+6), a
+ 384+ 712E
+ 385+ 712E                  ; 3. Determina se orizzontale o verticale
+ 386+ 712E DD 7E 00         ld   a, (ix+0)         ; Flags
+ 387+ 7131 E6 40            and  $40               ; Vertical? (Bit 6)
+ 388+ 7133 C2 7D 71         jp   nz, .vertical
+ 389+ 7136
+ 390+ 7136              .horizontal:
+ 391+ 7136 DD 7E 05         ld   a, (ix+5)         ; Direction (1=Left, 2=Right)
+ 392+ 7139 FE 01            cp   1
+ 393+ 713B 20 20            jr   nz, .horiz_right
+ 394+ 713D
+ 395+ 713D              .horiz_left:
+ 396+ 713D DD 7E 01         ld   a, (ix+1)         ; Current X
+ 397+ 7140 D6 02            sub  2                 ; Muovi a sinistra di 2 pixel
+ 398+ 7142 DD BE 03         cp   (ix+3)            ; Min Limit
+ 399+ 7145 28 08            jr   z, .h_rev_right
+ 400+ 7147 38 06            jr   c, .h_rev_right
+ 401+ 7149 DD 77 01         ld   (ix+1), a
+ 402+ 714C C3 C1 71         jp   .next
+ 403+ 714F
+ 404+ 714F              .h_rev_right:
+ 405+ 714F DD 7E 03         ld   a, (ix+3)         ; Min Limit
+ 406+ 7152 DD 77 01         ld   (ix+1), a
+ 407+ 7155 3E 02            ld   a, 2
+ 408+ 7157 DD 77 05         ld   (ix+5), a         ; Cambia direzione a Destra
+ 409+ 715A C3 C1 71         jp   .next
+ 410+ 715D
+ 411+ 715D              .horiz_right:
+ 412+ 715D DD 7E 01         ld   a, (ix+1)         ; Current X
+ 413+ 7160 C6 02            add  a, 2              ; Muovi a destra di 2 pixel
+ 414+ 7162 DD BE 04         cp   (ix+4)            ; Max Limit
+ 415+ 7165 28 08            jr   z, .h_rev_left
+ 416+ 7167 30 06            jr   nc, .h_rev_left
+ 417+ 7169 DD 77 01         ld   (ix+1), a
+ 418+ 716C C3 C1 71         jp   .next
+ 419+ 716F
+ 420+ 716F              .h_rev_left:
+ 421+ 716F DD 7E 04         ld   a, (ix+4)         ; Max Limit
+ 422+ 7172 DD 77 01         ld   (ix+1), a
+ 423+ 7175 3E 01            ld   a, 1
+ 424+ 7177 DD 77 05         ld   (ix+5), a         ; Cambia direzione a Sinistra
+ 425+ 717A C3 C1 71         jp   .next
+ 426+ 717D
+ 427+ 717D              .vertical:
+ 428+ 717D DD 7E 05         ld   a, (ix+5)         ; Direction (1=Up, 2=Down)
+ 429+ 7180 FE 01            cp   1
+ 430+ 7182 20 20            jr   nz, .vert_down
+ 431+ 7184
+ 432+ 7184              .vert_up:
+ 433+ 7184 DD 7E 02         ld   a, (ix+2)         ; Current Y
+ 434+ 7187 D6 02            sub  2                 ; Muovi in alto di 2 pixel
+ 435+ 7189 DD BE 03         cp   (ix+3)            ; Min Limit (Top)
+ 436+ 718C 28 08            jr   z, .v_rev_down
+ 437+ 718E 38 06            jr   c, .v_rev_down
+ 438+ 7190 DD 77 02         ld   (ix+2), a
+ 439+ 7193 C3 C1 71         jp   .next
+ 440+ 7196
+ 441+ 7196              .v_rev_down:
+ 442+ 7196 DD 7E 03         ld   a, (ix+3)         ; Min Limit
+ 443+ 7199 DD 77 02         ld   (ix+2), a
+ 444+ 719C 3E 02            ld   a, 2
+ 445+ 719E DD 77 05         ld   (ix+5), a         ; Cambia direzione in Basso
+ 446+ 71A1 C3 C1 71         jp   .next
+ 447+ 71A4
+ 448+ 71A4              .vert_down:
+ 449+ 71A4 DD 7E 02         ld   a, (ix+2)         ; Current Y
+ 450+ 71A7 C6 02            add  a, 2              ; Muovi in basso di 2 pixel
+ 451+ 71A9 DD BE 04         cp   (ix+4)            ; Max Limit (Bottom)
+ 452+ 71AC 28 08            jr   z, .v_rev_up
+ 453+ 71AE 30 06            jr   nc, .v_rev_up
+ 454+ 71B0 DD 77 02         ld   (ix+2), a
+ 455+ 71B3 C3 C1 71         jp   .next
+ 456+ 71B6
+ 457+ 71B6              .v_rev_up:
+ 458+ 71B6 DD 7E 04         ld   a, (ix+4)         ; Max Limit
+ 459+ 71B9 DD 77 02         ld   (ix+2), a
+ 460+ 71BC 3E 01            ld   a, 1
+ 461+ 71BE DD 77 05         ld   (ix+5), a         ; Cambia direzione in Alto
+ 462+ 71C1
+ 463+ 71C1              .next:
+ 464+ 71C1 11 0A 00         ld   de, 10
+ 465+ 71C4 DD 19            add  ix, de            ; Prossimo slot (10 byte)
+ 466+ 71C6 05               dec  b
+ 467+ 71C7 C2 11 71         jp   nz, .loop
+ 468+ 71CA
+ 469+ 71CA DD E1            pop  ix
+ 470+ 71CC C1               pop  bc
+ 471+ 71CD D1               pop  de
+ 472+ 71CE E1               pop  hl
+ 473+ 71CF C9               ret
+ 474+ 71D0
 # file closed: enemy.asm
-  19  7072                  ;include "level.asm"
-  20  7072
-  21  7072              start:
-  22  7072 CD AD 5D         call SetupIM2
-  23  7075
-  24  7075
-  25  7075
-  26  7075              Main:
-  27  7075                  ; Inizializza
-  28  7075 AF               xor  a
-  29  7076 32 08 71         ld  (body_state), a
-  30  7079
-  31  7079 CD DB 5D         call CopyChars
-  32  707C CD E7 5D         call DefineChars
-  33  707F
-  34  707F 3E 02            ld   a, $02
-  35  7081 CD 01 16         call OPENCHAN
-  36  7084 21 00 80         ld   hl, $8000
-  37  7087 22 7B 5C         ld   (UDG), hl
-  38  708A
-  39  708A 21 8D 5C         ld   hl, ATTR_P
-  40  708D 36 07            ld   (hl), $07
-  41  708F CD AF 0D         call CLS
-  42  7092 CD 2D 61         call DrawRoom
-  43  7095 CD 11 60         call PrintRoomName
-  44  7098 CD 44 6E         call LoadRoomEnemies
-  45  709B
-  46  709B                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
-  47  709B 2A 15 72         ld   hl, (room_ptr)
-  48  709E 11 DE 00         ld   de, OFFSET_BORDER_COLOR
-  49  70A1 19               add  hl, de
-  50  70A2 7E               ld   a, (hl)
-  51  70A3 32 0D 71         ld   (room_border_color), a
-  52  70A6 D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
-  53  70A8
-  54  70A8                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
-  55  70A8 87               add  a, a
-  56  70A9 87               add  a, a
-  57  70AA 87               add  a, a              ; Sposta nei bit 3-5
-  58  70AB 47               ld   b, a
-  59  70AC 3A 48 5C         ld   a, (BORDCR)
-  60  70AF E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
-  61  70B1 B0               or   b                 ; Imposta nuovo colore bordo
-  62  70B2 F6 07            or   $07               ; Imposta ink a bianco
-  63  70B4 32 48 5C         ld   (BORDCR), a
-  64  70B7
-  65  70B7                  ;call DrawVerticalBorders
-  66  70B7 CD A5 5F         call PrintPlayer
-  67  70BA
-  68  70BA              Main_loop:
-  69  70BA 76               halt
-  70  70BB
-  71  70BB                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
-  72  70BB CD F8 5F         call DeleteCharAtOldPos
-  73  70BE CD A5 5F         call PrintPlayer
-  74  70C1
-  75  70C1 CD B6 6E         call EraseRoomEnemies
-  76  70C4 CD E1 6E         call DrawRoomEnemies
-  77  70C7
-  78  70C7                  ; 3. Salva le posizioni correnti del player per il prossimo frame
-  79  70C7 ED 4B 02 71      ld   bc, (PlayerPos)
-  80  70CB ED 43 04 71      ld   (PlayerPosOld), bc
-  81  70CF
-  82  70CF                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
-  83  70CF CD B5 6B         call CheckCtrl
-  84  70D2 CD 6F 6B         call MovePlayer
-  85  70D5 CD 72 6C         call ApplyGravity
-  86  70D8 CD A8 6F         call UpdateRoomEnemies
-  87  70DB
-  88  70DB                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
-  89  70DB CD 44 6D         call CheckCollision
-  90  70DE 30 1A            jr   nc, .no_collision
-  91  70E0
-  92  70E0                  ; Collisione attiva: disegna le raster bar nel bordo
-  93  70E0 3A 12 71         ld   a, (counter)
-  94  70E3 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
-  95  70E5 06 1E            ld   b, 30             ; Numero di righe della barra raster
-  96  70E7              .raster_loop:
-  97  70E7 D3 FE            out  ($fe), a
-  98  70E9 3C               inc  a
-  99  70EA E6 07            and  7
- 100  70EC 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
- 101  70EE              .delay:
- 102  70EE 0D               dec  c
- 103  70EF 20 FD            jr   nz, .delay
- 104  70F1 10 F4            djnz .raster_loop
- 105  70F3
- 106  70F3                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
- 107  70F3 3A 0D 71         ld   a, (room_border_color)
- 108  70F6 D3 FE            out  ($fe), a
- 109  70F8 18 05            jr   .no_collision_change
- 110  70FA
- 111  70FA              .no_collision:
- 112  70FA                  ; Nessuna collisione: mantieni il bordo al colore della stanza
- 113  70FA 3A 0D 71         ld   a, (room_border_color)
- 114  70FD D3 FE            out  ($fe), a
- 115  70FF
- 116  70FF              .no_collision_change:
- 117  70FF C3 BA 70         jp   Main_loop
- 118  7102
- 119  7102              ; -------------------------------------------------------------------
- 120  7102              ; Variabili
- 121  7102              ; -------------------------------------------------------------------
- 122  7102              ; Posizioni
- 123  7102 88 80        PlayerPos:      db 136, 128
- 124  7104 88 80        PlayerPosOld:   db 136, 128
- 125  7106 11 11        bodyPos:        dw $1111
- 126  7108
- 127  7108              ; Stato player
- 128  7108 00           body_state:     db $00
- 129  7109 00           direction:      db $00
- 130  710A 00           flags:          db $00
- 131  710B
- 132  710B 00           collision_active: db $00
- 133  710C 00           sprite_shift:     db $00
- 134  710D 00           room_border_color: db $00
- 135  710E
- 136  710E              ; Fisica
- 137  710E 00           velocity_y:     db $00
- 138  710F 01           on_ground:      db $01
- 139  7110 00           jump_pressed:   db $00
- 140  7111 00           jump_prev:      db $00
- 141  7112
- 142  7112              ; Buffer e contatori
- 143  7112 00 00        counter:        dw 0
- 144  7114 00          > db 0
- 144  7115 00          > db 0
- 144  7116 00          > db 0
- 144  7117 00          > db 0
- 144  7118 00          > db 0
- 144  7119 00          > db 0
- 144  711A 00          > db 0
- 144  711B 00          > db 0
- 144  711C 00          > db 0
- 144  711D 00          > db 0
- 144  711E 00          > db 0
- 144  711F 00          > db 0
- 144  7120 00          > db 0
- 144  7121 00          > db 0
- 144  7122 00          > db 0
- 144  7123 00          > db 0
- 144  7124 00          > db 0
- 144  7125 00          > db 0
- 144  7126 00          > db 0
- 144  7127 00          > db 0
- 144  7128 00          > db 0
- 144  7129 00          > db 0
- 144  712A 00          > db 0
- 144  712B 00          > db 0
- 144  712C 00          > db 0
- 144  712D 00          > db 0
- 144  712E 00          > db 0
- 144  712F 00          > db 0
- 144  7130 00          > db 0
- 144  7131 00          > db 0
- 144  7132 00          > db 0
- 144  7133 00          > db 0
- 144  7134 00          > db 0
- 144  7135 00          > db 0
- 144  7136 00          > db 0
- 144  7137 00          > db 0
- 144  7138 00          > db 0
- 144  7139 00          > db 0
- 144  713A 00          > db 0
- 144  713B 00          > db 0
- 144  713C 00          > db 0
- 144  713D 00          > db 0
- 144  713E 00          > db 0
- 144  713F 00          > db 0
- 144  7140 00          > db 0
- 144  7141 00          > db 0
- 144  7142 00          > db 0
- 144  7143 00          > db 0
- 144  7144 00          > db 0
- 144  7145 00          > db 0
- 144  7146 00          > db 0
- 144  7147 00          > db 0
- 144  7148 00          > db 0
- 144  7149 00          > db 0
- 144  714A 00          > db 0
- 144  714B 00          > db 0
- 144  714C 00          > db 0
- 144  714D 00          > db 0
- 144  714E 00          > db 0
- 144  714F 00          > db 0
- 144  7150 00          > db 0
- 144  7151 00          > db 0
- 144  7152 00          > db 0
- 144  7153 00          > db 0
- 144  7154 00          > db 0
- 144  7155 00          > db 0
- 144  7156 00          > db 0
- 144  7157 00          > db 0
- 144  7158 00          > db 0
- 144  7159 00          > db 0
- 144  715A 00          > db 0
- 144  715B 00          > db 0
- 144  715C 00          > db 0
- 144  715D 00          > db 0
- 144  715E 00          > db 0
- 144  715F 00          > db 0
- 144  7160 00          > db 0
- 144  7161 00          > db 0
- 144  7162 00          > db 0
- 144  7163 00          > db 0
- 144  7164 00          > db 0
- 144  7165 00          > db 0
- 144  7166 00          > db 0
- 144  7167 00          > db 0
- 144  7168 00          > db 0
- 144  7169 00          > db 0
- 144  716A 00          > db 0
- 144  716B 00          > db 0
- 144  716C 00          > db 0
- 144  716D 00          > db 0
- 144  716E 00          > db 0
- 144  716F 00          > db 0
- 144  7170 00          > db 0
- 144  7171 00          > db 0
- 144  7172 00          > db 0
- 144  7173 00          > db 0
- 144  7174 00          > db 0
- 144  7175 00          > db 0
- 144  7176 00          > db 0
- 144  7177 00          > db 0
- 144  7178 00          > db 0
- 144  7179 00          > db 0
- 144  717A 00          > db 0
- 144  717B 00          > db 0
- 144  717C 00          > db 0
- 144  717D 00          > db 0
- 144  717E 00          > db 0
- 144  717F 00          > db 0
- 144  7180 00          > db 0
- 144  7181 00          > db 0
- 144  7182 00          > db 0
- 144  7183 00          > db 0
- 144  7184 00          > db 0
- 144  7185 00          > db 0
- 144  7186 00          > db 0
- 144  7187 00          > db 0
- 144  7188 00          > db 0
- 144  7189 00          > db 0
- 144  718A 00          > db 0
- 144  718B 00          > db 0
- 144  718C 00          > db 0
- 144  718D 00          > db 0
- 144  718E 00          > db 0
- 144  718F 00          > db 0
- 144  7190 00          > db 0
- 144  7191 00          > db 0
- 144  7192 00          > db 0
- 144  7193 00          > db 0
- 144  7194 00          > db 0
- 144  7195 00          > db 0
- 144  7196 00          > db 0
- 144  7197 00          > db 0
- 144  7198 00          > db 0
- 144  7199 00          > db 0
- 144  719A 00          > db 0
- 144  719B 00          > db 0
- 144  719C 00          > db 0
- 144  719D 00          > db 0
- 144  719E 00          > db 0
- 144  719F 00          > db 0
- 144  71A0 00          > db 0
- 144  71A1 00          > db 0
- 144  71A2 00          > db 0
- 144  71A3 00          > db 0
- 144  71A4 00          > db 0
- 144  71A5 00          > db 0
- 144  71A6 00          > db 0
- 144  71A7 00          > db 0
- 144  71A8 00          > db 0
- 144  71A9 00          > db 0
- 144  71AA 00          > db 0
- 144  71AB 00          > db 0
- 144  71AC 00          > db 0
- 144  71AD 00          > db 0
- 144  71AE 00          > db 0
- 144  71AF 00          > db 0
- 144  71B0 00          > db 0
- 144  71B1 00          > db 0
- 144  71B2 00          > db 0
- 144  71B3 00          > db 0
- 144  71B4 00          > db 0
- 144  71B5 00          > db 0
- 144  71B6 00          > db 0
- 144  71B7 00          > db 0
- 144  71B8 00          > db 0
- 144  71B9 00          > db 0
- 144  71BA 00          > db 0
- 144  71BB 00          > db 0
- 144  71BC 00          > db 0
- 144  71BD 00          > db 0
- 144  71BE 00          > db 0
- 144  71BF 00          > db 0
- 144  71C0 00          > db 0
- 144  71C1 00          > db 0
- 144  71C2 00          > db 0
- 144  71C3 00          > db 0
- 144  71C4 00          > db 0
- 144  71C5 00          > db 0
- 144  71C6 00          > db 0
- 144  71C7 00          > db 0
- 144  71C8 00          > db 0
- 144  71C9 00          > db 0
- 144  71CA 00          > db 0
- 144  71CB 00          > db 0
- 144  71CC 00          > db 0
- 144  71CD 00          > db 0
- 144  71CE 00          > db 0
- 144  71CF 00          > db 0
- 144  71D0 00          > db 0
- 144  71D1 00          > db 0
- 144  71D2 00          > db 0
- 144  71D3 00          > db 0
- 144  71D4 00          > db 0
- 144  71D5 00          > db 0
- 144  71D6 00          > db 0
- 144  71D7 00          > db 0
- 144  71D8 00          > db 0
- 144  71D9 00          > db 0
- 144  71DA 00          > db 0
- 144  71DB 00          > db 0
- 144  71DC 00          > db 0
- 144  71DD 00          > db 0
- 144  71DE 00          > db 0
- 144  71DF 00          > db 0
- 144  71E0 00          > db 0
- 144  71E1 00          > db 0
- 144  71E2 00          > db 0
- 144  71E3 00          > db 0
- 144  71E4 00          > db 0
- 144  71E5 00          > db 0
- 144  71E6 00          > db 0
- 144  71E7 00          > db 0
- 144  71E8 00          > db 0
- 144  71E9 00          > db 0
- 144  71EA 00          > db 0
- 144  71EB 00          > db 0
- 144  71EC 00          > db 0
- 144  71ED 00          > db 0
- 144  71EE 00          > db 0
- 144  71EF 00          > db 0
- 144  71F0 00          > db 0
- 144  71F1 00          > db 0
- 144  71F2 00          > db 0
- 144  71F3 00          > db 0
- 144  71F4 00          > db 0
- 144  71F5 00          > db 0
- 144  71F6 00          > db 0
- 144  71F7 00          > db 0
- 144  71F8 00          > db 0
- 144  71F9 00          > db 0
- 144  71FA 00          > db 0
- 144  71FB 00          > db 0
- 144  71FC 00          > db 0
- 144  71FD 00          > db 0
- 144  71FE 00          > db 0
- 144  71FF 00          > db 0
- 144  7200 00          > db 0
- 144  7201 00          > db 0
- 144  7202 00          > db 0
- 144  7203 00          > db 0
- 144  7204 00          > db 0
- 144  7205 00          > db 0
- 144  7206 00          > db 0
- 144  7207 00          > db 0
- 144  7208 00          > db 0
- 144  7209 00          > db 0
- 144  720A 00          > db 0
- 144  720B 00          > db 0
- 144  720C 00          > db 0
- 144  720D 00          > db 0
- 144  720E 00          > db 0
- 144  720F 00          > db 0
- 144  7210 00          > db 0
- 144  7211 00          > db 0
- 144  7212 00          > db 0
- 144  7213 00          > db 0
- 145  7214
- 146  7214              ; Gestione Stanze
- 147  7214 00           current_room:   db 0
- 148  7215 00 74        room_ptr:       dw TheOffLicenceLayout; TheBridgeLayout; TheTestRoomLayout
- 149  7217
- 150  7217 00 00 00...      ALIGN 256
- 151  7300              RoomsStart:
- 152  7300                  include "Rooms/TheBridge.asm"
+  19  71D0                  ;include "level.asm"
+  20  71D0
+  21  71D0              start:
+  22  71D0 CD AD 5D         call SetupIM2
+  23  71D3
+  24  71D3
+  25  71D3
+  26  71D3              Main:
+  27  71D3                  ; Inizializza
+  28  71D3 AF               xor  a
+  29  71D4 32 66 72         ld  (body_state), a
+  30  71D7
+  31  71D7 CD DB 5D         call CopyChars
+  32  71DA CD E7 5D         call DefineChars
+  33  71DD
+  34  71DD 3E 02            ld   a, $02
+  35  71DF CD 01 16         call OPENCHAN
+  36  71E2 21 00 80         ld   hl, $8000
+  37  71E5 22 7B 5C         ld   (UDG), hl
+  38  71E8
+  39  71E8 21 8D 5C         ld   hl, ATTR_P
+  40  71EB 36 07            ld   (hl), $07
+  41  71ED CD AF 0D         call CLS
+  42  71F0 CD 2D 61         call DrawRoom
+  43  71F3 CD 11 60         call PrintRoomName
+  44  71F6 CD 79 6F         call LoadRoomEnemies
+  45  71F9
+  46  71F9                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
+  47  71F9 2A 73 73         ld   hl, (room_ptr)
+  48  71FC 11 DE 00         ld   de, OFFSET_BORDER_COLOR
+  49  71FF 19               add  hl, de
+  50  7200 7E               ld   a, (hl)
+  51  7201 32 6B 72         ld   (room_border_color), a
+  52  7204 D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
+  53  7206
+  54  7206                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
+  55  7206 87               add  a, a
+  56  7207 87               add  a, a
+  57  7208 87               add  a, a              ; Sposta nei bit 3-5
+  58  7209 47               ld   b, a
+  59  720A 3A 48 5C         ld   a, (BORDCR)
+  60  720D E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
+  61  720F B0               or   b                 ; Imposta nuovo colore bordo
+  62  7210 F6 07            or   $07               ; Imposta ink a bianco
+  63  7212 32 48 5C         ld   (BORDCR), a
+  64  7215
+  65  7215                  ;call DrawVerticalBorders
+  66  7215 CD A5 5F         call PrintPlayer
+  67  7218
+  68  7218              Main_loop:
+  69  7218 76               halt
+  70  7219
+  71  7219                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
+  72  7219 CD F8 5F         call DeleteCharAtOldPos
+  73  721C CD A5 5F         call PrintPlayer
+  74  721F
+  75  721F CD FF 6F         call EraseRoomEnemies
+  76  7222 CD 33 70         call DrawRoomEnemies
+  77  7225
+  78  7225                  ; 3. Salva le posizioni correnti del player per il prossimo frame
+  79  7225 ED 4B 60 72      ld   bc, (PlayerPos)
+  80  7229 ED 43 62 72      ld   (PlayerPosOld), bc
+  81  722D
+  82  722D                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
+  83  722D CD EA 6C         call CheckCtrl
+  84  7230 CD A4 6C         call MovePlayer
+  85  7233 CD A7 6D         call ApplyGravity
+  86  7236 CD 06 71         call UpdateRoomEnemies
+  87  7239
+  88  7239                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
+  89  7239 CD 79 6E         call CheckCollision
+  90  723C 30 1A            jr   nc, .no_collision
+  91  723E
+  92  723E                  ; Collisione attiva: disegna le raster bar nel bordo
+  93  723E 3A 70 72         ld   a, (counter)
+  94  7241 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+  95  7243 06 1E            ld   b, 30             ; Numero di righe della barra raster
+  96  7245              .raster_loop:
+  97  7245 D3 FE            out  ($fe), a
+  98  7247 3C               inc  a
+  99  7248 E6 07            and  7
+ 100  724A 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+ 101  724C              .delay:
+ 102  724C 0D               dec  c
+ 103  724D 20 FD            jr   nz, .delay
+ 104  724F 10 F4            djnz .raster_loop
+ 105  7251
+ 106  7251                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+ 107  7251 3A 6B 72         ld   a, (room_border_color)
+ 108  7254 D3 FE            out  ($fe), a
+ 109  7256 18 05            jr   .no_collision_change
+ 110  7258
+ 111  7258              .no_collision:
+ 112  7258                  ; Nessuna collisione: mantieni il bordo al colore della stanza
+ 113  7258 3A 6B 72         ld   a, (room_border_color)
+ 114  725B D3 FE            out  ($fe), a
+ 115  725D
+ 116  725D              .no_collision_change:
+ 117  725D C3 18 72         jp   Main_loop
+ 118  7260
+ 119  7260              ; -------------------------------------------------------------------
+ 120  7260              ; Variabili
+ 121  7260              ; -------------------------------------------------------------------
+ 122  7260              ; Posizioni
+ 123  7260 88 80        PlayerPos:      db 136, 128
+ 124  7262 88 80        PlayerPosOld:   db 136, 128
+ 125  7264 11 11        bodyPos:        dw $1111
+ 126  7266
+ 127  7266              ; Stato player
+ 128  7266 00           body_state:     db $00
+ 129  7267 00           direction:      db $00
+ 130  7268 00           flags:          db $00
+ 131  7269
+ 132  7269 00           collision_active: db $00
+ 133  726A 00           sprite_shift:     db $00
+ 134  726B 00           room_border_color: db $00
+ 135  726C
+ 136  726C              ; Fisica
+ 137  726C 00           velocity_y:     db $00
+ 138  726D 01           on_ground:      db $01
+ 139  726E 00           jump_pressed:   db $00
+ 140  726F 00           jump_prev:      db $00
+ 141  7270
+ 142  7270              ; Buffer e contatori
+ 143  7270 00 00        counter:        dw 0
+ 144  7272 00          > db 0
+ 144  7273 00          > db 0
+ 144  7274 00          > db 0
+ 144  7275 00          > db 0
+ 144  7276 00          > db 0
+ 144  7277 00          > db 0
+ 144  7278 00          > db 0
+ 144  7279 00          > db 0
+ 144  727A 00          > db 0
+ 144  727B 00          > db 0
+ 144  727C 00          > db 0
+ 144  727D 00          > db 0
+ 144  727E 00          > db 0
+ 144  727F 00          > db 0
+ 144  7280 00          > db 0
+ 144  7281 00          > db 0
+ 144  7282 00          > db 0
+ 144  7283 00          > db 0
+ 144  7284 00          > db 0
+ 144  7285 00          > db 0
+ 144  7286 00          > db 0
+ 144  7287 00          > db 0
+ 144  7288 00          > db 0
+ 144  7289 00          > db 0
+ 144  728A 00          > db 0
+ 144  728B 00          > db 0
+ 144  728C 00          > db 0
+ 144  728D 00          > db 0
+ 144  728E 00          > db 0
+ 144  728F 00          > db 0
+ 144  7290 00          > db 0
+ 144  7291 00          > db 0
+ 144  7292 00          > db 0
+ 144  7293 00          > db 0
+ 144  7294 00          > db 0
+ 144  7295 00          > db 0
+ 144  7296 00          > db 0
+ 144  7297 00          > db 0
+ 144  7298 00          > db 0
+ 144  7299 00          > db 0
+ 144  729A 00          > db 0
+ 144  729B 00          > db 0
+ 144  729C 00          > db 0
+ 144  729D 00          > db 0
+ 144  729E 00          > db 0
+ 144  729F 00          > db 0
+ 144  72A0 00          > db 0
+ 144  72A1 00          > db 0
+ 144  72A2 00          > db 0
+ 144  72A3 00          > db 0
+ 144  72A4 00          > db 0
+ 144  72A5 00          > db 0
+ 144  72A6 00          > db 0
+ 144  72A7 00          > db 0
+ 144  72A8 00          > db 0
+ 144  72A9 00          > db 0
+ 144  72AA 00          > db 0
+ 144  72AB 00          > db 0
+ 144  72AC 00          > db 0
+ 144  72AD 00          > db 0
+ 144  72AE 00          > db 0
+ 144  72AF 00          > db 0
+ 144  72B0 00          > db 0
+ 144  72B1 00          > db 0
+ 144  72B2 00          > db 0
+ 144  72B3 00          > db 0
+ 144  72B4 00          > db 0
+ 144  72B5 00          > db 0
+ 144  72B6 00          > db 0
+ 144  72B7 00          > db 0
+ 144  72B8 00          > db 0
+ 144  72B9 00          > db 0
+ 144  72BA 00          > db 0
+ 144  72BB 00          > db 0
+ 144  72BC 00          > db 0
+ 144  72BD 00          > db 0
+ 144  72BE 00          > db 0
+ 144  72BF 00          > db 0
+ 144  72C0 00          > db 0
+ 144  72C1 00          > db 0
+ 144  72C2 00          > db 0
+ 144  72C3 00          > db 0
+ 144  72C4 00          > db 0
+ 144  72C5 00          > db 0
+ 144  72C6 00          > db 0
+ 144  72C7 00          > db 0
+ 144  72C8 00          > db 0
+ 144  72C9 00          > db 0
+ 144  72CA 00          > db 0
+ 144  72CB 00          > db 0
+ 144  72CC 00          > db 0
+ 144  72CD 00          > db 0
+ 144  72CE 00          > db 0
+ 144  72CF 00          > db 0
+ 144  72D0 00          > db 0
+ 144  72D1 00          > db 0
+ 144  72D2 00          > db 0
+ 144  72D3 00          > db 0
+ 144  72D4 00          > db 0
+ 144  72D5 00          > db 0
+ 144  72D6 00          > db 0
+ 144  72D7 00          > db 0
+ 144  72D8 00          > db 0
+ 144  72D9 00          > db 0
+ 144  72DA 00          > db 0
+ 144  72DB 00          > db 0
+ 144  72DC 00          > db 0
+ 144  72DD 00          > db 0
+ 144  72DE 00          > db 0
+ 144  72DF 00          > db 0
+ 144  72E0 00          > db 0
+ 144  72E1 00          > db 0
+ 144  72E2 00          > db 0
+ 144  72E3 00          > db 0
+ 144  72E4 00          > db 0
+ 144  72E5 00          > db 0
+ 144  72E6 00          > db 0
+ 144  72E7 00          > db 0
+ 144  72E8 00          > db 0
+ 144  72E9 00          > db 0
+ 144  72EA 00          > db 0
+ 144  72EB 00          > db 0
+ 144  72EC 00          > db 0
+ 144  72ED 00          > db 0
+ 144  72EE 00          > db 0
+ 144  72EF 00          > db 0
+ 144  72F0 00          > db 0
+ 144  72F1 00          > db 0
+ 144  72F2 00          > db 0
+ 144  72F3 00          > db 0
+ 144  72F4 00          > db 0
+ 144  72F5 00          > db 0
+ 144  72F6 00          > db 0
+ 144  72F7 00          > db 0
+ 144  72F8 00          > db 0
+ 144  72F9 00          > db 0
+ 144  72FA 00          > db 0
+ 144  72FB 00          > db 0
+ 144  72FC 00          > db 0
+ 144  72FD 00          > db 0
+ 144  72FE 00          > db 0
+ 144  72FF 00          > db 0
+ 144  7300 00          > db 0
+ 144  7301 00          > db 0
+ 144  7302 00          > db 0
+ 144  7303 00          > db 0
+ 144  7304 00          > db 0
+ 144  7305 00          > db 0
+ 144  7306 00          > db 0
+ 144  7307 00          > db 0
+ 144  7308 00          > db 0
+ 144  7309 00          > db 0
+ 144  730A 00          > db 0
+ 144  730B 00          > db 0
+ 144  730C 00          > db 0
+ 144  730D 00          > db 0
+ 144  730E 00          > db 0
+ 144  730F 00          > db 0
+ 144  7310 00          > db 0
+ 144  7311 00          > db 0
+ 144  7312 00          > db 0
+ 144  7313 00          > db 0
+ 144  7314 00          > db 0
+ 144  7315 00          > db 0
+ 144  7316 00          > db 0
+ 144  7317 00          > db 0
+ 144  7318 00          > db 0
+ 144  7319 00          > db 0
+ 144  731A 00          > db 0
+ 144  731B 00          > db 0
+ 144  731C 00          > db 0
+ 144  731D 00          > db 0
+ 144  731E 00          > db 0
+ 144  731F 00          > db 0
+ 144  7320 00          > db 0
+ 144  7321 00          > db 0
+ 144  7322 00          > db 0
+ 144  7323 00          > db 0
+ 144  7324 00          > db 0
+ 144  7325 00          > db 0
+ 144  7326 00          > db 0
+ 144  7327 00          > db 0
+ 144  7328 00          > db 0
+ 144  7329 00          > db 0
+ 144  732A 00          > db 0
+ 144  732B 00          > db 0
+ 144  732C 00          > db 0
+ 144  732D 00          > db 0
+ 144  732E 00          > db 0
+ 144  732F 00          > db 0
+ 144  7330 00          > db 0
+ 144  7331 00          > db 0
+ 144  7332 00          > db 0
+ 144  7333 00          > db 0
+ 144  7334 00          > db 0
+ 144  7335 00          > db 0
+ 144  7336 00          > db 0
+ 144  7337 00          > db 0
+ 144  7338 00          > db 0
+ 144  7339 00          > db 0
+ 144  733A 00          > db 0
+ 144  733B 00          > db 0
+ 144  733C 00          > db 0
+ 144  733D 00          > db 0
+ 144  733E 00          > db 0
+ 144  733F 00          > db 0
+ 144  7340 00          > db 0
+ 144  7341 00          > db 0
+ 144  7342 00          > db 0
+ 144  7343 00          > db 0
+ 144  7344 00          > db 0
+ 144  7345 00          > db 0
+ 144  7346 00          > db 0
+ 144  7347 00          > db 0
+ 144  7348 00          > db 0
+ 144  7349 00          > db 0
+ 144  734A 00          > db 0
+ 144  734B 00          > db 0
+ 144  734C 00          > db 0
+ 144  734D 00          > db 0
+ 144  734E 00          > db 0
+ 144  734F 00          > db 0
+ 144  7350 00          > db 0
+ 144  7351 00          > db 0
+ 144  7352 00          > db 0
+ 144  7353 00          > db 0
+ 144  7354 00          > db 0
+ 144  7355 00          > db 0
+ 144  7356 00          > db 0
+ 144  7357 00          > db 0
+ 144  7358 00          > db 0
+ 144  7359 00          > db 0
+ 144  735A 00          > db 0
+ 144  735B 00          > db 0
+ 144  735C 00          > db 0
+ 144  735D 00          > db 0
+ 144  735E 00          > db 0
+ 144  735F 00          > db 0
+ 144  7360 00          > db 0
+ 144  7361 00          > db 0
+ 144  7362 00          > db 0
+ 144  7363 00          > db 0
+ 144  7364 00          > db 0
+ 144  7365 00          > db 0
+ 144  7366 00          > db 0
+ 144  7367 00          > db 0
+ 144  7368 00          > db 0
+ 144  7369 00          > db 0
+ 144  736A 00          > db 0
+ 144  736B 00          > db 0
+ 144  736C 00          > db 0
+ 144  736D 00          > db 0
+ 144  736E 00          > db 0
+ 144  736F 00          > db 0
+ 144  7370 00          > db 0
+ 144  7371 00          > db 0
+ 145  7372
+ 146  7372              ; Gestione Stanze
+ 147  7372 00           current_room:   db 0
+ 148  7373 00 75        room_ptr:       dw TheOffLicenceLayout; TheBridgeLayout; TheTestRoomLayout
+ 149  7375
+ 150  7375 00 00 00...      ALIGN 256
+ 151  7400              RoomsStart:
+ 152  7400                  include "Rooms/TheBridge.asm"
 # file opened: Rooms/TheBridge.asm
-   1+ 7300              TheBridgeLayout:
-   2+ 7300 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   2+ 7304 00 00 00 00
-   3+ 7308 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   3+ 730C 00 00 00 00
-   4+ 7310 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   4+ 7314 00 00 00 00
-   5+ 7318 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   5+ 731C 00 00 00 00
-   6+ 7320 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   6+ 7324 00 00 00 00
-   7+ 7328 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   7+ 732C 00 00 00 00
-   8+ 7330 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   8+ 7334 00 00 00 00
-   9+ 7338 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-   9+ 733C 00 00 00 00
-  10+ 7340 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  10+ 7344 00 00 00 00
-  11+ 7348 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  11+ 734C 00 00 00 00
-  12+ 7350 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  12+ 7354 00 00 00 00
-  13+ 7358 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  13+ 735C 00 00 00 00
-  14+ 7360 00 00 0A 00      DEFB 0,0,10,0,42,0,0,0
-  14+ 7364 2A 00 00 00
-  15+ 7368 00 00 2A 00      DEFB 0,0,42,0,42,128,0,0
-  15+ 736C 2A 80 00 00
-  16+ 7370 00 00 AA FF      DEFB 0,0,170,255,234,160,0,0
-  16+ 7374 EA A0 00 00
-  17+ 7378 55 55 AA FF      DEFB 85,85,170,255,234,165,85,85
-  17+ 737C EA A5 55 55
-  18+ 7380
-  19+ 7380              TheBridgeTile:
-  20+ 7380              ;The next 32 bytes are copied to 32896 and specify the room name.
-  21+ 7380 20 20 20 20      DEFM "         The Bridge             "	    ;Room name
-  21+ 7384 20 20 20 20
-  21+ 7388 20 54 68 65
-  21+ 738C 20 42 72 69
-  21+ 7390 64 67 65 20
-  21+ 7394 20 20 20 20
-  21+ 7398 20 20 20 20
-  21+ 739C 20 20 20 20
-  22+ 73A0
-  23+ 73A0              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  24+ 73A0              TheBridgeBackground:
-  25+ 73A0 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
-  25+ 73A4 00 00 00 00
-  25+ 73A8 00
-  26+ 73A9
-  27+ 73A9              TheBridgeFloor:
-  28+ 73A9 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64	;Floor Solid
-  28+ 73AD BB D6 72 60
-  28+ 73B1 40
-  29+ 73B2
-  30+ 73B2              TheBridgeWall:
-  31+ 73B2 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136	    ;Wall Solid
-  31+ 73B6 88 22 77 22
-  31+ 73BA 88
-  32+ 73BB
-  33+ 73BB              TheBridgeNasty:
-  34+ 73BB 2F 03 84 48      DEFB 47,3,132,72,48,3,132,72,48	        ;Nasty
-  34+ 73BF 30 03 84 48
-  34+ 73C3 30
-  35+ 73C4
-  36+ 73C4              TheBridgeRamp:
-  37+ 73C4 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200	        ;Ramp Solid
-  37+ 73C8 0D 32 37 C2
-  37+ 73CC C8
-  38+ 73CD
-  39+ 73CD              TheBridgeConveyor:
-  40+ 73CD 2C 01 40 04      DEFB 44,1,64,4,70,79,121,240,249	    ;Conveyor
-  40+ 73D1 46 4F 79 F0
-  40+ 73D5 F9
-  41+ 73D6
-  42+ 73D6              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  43+ 73D6              TheBridgeConveyorData:
-  44+ 73D6 01               DEFB 1	                                ;Direction (right)
-  45+ 73D7 EC 5F            DEFW 24556	                            ;Location in the attribute buffer at 24064: (15,12)
-  46+ 73D9 05               DEFB 5	                                ;Length
-  47+ 73DA
-  48+ 73DA              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  49+ 73DA              TheBridgeRampData:
-  50+ 73DA 01               DEFB 1	                                ;Direction (up to the right)
-  51+ 73DB C7 5F            DEFW 24519	                            ;Location in the attribute buffer at 24064: (14,7)
-  52+ 73DD 03               DEFB 3	                                ;Length
-  53+ 73DE
-  54+ 73DE              ;The next byte is copied to 32990 and specifies the border colour.
-  55+ 73DE              TheBridgeBorderColor:
-  56+ 73DE 04               DEFB 4	                                ;Border colour
-  57+ 73DF
-  58+ 73DF              ;The next two bytes are copied to 32991, but are not used.
-  59+ 73DF              TheBridgeReserved:
-  60+ 73DF 40 A0            DEFB 64,160	                            ;Unused
-  61+ 73E1
-  62+ 73E1              ;The next eight bytes are copied to 32993 and define the item graphic.
-  63+ 73E1              TheBridgeItem:
-  64+ 73E1 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
-  64+ 73E5 00 00 00 00
-  65+ 73E9
-  66+ 73E9              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  67+ 73E9              TheBridgeDirection:
-  68+ 73E9 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
-  69+ 73EA 00               DEFB 0	                                ;Room to the right (The Off Licence)
-  70+ 73EB 00               DEFB 0	                                ;Room above (The Off Licence)
-  71+ 73EC 00               DEFB 0	                                ;Room below (The Off Licence)
-  72+ 73ED
-  73+ 73ED              ;The next three bytes are copied to 33005, but are not used.
-  74+ 73ED              TheBridgeUnused:
-  75+ 73ED 00 00 00         DEFB 0,0,0	                            ;Unused
-  76+ 73F0
-  77+ 73F0              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
-  78+ 73F0              TheBridgeEnemy1:
-  79+ 73F0 80 08 78 C8      DEFB $80, 8, 120, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
-  80+ 73F4              TheBridgeEnemy2:
-  81+ 73F4 80 50 50 B4      DEFB $80, 80, 80, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
-  82+ 73F8              TheBridgeEnemy3:
-  83+ 73F8 C1 78 28 82      DEFB $C1, 120, 40, 130        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
-  84+ 73FC              TheBridgeEnemy4:
-  85+ 73FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
-  86+ 7400
-# file closed: Rooms/TheBridge.asm
- 153  7400                  include "Rooms/TheOffLicence.asm"
-# file opened: Rooms/TheOffLicence.asm
-   1+ 7400              ; Room layout for Room 2 (The Off Licence)
-   2+ 7400              TheOffLicenceLayout:
-   3+ 7400 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
-   3+ 7404 00 00 00 00
-   4+ 7408 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
-   4+ 740C 00 00 00 00
-   5+ 7410 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
-   5+ 7414 00 00 00 00
-   6+ 7418 00 00 00 AA      DEFB  0,0,0,170,170,170,170,170
-   6+ 741C AA AA AA AA
-   7+ 7420 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-   7+ 7424 00 00 00 02
-   8+ 7428 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-   8+ 742C 00 00 00 02
-   9+ 7430 00 00 00 8C      DEFB  0,0,0,140,0,0,0,2
-   9+ 7434 00 00 00 02
-  10+ 7438 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  10+ 743C 00 00 00 02
-  11+ 7440 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  11+ 7444 00 00 00 02
-  12+ 7448 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  12+ 744C 00 00 00 02
-  13+ 7450 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  13+ 7454 00 00 00 02
-  14+ 7458 00 00 00 AA      DEFB  0,0,0,170,0,0,2,170
-  14+ 745C 00 00 02 AA
-  15+ 7460 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
-  15+ 7464 00 00 00 02
-  16+ 7468 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
-  16+ 746C 00 00 00 02
-  17+ 7470 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
-  17+ 7474 00 00 00 02
-  18+ 7478 55 55 55 55      DEFB  85,85,85,85,85,85,85,85
-  18+ 747C 55 55 55 55
-  19+ 7480
-  20+ 7480              TheOffLicenceTile:
-  21+ 7480 20 20 20 20      DEFM "         The Off Licence        "
+   1+ 7400              TheBridgeLayout:
+   2+ 7400 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   2+ 7404 00 00 00 00
+   3+ 7408 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   3+ 740C 00 00 00 00
+   4+ 7410 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   4+ 7414 00 00 00 00
+   5+ 7418 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   5+ 741C 00 00 00 00
+   6+ 7420 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   6+ 7424 00 00 00 00
+   7+ 7428 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   7+ 742C 00 00 00 00
+   8+ 7430 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   8+ 7434 00 00 00 00
+   9+ 7438 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+   9+ 743C 00 00 00 00
+  10+ 7440 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  10+ 7444 00 00 00 00
+  11+ 7448 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  11+ 744C 00 00 00 00
+  12+ 7450 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  12+ 7454 00 00 00 00
+  13+ 7458 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  13+ 745C 00 00 00 00
+  14+ 7460 00 00 0A 00      DEFB 0,0,10,0,42,0,0,0
+  14+ 7464 2A 00 00 00
+  15+ 7468 00 00 2A 00      DEFB 0,0,42,0,42,128,0,0
+  15+ 746C 2A 80 00 00
+  16+ 7470 00 00 AA FF      DEFB 0,0,170,255,234,160,0,0
+  16+ 7474 EA A0 00 00
+  17+ 7478 55 55 AA FF      DEFB 85,85,170,255,234,165,85,85
+  17+ 747C EA A5 55 55
+  18+ 7480
+  19+ 7480              TheBridgeTile:
+  20+ 7480              ;The next 32 bytes are copied to 32896 and specify the room name.
+  21+ 7480 20 20 20 20      DEFM "         The Bridge             "	    ;Room name
   21+ 7484 20 20 20 20
   21+ 7488 20 54 68 65
-  21+ 748C 20 4F 66 66
-  21+ 7490 20 4C 69 63
-  21+ 7494 65 6E 63 65
+  21+ 748C 20 42 72 69
+  21+ 7490 64 67 65 20
+  21+ 7494 20 20 20 20
   21+ 7498 20 20 20 20
   21+ 749C 20 20 20 20
   22+ 74A0
-  23+ 74A0              TheOffLicenceBackground:                    ; Background
-  24+ 74A0 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0
-  24+ 74A4 00 00 00 00
-  24+ 74A8 00
-  25+ 74A9
-  26+ 74A9              TheOffLicenceFloor:
-  27+ 74A9 44 FF DE 6C      DEFB 68,255,222,108,136,18,64,4,0       ; Floor Solid
-  27+ 74AD 88 12 40 04
-  27+ 74B1 00
-  28+ 74B2
-  29+ 74B2              TheOffLicenceWall:
-  30+ 74B2 16 22 FF 88      DEFB 22,34,255,136,255,34,255,136,255   ; Wall Solid
-  30+ 74B6 FF 22 FF 88
-  30+ 74BA FF
-  31+ 74BB
-  32+ 74BB              TheOffLicenceNasty:
-  33+ 74BB 05 F8 88 9E      DEFB 5,248,136,158,189,189,158,136,248  ; Nastry
-  33+ 74BF BD BD 9E 88
-  33+ 74C3 F8
-  34+ 74C4
-  35+ 74C4              TheOffLicenceRamp:                          ; Ramp Solid
-  36+ 74C4 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0
-  36+ 74C8 00 30 00 C0
-  36+ 74CC 00
-  37+ 74CD
-  38+ 74CD              TheOffLicenceConveyor:                      ; Conveyor Solid
-  39+ 74CD 43 33 FF 33      DEFB 67,51,255,51,0,255,0,170,0
-  39+ 74D1 00 FF 00 AA
-  39+ 74D5 00
-  40+ 74D6
-  41+ 74D6              TheOffLicenceConveyorData:
-  42+ 74D6 00               DEFB 0
-  43+ 74D7 33 5F            DEFW 24371
-  44+ 74D9 0C               DEFB 12
-  45+ 74DA
-  46+ 74DA              TheOffLicenceRampData:
-  47+ 74DA 01               DEFB 1
-  48+ 74DB D7 5F            DEFW 24535
-  49+ 74DD 04               DEFB 4
-  50+ 74DE
-  51+ 74DE              TheOffLicenceBorderColor:
-  52+ 74DE 05               DEFB 5
-  53+ 74DF
-  54+ 74DF              TheOffLicenceReserved:
-  55+ 74DF 00 A0            DEFB 0,160
-  56+ 74E1
-  57+ 74E1              TheOffLicenceItem:
-  58+ 74E1 18 18 3C 7E      DEFB 24,24,60,126,98,98,98,126
-  58+ 74E5 62 62 62 7E
-  59+ 74E9
-  60+ 74E9              TheOffLicenceDirection:
-  61+ 74E9 01               DEFB 1
-  62+ 74EA 00               DEFB 0
-  63+ 74EB 00               DEFB 0
-  64+ 74EC 00               DEFB 0
-  65+ 74ED
-  66+ 74ED              TheOffLicenceUnused:
-  67+ 74ED 00 00 00         DEFB 0,0,0
-  68+ 74F0
-  69+ 74F0              TheOffLicenceEnemy1:
-  70+ 74F0 80 8C 50 E6      DEFB $80, 140, 80, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
-  71+ 74F4              TheOffLicenceEnemy2:
-  72+ 74F4 C1 3C 50 82      DEFB $C1, 60, 80, 130         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
-  73+ 74F8              TheOffLicenceEnemy3:
-  74+ 74F8 C2 50 28 82      DEFB $C2, 80, 40, 130         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
-  75+ 74FC              TheOffLicenceEnemy4:
-  76+ 74FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
-  77+ 7500
-# file closed: Rooms/TheOffLicence.asm
- 154  7500                  include "Rooms/TheTestRoom.asm"
-# file opened: Rooms/TheTestRoom.asm
-   1+ 7500              ; Room layout for the TEST level with its platforms and floor
-   2+ 7500              TheTestRoomLayout:
-   3+ 7500 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 0
+  23+ 74A0              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  24+ 74A0              TheBridgeBackground:
+  25+ 74A0 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
+  25+ 74A4 00 00 00 00
+  25+ 74A8 00
+  26+ 74A9
+  27+ 74A9              TheBridgeFloor:
+  28+ 74A9 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64	;Floor Solid
+  28+ 74AD BB D6 72 60
+  28+ 74B1 40
+  29+ 74B2
+  30+ 74B2              TheBridgeWall:
+  31+ 74B2 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136	    ;Wall Solid
+  31+ 74B6 88 22 77 22
+  31+ 74BA 88
+  32+ 74BB
+  33+ 74BB              TheBridgeNasty:
+  34+ 74BB 2F 03 84 48      DEFB 47,3,132,72,48,3,132,72,48	        ;Nasty
+  34+ 74BF 30 03 84 48
+  34+ 74C3 30
+  35+ 74C4
+  36+ 74C4              TheBridgeRamp:
+  37+ 74C4 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200	        ;Ramp Solid
+  37+ 74C8 0D 32 37 C2
+  37+ 74CC C8
+  38+ 74CD
+  39+ 74CD              TheBridgeConveyor:
+  40+ 74CD 2C 01 40 04      DEFB 44,1,64,4,70,79,121,240,249	    ;Conveyor
+  40+ 74D1 46 4F 79 F0
+  40+ 74D5 F9
+  41+ 74D6
+  42+ 74D6              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  43+ 74D6              TheBridgeConveyorData:
+  44+ 74D6 01               DEFB 1	                                ;Direction (right)
+  45+ 74D7 EC 5F            DEFW 24556	                            ;Location in the attribute buffer at 24064: (15,12)
+  46+ 74D9 05               DEFB 5	                                ;Length
+  47+ 74DA
+  48+ 74DA              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  49+ 74DA              TheBridgeRampData:
+  50+ 74DA 01               DEFB 1	                                ;Direction (up to the right)
+  51+ 74DB C7 5F            DEFW 24519	                            ;Location in the attribute buffer at 24064: (14,7)
+  52+ 74DD 03               DEFB 3	                                ;Length
+  53+ 74DE
+  54+ 74DE              ;The next byte is copied to 32990 and specifies the border colour.
+  55+ 74DE              TheBridgeBorderColor:
+  56+ 74DE 04               DEFB 4	                                ;Border colour
+  57+ 74DF
+  58+ 74DF              ;The next two bytes are copied to 32991, but are not used.
+  59+ 74DF              TheBridgeReserved:
+  60+ 74DF 07 07 07 07      DEFB 7, 7, 7, 7                 ; Enemy colors: all WHITE (7)
+  61+ 74E3
+  62+ 74E3              ;The next eight bytes are copied to 32993 and define the item graphic.
+  63+ 74E3              TheBridgeItem:
+  64+ 74E3 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
+  64+ 74E7 00 00 00 00
+  65+ 74EB
+  66+ 74EB              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  67+ 74EB              TheBridgeDirection:
+  68+ 74EB 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
+  69+ 74EC 00               DEFB 0	                                ;Room to the right (The Off Licence)
+  70+ 74ED 00               DEFB 0	                                ;Room above (The Off Licence)
+  71+ 74EE 00               DEFB 0	                                ;Room below (The Off Licence)
+  72+ 74EF
+  73+ 74EF              TheBridgeUnused:
+  74+ 74EF 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  75+ 74F0
+  76+ 74F0              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+  77+ 74F0              TheBridgeEnemy1:
+  78+ 74F0 80 08 78 C8      DEFB $80, 8, 120, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+  79+ 74F4              TheBridgeEnemy2:
+  80+ 74F4 80 50 50 B4      DEFB $80, 80, 80, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+  81+ 74F8              TheBridgeEnemy3:
+  82+ 74F8 C1 78 28 82      DEFB $C1, 120, 40, 130        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+  83+ 74FC              TheBridgeEnemy4:
+  84+ 74FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
+  85+ 7500
+# file closed: Rooms/TheBridge.asm
+ 153  7500                  include "Rooms/TheOffLicence.asm"
+# file opened: Rooms/TheOffLicence.asm
+   1+ 7500              ; Room layout for Room 2 (The Off Licence)
+   2+ 7500              TheOffLicenceLayout:
+   3+ 7500 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
    3+ 7504 00 00 00 00
-   4+ 7508 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 1
+   4+ 7508 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
    4+ 750C 00 00 00 00
-   5+ 7510 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 2
+   5+ 7510 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
    5+ 7514 00 00 00 00
-   6+ 7518 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 3
-   6+ 751C 00 00 00 00
-   7+ 7520 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 4
-   7+ 7524 00 00 00 00
-   8+ 7528 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 5
-   8+ 752C 00 00 00 00
-   9+ 7530 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 6
-   9+ 7534 00 00 00 00
-  10+ 7538 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 7
-  10+ 753C 00 00 00 00
-  11+ 7540 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 8
-  11+ 7544 00 00 00 00
-  12+ 7548 01 55 55 40      DEFB 1,85,85,64,0,85,85,80    ; Row 9 (Platform 3: cols 3..12; Platform 2: cols 20..29)
-  12+ 754C 00 55 55 50
-  13+ 7550 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 10
-  13+ 7554 00 00 00 00
-  14+ 7558 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 11
-  14+ 755C 00 00 00 00
-  15+ 7560 00 00 55 55      DEFB 0,0,85,85,85,85,0,0      ; Row 12 (Platform 1: cols 8..23)
-  15+ 7564 55 55 00 00
-  16+ 7568 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 13
-  16+ 756C 00 00 00 00
-  17+ 7570 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 14
-  17+ 7574 00 00 00 00
-  18+ 7578 55 55 55 55      DEFB 85,85,85,85,85,85,85,85  ; Row 15 (Floor: cols 0..31)
+   6+ 7518 00 00 00 AA      DEFB  0,0,0,170,170,170,170,170
+   6+ 751C AA AA AA AA
+   7+ 7520 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+   7+ 7524 00 00 00 02
+   8+ 7528 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+   8+ 752C 00 00 00 02
+   9+ 7530 00 00 00 8C      DEFB  0,0,0,140,0,0,0,2
+   9+ 7534 00 00 00 02
+  10+ 7538 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  10+ 753C 00 00 00 02
+  11+ 7540 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  11+ 7544 00 00 00 02
+  12+ 7548 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  12+ 754C 00 00 00 02
+  13+ 7550 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  13+ 7554 00 00 00 02
+  14+ 7558 00 00 00 AA      DEFB  0,0,0,170,0,0,2,170
+  14+ 755C 00 00 02 AA
+  15+ 7560 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
+  15+ 7564 00 00 00 02
+  16+ 7568 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
+  16+ 756C 00 00 00 02
+  17+ 7570 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
+  17+ 7574 00 00 00 02
+  18+ 7578 55 55 55 55      DEFB  85,85,85,85,85,85,85,85
   18+ 757C 55 55 55 55
   19+ 7580
-  20+ 7580              TheTestRoomTile:
-  21+ 7580              ; 32 bytes for the room name
-  22+ 7580 20 20 20 20      DEFM "          TEST LEVEL            "
-  22+ 7584 20 20 20 20
-  22+ 7588 20 20 54 45
-  22+ 758C 53 54 20 4C
-  22+ 7590 45 56 45 4C
-  22+ 7594 20 20 20 20
-  22+ 7598 20 20 20 20
-  22+ 759C 20 20 20 20
-  23+ 75A0
-  24+ 75A0              ; Attributes and graphic data for the tiles (1 byte attribute + 8 bytes bitmap)
-  25+ 75A0              TheTestRoomBackground:
-  26+ 75A0 07 00 00 00      DEFB $07, 0,0,0,0,0,0,0,0
-  26+ 75A4 00 00 00 00
-  26+ 75A8 00
-  27+ 75A9
-  28+ 75A9              TheTestRoomFloor:
-  29+ 75A9 02 FF 88 FF      DEFB $02, 255, 136, 255, 34, 255, 136, 255, 36
-  29+ 75AD 22 FF 88 FF
-  29+ 75B1 24
-  30+ 75B2
-  31+ 75B2              TheTestRoomWall:
-  32+ 75B2 06 22 77 22      DEFB $06, 34,119,34,136,34,119,34,136
-  32+ 75B6 88 22 77 22
-  32+ 75BA 88
-  33+ 75BB
-  34+ 75BB              TheTestRoomNasty:
-  35+ 75BB 02 F8 88 9E      DEFB $02, 248,136,158,189,189,158,136,248
-  35+ 75BF BD BD 9E 88
-  35+ 75C3 F8
-  36+ 75C4
-  37+ 75C4              TheTestRoomRamp:
-  38+ 75C4 07 03 03 0C      DEFB $07, 3,3,12,13,50,55,194,200
-  38+ 75C8 0D 32 37 C2
-  38+ 75CC C8
-  39+ 75CD
-  40+ 75CD              TheTestRoomConveyor:
-  41+ 75CD 05 01 40 04      DEFB $05, 1,64,4,70,79,121,240,249
-  41+ 75D1 46 4F 79 F0
-  41+ 75D5 F9
-  42+ 75D6
-  43+ 75D6              ; Conveyor specs (direction, location, length)
-  44+ 75D6              TheTestRoomConveyorData:
-  45+ 75D6 00               DEFB 0
-  46+ 75D7 00 00            DEFW 0
-  47+ 75D9 00               DEFB 0
-  48+ 75DA
-  49+ 75DA              ; Ramp specs (direction, location, length)
-  50+ 75DA              TheTestRoomRampData:
-  51+ 75DA 00               DEFB 0
-  52+ 75DB 00 00            DEFW 0
-  53+ 75DD 00               DEFB 0
-  54+ 75DE
-  55+ 75DE              ; Border color
-  56+ 75DE              TheTestRoomBorderColor:
-  57+ 75DE 05               DEFB 5                        ; Black border
-  58+ 75DF
-  59+ 75DF              ; Reserved bytes
-  60+ 75DF              TheTestRoomReserved:
-  61+ 75DF 00 00            DEFB 0,0
-  62+ 75E1
-  63+ 75E1              ; Item graphic
-  64+ 75E1              TheTestRoomItem:
-  65+ 75E1 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; No item defined yet
-  65+ 75E5 00 00 00 00
-  66+ 75E9
-  67+ 75E9              ; Room connections (left, right, above, below)
-  68+ 75E9              TheTestRoomDirection:
-  69+ 75E9 01               DEFB 1                        ; Left: The Bridge (Room 1)
-  70+ 75EA 02               DEFB 2                        ; Right: The Off Licence (Room 2)
-  71+ 75EB 00               DEFB 0                        ; Above: Self
-  72+ 75EC 00               DEFB 0                        ; Below: Self
-  73+ 75ED
-  74+ 75ED              ; Unused
-  75+ 75ED              Room99Unused:
-  76+ 75ED 00 00 00         DEFB 0,0,0
-  77+ 75F0
-  78+ 75F0              ; Room entities slots (ropes, arrows, guardians)
-  79+ 75F0              TheTestRoomEnemy1:
-  80+ 75F0 80 18 80 E7      DEFB $80, 24, 128, 231        ; Enemy 1 (Lametta), horizontal, Starts X=24, Y=128, Limit X=231
-  81+ 75F4              TheTestRoomEnemy2:
-  82+ 75F4 81 A0 50 E0      DEFB $81, 160, 80, 224        ; Enemy 2 (Egg), horizontal, Starts X=160, Y=80, Limit X=224
-  83+ 75F8              TheTestRoomEnemy3:
-  84+ 75F8 82 40 68 B0      DEFB $82, 64, 104, 176        ; Enemy 3 (Robot), horizontal, Starts X=64, Y=104, Limit X=176
-  85+ 75FC              TheTestRoomEnemy4:
-  86+ 75FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
-  87+ 7600
+  20+ 7580              TheOffLicenceTile:
+  21+ 7580 20 20 20 20      DEFM "         The Off Licence        "
+  21+ 7584 20 20 20 20
+  21+ 7588 20 54 68 65
+  21+ 758C 20 4F 66 66
+  21+ 7590 20 4C 69 63
+  21+ 7594 65 6E 63 65
+  21+ 7598 20 20 20 20
+  21+ 759C 20 20 20 20
+  22+ 75A0
+  23+ 75A0              TheOffLicenceBackground:                    ; Background
+  24+ 75A0 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0
+  24+ 75A4 00 00 00 00
+  24+ 75A8 00
+  25+ 75A9
+  26+ 75A9              TheOffLicenceFloor:
+  27+ 75A9 44 FF DE 6C      DEFB 68,255,222,108,136,18,64,4,0       ; Floor Solid
+  27+ 75AD 88 12 40 04
+  27+ 75B1 00
+  28+ 75B2
+  29+ 75B2              TheOffLicenceWall:
+  30+ 75B2 16 22 FF 88      DEFB 22,34,255,136,255,34,255,136,255   ; Wall Solid
+  30+ 75B6 FF 22 FF 88
+  30+ 75BA FF
+  31+ 75BB
+  32+ 75BB              TheOffLicenceNasty:
+  33+ 75BB 05 F8 88 9E      DEFB 5,248,136,158,189,189,158,136,248  ; Nastry
+  33+ 75BF BD BD 9E 88
+  33+ 75C3 F8
+  34+ 75C4
+  35+ 75C4              TheOffLicenceRamp:                          ; Ramp Solid
+  36+ 75C4 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0
+  36+ 75C8 00 30 00 C0
+  36+ 75CC 00
+  37+ 75CD
+  38+ 75CD              TheOffLicenceConveyor:                      ; Conveyor Solid
+  39+ 75CD 43 33 FF 33      DEFB 67,51,255,51,0,255,0,170,0
+  39+ 75D1 00 FF 00 AA
+  39+ 75D5 00
+  40+ 75D6
+  41+ 75D6              TheOffLicenceConveyorData:
+  42+ 75D6 00               DEFB 0
+  43+ 75D7 33 5F            DEFW 24371
+  44+ 75D9 0C               DEFB 12
+  45+ 75DA
+  46+ 75DA              TheOffLicenceRampData:
+  47+ 75DA 01               DEFB 1
+  48+ 75DB D7 5F            DEFW 24535
+  49+ 75DD 04               DEFB 4
+  50+ 75DE
+  51+ 75DE              TheOffLicenceBorderColor:
+  52+ 75DE 05               DEFB 5
+  53+ 75DF
+  54+ 75DF              TheOffLicenceReserved:
+  55+ 75DF 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+  56+ 75E3
+  57+ 75E3              TheOffLicenceItem:
+  58+ 75E3 18 18 3C 7E      DEFB 24,24,60,126,98,98,98,126
+  58+ 75E7 62 62 62 7E
+  59+ 75EB
+  60+ 75EB              TheOffLicenceDirection:
+  61+ 75EB 01               DEFB 1
+  62+ 75EC 00               DEFB 0
+  63+ 75ED 00               DEFB 0
+  64+ 75EE 00               DEFB 0
+  65+ 75EF
+  66+ 75EF              TheOffLicenceUnused:
+  67+ 75EF 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  68+ 75F0
+  69+ 75F0              TheOffLicenceEnemy1:
+  70+ 75F0 80 8C 50 E6      DEFB $80, 140, 80, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+  71+ 75F4              TheOffLicenceEnemy2:
+  72+ 75F4 C1 3C 50 82      DEFB $C1, 60, 80, 130         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+  73+ 75F8              TheOffLicenceEnemy3:
+  74+ 75F8 C2 50 28 82      DEFB $C2, 80, 40, 130         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+  75+ 75FC              TheOffLicenceEnemy4:
+  76+ 75FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
+  77+ 7600
+# file closed: Rooms/TheOffLicence.asm
+ 154  7600                  include "Rooms/TheTestRoom.asm"
+# file opened: Rooms/TheTestRoom.asm
+   1+ 7600              ; Room layout for the TEST level with its platforms and floor
+   2+ 7600              TheTestRoomLayout:
+   3+ 7600 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 0
+   3+ 7604 00 00 00 00
+   4+ 7608 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 1
+   4+ 760C 00 00 00 00
+   5+ 7610 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 2
+   5+ 7614 00 00 00 00
+   6+ 7618 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 3
+   6+ 761C 00 00 00 00
+   7+ 7620 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 4
+   7+ 7624 00 00 00 00
+   8+ 7628 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 5
+   8+ 762C 00 00 00 00
+   9+ 7630 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 6
+   9+ 7634 00 00 00 00
+  10+ 7638 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 7
+  10+ 763C 00 00 00 00
+  11+ 7640 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 8
+  11+ 7644 00 00 00 00
+  12+ 7648 01 55 55 40      DEFB 1,85,85,64,0,85,85,80    ; Row 9 (Platform 3: cols 3..12; Platform 2: cols 20..29)
+  12+ 764C 00 55 55 50
+  13+ 7650 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 10
+  13+ 7654 00 00 00 00
+  14+ 7658 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 11
+  14+ 765C 00 00 00 00
+  15+ 7660 00 00 55 55      DEFB 0,0,85,85,85,85,0,0      ; Row 12 (Platform 1: cols 8..23)
+  15+ 7664 55 55 00 00
+  16+ 7668 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 13
+  16+ 766C 00 00 00 00
+  17+ 7670 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 14
+  17+ 7674 00 00 00 00
+  18+ 7678 55 55 55 55      DEFB 85,85,85,85,85,85,85,85  ; Row 15 (Floor: cols 0..31)
+  18+ 767C 55 55 55 55
+  19+ 7680
+  20+ 7680              TheTestRoomTile:
+  21+ 7680              ; 32 bytes for the room name
+  22+ 7680 20 20 20 20      DEFM "          TEST LEVEL            "
+  22+ 7684 20 20 20 20
+  22+ 7688 20 20 54 45
+  22+ 768C 53 54 20 4C
+  22+ 7690 45 56 45 4C
+  22+ 7694 20 20 20 20
+  22+ 7698 20 20 20 20
+  22+ 769C 20 20 20 20
+  23+ 76A0
+  24+ 76A0              ; Attributes and graphic data for the tiles (1 byte attribute + 8 bytes bitmap)
+  25+ 76A0              TheTestRoomBackground:
+  26+ 76A0 07 00 00 00      DEFB $07, 0,0,0,0,0,0,0,0
+  26+ 76A4 00 00 00 00
+  26+ 76A8 00
+  27+ 76A9
+  28+ 76A9              TheTestRoomFloor:
+  29+ 76A9 02 FF 88 FF      DEFB $02, 255, 136, 255, 34, 255, 136, 255, 36
+  29+ 76AD 22 FF 88 FF
+  29+ 76B1 24
+  30+ 76B2
+  31+ 76B2              TheTestRoomWall:
+  32+ 76B2 06 22 77 22      DEFB $06, 34,119,34,136,34,119,34,136
+  32+ 76B6 88 22 77 22
+  32+ 76BA 88
+  33+ 76BB
+  34+ 76BB              TheTestRoomNasty:
+  35+ 76BB 02 F8 88 9E      DEFB $02, 248,136,158,189,189,158,136,248
+  35+ 76BF BD BD 9E 88
+  35+ 76C3 F8
+  36+ 76C4
+  37+ 76C4              TheTestRoomRamp:
+  38+ 76C4 07 03 03 0C      DEFB $07, 3,3,12,13,50,55,194,200
+  38+ 76C8 0D 32 37 C2
+  38+ 76CC C8
+  39+ 76CD
+  40+ 76CD              TheTestRoomConveyor:
+  41+ 76CD 05 01 40 04      DEFB $05, 1,64,4,70,79,121,240,249
+  41+ 76D1 46 4F 79 F0
+  41+ 76D5 F9
+  42+ 76D6
+  43+ 76D6              ; Conveyor specs (direction, location, length)
+  44+ 76D6              TheTestRoomConveyorData:
+  45+ 76D6 00               DEFB 0
+  46+ 76D7 00 00            DEFW 0
+  47+ 76D9 00               DEFB 0
+  48+ 76DA
+  49+ 76DA              ; Ramp specs (direction, location, length)
+  50+ 76DA              TheTestRoomRampData:
+  51+ 76DA 00               DEFB 0
+  52+ 76DB 00 00            DEFW 0
+  53+ 76DD 00               DEFB 0
+  54+ 76DE
+  55+ 76DE              ; Border color
+  56+ 76DE              TheTestRoomBorderColor:
+  57+ 76DE 05               DEFB 5                        ; Black border
+  58+ 76DF
+  59+ 76DF              ; Reserved bytes
+  60+ 76DF              TheTestRoomReserved:
+  61+ 76DF 07 07 07 07      DEFB 7, 7, 7, 7               ; Enemy colors: all WHITE (7)
+  62+ 76E3
+  63+ 76E3              ; Item graphic
+  64+ 76E3              TheTestRoomItem:
+  65+ 76E3 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; No item defined yet
+  65+ 76E7 00 00 00 00
+  66+ 76EB
+  67+ 76EB              ; Room connections (left, right, above, below)
+  68+ 76EB              TheTestRoomDirection:
+  69+ 76EB 01               DEFB 1                        ; Left: The Bridge (Room 1)
+  70+ 76EC 02               DEFB 2                        ; Right: The Off Licence (Room 2)
+  71+ 76ED 00               DEFB 0                        ; Above: Self
+  72+ 76EE 00               DEFB 0                        ; Below: Self
+  73+ 76EF
+  74+ 76EF              TheTestRoomUnused:
+  75+ 76EF 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  76+ 76F0
+  77+ 76F0              ; Room entities slots (ropes, arrows, guardians)
+  78+ 76F0              TheTestRoomEnemy1:
+  79+ 76F0 80 18 80 E7      DEFB $80, 24, 128, 231        ; Enemy 1 (Lametta), horizontal, Starts X=24, Y=128, Limit X=231
+  80+ 76F4              TheTestRoomEnemy2:
+  81+ 76F4 81 A0 50 E0      DEFB $81, 160, 80, 224        ; Enemy 2 (Egg), horizontal, Starts X=160, Y=80, Limit X=224
+  82+ 76F8              TheTestRoomEnemy3:
+  83+ 76F8 82 40 68 B0      DEFB $82, 64, 104, 176        ; Enemy 3 (Robot), horizontal, Starts X=64, Y=104, Limit X=176
+  84+ 76FC              TheTestRoomEnemy4:
+  85+ 76FC 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
+  86+ 7700
 # file closed: Rooms/TheTestRoom.asm
- 155  7600
- 156  7600                  SAVESNA "jet set willy.sna", start
+ 155  7700
+ 156  7700                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm

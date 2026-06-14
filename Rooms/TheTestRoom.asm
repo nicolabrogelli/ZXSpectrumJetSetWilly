@@ -58,7 +58,7 @@ TheTestRoomBorderColor:
 
 ; Reserved bytes
 TheTestRoomReserved:
-    DEFB 0,0
+    DEFB 7, 7, 7, 7               ; Enemy colors: all WHITE (7)
 
 ; Item graphic
 TheTestRoomItem:
@@ -71,9 +71,8 @@ TheTestRoomDirection:
     DEFB 0                        ; Above: Self
     DEFB 0                        ; Below: Self
 
-; Unused
-Room99Unused:
-    DEFB 0,0,0
+TheTestRoomUnused:
+    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 ; Room entities slots (ropes, arrows, guardians)
 TheTestRoomEnemy1:

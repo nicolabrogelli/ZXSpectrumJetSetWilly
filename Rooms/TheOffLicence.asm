@@ -52,7 +52,7 @@ TheOffLicenceBorderColor:
     DEFB 5
 
 TheOffLicenceReserved:
-    DEFB 0,160
+    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
 
 TheOffLicenceItem:
     DEFB 24,24,60,126,98,98,98,126
@@ -64,7 +64,7 @@ TheOffLicenceDirection:
     DEFB 0
 
 TheOffLicenceUnused:
-    DEFB 0,0,0
+    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 TheOffLicenceEnemy1:
     DEFB $80, 140, 80, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180

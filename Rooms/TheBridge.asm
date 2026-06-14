@@ -57,7 +57,7 @@ TheBridgeBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheBridgeReserved:
-    DEFB 64,160	                            ;Unused
+    DEFB 7, 7, 7, 7                 ; Enemy colors: all WHITE (7)
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheBridgeItem:
@@ -70,9 +70,8 @@ TheBridgeDirection:
     DEFB 0	                                ;Room above (The Off Licence)
     DEFB 0	                                ;Room below (The Off Licence)
 
-;The next three bytes are copied to 33005, but are not used.
 TheBridgeUnused:
-    DEFB 0,0,0	                            ;Unused
+    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBridgeEnemy1:

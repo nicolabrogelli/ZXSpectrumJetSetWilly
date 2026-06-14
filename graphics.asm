@@ -1122,3 +1122,319 @@ BallSprite: ;This guardian (page 190, sprites 4-7) appears in The Off Licence.
     db 55,252,63,236,63,236,31,216,31,56,15,240,7,224,1,128	
     db 0,0,1,128,7,224,15,240,30,184,63,252,63,244,123,254	
     db 119,246,55,236,63,220,31,56,15,240,7,224,1,128,0,0
+
+; -------------------------------------------------------------------
+; Ottiene l'attributo colore originale dello sfondo per una cella
+; Input: H = Row (0..23), B = Col (0..31)
+; Output: A = Attributo colore
+; -------------------------------------------------------------------
+GetCellAttribute:
+    push hl
+    push de
+    push bc
+
+    ; 1. Controlla se Row (H) è fuori dal layout (H < 3 o H >= 19)
+    ld   a, h
+    cp   3
+    jr   c, .blank
+    cp   19
+    jr   nc, .blank
+
+    ; 2. Calcola riga di layout: r = H - 3
+    sub  3
+    
+    ; 3. HL = r * 8
+    ld   l, a
+    ld   h, 0
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl            ; HL = r * 8
+
+    ; 4. HL = r * 8 + c / 4
+    ld   a, b              ; A = Col
+    srl  a
+    srl  a                 ; A = c / 4
+    add  a, l
+    ld   l, a              ; HL = r * 8 + c / 4
+
+    ld   de, (room_ptr)
+    add  hl, de            ; HL = layout byte address
+    ld   a, (hl)           ; A = layout byte
+
+    ; Estrai il bit-pair corrispondente a c % 4
+    ld   c, a              ; C = layout byte
+    ld   a, b              ; A = Col
+    and  3                 ; A = c % 4
+    jr   z, .shift_0
+    dec  a
+    jr   z, .shift_1
+    dec  a
+    jr   z, .shift_2
+    ; Case 3 (c % 4 = 3)
+    ld   a, c
+    jr   .got_type
+.shift_2:
+    ld   a, c
+    rrca
+    rrca
+    jr   .got_type
+.shift_1:
+    ld   a, c
+    rrca
+    rrca
+    rrca
+    rrca
+    jr   .got_type
+.shift_0:
+    ld   a, c
+    rlca
+    rlca
+.got_type:
+    and  3                 ; A = cell type (0..3)
+
+    ; Ottieni l'offset del tile corrispondente e leggi l'attributo (il primo byte del tile)
+    or   a
+    jr   nz, .not_bg
+    ld   hl, OFFSET_BG
+    jr   .load_attr
+.not_bg:
+    dec  a
+    jr   nz, .not_floor
+    ld   hl, OFFSET_FLOOR
+    jr   .load_attr
+.not_floor:
+    dec  a
+    jr   nz, .not_wall
+    ld   hl, OFFSET_WALL
+    jr   .load_attr
+.not_wall:
+    ld   hl, OFFSET_NASTY
+
+.load_attr:
+    ld   de, (room_ptr)
+    add  hl, de            ; HL = tile pointer
+    ld   a, (hl)           ; A = primo byte del tile (l'attributo colore)
+    
+    pop  bc
+    pop  de
+    pop  hl
+    ret
+
+.blank:
+    ld   a, $07            ; Sfondo di default (bianco su nero)
+    pop  bc
+    pop  de
+    pop  hl
+    ret
+
+; -------------------------------------------------------------------
+; Imposta gli attributi colore per la cella occupata da un nemico 16x16
+; Input: C = X pixel, B = Y pixel, A = Colore Ink (0..7)
+; -------------------------------------------------------------------
+SetEnemyColorAttributes:
+    push hl
+    push de
+    push bc
+    
+    ld   d, a              ; D = Colore Ink (salvato)
+    
+    ; Se Y è fuori dai limiti della griglia di gioco, non fare nulla
+    ld   a, b
+    cp   24
+    jr   c, .done
+    cp   152
+    jr   nc, .done
+    
+    ; Calcola ColStart: col = X / 8
+    ld   a, c
+    srl  a
+    srl  a
+    srl  a
+    ld   e, a              ; E = ColStart
+    
+    ; Calcola ColEnd: col_end = (X + 15) / 8
+    ld   a, c
+    add  a, 15
+    srl  a
+    srl  a
+    srl  a
+    ld   c, a              ; C = ColEnd
+    
+    ; Calcola RowStart: row = Y / 8
+    ld   a, b
+    srl  a
+    srl  a
+    srl  a
+    ld   h, a              ; H = RowStart
+    
+    ; Calcola RowEnd: row_end = (Y + 15) / 8
+    ld   a, b
+    add  a, 15
+    srl  a
+    srl  a
+    srl  a
+    ld   l, a              ; L = RowEnd
+    
+    ; Loop righe: Row corrente in H, fino a L
+.row_loop:
+    ld   a, h
+    cp   l
+    jr   z, .ok_row
+    jr   nc, .done
+.ok_row:
+    push bc
+    push de
+    
+    ; Col loop from E (ColStart) to C (ColEnd)
+    ld   b, e              ; B = Col corrente
+.col_loop:
+    ld   a, b
+    cp   c
+    jr   z, .ok_col
+    jr   nc, .col_done
+.ok_col:
+    ; Processa la cella a H (Row), B (Col)
+    push hl
+    ld   l, h
+    ld   h, 0
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl            ; HL = Row * 32
+    
+    ld   a, b              ; A = Col corrente
+    add  a, l
+    ld   l, a
+    jr   nc, .no_c_s
+    inc  h
+.no_c_s:
+    ld   a, h
+    add  a, $58
+    ld   h, a              ; HL = Attribute screen address ($5800 + Row * 32 + Col)
+    
+    ld   a, (hl)
+    and  $f8
+    or   d                 ; D has the enemy color
+    ld   (hl), a
+    pop  hl
+    
+    inc  b                 ; Prossima colonna
+    jr   .col_loop
+    
+.col_done:
+    pop  de
+    pop  bc
+    inc  h                 ; Prossima riga
+    jr   .row_loop
+    
+.done:
+    pop  bc
+    pop  de
+    pop  hl
+    ret
+
+; -------------------------------------------------------------------
+; Ripristina gli attributi colore originali dello sfondo per la cella occupata da un nemico
+; Input: C = X pixel, B = Y pixel
+; -------------------------------------------------------------------
+RestoreEnemyColorAttributes:
+    push hl
+    push de
+    push bc
+    
+    ; Se Y è fuori dai limiti della griglia di gioco, non fare nulla
+    ld   a, b
+    cp   24
+    jr   c, .done
+    cp   152
+    jr   nc, .done
+    
+    ; Calcola ColStart: col = X / 8
+    ld   a, c
+    srl  a
+    srl  a
+    srl  a
+    ld   e, a              ; E = ColStart
+    
+    ; Calcola ColEnd: col_end = (X + 15) / 8
+    ld   a, c
+    add  a, 15
+    srl  a
+    srl  a
+    srl  a
+    ld   c, a              ; C = ColEnd
+    
+    ; Calcola RowStart: row = Y / 8
+    ld   a, b
+    srl  a
+    srl  a
+    srl  a
+    ld   h, a              ; H = RowStart
+    
+    ; Calcola RowEnd: row_end = (Y + 15) / 8
+    ld   a, b
+    add  a, 15
+    srl  a
+    srl  a
+    srl  a
+    ld   l, a              ; L = RowEnd
+    
+    ; Loop righe: Row corrente in H, fino a L
+.row_loop:
+    ld   a, h
+    cp   l
+    jr   z, .ok_row
+    jr   nc, .done
+.ok_row:
+    push bc
+    push de
+    
+    ; Col loop from E (ColStart) to C (ColEnd)
+    ld   b, e              ; B = Col corrente
+.col_loop:
+    ld   a, b
+    cp   c
+    jr   z, .ok_col
+    jr   nc, .col_done
+.ok_col:
+    ; Ottieni attributo originale dello sfondo per cella H (Row), B (Col)
+    call GetCellAttribute  ; A = attributo originale
+    ld   d, a              ; D = attributo originale
+    
+    push hl                ; Salva Row pointer
+    ld   l, h
+    ld   h, 0
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl            ; HL = Row * 32
+    
+    ld   a, b              ; A = Col corrente
+    add  a, l
+    ld   l, a
+    jr   nc, .no_c_r
+    inc  h
+.no_c_r:
+    ld   a, h
+    add  a, $58
+    ld   h, a              ; HL = Attribute screen address ($5800 + Row * 32 + Col)
+    
+    ld   (hl), d           ; Ripristina l'attributo colore dello sfondo
+    pop  hl                ; Ripristina Row pointer
+    
+    inc  b                 ; Prossima colonna
+    jr   .col_loop
+    
+.col_done:
+    pop  de
+    pop  bc
+    inc  h                 ; Prossima riga
+    jr   .row_loop
+    
+.done:
+    pop  bc
+    pop  de
+    pop  hl
+    ret

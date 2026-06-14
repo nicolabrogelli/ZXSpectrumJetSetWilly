@@ -27,7 +27,16 @@ LoadRoomEnemies:
     push hl
     push de
     push bc
+    push ix
     
+    ; 1. Imposta IX all'indirizzo dell'array dei colori in ROM (room_ptr + 223)
+    ld   hl, (room_ptr)
+    ld   de, 223
+    add  hl, de
+    push hl
+    pop  ix                ; IX = color pointer
+    
+    ; 2. Imposta HL all'indirizzo dei dati dei nemici (room_ptr + 240)
     ld   hl, (room_ptr)
     ld   de, 240           ; Offset degli enemy nella stanza
     add  hl, de            ; HL = indirizzo di RoomXEnemy1
@@ -35,6 +44,11 @@ LoadRoomEnemies:
     ld   de, ActiveEnemies
     ld   b, 4              ; 4 slot per stanza
 .loop:
+    ; Leggi il colore per questo nemico dal puntatore IX e salvalo sullo stack
+    ld   a, (ix+0)
+    inc  ix
+    push af                ; Salva colore sullo stack
+    
     ; 1. Copia Flags, StartX, StartY
     ld   a, (hl)           ; A = Flags
     ld   (de), a           ; Offset 0
@@ -146,14 +160,15 @@ LoadRoomEnemies:
     
     pop  hl
     
-    ; Offset 9: Riservato
-    xor  a
-    ld   (de), a           ; Offset 9
+    ; Offset 9: Color
+    pop  af                ; Ripristina colore dallo stack
+    ld   (de), a           ; Offset 9: Color
     inc  de
     
     dec  b
     jp   nz, .loop
     
+    pop  ix
     pop  bc
     pop  de
     pop  hl
@@ -179,6 +194,9 @@ EraseRoomEnemies:
     ld   c, (ix+7)         ; C = Old X
     ld   b, (ix+8)         ; B = Old Y
     call ErasePixelSprite16x16
+    ld   c, (ix+7)         ; C = Old X
+    ld   b, (ix+8)         ; B = Old Y
+    call RestoreEnemyColorAttributes
     pop  bc
     
 .next:
@@ -315,6 +333,12 @@ DrawRoomEnemies:
     pop  ix                ; IX = sprite data pointer
     call DrawPixelSprite16x16
     pop  ix                ; Ripristina slot pointer
+    
+    ; Applica gli attributi colore per la posizione corrente
+    ld   c, (ix+1)         ; C = Current X
+    ld   b, (ix+2)         ; B = Current Y
+    ld   a, (ix+9)         ; A = Color
+    call SetEnemyColorAttributes
     
     pop  bc                ; Ripristina contatore ciclo
     
