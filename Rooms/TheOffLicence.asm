@@ -20,22 +20,22 @@ TheOffLicenceLayout:
 TheOffLicenceTile:
     DEFM "         The Off Licence        "
 
-TheOffLicenceBackground:
-    DEFB 0,0,0,0,0,0,0,0,0
+TheOffLicenceBackground:                    ; Background
+    DEFB $07,0,0,0,0,0,0,0,0
 
 TheOffLicenceFloor:
-    DEFB 68,255,222,108,136,18,64,4,0
+    DEFB 68,255,222,108,136,18,64,4,0       ; Floor Solid
 
 TheOffLicenceWall:
-    DEFB 22,34,255,136,255,34,255,136,255
+    DEFB 22,34,255,136,255,34,255,136,255   ; Wall Solid
 
 TheOffLicenceNasty:
-    DEFB 5,248,136,158,189,189,158,136,248
+    DEFB 5,248,136,158,189,189,158,136,248  ; Nastry
 
-TheOffLicenceRamp:
-    DEFB 7,3,0,12,0,48,0,192,0
+TheOffLicenceRamp:                          ; Ramp Solid
+    DEFB 7,3,0,12,0,48,0,192,0              
 
-TheOffLicenceConveyor:
+TheOffLicenceConveyor:                      ; Conveyor Solid
     DEFB 67,51,255,51,0,255,0,170,0
 
 TheOffLicenceConveyorData:

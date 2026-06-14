@@ -3004,17 +3004,17 @@
   22+ 6FA0
   23+ 6FA0              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
   24+ 6FA0              TheBridgeBackground:
-  25+ 6FA0 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0	                ;Background
+  25+ 6FA0 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
   25+ 6FA4 00 00 00 00
   25+ 6FA8 00
   26+ 6FA9
   27+ 6FA9              TheBridgeFloor:
-  28+ 6FA9 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64	;Floor
+  28+ 6FA9 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64	;Floor Solid
   28+ 6FAD BB D6 72 60
   28+ 6FB1 40
   29+ 6FB2
   30+ 6FB2              TheBridgeWall:
-  31+ 6FB2 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136	    ;Wall
+  31+ 6FB2 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136	    ;Wall Solid
   31+ 6FB6 88 22 77 22
   31+ 6FBA 88
   32+ 6FBB
@@ -3024,7 +3024,7 @@
   34+ 6FC3 30
   35+ 6FC4
   36+ 6FC4              TheBridgeRamp:
-  37+ 6FC4 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200	        ;Ramp
+  37+ 6FC4 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200	        ;Ramp Solid
   37+ 6FC8 0D 32 37 C2
   37+ 6FCC C8
   38+ 6FCD
@@ -3127,32 +3127,32 @@
   21+ 7098 20 20 20 20
   21+ 709C 20 20 20 20
   22+ 70A0
-  23+ 70A0              TheOffLicenceBackground:
-  24+ 70A0 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0
+  23+ 70A0              TheOffLicenceBackground:                    ; Background
+  24+ 70A0 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0
   24+ 70A4 00 00 00 00
   24+ 70A8 00
   25+ 70A9
   26+ 70A9              TheOffLicenceFloor:
-  27+ 70A9 44 FF DE 6C      DEFB 68,255,222,108,136,18,64,4,0
+  27+ 70A9 44 FF DE 6C      DEFB 68,255,222,108,136,18,64,4,0       ; Floor Solid
   27+ 70AD 88 12 40 04
   27+ 70B1 00
   28+ 70B2
   29+ 70B2              TheOffLicenceWall:
-  30+ 70B2 16 22 FF 88      DEFB 22,34,255,136,255,34,255,136,255
+  30+ 70B2 16 22 FF 88      DEFB 22,34,255,136,255,34,255,136,255   ; Wall Solid
   30+ 70B6 FF 22 FF 88
   30+ 70BA FF
   31+ 70BB
   32+ 70BB              TheOffLicenceNasty:
-  33+ 70BB 05 F8 88 9E      DEFB 5,248,136,158,189,189,158,136,248
+  33+ 70BB 05 F8 88 9E      DEFB 5,248,136,158,189,189,158,136,248  ; Nastry
   33+ 70BF BD BD 9E 88
   33+ 70C3 F8
   34+ 70C4
-  35+ 70C4              TheOffLicenceRamp:
+  35+ 70C4              TheOffLicenceRamp:                          ; Ramp Solid
   36+ 70C4 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0
   36+ 70C8 00 30 00 C0
   36+ 70CC 00
   37+ 70CD
-  38+ 70CD              TheOffLicenceConveyor:
+  38+ 70CD              TheOffLicenceConveyor:                      ; Conveyor Solid
   39+ 70CD 43 33 FF 33      DEFB 67,51,255,51,0,255,0,170,0
   39+ 70D1 00 FF 00 AA
   39+ 70D5 00
