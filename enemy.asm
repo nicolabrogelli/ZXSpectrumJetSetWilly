@@ -217,11 +217,25 @@ DrawRoomEnemies:
     jp   nz, .not_lametta
     
     ; Lametta (Tipo 0)
+    ld   hl, (room_ptr)
+    ld   de, TheBridgeLayout
+    or   a
+    sbc  hl, de
+    jr   z, .bridge_lametta
+
     ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
     ld   hl, LamettaSpriteLeft
     jr   z, .got_sprite
     ld   hl, LamettaSpriteRight
+    jr   .got_sprite
+
+.bridge_lametta:
+    ld   a, (ix+5)         ; Direction
+    cp   1                 ; Sinistra?
+    ld   hl, UccelloSpriteLeft
+    jr   z, .got_sprite
+    ld   hl, UccelloSpriteRight
     jr   .got_sprite
     
 .not_lametta:
@@ -229,11 +243,21 @@ DrawRoomEnemies:
     jp   nz, .not_egg
     
     ; Uovo (Tipo 1)
+    ld   hl, (room_ptr)
+    ld   de, TheBridgeLayout
+    or   a
+    sbc  hl, de
+    jr   z, .bridge_egg
+
     ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
     ld   hl, EggSpriteLeft
     jr   z, .got_sprite
     ld   hl, EggSpriteRight
+    jr   .got_sprite
+
+.bridge_egg:
+    ld   hl, UfoSprite
     jr   .got_sprite
     
 .not_egg:
