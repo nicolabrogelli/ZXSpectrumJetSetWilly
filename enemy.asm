@@ -222,6 +222,12 @@ DrawRoomEnemies:
     or   a
     sbc  hl, de
     jr   z, .bridge_lametta
+    
+    ld   hl, (room_ptr)
+    ld   de, TheOffLicenceLayout
+    or   a
+    sbc  hl, de
+    jr   z, .offlicence_radar
 
     ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
@@ -237,6 +243,10 @@ DrawRoomEnemies:
     jr   z, .got_sprite
     ld   hl, UccelloSpriteRight
     jr   .got_sprite
+
+.offlicence_radar:
+    ld   hl, RadarSprite
+    jr   .got_sprite
     
 .not_lametta:
     dec  a
@@ -248,6 +258,12 @@ DrawRoomEnemies:
     or   a
     sbc  hl, de
     jr   z, .bridge_egg
+    
+    ld   hl, (room_ptr)
+    ld   de, TheOffLicenceLayout
+    or   a
+    sbc  hl, de
+    jr   z, .offlicence_face
 
     ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
@@ -259,10 +275,24 @@ DrawRoomEnemies:
 .bridge_egg:
     ld   hl, UfoSprite
     jr   .got_sprite
+
+.offlicence_face:
+    ld   hl, FaceSprite
+    jr   .got_sprite
     
 .not_egg:
     ; Robot (Tipo 2)
+    ld   hl, (room_ptr)
+    ld   de, TheOffLicenceLayout
+    or   a
+    sbc  hl, de
+    jr   z, .offlicence_ball
+
     ld   hl, RobotSprite
+    jr   .got_sprite
+
+.offlicence_ball:
+    ld   hl, BallSprite
     
 .got_sprite:
     ; Calcola il frame dell'animazione: Anim State * 32

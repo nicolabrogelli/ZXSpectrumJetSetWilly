@@ -145,7 +145,7 @@ line_buffer:    .256 db 0
 
 ; Gestione Stanze
 current_room:   db 0
-room_ptr:       dw TheBridgeLayout; TheOffLicenceLayout; TheTestRoomLayout
+room_ptr:       dw TheOffLicenceLayout; TheBridgeLayout; TheTestRoomLayout
 
     ALIGN 256
 RoomsStart:

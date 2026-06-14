@@ -67,10 +67,10 @@ TheOffLicenceUnused:
     DEFB 0,0,0
 
 TheOffLicenceEnemy1:
-    DEFB $82, 40, 128, 180        ; Enemy 1 (Robot), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, 140, 80, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
 TheOffLicenceEnemy2:
-    DEFB $80, 100, 80, 200        ; Enemy 2 (Lametta), horizontal, Starts X=100, Y=80, Limit X=200
+    DEFB $C1, 60, 80, 130         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
 TheOffLicenceEnemy3:
-    DEFB $81, 60, 104, 160        ; Enemy 3 (Egg), horizontal, Starts X=60, Y=104, Limit X=160
+    DEFB $C2, 80, 40, 130         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 TheOffLicenceEnemy4:
     DEFB 0,0,0,0                  ; Empty slot

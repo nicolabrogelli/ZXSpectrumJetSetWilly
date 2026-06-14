@@ -930,957 +930,990 @@ graphics.asm|1075||0|1|26863|F|UccelloSpriteLeft
 graphics.asm|1075||0|1|26863|L|,UccelloSpriteLeft,,+used
 graphics.asm|1085||0|1|26991|F|UccelloSpriteRight
 graphics.asm|1085||0|1|26991|L|,UccelloSpriteRight,,+used
-player.asm|10||0|1|27119|F|MovePlayer
-player.asm|10||0|1|27119|L|,MovePlayer,,+used
-player.asm|12||0|1|27119|T|
-player.asm|13||0|1|27123|T|
-player.asm|14||0|1|27127|T|
-player.asm|15||0|1|27128|T|
-player.asm|17||0|1|27132|T|
-player.asm|19||0|1|27136|T|
-player.asm|20||0|1|27138|T|
-player.asm|22||0|1|27140|T|
-player.asm|23||0|1|27142|T|
-player.asm|25||0|1|27143|F|movePlayer_left
-player.asm|25||0|1|27143|L|,movePlayer_left,
-player.asm|26||0|1|27143|T|
-player.asm|27||0|1|27144|T|
-player.asm|28||0|1|27146|T|
-player.asm|29||0|1|27148|T|
-player.asm|30||0|1|27150|T|
-player.asm|31||0|1|27151|T|
-player.asm|33||0|1|27153|F|movePlayer_left.clamp_left
-player.asm|33||0|1|27153|L|,movePlayer_left,clamp_left,+used
-player.asm|34||0|1|27153|T|
-player.asm|35||0|1|27155|T|
-player.asm|37||0|1|27157|F|movePlayer_right
-player.asm|37||0|1|27157|L|,movePlayer_right,,+used
-player.asm|38||0|1|27157|T|
-player.asm|39||0|1|27158|T|
-player.asm|40||0|1|27160|T|
-player.asm|41||0|1|27162|T|
-player.asm|42||0|1|27164|T|
-player.asm|43||0|1|27166|F|movePlayer_right.ok_right
-player.asm|43||0|1|27166|L|,movePlayer_right,ok_right,+used
-player.asm|44||0|1|27166|T|
-player.asm|45||0|1|27167|T|
-player.asm|47||0|1|27169|F|movePlayer_right.clamp_right
-player.asm|47||0|1|27169|L|,movePlayer_right,clamp_right,+used
-player.asm|48||0|1|27169|T|
-player.asm|50||0|1|27171|F|save_x
-player.asm|50||0|1|27171|L|,save_x,,+used
-player.asm|51||0|1|27171|T|
-player.asm|53||0|1|27175|F|movePlayer_print
-player.asm|53||0|1|27175|L|,movePlayer_print,
-player.asm|55||0|1|27175|T|
-player.asm|56||0|1|27178|T|
-player.asm|57||0|1|27179|T|
-player.asm|58||0|1|27181|T|
-player.asm|59||0|1|27183|T|
-player.asm|60||0|1|27185|F|movePlayer_print.save_state
-player.asm|60||0|1|27185|L|,movePlayer_print,save_state,+used
-player.asm|61||0|1|27185|T|
-player.asm|62||0|1|27188|T|
-input.asm|10||0|1|27189|F|CheckCtrl
-input.asm|10||0|1|27189|L|,CheckCtrl,,+used
-input.asm|11||0|1|27189|T|
-input.asm|12||0|1|27191|T|
-input.asm|13||0|1|27193|T|
-input.asm|14||0|1|27195|T|
-input.asm|16||0|1|27199|F|checkCtrl_left
-input.asm|16||0|1|27199|L|,checkCtrl_left,
-input.asm|17||0|1|27199|T|
-input.asm|18||0|1|27201|T|
-input.asm|19||0|1|27203|T|
-input.asm|20||0|1|27205|T|
-input.asm|21||0|1|27209|T|
-input.asm|22||0|1|27210|T|
-input.asm|23||0|1|27212|T|
-input.asm|24||0|1|27215|T|
-input.asm|26||0|1|27216|F|checkCtrl_right
-input.asm|26||0|1|27216|L|,checkCtrl_right,,+used
-input.asm|27||0|1|27216|T|
-input.asm|28||0|1|27218|T|
-input.asm|29||0|1|27220|T|
-input.asm|30||0|1|27222|T|
-input.asm|31||0|1|27226|T|
-input.asm|32||0|1|27227|T|
-input.asm|33||0|1|27229|T|
-input.asm|34||0|1|27232|T|
-input.asm|36||0|1|27233|F|checkCtrl_jump
-input.asm|36||0|1|27233|L|,checkCtrl_jump,,+used
-input.asm|38||0|1|27233|T|
-input.asm|39||0|1|27235|T|
-input.asm|40||0|1|27237|T|
-input.asm|41||0|1|27239|T|
-input.asm|44||0|1|27241|T|
-input.asm|45||0|1|27243|T|
-input.asm|46||0|1|27245|T|
-input.asm|47||0|1|27247|T|
-input.asm|49||0|1|27249|F|checkCtrl_jump.released
-input.asm|49||0|1|27249|L|,checkCtrl_jump,released
-input.asm|50||0|1|27249|T|
-input.asm|51||0|1|27250|T|
-input.asm|52||0|1|27253|T|
-input.asm|54||0|1|27255|F|checkCtrl_jump.pressed
-input.asm|54||0|1|27255|L|,checkCtrl_jump,pressed,+used
-input.asm|55||0|1|27255|T|
-input.asm|56||0|1|27258|T|
-input.asm|57||0|1|27259|T|
-input.asm|58||0|1|27261|T|
-input.asm|59||0|1|27263|T|
-input.asm|60||0|1|27266|T|
-input.asm|61||0|1|27269|T|
-input.asm|63||0|1|27271|F|checkCtrl_jump.end
-input.asm|63||0|1|27271|L|,checkCtrl_jump,end,+used
-input.asm|64||0|1|27271|T|
-input.asm|65||0|1|27272|T|
-input.asm|66||0|1|27274|T|
-input.asm|67||0|1|27276|T|
-input.asm|68||0|1|27277|T|
-input.asm|69||0|1|27278|T|
-input.asm|70||0|1|27280|T|
-input.asm|71||0|1|27281|T|
-physics.asm|11||0|1|27282|F|CheckSolidCell
-physics.asm|11||0|1|27282|L|,CheckSolidCell,,+used
-physics.asm|12||0|1|27282|T|
-physics.asm|13||0|1|27283|T|
-physics.asm|14||0|1|27284|T|
-physics.asm|17||0|1|27285|T|
-physics.asm|18||0|1|27286|T|
-physics.asm|19||0|1|27288|T|
-physics.asm|20||0|1|27290|T|
-physics.asm|21||0|1|27292|T|
-physics.asm|24||0|1|27294|T|
-physics.asm|25||0|1|27296|T|
-physics.asm|26||0|1|27298|T|
-physics.asm|27||0|1|27300|T|
-physics.asm|30||0|1|27302|T|
-physics.asm|31||0|1|27303|T|
-physics.asm|32||0|1|27305|T|
-physics.asm|33||0|1|27306|T|
-physics.asm|34||0|1|27307|T|
-physics.asm|37||0|1|27308|T|
-physics.asm|38||0|1|27309|T|
-physics.asm|39||0|1|27311|T|
-physics.asm|40||0|1|27313|T|
-physics.asm|41||0|1|27315|T|
-physics.asm|44||0|1|27316|T|
-physics.asm|45||0|1|27318|T|
-physics.asm|46||0|1|27320|T|
-physics.asm|47||0|1|27321|T|
-physics.asm|49||0|1|27322|T|
-physics.asm|50||0|1|27326|T|
-physics.asm|51||0|1|27327|T|
-physics.asm|54||0|1|27328|T|
-physics.asm|55||0|1|27329|T|
-physics.asm|56||0|1|27330|T|
-physics.asm|57||0|1|27332|T|
-physics.asm|58||0|1|27334|T|
-physics.asm|59||0|1|27335|T|
-physics.asm|60||0|1|27337|T|
-physics.asm|61||0|1|27338|T|
-physics.asm|63||0|1|27340|T|
-physics.asm|64||0|1|27341|T|
-physics.asm|65||0|1|27343|F|CheckSolidCell.shift_2
-physics.asm|65||0|1|27343|L|,CheckSolidCell,shift_2,+used
-physics.asm|66||0|1|27343|T|
-physics.asm|67||0|1|27344|T|
-physics.asm|68||0|1|27345|T|
-physics.asm|69||0|1|27346|T|
-physics.asm|70||0|1|27348|F|CheckSolidCell.shift_1
-physics.asm|70||0|1|27348|L|,CheckSolidCell,shift_1,+used
-physics.asm|71||0|1|27348|T|
-physics.asm|72||0|1|27349|T|
-physics.asm|73||0|1|27350|T|
-physics.asm|74||0|1|27351|T|
-physics.asm|75||0|1|27352|T|
-physics.asm|76||0|1|27353|T|
-physics.asm|77||0|1|27355|F|CheckSolidCell.shift_0
-physics.asm|77||0|1|27355|L|,CheckSolidCell,shift_0,+used
-physics.asm|78||0|1|27355|T|
-physics.asm|79||0|1|27356|T|
-physics.asm|80||0|1|27357|T|
-physics.asm|81||0|1|27358|F|CheckSolidCell.got_type
-physics.asm|81||0|1|27358|L|,CheckSolidCell,got_type,+used
-physics.asm|82||0|1|27358|T|
-physics.asm|85||0|1|27360|T|
-physics.asm|86||0|1|27362|T|
-physics.asm|87||0|1|27364|T|
-physics.asm|88||0|1|27366|T|
-physics.asm|90||0|1|27368|F|CheckSolidCell.not_solid
-physics.asm|90||0|1|27368|L|,CheckSolidCell,not_solid,+used
-physics.asm|91||0|1|27368|T|
-physics.asm|92||0|1|27369|T|
-physics.asm|93||0|1|27370|T|
-physics.asm|94||0|1|27371|T|
-physics.asm|95||0|1|27372|T|
-physics.asm|97||0|1|27373|F|CheckSolidCell.solid
-physics.asm|97||0|1|27373|L|,CheckSolidCell,solid,+used
-physics.asm|98||0|1|27373|T|
-physics.asm|99||0|1|27374|T|
-physics.asm|100||0|1|27375|T|
-physics.asm|101||0|1|27376|T|
-physics.asm|102||0|1|27377|T|
-physics.asm|107||0|1|27378|F|ApplyGravity
-physics.asm|107||0|1|27378|L|,ApplyGravity,,+used
-physics.asm|108||0|1|27378|T|
-physics.asm|109||0|1|27382|T|
-physics.asm|112||0|1|27383|T|
-physics.asm|113||0|1|27386|T|
-physics.asm|114||0|1|27387|T|
-physics.asm|119||0|1|27390|T|
-physics.asm|120||0|1|27391|T|
-physics.asm|121||0|1|27393|T|
-physics.asm|124||0|1|27394|T|
-physics.asm|125||0|1|27397|T|
-physics.asm|128||0|1|27399|T|
-physics.asm|129||0|1|27400|T|
-physics.asm|130||0|1|27402|T|
-physics.asm|131||0|1|27403|T|
-physics.asm|132||0|1|27406|T|
-physics.asm|135||0|1|27408|T|
-physics.asm|136||0|1|27409|T|
-physics.asm|137||0|1|27412|T|
-physics.asm|138||0|1|27415|T|
-physics.asm|140||0|1|27418|F|ApplyGravity.still_on_ground
-physics.asm|140||0|1|27418|L|,ApplyGravity,still_on_ground,+used
-physics.asm|143||0|1|27418|T|
-physics.asm|146||0|1|27422|T|
-physics.asm|147||0|1|27425|T|
-physics.asm|148||0|1|27426|T|
-physics.asm|150||0|1|27429|T|
-physics.asm|151||0|1|27431|T|
-physics.asm|152||0|1|27434|T|
-physics.asm|153||0|1|27435|T|
-physics.asm|154||0|1|27438|T|
-physics.asm|155||0|1|27441|T|
-physics.asm|157||0|1|27444|F|ApplyGravity.in_air
-physics.asm|157||0|1|27444|L|,ApplyGravity,in_air,+used
-physics.asm|159||0|1|27444|T|
-physics.asm|160||0|1|27447|T|
-physics.asm|163||0|1|27449|T|
-physics.asm|164||0|1|27451|T|
-physics.asm|166||0|1|27453|T|
-physics.asm|167||0|1|27455|T|
-physics.asm|168||0|1|27457|T|
-physics.asm|170||0|1|27459|F|ApplyGravity.store_vel
-physics.asm|170||0|1|27459|L|,ApplyGravity,store_vel,+used
-physics.asm|171||0|1|27459|T|
-physics.asm|174||0|1|27462|T|
-physics.asm|175||0|1|27466|T|
-physics.asm|176||0|1|27467|T|
-physics.asm|177||0|1|27468|T|
-physics.asm|178||0|1|27469|T|
-physics.asm|181||0|1|27470|T|
-physics.asm|182||0|1|27473|T|
-physics.asm|183||0|1|27475|T|
-physics.asm|184||0|1|27477|T|
-physics.asm|185||0|1|27478|T|
-physics.asm|186||0|1|27480|T|
-physics.asm|188||0|1|27482|F|ApplyGravity.falling_checks
-physics.asm|188||0|1|27482|L|,ApplyGravity,falling_checks,+used
-physics.asm|190||0|1|27482|T|
-physics.asm|191||0|1|27483|T|
-physics.asm|192||0|1|27485|T|
-physics.asm|195||0|1|27486|T|
-physics.asm|196||0|1|27489|T|
-physics.asm|199||0|1|27491|T|
-physics.asm|200||0|1|27492|T|
-physics.asm|201||0|1|27494|T|
-physics.asm|202||0|1|27495|T|
-physics.asm|203||0|1|27498|T|
-physics.asm|206||0|1|27500|T|
-physics.asm|208||0|1|27502|F|ApplyGravity.check_landing
-physics.asm|208||0|1|27502|L|,ApplyGravity,check_landing,+used
-physics.asm|210||0|1|27502|T|
-physics.asm|211||0|1|27503|T|
-physics.asm|212||0|1|27505|T|
-physics.asm|213||0|1|27507|T|
-physics.asm|214||0|1|27509|T|
-physics.asm|217||0|1|27511|T|
-physics.asm|218||0|1|27512|T|
-physics.asm|219||0|1|27513|T|
-physics.asm|220||0|1|27514|T|
-physics.asm|221||0|1|27515|T|
-physics.asm|222||0|1|27517|T|
-physics.asm|225||0|1|27518|T|
-physics.asm|226||0|1|27521|T|
-physics.asm|228||0|1|27523|T|
-physics.asm|229||0|1|27524|T|
-physics.asm|230||0|1|27526|T|
-physics.asm|232||0|1|27528|T|
-physics.asm|234||0|1|27530|F|ApplyGravity.do_landing
-physics.asm|234||0|1|27530|L|,ApplyGravity,do_landing,+used
-physics.asm|236||0|1|27530|T|
-physics.asm|237||0|1|27531|T|
-physics.asm|238||0|1|27532|T|
-physics.asm|239||0|1|27533|T|
-physics.asm|240||0|1|27534|T|
-physics.asm|242||0|1|27536|T|
-physics.asm|243||0|1|27540|T|
-physics.asm|245||0|1|27541|T|
-physics.asm|246||0|1|27545|T|
-physics.asm|247||0|1|27547|T|
-physics.asm|248||0|1|27550|T|
-physics.asm|249||0|1|27551|T|
-physics.asm|250||0|1|27554|T|
-physics.asm|252||0|1|27557|F|ApplyGravity.no_collision_checks
-physics.asm|252||0|1|27557|L|,ApplyGravity,no_collision_checks,+used
-physics.asm|253||0|1|27557|T|
-physics.asm|254||0|1|27560|T|
-physics.asm|255||0|1|27561|T|
-physics.asm|256||0|1|27565|T|
-physics.asm|257||0|1|27566|T|
-physics.asm|258||0|1|27567|T|
-physics.asm|260||0|1|27568|F|ApplyGravity.save_pos
-physics.asm|260||0|1|27568|L|,ApplyGravity,save_pos
-physics.asm|261||0|1|27568|T|
-physics.asm|262||0|1|27569|T|
-physics.asm|263||0|1|27571|T|
-physics.asm|264||0|1|27573|T|
-physics.asm|265||0|1|27575|T|
-physics.asm|266||0|1|27576|T|
-physics.asm|268||0|1|27579|F|ApplyGravity.save_ok
-physics.asm|268||0|1|27579|L|,ApplyGravity,save_ok,+used
-physics.asm|269||0|1|27579|T|
-physics.asm|271||0|1|27583|F|ApplyGravity.end
-physics.asm|271||0|1|27583|L|,ApplyGravity,end,+used
-physics.asm|272||0|1|27583|T|
-physics.asm|273||0|1|27584|T|
-physics.asm|274||0|1|27587|T|
-physics.asm|280||0|1|27588|F|CheckCollision
-physics.asm|280||0|1|27588|L|,CheckCollision,,+used
-physics.asm|281||0|1|27588|T|
-physics.asm|282||0|1|27589|T|
-physics.asm|283||0|1|27590|T|
-physics.asm|284||0|1|27591|T|
-physics.asm|286||0|1|27593|T|
-physics.asm|287||0|1|27597|T|
-physics.asm|288||0|1|27599|F|CheckCollision.loop
-physics.asm|288||0|1|27599|L|,CheckCollision,loop,+used
-physics.asm|289||0|1|27599|T|
-physics.asm|290||0|1|27602|T|
-physics.asm|291||0|1|27604|T|
-physics.asm|294||0|1|27606|T|
-physics.asm|295||0|1|27609|T|
-physics.asm|296||0|1|27612|T|
-physics.asm|297||0|1|27614|T|
-physics.asm|298||0|1|27616|T|
-physics.asm|301||0|1|27618|T|
-physics.asm|302||0|1|27621|T|
-physics.asm|303||0|1|27624|T|
-physics.asm|304||0|1|27626|T|
-physics.asm|305||0|1|27628|T|
-physics.asm|308||0|1|27630|T|
-physics.asm|309||0|1|27632|T|
-physics.asm|310||0|1|27633|T|
-physics.asm|311||0|1|27634|T|
-physics.asm|312||0|1|27635|T|
-physics.asm|313||0|1|27636|T|
-physics.asm|315||0|1|27637|F|CheckCollision.next
-physics.asm|315||0|1|27637|L|,CheckCollision,next,+used
-physics.asm|316||0|1|27637|T|
-physics.asm|317||0|1|27640|T|
-physics.asm|318||0|1|27642|T|
-physics.asm|319||0|1|27643|T|
-physics.asm|321||0|1|27645|T|
-physics.asm|322||0|1|27647|T|
-physics.asm|323||0|1|27648|T|
-physics.asm|324||0|1|27649|T|
-physics.asm|325||0|1|27650|T|
-physics.asm|326||0|1|27651|T|
-screen.asm|33||0|1|27652|F|PrintFrame
-screen.asm|33||0|1|27652|L|,PrintFrame,
-screen.asm|35||0|1|27652|T|
-screen.asm|36||0|1|27655|T|
-screen.asm|37||0|1|27657|T|
-screen.asm|40||0|1|27660|T|
-screen.asm|41||0|1|27662|T|
-screen.asm|42||0|1|27664|T|
-screen.asm|45||0|1|27667|T|
-screen.asm|46||0|1|27670|T|
-screen.asm|47||0|1|27672|T|
-screen.asm|49||0|1|27675|T|
-screen.asm|54||0|1|27676|F|PrintInfoGame
-screen.asm|54||0|1|27676|L|,PrintInfoGame,
-screen.asm|55||0|1|27676|T|
-screen.asm|56||0|1|27678|T|
-screen.asm|57||0|1|27681|T|
-screen.asm|58||0|1|27684|T|
-screen.asm|59||0|1|27686|T|
-screen.asm|60||0|1|27689|T|
-screen.asm|61||0|1|27691|T|
-screen.asm|62||0|1|27694|T|
-screen.asm|67||0|1|27695|F|frameTopGraph
-screen.asm|67||0|1|27695|L|,frameTopGraph,,+used
-screen.asm|73||0|1|27732|F|frameBottomGraph
-screen.asm|73||0|1|27732|L|,frameBottomGraph,,+used
-screen.asm|78||0|1|27767|F|frameEnd
-screen.asm|78||0|1|27767|L|,frameEnd,,+used
-screen.asm|80||0|1|27767|F|infoGame
-screen.asm|80||0|1|27767|L|,infoGame,,+used
-screen.asm|83||0|1|27804|F|infoGame_end
-screen.asm|83||0|1|27804|L|,infoGame_end,,+used
-enemy.asm|19||0|1|27804|F|ActiveEnemies
-enemy.asm|19||0|1|27804|L|,ActiveEnemies,,+used
-enemy.asm|26||0|1|27844|F|LoadRoomEnemies
-enemy.asm|26||0|1|27844|L|,LoadRoomEnemies,,+used
-enemy.asm|27||0|1|27844|T|
-enemy.asm|28||0|1|27845|T|
-enemy.asm|29||0|1|27846|T|
-enemy.asm|31||0|1|27847|T|
-enemy.asm|32||0|1|27850|T|
-enemy.asm|33||0|1|27853|T|
-enemy.asm|35||0|1|27854|T|
-enemy.asm|36||0|1|27857|T|
-enemy.asm|37||0|1|27859|F|LoadRoomEnemies.loop
-enemy.asm|37||0|1|27859|L|,LoadRoomEnemies,loop,+used
-enemy.asm|39||0|1|27859|T|
-enemy.asm|40||0|1|27860|T|
-enemy.asm|41||0|1|27861|T|
-enemy.asm|42||0|1|27862|T|
-enemy.asm|44||0|1|27863|T|
-enemy.asm|45||0|1|27864|T|
-enemy.asm|46||0|1|27865|T|
-enemy.asm|47||0|1|27866|T|
-enemy.asm|49||0|1|27867|T|
-enemy.asm|50||0|1|27868|T|
-enemy.asm|51||0|1|27869|T|
-enemy.asm|52||0|1|27870|T|
-enemy.asm|55||0|1|27871|T|
-enemy.asm|56||0|1|27872|T|
-enemy.asm|57||0|1|27873|T|
-enemy.asm|58||0|1|27874|T|
-enemy.asm|59||0|1|27875|T|
-enemy.asm|60||0|1|27876|T|
-enemy.asm|61||0|1|27878|T|
-enemy.asm|63||0|1|27880|F|LoadRoomEnemies.is_horiz
-enemy.asm|63||0|1|27880|L|,LoadRoomEnemies,is_horiz
-enemy.asm|64||0|1|27880|T|
-enemy.asm|65||0|1|27881|T|
-enemy.asm|66||0|1|27882|T|
-enemy.asm|67||0|1|27883|T|
-enemy.asm|68||0|1|27884|T|
-enemy.asm|71||0|1|27885|T|
-enemy.asm|72||0|1|27886|T|
-enemy.asm|74||0|1|27888|T|
-enemy.asm|75||0|1|27889|T|
-enemy.asm|76||0|1|27890|T|
-enemy.asm|77||0|1|27891|T|
-enemy.asm|78||0|1|27892|T|
-enemy.asm|79||0|1|27893|T|
-enemy.asm|80||0|1|27894|T|
-enemy.asm|81||0|1|27895|T|
-enemy.asm|83||0|1|27897|F|LoadRoomEnemies.h_start_smaller
-enemy.asm|83||0|1|27897|L|,LoadRoomEnemies,h_start_smaller,+used
-enemy.asm|84||0|1|27897|T|
-enemy.asm|85||0|1|27898|T|
-enemy.asm|86||0|1|27899|T|
-enemy.asm|87||0|1|27900|T|
-enemy.asm|88||0|1|27901|T|
-enemy.asm|89||0|1|27902|T|
-enemy.asm|91||0|1|27904|F|LoadRoomEnemies.is_vert
-enemy.asm|91||0|1|27904|L|,LoadRoomEnemies,is_vert,+used
-enemy.asm|92||0|1|27904|T|
-enemy.asm|93||0|1|27905|T|
-enemy.asm|94||0|1|27906|T|
-enemy.asm|95||0|1|27907|T|
-enemy.asm|96||0|1|27908|T|
-enemy.asm|99||0|1|27909|T|
-enemy.asm|100||0|1|27910|T|
-enemy.asm|102||0|1|27912|T|
-enemy.asm|103||0|1|27913|T|
-enemy.asm|104||0|1|27914|T|
-enemy.asm|105||0|1|27915|T|
-enemy.asm|106||0|1|27916|T|
-enemy.asm|107||0|1|27917|T|
-enemy.asm|108||0|1|27918|T|
-enemy.asm|109||0|1|27919|T|
-enemy.asm|111||0|1|27921|F|LoadRoomEnemies.v_start_smaller
-enemy.asm|111||0|1|27921|L|,LoadRoomEnemies,v_start_smaller,+used
-enemy.asm|112||0|1|27921|T|
-enemy.asm|113||0|1|27922|T|
-enemy.asm|114||0|1|27923|T|
-enemy.asm|115||0|1|27924|T|
-enemy.asm|116||0|1|27925|T|
-enemy.asm|118||0|1|27926|F|LoadRoomEnemies.done_min_max
-enemy.asm|118||0|1|27926|L|,LoadRoomEnemies,done_min_max,+used
-enemy.asm|119||0|1|27926|T|
-enemy.asm|120||0|1|27927|T|
-enemy.asm|123||0|1|27928|T|
-enemy.asm|124||0|1|27930|T|
-enemy.asm|125||0|1|27931|T|
-enemy.asm|128||0|1|27932|T|
-enemy.asm|129||0|1|27933|T|
-enemy.asm|130||0|1|27934|T|
-enemy.asm|133||0|1|27935|T|
-enemy.asm|134||0|1|27936|T|
-enemy.asm|135||0|1|27937|T|
-enemy.asm|136||0|1|27938|T|
-enemy.asm|137||0|1|27939|T|
-enemy.asm|138||0|1|27940|T|
-enemy.asm|139||0|1|27941|T|
-enemy.asm|142||0|1|27942|T|
-enemy.asm|143||0|1|27943|T|
-enemy.asm|144||0|1|27944|T|
-enemy.asm|145||0|1|27945|T|
-enemy.asm|147||0|1|27946|T|
-enemy.asm|150||0|1|27947|T|
-enemy.asm|151||0|1|27948|T|
-enemy.asm|152||0|1|27949|T|
-enemy.asm|154||0|1|27950|T|
-enemy.asm|155||0|1|27951|T|
-enemy.asm|157||0|1|27954|T|
-enemy.asm|158||0|1|27955|T|
-enemy.asm|159||0|1|27956|T|
-enemy.asm|160||0|1|27957|T|
-enemy.asm|165||0|1|27958|F|EraseRoomEnemies
-enemy.asm|165||0|1|27958|L|,EraseRoomEnemies,,+used
-enemy.asm|166||0|1|27958|T|
-enemy.asm|167||0|1|27959|T|
-enemy.asm|168||0|1|27960|T|
-enemy.asm|169||0|1|27961|T|
-enemy.asm|171||0|1|27963|T|
-enemy.asm|172||0|1|27967|T|
-enemy.asm|173||0|1|27969|F|EraseRoomEnemies.loop
-enemy.asm|173||0|1|27969|L|,EraseRoomEnemies,loop,+used
-enemy.asm|174||0|1|27969|T|
-enemy.asm|175||0|1|27972|T|
-enemy.asm|176||0|1|27974|T|
-enemy.asm|178||0|1|27976|T|
-enemy.asm|179||0|1|27977|T|
-enemy.asm|180||0|1|27980|T|
-enemy.asm|181||0|1|27983|T|
-enemy.asm|182||0|1|27986|T|
-enemy.asm|184||0|1|27987|F|EraseRoomEnemies.next
-enemy.asm|184||0|1|27987|L|,EraseRoomEnemies,next,+used
-enemy.asm|185||0|1|27987|T|
-enemy.asm|186||0|1|27990|T|
-enemy.asm|187||0|1|27992|T|
-enemy.asm|188||0|1|27993|T|
-enemy.asm|190||0|1|27995|T|
-enemy.asm|191||0|1|27997|T|
-enemy.asm|192||0|1|27998|T|
-enemy.asm|193||0|1|27999|T|
-enemy.asm|194||0|1|28000|T|
-enemy.asm|199||0|1|28001|F|DrawRoomEnemies
-enemy.asm|199||0|1|28001|L|,DrawRoomEnemies,,+used
-enemy.asm|200||0|1|28001|T|
-enemy.asm|201||0|1|28002|T|
-enemy.asm|202||0|1|28003|T|
-enemy.asm|203||0|1|28004|T|
-enemy.asm|205||0|1|28006|T|
-enemy.asm|206||0|1|28010|T|
-enemy.asm|207||0|1|28012|F|DrawRoomEnemies.loop
-enemy.asm|207||0|1|28012|L|,DrawRoomEnemies,loop,+used
-enemy.asm|208||0|1|28012|T|
-enemy.asm|209||0|1|28015|T|
-enemy.asm|210||0|1|28017|T|
-enemy.asm|212||0|1|28020|T|
-enemy.asm|215||0|1|28021|T|
-enemy.asm|216||0|1|28024|T|
-enemy.asm|217||0|1|28026|T|
-enemy.asm|220||0|1|28029|T|
-enemy.asm|221||0|1|28032|T|
-enemy.asm|222||0|1|28035|T|
-enemy.asm|223||0|1|28036|T|
-enemy.asm|224||0|1|28038|T|
-enemy.asm|226||0|1|28040|T|
-enemy.asm|227||0|1|28043|T|
-enemy.asm|228||0|1|28045|T|
-enemy.asm|229||0|1|28048|T|
-enemy.asm|230||0|1|28050|T|
-enemy.asm|231||0|1|28053|T|
-enemy.asm|233||0|1|28055|F|DrawRoomEnemies.bridge_lametta
-enemy.asm|233||0|1|28055|L|,DrawRoomEnemies,bridge_lametta,+used
-enemy.asm|234||0|1|28055|T|
-enemy.asm|235||0|1|28058|T|
-enemy.asm|236||0|1|28060|T|
-enemy.asm|237||0|1|28063|T|
-enemy.asm|238||0|1|28065|T|
-enemy.asm|239||0|1|28068|T|
-enemy.asm|241||0|1|28070|F|DrawRoomEnemies.not_lametta
-enemy.asm|241||0|1|28070|L|,DrawRoomEnemies,not_lametta,+used
-enemy.asm|242||0|1|28070|T|
-enemy.asm|243||0|1|28071|T|
-enemy.asm|246||0|1|28074|T|
-enemy.asm|247||0|1|28077|T|
-enemy.asm|248||0|1|28080|T|
-enemy.asm|249||0|1|28081|T|
-enemy.asm|250||0|1|28083|T|
-enemy.asm|252||0|1|28085|T|
-enemy.asm|253||0|1|28088|T|
-enemy.asm|254||0|1|28090|T|
-enemy.asm|255||0|1|28093|T|
-enemy.asm|256||0|1|28095|T|
-enemy.asm|257||0|1|28098|T|
-enemy.asm|259||0|1|28100|F|DrawRoomEnemies.bridge_egg
-enemy.asm|259||0|1|28100|L|,DrawRoomEnemies,bridge_egg,+used
-enemy.asm|260||0|1|28100|T|
-enemy.asm|261||0|1|28103|T|
-enemy.asm|263||0|1|28105|F|DrawRoomEnemies.not_egg
-enemy.asm|263||0|1|28105|L|,DrawRoomEnemies,not_egg,+used
-enemy.asm|265||0|1|28105|T|
-enemy.asm|267||0|1|28108|F|DrawRoomEnemies.got_sprite
-enemy.asm|267||0|1|28108|L|,DrawRoomEnemies,got_sprite,+used
-enemy.asm|269||0|1|28108|T|
-enemy.asm|270||0|1|28111|T|
-enemy.asm|271||0|1|28112|T|
-enemy.asm|272||0|1|28113|T|
-enemy.asm|273||0|1|28114|T|
-enemy.asm|274||0|1|28115|T|
-enemy.asm|275||0|1|28116|T|
-enemy.asm|276||0|1|28117|T|
-enemy.asm|277||0|1|28119|T|
-enemy.asm|280||0|1|28120|T|
-enemy.asm|281||0|1|28123|T|
-enemy.asm|283||0|1|28126|T|
-enemy.asm|284||0|1|28128|T|
-enemy.asm|285||0|1|28129|T|
-enemy.asm|286||0|1|28131|T|
-enemy.asm|287||0|1|28134|T|
-enemy.asm|289||0|1|28136|T|
-enemy.asm|291||0|1|28137|F|DrawRoomEnemies.next
-enemy.asm|291||0|1|28137|L|,DrawRoomEnemies,next,+used
-enemy.asm|292||0|1|28137|T|
-enemy.asm|293||0|1|28140|T|
-enemy.asm|294||0|1|28142|T|
-enemy.asm|295||0|1|28143|T|
-enemy.asm|297||0|1|28146|T|
-enemy.asm|298||0|1|28148|T|
-enemy.asm|299||0|1|28149|T|
-enemy.asm|300||0|1|28150|T|
-enemy.asm|301||0|1|28151|T|
-enemy.asm|306||0|1|28152|F|UpdateRoomEnemies
-enemy.asm|306||0|1|28152|L|,UpdateRoomEnemies,,+used
-enemy.asm|307||0|1|28152|T|
-enemy.asm|308||0|1|28153|T|
-enemy.asm|309||0|1|28154|T|
-enemy.asm|310||0|1|28155|T|
-enemy.asm|312||0|1|28157|T|
-enemy.asm|313||0|1|28161|T|
-enemy.asm|314||0|1|28163|F|UpdateRoomEnemies.loop
-enemy.asm|314||0|1|28163|L|,UpdateRoomEnemies,loop,+used
-enemy.asm|315||0|1|28163|T|
-enemy.asm|316||0|1|28166|T|
-enemy.asm|317||0|1|28168|T|
-enemy.asm|320||0|1|28171|T|
-enemy.asm|321||0|1|28174|T|
-enemy.asm|322||0|1|28177|T|
-enemy.asm|323||0|1|28180|T|
-enemy.asm|326||0|1|28183|T|
-enemy.asm|327||0|1|28186|T|
-enemy.asm|328||0|1|28187|T|
-enemy.asm|329||0|1|28189|T|
-enemy.asm|332||0|1|28192|T|
-enemy.asm|333||0|1|28195|T|
-enemy.asm|334||0|1|28197|T|
-enemy.asm|336||0|1|28200|F|UpdateRoomEnemies.horizontal
-enemy.asm|336||0|1|28200|L|,UpdateRoomEnemies,horizontal
-enemy.asm|337||0|1|28200|T|
-enemy.asm|338||0|1|28203|T|
-enemy.asm|339||0|1|28205|T|
-enemy.asm|341||0|1|28207|F|UpdateRoomEnemies.horiz_left
-enemy.asm|341||0|1|28207|L|,UpdateRoomEnemies,horiz_left
-enemy.asm|342||0|1|28207|T|
-enemy.asm|343||0|1|28210|T|
-enemy.asm|344||0|1|28212|T|
-enemy.asm|345||0|1|28215|T|
-enemy.asm|346||0|1|28217|T|
-enemy.asm|347||0|1|28219|T|
-enemy.asm|348||0|1|28222|T|
-enemy.asm|350||0|1|28225|F|UpdateRoomEnemies.h_rev_right
-enemy.asm|350||0|1|28225|L|,UpdateRoomEnemies,h_rev_right,+used
-enemy.asm|351||0|1|28225|T|
-enemy.asm|352||0|1|28228|T|
-enemy.asm|353||0|1|28231|T|
-enemy.asm|354||0|1|28233|T|
-enemy.asm|355||0|1|28236|T|
-enemy.asm|357||0|1|28239|F|UpdateRoomEnemies.horiz_right
-enemy.asm|357||0|1|28239|L|,UpdateRoomEnemies,horiz_right,+used
-enemy.asm|358||0|1|28239|T|
-enemy.asm|359||0|1|28242|T|
-enemy.asm|360||0|1|28244|T|
-enemy.asm|361||0|1|28247|T|
-enemy.asm|362||0|1|28249|T|
-enemy.asm|363||0|1|28251|T|
-enemy.asm|364||0|1|28254|T|
-enemy.asm|366||0|1|28257|F|UpdateRoomEnemies.h_rev_left
-enemy.asm|366||0|1|28257|L|,UpdateRoomEnemies,h_rev_left,+used
-enemy.asm|367||0|1|28257|T|
-enemy.asm|368||0|1|28260|T|
-enemy.asm|369||0|1|28263|T|
-enemy.asm|370||0|1|28265|T|
-enemy.asm|371||0|1|28268|T|
-enemy.asm|373||0|1|28271|F|UpdateRoomEnemies.vertical
-enemy.asm|373||0|1|28271|L|,UpdateRoomEnemies,vertical,+used
-enemy.asm|374||0|1|28271|T|
-enemy.asm|375||0|1|28274|T|
-enemy.asm|376||0|1|28276|T|
-enemy.asm|378||0|1|28278|F|UpdateRoomEnemies.vert_up
-enemy.asm|378||0|1|28278|L|,UpdateRoomEnemies,vert_up
-enemy.asm|379||0|1|28278|T|
-enemy.asm|380||0|1|28281|T|
-enemy.asm|381||0|1|28283|T|
-enemy.asm|382||0|1|28286|T|
-enemy.asm|383||0|1|28288|T|
-enemy.asm|384||0|1|28290|T|
-enemy.asm|385||0|1|28293|T|
-enemy.asm|387||0|1|28296|F|UpdateRoomEnemies.v_rev_down
-enemy.asm|387||0|1|28296|L|,UpdateRoomEnemies,v_rev_down,+used
-enemy.asm|388||0|1|28296|T|
-enemy.asm|389||0|1|28299|T|
-enemy.asm|390||0|1|28302|T|
-enemy.asm|391||0|1|28304|T|
-enemy.asm|392||0|1|28307|T|
-enemy.asm|394||0|1|28310|F|UpdateRoomEnemies.vert_down
-enemy.asm|394||0|1|28310|L|,UpdateRoomEnemies,vert_down,+used
-enemy.asm|395||0|1|28310|T|
-enemy.asm|396||0|1|28313|T|
-enemy.asm|397||0|1|28315|T|
-enemy.asm|398||0|1|28318|T|
-enemy.asm|399||0|1|28320|T|
-enemy.asm|400||0|1|28322|T|
-enemy.asm|401||0|1|28325|T|
-enemy.asm|403||0|1|28328|F|UpdateRoomEnemies.v_rev_up
-enemy.asm|403||0|1|28328|L|,UpdateRoomEnemies,v_rev_up,+used
-enemy.asm|404||0|1|28328|T|
-enemy.asm|405||0|1|28331|T|
-enemy.asm|406||0|1|28334|T|
-enemy.asm|407||0|1|28336|T|
-enemy.asm|409||0|1|28339|F|UpdateRoomEnemies.next
-enemy.asm|409||0|1|28339|L|,UpdateRoomEnemies,next,+used
-enemy.asm|410||0|1|28339|T|
-enemy.asm|411||0|1|28342|T|
-enemy.asm|412||0|1|28344|T|
-enemy.asm|413||0|1|28345|T|
-enemy.asm|415||0|1|28348|T|
-enemy.asm|416||0|1|28350|T|
-enemy.asm|417||0|1|28351|T|
-enemy.asm|418||0|1|28352|T|
-enemy.asm|419||0|1|28353|T|
-jet set willy.asm|21||0|1|28354|F|start
-jet set willy.asm|21||0|1|28354|L|,start,
-jet set willy.asm|22||0|1|28354|T|
-jet set willy.asm|26||0|1|28357|F|Main
-jet set willy.asm|26||0|1|28357|L|,Main,
-jet set willy.asm|28||0|1|28357|T|
-jet set willy.asm|29||0|1|28358|T|
-jet set willy.asm|31||0|1|28361|T|
-jet set willy.asm|32||0|1|28364|T|
-jet set willy.asm|34||0|1|28367|T|
-jet set willy.asm|35||0|1|28369|T|
-jet set willy.asm|36||0|1|28372|T|
-jet set willy.asm|37||0|1|28375|T|
-jet set willy.asm|39||0|1|28378|T|
-jet set willy.asm|40||0|1|28381|T|
-jet set willy.asm|41||0|1|28383|T|
-jet set willy.asm|42||0|1|28386|T|
-jet set willy.asm|43||0|1|28389|T|
-jet set willy.asm|44||0|1|28392|T|
-jet set willy.asm|47||0|1|28395|T|
-jet set willy.asm|48||0|1|28398|T|
-jet set willy.asm|49||0|1|28401|T|
-jet set willy.asm|50||0|1|28402|T|
-jet set willy.asm|51||0|1|28403|T|
-jet set willy.asm|52||0|1|28406|T|
-jet set willy.asm|55||0|1|28408|T|
-jet set willy.asm|56||0|1|28409|T|
-jet set willy.asm|57||0|1|28410|T|
-jet set willy.asm|58||0|1|28411|T|
-jet set willy.asm|59||0|1|28412|T|
-jet set willy.asm|60||0|1|28415|T|
-jet set willy.asm|61||0|1|28417|T|
-jet set willy.asm|62||0|1|28418|T|
-jet set willy.asm|63||0|1|28420|T|
-jet set willy.asm|66||0|1|28423|T|
-jet set willy.asm|68||0|1|28426|F|Main_loop
-jet set willy.asm|68||0|1|28426|L|,Main_loop,,+used
-jet set willy.asm|69||0|1|28426|T|
-jet set willy.asm|72||0|1|28427|T|
-jet set willy.asm|73||0|1|28430|T|
-jet set willy.asm|75||0|1|28433|T|
-jet set willy.asm|76||0|1|28436|T|
-jet set willy.asm|79||0|1|28439|T|
-jet set willy.asm|80||0|1|28443|T|
-jet set willy.asm|83||0|1|28447|T|
-jet set willy.asm|84||0|1|28450|T|
-jet set willy.asm|85||0|1|28453|T|
-jet set willy.asm|86||0|1|28456|T|
-jet set willy.asm|89||0|1|28459|T|
-jet set willy.asm|90||0|1|28462|T|
-jet set willy.asm|93||0|1|28464|T|
-jet set willy.asm|94||0|1|28467|T|
-jet set willy.asm|95||0|1|28469|T|
-jet set willy.asm|96||0|1|28471|F|Main_loop.raster_loop
-jet set willy.asm|96||0|1|28471|L|,Main_loop,raster_loop,+used
-jet set willy.asm|97||0|1|28471|T|
-jet set willy.asm|98||0|1|28473|T|
-jet set willy.asm|99||0|1|28474|T|
-jet set willy.asm|100||0|1|28476|T|
-jet set willy.asm|101||0|1|28478|F|Main_loop.delay
-jet set willy.asm|101||0|1|28478|L|,Main_loop,delay,+used
-jet set willy.asm|102||0|1|28478|T|
-jet set willy.asm|103||0|1|28479|T|
-jet set willy.asm|104||0|1|28481|T|
-jet set willy.asm|107||0|1|28483|T|
-jet set willy.asm|108||0|1|28486|T|
-jet set willy.asm|109||0|1|28488|T|
-jet set willy.asm|111||0|1|28490|F|Main_loop.no_collision
-jet set willy.asm|111||0|1|28490|L|,Main_loop,no_collision,+used
-jet set willy.asm|113||0|1|28490|T|
-jet set willy.asm|114||0|1|28493|T|
-jet set willy.asm|116||0|1|28495|F|Main_loop.no_collision_change
-jet set willy.asm|116||0|1|28495|L|,Main_loop,no_collision_change,+used
-jet set willy.asm|117||0|1|28495|T|
-jet set willy.asm|123||0|1|28498|F|PlayerPos
-jet set willy.asm|123||0|1|28498|L|,PlayerPos,,+used
-jet set willy.asm|124||0|1|28500|F|PlayerPosOld
-jet set willy.asm|124||0|1|28500|L|,PlayerPosOld,,+used
-jet set willy.asm|125||0|1|28502|F|bodyPos
-jet set willy.asm|125||0|1|28502|L|,bodyPos,
-jet set willy.asm|128||0|1|28504|F|body_state
-jet set willy.asm|128||0|1|28504|L|,body_state,,+used
-jet set willy.asm|129||0|1|28505|F|direction
-jet set willy.asm|129||0|1|28505|L|,direction,,+used
-jet set willy.asm|130||0|1|28506|F|flags
-jet set willy.asm|130||0|1|28506|L|,flags,,+used
-jet set willy.asm|132||0|1|28507|F|collision_active
-jet set willy.asm|132||0|1|28507|L|,collision_active,
-jet set willy.asm|133||0|1|28508|F|sprite_shift
-jet set willy.asm|133||0|1|28508|L|,sprite_shift,,+used
-jet set willy.asm|134||0|1|28509|F|room_border_color
-jet set willy.asm|134||0|1|28509|L|,room_border_color,,+used
-jet set willy.asm|137||0|1|28510|F|velocity_y
-jet set willy.asm|137||0|1|28510|L|,velocity_y,,+used
-jet set willy.asm|138||0|1|28511|F|on_ground
-jet set willy.asm|138||0|1|28511|L|,on_ground,,+used
-jet set willy.asm|139||0|1|28512|F|jump_pressed
-jet set willy.asm|139||0|1|28512|L|,jump_pressed,,+used
-jet set willy.asm|140||0|1|28513|F|jump_prev
-jet set willy.asm|140||0|1|28513|L|,jump_prev,,+used
-jet set willy.asm|143||0|1|28514|F|counter
-jet set willy.asm|143||0|1|28514|L|,counter,,+used
-jet set willy.asm|144||0|1|28516|F|line_buffer
-jet set willy.asm|144||0|1|28516|L|,line_buffer,
-jet set willy.asm|147||0|1|28772|F|current_room
-jet set willy.asm|147||0|1|28772|L|,current_room,
-jet set willy.asm|148||0|1|28773|F|room_ptr
-jet set willy.asm|148||0|1|28773|L|,room_ptr,,+used
-jet set willy.asm|151||0|1|28928|F|RoomsStart
-jet set willy.asm|151||0|1|28928|L|,RoomsStart,
-Rooms/TheBridge.asm|1||0|1|28928|F|TheBridgeLayout
-Rooms/TheBridge.asm|1||0|1|28928|L|,TheBridgeLayout,,+used
-Rooms/TheBridge.asm|19||0|1|29056|F|TheBridgeTile
-Rooms/TheBridge.asm|19||0|1|29056|L|,TheBridgeTile,
-Rooms/TheBridge.asm|24||0|1|29088|F|TheBridgeBackground
-Rooms/TheBridge.asm|24||0|1|29088|L|,TheBridgeBackground,
-Rooms/TheBridge.asm|27||0|1|29097|F|TheBridgeFloor
-Rooms/TheBridge.asm|27||0|1|29097|L|,TheBridgeFloor,
-Rooms/TheBridge.asm|30||0|1|29106|F|TheBridgeWall
-Rooms/TheBridge.asm|30||0|1|29106|L|,TheBridgeWall,
-Rooms/TheBridge.asm|33||0|1|29115|F|TheBridgeNasty
-Rooms/TheBridge.asm|33||0|1|29115|L|,TheBridgeNasty,
-Rooms/TheBridge.asm|36||0|1|29124|F|TheBridgeRamp
-Rooms/TheBridge.asm|36||0|1|29124|L|,TheBridgeRamp,
-Rooms/TheBridge.asm|39||0|1|29133|F|TheBridgeConveyor
-Rooms/TheBridge.asm|39||0|1|29133|L|,TheBridgeConveyor,
-Rooms/TheBridge.asm|43||0|1|29142|F|TheBridgeConveyorData
-Rooms/TheBridge.asm|43||0|1|29142|L|,TheBridgeConveyorData,
-Rooms/TheBridge.asm|49||0|1|29146|F|TheBridgeRampData
-Rooms/TheBridge.asm|49||0|1|29146|L|,TheBridgeRampData,
-Rooms/TheBridge.asm|55||0|1|29150|F|TheBridgeBorderColor
-Rooms/TheBridge.asm|55||0|1|29150|L|,TheBridgeBorderColor,
-Rooms/TheBridge.asm|59||0|1|29151|F|TheBridgeReserved
-Rooms/TheBridge.asm|59||0|1|29151|L|,TheBridgeReserved,
-Rooms/TheBridge.asm|63||0|1|29153|F|TheBridgeItem
-Rooms/TheBridge.asm|63||0|1|29153|L|,TheBridgeItem,
-Rooms/TheBridge.asm|67||0|1|29161|F|TheBridgeDirection
-Rooms/TheBridge.asm|67||0|1|29161|L|,TheBridgeDirection,
-Rooms/TheBridge.asm|74||0|1|29165|F|TheBridgeUnused
-Rooms/TheBridge.asm|74||0|1|29165|L|,TheBridgeUnused,
-Rooms/TheBridge.asm|78||0|1|29168|F|TheBridgeEnemy1
-Rooms/TheBridge.asm|78||0|1|29168|L|,TheBridgeEnemy1,
-Rooms/TheBridge.asm|80||0|1|29172|F|TheBridgeEnemy2
-Rooms/TheBridge.asm|80||0|1|29172|L|,TheBridgeEnemy2,
-Rooms/TheBridge.asm|82||0|1|29176|F|TheBridgeEnemy3
-Rooms/TheBridge.asm|82||0|1|29176|L|,TheBridgeEnemy3,
-Rooms/TheBridge.asm|84||0|1|29180|F|TheBridgeEnemy4
-Rooms/TheBridge.asm|84||0|1|29180|L|,TheBridgeEnemy4,
-Rooms/TheOffLicence.asm|2||0|1|29184|F|TheOffLicenceLayout
-Rooms/TheOffLicence.asm|2||0|1|29184|L|,TheOffLicenceLayout,
-Rooms/TheOffLicence.asm|20||0|1|29312|F|TheOffLicenceTile
-Rooms/TheOffLicence.asm|20||0|1|29312|L|,TheOffLicenceTile,
-Rooms/TheOffLicence.asm|23||0|1|29344|F|TheOffLicenceBackground
-Rooms/TheOffLicence.asm|23||0|1|29344|L|,TheOffLicenceBackground,
-Rooms/TheOffLicence.asm|26||0|1|29353|F|TheOffLicenceFloor
-Rooms/TheOffLicence.asm|26||0|1|29353|L|,TheOffLicenceFloor,
-Rooms/TheOffLicence.asm|29||0|1|29362|F|TheOffLicenceWall
-Rooms/TheOffLicence.asm|29||0|1|29362|L|,TheOffLicenceWall,
-Rooms/TheOffLicence.asm|32||0|1|29371|F|TheOffLicenceNasty
-Rooms/TheOffLicence.asm|32||0|1|29371|L|,TheOffLicenceNasty,
-Rooms/TheOffLicence.asm|35||0|1|29380|F|TheOffLicenceRamp
-Rooms/TheOffLicence.asm|35||0|1|29380|L|,TheOffLicenceRamp,
-Rooms/TheOffLicence.asm|38||0|1|29389|F|TheOffLicenceConveyor
-Rooms/TheOffLicence.asm|38||0|1|29389|L|,TheOffLicenceConveyor,
-Rooms/TheOffLicence.asm|41||0|1|29398|F|TheOffLicenceConveyorData
-Rooms/TheOffLicence.asm|41||0|1|29398|L|,TheOffLicenceConveyorData,
-Rooms/TheOffLicence.asm|46||0|1|29402|F|TheOffLicenceRampData
-Rooms/TheOffLicence.asm|46||0|1|29402|L|,TheOffLicenceRampData,
-Rooms/TheOffLicence.asm|51||0|1|29406|F|TheOffLicenceBorderColor
-Rooms/TheOffLicence.asm|51||0|1|29406|L|,TheOffLicenceBorderColor,
-Rooms/TheOffLicence.asm|54||0|1|29407|F|TheOffLicenceReserved
-Rooms/TheOffLicence.asm|54||0|1|29407|L|,TheOffLicenceReserved,
-Rooms/TheOffLicence.asm|57||0|1|29409|F|TheOffLicenceItem
-Rooms/TheOffLicence.asm|57||0|1|29409|L|,TheOffLicenceItem,
-Rooms/TheOffLicence.asm|60||0|1|29417|F|TheOffLicenceDirection
-Rooms/TheOffLicence.asm|60||0|1|29417|L|,TheOffLicenceDirection,
-Rooms/TheOffLicence.asm|66||0|1|29421|F|TheOffLicenceUnused
-Rooms/TheOffLicence.asm|66||0|1|29421|L|,TheOffLicenceUnused,
-Rooms/TheOffLicence.asm|69||0|1|29424|F|TheOffLicenceEnemy1
-Rooms/TheOffLicence.asm|69||0|1|29424|L|,TheOffLicenceEnemy1,
-Rooms/TheOffLicence.asm|71||0|1|29428|F|TheOffLicenceEnemy2
-Rooms/TheOffLicence.asm|71||0|1|29428|L|,TheOffLicenceEnemy2,
-Rooms/TheOffLicence.asm|73||0|1|29432|F|TheOffLicenceEnemy3
-Rooms/TheOffLicence.asm|73||0|1|29432|L|,TheOffLicenceEnemy3,
-Rooms/TheOffLicence.asm|75||0|1|29436|F|TheOffLicenceEnemy4
-Rooms/TheOffLicence.asm|75||0|1|29436|L|,TheOffLicenceEnemy4,
-Rooms/TheTestRoom.asm|2||0|1|29440|F|TheTestRoomLayout
-Rooms/TheTestRoom.asm|2||0|1|29440|L|,TheTestRoomLayout,,+used
-Rooms/TheTestRoom.asm|20||0|1|29568|F|TheTestRoomTile
-Rooms/TheTestRoom.asm|20||0|1|29568|L|,TheTestRoomTile,
-Rooms/TheTestRoom.asm|25||0|1|29600|F|TheTestRoomBackground
-Rooms/TheTestRoom.asm|25||0|1|29600|L|,TheTestRoomBackground,
-Rooms/TheTestRoom.asm|28||0|1|29609|F|TheTestRoomFloor
-Rooms/TheTestRoom.asm|28||0|1|29609|L|,TheTestRoomFloor,
-Rooms/TheTestRoom.asm|31||0|1|29618|F|TheTestRoomWall
-Rooms/TheTestRoom.asm|31||0|1|29618|L|,TheTestRoomWall,
-Rooms/TheTestRoom.asm|34||0|1|29627|F|TheTestRoomNasty
-Rooms/TheTestRoom.asm|34||0|1|29627|L|,TheTestRoomNasty,
-Rooms/TheTestRoom.asm|37||0|1|29636|F|TheTestRoomRamp
-Rooms/TheTestRoom.asm|37||0|1|29636|L|,TheTestRoomRamp,
-Rooms/TheTestRoom.asm|40||0|1|29645|F|TheTestRoomConveyor
-Rooms/TheTestRoom.asm|40||0|1|29645|L|,TheTestRoomConveyor,
-Rooms/TheTestRoom.asm|44||0|1|29654|F|TheTestRoomConveyorData
-Rooms/TheTestRoom.asm|44||0|1|29654|L|,TheTestRoomConveyorData,
-Rooms/TheTestRoom.asm|50||0|1|29658|F|TheTestRoomRampData
-Rooms/TheTestRoom.asm|50||0|1|29658|L|,TheTestRoomRampData,
-Rooms/TheTestRoom.asm|56||0|1|29662|F|TheTestRoomBorderColor
-Rooms/TheTestRoom.asm|56||0|1|29662|L|,TheTestRoomBorderColor,
-Rooms/TheTestRoom.asm|60||0|1|29663|F|TheTestRoomReserved
-Rooms/TheTestRoom.asm|60||0|1|29663|L|,TheTestRoomReserved,
-Rooms/TheTestRoom.asm|64||0|1|29665|F|TheTestRoomItem
-Rooms/TheTestRoom.asm|64||0|1|29665|L|,TheTestRoomItem,
-Rooms/TheTestRoom.asm|68||0|1|29673|F|TheTestRoomDirection
-Rooms/TheTestRoom.asm|68||0|1|29673|L|,TheTestRoomDirection,
-Rooms/TheTestRoom.asm|75||0|1|29677|F|Room99Unused
-Rooms/TheTestRoom.asm|75||0|1|29677|L|,Room99Unused,
-Rooms/TheTestRoom.asm|79||0|1|29680|F|TheTestRoomEnemy1
-Rooms/TheTestRoom.asm|79||0|1|29680|L|,TheTestRoomEnemy1,
-Rooms/TheTestRoom.asm|81||0|1|29684|F|TheTestRoomEnemy2
-Rooms/TheTestRoom.asm|81||0|1|29684|L|,TheTestRoomEnemy2,
-Rooms/TheTestRoom.asm|83||0|1|29688|F|TheTestRoomEnemy3
-Rooms/TheTestRoom.asm|83||0|1|29688|L|,TheTestRoomEnemy3,
-Rooms/TheTestRoom.asm|85||0|1|29692|F|TheTestRoomEnemy4
-Rooms/TheTestRoom.asm|85||0|1|29692|L|,TheTestRoomEnemy4,
+graphics.asm|1095||0|1|27119|F|FaceSprite
+graphics.asm|1095||0|1|27119|L|,FaceSprite,,+used
+graphics.asm|1106||0|1|27247|F|RadarSprite
+graphics.asm|1106||0|1|27247|L|,RadarSprite,,+used
+graphics.asm|1116||0|1|27375|F|BallSprite
+graphics.asm|1116||0|1|27375|L|,BallSprite,,+used
+player.asm|10||0|1|27503|F|MovePlayer
+player.asm|10||0|1|27503|L|,MovePlayer,,+used
+player.asm|12||0|1|27503|T|
+player.asm|13||0|1|27507|T|
+player.asm|14||0|1|27511|T|
+player.asm|15||0|1|27512|T|
+player.asm|17||0|1|27516|T|
+player.asm|19||0|1|27520|T|
+player.asm|20||0|1|27522|T|
+player.asm|22||0|1|27524|T|
+player.asm|23||0|1|27526|T|
+player.asm|25||0|1|27527|F|movePlayer_left
+player.asm|25||0|1|27527|L|,movePlayer_left,
+player.asm|26||0|1|27527|T|
+player.asm|27||0|1|27528|T|
+player.asm|28||0|1|27530|T|
+player.asm|29||0|1|27532|T|
+player.asm|30||0|1|27534|T|
+player.asm|31||0|1|27535|T|
+player.asm|33||0|1|27537|F|movePlayer_left.clamp_left
+player.asm|33||0|1|27537|L|,movePlayer_left,clamp_left,+used
+player.asm|34||0|1|27537|T|
+player.asm|35||0|1|27539|T|
+player.asm|37||0|1|27541|F|movePlayer_right
+player.asm|37||0|1|27541|L|,movePlayer_right,,+used
+player.asm|38||0|1|27541|T|
+player.asm|39||0|1|27542|T|
+player.asm|40||0|1|27544|T|
+player.asm|41||0|1|27546|T|
+player.asm|42||0|1|27548|T|
+player.asm|43||0|1|27550|F|movePlayer_right.ok_right
+player.asm|43||0|1|27550|L|,movePlayer_right,ok_right,+used
+player.asm|44||0|1|27550|T|
+player.asm|45||0|1|27551|T|
+player.asm|47||0|1|27553|F|movePlayer_right.clamp_right
+player.asm|47||0|1|27553|L|,movePlayer_right,clamp_right,+used
+player.asm|48||0|1|27553|T|
+player.asm|50||0|1|27555|F|save_x
+player.asm|50||0|1|27555|L|,save_x,,+used
+player.asm|51||0|1|27555|T|
+player.asm|53||0|1|27559|F|movePlayer_print
+player.asm|53||0|1|27559|L|,movePlayer_print,
+player.asm|55||0|1|27559|T|
+player.asm|56||0|1|27562|T|
+player.asm|57||0|1|27563|T|
+player.asm|58||0|1|27565|T|
+player.asm|59||0|1|27567|T|
+player.asm|60||0|1|27569|F|movePlayer_print.save_state
+player.asm|60||0|1|27569|L|,movePlayer_print,save_state,+used
+player.asm|61||0|1|27569|T|
+player.asm|62||0|1|27572|T|
+input.asm|10||0|1|27573|F|CheckCtrl
+input.asm|10||0|1|27573|L|,CheckCtrl,,+used
+input.asm|11||0|1|27573|T|
+input.asm|12||0|1|27575|T|
+input.asm|13||0|1|27577|T|
+input.asm|14||0|1|27579|T|
+input.asm|16||0|1|27583|F|checkCtrl_left
+input.asm|16||0|1|27583|L|,checkCtrl_left,
+input.asm|17||0|1|27583|T|
+input.asm|18||0|1|27585|T|
+input.asm|19||0|1|27587|T|
+input.asm|20||0|1|27589|T|
+input.asm|21||0|1|27593|T|
+input.asm|22||0|1|27594|T|
+input.asm|23||0|1|27596|T|
+input.asm|24||0|1|27599|T|
+input.asm|26||0|1|27600|F|checkCtrl_right
+input.asm|26||0|1|27600|L|,checkCtrl_right,,+used
+input.asm|27||0|1|27600|T|
+input.asm|28||0|1|27602|T|
+input.asm|29||0|1|27604|T|
+input.asm|30||0|1|27606|T|
+input.asm|31||0|1|27610|T|
+input.asm|32||0|1|27611|T|
+input.asm|33||0|1|27613|T|
+input.asm|34||0|1|27616|T|
+input.asm|36||0|1|27617|F|checkCtrl_jump
+input.asm|36||0|1|27617|L|,checkCtrl_jump,,+used
+input.asm|38||0|1|27617|T|
+input.asm|39||0|1|27619|T|
+input.asm|40||0|1|27621|T|
+input.asm|41||0|1|27623|T|
+input.asm|44||0|1|27625|T|
+input.asm|45||0|1|27627|T|
+input.asm|46||0|1|27629|T|
+input.asm|47||0|1|27631|T|
+input.asm|49||0|1|27633|F|checkCtrl_jump.released
+input.asm|49||0|1|27633|L|,checkCtrl_jump,released
+input.asm|50||0|1|27633|T|
+input.asm|51||0|1|27634|T|
+input.asm|52||0|1|27637|T|
+input.asm|54||0|1|27639|F|checkCtrl_jump.pressed
+input.asm|54||0|1|27639|L|,checkCtrl_jump,pressed,+used
+input.asm|55||0|1|27639|T|
+input.asm|56||0|1|27642|T|
+input.asm|57||0|1|27643|T|
+input.asm|58||0|1|27645|T|
+input.asm|59||0|1|27647|T|
+input.asm|60||0|1|27650|T|
+input.asm|61||0|1|27653|T|
+input.asm|63||0|1|27655|F|checkCtrl_jump.end
+input.asm|63||0|1|27655|L|,checkCtrl_jump,end,+used
+input.asm|64||0|1|27655|T|
+input.asm|65||0|1|27656|T|
+input.asm|66||0|1|27658|T|
+input.asm|67||0|1|27660|T|
+input.asm|68||0|1|27661|T|
+input.asm|69||0|1|27662|T|
+input.asm|70||0|1|27664|T|
+input.asm|71||0|1|27665|T|
+physics.asm|11||0|1|27666|F|CheckSolidCell
+physics.asm|11||0|1|27666|L|,CheckSolidCell,,+used
+physics.asm|12||0|1|27666|T|
+physics.asm|13||0|1|27667|T|
+physics.asm|14||0|1|27668|T|
+physics.asm|17||0|1|27669|T|
+physics.asm|18||0|1|27670|T|
+physics.asm|19||0|1|27672|T|
+physics.asm|20||0|1|27674|T|
+physics.asm|21||0|1|27676|T|
+physics.asm|24||0|1|27678|T|
+physics.asm|25||0|1|27680|T|
+physics.asm|26||0|1|27682|T|
+physics.asm|27||0|1|27684|T|
+physics.asm|30||0|1|27686|T|
+physics.asm|31||0|1|27687|T|
+physics.asm|32||0|1|27689|T|
+physics.asm|33||0|1|27690|T|
+physics.asm|34||0|1|27691|T|
+physics.asm|37||0|1|27692|T|
+physics.asm|38||0|1|27693|T|
+physics.asm|39||0|1|27695|T|
+physics.asm|40||0|1|27697|T|
+physics.asm|41||0|1|27699|T|
+physics.asm|44||0|1|27700|T|
+physics.asm|45||0|1|27702|T|
+physics.asm|46||0|1|27704|T|
+physics.asm|47||0|1|27705|T|
+physics.asm|49||0|1|27706|T|
+physics.asm|50||0|1|27710|T|
+physics.asm|51||0|1|27711|T|
+physics.asm|54||0|1|27712|T|
+physics.asm|55||0|1|27713|T|
+physics.asm|56||0|1|27714|T|
+physics.asm|57||0|1|27716|T|
+physics.asm|58||0|1|27718|T|
+physics.asm|59||0|1|27719|T|
+physics.asm|60||0|1|27721|T|
+physics.asm|61||0|1|27722|T|
+physics.asm|63||0|1|27724|T|
+physics.asm|64||0|1|27725|T|
+physics.asm|65||0|1|27727|F|CheckSolidCell.shift_2
+physics.asm|65||0|1|27727|L|,CheckSolidCell,shift_2,+used
+physics.asm|66||0|1|27727|T|
+physics.asm|67||0|1|27728|T|
+physics.asm|68||0|1|27729|T|
+physics.asm|69||0|1|27730|T|
+physics.asm|70||0|1|27732|F|CheckSolidCell.shift_1
+physics.asm|70||0|1|27732|L|,CheckSolidCell,shift_1,+used
+physics.asm|71||0|1|27732|T|
+physics.asm|72||0|1|27733|T|
+physics.asm|73||0|1|27734|T|
+physics.asm|74||0|1|27735|T|
+physics.asm|75||0|1|27736|T|
+physics.asm|76||0|1|27737|T|
+physics.asm|77||0|1|27739|F|CheckSolidCell.shift_0
+physics.asm|77||0|1|27739|L|,CheckSolidCell,shift_0,+used
+physics.asm|78||0|1|27739|T|
+physics.asm|79||0|1|27740|T|
+physics.asm|80||0|1|27741|T|
+physics.asm|81||0|1|27742|F|CheckSolidCell.got_type
+physics.asm|81||0|1|27742|L|,CheckSolidCell,got_type,+used
+physics.asm|82||0|1|27742|T|
+physics.asm|85||0|1|27744|T|
+physics.asm|86||0|1|27746|T|
+physics.asm|87||0|1|27748|T|
+physics.asm|88||0|1|27750|T|
+physics.asm|90||0|1|27752|F|CheckSolidCell.not_solid
+physics.asm|90||0|1|27752|L|,CheckSolidCell,not_solid,+used
+physics.asm|91||0|1|27752|T|
+physics.asm|92||0|1|27753|T|
+physics.asm|93||0|1|27754|T|
+physics.asm|94||0|1|27755|T|
+physics.asm|95||0|1|27756|T|
+physics.asm|97||0|1|27757|F|CheckSolidCell.solid
+physics.asm|97||0|1|27757|L|,CheckSolidCell,solid,+used
+physics.asm|98||0|1|27757|T|
+physics.asm|99||0|1|27758|T|
+physics.asm|100||0|1|27759|T|
+physics.asm|101||0|1|27760|T|
+physics.asm|102||0|1|27761|T|
+physics.asm|107||0|1|27762|F|ApplyGravity
+physics.asm|107||0|1|27762|L|,ApplyGravity,,+used
+physics.asm|108||0|1|27762|T|
+physics.asm|109||0|1|27766|T|
+physics.asm|112||0|1|27767|T|
+physics.asm|113||0|1|27770|T|
+physics.asm|114||0|1|27771|T|
+physics.asm|119||0|1|27774|T|
+physics.asm|120||0|1|27775|T|
+physics.asm|121||0|1|27777|T|
+physics.asm|124||0|1|27778|T|
+physics.asm|125||0|1|27781|T|
+physics.asm|128||0|1|27783|T|
+physics.asm|129||0|1|27784|T|
+physics.asm|130||0|1|27786|T|
+physics.asm|131||0|1|27787|T|
+physics.asm|132||0|1|27790|T|
+physics.asm|135||0|1|27792|T|
+physics.asm|136||0|1|27793|T|
+physics.asm|137||0|1|27796|T|
+physics.asm|138||0|1|27799|T|
+physics.asm|140||0|1|27802|F|ApplyGravity.still_on_ground
+physics.asm|140||0|1|27802|L|,ApplyGravity,still_on_ground,+used
+physics.asm|143||0|1|27802|T|
+physics.asm|146||0|1|27806|T|
+physics.asm|147||0|1|27809|T|
+physics.asm|148||0|1|27810|T|
+physics.asm|150||0|1|27813|T|
+physics.asm|151||0|1|27815|T|
+physics.asm|152||0|1|27818|T|
+physics.asm|153||0|1|27819|T|
+physics.asm|154||0|1|27822|T|
+physics.asm|155||0|1|27825|T|
+physics.asm|157||0|1|27828|F|ApplyGravity.in_air
+physics.asm|157||0|1|27828|L|,ApplyGravity,in_air,+used
+physics.asm|159||0|1|27828|T|
+physics.asm|160||0|1|27831|T|
+physics.asm|163||0|1|27833|T|
+physics.asm|164||0|1|27835|T|
+physics.asm|166||0|1|27837|T|
+physics.asm|167||0|1|27839|T|
+physics.asm|168||0|1|27841|T|
+physics.asm|170||0|1|27843|F|ApplyGravity.store_vel
+physics.asm|170||0|1|27843|L|,ApplyGravity,store_vel,+used
+physics.asm|171||0|1|27843|T|
+physics.asm|174||0|1|27846|T|
+physics.asm|175||0|1|27850|T|
+physics.asm|176||0|1|27851|T|
+physics.asm|177||0|1|27852|T|
+physics.asm|178||0|1|27853|T|
+physics.asm|181||0|1|27854|T|
+physics.asm|182||0|1|27857|T|
+physics.asm|183||0|1|27859|T|
+physics.asm|184||0|1|27861|T|
+physics.asm|185||0|1|27862|T|
+physics.asm|186||0|1|27864|T|
+physics.asm|188||0|1|27866|F|ApplyGravity.falling_checks
+physics.asm|188||0|1|27866|L|,ApplyGravity,falling_checks,+used
+physics.asm|190||0|1|27866|T|
+physics.asm|191||0|1|27867|T|
+physics.asm|192||0|1|27869|T|
+physics.asm|195||0|1|27870|T|
+physics.asm|196||0|1|27873|T|
+physics.asm|199||0|1|27875|T|
+physics.asm|200||0|1|27876|T|
+physics.asm|201||0|1|27878|T|
+physics.asm|202||0|1|27879|T|
+physics.asm|203||0|1|27882|T|
+physics.asm|206||0|1|27884|T|
+physics.asm|208||0|1|27886|F|ApplyGravity.check_landing
+physics.asm|208||0|1|27886|L|,ApplyGravity,check_landing,+used
+physics.asm|210||0|1|27886|T|
+physics.asm|211||0|1|27887|T|
+physics.asm|212||0|1|27889|T|
+physics.asm|213||0|1|27891|T|
+physics.asm|214||0|1|27893|T|
+physics.asm|217||0|1|27895|T|
+physics.asm|218||0|1|27896|T|
+physics.asm|219||0|1|27897|T|
+physics.asm|220||0|1|27898|T|
+physics.asm|221||0|1|27899|T|
+physics.asm|222||0|1|27901|T|
+physics.asm|225||0|1|27902|T|
+physics.asm|226||0|1|27905|T|
+physics.asm|228||0|1|27907|T|
+physics.asm|229||0|1|27908|T|
+physics.asm|230||0|1|27910|T|
+physics.asm|232||0|1|27912|T|
+physics.asm|234||0|1|27914|F|ApplyGravity.do_landing
+physics.asm|234||0|1|27914|L|,ApplyGravity,do_landing,+used
+physics.asm|236||0|1|27914|T|
+physics.asm|237||0|1|27915|T|
+physics.asm|238||0|1|27916|T|
+physics.asm|239||0|1|27917|T|
+physics.asm|240||0|1|27918|T|
+physics.asm|242||0|1|27920|T|
+physics.asm|243||0|1|27924|T|
+physics.asm|245||0|1|27925|T|
+physics.asm|246||0|1|27929|T|
+physics.asm|247||0|1|27931|T|
+physics.asm|248||0|1|27934|T|
+physics.asm|249||0|1|27935|T|
+physics.asm|250||0|1|27938|T|
+physics.asm|252||0|1|27941|F|ApplyGravity.no_collision_checks
+physics.asm|252||0|1|27941|L|,ApplyGravity,no_collision_checks,+used
+physics.asm|253||0|1|27941|T|
+physics.asm|254||0|1|27944|T|
+physics.asm|255||0|1|27945|T|
+physics.asm|256||0|1|27949|T|
+physics.asm|257||0|1|27950|T|
+physics.asm|258||0|1|27951|T|
+physics.asm|260||0|1|27952|F|ApplyGravity.save_pos
+physics.asm|260||0|1|27952|L|,ApplyGravity,save_pos
+physics.asm|261||0|1|27952|T|
+physics.asm|262||0|1|27953|T|
+physics.asm|263||0|1|27955|T|
+physics.asm|264||0|1|27957|T|
+physics.asm|265||0|1|27959|T|
+physics.asm|266||0|1|27960|T|
+physics.asm|268||0|1|27963|F|ApplyGravity.save_ok
+physics.asm|268||0|1|27963|L|,ApplyGravity,save_ok,+used
+physics.asm|269||0|1|27963|T|
+physics.asm|271||0|1|27967|F|ApplyGravity.end
+physics.asm|271||0|1|27967|L|,ApplyGravity,end,+used
+physics.asm|272||0|1|27967|T|
+physics.asm|273||0|1|27968|T|
+physics.asm|274||0|1|27971|T|
+physics.asm|280||0|1|27972|F|CheckCollision
+physics.asm|280||0|1|27972|L|,CheckCollision,,+used
+physics.asm|281||0|1|27972|T|
+physics.asm|282||0|1|27973|T|
+physics.asm|283||0|1|27974|T|
+physics.asm|284||0|1|27975|T|
+physics.asm|286||0|1|27977|T|
+physics.asm|287||0|1|27981|T|
+physics.asm|288||0|1|27983|F|CheckCollision.loop
+physics.asm|288||0|1|27983|L|,CheckCollision,loop,+used
+physics.asm|289||0|1|27983|T|
+physics.asm|290||0|1|27986|T|
+physics.asm|291||0|1|27988|T|
+physics.asm|294||0|1|27990|T|
+physics.asm|295||0|1|27993|T|
+physics.asm|296||0|1|27996|T|
+physics.asm|297||0|1|27998|T|
+physics.asm|298||0|1|28000|T|
+physics.asm|301||0|1|28002|T|
+physics.asm|302||0|1|28005|T|
+physics.asm|303||0|1|28008|T|
+physics.asm|304||0|1|28010|T|
+physics.asm|305||0|1|28012|T|
+physics.asm|308||0|1|28014|T|
+physics.asm|309||0|1|28016|T|
+physics.asm|310||0|1|28017|T|
+physics.asm|311||0|1|28018|T|
+physics.asm|312||0|1|28019|T|
+physics.asm|313||0|1|28020|T|
+physics.asm|315||0|1|28021|F|CheckCollision.next
+physics.asm|315||0|1|28021|L|,CheckCollision,next,+used
+physics.asm|316||0|1|28021|T|
+physics.asm|317||0|1|28024|T|
+physics.asm|318||0|1|28026|T|
+physics.asm|319||0|1|28027|T|
+physics.asm|321||0|1|28029|T|
+physics.asm|322||0|1|28031|T|
+physics.asm|323||0|1|28032|T|
+physics.asm|324||0|1|28033|T|
+physics.asm|325||0|1|28034|T|
+physics.asm|326||0|1|28035|T|
+screen.asm|33||0|1|28036|F|PrintFrame
+screen.asm|33||0|1|28036|L|,PrintFrame,
+screen.asm|35||0|1|28036|T|
+screen.asm|36||0|1|28039|T|
+screen.asm|37||0|1|28041|T|
+screen.asm|40||0|1|28044|T|
+screen.asm|41||0|1|28046|T|
+screen.asm|42||0|1|28048|T|
+screen.asm|45||0|1|28051|T|
+screen.asm|46||0|1|28054|T|
+screen.asm|47||0|1|28056|T|
+screen.asm|49||0|1|28059|T|
+screen.asm|54||0|1|28060|F|PrintInfoGame
+screen.asm|54||0|1|28060|L|,PrintInfoGame,
+screen.asm|55||0|1|28060|T|
+screen.asm|56||0|1|28062|T|
+screen.asm|57||0|1|28065|T|
+screen.asm|58||0|1|28068|T|
+screen.asm|59||0|1|28070|T|
+screen.asm|60||0|1|28073|T|
+screen.asm|61||0|1|28075|T|
+screen.asm|62||0|1|28078|T|
+screen.asm|67||0|1|28079|F|frameTopGraph
+screen.asm|67||0|1|28079|L|,frameTopGraph,,+used
+screen.asm|73||0|1|28116|F|frameBottomGraph
+screen.asm|73||0|1|28116|L|,frameBottomGraph,,+used
+screen.asm|78||0|1|28151|F|frameEnd
+screen.asm|78||0|1|28151|L|,frameEnd,,+used
+screen.asm|80||0|1|28151|F|infoGame
+screen.asm|80||0|1|28151|L|,infoGame,,+used
+screen.asm|83||0|1|28188|F|infoGame_end
+screen.asm|83||0|1|28188|L|,infoGame_end,,+used
+enemy.asm|19||0|1|28188|F|ActiveEnemies
+enemy.asm|19||0|1|28188|L|,ActiveEnemies,,+used
+enemy.asm|26||0|1|28228|F|LoadRoomEnemies
+enemy.asm|26||0|1|28228|L|,LoadRoomEnemies,,+used
+enemy.asm|27||0|1|28228|T|
+enemy.asm|28||0|1|28229|T|
+enemy.asm|29||0|1|28230|T|
+enemy.asm|31||0|1|28231|T|
+enemy.asm|32||0|1|28234|T|
+enemy.asm|33||0|1|28237|T|
+enemy.asm|35||0|1|28238|T|
+enemy.asm|36||0|1|28241|T|
+enemy.asm|37||0|1|28243|F|LoadRoomEnemies.loop
+enemy.asm|37||0|1|28243|L|,LoadRoomEnemies,loop,+used
+enemy.asm|39||0|1|28243|T|
+enemy.asm|40||0|1|28244|T|
+enemy.asm|41||0|1|28245|T|
+enemy.asm|42||0|1|28246|T|
+enemy.asm|44||0|1|28247|T|
+enemy.asm|45||0|1|28248|T|
+enemy.asm|46||0|1|28249|T|
+enemy.asm|47||0|1|28250|T|
+enemy.asm|49||0|1|28251|T|
+enemy.asm|50||0|1|28252|T|
+enemy.asm|51||0|1|28253|T|
+enemy.asm|52||0|1|28254|T|
+enemy.asm|55||0|1|28255|T|
+enemy.asm|56||0|1|28256|T|
+enemy.asm|57||0|1|28257|T|
+enemy.asm|58||0|1|28258|T|
+enemy.asm|59||0|1|28259|T|
+enemy.asm|60||0|1|28260|T|
+enemy.asm|61||0|1|28262|T|
+enemy.asm|63||0|1|28264|F|LoadRoomEnemies.is_horiz
+enemy.asm|63||0|1|28264|L|,LoadRoomEnemies,is_horiz
+enemy.asm|64||0|1|28264|T|
+enemy.asm|65||0|1|28265|T|
+enemy.asm|66||0|1|28266|T|
+enemy.asm|67||0|1|28267|T|
+enemy.asm|68||0|1|28268|T|
+enemy.asm|71||0|1|28269|T|
+enemy.asm|72||0|1|28270|T|
+enemy.asm|74||0|1|28272|T|
+enemy.asm|75||0|1|28273|T|
+enemy.asm|76||0|1|28274|T|
+enemy.asm|77||0|1|28275|T|
+enemy.asm|78||0|1|28276|T|
+enemy.asm|79||0|1|28277|T|
+enemy.asm|80||0|1|28278|T|
+enemy.asm|81||0|1|28279|T|
+enemy.asm|83||0|1|28281|F|LoadRoomEnemies.h_start_smaller
+enemy.asm|83||0|1|28281|L|,LoadRoomEnemies,h_start_smaller,+used
+enemy.asm|84||0|1|28281|T|
+enemy.asm|85||0|1|28282|T|
+enemy.asm|86||0|1|28283|T|
+enemy.asm|87||0|1|28284|T|
+enemy.asm|88||0|1|28285|T|
+enemy.asm|89||0|1|28286|T|
+enemy.asm|91||0|1|28288|F|LoadRoomEnemies.is_vert
+enemy.asm|91||0|1|28288|L|,LoadRoomEnemies,is_vert,+used
+enemy.asm|92||0|1|28288|T|
+enemy.asm|93||0|1|28289|T|
+enemy.asm|94||0|1|28290|T|
+enemy.asm|95||0|1|28291|T|
+enemy.asm|96||0|1|28292|T|
+enemy.asm|99||0|1|28293|T|
+enemy.asm|100||0|1|28294|T|
+enemy.asm|102||0|1|28296|T|
+enemy.asm|103||0|1|28297|T|
+enemy.asm|104||0|1|28298|T|
+enemy.asm|105||0|1|28299|T|
+enemy.asm|106||0|1|28300|T|
+enemy.asm|107||0|1|28301|T|
+enemy.asm|108||0|1|28302|T|
+enemy.asm|109||0|1|28303|T|
+enemy.asm|111||0|1|28305|F|LoadRoomEnemies.v_start_smaller
+enemy.asm|111||0|1|28305|L|,LoadRoomEnemies,v_start_smaller,+used
+enemy.asm|112||0|1|28305|T|
+enemy.asm|113||0|1|28306|T|
+enemy.asm|114||0|1|28307|T|
+enemy.asm|115||0|1|28308|T|
+enemy.asm|116||0|1|28309|T|
+enemy.asm|118||0|1|28310|F|LoadRoomEnemies.done_min_max
+enemy.asm|118||0|1|28310|L|,LoadRoomEnemies,done_min_max,+used
+enemy.asm|119||0|1|28310|T|
+enemy.asm|120||0|1|28311|T|
+enemy.asm|123||0|1|28312|T|
+enemy.asm|124||0|1|28314|T|
+enemy.asm|125||0|1|28315|T|
+enemy.asm|128||0|1|28316|T|
+enemy.asm|129||0|1|28317|T|
+enemy.asm|130||0|1|28318|T|
+enemy.asm|133||0|1|28319|T|
+enemy.asm|134||0|1|28320|T|
+enemy.asm|135||0|1|28321|T|
+enemy.asm|136||0|1|28322|T|
+enemy.asm|137||0|1|28323|T|
+enemy.asm|138||0|1|28324|T|
+enemy.asm|139||0|1|28325|T|
+enemy.asm|142||0|1|28326|T|
+enemy.asm|143||0|1|28327|T|
+enemy.asm|144||0|1|28328|T|
+enemy.asm|145||0|1|28329|T|
+enemy.asm|147||0|1|28330|T|
+enemy.asm|150||0|1|28331|T|
+enemy.asm|151||0|1|28332|T|
+enemy.asm|152||0|1|28333|T|
+enemy.asm|154||0|1|28334|T|
+enemy.asm|155||0|1|28335|T|
+enemy.asm|157||0|1|28338|T|
+enemy.asm|158||0|1|28339|T|
+enemy.asm|159||0|1|28340|T|
+enemy.asm|160||0|1|28341|T|
+enemy.asm|165||0|1|28342|F|EraseRoomEnemies
+enemy.asm|165||0|1|28342|L|,EraseRoomEnemies,,+used
+enemy.asm|166||0|1|28342|T|
+enemy.asm|167||0|1|28343|T|
+enemy.asm|168||0|1|28344|T|
+enemy.asm|169||0|1|28345|T|
+enemy.asm|171||0|1|28347|T|
+enemy.asm|172||0|1|28351|T|
+enemy.asm|173||0|1|28353|F|EraseRoomEnemies.loop
+enemy.asm|173||0|1|28353|L|,EraseRoomEnemies,loop,+used
+enemy.asm|174||0|1|28353|T|
+enemy.asm|175||0|1|28356|T|
+enemy.asm|176||0|1|28358|T|
+enemy.asm|178||0|1|28360|T|
+enemy.asm|179||0|1|28361|T|
+enemy.asm|180||0|1|28364|T|
+enemy.asm|181||0|1|28367|T|
+enemy.asm|182||0|1|28370|T|
+enemy.asm|184||0|1|28371|F|EraseRoomEnemies.next
+enemy.asm|184||0|1|28371|L|,EraseRoomEnemies,next,+used
+enemy.asm|185||0|1|28371|T|
+enemy.asm|186||0|1|28374|T|
+enemy.asm|187||0|1|28376|T|
+enemy.asm|188||0|1|28377|T|
+enemy.asm|190||0|1|28379|T|
+enemy.asm|191||0|1|28381|T|
+enemy.asm|192||0|1|28382|T|
+enemy.asm|193||0|1|28383|T|
+enemy.asm|194||0|1|28384|T|
+enemy.asm|199||0|1|28385|F|DrawRoomEnemies
+enemy.asm|199||0|1|28385|L|,DrawRoomEnemies,,+used
+enemy.asm|200||0|1|28385|T|
+enemy.asm|201||0|1|28386|T|
+enemy.asm|202||0|1|28387|T|
+enemy.asm|203||0|1|28388|T|
+enemy.asm|205||0|1|28390|T|
+enemy.asm|206||0|1|28394|T|
+enemy.asm|207||0|1|28396|F|DrawRoomEnemies.loop
+enemy.asm|207||0|1|28396|L|,DrawRoomEnemies,loop,+used
+enemy.asm|208||0|1|28396|T|
+enemy.asm|209||0|1|28399|T|
+enemy.asm|210||0|1|28401|T|
+enemy.asm|212||0|1|28404|T|
+enemy.asm|215||0|1|28405|T|
+enemy.asm|216||0|1|28408|T|
+enemy.asm|217||0|1|28410|T|
+enemy.asm|220||0|1|28413|T|
+enemy.asm|221||0|1|28416|T|
+enemy.asm|222||0|1|28419|T|
+enemy.asm|223||0|1|28420|T|
+enemy.asm|224||0|1|28422|T|
+enemy.asm|226||0|1|28424|T|
+enemy.asm|227||0|1|28427|T|
+enemy.asm|228||0|1|28430|T|
+enemy.asm|229||0|1|28431|T|
+enemy.asm|230||0|1|28433|T|
+enemy.asm|232||0|1|28435|T|
+enemy.asm|233||0|1|28438|T|
+enemy.asm|234||0|1|28440|T|
+enemy.asm|235||0|1|28443|T|
+enemy.asm|236||0|1|28445|T|
+enemy.asm|237||0|1|28448|T|
+enemy.asm|239||0|1|28450|F|DrawRoomEnemies.bridge_lametta
+enemy.asm|239||0|1|28450|L|,DrawRoomEnemies,bridge_lametta,+used
+enemy.asm|240||0|1|28450|T|
+enemy.asm|241||0|1|28453|T|
+enemy.asm|242||0|1|28455|T|
+enemy.asm|243||0|1|28458|T|
+enemy.asm|244||0|1|28460|T|
+enemy.asm|245||0|1|28463|T|
+enemy.asm|247||0|1|28465|F|DrawRoomEnemies.offlicence_radar
+enemy.asm|247||0|1|28465|L|,DrawRoomEnemies,offlicence_radar,+used
+enemy.asm|248||0|1|28465|T|
+enemy.asm|249||0|1|28468|T|
+enemy.asm|251||0|1|28470|F|DrawRoomEnemies.not_lametta
+enemy.asm|251||0|1|28470|L|,DrawRoomEnemies,not_lametta,+used
+enemy.asm|252||0|1|28470|T|
+enemy.asm|253||0|1|28471|T|
+enemy.asm|256||0|1|28474|T|
+enemy.asm|257||0|1|28477|T|
+enemy.asm|258||0|1|28480|T|
+enemy.asm|259||0|1|28481|T|
+enemy.asm|260||0|1|28483|T|
+enemy.asm|262||0|1|28485|T|
+enemy.asm|263||0|1|28488|T|
+enemy.asm|264||0|1|28491|T|
+enemy.asm|265||0|1|28492|T|
+enemy.asm|266||0|1|28494|T|
+enemy.asm|268||0|1|28496|T|
+enemy.asm|269||0|1|28499|T|
+enemy.asm|270||0|1|28501|T|
+enemy.asm|271||0|1|28504|T|
+enemy.asm|272||0|1|28506|T|
+enemy.asm|273||0|1|28509|T|
+enemy.asm|275||0|1|28511|F|DrawRoomEnemies.bridge_egg
+enemy.asm|275||0|1|28511|L|,DrawRoomEnemies,bridge_egg,+used
+enemy.asm|276||0|1|28511|T|
+enemy.asm|277||0|1|28514|T|
+enemy.asm|279||0|1|28516|F|DrawRoomEnemies.offlicence_face
+enemy.asm|279||0|1|28516|L|,DrawRoomEnemies,offlicence_face,+used
+enemy.asm|280||0|1|28516|T|
+enemy.asm|281||0|1|28519|T|
+enemy.asm|283||0|1|28521|F|DrawRoomEnemies.not_egg
+enemy.asm|283||0|1|28521|L|,DrawRoomEnemies,not_egg,+used
+enemy.asm|285||0|1|28521|T|
+enemy.asm|286||0|1|28524|T|
+enemy.asm|287||0|1|28527|T|
+enemy.asm|288||0|1|28528|T|
+enemy.asm|289||0|1|28530|T|
+enemy.asm|291||0|1|28532|T|
+enemy.asm|292||0|1|28535|T|
+enemy.asm|294||0|1|28537|F|DrawRoomEnemies.offlicence_ball
+enemy.asm|294||0|1|28537|L|,DrawRoomEnemies,offlicence_ball,+used
+enemy.asm|295||0|1|28537|T|
+enemy.asm|297||0|1|28540|F|DrawRoomEnemies.got_sprite
+enemy.asm|297||0|1|28540|L|,DrawRoomEnemies,got_sprite,+used
+enemy.asm|299||0|1|28540|T|
+enemy.asm|300||0|1|28543|T|
+enemy.asm|301||0|1|28544|T|
+enemy.asm|302||0|1|28545|T|
+enemy.asm|303||0|1|28546|T|
+enemy.asm|304||0|1|28547|T|
+enemy.asm|305||0|1|28548|T|
+enemy.asm|306||0|1|28549|T|
+enemy.asm|307||0|1|28551|T|
+enemy.asm|310||0|1|28552|T|
+enemy.asm|311||0|1|28555|T|
+enemy.asm|313||0|1|28558|T|
+enemy.asm|314||0|1|28560|T|
+enemy.asm|315||0|1|28561|T|
+enemy.asm|316||0|1|28563|T|
+enemy.asm|317||0|1|28566|T|
+enemy.asm|319||0|1|28568|T|
+enemy.asm|321||0|1|28569|F|DrawRoomEnemies.next
+enemy.asm|321||0|1|28569|L|,DrawRoomEnemies,next,+used
+enemy.asm|322||0|1|28569|T|
+enemy.asm|323||0|1|28572|T|
+enemy.asm|324||0|1|28574|T|
+enemy.asm|325||0|1|28575|T|
+enemy.asm|327||0|1|28578|T|
+enemy.asm|328||0|1|28580|T|
+enemy.asm|329||0|1|28581|T|
+enemy.asm|330||0|1|28582|T|
+enemy.asm|331||0|1|28583|T|
+enemy.asm|336||0|1|28584|F|UpdateRoomEnemies
+enemy.asm|336||0|1|28584|L|,UpdateRoomEnemies,,+used
+enemy.asm|337||0|1|28584|T|
+enemy.asm|338||0|1|28585|T|
+enemy.asm|339||0|1|28586|T|
+enemy.asm|340||0|1|28587|T|
+enemy.asm|342||0|1|28589|T|
+enemy.asm|343||0|1|28593|T|
+enemy.asm|344||0|1|28595|F|UpdateRoomEnemies.loop
+enemy.asm|344||0|1|28595|L|,UpdateRoomEnemies,loop,+used
+enemy.asm|345||0|1|28595|T|
+enemy.asm|346||0|1|28598|T|
+enemy.asm|347||0|1|28600|T|
+enemy.asm|350||0|1|28603|T|
+enemy.asm|351||0|1|28606|T|
+enemy.asm|352||0|1|28609|T|
+enemy.asm|353||0|1|28612|T|
+enemy.asm|356||0|1|28615|T|
+enemy.asm|357||0|1|28618|T|
+enemy.asm|358||0|1|28619|T|
+enemy.asm|359||0|1|28621|T|
+enemy.asm|362||0|1|28624|T|
+enemy.asm|363||0|1|28627|T|
+enemy.asm|364||0|1|28629|T|
+enemy.asm|366||0|1|28632|F|UpdateRoomEnemies.horizontal
+enemy.asm|366||0|1|28632|L|,UpdateRoomEnemies,horizontal
+enemy.asm|367||0|1|28632|T|
+enemy.asm|368||0|1|28635|T|
+enemy.asm|369||0|1|28637|T|
+enemy.asm|371||0|1|28639|F|UpdateRoomEnemies.horiz_left
+enemy.asm|371||0|1|28639|L|,UpdateRoomEnemies,horiz_left
+enemy.asm|372||0|1|28639|T|
+enemy.asm|373||0|1|28642|T|
+enemy.asm|374||0|1|28644|T|
+enemy.asm|375||0|1|28647|T|
+enemy.asm|376||0|1|28649|T|
+enemy.asm|377||0|1|28651|T|
+enemy.asm|378||0|1|28654|T|
+enemy.asm|380||0|1|28657|F|UpdateRoomEnemies.h_rev_right
+enemy.asm|380||0|1|28657|L|,UpdateRoomEnemies,h_rev_right,+used
+enemy.asm|381||0|1|28657|T|
+enemy.asm|382||0|1|28660|T|
+enemy.asm|383||0|1|28663|T|
+enemy.asm|384||0|1|28665|T|
+enemy.asm|385||0|1|28668|T|
+enemy.asm|387||0|1|28671|F|UpdateRoomEnemies.horiz_right
+enemy.asm|387||0|1|28671|L|,UpdateRoomEnemies,horiz_right,+used
+enemy.asm|388||0|1|28671|T|
+enemy.asm|389||0|1|28674|T|
+enemy.asm|390||0|1|28676|T|
+enemy.asm|391||0|1|28679|T|
+enemy.asm|392||0|1|28681|T|
+enemy.asm|393||0|1|28683|T|
+enemy.asm|394||0|1|28686|T|
+enemy.asm|396||0|1|28689|F|UpdateRoomEnemies.h_rev_left
+enemy.asm|396||0|1|28689|L|,UpdateRoomEnemies,h_rev_left,+used
+enemy.asm|397||0|1|28689|T|
+enemy.asm|398||0|1|28692|T|
+enemy.asm|399||0|1|28695|T|
+enemy.asm|400||0|1|28697|T|
+enemy.asm|401||0|1|28700|T|
+enemy.asm|403||0|1|28703|F|UpdateRoomEnemies.vertical
+enemy.asm|403||0|1|28703|L|,UpdateRoomEnemies,vertical,+used
+enemy.asm|404||0|1|28703|T|
+enemy.asm|405||0|1|28706|T|
+enemy.asm|406||0|1|28708|T|
+enemy.asm|408||0|1|28710|F|UpdateRoomEnemies.vert_up
+enemy.asm|408||0|1|28710|L|,UpdateRoomEnemies,vert_up
+enemy.asm|409||0|1|28710|T|
+enemy.asm|410||0|1|28713|T|
+enemy.asm|411||0|1|28715|T|
+enemy.asm|412||0|1|28718|T|
+enemy.asm|413||0|1|28720|T|
+enemy.asm|414||0|1|28722|T|
+enemy.asm|415||0|1|28725|T|
+enemy.asm|417||0|1|28728|F|UpdateRoomEnemies.v_rev_down
+enemy.asm|417||0|1|28728|L|,UpdateRoomEnemies,v_rev_down,+used
+enemy.asm|418||0|1|28728|T|
+enemy.asm|419||0|1|28731|T|
+enemy.asm|420||0|1|28734|T|
+enemy.asm|421||0|1|28736|T|
+enemy.asm|422||0|1|28739|T|
+enemy.asm|424||0|1|28742|F|UpdateRoomEnemies.vert_down
+enemy.asm|424||0|1|28742|L|,UpdateRoomEnemies,vert_down,+used
+enemy.asm|425||0|1|28742|T|
+enemy.asm|426||0|1|28745|T|
+enemy.asm|427||0|1|28747|T|
+enemy.asm|428||0|1|28750|T|
+enemy.asm|429||0|1|28752|T|
+enemy.asm|430||0|1|28754|T|
+enemy.asm|431||0|1|28757|T|
+enemy.asm|433||0|1|28760|F|UpdateRoomEnemies.v_rev_up
+enemy.asm|433||0|1|28760|L|,UpdateRoomEnemies,v_rev_up,+used
+enemy.asm|434||0|1|28760|T|
+enemy.asm|435||0|1|28763|T|
+enemy.asm|436||0|1|28766|T|
+enemy.asm|437||0|1|28768|T|
+enemy.asm|439||0|1|28771|F|UpdateRoomEnemies.next
+enemy.asm|439||0|1|28771|L|,UpdateRoomEnemies,next,+used
+enemy.asm|440||0|1|28771|T|
+enemy.asm|441||0|1|28774|T|
+enemy.asm|442||0|1|28776|T|
+enemy.asm|443||0|1|28777|T|
+enemy.asm|445||0|1|28780|T|
+enemy.asm|446||0|1|28782|T|
+enemy.asm|447||0|1|28783|T|
+enemy.asm|448||0|1|28784|T|
+enemy.asm|449||0|1|28785|T|
+jet set willy.asm|21||0|1|28786|F|start
+jet set willy.asm|21||0|1|28786|L|,start,
+jet set willy.asm|22||0|1|28786|T|
+jet set willy.asm|26||0|1|28789|F|Main
+jet set willy.asm|26||0|1|28789|L|,Main,
+jet set willy.asm|28||0|1|28789|T|
+jet set willy.asm|29||0|1|28790|T|
+jet set willy.asm|31||0|1|28793|T|
+jet set willy.asm|32||0|1|28796|T|
+jet set willy.asm|34||0|1|28799|T|
+jet set willy.asm|35||0|1|28801|T|
+jet set willy.asm|36||0|1|28804|T|
+jet set willy.asm|37||0|1|28807|T|
+jet set willy.asm|39||0|1|28810|T|
+jet set willy.asm|40||0|1|28813|T|
+jet set willy.asm|41||0|1|28815|T|
+jet set willy.asm|42||0|1|28818|T|
+jet set willy.asm|43||0|1|28821|T|
+jet set willy.asm|44||0|1|28824|T|
+jet set willy.asm|47||0|1|28827|T|
+jet set willy.asm|48||0|1|28830|T|
+jet set willy.asm|49||0|1|28833|T|
+jet set willy.asm|50||0|1|28834|T|
+jet set willy.asm|51||0|1|28835|T|
+jet set willy.asm|52||0|1|28838|T|
+jet set willy.asm|55||0|1|28840|T|
+jet set willy.asm|56||0|1|28841|T|
+jet set willy.asm|57||0|1|28842|T|
+jet set willy.asm|58||0|1|28843|T|
+jet set willy.asm|59||0|1|28844|T|
+jet set willy.asm|60||0|1|28847|T|
+jet set willy.asm|61||0|1|28849|T|
+jet set willy.asm|62||0|1|28850|T|
+jet set willy.asm|63||0|1|28852|T|
+jet set willy.asm|66||0|1|28855|T|
+jet set willy.asm|68||0|1|28858|F|Main_loop
+jet set willy.asm|68||0|1|28858|L|,Main_loop,,+used
+jet set willy.asm|69||0|1|28858|T|
+jet set willy.asm|72||0|1|28859|T|
+jet set willy.asm|73||0|1|28862|T|
+jet set willy.asm|75||0|1|28865|T|
+jet set willy.asm|76||0|1|28868|T|
+jet set willy.asm|79||0|1|28871|T|
+jet set willy.asm|80||0|1|28875|T|
+jet set willy.asm|83||0|1|28879|T|
+jet set willy.asm|84||0|1|28882|T|
+jet set willy.asm|85||0|1|28885|T|
+jet set willy.asm|86||0|1|28888|T|
+jet set willy.asm|89||0|1|28891|T|
+jet set willy.asm|90||0|1|28894|T|
+jet set willy.asm|93||0|1|28896|T|
+jet set willy.asm|94||0|1|28899|T|
+jet set willy.asm|95||0|1|28901|T|
+jet set willy.asm|96||0|1|28903|F|Main_loop.raster_loop
+jet set willy.asm|96||0|1|28903|L|,Main_loop,raster_loop,+used
+jet set willy.asm|97||0|1|28903|T|
+jet set willy.asm|98||0|1|28905|T|
+jet set willy.asm|99||0|1|28906|T|
+jet set willy.asm|100||0|1|28908|T|
+jet set willy.asm|101||0|1|28910|F|Main_loop.delay
+jet set willy.asm|101||0|1|28910|L|,Main_loop,delay,+used
+jet set willy.asm|102||0|1|28910|T|
+jet set willy.asm|103||0|1|28911|T|
+jet set willy.asm|104||0|1|28913|T|
+jet set willy.asm|107||0|1|28915|T|
+jet set willy.asm|108||0|1|28918|T|
+jet set willy.asm|109||0|1|28920|T|
+jet set willy.asm|111||0|1|28922|F|Main_loop.no_collision
+jet set willy.asm|111||0|1|28922|L|,Main_loop,no_collision,+used
+jet set willy.asm|113||0|1|28922|T|
+jet set willy.asm|114||0|1|28925|T|
+jet set willy.asm|116||0|1|28927|F|Main_loop.no_collision_change
+jet set willy.asm|116||0|1|28927|L|,Main_loop,no_collision_change,+used
+jet set willy.asm|117||0|1|28927|T|
+jet set willy.asm|123||0|1|28930|F|PlayerPos
+jet set willy.asm|123||0|1|28930|L|,PlayerPos,,+used
+jet set willy.asm|124||0|1|28932|F|PlayerPosOld
+jet set willy.asm|124||0|1|28932|L|,PlayerPosOld,,+used
+jet set willy.asm|125||0|1|28934|F|bodyPos
+jet set willy.asm|125||0|1|28934|L|,bodyPos,
+jet set willy.asm|128||0|1|28936|F|body_state
+jet set willy.asm|128||0|1|28936|L|,body_state,,+used
+jet set willy.asm|129||0|1|28937|F|direction
+jet set willy.asm|129||0|1|28937|L|,direction,,+used
+jet set willy.asm|130||0|1|28938|F|flags
+jet set willy.asm|130||0|1|28938|L|,flags,,+used
+jet set willy.asm|132||0|1|28939|F|collision_active
+jet set willy.asm|132||0|1|28939|L|,collision_active,
+jet set willy.asm|133||0|1|28940|F|sprite_shift
+jet set willy.asm|133||0|1|28940|L|,sprite_shift,,+used
+jet set willy.asm|134||0|1|28941|F|room_border_color
+jet set willy.asm|134||0|1|28941|L|,room_border_color,,+used
+jet set willy.asm|137||0|1|28942|F|velocity_y
+jet set willy.asm|137||0|1|28942|L|,velocity_y,,+used
+jet set willy.asm|138||0|1|28943|F|on_ground
+jet set willy.asm|138||0|1|28943|L|,on_ground,,+used
+jet set willy.asm|139||0|1|28944|F|jump_pressed
+jet set willy.asm|139||0|1|28944|L|,jump_pressed,,+used
+jet set willy.asm|140||0|1|28945|F|jump_prev
+jet set willy.asm|140||0|1|28945|L|,jump_prev,,+used
+jet set willy.asm|143||0|1|28946|F|counter
+jet set willy.asm|143||0|1|28946|L|,counter,,+used
+jet set willy.asm|144||0|1|28948|F|line_buffer
+jet set willy.asm|144||0|1|28948|L|,line_buffer,
+jet set willy.asm|147||0|1|29204|F|current_room
+jet set willy.asm|147||0|1|29204|L|,current_room,
+jet set willy.asm|148||0|1|29205|F|room_ptr
+jet set willy.asm|148||0|1|29205|L|,room_ptr,,+used
+jet set willy.asm|151||0|1|29440|F|RoomsStart
+jet set willy.asm|151||0|1|29440|L|,RoomsStart,
+Rooms/TheBridge.asm|1||0|1|29440|F|TheBridgeLayout
+Rooms/TheBridge.asm|1||0|1|29440|L|,TheBridgeLayout,,+used
+Rooms/TheBridge.asm|19||0|1|29568|F|TheBridgeTile
+Rooms/TheBridge.asm|19||0|1|29568|L|,TheBridgeTile,
+Rooms/TheBridge.asm|24||0|1|29600|F|TheBridgeBackground
+Rooms/TheBridge.asm|24||0|1|29600|L|,TheBridgeBackground,
+Rooms/TheBridge.asm|27||0|1|29609|F|TheBridgeFloor
+Rooms/TheBridge.asm|27||0|1|29609|L|,TheBridgeFloor,
+Rooms/TheBridge.asm|30||0|1|29618|F|TheBridgeWall
+Rooms/TheBridge.asm|30||0|1|29618|L|,TheBridgeWall,
+Rooms/TheBridge.asm|33||0|1|29627|F|TheBridgeNasty
+Rooms/TheBridge.asm|33||0|1|29627|L|,TheBridgeNasty,
+Rooms/TheBridge.asm|36||0|1|29636|F|TheBridgeRamp
+Rooms/TheBridge.asm|36||0|1|29636|L|,TheBridgeRamp,
+Rooms/TheBridge.asm|39||0|1|29645|F|TheBridgeConveyor
+Rooms/TheBridge.asm|39||0|1|29645|L|,TheBridgeConveyor,
+Rooms/TheBridge.asm|43||0|1|29654|F|TheBridgeConveyorData
+Rooms/TheBridge.asm|43||0|1|29654|L|,TheBridgeConveyorData,
+Rooms/TheBridge.asm|49||0|1|29658|F|TheBridgeRampData
+Rooms/TheBridge.asm|49||0|1|29658|L|,TheBridgeRampData,
+Rooms/TheBridge.asm|55||0|1|29662|F|TheBridgeBorderColor
+Rooms/TheBridge.asm|55||0|1|29662|L|,TheBridgeBorderColor,
+Rooms/TheBridge.asm|59||0|1|29663|F|TheBridgeReserved
+Rooms/TheBridge.asm|59||0|1|29663|L|,TheBridgeReserved,
+Rooms/TheBridge.asm|63||0|1|29665|F|TheBridgeItem
+Rooms/TheBridge.asm|63||0|1|29665|L|,TheBridgeItem,
+Rooms/TheBridge.asm|67||0|1|29673|F|TheBridgeDirection
+Rooms/TheBridge.asm|67||0|1|29673|L|,TheBridgeDirection,
+Rooms/TheBridge.asm|74||0|1|29677|F|TheBridgeUnused
+Rooms/TheBridge.asm|74||0|1|29677|L|,TheBridgeUnused,
+Rooms/TheBridge.asm|78||0|1|29680|F|TheBridgeEnemy1
+Rooms/TheBridge.asm|78||0|1|29680|L|,TheBridgeEnemy1,
+Rooms/TheBridge.asm|80||0|1|29684|F|TheBridgeEnemy2
+Rooms/TheBridge.asm|80||0|1|29684|L|,TheBridgeEnemy2,
+Rooms/TheBridge.asm|82||0|1|29688|F|TheBridgeEnemy3
+Rooms/TheBridge.asm|82||0|1|29688|L|,TheBridgeEnemy3,
+Rooms/TheBridge.asm|84||0|1|29692|F|TheBridgeEnemy4
+Rooms/TheBridge.asm|84||0|1|29692|L|,TheBridgeEnemy4,
+Rooms/TheOffLicence.asm|2||0|1|29696|F|TheOffLicenceLayout
+Rooms/TheOffLicence.asm|2||0|1|29696|L|,TheOffLicenceLayout,,+used
+Rooms/TheOffLicence.asm|20||0|1|29824|F|TheOffLicenceTile
+Rooms/TheOffLicence.asm|20||0|1|29824|L|,TheOffLicenceTile,
+Rooms/TheOffLicence.asm|23||0|1|29856|F|TheOffLicenceBackground
+Rooms/TheOffLicence.asm|23||0|1|29856|L|,TheOffLicenceBackground,
+Rooms/TheOffLicence.asm|26||0|1|29865|F|TheOffLicenceFloor
+Rooms/TheOffLicence.asm|26||0|1|29865|L|,TheOffLicenceFloor,
+Rooms/TheOffLicence.asm|29||0|1|29874|F|TheOffLicenceWall
+Rooms/TheOffLicence.asm|29||0|1|29874|L|,TheOffLicenceWall,
+Rooms/TheOffLicence.asm|32||0|1|29883|F|TheOffLicenceNasty
+Rooms/TheOffLicence.asm|32||0|1|29883|L|,TheOffLicenceNasty,
+Rooms/TheOffLicence.asm|35||0|1|29892|F|TheOffLicenceRamp
+Rooms/TheOffLicence.asm|35||0|1|29892|L|,TheOffLicenceRamp,
+Rooms/TheOffLicence.asm|38||0|1|29901|F|TheOffLicenceConveyor
+Rooms/TheOffLicence.asm|38||0|1|29901|L|,TheOffLicenceConveyor,
+Rooms/TheOffLicence.asm|41||0|1|29910|F|TheOffLicenceConveyorData
+Rooms/TheOffLicence.asm|41||0|1|29910|L|,TheOffLicenceConveyorData,
+Rooms/TheOffLicence.asm|46||0|1|29914|F|TheOffLicenceRampData
+Rooms/TheOffLicence.asm|46||0|1|29914|L|,TheOffLicenceRampData,
+Rooms/TheOffLicence.asm|51||0|1|29918|F|TheOffLicenceBorderColor
+Rooms/TheOffLicence.asm|51||0|1|29918|L|,TheOffLicenceBorderColor,
+Rooms/TheOffLicence.asm|54||0|1|29919|F|TheOffLicenceReserved
+Rooms/TheOffLicence.asm|54||0|1|29919|L|,TheOffLicenceReserved,
+Rooms/TheOffLicence.asm|57||0|1|29921|F|TheOffLicenceItem
+Rooms/TheOffLicence.asm|57||0|1|29921|L|,TheOffLicenceItem,
+Rooms/TheOffLicence.asm|60||0|1|29929|F|TheOffLicenceDirection
+Rooms/TheOffLicence.asm|60||0|1|29929|L|,TheOffLicenceDirection,
+Rooms/TheOffLicence.asm|66||0|1|29933|F|TheOffLicenceUnused
+Rooms/TheOffLicence.asm|66||0|1|29933|L|,TheOffLicenceUnused,
+Rooms/TheOffLicence.asm|69||0|1|29936|F|TheOffLicenceEnemy1
+Rooms/TheOffLicence.asm|69||0|1|29936|L|,TheOffLicenceEnemy1,
+Rooms/TheOffLicence.asm|71||0|1|29940|F|TheOffLicenceEnemy2
+Rooms/TheOffLicence.asm|71||0|1|29940|L|,TheOffLicenceEnemy2,
+Rooms/TheOffLicence.asm|73||0|1|29944|F|TheOffLicenceEnemy3
+Rooms/TheOffLicence.asm|73||0|1|29944|L|,TheOffLicenceEnemy3,
+Rooms/TheOffLicence.asm|75||0|1|29948|F|TheOffLicenceEnemy4
+Rooms/TheOffLicence.asm|75||0|1|29948|L|,TheOffLicenceEnemy4,
+Rooms/TheTestRoom.asm|2||0|1|29952|F|TheTestRoomLayout
+Rooms/TheTestRoom.asm|2||0|1|29952|L|,TheTestRoomLayout,
+Rooms/TheTestRoom.asm|20||0|1|30080|F|TheTestRoomTile
+Rooms/TheTestRoom.asm|20||0|1|30080|L|,TheTestRoomTile,
+Rooms/TheTestRoom.asm|25||0|1|30112|F|TheTestRoomBackground
+Rooms/TheTestRoom.asm|25||0|1|30112|L|,TheTestRoomBackground,
+Rooms/TheTestRoom.asm|28||0|1|30121|F|TheTestRoomFloor
+Rooms/TheTestRoom.asm|28||0|1|30121|L|,TheTestRoomFloor,
+Rooms/TheTestRoom.asm|31||0|1|30130|F|TheTestRoomWall
+Rooms/TheTestRoom.asm|31||0|1|30130|L|,TheTestRoomWall,
+Rooms/TheTestRoom.asm|34||0|1|30139|F|TheTestRoomNasty
+Rooms/TheTestRoom.asm|34||0|1|30139|L|,TheTestRoomNasty,
+Rooms/TheTestRoom.asm|37||0|1|30148|F|TheTestRoomRamp
+Rooms/TheTestRoom.asm|37||0|1|30148|L|,TheTestRoomRamp,
+Rooms/TheTestRoom.asm|40||0|1|30157|F|TheTestRoomConveyor
+Rooms/TheTestRoom.asm|40||0|1|30157|L|,TheTestRoomConveyor,
+Rooms/TheTestRoom.asm|44||0|1|30166|F|TheTestRoomConveyorData
+Rooms/TheTestRoom.asm|44||0|1|30166|L|,TheTestRoomConveyorData,
+Rooms/TheTestRoom.asm|50||0|1|30170|F|TheTestRoomRampData
+Rooms/TheTestRoom.asm|50||0|1|30170|L|,TheTestRoomRampData,
+Rooms/TheTestRoom.asm|56||0|1|30174|F|TheTestRoomBorderColor
+Rooms/TheTestRoom.asm|56||0|1|30174|L|,TheTestRoomBorderColor,
+Rooms/TheTestRoom.asm|60||0|1|30175|F|TheTestRoomReserved
+Rooms/TheTestRoom.asm|60||0|1|30175|L|,TheTestRoomReserved,
+Rooms/TheTestRoom.asm|64||0|1|30177|F|TheTestRoomItem
+Rooms/TheTestRoom.asm|64||0|1|30177|L|,TheTestRoomItem,
+Rooms/TheTestRoom.asm|68||0|1|30185|F|TheTestRoomDirection
+Rooms/TheTestRoom.asm|68||0|1|30185|L|,TheTestRoomDirection,
+Rooms/TheTestRoom.asm|75||0|1|30189|F|Room99Unused
+Rooms/TheTestRoom.asm|75||0|1|30189|L|,Room99Unused,
+Rooms/TheTestRoom.asm|79||0|1|30192|F|TheTestRoomEnemy1
+Rooms/TheTestRoom.asm|79||0|1|30192|L|,TheTestRoomEnemy1,
+Rooms/TheTestRoom.asm|81||0|1|30196|F|TheTestRoomEnemy2
+Rooms/TheTestRoom.asm|81||0|1|30196|L|,TheTestRoomEnemy2,
+Rooms/TheTestRoom.asm|83||0|1|30200|F|TheTestRoomEnemy3
+Rooms/TheTestRoom.asm|83||0|1|30200|L|,TheTestRoomEnemy3,
+Rooms/TheTestRoom.asm|85||0|1|30204|F|TheTestRoomEnemy4
+Rooms/TheTestRoom.asm|85||0|1|30204|L|,TheTestRoomEnemy4,
