@@ -4,31 +4,31 @@
 
 ; -------------------------------------------------------------------
 ; Tabella Globale degli Oggetti (Items)
-; Ciascun item occupa 4 byte:
+; Ciascun item occupa 5 byte:
 ;   Byte 0: ID della stanza (0 = Test Room, 1 = The Bridge, 2 = The Off Licence)
 ;   Byte 1: X colonna dello schermo (0..31)
 ;   Byte 2: Y riga dello schermo (3..18)
-;   Byte 3: Stato (0 = Attivo/Non raccolto, 1 = Raccolto)
+;   Byte 3: Attributo colore (es. $C6 per Giallo Flashing, $C5 per Cyan Flashing)
+;   Byte 4: Stato (0 = Attivo/Non raccolto, 1 = Raccolto)
 ; La tabella termina con $FF
 ; -------------------------------------------------------------------
 ItemsTable:
     ; Stanza 2 (The Off Licence)
-    db 2, 30, 7, 0               ; Oggetto 1 alla colonna X=30, riga Y=7 (Stato: 0=attivo)   
-    db 2, 29, 7, 0               ; Oggetto 2 alla colonna X=10, riga Y=7     
-    db 2, 28, 7, 0               ; Oggetto 12 alla colonna X=10, riga Y=7     
-    db 2, 27, 7, 0               ; Oggetto 3 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
-    db 2, 26, 7, 0               ; Oggetto 4 alla colonna X=10, riga Y=7     
-    db 2, 25, 7, 0               ; Oggetto 5 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
-    db 2, 24, 7, 0               ; Oggetto 6 alla colonna X=10, riga Y=7     
-    db 2, 23, 7, 0               ; Oggetto 7 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
-    db 2, 22, 7, 0               ; Oggetto 8 alla colonna X=10, riga Y=7     
-    db 2, 21, 7, 0               ; Oggetto 9 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
-    db 2, 20, 7, 0               ; Oggetto 10 alla colonna X=10, riga Y=7     
-    db 2, 19, 7, 0               ; Oggetto 11 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
-    
+    db 2, 30, 7, 6, 0               ; Oggetto 1 alla colonna X=30, riga Y=7 (Stato: 0=attivo)    
+    db 2, 29, 7, 5, 0               ; Oggetto 2 alla colonna X=10, riga Y=7     
+    db 2, 28, 7, 4, 0               ; Oggetto 12 alla colonna X=10, riga Y=7     
+    db 2, 27, 7, 3, 0               ; Oggetto 3 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
+    db 2, 26, 7, 6, 0               ; Oggetto 4 alla colonna X=10, riga Y=7     
+    db 2, 25, 7, 5, 0               ; Oggetto 5 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
+    db 2, 24, 7, 4, 0               ; Oggetto 6 alla colonna X=10, riga Y=7     
+    db 2, 23, 7, 3, 0               ; Oggetto 7 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
+    db 2, 22, 7, 6, 0               ; Oggetto 8 alla colonna X=10, riga Y=7     
+    db 2, 21, 7, 5, 0               ; Oggetto 9 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
+    db 2, 20, 7, 4, 0               ; Oggetto 10 alla colonna X=10, riga Y=7     
+    db 2, 19, 7, 3, 0               ; Oggetto 11 alla colonna X=20, riga Y=7 (Stato: 0=attivo)  
     
     ; Stanza 0 (The Test Room)
-    db 0, 15, 17, 0               ; Oggetto 3: Diamante al centro
+    db 0, 15, 17, $C2, 0           ; Oggetto 3: Rosso Flashing ($C2) al centro
     
     db $FF                        ; Fine tabella
 
@@ -106,18 +106,20 @@ DrawRoomItems:
     cp   d
     jr   nz, .next_item    ; Stanza diversa, salta
     
-    ; Leggi coordinate e stato
+    ; Leggi coordinate, colore e stato
     inc  hl                ; HL punta a X
     ld   c, (hl)           ; C = X colonna
     inc  hl                ; HL punta a Y
     ld   b, (hl)           ; B = Y riga
+    inc  hl                ; HL punta al Colore
+    ld   e, (hl)           ; E = Colore
     inc  hl                ; HL punta a collected flag
     ld   a, (hl)           ; A = collected flag
     or   a
     jr   nz, .next_no_inc  ; Già raccolto, salta
     
     ; Disegna l'item!
-    ; B = Row, C = Col, IX = bitmap graphic (8 byte)
+    ; B = Row, C = Col, IX = bitmap graphic (8 byte), E = Colore
     push hl
     push ix
     pop  hl                ; HL = bitmap pointer
@@ -129,6 +131,7 @@ DrawRoomItems:
 .next_item:
     inc  hl                ; salta X
     inc  hl                ; salta Y
+    inc  hl                ; salta colore
     inc  hl                ; salta collected
 .next_no_inc:
     inc  hl                ; vai al prossimo record (prossimo Room ID)
@@ -142,8 +145,8 @@ DrawRoomItems:
     ret
 
 ; -------------------------------------------------------------------
-; Disegna un singolo item (8x8 pixel) a schermo con colore giallo lampeggiante
-; Input: B = Row (3..18), C = Col (0..31), HL = Puntatore al bitmap (8 byte)
+; Disegna un singolo item (8x8 pixel) a schermo con colore personalizzato
+; Input: B = Row (3..18), C = Col (0..31), HL = Puntatore al bitmap (8 byte), E = Colore
 ; -------------------------------------------------------------------
 DrawItemGraphic:
     push bc
@@ -167,6 +170,7 @@ DrawItemGraphic:
     ld   e, a              ; E = Low byte dell'indirizzo dello schermo
     
     ; 2. Copia gli 8 byte del bitmap dello sprite
+    push bc                ; Salva BC (contiene Row e Col)
     ld   b, 8              ; 8 scanline
 .line_loop:
     ld   a, (hl)
@@ -175,16 +179,10 @@ DrawItemGraphic:
     inc  hl
     dec  b
     jr   nz, .line_loop
+    pop  bc                ; Ripristina BC
     
-    pop  hl
-    pop  de
-    pop  bc
-    
-    ; 3. Scrivi l'attributo colore
-    push hl
-    push de
-    push bc
-    
+    ; 3. Calcola l'indirizzo degli attributi dello schermo
+    ; HL = $5800 + B * 32 + C
     ld   h, 0
     ld   l, b              ; HL = B (Row)
     add  hl, hl            ; *2
@@ -192,18 +190,29 @@ DrawItemGraphic:
     add  hl, hl            ; *8
     add  hl, hl            ; *16
     add  hl, hl            ; *32
-    ld   d, 0
-    ld   e, c              ; DE = C (Col)
-    add  hl, de            ; HL = B * 32 + C
+    
+    ld   a, c              ; A = Col
+    add  a, l
+    ld   l, a
+    jr   nc, .no_carry
+    inc  h
+.no_carry:
+    ; HL = B * 32 + C
     ld   de, $5800
     add  hl, de            ; HL = AttrAddr
     
-    ld   a, $C6            ; Attributo: Flashing (bit 7), Bright (bit 6), Paper Black, Ink Yellow
-    ld   (hl), a           ; Scrivi in memoria attributi
+    ; Ripristina i registri dallo stack per estrarre il colore in E
+    ; Lo stack ha: HL (originale), DE (originale con colore in E), BC (originale)
+    pop  bc                ; BC = HL originale
+    pop  de                ; DE = DE originale (colore in E)
     
-    pop  bc
-    pop  de
-    pop  hl
+    ld   a, e              ; A = Colore
+    ld   (hl), a           ; Scrivi in memoria attributi (HL)
+    
+    ; Ripristina lo stack e i registri originari
+    push bc                ; Rimetti HL originale sulla pila
+    pop  hl                ; HL = HL originale
+    pop  bc                ; BC = BC originale
     ret
 
 ; -------------------------------------------------------------------
@@ -211,6 +220,7 @@ DrawItemGraphic:
 ; Input: B = Row (3..18), C = Col (0..31)
 ; -------------------------------------------------------------------
 RestoreBackgroundCell:
+    push iy                ; Preserva IY
     push bc
     push de
     push hl
@@ -307,6 +317,7 @@ RestoreBackgroundCell:
     pop  hl
     pop  de
     pop  bc
+    pop  iy                ; Ripristina IY
     ret
 
 ; -------------------------------------------------------------------
@@ -407,6 +418,7 @@ CheckRoomItemsCollision:
     ld   c, (hl)           ; C = X
     inc  hl                ; HL punta a Y
     ld   b, (hl)           ; B = Y
+    inc  hl                ; HL punta al colore (lo saltiamo per il controllo collisione)
     inc  hl                ; HL punta a collected
     ld   a, (hl)           ; A = collected
     or   a
@@ -436,6 +448,7 @@ CheckRoomItemsCollision:
 .next_item:
     inc  hl                ; salta X
     inc  hl                ; salta Y
+    inc  hl                ; salta colore
     inc  hl                ; salta collected
 .next_no_inc:
     inc  hl                ; vai al prossimo item
