@@ -16,6 +16,7 @@
     include "physics.asm"
     include "screen.asm"
     include "enemy.asm"
+    include "items.asm"
     ;include "level.asm"
 
 start:
@@ -39,8 +40,10 @@ Main:
     ld   hl, ATTR_P
     ld   (hl), $07
     call CLS
+    call DetermineCurrentRoomID
     call DrawRoom
     call PrintRoomName
+    call DrawRoomItems
     call LoadRoomEnemies
 
     ; Leggi il colore del bordo dalla stanza corrente e impostalo
@@ -84,6 +87,7 @@ Main_loop:
     call MovePlayer
     call ApplyGravity
     call UpdateRoomEnemies
+    call CheckRoomItemsCollision
     
     ; 5. Gestisci la collisione (disegna le raster bar se collide)
     call CheckCollision

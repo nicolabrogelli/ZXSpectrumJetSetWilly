@@ -92,6 +92,7 @@ OFFSET_FLOOR:    EQU 169
 OFFSET_WALL:     EQU 178
 OFFSET_NASTY:    EQU 187
 OFFSET_BORDER_COLOR: EQU 222
+OFFSET_ITEM_GRAPHIC: EQU 227
 
 ; Aggiungi nelle costanti
 VERTICAL_BORDER: EQU $49  ; Codice del carattere per i bordi verticali ($49 = 73, lettera 'I')

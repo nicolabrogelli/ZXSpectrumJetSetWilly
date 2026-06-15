@@ -60,9 +60,8 @@ TheTestRoomBorderColor:
 TheTestRoomReserved:
     DEFB 7, 7, 7, 7               ; Enemy colors: all WHITE (7)
 
-; Item graphic
 TheTestRoomItem:
-    DEFB 0,0,0,0,0,0,0,0          ; No item defined yet
+    DEFB 24,60,126,255,255,126,60,24          ; Diamond graphic for the item
 
 ; Room connections (left, right, above, below)
 TheTestRoomDirection:
