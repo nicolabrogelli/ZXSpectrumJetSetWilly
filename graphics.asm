@@ -186,15 +186,101 @@ GetBackgroundByte:
     ; 1. Controlla se Y (in D) è fuori dalla griglia di layout (Y < 24 o Y >= 152)
     ld   a, d
     cp   24
-    jr   c, .blank
+    jp   c, .blank
     cp   152
-    jr   nc, .blank
+    jp   nc, .blank
     
-    ; 2. Calcola riga di layout: r = (Y - 24) / 8
+    ; Converti Y (in D) e X (in B) a cella
     sub  24
     srl  a
     srl  a
-    srl  a                 ; A = r (0..15)
+    srl  a                 ; A = layout row r (0..15)
+    ld   e, a              ; E = r (Row)
+    
+    ld   a, b
+    srl  a
+    srl  a
+    srl  a                 ; A = column c (0..31)
+    ld   c, a              ; C = c (Col)
+    
+    ; --- Controlla Conveyor ---
+    ld   a, (conveyor_len)
+    or   a
+    jp   z, .check_ramp
+    
+    ld   a, (conveyor_row)
+    sub  3
+    cp   e
+    jp   nz, .check_ramp
+    
+    ld   a, (conveyor_col)
+    cp   c
+    jp   z, .is_conveyor
+    jp   c, .c_greater
+    jp   .check_ramp
+.c_greater:
+    ld   hl, conveyor_len
+    add  a, (hl)
+    cp   c
+    jp   z, .check_ramp
+    jp   c, .check_ramp
+.is_conveyor:
+    ld   hl, OFFSET_CONVEYOR
+    jp   .load_tile
+
+.check_ramp:
+    ld   a, (ramp_len)
+    or   a
+    jp   z, .normal_grid
+    
+    ; C = player col, E = player row
+    ; H = ramp row, L = ramp col
+    ld   a, (ramp_row)
+    sub  3
+    ld   h, a              ; H = ramp row
+    
+    ld   a, (ramp_col)
+    ld   l, a              ; L = ramp col
+    
+    ld   a, (ramp_len)     ; A = loop counter
+    
+.ramp_loop:
+    push af                ; Salva il loop counter
+    ld   a, h
+    cp   e                 ; Confronta ramp row con player row (E)
+    jr   nz, .next_ramp_cell
+    ld   a, l
+    cp   c                 ; Confronta ramp col con player col (C)
+    jp   z, .is_ramp
+    
+.next_ramp_cell:
+    dec  h                 ; la rampa sale
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .r_left
+.r_right:
+    inc  l
+    jr   .loop_end
+.r_left:
+    dec  l
+.loop_end:
+    pop  af                ; Ripristina il loop counter
+    dec  a
+    jp   nz, .ramp_loop
+    jp   .normal_grid
+
+.is_ramp:
+    pop  af                ; Pulisce lo stack
+    ld   hl, OFFSET_RAMP
+    jp   .load_tile
+
+.normal_grid:
+    ; Ripristina riga di layout in A per il flusso normale
+    ld   a, d
+    sub  24
+    srl  a
+    srl  a
+    srl  a
     
     ; 3. HL = r * 8
     ld   l, a
