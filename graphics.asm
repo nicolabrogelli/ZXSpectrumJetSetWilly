@@ -1438,3 +1438,175 @@ RestoreEnemyColorAttributes:
     pop  de
     pop  hl
     ret
+
+; -------------------------------------------------------------------
+; Disegna rampa e conveyor leggendo i dati della stanza corrente
+; -------------------------------------------------------------------
+DrawConveyorsAndRamps:
+    push hl
+    push de
+    push bc
+    push ix
+    
+    ; --- 1. Disegna Conveyor ---
+    ld   hl, (room_ptr)
+    ld   de, OFFSET_CONVEYOR_DATA
+    add  hl, de            ; HL = ConveyorData pointer
+    
+    ld   a, (hl)           ; A = Direction
+    ld   (conveyor_dir), a
+    inc  hl
+    ld   e, (hl)
+    inc  hl
+    ld   d, (hl)           ; DE = Location
+    inc  hl
+    ld   a, (hl)           ; A = Length
+    ld   (conveyor_len), a
+    
+    ; Controlla se DE (Location) è 0
+    ld   a, d
+    or   e
+    jr   z, .draw_ramp     ; Se 0, salta conveyor
+    
+    ; Calcola Row e Col: Offset = DE - 24064
+    push hl
+    ld   hl, -24064
+    add  hl, de            ; HL = Offset
+    
+    ; Row = Offset / 32
+    ; Col = Offset % 32
+    ld   d, h
+    ld   e, l              ; DE = Offset
+    
+    ; Col = Offset & 31
+    ld   a, e
+    and  31
+    ld   c, a              ; C = Col Start
+    
+    ; Row = Offset / 32
+    srl  h
+    rr   l
+    srl  h
+    rr   l
+    srl  h
+    rr   l
+    srl  h
+    rr   l
+    srl  h
+    rr   l
+    ld   a, l
+    add  a, 3              ; A = screen Row
+    ld   b, a              ; B = Row
+    pop  hl                ; HL = original pointer (Length)
+    
+    ld   a, b
+    ld   (conveyor_row), a
+    ld   a, c
+    ld   (conveyor_col), a
+    
+    ld   a, (hl)           ; A = Length
+    ld   d, a              ; D = contatore lunghezza
+    
+    ; IX = room_ptr + OFFSET_CONVEYOR
+    ld   hl, (room_ptr)
+    push bc
+    ld   bc, OFFSET_CONVEYOR
+    add  hl, bc
+    pop  bc
+    push hl
+    pop  ix                ; IX = conveyor tile pointer
+    
+.conveyor_loop:
+    call DrawTile
+    inc  c                 ; Prossima colonna
+    dec  d
+    jr   nz, .conveyor_loop
+
+.draw_ramp:
+    ; --- 2. Disegna Ramp ---
+    ld   hl, (room_ptr)
+    ld   de, OFFSET_RAMP_DATA
+    add  hl, de            ; HL = RampData pointer
+    
+    ld   a, (hl)           ; A = Direction (0 = up-left, 1 = up-right)
+    ld   (ramp_dir), a
+    inc  hl
+    ld   e, (hl)
+    inc  hl
+    ld   d, (hl)           ; DE = Location
+    inc  hl
+    ld   a, (hl)           ; A = Length
+    ld   (ramp_len), a
+    
+    ; Controlla se DE (Location) è 0
+    ld   a, d
+    or   e
+    jr   z, .done_ramp     ; Se 0, fine
+    
+    push hl
+    ld   hl, -24064
+    add  hl, de            ; HL = Offset
+    
+    ld   d, h
+    ld   e, l              ; DE = Offset
+    
+    ; Col = Offset & 31
+    ld   a, e
+    and  31
+    ld   c, a              ; C = Col Start
+    
+    ; Row = Offset / 32
+    srl  h
+    rr   l
+    srl  h
+    rr   l
+    srl  h
+    rr   l
+    srl  h
+    rr   l
+    srl  h
+    rr   l
+    ld   a, l
+    add  a, 3              ; A = screen Row
+    ld   b, a              ; B = Row
+    pop  hl                ; HL = original pointer (Length)
+    
+    ld   a, b
+    ld   (ramp_row), a
+    ld   a, c
+    ld   (ramp_col), a
+    
+    ld   a, (hl)           ; A = Length
+    ld   d, a              ; D = contatore lunghezza
+    
+    ; IX = room_ptr + OFFSET_RAMP
+    ld   hl, (room_ptr)
+    push bc
+    ld   bc, OFFSET_RAMP
+    add  hl, bc
+    pop  bc
+    push hl
+    pop  ix                ; IX = ramp tile pointer
+    
+.ramp_loop:
+    call DrawTile
+    
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .up_left
+.up_right:
+    inc  c                 ; Prossima colonna a destra
+    jr   .next_step
+.up_left:
+    dec  c                 ; Prossima colonna a sinistra
+.next_step:
+    dec  b                 ; Riga sopra (sale)
+    dec  d
+    jr   nz, .ramp_loop
+
+.done_ramp:
+    pop  ix
+    pop  bc
+    pop  de
+    pop  hl
+    ret

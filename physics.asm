@@ -13,6 +13,9 @@ CheckSolidCell:
     push de
     push bc
     
+    call CheckConveyorOrRampCell
+    jr   c, .solid
+    
     ; 1. Controlla se Y (in B) è fuori dalla griglia di layout (Y < 24 o Y >= 152)
     ld   a, b
     cp   24
@@ -323,4 +326,192 @@ CheckCollision:
     pop  de
     pop  hl
     or   a                 ; Reset carry flag
+    ret
+
+; -------------------------------------------------------------------
+; Controlla se la coordinata pixel (X, Y) si trova su un conveyor o rampa
+; Input: C = X, B = Y
+; Output: Carry flag impostato se solida, altrimenti resettato
+; -------------------------------------------------------------------
+CheckConveyorOrRampCell:
+    push hl
+    push de
+    push bc
+    
+    ; 1. Converti Y pixel in B a layout row: r = (Y - 24) / 8
+    ld   a, b
+    cp   24
+    jr   c, .not_solid
+    cp   152
+    jr   nc, .not_solid
+    sub  24
+    srl  a
+    srl  a
+    srl  a                 ; A = r (0..15)
+    ld   d, a              ; D = r (layout row)
+    
+    ; 2. Converti X pixel in C a column: c = X / 8
+    ld   a, c
+    srl  a
+    srl  a
+    srl  a                 ; A = c (0..31)
+    ld   e, a              ; E = c (column)
+    
+    ; --- CONTROLLO CONVEYOR ---
+    ld   a, (conveyor_len)
+    or   a
+    jr   z, .check_ramp    ; Se non c'è conveyor, controlla rampa
+    
+    ; Controlla se Row corrisponde
+    ld   a, (conveyor_row)
+    sub  3                 ; Converti in layout row
+    cp   d
+    jr   nz, .check_ramp   ; Row diversa, controlla rampa
+    
+    ; Controlla se Col è compresa: c >= conveyor_col e c < conveyor_col + conveyor_len
+    ld   a, (conveyor_col)
+    cp   e
+    jr   z, .is_conveyor   ; c == conveyor_col -> solido!
+    jr   c, .c_greater     ; c > conveyor_col -> controlla limite superiore
+    jr   .check_ramp       ; c < conveyor_col
+.c_greater:
+    ld   b, a              ; B = conveyor_col
+    ld   a, (conveyor_len)
+    add  a, b              ; A = conveyor_col + conveyor_len
+    cp   e
+    jr   z, .check_ramp    ; c == len (fuori)
+    jr   c, .check_ramp    ; c > len (fuori)
+.is_conveyor:
+    jr   .solid
+
+.check_ramp:
+    ; --- CONTROLLO RAMP ---
+    ld   a, (ramp_len)
+    or   a
+    jr   z, .not_solid     ; Se non c'è rampa, fine
+    
+    ld   b, a              ; B = ramp_len (contatore)
+    ld   a, (ramp_row)
+    sub  3                 ; A = layout Row di partenza della rampa
+    ld   h, a              ; H = riga corrente della rampa
+    ld   a, (ramp_col)     ; A = colonna di partenza della rampa
+    ld   l, a              ; L = colonna corrente della rampa
+    
+.ramp_loop:
+    ld   a, h
+    cp   d
+    jr   nz, .next_ramp_cell
+    ld   a, l
+    cp   e
+    jr   z, .solid         ; Riga e colonna coincidono -> solido!
+    
+.next_ramp_cell:
+    dec  h                 ; la rampa sale (riga layout diminuisce)
+    
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .r_left
+.r_right:
+    inc  l                 ; sale verso destra
+    jr   .loop_end
+.r_left:
+    dec  l                 ; sale verso sinistra
+.loop_end:
+    djnz .ramp_loop
+    
+.not_solid:
+    pop  bc
+    pop  de
+    pop  hl
+    or   a                 ; Clear carry
+    ret
+    
+.solid:
+    pop  bc
+    pop  de
+    pop  hl
+    scf                    ; Set carry
+    ret
+
+; -------------------------------------------------------------------
+; Applica la forza di trascinamento del conveyor se Willy vi è sopra
+; -------------------------------------------------------------------
+ApplyConveyorForce:
+    ld   a, (on_ground)
+    or   a
+    ret  z                 ; Se non è a terra, nessuna forza
+    
+    ld   a, (conveyor_len)
+    or   a
+    ret  z                 ; Se non c'è conveyor in questa stanza, fine
+    
+    ld   bc, (PlayerPos)   ; C = WillyX, B = WillyY
+    
+    ; Calcola screenRow dei piedi del player: RowPiedi = Y / 8
+    ld   a, b
+    srl  a
+    srl  a
+    srl  a                 ; A = Y / 8
+    
+    ; Confronta con conveyor_row
+    ld   d, a              ; D = RowPiedi
+    ld   a, (conveyor_row)
+    cp   d
+    ret  nz                ; Se non siamo sulla riga del conveyor, fine
+    
+    ; ColStart = WillyX / 8
+    ld   a, c
+    srl  a
+    srl  a
+    srl  a                 ; A = ColStart
+    ld   e, a              ; E = ColStart
+    
+    ; ColEnd = (WillyX + 15) / 8
+    ld   a, c
+    add  a, 15
+    srl  a
+    srl  a
+    srl  a                 ; A = ColEnd
+    ld   d, a              ; D = ColEnd
+    
+    ; conveyor_col_end = conveyor_col + conveyor_len - 1
+    ld   a, (conveyor_col)
+    ld   hl, conveyor_len
+    add  a, (hl)
+    dec  a                 ; A = conveyor_col_end
+    
+    ; E <= conveyor_col_end (conveyor_col_end >= E)
+    cp   e
+    ret  c                 ; Se conveyor_col_end < E, fine
+    
+    ; D >= conveyor_col
+    ld   a, (conveyor_col)
+    ld   e, a
+    ld   a, d
+    cp   e
+    ret  c                 ; Se D < conveyor_col, fine
+    
+    ; Willy è sul conveyor! Muovilo nella direzione del conveyor!
+    ld   a, (conveyor_dir)
+    or   a
+    jr   z, .move_left
+    
+.move_right:
+    ld   a, c
+    add  a, 1              ; trascina di 1 pixel a destra per frame
+    cp   PLAYER_MAX_X
+    jr   c, .store_x
+    ld   a, PLAYER_MAX_X
+    jr   .store_x
+    
+.move_left:
+    ld   a, c
+    sub  1                 ; trascina di 1 pixel a sinistra per frame
+    cp   PLAYER_MIN_X
+    jr   nc, .store_x
+    ld   a, PLAYER_MIN_X
+    
+.store_x:
+    ld   c, a
+    ld   (PlayerPos), bc   ; salva la nuova posizione
     ret

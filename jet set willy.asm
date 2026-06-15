@@ -42,6 +42,7 @@ Main:
     call CLS
     call DetermineCurrentRoomID
     call DrawRoom
+    call DrawConveyorsAndRamps
     call PrintRoomName
     call DrawRoomItems
     call LoadRoomEnemies
@@ -86,6 +87,7 @@ Main_loop:
     call CheckCtrl
     call MovePlayer
     call ApplyGravity
+    call ApplyConveyorForce
     call UpdateRoomEnemies
     call CheckRoomItemsCollision
     
@@ -149,6 +151,14 @@ line_buffer:    .256 db 0
 
 ; Gestione Stanze
 current_room:   db 0
+conveyor_dir:   db 0
+conveyor_len:   db 0
+conveyor_row:   db 0
+conveyor_col:   db 0
+ramp_dir:       db 0
+ramp_len:       db 0
+ramp_row:       db 0
+ramp_col:       db 0
 room_ptr:       dw TheOffLicenceLayout; TheBridgeLayout; TheTestRoomLayout
 
     ALIGN 256
