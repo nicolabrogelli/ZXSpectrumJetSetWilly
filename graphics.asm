@@ -233,111 +233,41 @@ GetBackgroundByte:
     or   a
     jp   z, .normal_grid
     
-    ; C = player col, E = player row
-    ; H = ramp row, L = ramp col
     ld   a, (ramp_row)
-    sub  3
-    ld   h, a              ; H = ramp row
+    sub  3                 ; A = RampRowStart
+    cp   e                 ; compare with player row E
+    jp   c, .normal_grid   ; if RampRowStart < E, skip!
     
-    ld   a, (ramp_col)
-    ld   l, a              ; L = ramp col
+    sub  e                 ; A = RampRowStart - E
+    ld   b, a              ; B = distance from start row (0..ramp_len-1)
+    ld   a, (ramp_len)
+    cp   b
+    jp   z, .normal_grid   ; if B == ramp_len, too high!
+    jp   c, .normal_grid   ; if B > ramp_len, too high!
     
-    ld   a, (ramp_len)     ; A = loop counter
-    
-.ramp_loop:
-    push af                ; Salva il loop counter
-    ld   a, h
-    cp   e                 ; Confronta ramp row con player row (E)
-    jr   nz, .next_ramp_cell
-    ld   a, l
-    cp   c                 ; Confronta ramp col con player col (C)
-    jp   z, .is_ramp
-    
-.next_ramp_cell:
-    dec  h                 ; la rampa sale
+    ; Calcola ExpectedCol:
     ld   a, (ramp_dir)
     or   a
     jr   z, .r_left
 .r_right:
-    inc  l
-    jr   .loop_end
+    ld   a, (ramp_col)
+    add  a, b              ; A = ramp_col + B
+    jr   .compare_col
 .r_left:
-    dec  l
-.loop_end:
-    pop  af                ; Ripristina il loop counter
-    dec  a
-    jp   nz, .ramp_loop
-    jp   .normal_grid
-
-.is_ramp:
-    pop  af                ; Pulisce lo stack
+    ld   a, (ramp_col)
+    sub  b                 ; A = ramp_col - B
+.compare_col:
+    cp   c                 ; Compare with player col C
+    jp   nz, .normal_grid  ; If not equal, not on ramp!
+    
     ld   hl, OFFSET_RAMP
     jp   .load_tile
 
 .normal_grid:
-    ; Ripristina riga di layout in A per il flusso normale
-    ld   a, d
-    sub  24
-    srl  a
-    srl  a
-    srl  a
-    
-    ; 3. HL = r * 8
-    ld   l, a
-    ld   h, 0
-    add  hl, hl
-    add  hl, hl
-    add  hl, hl            ; HL = r * 8
-    
-    ; 4. Calcola colonna di layout: c = X / 8 (in B)
-    ld   a, b
-    srl  a
-    srl  a
-    srl  a                 ; A = c (0..31)
-    ld   b, a              ; B = c
-    
-    ; HL = r * 8 + c / 4
-    srl  a
-    srl  a                 ; A = c / 4 (0..7)
-    add  a, l
-    ld   l, a              ; HL = r * 8 + (c / 4)
-    
-    push de
-    ld   de, (room_ptr)
-    add  hl, de            ; HL = layout byte address
-    pop  de
-    ld   a, (hl)           ; A = layout byte
-    
-    ; Estrai il bit-pair corrispondente a c % 4
-    ld   c, a              ; C = layout byte
-    ld   a, b
-    and  3                 ; A = c % 4
-    jr   z, .shift_0
-    dec  a
-    jr   z, .shift_1
-    dec  a
-    jr   z, .shift_2
-    ; Case 3 (c % 4 = 3)
-    ld   a, c
-    jr   .got_type
-.shift_2:
-    ld   a, c
-    rrca
-    rrca
-    jr   .got_type
-.shift_1:
-    ld   a, c
-    rrca
-    rrca
-    rrca
-    rrca
-    jr   .got_type
-.shift_0:
-    ld   a, c
-    rlca
-    rlca
-.got_type:
-    and  3                 ; A = cell type (0..3)
+    ld   a, e              ; A = r (Row, calculated at the start of GetBackgroundByte)
+    ; C already contains c (Col, calculated at the start of GetBackgroundByte)
+    call GetCellFromUnpacked ; A = cell type (0..3)
+
     
     ; 5. Ottieni il puntatore al tile corrispondente
     or   a
@@ -902,6 +832,8 @@ DrawRoom:
     push de
     push hl
     push ix
+    
+    call UnpackRoomLayout
     
     ld   b, 0              ; B = layout row (0..15)
 .row_loop:

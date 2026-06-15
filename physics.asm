@@ -29,60 +29,16 @@ CheckSolidCell:
     srl  a
     srl  a                 ; A = r (0..15)
     
-    ; 3. HL = r * 8
-    ld   l, a
-    ld   h, 0
-    add  hl, hl
-    add  hl, hl
-    add  hl, hl            ; HL = r * 8
-    
-    ; 4. Calcola colonna di layout: c = X / 8 (in C)
+    ; 3. Calcola colonna di layout: c = X / 8 (in C)
+    ld   e, a              ; E = r
     ld   a, c
     srl  a
     srl  a
     srl  a                 ; A = c (0..31)
-    ld   c, a              ; C = c (salva colonna)
+    ld   c, a              ; C = c
+    ld   a, e              ; A = r
     
-    ; HL = r * 8 + c / 4
-    srl  a
-    srl  a                 ; A = c / 4
-    add  a, l
-    ld   l, a              ; HL = r * 8 + c / 4
-    
-    ld   de, (room_ptr)
-    add  hl, de            ; HL = layout byte address
-    ld   a, (hl)           ; A = layout byte
-    
-    ; Estrai il bit-pair corrispondente a c % 4
-    ld   d, a              ; D = layout byte
-    ld   a, c
-    and  3                 ; A = c % 4
-    jr   z, .shift_0
-    dec  a
-    jr   z, .shift_1
-    dec  a
-    jr   z, .shift_2
-    ; Case 3 (c % 4 = 3)
-    ld   a, d
-    jr   .got_type
-.shift_2:
-    ld   a, d
-    rrca
-    rrca
-    jr   .got_type
-.shift_1:
-    ld   a, d
-    rrca
-    rrca
-    rrca
-    rrca
-    jr   .got_type
-.shift_0:
-    ld   a, d
-    rlca
-    rlca
-.got_type:
-    and  3                 ; A = cell type (0..3)
+    call GetCellFromUnpacked ; A = cell type
     
     ; 5. Controlla se è solida: Floor (1) o Wall (2)
     cp   1
@@ -103,6 +59,7 @@ CheckSolidCell:
     pop  hl
     scf                    ; Set carry
     ret
+
 
 ; -------------------------------------------------------------------
 ; Applica gravità e gestisce salto
@@ -316,7 +273,7 @@ CheckCollision:
     ret
     
 .next:
-    ld   de, 8
+    ld   de, 10
     add  ix, de            ; Prossimo slot
     dec  b
     jr   nz, .loop
@@ -390,34 +347,32 @@ CheckConveyorOrRampCell:
     or   a
     jr   z, .not_solid     ; Se non c'è rampa, fine
     
-    ld   b, a              ; B = ramp_len (contatore)
     ld   a, (ramp_row)
-    sub  3                 ; A = layout Row di partenza della rampa
-    ld   h, a              ; H = riga corrente della rampa
-    ld   a, (ramp_col)     ; A = colonna di partenza della rampa
-    ld   l, a              ; L = colonna corrente della rampa
+    sub  3                 ; A = RampRowStart
+    cp   d                 ; compare with player row D
+    jr   c, .not_solid     ; if RampRowStart < D, skip!
     
-.ramp_loop:
-    ld   a, h
-    cp   d
-    jr   nz, .next_ramp_cell
-    ld   a, l
-    cp   e
-    jr   z, .solid         ; Riga e colonna coincidono -> solido!
+    sub  d                 ; A = RampRowStart - D
+    ld   b, a              ; B = distance from start row (0..ramp_len-1)
+    ld   a, (ramp_len)
+    cp   b
+    jr   z, .not_solid     ; if B == ramp_len, too high!
+    jr   c, .not_solid     ; if B > ramp_len, too high!
     
-.next_ramp_cell:
-    dec  h                 ; la rampa sale (riga layout diminuisce)
-    
+    ; Calcola ExpectedCol:
     ld   a, (ramp_dir)
     or   a
     jr   z, .r_left
 .r_right:
-    inc  l                 ; sale verso destra
-    jr   .loop_end
+    ld   a, (ramp_col)
+    add  a, b              ; A = ramp_col + B
+    jr   .compare_col
 .r_left:
-    dec  l                 ; sale verso sinistra
-.loop_end:
-    djnz .ramp_loop
+    ld   a, (ramp_col)
+    sub  b                 ; A = ramp_col - B
+.compare_col:
+    cp   e                 ; Compare with player col E
+    jr   nz, .not_solid    ; If not equal, not on ramp!
     
 .not_solid:
     pop  bc
@@ -515,3 +470,178 @@ ApplyConveyorForce:
     ld   c, a
     ld   (PlayerPos), bc   ; salva la nuova posizione
     ret
+
+; -------------------------------------------------------------------
+; Verifica se c'è un blocco Wall (tipo 2) alle coordinate pixel (X, Y)
+; Input: C = X, B = Y
+; Output: Carry flag impostato se è un Wall, altrimenti resettato
+; -------------------------------------------------------------------
+CheckWallCell:
+    push hl
+    push de
+    push bc
+    
+    ; 1. Controlla se Y (in B) è fuori dalla griglia di layout
+    ld   a, b
+    cp   24
+    jr   c, .not_wall
+    cp   152
+    jr   nc, .not_wall
+    
+    ; 2. Calcola riga di layout: r = (Y - 24) / 8
+    sub  24
+    srl  a
+    srl  a
+    srl  a                 ; A = r (0..15)
+    
+    ; 3. Calcola colonna di layout: c = X / 8 (in C)
+    ld   e, a              ; E = r
+    ld   a, c
+    srl  a
+    srl  a
+    srl  a                 ; A = c (0..31)
+    ld   c, a              ; C = c
+    ld   a, e              ; A = r
+    
+    call GetCellFromUnpacked ; A = cell type
+    
+    ; Controlla se è Wall (2)
+    cp   2
+    jr   z, .is_wall
+    
+.not_wall:
+    pop  bc
+    pop  de
+    pop  hl
+    or   a                 ; Clear carry
+    ret
+    
+.is_wall:
+    pop  bc
+    pop  de
+    pop  hl
+    scf                    ; Set carry
+    ret
+
+
+; -------------------------------------------------------------------
+; Controlla se Willy collide orizzontalmente con un Wall alle coordinate specificate
+; Input: C = X pixel (da controllare), B = Y pixel (attuale)
+; Output: Carry flag impostato se c'è collisione, altrimenti resettato
+; -------------------------------------------------------------------
+CheckWillyWallCollision:
+    push bc
+    
+    ; 1. Punto superiore: (X, Y)
+    call CheckWallCell
+    jr   c, .collision
+    
+    ; 2. Punto medio: (X, Y + 7)
+    ld   a, b
+    add  a, 7
+    ld   b, a
+    call CheckWallCell
+    jr   c, .collision
+    
+    ; 3. Punto inferiore: (X, Y + 15)
+    pop  bc
+    push bc
+    ld   a, b
+    add  a, 15
+    ld   b, a
+    call CheckWallCell
+    jr   c, .collision
+    
+    pop  bc
+    or   a                 ; Reset carry (nessuna collisione)
+    ret
+    
+.collision:
+    pop  bc
+    scf                    ; Set carry (collisione avvenuta)
+    ret
+
+; -------------------------------------------------------------------
+; Decomprime il layout della stanza (128 byte) in un buffer di 512 byte in RAM.
+; Ciascuna cella occupa così 1 byte (valore 0..3), consentendo accessi O(1) velocissimi.
+; -------------------------------------------------------------------
+UnpackRoomLayout:
+    push hl
+    push de
+    push bc
+    
+    ld   hl, (room_ptr)     ; HL = inizio layout stanza (128 byte)
+    ld   de, unpacked_layout ; DE = buffer RAM
+    ld   b, 128             ; 128 byte
+.byte_loop:
+    ld   a, (hl)            ; Leggi byte compresso
+    inc  hl
+    
+    ld   c, a               ; C = salvataggio
+    
+    ; Cella 0: bit 7-6
+    rlca
+    rlca
+    and  3
+    ld   (de), a
+    inc  de
+    
+    ; Cella 1: bit 5-4
+    ld   a, c
+    rlca
+    rlca
+    rlca
+    rlca
+    and  3
+    ld   (de), a
+    inc  de
+    
+    ; Cella 2: bit 3-2
+    ld   a, c
+    rrca
+    rrca
+    and  3
+    ld   (de), a
+    inc  de
+    
+    ; Cella 3: bit 1-0
+    ld   a, c
+    and  3
+    ld   (de), a
+    inc  de
+    
+    djnz .byte_loop
+    
+    pop  bc
+    pop  de
+    pop  hl
+    ret
+
+; -------------------------------------------------------------------
+; Legge il tipo di cella dal buffer decompresso in RAM
+; Input: A = Row (0..15), C = Col (0..31)
+; Output: A = tipo di cella (0..3)
+; Preserva tutti gli altri registri.
+; -------------------------------------------------------------------
+GetCellFromUnpacked:
+    push hl
+    push de
+    
+    ld   l, a
+    ld   h, 0
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl            ; HL = Row * 32
+    ld   e, c
+    ld   d, 0
+    add  hl, de            ; HL = Row * 32 + Col
+    ld   de, unpacked_layout
+    add  hl, de
+    ld   a, (hl)           ; A = cell type
+    
+    pop  de
+    pop  hl
+    ret
+

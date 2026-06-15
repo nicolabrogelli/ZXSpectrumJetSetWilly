@@ -231,56 +231,10 @@ RestoreBackgroundCell:
     
     ; Riga di layout: r = B - 3
     ld   a, b
-    sub  3
-    ld   b, a              ; B = r (0..15)
+    sub  3                 ; A = r (0..15)
     
-    ; HL = r * 8
-    ld   l, b
-    ld   h, 0
-    add  hl, hl
-    add  hl, hl
-    add  hl, hl            ; HL = r * 8
-    
-    ; HL = r * 8 + c / 4
-    ld   a, c
-    srl  a
-    srl  a                 ; A = c / 4
-    add  a, l
-    ld   l, a              ; HL = r * 8 + c / 4
-    
-    ld   de, (room_ptr)
-    add  hl, de            ; HL = layout byte address
-    ld   a, (hl)           ; A = layout byte
-    
-    ; Estrai il bit-pair corrispondente a c % 4
-    ld   d, a              ; D = layout byte
-    ld   a, c
-    and  3                 ; A = c % 4
-    jr   z, .shift_0
-    dec  a
-    jr   z, .shift_1
-    dec  a
-    jr   z, .shift_2
-    ld   a, d
-    jr   .got_type
-.shift_2:
-    ld   a, d
-    rrca
-    rrca
-    jr   .got_type
-.shift_1:
-    ld   a, d
-    rrca
-    rrca
-    rrca
-    rrca
-    jr   .got_type
-.shift_0:
-    ld   a, d
-    rlca
-    rlca
-.got_type:
-    and  3                 ; A = cell type (0..3)
+    ; Colonna: c = C (Col)
+    call GetCellFromUnpacked ; A = cell type (0..3)
     
     ld   de, (room_ptr)
     or   a

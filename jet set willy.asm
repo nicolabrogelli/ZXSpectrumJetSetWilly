@@ -148,6 +148,7 @@ jump_prev:      db $00
 ; Buffer e contatori
 counter:        dw 0
 line_buffer:    .256 db 0
+unpacked_layout: .512 db 0
 
 ; Gestione Stanze
 current_room:   db 0
