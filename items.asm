@@ -69,12 +69,22 @@ DetermineCurrentRoomID:
     
 .not_office:
     ld   hl, (room_ptr)
-    ld   de, TheBedRoomLayout
+    ld   de, MastreBedRoomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_masterbed
+    ld   a, 2
+    jr   .set_room
+
+.not_masterbed:
+    ld   hl, (room_ptr)
+    ld   de, UnderTheMegaTreeLayout
     or   a
     sbc  hl, de
     jr   nz, .unknown
     ld   a, 2
     jr   .set_room
+
 
 .unknown:
     ld   a, 0                    ; Default fallback
