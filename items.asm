@@ -5,7 +5,7 @@
 ; -------------------------------------------------------------------
 ; Tabella Globale degli Oggetti (Items)
 ; Ciascun item occupa 5 byte:
-;   Byte 0: ID della stanza (0 = Test Room, 1 = The Bridge, 2 = The Off Licence)
+;   Byte 0: ID della stanza (0 = Test Room, 1 = The Bridge, 2 = The Off Licence, 3 = Master Bedroom, 4 = Under the MegaTree)
 ;   Byte 1: X colonna dello schermo (0..31)
 ;   Byte 2: Y riga dello schermo (3..18)
 ;   Byte 3: Attributo colore (es. $C6 per Giallo Flashing, $C5 per Cyan Flashing)
@@ -29,6 +29,15 @@ ItemsTable:
     
     ; Stanza 0 (The Test Room)
     db 0, 15, 17, $C2, 0           ; Oggetto 3: Rosso Flashing ($C2) al centro
+    
+    ; Stanza 4 (Under the MegaTree)
+    db 4, 22, 3, 3, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
+
+    ; Stanza 4 (Under the MegaTree)
+    db 5, 1, 14, 3, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
+    db 5, 4, 13, 4, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
+    db 5, 7, 14, 5, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
+
     
     db $FF                        ; Fine tabella
 
@@ -73,7 +82,7 @@ DetermineCurrentRoomID:
     or   a
     sbc  hl, de
     jr   nz, .not_masterbed
-    ld   a, 2
+    ld   a, 3
     jr   .set_room
 
 .not_masterbed:
@@ -81,8 +90,17 @@ DetermineCurrentRoomID:
     ld   de, UnderTheMegaTreeLayout
     or   a
     sbc  hl, de
+    jr   nz, .not_undertree
+    ld   a, 4
+    jr   .set_room
+
+.not_undertree:
+    ld   hl, (room_ptr)
+    ld   de, AtTheFootTheMegaTreeLayout
+    or   a
+    sbc  hl, de
     jr   nz, .unknown
-    ld   a, 2
+    ld   a, 5
     jr   .set_room
 
 

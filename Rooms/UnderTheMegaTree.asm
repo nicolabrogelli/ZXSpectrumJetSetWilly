@@ -88,7 +88,7 @@ UnderTheMegaTreeReserved:
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 UnderTheMegaTreeItem:
-    DEFB 129,66,36,24,60,24,60,19	                ;Item graphic (unused)
+    DEFB 129,66,36,24,60,24,60,195	                ;Item graphic (unused)
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 UnderTheMegaTreeDirection:

@@ -2248,490 +2248,499 @@ enemy.asm|472||0|1|29418|T|
 enemy.asm|473||0|1|29419|T|
 items.asm|15||0|1|29420|F|ItemsTable
 items.asm|15||0|1|29420|L|,ItemsTable,,+used
-items.asm|38||0|1|29486|F|DetermineCurrentRoomID
-items.asm|38||0|1|29486|L|,DetermineCurrentRoomID,,+used
-items.asm|39||0|1|29486|T|
-items.asm|40||0|1|29487|T|
-items.asm|42||0|1|29488|T|
-items.asm|45||0|1|29491|T|
-items.asm|46||0|1|29494|T|
-items.asm|47||0|1|29495|T|
-items.asm|48||0|1|29497|T|
-items.asm|49||0|1|29499|T|
-items.asm|50||0|1|29501|T|
-items.asm|52||0|1|29503|F|DetermineCurrentRoomID.not_test
-items.asm|52||0|1|29503|L|,DetermineCurrentRoomID,not_test,+used
-items.asm|53||0|1|29503|T|
-items.asm|54||0|1|29506|T|
-items.asm|55||0|1|29509|T|
-items.asm|56||0|1|29510|T|
-items.asm|57||0|1|29512|T|
-items.asm|58||0|1|29514|T|
-items.asm|59||0|1|29516|T|
-items.asm|61||0|1|29518|F|DetermineCurrentRoomID.not_bridge
-items.asm|61||0|1|29518|L|,DetermineCurrentRoomID,not_bridge,+used
-items.asm|62||0|1|29518|T|
-items.asm|63||0|1|29521|T|
-items.asm|64||0|1|29524|T|
-items.asm|65||0|1|29525|T|
-items.asm|66||0|1|29527|T|
-items.asm|67||0|1|29529|T|
-items.asm|68||0|1|29531|T|
-items.asm|70||0|1|29533|F|DetermineCurrentRoomID.not_office
-items.asm|70||0|1|29533|L|,DetermineCurrentRoomID,not_office,+used
-items.asm|71||0|1|29533|T|
-items.asm|72||0|1|29536|T|
-items.asm|73||0|1|29539|T|
-items.asm|74||0|1|29540|T|
-items.asm|75||0|1|29542|T|
-items.asm|76||0|1|29544|T|
-items.asm|77||0|1|29546|T|
-items.asm|79||0|1|29548|F|DetermineCurrentRoomID.not_masterbed
-items.asm|79||0|1|29548|L|,DetermineCurrentRoomID,not_masterbed,+used
-items.asm|80||0|1|29548|T|
-items.asm|81||0|1|29551|T|
-items.asm|82||0|1|29554|T|
-items.asm|83||0|1|29555|T|
-items.asm|84||0|1|29557|T|
-items.asm|85||0|1|29559|T|
-items.asm|86||0|1|29561|T|
-items.asm|89||0|1|29563|F|DetermineCurrentRoomID.unknown
-items.asm|89||0|1|29563|L|,DetermineCurrentRoomID,unknown,+used
-items.asm|90||0|1|29563|T|
-items.asm|92||0|1|29565|F|DetermineCurrentRoomID.set_room
-items.asm|92||0|1|29565|L|,DetermineCurrentRoomID,set_room,+used
-items.asm|93||0|1|29565|T|
-items.asm|95||0|1|29568|T|
-items.asm|96||0|1|29569|T|
-items.asm|97||0|1|29570|T|
-items.asm|102||0|1|29571|F|DrawRoomItems
-items.asm|102||0|1|29571|L|,DrawRoomItems,,+used
-items.asm|103||0|1|29571|T|
-items.asm|104||0|1|29572|T|
-items.asm|105||0|1|29573|T|
-items.asm|106||0|1|29574|T|
-items.asm|110||0|1|29576|T|
-items.asm|111||0|1|29579|T|
-items.asm|112||0|1|29582|T|
-items.asm|113||0|1|29583|T|
-items.asm|114||0|1|29584|T|
-items.asm|116||0|1|29586|T|
-items.asm|117||0|1|29589|F|DrawRoomItems.loop
-items.asm|117||0|1|29589|L|,DrawRoomItems,loop,+used
-items.asm|118||0|1|29589|T|
-items.asm|119||0|1|29590|T|
-items.asm|120||0|1|29592|T|
-items.asm|123||0|1|29594|T|
-items.asm|124||0|1|29595|T|
-items.asm|125||0|1|29598|T|
-items.asm|126||0|1|29599|T|
-items.asm|129||0|1|29601|T|
-items.asm|130||0|1|29602|T|
-items.asm|131||0|1|29603|T|
-items.asm|132||0|1|29604|T|
-items.asm|133||0|1|29605|T|
-items.asm|134||0|1|29606|T|
-items.asm|135||0|1|29607|T|
-items.asm|136||0|1|29608|T|
-items.asm|137||0|1|29609|T|
-items.asm|138||0|1|29610|T|
-items.asm|142||0|1|29612|T|
-items.asm|143||0|1|29613|T|
-items.asm|144||0|1|29615|T|
-items.asm|145||0|1|29616|T|
-items.asm|146||0|1|29619|T|
-items.asm|148||0|1|29620|T|
-items.asm|150||0|1|29622|F|DrawRoomItems.next_item
-items.asm|150||0|1|29622|L|,DrawRoomItems,next_item,+used
-items.asm|151||0|1|29622|T|
-items.asm|152||0|1|29623|T|
-items.asm|153||0|1|29624|T|
-items.asm|154||0|1|29625|T|
-items.asm|155||0|1|29626|F|DrawRoomItems.next_no_inc
-items.asm|155||0|1|29626|L|,DrawRoomItems,next_no_inc,+used
-items.asm|156||0|1|29626|T|
-items.asm|157||0|1|29627|T|
-items.asm|159||0|1|29629|F|DrawRoomItems.done
-items.asm|159||0|1|29629|L|,DrawRoomItems,done,+used
-items.asm|160||0|1|29629|T|
-items.asm|161||0|1|29631|T|
-items.asm|162||0|1|29632|T|
-items.asm|163||0|1|29633|T|
-items.asm|164||0|1|29634|T|
-items.asm|170||0|1|29635|F|DrawItemGraphic
-items.asm|170||0|1|29635|L|,DrawItemGraphic,,+used
-items.asm|171||0|1|29635|T|
-items.asm|172||0|1|29636|T|
-items.asm|173||0|1|29637|T|
-items.asm|176||0|1|29638|T|
-items.asm|177||0|1|29639|T|
-items.asm|178||0|1|29641|T|
-items.asm|179||0|1|29643|T|
-items.asm|181||0|1|29644|T|
-items.asm|182||0|1|29645|T|
-items.asm|183||0|1|29647|T|
-items.asm|184||0|1|29648|T|
-items.asm|185||0|1|29649|T|
-items.asm|186||0|1|29650|T|
-items.asm|187||0|1|29651|T|
-items.asm|188||0|1|29652|T|
-items.asm|189||0|1|29653|T|
-items.asm|192||0|1|29654|T|
-items.asm|193||0|1|29655|T|
-items.asm|194||0|1|29657|F|DrawItemGraphic.line_loop
-items.asm|194||0|1|29657|L|,DrawItemGraphic,line_loop,+used
-items.asm|195||0|1|29657|T|
-items.asm|196||0|1|29658|T|
-items.asm|197||0|1|29659|T|
-items.asm|198||0|1|29660|T|
-items.asm|199||0|1|29661|T|
-items.asm|200||0|1|29662|T|
-items.asm|201||0|1|29664|T|
-items.asm|205||0|1|29665|T|
-items.asm|206||0|1|29667|T|
-items.asm|207||0|1|29668|T|
-items.asm|208||0|1|29669|T|
-items.asm|209||0|1|29670|T|
-items.asm|210||0|1|29671|T|
-items.asm|211||0|1|29672|T|
-items.asm|213||0|1|29673|T|
-items.asm|214||0|1|29674|T|
-items.asm|215||0|1|29675|T|
-items.asm|216||0|1|29676|T|
-items.asm|217||0|1|29678|T|
-items.asm|218||0|1|29679|F|DrawItemGraphic.no_carry
-items.asm|218||0|1|29679|L|,DrawItemGraphic,no_carry,+used
-items.asm|220||0|1|29679|T|
-items.asm|221||0|1|29682|T|
-items.asm|225||0|1|29683|T|
-items.asm|226||0|1|29684|T|
-items.asm|228||0|1|29685|T|
-items.asm|229||0|1|29686|T|
-items.asm|232||0|1|29687|T|
-items.asm|233||0|1|29688|T|
-items.asm|234||0|1|29689|T|
-items.asm|235||0|1|29690|T|
-items.asm|241||0|1|29691|F|RestoreBackgroundCell
-items.asm|241||0|1|29691|L|,RestoreBackgroundCell,,+used
-items.asm|242||0|1|29691|T|
-items.asm|243||0|1|29693|T|
-items.asm|244||0|1|29694|T|
-items.asm|245||0|1|29695|T|
-items.asm|246||0|1|29696|T|
-items.asm|248||0|1|29698|T|
-items.asm|249||0|1|29699|T|
-items.asm|252||0|1|29701|T|
-items.asm|253||0|1|29702|T|
-items.asm|256||0|1|29704|T|
-items.asm|258||0|1|29707|T|
-items.asm|259||0|1|29711|T|
-items.asm|260||0|1|29712|T|
-items.asm|261||0|1|29714|T|
-items.asm|262||0|1|29717|T|
-items.asm|263||0|1|29718|T|
-items.asm|264||0|1|29720|F|RestoreBackgroundCell.not_bg
-items.asm|264||0|1|29720|L|,RestoreBackgroundCell,not_bg,+used
-items.asm|265||0|1|29720|T|
-items.asm|266||0|1|29721|T|
-items.asm|267||0|1|29723|T|
-items.asm|268||0|1|29726|T|
-items.asm|269||0|1|29727|T|
-items.asm|270||0|1|29729|F|RestoreBackgroundCell.not_floor
-items.asm|270||0|1|29729|L|,RestoreBackgroundCell,not_floor,+used
-items.asm|271||0|1|29729|T|
-items.asm|272||0|1|29730|T|
-items.asm|273||0|1|29732|T|
-items.asm|274||0|1|29735|T|
-items.asm|275||0|1|29736|T|
-items.asm|276||0|1|29738|F|RestoreBackgroundCell.not_wall
-items.asm|276||0|1|29738|L|,RestoreBackgroundCell,not_wall,+used
-items.asm|277||0|1|29738|T|
-items.asm|278||0|1|29741|T|
-items.asm|280||0|1|29742|F|RestoreBackgroundCell.draw_cell
-items.asm|280||0|1|29742|L|,RestoreBackgroundCell,draw_cell,+used
-items.asm|281||0|1|29742|T|
-items.asm|282||0|1|29743|T|
-items.asm|284||0|1|29745|T|
-items.asm|285||0|1|29747|T|
-items.asm|287||0|1|29748|T|
-items.asm|289||0|1|29751|T|
-items.asm|290||0|1|29753|T|
-items.asm|291||0|1|29754|T|
-items.asm|292||0|1|29755|T|
-items.asm|293||0|1|29756|T|
-items.asm|294||0|1|29758|T|
-items.asm|301||0|1|29759|F|CheckWillyItemCollision
-items.asm|301||0|1|29759|L|,CheckWillyItemCollision,,+used
-items.asm|302||0|1|29759|T|
-items.asm|303||0|1|29760|T|
-items.asm|304||0|1|29761|T|
-items.asm|307||0|1|29762|T|
-items.asm|308||0|1|29763|T|
-items.asm|309||0|1|29764|T|
-items.asm|310||0|1|29765|T|
-items.asm|311||0|1|29766|T|
-items.asm|312||0|1|29767|T|
-items.asm|313||0|1|29768|T|
-items.asm|314||0|1|29770|T|
-items.asm|317||0|1|29771|T|
-items.asm|320||0|1|29775|T|
-items.asm|321||0|1|29776|T|
-items.asm|322||0|1|29777|T|
-items.asm|323||0|1|29779|T|
-items.asm|324||0|1|29781|T|
-items.asm|325||0|1|29783|F|CheckWillyItemCollision.x_ok
-items.asm|325||0|1|29783|L|,CheckWillyItemCollision,x_ok,+used
-items.asm|326||0|1|29783|T|
-items.asm|327||0|1|29785|T|
-items.asm|328||0|1|29786|T|
-items.asm|329||0|1|29788|T|
-items.asm|330||0|1|29790|T|
-items.asm|332||0|1|29792|F|CheckWillyItemCollision.y_check
-items.asm|332||0|1|29792|L|,CheckWillyItemCollision,y_check,+used
-items.asm|333||0|1|29792|T|
-items.asm|334||0|1|29793|T|
-items.asm|335||0|1|29794|T|
-items.asm|336||0|1|29795|T|
-items.asm|337||0|1|29796|T|
-items.asm|338||0|1|29797|T|
-items.asm|339||0|1|29798|T|
-items.asm|340||0|1|29799|T|
-items.asm|341||0|1|29801|T|
-items.asm|344||0|1|29802|T|
-items.asm|345||0|1|29803|T|
-items.asm|346||0|1|29804|T|
-items.asm|347||0|1|29806|T|
-items.asm|348||0|1|29808|T|
-items.asm|349||0|1|29810|F|CheckWillyItemCollision.y_ok
-items.asm|349||0|1|29810|L|,CheckWillyItemCollision,y_ok,+used
-items.asm|350||0|1|29810|T|
-items.asm|351||0|1|29812|T|
-items.asm|352||0|1|29813|T|
-items.asm|353||0|1|29815|T|
-items.asm|354||0|1|29817|T|
-items.asm|356||0|1|29819|F|CheckWillyItemCollision.collision
-items.asm|356||0|1|29819|L|,CheckWillyItemCollision,collision,+used
-items.asm|357||0|1|29819|T|
-items.asm|358||0|1|29820|T|
-items.asm|359||0|1|29821|T|
-items.asm|360||0|1|29822|T|
-items.asm|361||0|1|29823|T|
-items.asm|363||0|1|29824|F|CheckWillyItemCollision.no_collision
-items.asm|363||0|1|29824|L|,CheckWillyItemCollision,no_collision,+used
-items.asm|364||0|1|29824|T|
-items.asm|365||0|1|29825|T|
-items.asm|366||0|1|29826|T|
-items.asm|367||0|1|29827|T|
-items.asm|368||0|1|29828|T|
-items.asm|373||0|1|29829|F|CheckRoomItemsCollision
-items.asm|373||0|1|29829|L|,CheckRoomItemsCollision,,+used
-items.asm|374||0|1|29829|T|
-items.asm|375||0|1|29830|T|
-items.asm|376||0|1|29831|T|
-items.asm|378||0|1|29832|T|
-items.asm|379||0|1|29835|F|CheckRoomItemsCollision.loop
-items.asm|379||0|1|29835|L|,CheckRoomItemsCollision,loop,+used
-items.asm|380||0|1|29835|T|
-items.asm|381||0|1|29836|T|
-items.asm|382||0|1|29838|T|
-items.asm|385||0|1|29840|T|
-items.asm|386||0|1|29841|T|
-items.asm|387||0|1|29844|T|
-items.asm|388||0|1|29845|T|
-items.asm|390||0|1|29847|T|
-items.asm|391||0|1|29848|T|
-items.asm|392||0|1|29849|T|
-items.asm|393||0|1|29850|T|
-items.asm|394||0|1|29851|T|
-items.asm|395||0|1|29852|T|
-items.asm|396||0|1|29853|T|
-items.asm|397||0|1|29854|T|
-items.asm|398||0|1|29855|T|
-items.asm|401||0|1|29857|T|
-items.asm|402||0|1|29858|T|
-items.asm|403||0|1|29859|T|
-items.asm|404||0|1|29862|T|
-items.asm|407||0|1|29864|T|
-items.asm|409||0|1|29866|T|
-items.asm|412||0|1|29867|T|
-items.asm|415||0|1|29870|T|
-items.asm|417||0|1|29873|T|
-items.asm|419||0|1|29874|T|
-items.asm|421||0|1|29876|F|CheckRoomItemsCollision.next_item
-items.asm|421||0|1|29876|L|,CheckRoomItemsCollision,next_item,+used
-items.asm|422||0|1|29876|T|
-items.asm|423||0|1|29877|T|
-items.asm|424||0|1|29878|T|
-items.asm|425||0|1|29879|T|
-items.asm|426||0|1|29880|F|CheckRoomItemsCollision.next_no_inc
-items.asm|426||0|1|29880|L|,CheckRoomItemsCollision,next_no_inc,+used
-items.asm|427||0|1|29880|T|
-items.asm|428||0|1|29881|T|
-items.asm|430||0|1|29883|F|CheckRoomItemsCollision.done
-items.asm|430||0|1|29883|L|,CheckRoomItemsCollision,done,+used
-items.asm|431||0|1|29883|T|
-items.asm|432||0|1|29884|T|
-items.asm|433||0|1|29885|T|
-items.asm|434||0|1|29886|T|
-items.asm|439||0|1|29887|F|PlayCollectSound
-items.asm|439||0|1|29887|L|,PlayCollectSound,,+used
-items.asm|440||0|1|29887|T|
-items.asm|441||0|1|29888|T|
-items.asm|443||0|1|29889|T|
-items.asm|444||0|1|29891|F|PlayCollectSound.sound_loop
-items.asm|444||0|1|29891|L|,PlayCollectSound,sound_loop,+used
-items.asm|445||0|1|29891|T|
-items.asm|446||0|1|29894|T|
-items.asm|447||0|1|29896|T|
-items.asm|448||0|1|29898|T|
-items.asm|449||0|1|29900|F|PlayCollectSound.d1
-items.asm|449||0|1|29900|L|,PlayCollectSound,d1,+used
-items.asm|449||0|1|29900|T|
-items.asm|450||0|1|29901|T|
-items.asm|452||0|1|29903|T|
-items.asm|453||0|1|29906|T|
-items.asm|454||0|1|29908|T|
-items.asm|455||0|1|29910|T|
-items.asm|456||0|1|29912|F|PlayCollectSound.d2
-items.asm|456||0|1|29912|L|,PlayCollectSound,d2,+used
-items.asm|456||0|1|29912|T|
-items.asm|457||0|1|29913|T|
-items.asm|459||0|1|29915|T|
-items.asm|461||0|1|29917|T|
-items.asm|462||0|1|29918|T|
-items.asm|463||0|1|29919|T|
-jet set willy.asm|20||0|1|29920|F|start
-jet set willy.asm|20||0|1|29920|L|,start,
-jet set willy.asm|21||0|1|29920|T|
-jet set willy.asm|25||0|1|29923|F|Main
-jet set willy.asm|25||0|1|29923|L|,Main,
-jet set willy.asm|27||0|1|29923|T|
-jet set willy.asm|28||0|1|29924|T|
-jet set willy.asm|30||0|1|29927|T|
-jet set willy.asm|31||0|1|29930|T|
-jet set willy.asm|33||0|1|29933|T|
-jet set willy.asm|34||0|1|29935|T|
-jet set willy.asm|35||0|1|29938|T|
-jet set willy.asm|36||0|1|29941|T|
-jet set willy.asm|38||0|1|29944|T|
-jet set willy.asm|39||0|1|29947|T|
-jet set willy.asm|40||0|1|29949|T|
-jet set willy.asm|41||0|1|29952|T|
-jet set willy.asm|42||0|1|29955|T|
-jet set willy.asm|43||0|1|29958|T|
-jet set willy.asm|44||0|1|29961|T|
-jet set willy.asm|45||0|1|29964|T|
-jet set willy.asm|46||0|1|29967|T|
-jet set willy.asm|47||0|1|29970|T|
-jet set willy.asm|50||0|1|29973|T|
-jet set willy.asm|51||0|1|29976|T|
-jet set willy.asm|52||0|1|29979|T|
-jet set willy.asm|53||0|1|29980|T|
-jet set willy.asm|54||0|1|29981|T|
-jet set willy.asm|55||0|1|29984|T|
-jet set willy.asm|58||0|1|29986|T|
-jet set willy.asm|59||0|1|29987|T|
-jet set willy.asm|60||0|1|29988|T|
-jet set willy.asm|61||0|1|29989|T|
-jet set willy.asm|62||0|1|29990|T|
-jet set willy.asm|63||0|1|29993|T|
-jet set willy.asm|64||0|1|29995|T|
-jet set willy.asm|65||0|1|29996|T|
-jet set willy.asm|66||0|1|29998|T|
-jet set willy.asm|68||0|1|30001|T|
-jet set willy.asm|70||0|1|30004|F|Main_loop
-jet set willy.asm|70||0|1|30004|L|,Main_loop,,+used
-jet set willy.asm|71||0|1|30004|T|
-jet set willy.asm|74||0|1|30005|T|
-jet set willy.asm|75||0|1|30008|T|
-jet set willy.asm|77||0|1|30011|T|
-jet set willy.asm|78||0|1|30014|T|
-jet set willy.asm|81||0|1|30017|T|
-jet set willy.asm|82||0|1|30021|T|
-jet set willy.asm|85||0|1|30025|T|
-jet set willy.asm|86||0|1|30028|T|
-jet set willy.asm|87||0|1|30031|T|
-jet set willy.asm|88||0|1|30034|T|
-jet set willy.asm|89||0|1|30037|T|
-jet set willy.asm|90||0|1|30040|T|
-jet set willy.asm|93||0|1|30043|T|
-jet set willy.asm|94||0|1|30046|T|
-jet set willy.asm|97||0|1|30048|T|
-jet set willy.asm|98||0|1|30051|T|
-jet set willy.asm|99||0|1|30053|T|
-jet set willy.asm|100||0|1|30055|F|Main_loop.raster_loop
-jet set willy.asm|100||0|1|30055|L|,Main_loop,raster_loop,+used
-jet set willy.asm|101||0|1|30055|T|
-jet set willy.asm|102||0|1|30057|T|
-jet set willy.asm|103||0|1|30058|T|
-jet set willy.asm|104||0|1|30060|T|
-jet set willy.asm|105||0|1|30062|F|Main_loop.delay
-jet set willy.asm|105||0|1|30062|L|,Main_loop,delay,+used
-jet set willy.asm|106||0|1|30062|T|
-jet set willy.asm|107||0|1|30063|T|
-jet set willy.asm|108||0|1|30065|T|
-jet set willy.asm|111||0|1|30067|T|
-jet set willy.asm|112||0|1|30070|T|
-jet set willy.asm|113||0|1|30072|T|
-jet set willy.asm|115||0|1|30074|F|Main_loop.no_collision
-jet set willy.asm|115||0|1|30074|L|,Main_loop,no_collision,+used
-jet set willy.asm|117||0|1|30074|T|
-jet set willy.asm|118||0|1|30077|T|
-jet set willy.asm|120||0|1|30079|F|Main_loop.no_collision_change
-jet set willy.asm|120||0|1|30079|L|,Main_loop,no_collision_change,+used
-jet set willy.asm|121||0|1|30079|T|
-jet set willy.asm|127||0|1|30082|F|PlayerPos
-jet set willy.asm|127||0|1|30082|L|,PlayerPos,,+used
-jet set willy.asm|128||0|1|30084|F|PlayerPosOld
-jet set willy.asm|128||0|1|30084|L|,PlayerPosOld,,+used
-jet set willy.asm|129||0|1|30086|F|bodyPos
-jet set willy.asm|129||0|1|30086|L|,bodyPos,
-jet set willy.asm|132||0|1|30088|F|body_state
-jet set willy.asm|132||0|1|30088|L|,body_state,,+used
-jet set willy.asm|133||0|1|30089|F|direction
-jet set willy.asm|133||0|1|30089|L|,direction,,+used
-jet set willy.asm|134||0|1|30090|F|flags
-jet set willy.asm|134||0|1|30090|L|,flags,,+used
-jet set willy.asm|136||0|1|30091|F|collision_active
-jet set willy.asm|136||0|1|30091|L|,collision_active,
-jet set willy.asm|137||0|1|30092|F|sprite_shift
-jet set willy.asm|137||0|1|30092|L|,sprite_shift,,+used
-jet set willy.asm|138||0|1|30093|F|room_border_color
-jet set willy.asm|138||0|1|30093|L|,room_border_color,,+used
-jet set willy.asm|141||0|1|30094|F|velocity_y
-jet set willy.asm|141||0|1|30094|L|,velocity_y,,+used
-jet set willy.asm|142||0|1|30095|F|on_ground
-jet set willy.asm|142||0|1|30095|L|,on_ground,,+used
-jet set willy.asm|143||0|1|30096|F|jump_pressed
-jet set willy.asm|143||0|1|30096|L|,jump_pressed,,+used
-jet set willy.asm|144||0|1|30097|F|jump_prev
-jet set willy.asm|144||0|1|30097|L|,jump_prev,,+used
-jet set willy.asm|147||0|1|30098|F|counter
-jet set willy.asm|147||0|1|30098|L|,counter,,+used
-jet set willy.asm|148||0|1|30100|F|line_buffer
-jet set willy.asm|148||0|1|30100|L|,line_buffer,
-jet set willy.asm|149||0|1|30356|F|unpacked_layout
-jet set willy.asm|149||0|1|30356|L|,unpacked_layout,,+used
-jet set willy.asm|152||0|1|30868|F|current_room
-jet set willy.asm|152||0|1|30868|L|,current_room,,+used
-jet set willy.asm|153||0|1|30869|F|conveyor_dir
-jet set willy.asm|153||0|1|30869|L|,conveyor_dir,,+used
-jet set willy.asm|154||0|1|30870|F|conveyor_len
-jet set willy.asm|154||0|1|30870|L|,conveyor_len,,+used
-jet set willy.asm|155||0|1|30871|F|conveyor_row
-jet set willy.asm|155||0|1|30871|L|,conveyor_row,,+used
-jet set willy.asm|156||0|1|30872|F|conveyor_col
-jet set willy.asm|156||0|1|30872|L|,conveyor_col,,+used
-jet set willy.asm|157||0|1|30873|F|ramp_dir
-jet set willy.asm|157||0|1|30873|L|,ramp_dir,,+used
-jet set willy.asm|158||0|1|30874|F|ramp_len
-jet set willy.asm|158||0|1|30874|L|,ramp_len,,+used
-jet set willy.asm|159||0|1|30875|F|ramp_row
-jet set willy.asm|159||0|1|30875|L|,ramp_row,,+used
-jet set willy.asm|160||0|1|30876|F|ramp_col
-jet set willy.asm|160||0|1|30876|L|,ramp_col,,+used
-jet set willy.asm|161||0|1|30877|F|room_ptr
-jet set willy.asm|161||0|1|30877|L|,room_ptr,,+used
+items.asm|47||0|1|29506|F|DetermineCurrentRoomID
+items.asm|47||0|1|29506|L|,DetermineCurrentRoomID,,+used
+items.asm|48||0|1|29506|T|
+items.asm|49||0|1|29507|T|
+items.asm|51||0|1|29508|T|
+items.asm|54||0|1|29511|T|
+items.asm|55||0|1|29514|T|
+items.asm|56||0|1|29515|T|
+items.asm|57||0|1|29517|T|
+items.asm|58||0|1|29519|T|
+items.asm|59||0|1|29521|T|
+items.asm|61||0|1|29523|F|DetermineCurrentRoomID.not_test
+items.asm|61||0|1|29523|L|,DetermineCurrentRoomID,not_test,+used
+items.asm|62||0|1|29523|T|
+items.asm|63||0|1|29526|T|
+items.asm|64||0|1|29529|T|
+items.asm|65||0|1|29530|T|
+items.asm|66||0|1|29532|T|
+items.asm|67||0|1|29534|T|
+items.asm|68||0|1|29536|T|
+items.asm|70||0|1|29538|F|DetermineCurrentRoomID.not_bridge
+items.asm|70||0|1|29538|L|,DetermineCurrentRoomID,not_bridge,+used
+items.asm|71||0|1|29538|T|
+items.asm|72||0|1|29541|T|
+items.asm|73||0|1|29544|T|
+items.asm|74||0|1|29545|T|
+items.asm|75||0|1|29547|T|
+items.asm|76||0|1|29549|T|
+items.asm|77||0|1|29551|T|
+items.asm|79||0|1|29553|F|DetermineCurrentRoomID.not_office
+items.asm|79||0|1|29553|L|,DetermineCurrentRoomID,not_office,+used
+items.asm|80||0|1|29553|T|
+items.asm|81||0|1|29556|T|
+items.asm|82||0|1|29559|T|
+items.asm|83||0|1|29560|T|
+items.asm|84||0|1|29562|T|
+items.asm|85||0|1|29564|T|
+items.asm|86||0|1|29566|T|
+items.asm|88||0|1|29568|F|DetermineCurrentRoomID.not_masterbed
+items.asm|88||0|1|29568|L|,DetermineCurrentRoomID,not_masterbed,+used
+items.asm|89||0|1|29568|T|
+items.asm|90||0|1|29571|T|
+items.asm|91||0|1|29574|T|
+items.asm|92||0|1|29575|T|
+items.asm|93||0|1|29577|T|
+items.asm|94||0|1|29579|T|
+items.asm|95||0|1|29581|T|
+items.asm|97||0|1|29583|F|DetermineCurrentRoomID.not_undertree
+items.asm|97||0|1|29583|L|,DetermineCurrentRoomID,not_undertree,+used
+items.asm|98||0|1|29583|T|
+items.asm|99||0|1|29586|T|
+items.asm|100||0|1|29589|T|
+items.asm|101||0|1|29590|T|
+items.asm|102||0|1|29592|T|
+items.asm|103||0|1|29594|T|
+items.asm|104||0|1|29596|T|
+items.asm|107||0|1|29598|F|DetermineCurrentRoomID.unknown
+items.asm|107||0|1|29598|L|,DetermineCurrentRoomID,unknown,+used
+items.asm|108||0|1|29598|T|
+items.asm|110||0|1|29600|F|DetermineCurrentRoomID.set_room
+items.asm|110||0|1|29600|L|,DetermineCurrentRoomID,set_room,+used
+items.asm|111||0|1|29600|T|
+items.asm|113||0|1|29603|T|
+items.asm|114||0|1|29604|T|
+items.asm|115||0|1|29605|T|
+items.asm|120||0|1|29606|F|DrawRoomItems
+items.asm|120||0|1|29606|L|,DrawRoomItems,,+used
+items.asm|121||0|1|29606|T|
+items.asm|122||0|1|29607|T|
+items.asm|123||0|1|29608|T|
+items.asm|124||0|1|29609|T|
+items.asm|128||0|1|29611|T|
+items.asm|129||0|1|29614|T|
+items.asm|130||0|1|29617|T|
+items.asm|131||0|1|29618|T|
+items.asm|132||0|1|29619|T|
+items.asm|134||0|1|29621|T|
+items.asm|135||0|1|29624|F|DrawRoomItems.loop
+items.asm|135||0|1|29624|L|,DrawRoomItems,loop,+used
+items.asm|136||0|1|29624|T|
+items.asm|137||0|1|29625|T|
+items.asm|138||0|1|29627|T|
+items.asm|141||0|1|29629|T|
+items.asm|142||0|1|29630|T|
+items.asm|143||0|1|29633|T|
+items.asm|144||0|1|29634|T|
+items.asm|147||0|1|29636|T|
+items.asm|148||0|1|29637|T|
+items.asm|149||0|1|29638|T|
+items.asm|150||0|1|29639|T|
+items.asm|151||0|1|29640|T|
+items.asm|152||0|1|29641|T|
+items.asm|153||0|1|29642|T|
+items.asm|154||0|1|29643|T|
+items.asm|155||0|1|29644|T|
+items.asm|156||0|1|29645|T|
+items.asm|160||0|1|29647|T|
+items.asm|161||0|1|29648|T|
+items.asm|162||0|1|29650|T|
+items.asm|163||0|1|29651|T|
+items.asm|164||0|1|29654|T|
+items.asm|166||0|1|29655|T|
+items.asm|168||0|1|29657|F|DrawRoomItems.next_item
+items.asm|168||0|1|29657|L|,DrawRoomItems,next_item,+used
+items.asm|169||0|1|29657|T|
+items.asm|170||0|1|29658|T|
+items.asm|171||0|1|29659|T|
+items.asm|172||0|1|29660|T|
+items.asm|173||0|1|29661|F|DrawRoomItems.next_no_inc
+items.asm|173||0|1|29661|L|,DrawRoomItems,next_no_inc,+used
+items.asm|174||0|1|29661|T|
+items.asm|175||0|1|29662|T|
+items.asm|177||0|1|29664|F|DrawRoomItems.done
+items.asm|177||0|1|29664|L|,DrawRoomItems,done,+used
+items.asm|178||0|1|29664|T|
+items.asm|179||0|1|29666|T|
+items.asm|180||0|1|29667|T|
+items.asm|181||0|1|29668|T|
+items.asm|182||0|1|29669|T|
+items.asm|188||0|1|29670|F|DrawItemGraphic
+items.asm|188||0|1|29670|L|,DrawItemGraphic,,+used
+items.asm|189||0|1|29670|T|
+items.asm|190||0|1|29671|T|
+items.asm|191||0|1|29672|T|
+items.asm|194||0|1|29673|T|
+items.asm|195||0|1|29674|T|
+items.asm|196||0|1|29676|T|
+items.asm|197||0|1|29678|T|
+items.asm|199||0|1|29679|T|
+items.asm|200||0|1|29680|T|
+items.asm|201||0|1|29682|T|
+items.asm|202||0|1|29683|T|
+items.asm|203||0|1|29684|T|
+items.asm|204||0|1|29685|T|
+items.asm|205||0|1|29686|T|
+items.asm|206||0|1|29687|T|
+items.asm|207||0|1|29688|T|
+items.asm|210||0|1|29689|T|
+items.asm|211||0|1|29690|T|
+items.asm|212||0|1|29692|F|DrawItemGraphic.line_loop
+items.asm|212||0|1|29692|L|,DrawItemGraphic,line_loop,+used
+items.asm|213||0|1|29692|T|
+items.asm|214||0|1|29693|T|
+items.asm|215||0|1|29694|T|
+items.asm|216||0|1|29695|T|
+items.asm|217||0|1|29696|T|
+items.asm|218||0|1|29697|T|
+items.asm|219||0|1|29699|T|
+items.asm|223||0|1|29700|T|
+items.asm|224||0|1|29702|T|
+items.asm|225||0|1|29703|T|
+items.asm|226||0|1|29704|T|
+items.asm|227||0|1|29705|T|
+items.asm|228||0|1|29706|T|
+items.asm|229||0|1|29707|T|
+items.asm|231||0|1|29708|T|
+items.asm|232||0|1|29709|T|
+items.asm|233||0|1|29710|T|
+items.asm|234||0|1|29711|T|
+items.asm|235||0|1|29713|T|
+items.asm|236||0|1|29714|F|DrawItemGraphic.no_carry
+items.asm|236||0|1|29714|L|,DrawItemGraphic,no_carry,+used
+items.asm|238||0|1|29714|T|
+items.asm|239||0|1|29717|T|
+items.asm|243||0|1|29718|T|
+items.asm|244||0|1|29719|T|
+items.asm|246||0|1|29720|T|
+items.asm|247||0|1|29721|T|
+items.asm|250||0|1|29722|T|
+items.asm|251||0|1|29723|T|
+items.asm|252||0|1|29724|T|
+items.asm|253||0|1|29725|T|
+items.asm|259||0|1|29726|F|RestoreBackgroundCell
+items.asm|259||0|1|29726|L|,RestoreBackgroundCell,,+used
+items.asm|260||0|1|29726|T|
+items.asm|261||0|1|29728|T|
+items.asm|262||0|1|29729|T|
+items.asm|263||0|1|29730|T|
+items.asm|264||0|1|29731|T|
+items.asm|266||0|1|29733|T|
+items.asm|267||0|1|29734|T|
+items.asm|270||0|1|29736|T|
+items.asm|271||0|1|29737|T|
+items.asm|274||0|1|29739|T|
+items.asm|276||0|1|29742|T|
+items.asm|277||0|1|29746|T|
+items.asm|278||0|1|29747|T|
+items.asm|279||0|1|29749|T|
+items.asm|280||0|1|29752|T|
+items.asm|281||0|1|29753|T|
+items.asm|282||0|1|29755|F|RestoreBackgroundCell.not_bg
+items.asm|282||0|1|29755|L|,RestoreBackgroundCell,not_bg,+used
+items.asm|283||0|1|29755|T|
+items.asm|284||0|1|29756|T|
+items.asm|285||0|1|29758|T|
+items.asm|286||0|1|29761|T|
+items.asm|287||0|1|29762|T|
+items.asm|288||0|1|29764|F|RestoreBackgroundCell.not_floor
+items.asm|288||0|1|29764|L|,RestoreBackgroundCell,not_floor,+used
+items.asm|289||0|1|29764|T|
+items.asm|290||0|1|29765|T|
+items.asm|291||0|1|29767|T|
+items.asm|292||0|1|29770|T|
+items.asm|293||0|1|29771|T|
+items.asm|294||0|1|29773|F|RestoreBackgroundCell.not_wall
+items.asm|294||0|1|29773|L|,RestoreBackgroundCell,not_wall,+used
+items.asm|295||0|1|29773|T|
+items.asm|296||0|1|29776|T|
+items.asm|298||0|1|29777|F|RestoreBackgroundCell.draw_cell
+items.asm|298||0|1|29777|L|,RestoreBackgroundCell,draw_cell,+used
+items.asm|299||0|1|29777|T|
+items.asm|300||0|1|29778|T|
+items.asm|302||0|1|29780|T|
+items.asm|303||0|1|29782|T|
+items.asm|305||0|1|29783|T|
+items.asm|307||0|1|29786|T|
+items.asm|308||0|1|29788|T|
+items.asm|309||0|1|29789|T|
+items.asm|310||0|1|29790|T|
+items.asm|311||0|1|29791|T|
+items.asm|312||0|1|29793|T|
+items.asm|319||0|1|29794|F|CheckWillyItemCollision
+items.asm|319||0|1|29794|L|,CheckWillyItemCollision,,+used
+items.asm|320||0|1|29794|T|
+items.asm|321||0|1|29795|T|
+items.asm|322||0|1|29796|T|
+items.asm|325||0|1|29797|T|
+items.asm|326||0|1|29798|T|
+items.asm|327||0|1|29799|T|
+items.asm|328||0|1|29800|T|
+items.asm|329||0|1|29801|T|
+items.asm|330||0|1|29802|T|
+items.asm|331||0|1|29803|T|
+items.asm|332||0|1|29805|T|
+items.asm|335||0|1|29806|T|
+items.asm|338||0|1|29810|T|
+items.asm|339||0|1|29811|T|
+items.asm|340||0|1|29812|T|
+items.asm|341||0|1|29814|T|
+items.asm|342||0|1|29816|T|
+items.asm|343||0|1|29818|F|CheckWillyItemCollision.x_ok
+items.asm|343||0|1|29818|L|,CheckWillyItemCollision,x_ok,+used
+items.asm|344||0|1|29818|T|
+items.asm|345||0|1|29820|T|
+items.asm|346||0|1|29821|T|
+items.asm|347||0|1|29823|T|
+items.asm|348||0|1|29825|T|
+items.asm|350||0|1|29827|F|CheckWillyItemCollision.y_check
+items.asm|350||0|1|29827|L|,CheckWillyItemCollision,y_check,+used
+items.asm|351||0|1|29827|T|
+items.asm|352||0|1|29828|T|
+items.asm|353||0|1|29829|T|
+items.asm|354||0|1|29830|T|
+items.asm|355||0|1|29831|T|
+items.asm|356||0|1|29832|T|
+items.asm|357||0|1|29833|T|
+items.asm|358||0|1|29834|T|
+items.asm|359||0|1|29836|T|
+items.asm|362||0|1|29837|T|
+items.asm|363||0|1|29838|T|
+items.asm|364||0|1|29839|T|
+items.asm|365||0|1|29841|T|
+items.asm|366||0|1|29843|T|
+items.asm|367||0|1|29845|F|CheckWillyItemCollision.y_ok
+items.asm|367||0|1|29845|L|,CheckWillyItemCollision,y_ok,+used
+items.asm|368||0|1|29845|T|
+items.asm|369||0|1|29847|T|
+items.asm|370||0|1|29848|T|
+items.asm|371||0|1|29850|T|
+items.asm|372||0|1|29852|T|
+items.asm|374||0|1|29854|F|CheckWillyItemCollision.collision
+items.asm|374||0|1|29854|L|,CheckWillyItemCollision,collision,+used
+items.asm|375||0|1|29854|T|
+items.asm|376||0|1|29855|T|
+items.asm|377||0|1|29856|T|
+items.asm|378||0|1|29857|T|
+items.asm|379||0|1|29858|T|
+items.asm|381||0|1|29859|F|CheckWillyItemCollision.no_collision
+items.asm|381||0|1|29859|L|,CheckWillyItemCollision,no_collision,+used
+items.asm|382||0|1|29859|T|
+items.asm|383||0|1|29860|T|
+items.asm|384||0|1|29861|T|
+items.asm|385||0|1|29862|T|
+items.asm|386||0|1|29863|T|
+items.asm|391||0|1|29864|F|CheckRoomItemsCollision
+items.asm|391||0|1|29864|L|,CheckRoomItemsCollision,,+used
+items.asm|392||0|1|29864|T|
+items.asm|393||0|1|29865|T|
+items.asm|394||0|1|29866|T|
+items.asm|396||0|1|29867|T|
+items.asm|397||0|1|29870|F|CheckRoomItemsCollision.loop
+items.asm|397||0|1|29870|L|,CheckRoomItemsCollision,loop,+used
+items.asm|398||0|1|29870|T|
+items.asm|399||0|1|29871|T|
+items.asm|400||0|1|29873|T|
+items.asm|403||0|1|29875|T|
+items.asm|404||0|1|29876|T|
+items.asm|405||0|1|29879|T|
+items.asm|406||0|1|29880|T|
+items.asm|408||0|1|29882|T|
+items.asm|409||0|1|29883|T|
+items.asm|410||0|1|29884|T|
+items.asm|411||0|1|29885|T|
+items.asm|412||0|1|29886|T|
+items.asm|413||0|1|29887|T|
+items.asm|414||0|1|29888|T|
+items.asm|415||0|1|29889|T|
+items.asm|416||0|1|29890|T|
+items.asm|419||0|1|29892|T|
+items.asm|420||0|1|29893|T|
+items.asm|421||0|1|29894|T|
+items.asm|422||0|1|29897|T|
+items.asm|425||0|1|29899|T|
+items.asm|427||0|1|29901|T|
+items.asm|430||0|1|29902|T|
+items.asm|433||0|1|29905|T|
+items.asm|435||0|1|29908|T|
+items.asm|437||0|1|29909|T|
+items.asm|439||0|1|29911|F|CheckRoomItemsCollision.next_item
+items.asm|439||0|1|29911|L|,CheckRoomItemsCollision,next_item,+used
+items.asm|440||0|1|29911|T|
+items.asm|441||0|1|29912|T|
+items.asm|442||0|1|29913|T|
+items.asm|443||0|1|29914|T|
+items.asm|444||0|1|29915|F|CheckRoomItemsCollision.next_no_inc
+items.asm|444||0|1|29915|L|,CheckRoomItemsCollision,next_no_inc,+used
+items.asm|445||0|1|29915|T|
+items.asm|446||0|1|29916|T|
+items.asm|448||0|1|29918|F|CheckRoomItemsCollision.done
+items.asm|448||0|1|29918|L|,CheckRoomItemsCollision,done,+used
+items.asm|449||0|1|29918|T|
+items.asm|450||0|1|29919|T|
+items.asm|451||0|1|29920|T|
+items.asm|452||0|1|29921|T|
+items.asm|457||0|1|29922|F|PlayCollectSound
+items.asm|457||0|1|29922|L|,PlayCollectSound,,+used
+items.asm|458||0|1|29922|T|
+items.asm|459||0|1|29923|T|
+items.asm|461||0|1|29924|T|
+items.asm|462||0|1|29926|F|PlayCollectSound.sound_loop
+items.asm|462||0|1|29926|L|,PlayCollectSound,sound_loop,+used
+items.asm|463||0|1|29926|T|
+items.asm|464||0|1|29929|T|
+items.asm|465||0|1|29931|T|
+items.asm|466||0|1|29933|T|
+items.asm|467||0|1|29935|F|PlayCollectSound.d1
+items.asm|467||0|1|29935|L|,PlayCollectSound,d1,+used
+items.asm|467||0|1|29935|T|
+items.asm|468||0|1|29936|T|
+items.asm|470||0|1|29938|T|
+items.asm|471||0|1|29941|T|
+items.asm|472||0|1|29943|T|
+items.asm|473||0|1|29945|T|
+items.asm|474||0|1|29947|F|PlayCollectSound.d2
+items.asm|474||0|1|29947|L|,PlayCollectSound,d2,+used
+items.asm|474||0|1|29947|T|
+items.asm|475||0|1|29948|T|
+items.asm|477||0|1|29950|T|
+items.asm|479||0|1|29952|T|
+items.asm|480||0|1|29953|T|
+items.asm|481||0|1|29954|T|
+jet set willy.asm|20||0|1|29955|F|start
+jet set willy.asm|20||0|1|29955|L|,start,
+jet set willy.asm|21||0|1|29955|T|
+jet set willy.asm|25||0|1|29958|F|Main
+jet set willy.asm|25||0|1|29958|L|,Main,
+jet set willy.asm|27||0|1|29958|T|
+jet set willy.asm|28||0|1|29959|T|
+jet set willy.asm|30||0|1|29962|T|
+jet set willy.asm|31||0|1|29965|T|
+jet set willy.asm|33||0|1|29968|T|
+jet set willy.asm|34||0|1|29970|T|
+jet set willy.asm|35||0|1|29973|T|
+jet set willy.asm|36||0|1|29976|T|
+jet set willy.asm|38||0|1|29979|T|
+jet set willy.asm|39||0|1|29982|T|
+jet set willy.asm|40||0|1|29984|T|
+jet set willy.asm|41||0|1|29987|T|
+jet set willy.asm|42||0|1|29990|T|
+jet set willy.asm|43||0|1|29993|T|
+jet set willy.asm|44||0|1|29996|T|
+jet set willy.asm|45||0|1|29999|T|
+jet set willy.asm|46||0|1|30002|T|
+jet set willy.asm|47||0|1|30005|T|
+jet set willy.asm|50||0|1|30008|T|
+jet set willy.asm|51||0|1|30011|T|
+jet set willy.asm|52||0|1|30014|T|
+jet set willy.asm|53||0|1|30015|T|
+jet set willy.asm|54||0|1|30016|T|
+jet set willy.asm|55||0|1|30019|T|
+jet set willy.asm|58||0|1|30021|T|
+jet set willy.asm|59||0|1|30022|T|
+jet set willy.asm|60||0|1|30023|T|
+jet set willy.asm|61||0|1|30024|T|
+jet set willy.asm|62||0|1|30025|T|
+jet set willy.asm|63||0|1|30028|T|
+jet set willy.asm|64||0|1|30030|T|
+jet set willy.asm|65||0|1|30031|T|
+jet set willy.asm|66||0|1|30033|T|
+jet set willy.asm|68||0|1|30036|T|
+jet set willy.asm|70||0|1|30039|F|Main_loop
+jet set willy.asm|70||0|1|30039|L|,Main_loop,,+used
+jet set willy.asm|71||0|1|30039|T|
+jet set willy.asm|74||0|1|30040|T|
+jet set willy.asm|75||0|1|30043|T|
+jet set willy.asm|77||0|1|30046|T|
+jet set willy.asm|78||0|1|30049|T|
+jet set willy.asm|81||0|1|30052|T|
+jet set willy.asm|82||0|1|30056|T|
+jet set willy.asm|85||0|1|30060|T|
+jet set willy.asm|86||0|1|30063|T|
+jet set willy.asm|87||0|1|30066|T|
+jet set willy.asm|88||0|1|30069|T|
+jet set willy.asm|89||0|1|30072|T|
+jet set willy.asm|90||0|1|30075|T|
+jet set willy.asm|93||0|1|30078|T|
+jet set willy.asm|94||0|1|30081|T|
+jet set willy.asm|97||0|1|30083|T|
+jet set willy.asm|98||0|1|30086|T|
+jet set willy.asm|99||0|1|30088|T|
+jet set willy.asm|100||0|1|30090|F|Main_loop.raster_loop
+jet set willy.asm|100||0|1|30090|L|,Main_loop,raster_loop,+used
+jet set willy.asm|101||0|1|30090|T|
+jet set willy.asm|102||0|1|30092|T|
+jet set willy.asm|103||0|1|30093|T|
+jet set willy.asm|104||0|1|30095|T|
+jet set willy.asm|105||0|1|30097|F|Main_loop.delay
+jet set willy.asm|105||0|1|30097|L|,Main_loop,delay,+used
+jet set willy.asm|106||0|1|30097|T|
+jet set willy.asm|107||0|1|30098|T|
+jet set willy.asm|108||0|1|30100|T|
+jet set willy.asm|111||0|1|30102|T|
+jet set willy.asm|112||0|1|30105|T|
+jet set willy.asm|113||0|1|30107|T|
+jet set willy.asm|115||0|1|30109|F|Main_loop.no_collision
+jet set willy.asm|115||0|1|30109|L|,Main_loop,no_collision,+used
+jet set willy.asm|117||0|1|30109|T|
+jet set willy.asm|118||0|1|30112|T|
+jet set willy.asm|120||0|1|30114|F|Main_loop.no_collision_change
+jet set willy.asm|120||0|1|30114|L|,Main_loop,no_collision_change,+used
+jet set willy.asm|121||0|1|30114|T|
+jet set willy.asm|127||0|1|30117|F|PlayerPos
+jet set willy.asm|127||0|1|30117|L|,PlayerPos,,+used
+jet set willy.asm|128||0|1|30119|F|PlayerPosOld
+jet set willy.asm|128||0|1|30119|L|,PlayerPosOld,,+used
+jet set willy.asm|129||0|1|30121|F|bodyPos
+jet set willy.asm|129||0|1|30121|L|,bodyPos,
+jet set willy.asm|132||0|1|30123|F|body_state
+jet set willy.asm|132||0|1|30123|L|,body_state,,+used
+jet set willy.asm|133||0|1|30124|F|direction
+jet set willy.asm|133||0|1|30124|L|,direction,,+used
+jet set willy.asm|134||0|1|30125|F|flags
+jet set willy.asm|134||0|1|30125|L|,flags,,+used
+jet set willy.asm|136||0|1|30126|F|collision_active
+jet set willy.asm|136||0|1|30126|L|,collision_active,
+jet set willy.asm|137||0|1|30127|F|sprite_shift
+jet set willy.asm|137||0|1|30127|L|,sprite_shift,,+used
+jet set willy.asm|138||0|1|30128|F|room_border_color
+jet set willy.asm|138||0|1|30128|L|,room_border_color,,+used
+jet set willy.asm|141||0|1|30129|F|velocity_y
+jet set willy.asm|141||0|1|30129|L|,velocity_y,,+used
+jet set willy.asm|142||0|1|30130|F|on_ground
+jet set willy.asm|142||0|1|30130|L|,on_ground,,+used
+jet set willy.asm|143||0|1|30131|F|jump_pressed
+jet set willy.asm|143||0|1|30131|L|,jump_pressed,,+used
+jet set willy.asm|144||0|1|30132|F|jump_prev
+jet set willy.asm|144||0|1|30132|L|,jump_prev,,+used
+jet set willy.asm|147||0|1|30133|F|counter
+jet set willy.asm|147||0|1|30133|L|,counter,,+used
+jet set willy.asm|148||0|1|30135|F|line_buffer
+jet set willy.asm|148||0|1|30135|L|,line_buffer,
+jet set willy.asm|149||0|1|30391|F|unpacked_layout
+jet set willy.asm|149||0|1|30391|L|,unpacked_layout,,+used
+jet set willy.asm|152||0|1|30903|F|current_room
+jet set willy.asm|152||0|1|30903|L|,current_room,,+used
+jet set willy.asm|153||0|1|30904|F|conveyor_dir
+jet set willy.asm|153||0|1|30904|L|,conveyor_dir,,+used
+jet set willy.asm|154||0|1|30905|F|conveyor_len
+jet set willy.asm|154||0|1|30905|L|,conveyor_len,,+used
+jet set willy.asm|155||0|1|30906|F|conveyor_row
+jet set willy.asm|155||0|1|30906|L|,conveyor_row,,+used
+jet set willy.asm|156||0|1|30907|F|conveyor_col
+jet set willy.asm|156||0|1|30907|L|,conveyor_col,,+used
+jet set willy.asm|157||0|1|30908|F|ramp_dir
+jet set willy.asm|157||0|1|30908|L|,ramp_dir,,+used
+jet set willy.asm|158||0|1|30909|F|ramp_len
+jet set willy.asm|158||0|1|30909|L|,ramp_len,,+used
+jet set willy.asm|159||0|1|30910|F|ramp_row
+jet set willy.asm|159||0|1|30910|L|,ramp_row,,+used
+jet set willy.asm|160||0|1|30911|F|ramp_col
+jet set willy.asm|160||0|1|30911|L|,ramp_col,,+used
+jet set willy.asm|161||0|1|30912|F|room_ptr
+jet set willy.asm|161||0|1|30912|L|,room_ptr,,+used
 jet set willy.asm|164||0|1|30976|F|RoomsStart
 jet set willy.asm|164||0|1|30976|L|,RoomsStart,
 Rooms/TheOffLicence.asm|28||0|1|30976|F|TheOffLicenceLayout
@@ -2774,163 +2783,203 @@ Rooms/TheOffLicence.asm|101||0|1|31228|F|TheOffLicenceEnemy4
 Rooms/TheOffLicence.asm|101||0|1|31228|L|,TheOffLicenceEnemy4,
 Rooms/TheOffLicence.asm|104||0|1|31232|F|TheOffLicencePosWilly
 Rooms/TheOffLicence.asm|104||0|1|31232|L|,TheOffLicencePosWilly,
-Rooms/UnderTheMegaTree.asm|28||0|1|31234|F|UnderTheMegaTreeLayout
-Rooms/UnderTheMegaTree.asm|28||0|1|31234|L|,UnderTheMegaTreeLayout,,+used
-Rooms/UnderTheMegaTree.asm|46||0|1|31362|F|UnderTheMegaTreeTile
-Rooms/UnderTheMegaTree.asm|46||0|1|31362|L|,UnderTheMegaTreeTile,
-Rooms/UnderTheMegaTree.asm|51||0|1|31394|F|UnderTheMegaTreeBackground
-Rooms/UnderTheMegaTree.asm|51||0|1|31394|L|,UnderTheMegaTreeBackground,
-Rooms/UnderTheMegaTree.asm|54||0|1|31403|F|UnderTheMegaTreeFloor
-Rooms/UnderTheMegaTree.asm|54||0|1|31403|L|,UnderTheMegaTreeFloor,
-Rooms/UnderTheMegaTree.asm|57||0|1|31412|F|UnderTheMegaTreeWall
-Rooms/UnderTheMegaTree.asm|57||0|1|31412|L|,UnderTheMegaTreeWall,
-Rooms/UnderTheMegaTree.asm|60||0|1|31421|F|UnderTheMegaTreeNasty
-Rooms/UnderTheMegaTree.asm|60||0|1|31421|L|,UnderTheMegaTreeNasty,
-Rooms/UnderTheMegaTree.asm|63||0|1|31430|F|UnderTheMegaTreeRamp
-Rooms/UnderTheMegaTree.asm|63||0|1|31430|L|,UnderTheMegaTreeRamp,
-Rooms/UnderTheMegaTree.asm|66||0|1|31439|F|UnderTheMegaTreeConveyor
-Rooms/UnderTheMegaTree.asm|66||0|1|31439|L|,UnderTheMegaTreeConveyor,
-Rooms/UnderTheMegaTree.asm|70||0|1|31448|F|UnderTheMegaTreeConveyorData
-Rooms/UnderTheMegaTree.asm|70||0|1|31448|L|,UnderTheMegaTreeConveyorData,
-Rooms/UnderTheMegaTree.asm|76||0|1|31452|F|UnderTheMegaTreeRampData
-Rooms/UnderTheMegaTree.asm|76||0|1|31452|L|,UnderTheMegaTreeRampData,
-Rooms/UnderTheMegaTree.asm|82||0|1|31456|F|UnderTheMegaTreeBorderColor
-Rooms/UnderTheMegaTree.asm|82||0|1|31456|L|,UnderTheMegaTreeBorderColor,
-Rooms/UnderTheMegaTree.asm|86||0|1|31457|F|UnderTheMegaTreeReserved
-Rooms/UnderTheMegaTree.asm|86||0|1|31457|L|,UnderTheMegaTreeReserved,
-Rooms/UnderTheMegaTree.asm|90||0|1|31461|F|UnderTheMegaTreeItem
-Rooms/UnderTheMegaTree.asm|90||0|1|31461|L|,UnderTheMegaTreeItem,
-Rooms/UnderTheMegaTree.asm|94||0|1|31469|F|UnderTheMegaTreeDirection
-Rooms/UnderTheMegaTree.asm|94||0|1|31469|L|,UnderTheMegaTreeDirection,
-Rooms/UnderTheMegaTree.asm|100||0|1|31473|F|UnderTheMegaTreeUnused
-Rooms/UnderTheMegaTree.asm|100||0|1|31473|L|,UnderTheMegaTreeUnused,
-Rooms/UnderTheMegaTree.asm|104||0|1|31474|F|UnderTheMegaTreeEnemy1
-Rooms/UnderTheMegaTree.asm|104||0|1|31474|L|,UnderTheMegaTreeEnemy1,
-Rooms/UnderTheMegaTree.asm|106||0|1|31478|F|UnderTheMegaTreeEnemy2
-Rooms/UnderTheMegaTree.asm|106||0|1|31478|L|,UnderTheMegaTreeEnemy2,
-Rooms/UnderTheMegaTree.asm|108||0|1|31482|F|UnderTheMegaTreeEnemy3
-Rooms/UnderTheMegaTree.asm|108||0|1|31482|L|,UnderTheMegaTreeEnemy3,
-Rooms/UnderTheMegaTree.asm|110||0|1|31486|F|UnderTheMegaTreeEnemy4
-Rooms/UnderTheMegaTree.asm|110||0|1|31486|L|,UnderTheMegaTreeEnemy4,
-Rooms/UnderTheMegaTree.asm|113||0|1|31490|F|UnderTheMegaTreePosWilly
-Rooms/UnderTheMegaTree.asm|113||0|1|31490|L|,UnderTheMegaTreePosWilly,
-Rooms/TheBridge.asm|28||0|1|31492|F|TheBridgeLayout
-Rooms/TheBridge.asm|28||0|1|31492|L|,TheBridgeLayout,,+used
-Rooms/TheBridge.asm|46||0|1|31620|F|TheBridgeTile
-Rooms/TheBridge.asm|46||0|1|31620|L|,TheBridgeTile,
-Rooms/TheBridge.asm|51||0|1|31652|F|TheBridgeBackground
-Rooms/TheBridge.asm|51||0|1|31652|L|,TheBridgeBackground,
-Rooms/TheBridge.asm|54||0|1|31661|F|TheBridgeFloor
-Rooms/TheBridge.asm|54||0|1|31661|L|,TheBridgeFloor,
-Rooms/TheBridge.asm|57||0|1|31670|F|TheBridgeWall
-Rooms/TheBridge.asm|57||0|1|31670|L|,TheBridgeWall,
-Rooms/TheBridge.asm|60||0|1|31679|F|TheBridgeNasty
-Rooms/TheBridge.asm|60||0|1|31679|L|,TheBridgeNasty,
-Rooms/TheBridge.asm|63||0|1|31688|F|TheBridgeRamp
-Rooms/TheBridge.asm|63||0|1|31688|L|,TheBridgeRamp,
-Rooms/TheBridge.asm|66||0|1|31697|F|TheBridgeConveyor
-Rooms/TheBridge.asm|66||0|1|31697|L|,TheBridgeConveyor,
-Rooms/TheBridge.asm|70||0|1|31706|F|TheBridgeConveyorData
-Rooms/TheBridge.asm|70||0|1|31706|L|,TheBridgeConveyorData,
-Rooms/TheBridge.asm|76||0|1|31710|F|TheBridgeRampData
-Rooms/TheBridge.asm|76||0|1|31710|L|,TheBridgeRampData,
-Rooms/TheBridge.asm|82||0|1|31714|F|TheBridgeBorderColor
-Rooms/TheBridge.asm|82||0|1|31714|L|,TheBridgeBorderColor,
-Rooms/TheBridge.asm|86||0|1|31715|F|TheBridgeReserved
-Rooms/TheBridge.asm|86||0|1|31715|L|,TheBridgeReserved,
-Rooms/TheBridge.asm|90||0|1|31719|F|TheBridgeItem
-Rooms/TheBridge.asm|90||0|1|31719|L|,TheBridgeItem,
-Rooms/TheBridge.asm|94||0|1|31727|F|TheBridgeDirection
-Rooms/TheBridge.asm|94||0|1|31727|L|,TheBridgeDirection,
-Rooms/TheBridge.asm|100||0|1|31731|F|TheBridgeUnused
-Rooms/TheBridge.asm|100||0|1|31731|L|,TheBridgeUnused,
-Rooms/TheBridge.asm|104||0|1|31732|F|TheBridgeEnemy1
-Rooms/TheBridge.asm|104||0|1|31732|L|,TheBridgeEnemy1,
-Rooms/TheBridge.asm|106||0|1|31736|F|TheBridgeEnemy2
-Rooms/TheBridge.asm|106||0|1|31736|L|,TheBridgeEnemy2,
-Rooms/TheBridge.asm|108||0|1|31740|F|TheBridgeEnemy3
-Rooms/TheBridge.asm|108||0|1|31740|L|,TheBridgeEnemy3,
-Rooms/TheBridge.asm|110||0|1|31744|F|TheBridgeEnemy4
-Rooms/TheBridge.asm|110||0|1|31744|L|,TheBridgeEnemy4,
-Rooms/TheBridge.asm|113||0|1|31748|F|TheBridgePosWilly
-Rooms/TheBridge.asm|113||0|1|31748|L|,TheBridgePosWilly,
-Rooms/MasterBedRoom.asm|30||0|1|31750|F|MastreBedRoomLayout
-Rooms/MasterBedRoom.asm|30||0|1|31750|L|,MastreBedRoomLayout,,+used
-Rooms/MasterBedRoom.asm|48||0|1|31878|F|MastreBedRoomTile
-Rooms/MasterBedRoom.asm|48||0|1|31878|L|,MastreBedRoomTile,
-Rooms/MasterBedRoom.asm|53||0|1|31910|F|MastreBedRoomBackground
-Rooms/MasterBedRoom.asm|53||0|1|31910|L|,MastreBedRoomBackground,
-Rooms/MasterBedRoom.asm|56||0|1|31919|F|MastreBedRoomFloor
-Rooms/MasterBedRoom.asm|56||0|1|31919|L|,MastreBedRoomFloor,
-Rooms/MasterBedRoom.asm|59||0|1|31928|F|MastreBedRoomWall
-Rooms/MasterBedRoom.asm|59||0|1|31928|L|,MastreBedRoomWall,
-Rooms/MasterBedRoom.asm|62||0|1|31937|F|MastreBedRoomNasty
-Rooms/MasterBedRoom.asm|62||0|1|31937|L|,MastreBedRoomNasty,
-Rooms/MasterBedRoom.asm|65||0|1|31946|F|MastreBedRoomRamp
-Rooms/MasterBedRoom.asm|65||0|1|31946|L|,MastreBedRoomRamp,
-Rooms/MasterBedRoom.asm|68||0|1|31955|F|MastreBedRoomConveyor
-Rooms/MasterBedRoom.asm|68||0|1|31955|L|,MastreBedRoomConveyor,
-Rooms/MasterBedRoom.asm|72||0|1|31964|F|MastreBedRoomConveyorData
-Rooms/MasterBedRoom.asm|72||0|1|31964|L|,MastreBedRoomConveyorData,
-Rooms/MasterBedRoom.asm|78||0|1|31968|F|MastreBedRoomRampData
-Rooms/MasterBedRoom.asm|78||0|1|31968|L|,MastreBedRoomRampData,
-Rooms/MasterBedRoom.asm|84||0|1|31972|F|MastreBedRoomBorderColor
-Rooms/MasterBedRoom.asm|84||0|1|31972|L|,MastreBedRoomBorderColor,
-Rooms/MasterBedRoom.asm|88||0|1|31973|F|MastreBedRoomReserved
-Rooms/MasterBedRoom.asm|88||0|1|31973|L|,MastreBedRoomReserved,
-Rooms/MasterBedRoom.asm|92||0|1|31977|F|MastreBedRoomItem
-Rooms/MasterBedRoom.asm|92||0|1|31977|L|,MastreBedRoomItem,
-Rooms/MasterBedRoom.asm|96||0|1|31985|F|MastreBedRoomDirection
-Rooms/MasterBedRoom.asm|96||0|1|31985|L|,MastreBedRoomDirection,
-Rooms/MasterBedRoom.asm|102||0|1|31989|F|MastreBedRoomUnused
-Rooms/MasterBedRoom.asm|102||0|1|31989|L|,MastreBedRoomUnused,
-Rooms/MasterBedRoom.asm|106||0|1|31990|F|MastreBedRoomEnemy1
-Rooms/MasterBedRoom.asm|106||0|1|31990|L|,MastreBedRoomEnemy1,
-Rooms/MasterBedRoom.asm|108||0|1|31994|F|MastreBedRoomEnemy2
-Rooms/MasterBedRoom.asm|108||0|1|31994|L|,MastreBedRoomEnemy2,
-Rooms/MasterBedRoom.asm|110||0|1|31998|F|MastreBedRoomEnemy3
-Rooms/MasterBedRoom.asm|110||0|1|31998|L|,MastreBedRoomEnemy3,
-Rooms/MasterBedRoom.asm|112||0|1|32002|F|MastreBedRoomEnemy4
-Rooms/MasterBedRoom.asm|112||0|1|32002|L|,MastreBedRoomEnemy4,
-Rooms/MasterBedRoom.asm|115||0|1|32006|F|MastreBedRoomPosWilly
-Rooms/MasterBedRoom.asm|115||0|1|32006|L|,MastreBedRoomPosWilly,
-Rooms/TheTestRoom.asm|28||0|1|32008|F|TheTestRoomLayout
-Rooms/TheTestRoom.asm|28||0|1|32008|L|,TheTestRoomLayout,,+used
-Rooms/TheTestRoom.asm|46||0|1|32136|F|TheTestRoomTile
-Rooms/TheTestRoom.asm|46||0|1|32136|L|,TheTestRoomTile,
-Rooms/TheTestRoom.asm|51||0|1|32168|F|TheTestRoomBackground
-Rooms/TheTestRoom.asm|51||0|1|32168|L|,TheTestRoomBackground,
-Rooms/TheTestRoom.asm|54||0|1|32177|F|TheTestRoomFloor
-Rooms/TheTestRoom.asm|54||0|1|32177|L|,TheTestRoomFloor,
-Rooms/TheTestRoom.asm|57||0|1|32186|F|TheTestRoomWall
-Rooms/TheTestRoom.asm|57||0|1|32186|L|,TheTestRoomWall,
-Rooms/TheTestRoom.asm|60||0|1|32195|F|TheTestRoomNasty
-Rooms/TheTestRoom.asm|60||0|1|32195|L|,TheTestRoomNasty,
-Rooms/TheTestRoom.asm|63||0|1|32204|F|TheTestRoomRamp
-Rooms/TheTestRoom.asm|63||0|1|32204|L|,TheTestRoomRamp,
-Rooms/TheTestRoom.asm|66||0|1|32213|F|TheTestRoomConveyor
-Rooms/TheTestRoom.asm|66||0|1|32213|L|,TheTestRoomConveyor,
-Rooms/TheTestRoom.asm|70||0|1|32222|F|TheTestRoomConveyorData
-Rooms/TheTestRoom.asm|70||0|1|32222|L|,TheTestRoomConveyorData,
-Rooms/TheTestRoom.asm|76||0|1|32226|F|TheTestRoomRampData
-Rooms/TheTestRoom.asm|76||0|1|32226|L|,TheTestRoomRampData,
-Rooms/TheTestRoom.asm|82||0|1|32230|F|TheTestRoomBorderColor
-Rooms/TheTestRoom.asm|82||0|1|32230|L|,TheTestRoomBorderColor,
-Rooms/TheTestRoom.asm|86||0|1|32231|F|TheTestRoomReserved
-Rooms/TheTestRoom.asm|86||0|1|32231|L|,TheTestRoomReserved,
-Rooms/TheTestRoom.asm|89||0|1|32235|F|TheTestRoomItem
-Rooms/TheTestRoom.asm|89||0|1|32235|L|,TheTestRoomItem,
-Rooms/TheTestRoom.asm|93||0|1|32243|F|TheTestRoomDirection
-Rooms/TheTestRoom.asm|93||0|1|32243|L|,TheTestRoomDirection,
-Rooms/TheTestRoom.asm|99||0|1|32247|F|TheTestRoomUnused
-Rooms/TheTestRoom.asm|99||0|1|32247|L|,TheTestRoomUnused,
-Rooms/TheTestRoom.asm|103||0|1|32248|F|TheTestRoomEnemy1
-Rooms/TheTestRoom.asm|103||0|1|32248|L|,TheTestRoomEnemy1,
-Rooms/TheTestRoom.asm|105||0|1|32252|F|TheTestRoomEnemy2
-Rooms/TheTestRoom.asm|105||0|1|32252|L|,TheTestRoomEnemy2,
-Rooms/TheTestRoom.asm|107||0|1|32256|F|TheTestRoomEnemy3
-Rooms/TheTestRoom.asm|107||0|1|32256|L|,TheTestRoomEnemy3,
-Rooms/TheTestRoom.asm|109||0|1|32260|F|TheTestRoomEnemy4
-Rooms/TheTestRoom.asm|109||0|1|32260|L|,TheTestRoomEnemy4,
-Rooms/TheTestRoom.asm|112||0|1|32264|F|TheTestRoomPosWilly
-Rooms/TheTestRoom.asm|112||0|1|32264|L|,TheTestRoomPosWilly,
+Rooms/TheBridge.asm|28||0|1|31234|F|TheBridgeLayout
+Rooms/TheBridge.asm|28||0|1|31234|L|,TheBridgeLayout,,+used
+Rooms/TheBridge.asm|46||0|1|31362|F|TheBridgeTile
+Rooms/TheBridge.asm|46||0|1|31362|L|,TheBridgeTile,
+Rooms/TheBridge.asm|51||0|1|31394|F|TheBridgeBackground
+Rooms/TheBridge.asm|51||0|1|31394|L|,TheBridgeBackground,
+Rooms/TheBridge.asm|54||0|1|31403|F|TheBridgeFloor
+Rooms/TheBridge.asm|54||0|1|31403|L|,TheBridgeFloor,
+Rooms/TheBridge.asm|57||0|1|31412|F|TheBridgeWall
+Rooms/TheBridge.asm|57||0|1|31412|L|,TheBridgeWall,
+Rooms/TheBridge.asm|60||0|1|31421|F|TheBridgeNasty
+Rooms/TheBridge.asm|60||0|1|31421|L|,TheBridgeNasty,
+Rooms/TheBridge.asm|63||0|1|31430|F|TheBridgeRamp
+Rooms/TheBridge.asm|63||0|1|31430|L|,TheBridgeRamp,
+Rooms/TheBridge.asm|66||0|1|31439|F|TheBridgeConveyor
+Rooms/TheBridge.asm|66||0|1|31439|L|,TheBridgeConveyor,
+Rooms/TheBridge.asm|70||0|1|31448|F|TheBridgeConveyorData
+Rooms/TheBridge.asm|70||0|1|31448|L|,TheBridgeConveyorData,
+Rooms/TheBridge.asm|76||0|1|31452|F|TheBridgeRampData
+Rooms/TheBridge.asm|76||0|1|31452|L|,TheBridgeRampData,
+Rooms/TheBridge.asm|82||0|1|31456|F|TheBridgeBorderColor
+Rooms/TheBridge.asm|82||0|1|31456|L|,TheBridgeBorderColor,
+Rooms/TheBridge.asm|86||0|1|31457|F|TheBridgeReserved
+Rooms/TheBridge.asm|86||0|1|31457|L|,TheBridgeReserved,
+Rooms/TheBridge.asm|90||0|1|31461|F|TheBridgeItem
+Rooms/TheBridge.asm|90||0|1|31461|L|,TheBridgeItem,
+Rooms/TheBridge.asm|94||0|1|31469|F|TheBridgeDirection
+Rooms/TheBridge.asm|94||0|1|31469|L|,TheBridgeDirection,
+Rooms/TheBridge.asm|100||0|1|31473|F|TheBridgeUnused
+Rooms/TheBridge.asm|100||0|1|31473|L|,TheBridgeUnused,
+Rooms/TheBridge.asm|104||0|1|31474|F|TheBridgeEnemy1
+Rooms/TheBridge.asm|104||0|1|31474|L|,TheBridgeEnemy1,
+Rooms/TheBridge.asm|106||0|1|31478|F|TheBridgeEnemy2
+Rooms/TheBridge.asm|106||0|1|31478|L|,TheBridgeEnemy2,
+Rooms/TheBridge.asm|108||0|1|31482|F|TheBridgeEnemy3
+Rooms/TheBridge.asm|108||0|1|31482|L|,TheBridgeEnemy3,
+Rooms/TheBridge.asm|110||0|1|31486|F|TheBridgeEnemy4
+Rooms/TheBridge.asm|110||0|1|31486|L|,TheBridgeEnemy4,
+Rooms/TheBridge.asm|113||0|1|31490|F|TheBridgePosWilly
+Rooms/TheBridge.asm|113||0|1|31490|L|,TheBridgePosWilly,
+Rooms/UnderTheMegaTree.asm|28||0|1|31492|F|UnderTheMegaTreeLayout
+Rooms/UnderTheMegaTree.asm|28||0|1|31492|L|,UnderTheMegaTreeLayout,,+used
+Rooms/UnderTheMegaTree.asm|46||0|1|31620|F|UnderTheMegaTreeTile
+Rooms/UnderTheMegaTree.asm|46||0|1|31620|L|,UnderTheMegaTreeTile,
+Rooms/UnderTheMegaTree.asm|51||0|1|31652|F|UnderTheMegaTreeBackground
+Rooms/UnderTheMegaTree.asm|51||0|1|31652|L|,UnderTheMegaTreeBackground,
+Rooms/UnderTheMegaTree.asm|54||0|1|31661|F|UnderTheMegaTreeFloor
+Rooms/UnderTheMegaTree.asm|54||0|1|31661|L|,UnderTheMegaTreeFloor,
+Rooms/UnderTheMegaTree.asm|57||0|1|31670|F|UnderTheMegaTreeWall
+Rooms/UnderTheMegaTree.asm|57||0|1|31670|L|,UnderTheMegaTreeWall,
+Rooms/UnderTheMegaTree.asm|60||0|1|31679|F|UnderTheMegaTreeNasty
+Rooms/UnderTheMegaTree.asm|60||0|1|31679|L|,UnderTheMegaTreeNasty,
+Rooms/UnderTheMegaTree.asm|63||0|1|31688|F|UnderTheMegaTreeRamp
+Rooms/UnderTheMegaTree.asm|63||0|1|31688|L|,UnderTheMegaTreeRamp,
+Rooms/UnderTheMegaTree.asm|66||0|1|31697|F|UnderTheMegaTreeConveyor
+Rooms/UnderTheMegaTree.asm|66||0|1|31697|L|,UnderTheMegaTreeConveyor,
+Rooms/UnderTheMegaTree.asm|70||0|1|31706|F|UnderTheMegaTreeConveyorData
+Rooms/UnderTheMegaTree.asm|70||0|1|31706|L|,UnderTheMegaTreeConveyorData,
+Rooms/UnderTheMegaTree.asm|76||0|1|31710|F|UnderTheMegaTreeRampData
+Rooms/UnderTheMegaTree.asm|76||0|1|31710|L|,UnderTheMegaTreeRampData,
+Rooms/UnderTheMegaTree.asm|82||0|1|31714|F|UnderTheMegaTreeBorderColor
+Rooms/UnderTheMegaTree.asm|82||0|1|31714|L|,UnderTheMegaTreeBorderColor,
+Rooms/UnderTheMegaTree.asm|86||0|1|31715|F|UnderTheMegaTreeReserved
+Rooms/UnderTheMegaTree.asm|86||0|1|31715|L|,UnderTheMegaTreeReserved,
+Rooms/UnderTheMegaTree.asm|90||0|1|31719|F|UnderTheMegaTreeItem
+Rooms/UnderTheMegaTree.asm|90||0|1|31719|L|,UnderTheMegaTreeItem,
+Rooms/UnderTheMegaTree.asm|94||0|1|31727|F|UnderTheMegaTreeDirection
+Rooms/UnderTheMegaTree.asm|94||0|1|31727|L|,UnderTheMegaTreeDirection,
+Rooms/UnderTheMegaTree.asm|100||0|1|31731|F|UnderTheMegaTreeUnused
+Rooms/UnderTheMegaTree.asm|100||0|1|31731|L|,UnderTheMegaTreeUnused,
+Rooms/UnderTheMegaTree.asm|104||0|1|31732|F|UnderTheMegaTreeEnemy1
+Rooms/UnderTheMegaTree.asm|104||0|1|31732|L|,UnderTheMegaTreeEnemy1,
+Rooms/UnderTheMegaTree.asm|106||0|1|31736|F|UnderTheMegaTreeEnemy2
+Rooms/UnderTheMegaTree.asm|106||0|1|31736|L|,UnderTheMegaTreeEnemy2,
+Rooms/UnderTheMegaTree.asm|108||0|1|31740|F|UnderTheMegaTreeEnemy3
+Rooms/UnderTheMegaTree.asm|108||0|1|31740|L|,UnderTheMegaTreeEnemy3,
+Rooms/UnderTheMegaTree.asm|110||0|1|31744|F|UnderTheMegaTreeEnemy4
+Rooms/UnderTheMegaTree.asm|110||0|1|31744|L|,UnderTheMegaTreeEnemy4,
+Rooms/UnderTheMegaTree.asm|113||0|1|31748|F|UnderTheMegaTreePosWilly
+Rooms/UnderTheMegaTree.asm|113||0|1|31748|L|,UnderTheMegaTreePosWilly,
+Rooms/AtTheFootTheMegaTree.asm|28||0|1|31750|F|AtTheFootTheMegaTreeLayout
+Rooms/AtTheFootTheMegaTree.asm|28||0|1|31750|L|,AtTheFootTheMegaTreeLayout,,+used
+Rooms/AtTheFootTheMegaTree.asm|46||0|1|31878|F|AtTheFootTheMegaTreeTile
+Rooms/AtTheFootTheMegaTree.asm|46||0|1|31878|L|,AtTheFootTheMegaTreeTile,
+Rooms/AtTheFootTheMegaTree.asm|51||0|1|31910|F|AtTheFootTheMegaTreeBackground
+Rooms/AtTheFootTheMegaTree.asm|51||0|1|31910|L|,AtTheFootTheMegaTreeBackground,
+Rooms/AtTheFootTheMegaTree.asm|54||0|1|31919|F|AtTheFootTheMegaTreeFloor
+Rooms/AtTheFootTheMegaTree.asm|54||0|1|31919|L|,AtTheFootTheMegaTreeFloor,
+Rooms/AtTheFootTheMegaTree.asm|57||0|1|31928|F|AtTheFootTheMegaTreeWall
+Rooms/AtTheFootTheMegaTree.asm|57||0|1|31928|L|,AtTheFootTheMegaTreeWall,
+Rooms/AtTheFootTheMegaTree.asm|60||0|1|31937|F|AtTheFootTheMegaTreeNasty
+Rooms/AtTheFootTheMegaTree.asm|60||0|1|31937|L|,AtTheFootTheMegaTreeNasty,
+Rooms/AtTheFootTheMegaTree.asm|63||0|1|31946|F|AtTheFootTheMegaTreeRamp
+Rooms/AtTheFootTheMegaTree.asm|63||0|1|31946|L|,AtTheFootTheMegaTreeRamp,
+Rooms/AtTheFootTheMegaTree.asm|66||0|1|31955|F|AtTheFootTheMegaTreeConveyor
+Rooms/AtTheFootTheMegaTree.asm|66||0|1|31955|L|,AtTheFootTheMegaTreeConveyor,
+Rooms/AtTheFootTheMegaTree.asm|70||0|1|31964|F|AtTheFootTheMegaTreeConveyorData
+Rooms/AtTheFootTheMegaTree.asm|70||0|1|31964|L|,AtTheFootTheMegaTreeConveyorData,
+Rooms/AtTheFootTheMegaTree.asm|76||0|1|31968|F|AtTheFootTheMegaTreeRampData
+Rooms/AtTheFootTheMegaTree.asm|76||0|1|31968|L|,AtTheFootTheMegaTreeRampData,
+Rooms/AtTheFootTheMegaTree.asm|82||0|1|31972|F|AtTheFootTheMegaTreeBorderColor
+Rooms/AtTheFootTheMegaTree.asm|82||0|1|31972|L|,AtTheFootTheMegaTreeBorderColor,
+Rooms/AtTheFootTheMegaTree.asm|86||0|1|31973|F|AtTheFootTheMegaTreeReserved
+Rooms/AtTheFootTheMegaTree.asm|86||0|1|31973|L|,AtTheFootTheMegaTreeReserved,
+Rooms/AtTheFootTheMegaTree.asm|90||0|1|31977|F|AtTheFootTheMegaTreeItem
+Rooms/AtTheFootTheMegaTree.asm|90||0|1|31977|L|,AtTheFootTheMegaTreeItem,
+Rooms/AtTheFootTheMegaTree.asm|94||0|1|31985|F|AtTheFootTheMegaTreeDirection
+Rooms/AtTheFootTheMegaTree.asm|94||0|1|31985|L|,AtTheFootTheMegaTreeDirection,
+Rooms/AtTheFootTheMegaTree.asm|100||0|1|31989|F|AtTheFootTheMegaTreeUnused
+Rooms/AtTheFootTheMegaTree.asm|100||0|1|31989|L|,AtTheFootTheMegaTreeUnused,
+Rooms/AtTheFootTheMegaTree.asm|104||0|1|31990|F|AtTheFootTheMegaTreeEnemy1
+Rooms/AtTheFootTheMegaTree.asm|104||0|1|31990|L|,AtTheFootTheMegaTreeEnemy1,
+Rooms/AtTheFootTheMegaTree.asm|106||0|1|31994|F|AtTheFootTheMegaTreeEnemy2
+Rooms/AtTheFootTheMegaTree.asm|106||0|1|31994|L|,AtTheFootTheMegaTreeEnemy2,
+Rooms/AtTheFootTheMegaTree.asm|108||0|1|31998|F|AtTheFootTheMegaTreeEnemy3
+Rooms/AtTheFootTheMegaTree.asm|108||0|1|31998|L|,AtTheFootTheMegaTreeEnemy3,
+Rooms/AtTheFootTheMegaTree.asm|110||0|1|32002|F|AtTheFootTheMegaTreeEnemy4
+Rooms/AtTheFootTheMegaTree.asm|110||0|1|32002|L|,AtTheFootTheMegaTreeEnemy4,
+Rooms/AtTheFootTheMegaTree.asm|113||0|1|32006|F|AtTheFootTheMegaTreePosWilly
+Rooms/AtTheFootTheMegaTree.asm|113||0|1|32006|L|,AtTheFootTheMegaTreePosWilly,
+Rooms/MasterBedRoom.asm|30||0|1|32008|F|MastreBedRoomLayout
+Rooms/MasterBedRoom.asm|30||0|1|32008|L|,MastreBedRoomLayout,,+used
+Rooms/MasterBedRoom.asm|48||0|1|32136|F|MastreBedRoomTile
+Rooms/MasterBedRoom.asm|48||0|1|32136|L|,MastreBedRoomTile,
+Rooms/MasterBedRoom.asm|53||0|1|32168|F|MastreBedRoomBackground
+Rooms/MasterBedRoom.asm|53||0|1|32168|L|,MastreBedRoomBackground,
+Rooms/MasterBedRoom.asm|56||0|1|32177|F|MastreBedRoomFloor
+Rooms/MasterBedRoom.asm|56||0|1|32177|L|,MastreBedRoomFloor,
+Rooms/MasterBedRoom.asm|59||0|1|32186|F|MastreBedRoomWall
+Rooms/MasterBedRoom.asm|59||0|1|32186|L|,MastreBedRoomWall,
+Rooms/MasterBedRoom.asm|62||0|1|32195|F|MastreBedRoomNasty
+Rooms/MasterBedRoom.asm|62||0|1|32195|L|,MastreBedRoomNasty,
+Rooms/MasterBedRoom.asm|65||0|1|32204|F|MastreBedRoomRamp
+Rooms/MasterBedRoom.asm|65||0|1|32204|L|,MastreBedRoomRamp,
+Rooms/MasterBedRoom.asm|68||0|1|32213|F|MastreBedRoomConveyor
+Rooms/MasterBedRoom.asm|68||0|1|32213|L|,MastreBedRoomConveyor,
+Rooms/MasterBedRoom.asm|72||0|1|32222|F|MastreBedRoomConveyorData
+Rooms/MasterBedRoom.asm|72||0|1|32222|L|,MastreBedRoomConveyorData,
+Rooms/MasterBedRoom.asm|78||0|1|32226|F|MastreBedRoomRampData
+Rooms/MasterBedRoom.asm|78||0|1|32226|L|,MastreBedRoomRampData,
+Rooms/MasterBedRoom.asm|84||0|1|32230|F|MastreBedRoomBorderColor
+Rooms/MasterBedRoom.asm|84||0|1|32230|L|,MastreBedRoomBorderColor,
+Rooms/MasterBedRoom.asm|88||0|1|32231|F|MastreBedRoomReserved
+Rooms/MasterBedRoom.asm|88||0|1|32231|L|,MastreBedRoomReserved,
+Rooms/MasterBedRoom.asm|92||0|1|32235|F|MastreBedRoomItem
+Rooms/MasterBedRoom.asm|92||0|1|32235|L|,MastreBedRoomItem,
+Rooms/MasterBedRoom.asm|96||0|1|32243|F|MastreBedRoomDirection
+Rooms/MasterBedRoom.asm|96||0|1|32243|L|,MastreBedRoomDirection,
+Rooms/MasterBedRoom.asm|102||0|1|32247|F|MastreBedRoomUnused
+Rooms/MasterBedRoom.asm|102||0|1|32247|L|,MastreBedRoomUnused,
+Rooms/MasterBedRoom.asm|106||0|1|32248|F|MastreBedRoomEnemy1
+Rooms/MasterBedRoom.asm|106||0|1|32248|L|,MastreBedRoomEnemy1,
+Rooms/MasterBedRoom.asm|108||0|1|32252|F|MastreBedRoomEnemy2
+Rooms/MasterBedRoom.asm|108||0|1|32252|L|,MastreBedRoomEnemy2,
+Rooms/MasterBedRoom.asm|110||0|1|32256|F|MastreBedRoomEnemy3
+Rooms/MasterBedRoom.asm|110||0|1|32256|L|,MastreBedRoomEnemy3,
+Rooms/MasterBedRoom.asm|112||0|1|32260|F|MastreBedRoomEnemy4
+Rooms/MasterBedRoom.asm|112||0|1|32260|L|,MastreBedRoomEnemy4,
+Rooms/MasterBedRoom.asm|115||0|1|32264|F|MastreBedRoomPosWilly
+Rooms/MasterBedRoom.asm|115||0|1|32264|L|,MastreBedRoomPosWilly,
+Rooms/TheTestRoom.asm|28||0|1|32266|F|TheTestRoomLayout
+Rooms/TheTestRoom.asm|28||0|1|32266|L|,TheTestRoomLayout,,+used
+Rooms/TheTestRoom.asm|46||0|1|32394|F|TheTestRoomTile
+Rooms/TheTestRoom.asm|46||0|1|32394|L|,TheTestRoomTile,
+Rooms/TheTestRoom.asm|51||0|1|32426|F|TheTestRoomBackground
+Rooms/TheTestRoom.asm|51||0|1|32426|L|,TheTestRoomBackground,
+Rooms/TheTestRoom.asm|54||0|1|32435|F|TheTestRoomFloor
+Rooms/TheTestRoom.asm|54||0|1|32435|L|,TheTestRoomFloor,
+Rooms/TheTestRoom.asm|57||0|1|32444|F|TheTestRoomWall
+Rooms/TheTestRoom.asm|57||0|1|32444|L|,TheTestRoomWall,
+Rooms/TheTestRoom.asm|60||0|1|32453|F|TheTestRoomNasty
+Rooms/TheTestRoom.asm|60||0|1|32453|L|,TheTestRoomNasty,
+Rooms/TheTestRoom.asm|63||0|1|32462|F|TheTestRoomRamp
+Rooms/TheTestRoom.asm|63||0|1|32462|L|,TheTestRoomRamp,
+Rooms/TheTestRoom.asm|66||0|1|32471|F|TheTestRoomConveyor
+Rooms/TheTestRoom.asm|66||0|1|32471|L|,TheTestRoomConveyor,
+Rooms/TheTestRoom.asm|70||0|1|32480|F|TheTestRoomConveyorData
+Rooms/TheTestRoom.asm|70||0|1|32480|L|,TheTestRoomConveyorData,
+Rooms/TheTestRoom.asm|76||0|1|32484|F|TheTestRoomRampData
+Rooms/TheTestRoom.asm|76||0|1|32484|L|,TheTestRoomRampData,
+Rooms/TheTestRoom.asm|82||0|1|32488|F|TheTestRoomBorderColor
+Rooms/TheTestRoom.asm|82||0|1|32488|L|,TheTestRoomBorderColor,
+Rooms/TheTestRoom.asm|86||0|1|32489|F|TheTestRoomReserved
+Rooms/TheTestRoom.asm|86||0|1|32489|L|,TheTestRoomReserved,
+Rooms/TheTestRoom.asm|89||0|1|32493|F|TheTestRoomItem
+Rooms/TheTestRoom.asm|89||0|1|32493|L|,TheTestRoomItem,
+Rooms/TheTestRoom.asm|93||0|1|32501|F|TheTestRoomDirection
+Rooms/TheTestRoom.asm|93||0|1|32501|L|,TheTestRoomDirection,
+Rooms/TheTestRoom.asm|99||0|1|32505|F|TheTestRoomUnused
+Rooms/TheTestRoom.asm|99||0|1|32505|L|,TheTestRoomUnused,
+Rooms/TheTestRoom.asm|103||0|1|32506|F|TheTestRoomEnemy1
+Rooms/TheTestRoom.asm|103||0|1|32506|L|,TheTestRoomEnemy1,
+Rooms/TheTestRoom.asm|105||0|1|32510|F|TheTestRoomEnemy2
+Rooms/TheTestRoom.asm|105||0|1|32510|L|,TheTestRoomEnemy2,
+Rooms/TheTestRoom.asm|107||0|1|32514|F|TheTestRoomEnemy3
+Rooms/TheTestRoom.asm|107||0|1|32514|L|,TheTestRoomEnemy3,
+Rooms/TheTestRoom.asm|109||0|1|32518|F|TheTestRoomEnemy4
+Rooms/TheTestRoom.asm|109||0|1|32518|L|,TheTestRoomEnemy4,
+Rooms/TheTestRoom.asm|112||0|1|32522|F|TheTestRoomPosWilly
+Rooms/TheTestRoom.asm|112||0|1|32522|L|,TheTestRoomPosWilly,

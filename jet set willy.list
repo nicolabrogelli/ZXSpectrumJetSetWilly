@@ -159,9 +159,9 @@
   38+ 5DCD DB FE            in a, (0xFE)
   39+ 5DCF
   40+ 5DCF                  ; Incrementa il contatore (usato per animazioni/raster bars)
-  41+ 5DCF 2A 92 75         ld hl, (counter)
+  41+ 5DCF 2A B5 75         ld hl, (counter)
   42+ 5DD2 23               inc hl
-  43+ 5DD3 22 92 75         ld (counter), hl
+  43+ 5DD3 22 B5 75         ld (counter), hl
   44+ 5DD6
   45+ 5DD6                  ; Ripristina registri
   46+ 5DD6 E1               pop hl
@@ -377,22 +377,22 @@
  204+ 5E93 4F               ld   c, a              ; C = c (Col)
  205+ 5E94
  206+ 5E94                  ; --- Controlla Conveyor ---
- 207+ 5E94 3A 96 78         ld   a, (conveyor_len)
+ 207+ 5E94 3A B9 78         ld   a, (conveyor_len)
  208+ 5E97 B7               or   a
  209+ 5E98 CA C2 5E         jp   z, .check_ramp
  210+ 5E9B
- 211+ 5E9B 3A 97 78         ld   a, (conveyor_row)
+ 211+ 5E9B 3A BA 78         ld   a, (conveyor_row)
  212+ 5E9E D6 03            sub  3
  213+ 5EA0 BB               cp   e
  214+ 5EA1 C2 C2 5E         jp   nz, .check_ramp
  215+ 5EA4
- 216+ 5EA4 3A 98 78         ld   a, (conveyor_col)
+ 216+ 5EA4 3A BB 78         ld   a, (conveyor_col)
  217+ 5EA7 B9               cp   c
  218+ 5EA8 CA BC 5E         jp   z, .is_conveyor
  219+ 5EAB DA B1 5E         jp   c, .c_greater
  220+ 5EAE C3 C2 5E         jp   .check_ramp
  221+ 5EB1              .c_greater:
- 222+ 5EB1 21 96 78         ld   hl, conveyor_len
+ 222+ 5EB1 21 B9 78         ld   hl, conveyor_len
  223+ 5EB4 86               add  a, (hl)
  224+ 5EB5 B9               cp   c
  225+ 5EB6 CA C2 5E         jp   z, .check_ramp
@@ -402,32 +402,32 @@
  229+ 5EBF C3 17 5F         jp   .load_tile
  230+ 5EC2
  231+ 5EC2              .check_ramp:
- 232+ 5EC2 3A 9A 78         ld   a, (ramp_len)
+ 232+ 5EC2 3A BD 78         ld   a, (ramp_len)
  233+ 5EC5 B7               or   a
  234+ 5EC6 CA F8 5E         jp   z, .normal_grid
  235+ 5EC9
- 236+ 5EC9 3A 9B 78         ld   a, (ramp_row)
+ 236+ 5EC9 3A BE 78         ld   a, (ramp_row)
  237+ 5ECC D6 03            sub  3                 ; A = RampRowStart
  238+ 5ECE BB               cp   e                 ; compare with player row E
  239+ 5ECF DA F8 5E         jp   c, .normal_grid   ; if RampRowStart < E, skip!
  240+ 5ED2
  241+ 5ED2 93               sub  e                 ; A = RampRowStart - E
  242+ 5ED3 47               ld   b, a              ; B = distance from start row (0..ramp_len-1)
- 243+ 5ED4 3A 9A 78         ld   a, (ramp_len)
+ 243+ 5ED4 3A BD 78         ld   a, (ramp_len)
  244+ 5ED7 B8               cp   b
  245+ 5ED8 CA F8 5E         jp   z, .normal_grid   ; if B == ramp_len, too high!
  246+ 5EDB DA F8 5E         jp   c, .normal_grid   ; if B > ramp_len, too high!
  247+ 5EDE
  248+ 5EDE                  ; Calcola ExpectedCol:
- 249+ 5EDE 3A 99 78         ld   a, (ramp_dir)
+ 249+ 5EDE 3A BC 78         ld   a, (ramp_dir)
  250+ 5EE1 B7               or   a
  251+ 5EE2 28 06            jr   z, .r_left
  252+ 5EE4              .r_right:
- 253+ 5EE4 3A 9C 78         ld   a, (ramp_col)
+ 253+ 5EE4 3A BF 78         ld   a, (ramp_col)
  254+ 5EE7 80               add  a, b              ; A = ramp_col + B
  255+ 5EE8 18 04            jr   .compare_col
  256+ 5EEA              .r_left:
- 257+ 5EEA 3A 9C 78         ld   a, (ramp_col)
+ 257+ 5EEA 3A BF 78         ld   a, (ramp_col)
  258+ 5EED 90               sub  b                 ; A = ramp_col - B
  259+ 5EEE              .compare_col:
  260+ 5EEE B9               cp   c                 ; Compare with player col C
@@ -461,7 +461,7 @@
  288+ 5F14 21 BB 00         ld   hl, OFFSET_NASTY
  289+ 5F17              .load_tile:
  290+ 5F17 D5               push de
- 291+ 5F18 ED 5B 9D 78      ld   de, (room_ptr)
+ 291+ 5F18 ED 5B C0 78      ld   de, (room_ptr)
  292+ 5F1C 19               add  hl, de            ; HL = tile pointer
  293+ 5F1D D1               pop  de
  294+ 5F1E
@@ -541,7 +541,7 @@
  368+ 5F5E                  ; 1. Salva la coordinata X per calcolare lo shift
  369+ 5F5E 79               ld   a, c
  370+ 5F5F E6 07            and  7
- 371+ 5F61 32 8C 75         ld   (sprite_shift), a
+ 371+ 5F61 32 AF 75         ld   (sprite_shift), a
  372+ 5F64
  373+ 5F64                  ; 2. Calcola indirizzo schermo
  374+ 5F64 60               ld   h, b
@@ -554,7 +554,7 @@
  381+ 5F6E DD 5E 01         ld   e, (ix+1)     ; E = secondo byte dello sprite
  382+ 5F71
  383+ 5F71                  ; Esegui lo shift a destra se necessario
- 384+ 5F71 3A 8C 75         ld   a, (sprite_shift)
+ 384+ 5F71 3A AF 75         ld   a, (sprite_shift)
  385+ 5F74 B7               or   a
  386+ 5F75 28 1C            jr   z, .no_shift
  387+ 5F77
@@ -664,7 +664,7 @@
  491+ 5FDC DD E5            push ix
  492+ 5FDE
  493+ 5FDE                  ; 1. Determina sprite per la testa (sinistra o destra)
- 494+ 5FDE 3A 89 75         ld   a, (direction)
+ 494+ 5FDE 3A AC 75         ld   a, (direction)
  495+ 5FE1 FE 01            cp   1                 ; Sinistra?
  496+ 5FE3 20 06            jr   nz, .right_head
  497+ 5FE5
@@ -675,16 +675,16 @@
  502+ 5FEB DD 21 1D 61      ld   ix, Willy + (0 * 8) ; 1° tile (HEAD_GRAPH_RIGHT)
  503+ 5FEF
  504+ 5FEF              .draw_head:
- 505+ 5FEF ED 4B 82 75      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
+ 505+ 5FEF ED 4B A5 75      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
  506+ 5FF3 CD 3D 5E         call DrawPixelSprite8x8 ; Disegna testa
  507+ 5FF6
  508+ 5FF6                  ; 2. Determina sprite per il corpo (sinistra o destra con frame animazione)
- 509+ 5FF6 3A 89 75         ld   a, (direction)
+ 509+ 5FF6 3A AC 75         ld   a, (direction)
  510+ 5FF9 FE 01            cp   1                 ; Sinistra?
  511+ 5FFB 20 13            jr   nz, .right_body
  512+ 5FFD
  513+ 5FFD                  ; Corpo a sinistra
- 514+ 5FFD 3A 88 75         ld   a, (body_state)   ; 0, 1, 2
+ 514+ 5FFD 3A AB 75         ld   a, (body_state)   ; 0, 1, 2
  515+ 6000 C6 05            add  a, 5              ; offset del tile per il corpo sinistro (5, 6, 7)
  516+ 6002 87               add  a, a              ; *2
  517+ 6003 87               add  a, a              ; *4
@@ -697,7 +697,7 @@
  524+ 6010
  525+ 6010              .right_body:
  526+ 6010                  ; Corpo a destra
- 527+ 6010 3A 88 75         ld   a, (body_state)   ; 0, 1, 2
+ 527+ 6010 3A AB 75         ld   a, (body_state)   ; 0, 1, 2
  528+ 6013 C6 01            add  a, 1              ; offset del tile per il corpo destro (1, 2, 3)
  529+ 6015 87               add  a, a              ; *2
  530+ 6016 87               add  a, a              ; *4
@@ -708,7 +708,7 @@
  535+ 601F DD 19            add  ix, de
  536+ 6021
  537+ 6021              .draw_body:
- 538+ 6021 ED 4B 82 75      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
+ 538+ 6021 ED 4B A5 75      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
  539+ 6025 78               ld   a, b
  540+ 6026 C6 08            add  a, 8
  541+ 6028 47               ld   b, a              ; B = PlayerY + 8
@@ -721,10 +721,10 @@
  548+ 602F              ; Cancella il player alle vecchie coordinate pixel
  549+ 602F              ; -------------------------------------------------------------------
  550+ 602F              DeleteCharAtOldPos:
- 551+ 602F ED 4B 84 75      ld   bc, (PlayerPosOld) ; C = PlayerXOld, B = PlayerYOld
+ 551+ 602F ED 4B A7 75      ld   bc, (PlayerPosOld) ; C = PlayerXOld, B = PlayerYOld
  552+ 6033 CD 31 5F         call ErasePixelSprite8x8 ; Cancella testa
  553+ 6036
- 554+ 6036 ED 4B 84 75      ld   bc, (PlayerPosOld)
+ 554+ 6036 ED 4B A7 75      ld   bc, (PlayerPosOld)
  555+ 603A 78               ld   a, b
  556+ 603B C6 08            add  a, 8
  557+ 603D 47               ld   b, a
@@ -757,7 +757,7 @@
  584+ 6051 3E 06            ld   a, YELLOW         ; Inchiostro Giallo
  585+ 6053 CD 01 5E         call Ink
  586+ 6056
- 587+ 6056 2A 9D 78         ld   hl, (room_ptr)    ; HL = indirizzo stanza
+ 587+ 6056 2A C0 78         ld   hl, (room_ptr)    ; HL = indirizzo stanza
  588+ 6059 11 80 00         ld   de, 128           ; Offset del nome stanza (32 byte)
  589+ 605C 19               add  hl, de            ; HL = indirizzo nome stanza
  590+ 605D 06 20            ld   b, 32             ; B = 32 caratteri
@@ -854,7 +854,7 @@
  681+ 60B2 16 00            ld   d, 0
  682+ 60B4 59               ld   e, c              ; DE = C
  683+ 60B5 19               add  hl, de            ; HL = B * 8 + C
- 684+ 60B6 ED 5B 9D 78      ld   de, (room_ptr)
+ 684+ 60B6 ED 5B C0 78      ld   de, (room_ptr)
  685+ 60BA 19               add  hl, de            ; HL = layout byte address
  686+ 60BB 7E               ld   a, (hl)           ; A = layout byte
  687+ 60BC 57               ld   d, a              ; D = salva il byte di layout
@@ -870,7 +870,7 @@
  697+ 60C5 D5               push de
  698+ 60C6 C5               push bc
  699+ 60C7
- 700+ 60C7 ED 5B 9D 78      ld   de, (room_ptr)
+ 700+ 60C7 ED 5B C0 78      ld   de, (room_ptr)
  701+ 60CB B7               or   a
  702+ 60CC 20 06            jr   nz, .not_bg
  703+ 60CE 21 A0 00         ld   hl, OFFSET_BG
@@ -1646,7 +1646,7 @@
 1009+ 6AF6 85               add  a, l
 1010+ 6AF7 6F               ld   l, a              ; HL = r * 8 + c / 4
 1011+ 6AF8
-1012+ 6AF8 ED 5B 9D 78      ld   de, (room_ptr)
+1012+ 6AF8 ED 5B C0 78      ld   de, (room_ptr)
 1013+ 6AFC 19               add  hl, de            ; HL = layout byte address
 1014+ 6AFD 7E               ld   a, (hl)           ; A = layout byte
 1015+ 6AFE
@@ -1700,7 +1700,7 @@
 1063+ 6B36 21 BB 00         ld   hl, OFFSET_NASTY
 1064+ 6B39
 1065+ 6B39              .load_attr:
-1066+ 6B39 ED 5B 9D 78      ld   de, (room_ptr)
+1066+ 6B39 ED 5B C0 78      ld   de, (room_ptr)
 1067+ 6B3D 19               add  hl, de            ; HL = tile pointer
 1068+ 6B3E 7E               ld   a, (hl)           ; A = primo byte del tile (l'attributo colore)
 1069+ 6B3F
@@ -1938,19 +1938,19 @@
 1301+ 6C15 DD E5            push ix
 1302+ 6C17
 1303+ 6C17                  ; --- 1. Disegna Conveyor ---
-1304+ 6C17 2A 9D 78         ld   hl, (room_ptr)
+1304+ 6C17 2A C0 78         ld   hl, (room_ptr)
 1305+ 6C1A 11 D6 00         ld   de, OFFSET_CONVEYOR_DATA
 1306+ 6C1D 19               add  hl, de            ; HL = ConveyorData pointer
 1307+ 6C1E
 1308+ 6C1E 7E               ld   a, (hl)           ; A = Direction
-1309+ 6C1F 32 95 78         ld   (conveyor_dir), a
+1309+ 6C1F 32 B8 78         ld   (conveyor_dir), a
 1310+ 6C22 23               inc  hl
 1311+ 6C23 5E               ld   e, (hl)
 1312+ 6C24 23               inc  hl
 1313+ 6C25 56               ld   d, (hl)           ; DE = Location
 1314+ 6C26 23               inc  hl
 1315+ 6C27 7E               ld   a, (hl)           ; A = Length
-1316+ 6C28 32 96 78         ld   (conveyor_len), a
+1316+ 6C28 32 B9 78         ld   (conveyor_len), a
 1317+ 6C2B
 1318+ 6C2B                  ; Controlla se DE (Location) è 0
 1319+ 6C2B 7A               ld   a, d
@@ -1989,15 +1989,15 @@
 1352+ 6C52 E1               pop  hl                ; HL = original pointer (Length)
 1353+ 6C53
 1354+ 6C53 78               ld   a, b
-1355+ 6C54 32 97 78         ld   (conveyor_row), a
+1355+ 6C54 32 BA 78         ld   (conveyor_row), a
 1356+ 6C57 79               ld   a, c
-1357+ 6C58 32 98 78         ld   (conveyor_col), a
+1357+ 6C58 32 BB 78         ld   (conveyor_col), a
 1358+ 6C5B
 1359+ 6C5B 7E               ld   a, (hl)           ; A = Length
 1360+ 6C5C 57               ld   d, a              ; D = contatore lunghezza
 1361+ 6C5D
 1362+ 6C5D                  ; IX = room_ptr + OFFSET_CONVEYOR
-1363+ 6C5D 2A 9D 78         ld   hl, (room_ptr)
+1363+ 6C5D 2A C0 78         ld   hl, (room_ptr)
 1364+ 6C60 C5               push bc
 1365+ 6C61 01 CD 00         ld   bc, OFFSET_CONVEYOR
 1366+ 6C64 09               add  hl, bc
@@ -2013,19 +2013,19 @@
 1376+ 6C70
 1377+ 6C70              .draw_ramp:
 1378+ 6C70                  ; --- 2. Disegna Ramp ---
-1379+ 6C70 2A 9D 78         ld   hl, (room_ptr)
+1379+ 6C70 2A C0 78         ld   hl, (room_ptr)
 1380+ 6C73 11 DA 00         ld   de, OFFSET_RAMP_DATA
 1381+ 6C76 19               add  hl, de            ; HL = RampData pointer
 1382+ 6C77
 1383+ 6C77 7E               ld   a, (hl)           ; A = Direction (0 = up-left, 1 = up-right)
-1384+ 6C78 32 99 78         ld   (ramp_dir), a
+1384+ 6C78 32 BC 78         ld   (ramp_dir), a
 1385+ 6C7B 23               inc  hl
 1386+ 6C7C 5E               ld   e, (hl)
 1387+ 6C7D 23               inc  hl
 1388+ 6C7E 56               ld   d, (hl)           ; DE = Location
 1389+ 6C7F 23               inc  hl
 1390+ 6C80 7E               ld   a, (hl)           ; A = Length
-1391+ 6C81 32 9A 78         ld   (ramp_len), a
+1391+ 6C81 32 BD 78         ld   (ramp_len), a
 1392+ 6C84
 1393+ 6C84                  ; Controlla se DE (Location) è 0
 1394+ 6C84 7A               ld   a, d
@@ -2061,15 +2061,15 @@
 1424+ 6CAB E1               pop  hl                ; HL = original pointer (Length)
 1425+ 6CAC
 1426+ 6CAC 78               ld   a, b
-1427+ 6CAD 32 9B 78         ld   (ramp_row), a
+1427+ 6CAD 32 BE 78         ld   (ramp_row), a
 1428+ 6CB0 79               ld   a, c
-1429+ 6CB1 32 9C 78         ld   (ramp_col), a
+1429+ 6CB1 32 BF 78         ld   (ramp_col), a
 1430+ 6CB4
 1431+ 6CB4 7E               ld   a, (hl)           ; A = Length
 1432+ 6CB5 57               ld   d, a              ; D = contatore lunghezza
 1433+ 6CB6
 1434+ 6CB6                  ; IX = room_ptr + OFFSET_RAMP
-1435+ 6CB6 2A 9D 78         ld   hl, (room_ptr)
+1435+ 6CB6 2A C0 78         ld   hl, (room_ptr)
 1436+ 6CB9 C5               push bc
 1437+ 6CBA 01 C4 00         ld   bc, OFFSET_RAMP
 1438+ 6CBD 09               add  hl, bc
@@ -2080,7 +2080,7 @@
 1443+ 6CC2              .ramp_loop:
 1444+ 6CC2 CD 63 60         call DrawTile
 1445+ 6CC5
-1446+ 6CC5 3A 99 78         ld   a, (ramp_dir)
+1446+ 6CC5 3A BC 78         ld   a, (ramp_dir)
 1447+ 6CC8 B7               or   a
 1448+ 6CC9 28 03            jr   z, .up_left
 1449+ 6CCB              .up_right:
@@ -2113,12 +2113,12 @@
    9+ 6CD9              ; -------------------------------------------------------------------
   10+ 6CD9              MovePlayer:
   11+ 6CD9                  ; Verifica se un tasto di movimento è premuto
-  12+ 6CD9 DD 21 8A 75      ld   ix, flags
+  12+ 6CD9 DD 21 AD 75      ld   ix, flags
   13+ 6CDD DD CB 00 46      bit  $00, (ix)
   14+ 6CE1 C8               ret  z
   15+ 6CE2 DD CB 00 86      res  $00, (ix)
   16+ 6CE6
-  17+ 6CE6 ED 4B 82 75      ld   bc, (PlayerPos)   ; C = PlayerX (pixel), B = PlayerY (pixel)
+  17+ 6CE6 ED 4B A5 75      ld   bc, (PlayerPos)   ; C = PlayerX (pixel), B = PlayerY (pixel)
   18+ 6CEA
   19+ 6CEA CB 4A            bit  $01, d            ; Tasto Destra premuto?
   20+ 6CEC 20 25            jr   nz, movePlayer_right
@@ -2186,17 +2186,17 @@
   82+ 6D38 0E F0            ld   c, PLAYER_MAX_X
   83+ 6D3A
   84+ 6D3A              save_x:
-  85+ 6D3A ED 43 82 75      ld   (PlayerPos), bc
+  85+ 6D3A ED 43 A5 75      ld   (PlayerPos), bc
   86+ 6D3E
   87+ 6D3E              movePlayer_print:
   88+ 6D3E                  ; Alterna lo stato delle gambe ad ogni movimento (0, 1, 2, 0, 1, 2...)
-  89+ 6D3E 3A 88 75         ld   a, (body_state)
+  89+ 6D3E 3A AB 75         ld   a, (body_state)
   90+ 6D41 3C               inc  a
   91+ 6D42 FE 03            cp   3
   92+ 6D44 20 02            jr   nz, .save_state
   93+ 6D46 3E 00            ld   a, 0
   94+ 6D48              .save_state:
-  95+ 6D48 32 88 75         ld   (body_state), a
+  95+ 6D48 32 AB 75         ld   (body_state), a
   96+ 6D4B C9               ret
   97+ 6D4C
   98+ 6D4C
@@ -2205,15 +2205,15 @@
  101+ 6D4C              ; -------------------------------------------------------------------
  102+ 6D4C              LoadPositionPlayeinRoom:
  103+ 6D4C                  ; Carica la posizione iniziale di Willy definita nei dati della stanza
- 104+ 6D4C 2A 9D 78         ld   hl, (room_ptr)
+ 104+ 6D4C 2A C0 78         ld   hl, (room_ptr)
  105+ 6D4F 11 00 01         ld   de, OFFSET_POS_WILLY
  106+ 6D52 19               add  hl, de
  107+ 6D53 7E               ld   a, (hl)           ; A = Willy X
  108+ 6D54 23               inc  hl
  109+ 6D55 66               ld   h, (hl)           ; H = Willy Y
  110+ 6D56 6F               ld   l, a              ; HL = Willy position (Y, X)
- 111+ 6D57 22 82 75         ld   (PlayerPos), hl
- 112+ 6D5A 22 84 75         ld   (PlayerPosOld), hl
+ 111+ 6D57 22 A5 75         ld   (PlayerPos), hl
+ 112+ 6D5A 22 A7 75         ld   (PlayerPosOld), hl
  113+ 6D5D C9               ret
 # file closed: player.asm
   15  6D5E                  include "input.asm"
@@ -2231,7 +2231,7 @@
   11+ 6D5E 16 00            ld  d, $00
   12+ 6D60 3E FE            ld  a, $fe
   13+ 6D62 DB FE            in  a, ($fe)
-  14+ 6D64 DD 21 8A 75      ld  ix,flags
+  14+ 6D64 DD 21 AD 75      ld  ix,flags
   15+ 6D68
   16+ 6D68              checkCtrl_left:
   17+ 6D68 CB 4F            bit $01, a
@@ -2240,7 +2240,7 @@
   20+ 6D6E DD CB 00 C6      set 0,(ix)
   21+ 6D72 5F               ld  e, a
   22+ 6D73 3E 01            ld  a, 1
-  23+ 6D75 32 89 75         ld  (direction), a
+  23+ 6D75 32 AC 75         ld  (direction), a
   24+ 6D78 7B               ld  a, e
   25+ 6D79
   26+ 6D79              checkCtrl_right:
@@ -2250,7 +2250,7 @@
   30+ 6D7F DD CB 00 C6      set 0,(ix)
   31+ 6D83 5F               ld  e, a
   32+ 6D84 3E 02            ld  a, 2
-  33+ 6D86 32 89 75         ld  (direction), a
+  33+ 6D86 32 AC 75         ld  (direction), a
   34+ 6D89 7B               ld  a, e
   35+ 6D8A
   36+ 6D8A              checkCtrl_jump:
@@ -2268,16 +2268,16 @@
   48+ 6D9A
   49+ 6D9A              .released:
   50+ 6D9A AF               xor a
-  51+ 6D9B 32 91 75         ld  (jump_prev), a
+  51+ 6D9B 32 B4 75         ld  (jump_prev), a
   52+ 6D9E 18 10            jr  .end
   53+ 6DA0
   54+ 6DA0              .pressed:
-  55+ 6DA0 3A 91 75         ld  a, (jump_prev)
+  55+ 6DA0 3A B4 75         ld  a, (jump_prev)
   56+ 6DA3 B7               or  a
   57+ 6DA4 20 0A            jr  nz, .end
   58+ 6DA6 3E 01            ld  a, 1
-  59+ 6DA8 32 90 75         ld  (jump_pressed), a
-  60+ 6DAB 32 91 75         ld  (jump_prev), a
+  59+ 6DA8 32 B3 75         ld  (jump_pressed), a
+  60+ 6DAB 32 B4 75         ld  (jump_prev), a
   61+ 6DAE CB D2            set 2, d
   62+ 6DB0
   63+ 6DB0              .end:
@@ -2359,11 +2359,11 @@
   65+ 6DF3              ; Applica gravità e gestisce salto
   66+ 6DF3              ; -------------------------------------------------------------------
   67+ 6DF3              ApplyGravity:
-  68+ 6DF3 ED 4B 82 75      ld  bc, (PlayerPos)
+  68+ 6DF3 ED 4B A5 75      ld  bc, (PlayerPos)
   69+ 6DF7 78               ld  a, b              ; B = PlayerY (pixel)
   70+ 6DF8
   71+ 6DF8                  ; Controlla se siamo a mezz'aria (on_ground == 0)
-  72+ 6DF8 3A 8F 75         ld  a, (on_ground)
+  72+ 6DF8 3A B2 75         ld  a, (on_ground)
   73+ 6DFB B7               or  a
   74+ 6DFC CA 35 6E         jp  z, .in_air        ; Se siamo in volo, continua a volare
   75+ 6DFF
@@ -2387,30 +2387,30 @@
   93+ 6E11
   94+ 6E11                  ; Se nessuna delle due è solida, iniziamo a cadere!
   95+ 6E11 AF               xor  a
-  96+ 6E12 32 8F 75         ld   (on_ground), a
-  97+ 6E15 32 8E 75         ld   (velocity_y), a   ; Inizia la caduta con velocità 0
+  96+ 6E12 32 B2 75         ld   (on_ground), a
+  97+ 6E15 32 B1 75         ld   (velocity_y), a   ; Inizia la caduta con velocità 0
   98+ 6E18 C3 35 6E         jp   .in_air
   99+ 6E1B
  100+ 6E1B              .still_on_ground:
  101+ 6E1B                  ; Siamo ancora sulla piattaforma o sul pavimento
  102+ 6E1B                  ; Ripristina bc originale (PlayerPos)
- 103+ 6E1B ED 4B 82 75      ld   bc, (PlayerPos)
+ 103+ 6E1B ED 4B A5 75      ld   bc, (PlayerPos)
  104+ 6E1F
  105+ 6E1F                  ; Gestisci il salto
- 106+ 6E1F 3A 90 75         ld   a, (jump_pressed)
+ 106+ 6E1F 3A B3 75         ld   a, (jump_pressed)
  107+ 6E22 B7               or   a
  108+ 6E23 CA C0 6E         jp   z, .end
  109+ 6E26
  110+ 6E26 3E 0C            ld   a, JUMP_STRENGTH
- 111+ 6E28 32 8E 75         ld   (velocity_y), a
+ 111+ 6E28 32 B1 75         ld   (velocity_y), a
  112+ 6E2B AF               xor  a
- 113+ 6E2C 32 8F 75         ld   (on_ground), a
- 114+ 6E2F 32 90 75         ld   (jump_pressed), a
+ 113+ 6E2C 32 B2 75         ld   (on_ground), a
+ 114+ 6E2F 32 B3 75         ld   (jump_pressed), a
  115+ 6E32 C3 35 6E         jp   .in_air
  116+ 6E35
  117+ 6E35              .in_air:
  118+ 6E35                  ; Applica gravità
- 119+ 6E35 3A 8E 75         ld  a, (velocity_y)
+ 119+ 6E35 3A B1 75         ld  a, (velocity_y)
  120+ 6E38 D6 02            sub GRAVITY           ; gravity = 2
  121+ 6E3A
  122+ 6E3A                  ; Controlla se positivo per evitare bug con cp signed
@@ -2422,17 +2422,17 @@
  128+ 6E42 3E F4            ld  a, -MAX_FALL_SPEED
  129+ 6E44
  130+ 6E44              .store_vel:
- 131+ 6E44 32 8E 75         ld  (velocity_y), a
+ 131+ 6E44 32 B1 75         ld  (velocity_y), a
  132+ 6E47
  133+ 6E47                  ; Applica movimento verticale: PlayerY = PlayerY - velocity_y
- 134+ 6E47 ED 4B 82 75      ld  bc, (PlayerPos)
+ 134+ 6E47 ED 4B A5 75      ld  bc, (PlayerPos)
  135+ 6E4B 57               ld  d, a              ; D = velocity_y (signed)
  136+ 6E4C 78               ld  a, b              ; A = PlayerY
  137+ 6E4D 92               sub d                 ; A = PlayerY - velocity_y
  138+ 6E4E 47               ld  b, a              ; B = new PlayerY
  139+ 6E4F
  140+ 6E4F                  ; Controlla se stiamo cadendo (velocity_y <= 0)
- 141+ 6E4F 3A 8E 75         ld  a, (velocity_y)
+ 141+ 6E4F 3A B1 75         ld  a, (velocity_y)
  142+ 6E52 CB 7F            bit 7, a              ; Se negativo, bit 7 = 1
  143+ 6E54 20 05            jr  nz, .falling_checks
  144+ 6E56 B7               or  a                 ; Se zero
@@ -2476,7 +2476,7 @@
  182+ 6E7E 57               ld   d, a              ; D = limite superiore
  183+ 6E7F
  184+ 6E7F                  ; Vecchio Y + 16
- 185+ 6E7F 3A 83 75         ld   a, (PlayerPos+1)  ; A = Vecchio Y
+ 185+ 6E7F 3A A6 75         ld   a, (PlayerPos+1)  ; A = Vecchio Y
  186+ 6E82 C6 10            add  a, 16             ; A = Vecchio Y + 16
  187+ 6E84
  188+ 6E84 BA               cp   d                 ; Confronta Vecchio Y + 16 con il limite
@@ -2493,20 +2493,20 @@
  199+ 6E8E 87               add  a, a              ; *8
  200+ 6E8F C6 08            add  a, 8              ; A = PlayerY di atterraggio
  201+ 6E91
- 202+ 6E91 ED 4B 82 75      ld   bc, (PlayerPos)   ; Ripristina C = PlayerX
+ 202+ 6E91 ED 4B A5 75      ld   bc, (PlayerPos)   ; Ripristina C = PlayerX
  203+ 6E95 47               ld   b, a              ; B = Nuovo PlayerY
  204+ 6E96
- 205+ 6E96 ED 43 82 75      ld   (PlayerPos), bc
+ 205+ 6E96 ED 43 A5 75      ld   (PlayerPos), bc
  206+ 6E9A 3E 01            ld   a, 1
- 207+ 6E9C 32 8F 75         ld   (on_ground), a
+ 207+ 6E9C 32 B2 75         ld   (on_ground), a
  208+ 6E9F AF               xor  a
- 209+ 6EA0 32 8E 75         ld   (velocity_y), a
+ 209+ 6EA0 32 B1 75         ld   (velocity_y), a
  210+ 6EA3 C3 C0 6E         jp   .end
  211+ 6EA6
  212+ 6EA6              .no_collision_checks:
- 213+ 6EA6 3A 8E 75         ld   a, (velocity_y)
+ 213+ 6EA6 3A B1 75         ld   a, (velocity_y)
  214+ 6EA9 57               ld   d, a                  ; Ripristina D = velocity_y (evita corruzione se proveniamo da .check_landing)
- 215+ 6EAA ED 4B 82 75      ld   bc, (PlayerPos)
+ 215+ 6EAA ED 4B A5 75      ld   bc, (PlayerPos)
  216+ 6EAE 78               ld   a, b
  217+ 6EAF 92               sub  d                 ; A = Nuovo Y (calcolato in .store_vel)
  218+ 6EB0 47               ld   b, a              ; B = Nuovo Y
@@ -2517,14 +2517,14 @@
  223+ 6EB4 30 06            jr   nc, .save_ok
  224+ 6EB6 06 08            ld   b, 8
  225+ 6EB8 AF               xor  a
- 226+ 6EB9 32 8E 75         ld   (velocity_y), a
+ 226+ 6EB9 32 B1 75         ld   (velocity_y), a
  227+ 6EBC
  228+ 6EBC              .save_ok:
- 229+ 6EBC ED 43 82 75      ld   (PlayerPos), bc
+ 229+ 6EBC ED 43 A5 75      ld   (PlayerPos), bc
  230+ 6EC0
  231+ 6EC0              .end:
  232+ 6EC0 AF               xor  a
- 233+ 6EC1 32 90 75         ld   (jump_pressed), a
+ 233+ 6EC1 32 B3 75         ld   (jump_pressed), a
  234+ 6EC4 C9               ret
  235+ 6EC5
  236+ 6EC5              ; -------------------------------------------------------------------
@@ -2545,14 +2545,14 @@
  251+ 6ED5 28 1F            jr   z, .next
  252+ 6ED7
  253+ 6ED7                  ; 1. Controllo orizzontale: PlayerX - EnemyX + 7 in [0, 22]
- 254+ 6ED7 3A 82 75         ld   a, (PlayerPos)    ; A = PlayerX
+ 254+ 6ED7 3A A5 75         ld   a, (PlayerPos)    ; A = PlayerX
  255+ 6EDA DD 96 01         sub  (ix+1)            ; A = PlayerX - EnemyX
  256+ 6EDD C6 07            add  a, 7              ; A = PlayerX - EnemyX + 7
  257+ 6EDF FE 17            cp   23                ; Se >= 23, nessuna collisione con questo
  258+ 6EE1 30 13            jr   nc, .next
  259+ 6EE3
  260+ 6EE3                  ; 2. Controllo verticale: PlayerY - EnemyY + 15 in [0, 30]
- 261+ 6EE3 3A 83 75         ld   a, (PlayerPos+1)  ; A = PlayerY
+ 261+ 6EE3 3A A6 75         ld   a, (PlayerPos+1)  ; A = PlayerY
  262+ 6EE6 DD 96 02         sub  (ix+2)            ; A = PlayerY - EnemyY
  263+ 6EE9 C6 0F            add  a, 15             ; A = PlayerY - EnemyY + 15
  264+ 6EEB FE 1F            cp   31                ; Se >= 31, nessuna collisione con questo
@@ -2609,25 +2609,25 @@
  315+ 6F21 5F               ld   e, a              ; E = c (column)
  316+ 6F22
  317+ 6F22                  ; --- CONTROLLO CONVEYOR ---
- 318+ 6F22 3A 96 78         ld   a, (conveyor_len)
+ 318+ 6F22 3A B9 78         ld   a, (conveyor_len)
  319+ 6F25 B7               or   a
  320+ 6F26 28 1E            jr   z, .check_ramp    ; Se non c'è conveyor, controlla rampa
  321+ 6F28
  322+ 6F28                  ; Controlla se Row corrisponde
- 323+ 6F28 3A 97 78         ld   a, (conveyor_row)
+ 323+ 6F28 3A BA 78         ld   a, (conveyor_row)
  324+ 6F2B D6 03            sub  3                 ; Converti in layout row
  325+ 6F2D BA               cp   d
  326+ 6F2E 20 16            jr   nz, .check_ramp   ; Row diversa, controlla rampa
  327+ 6F30
  328+ 6F30                  ; Controlla se Col è compresa: c >= conveyor_col e c < conveyor_col + conveyor_len
- 329+ 6F30 3A 98 78         ld   a, (conveyor_col)
+ 329+ 6F30 3A BB 78         ld   a, (conveyor_col)
  330+ 6F33 BB               cp   e
  331+ 6F34 28 0E            jr   z, .is_conveyor   ; c == conveyor_col -> solido!
  332+ 6F36 38 02            jr   c, .c_greater     ; c > conveyor_col -> controlla limite superiore
  333+ 6F38 18 0C            jr   .check_ramp       ; c < conveyor_col
  334+ 6F3A              .c_greater:
  335+ 6F3A 47               ld   b, a              ; B = conveyor_col
- 336+ 6F3B 3A 96 78         ld   a, (conveyor_len)
+ 336+ 6F3B 3A B9 78         ld   a, (conveyor_len)
  337+ 6F3E 80               add  a, b              ; A = conveyor_col + conveyor_len
  338+ 6F3F BB               cp   e
  339+ 6F40 28 04            jr   z, .check_ramp    ; c == len (fuori)
@@ -2637,32 +2637,32 @@
  343+ 6F46
  344+ 6F46              .check_ramp:
  345+ 6F46                  ; --- CONTROLLO RAMP ---
- 346+ 6F46 3A 9A 78         ld   a, (ramp_len)
+ 346+ 6F46 3A BD 78         ld   a, (ramp_len)
  347+ 6F49 B7               or   a
  348+ 6F4A 28 25            jr   z, .not_solid     ; Se non c'è rampa, fine
  349+ 6F4C
- 350+ 6F4C 3A 9B 78         ld   a, (ramp_row)
+ 350+ 6F4C 3A BE 78         ld   a, (ramp_row)
  351+ 6F4F D6 03            sub  3                 ; A = RampRowStart
  352+ 6F51 BA               cp   d                 ; compare with player row D
  353+ 6F52 38 1D            jr   c, .not_solid     ; if RampRowStart < D, skip!
  354+ 6F54
  355+ 6F54 92               sub  d                 ; A = RampRowStart - D
  356+ 6F55 47               ld   b, a              ; B = distance from start row (0..ramp_len-1)
- 357+ 6F56 3A 9A 78         ld   a, (ramp_len)
+ 357+ 6F56 3A BD 78         ld   a, (ramp_len)
  358+ 6F59 B8               cp   b
  359+ 6F5A 28 15            jr   z, .not_solid     ; if B == ramp_len, too high!
  360+ 6F5C 38 13            jr   c, .not_solid     ; if B > ramp_len, too high!
  361+ 6F5E
  362+ 6F5E                  ; Calcola ExpectedCol:
- 363+ 6F5E 3A 99 78         ld   a, (ramp_dir)
+ 363+ 6F5E 3A BC 78         ld   a, (ramp_dir)
  364+ 6F61 B7               or   a
  365+ 6F62 28 06            jr   z, .r_left
  366+ 6F64              .r_right:
- 367+ 6F64 3A 9C 78         ld   a, (ramp_col)
+ 367+ 6F64 3A BF 78         ld   a, (ramp_col)
  368+ 6F67 80               add  a, b              ; A = ramp_col + B
  369+ 6F68 18 04            jr   .compare_col
  370+ 6F6A              .r_left:
- 371+ 6F6A 3A 9C 78         ld   a, (ramp_col)
+ 371+ 6F6A 3A BF 78         ld   a, (ramp_col)
  372+ 6F6D 90               sub  b                 ; A = ramp_col - B
  373+ 6F6E              .compare_col:
  374+ 6F6E BB               cp   e                 ; Compare with player col E
@@ -2686,15 +2686,15 @@
  392+ 6F7B              ; Applica la forza di trascinamento del conveyor se Willy vi è sopra
  393+ 6F7B              ; -------------------------------------------------------------------
  394+ 6F7B              ApplyConveyorForce:
- 395+ 6F7B 3A 8F 75         ld   a, (on_ground)
+ 395+ 6F7B 3A B2 75         ld   a, (on_ground)
  396+ 6F7E B7               or   a
  397+ 6F7F C8               ret  z                 ; Se non è a terra, nessuna forza
  398+ 6F80
- 399+ 6F80 3A 96 78         ld   a, (conveyor_len)
+ 399+ 6F80 3A B9 78         ld   a, (conveyor_len)
  400+ 6F83 B7               or   a
  401+ 6F84 C8               ret  z                 ; Se non c'è conveyor in questa stanza, fine
  402+ 6F85
- 403+ 6F85 ED 4B 82 75      ld   bc, (PlayerPos)   ; C = WillyX, B = WillyY
+ 403+ 6F85 ED 4B A5 75      ld   bc, (PlayerPos)   ; C = WillyX, B = WillyY
  404+ 6F89
  405+ 6F89                  ; Calcola screenRow dei piedi del player: RowPiedi = Y / 8
  406+ 6F89 78               ld   a, b
@@ -2704,7 +2704,7 @@
  410+ 6F90
  411+ 6F90                  ; Confronta con conveyor_row
  412+ 6F90 57               ld   d, a              ; D = RowPiedi
- 413+ 6F91 3A 97 78         ld   a, (conveyor_row)
+ 413+ 6F91 3A BA 78         ld   a, (conveyor_row)
  414+ 6F94 BA               cp   d
  415+ 6F95 C0               ret  nz                ; Se non siamo sulla riga del conveyor, fine
  416+ 6F96
@@ -2724,8 +2724,8 @@
  430+ 6FA7 57               ld   d, a              ; D = ColEnd
  431+ 6FA8
  432+ 6FA8                  ; conveyor_col_end = conveyor_col + conveyor_len - 1
- 433+ 6FA8 3A 98 78         ld   a, (conveyor_col)
- 434+ 6FAB 21 96 78         ld   hl, conveyor_len
+ 433+ 6FA8 3A BB 78         ld   a, (conveyor_col)
+ 434+ 6FAB 21 B9 78         ld   hl, conveyor_len
  435+ 6FAE 86               add  a, (hl)
  436+ 6FAF 3D               dec  a                 ; A = conveyor_col_end
  437+ 6FB0
@@ -2734,14 +2734,14 @@
  440+ 6FB1 D8               ret  c                 ; Se conveyor_col_end < E, fine
  441+ 6FB2
  442+ 6FB2                  ; D >= conveyor_col
- 443+ 6FB2 3A 98 78         ld   a, (conveyor_col)
+ 443+ 6FB2 3A BB 78         ld   a, (conveyor_col)
  444+ 6FB5 5F               ld   e, a
  445+ 6FB6 7A               ld   a, d
  446+ 6FB7 BB               cp   e
  447+ 6FB8 D8               ret  c                 ; Se D < conveyor_col, fine
  448+ 6FB9
  449+ 6FB9                  ; Willy è sul conveyor! Muovilo nella direzione del conveyor!
- 450+ 6FB9 3A 95 78         ld   a, (conveyor_dir)
+ 450+ 6FB9 3A B8 78         ld   a, (conveyor_dir)
  451+ 6FBC B7               or   a
  452+ 6FBD 28 0B            jr   z, .move_left
  453+ 6FBF
@@ -2762,7 +2762,7 @@
  468+ 6FD3
  469+ 6FD3              .store_x:
  470+ 6FD3 4F               ld   c, a
- 471+ 6FD4 ED 43 82 75      ld   (PlayerPos), bc   ; salva la nuova posizione
+ 471+ 6FD4 ED 43 A5 75      ld   (PlayerPos), bc   ; salva la nuova posizione
  472+ 6FD8 C9               ret
  473+ 6FD9
  474+ 6FD9              ; -------------------------------------------------------------------
@@ -2864,8 +2864,8 @@
  570+ 7029 D5               push de
  571+ 702A C5               push bc
  572+ 702B
- 573+ 702B 2A 9D 78         ld   hl, (room_ptr)     ; HL = inizio layout stanza (128 byte)
- 574+ 702E 11 94 76         ld   de, unpacked_layout ; DE = buffer RAM
+ 573+ 702B 2A C0 78         ld   hl, (room_ptr)     ; HL = inizio layout stanza (128 byte)
+ 574+ 702E 11 B7 76         ld   de, unpacked_layout ; DE = buffer RAM
  575+ 7031 06 80            ld   b, 128             ; 128 byte
  576+ 7033              .byte_loop:
  577+ 7033 7E               ld   a, (hl)            ; Leggi byte compresso
@@ -2931,7 +2931,7 @@
  637+ 7061 59               ld   e, c
  638+ 7062 16 00            ld   d, 0
  639+ 7064 19               add  hl, de            ; HL = Row * 32 + Col
- 640+ 7065 11 94 76         ld   de, unpacked_layout
+ 640+ 7065 11 B7 76         ld   de, unpacked_layout
  641+ 7068 19               add  hl, de
  642+ 7069 7E               ld   a, (hl)           ; A = cell type
  643+ 706A
@@ -3013,14 +3013,14 @@
   30+ 7098 DD E5            push ix
   31+ 709A
   32+ 709A                  ; 1. Imposta IX all'indirizzo dell'array dei colori in ROM (room_ptr + 223)
-  33+ 709A 2A 9D 78         ld   hl, (room_ptr)
+  33+ 709A 2A C0 78         ld   hl, (room_ptr)
   34+ 709D 11 DF 00         ld   de, 223
   35+ 70A0 19               add  hl, de
   36+ 70A1 E5               push hl
   37+ 70A2 DD E1            pop  ix                ; IX = color pointer
   38+ 70A4
   39+ 70A4                  ; 2. Imposta HL all'indirizzo dei dati dei nemici (room_ptr + 240)
-  40+ 70A4 2A 9D 78         ld   hl, (room_ptr)
+  40+ 70A4 2A C0 78         ld   hl, (room_ptr)
   41+ 70A7 11 F0 00         ld   de, 240           ; Offset degli enemy nella stanza
   42+ 70AA 19               add  hl, de            ; HL = indirizzo di RoomXEnemy1
   43+ 70AB
@@ -3218,13 +3218,13 @@
  235+ 7168 C2 A4 71         jp   nz, .not_lametta
  236+ 716B
  237+ 716B                  ; Lametta (Tipo 0)
- 238+ 716B 2A 9D 78         ld   hl, (room_ptr)
- 239+ 716E 11 04 7B         ld   de, TheBridgeLayout
+ 238+ 716B 2A C0 78         ld   hl, (room_ptr)
+ 239+ 716E 11 02 7A         ld   de, TheBridgeLayout
  240+ 7171 B7               or   a
  241+ 7172 ED 52            sbc  hl, de
  242+ 7174 28 1A            jr   z, .bridge_lametta
  243+ 7176
- 244+ 7176 2A 9D 78         ld   hl, (room_ptr)
+ 244+ 7176 2A C0 78         ld   hl, (room_ptr)
  245+ 7179 11 00 79         ld   de, TheOffLicenceLayout
  246+ 717C B7               or   a
  247+ 717D ED 52            sbc  hl, de
@@ -3254,13 +3254,13 @@
  271+ 71A5 C2 D7 71         jp   nz, .not_egg
  272+ 71A8
  273+ 71A8                  ; Uovo (Tipo 1)
- 274+ 71A8 2A 9D 78         ld   hl, (room_ptr)
- 275+ 71AB 11 04 7B         ld   de, TheBridgeLayout
+ 274+ 71A8 2A C0 78         ld   hl, (room_ptr)
+ 275+ 71AB 11 02 7A         ld   de, TheBridgeLayout
  276+ 71AE B7               or   a
  277+ 71AF ED 52            sbc  hl, de
  278+ 71B1 28 1A            jr   z, .bridge_egg
  279+ 71B3
- 280+ 71B3 2A 9D 78         ld   hl, (room_ptr)
+ 280+ 71B3 2A C0 78         ld   hl, (room_ptr)
  281+ 71B6 11 00 79         ld   de, TheOffLicenceLayout
  282+ 71B9 B7               or   a
  283+ 71BA ED 52            sbc  hl, de
@@ -3283,7 +3283,7 @@
  300+ 71D7
  301+ 71D7              .not_egg:
  302+ 71D7                  ; Robot (Tipo 2)
- 303+ 71D7 2A 9D 78         ld   hl, (room_ptr)
+ 303+ 71D7 2A C0 78         ld   hl, (room_ptr)
  304+ 71DA 11 00 79         ld   de, TheOffLicenceLayout
  305+ 71DD B7               or   a
  306+ 71DE ED 52            sbc  hl, de
@@ -3465,7 +3465,7 @@
    5+ 72EC              ; -------------------------------------------------------------------
    6+ 72EC              ; Tabella Globale degli Oggetti (Items)
    7+ 72EC              ; Ciascun item occupa 5 byte:
-   8+ 72EC              ;   Byte 0: ID della stanza (0 = Test Room, 1 = The Bridge, 2 = The Off Licence)
+   8+ 72EC              ;   Byte 0: ID della stanza (0 = Test Room, 1 = The Bridge, 2 = The Off Licence, 3 = Master Bedroom, 4 = Under the MegaTree)
    9+ 72EC              ;   Byte 1: X colonna dello schermo (0..31)
   10+ 72EC              ;   Byte 2: Y riga dello schermo (3..18)
   11+ 72EC              ;   Byte 3: Attributo colore (es. $C6 per Giallo Flashing, $C5 per Cyan Flashing)
@@ -3503,603 +3503,590 @@
   31+ 7328 00 0F 11 C2      db 0, 15, 17, $C2, 0           ; Oggetto 3: Rosso Flashing ($C2) al centro
   31+ 732C 00
   32+ 732D
-  33+ 732D FF               db $FF                        ; Fine tabella
-  34+ 732E
-  35+ 732E              ; -------------------------------------------------------------------
-  36+ 732E              ; Determina e imposta il current_room ID in base a room_ptr
-  37+ 732E              ; -------------------------------------------------------------------
-  38+ 732E              DetermineCurrentRoomID:
-  39+ 732E E5               push hl
-  40+ 732F D5               push de
-  41+ 7330
-  42+ 7330 2A 9D 78         ld   hl, (room_ptr)
-  43+ 7333
-  44+ 7333                  ; Test Room?
-  45+ 7333 11 08 7D         ld   de, TheTestRoomLayout
-  46+ 7336 B7               or   a
-  47+ 7337 ED 52            sbc  hl, de
-  48+ 7339 20 04            jr   nz, .not_test
-  49+ 733B 3E 00            ld   a, 0
-  50+ 733D 18 3E            jr   .set_room
-  51+ 733F
-  52+ 733F              .not_test:
-  53+ 733F 2A 9D 78         ld   hl, (room_ptr)
-  54+ 7342 11 04 7B         ld   de, TheBridgeLayout
-  55+ 7345 B7               or   a
-  56+ 7346 ED 52            sbc  hl, de
-  57+ 7348 20 04            jr   nz, .not_bridge
-  58+ 734A 3E 01            ld   a, 1
-  59+ 734C 18 2F            jr   .set_room
-  60+ 734E
-  61+ 734E              .not_bridge:
-  62+ 734E 2A 9D 78         ld   hl, (room_ptr)
-  63+ 7351 11 00 79         ld   de, TheOffLicenceLayout
-  64+ 7354 B7               or   a
-  65+ 7355 ED 52            sbc  hl, de
-  66+ 7357 20 04            jr   nz, .not_office
-  67+ 7359 3E 02            ld   a, 2
-  68+ 735B 18 20            jr   .set_room
-  69+ 735D
-  70+ 735D              .not_office:
-  71+ 735D 2A 9D 78         ld   hl, (room_ptr)
-  72+ 7360 11 06 7C         ld   de, MastreBedRoomLayout
-  73+ 7363 B7               or   a
-  74+ 7364 ED 52            sbc  hl, de
-  75+ 7366 20 04            jr   nz, .not_masterbed
-  76+ 7368 3E 02            ld   a, 2
-  77+ 736A 18 11            jr   .set_room
-  78+ 736C
-  79+ 736C              .not_masterbed:
-  80+ 736C 2A 9D 78         ld   hl, (room_ptr)
-  81+ 736F 11 02 7A         ld   de, UnderTheMegaTreeLayout
-  82+ 7372 B7               or   a
-  83+ 7373 ED 52            sbc  hl, de
-  84+ 7375 20 04            jr   nz, .unknown
-  85+ 7377 3E 02            ld   a, 2
-  86+ 7379 18 02            jr   .set_room
-  87+ 737B
-  88+ 737B
-  89+ 737B              .unknown:
-  90+ 737B 3E 00            ld   a, 0                    ; Default fallback
-  91+ 737D
-  92+ 737D              .set_room:
-  93+ 737D 32 94 78         ld   (current_room), a
-  94+ 7380
-  95+ 7380 D1               pop  de
-  96+ 7381 E1               pop  hl
-  97+ 7382 C9               ret
-  98+ 7383
-  99+ 7383              ; -------------------------------------------------------------------
- 100+ 7383              ; Disegna tutti gli oggetti attivi della stanza corrente
- 101+ 7383              ; -------------------------------------------------------------------
- 102+ 7383              DrawRoomItems:
- 103+ 7383 E5               push hl
- 104+ 7384 D5               push de
- 105+ 7385 C5               push bc
- 106+ 7386 DD E5            push ix
- 107+ 7388
- 108+ 7388                  ; Ottieni il puntatore alla grafica dell'item della stanza corrente:
- 109+ 7388                  ; room_ptr + OFFSET_ITEM_GRAPHIC
- 110+ 7388 2A 9D 78         ld   hl, (room_ptr)
- 111+ 738B 11 E3 00         ld   de, OFFSET_ITEM_GRAPHIC
- 112+ 738E 19               add  hl, de
- 113+ 738F E5               push hl
- 114+ 7390 DD E1            pop  ix                ; IX = puntatore alla grafica dell'item della stanza
- 115+ 7392
- 116+ 7392 21 EC 72         ld   hl, ItemsTable
- 117+ 7395              .loop:
- 118+ 7395 7E               ld   a, (hl)           ; A = Room ID
- 119+ 7396 FE FF            cp   $FF               ; Fine tabella?
- 120+ 7398 28 23            jr   z, .done
- 121+ 739A
- 122+ 739A                  ; Confronta con la stanza corrente
- 123+ 739A 57               ld   d, a              ; D = Room ID dell'item
- 124+ 739B 3A 94 78         ld   a, (current_room)
- 125+ 739E BA               cp   d
- 126+ 739F 20 15            jr   nz, .next_item    ; Stanza diversa, salta
- 127+ 73A1
- 128+ 73A1                  ; Leggi coordinate, colore e stato
- 129+ 73A1 23               inc  hl                ; HL punta a X
- 130+ 73A2 4E               ld   c, (hl)           ; C = X colonna
- 131+ 73A3 23               inc  hl                ; HL punta a Y
- 132+ 73A4 46               ld   b, (hl)           ; B = Y riga
- 133+ 73A5 23               inc  hl                ; HL punta al Colore
- 134+ 73A6 5E               ld   e, (hl)           ; E = Colore
- 135+ 73A7 23               inc  hl                ; HL punta a collected flag
- 136+ 73A8 7E               ld   a, (hl)           ; A = collected flag
- 137+ 73A9 B7               or   a
- 138+ 73AA 20 0E            jr   nz, .next_no_inc  ; Già raccolto, salta
- 139+ 73AC
- 140+ 73AC                  ; Disegna l'item!
- 141+ 73AC                  ; B = Row, C = Col, IX = bitmap graphic (8 byte), E = Colore
- 142+ 73AC E5               push hl
- 143+ 73AD DD E5            push ix
- 144+ 73AF E1               pop  hl                ; HL = bitmap pointer
- 145+ 73B0 CD C3 73         call DrawItemGraphic
- 146+ 73B3 E1               pop  hl
- 147+ 73B4
- 148+ 73B4 18 04            jr   .next_no_inc
- 149+ 73B6
- 150+ 73B6              .next_item:
- 151+ 73B6 23               inc  hl                ; salta X
- 152+ 73B7 23               inc  hl                ; salta Y
- 153+ 73B8 23               inc  hl                ; salta colore
- 154+ 73B9 23               inc  hl                ; salta collected
- 155+ 73BA              .next_no_inc:
- 156+ 73BA 23               inc  hl                ; vai al prossimo record (prossimo Room ID)
- 157+ 73BB 18 D8            jr   .loop
- 158+ 73BD
- 159+ 73BD              .done:
- 160+ 73BD DD E1            pop  ix
- 161+ 73BF D1               pop  de
- 162+ 73C0 C1               pop  bc
- 163+ 73C1 E1               pop  hl
- 164+ 73C2 C9               ret
- 165+ 73C3
- 166+ 73C3              ; -------------------------------------------------------------------
- 167+ 73C3              ; Disegna un singolo item (8x8 pixel) a schermo con colore personalizzato
- 168+ 73C3              ; Input: B = Row (3..18), C = Col (0..31), HL = Puntatore al bitmap (8 byte), E = Colore
- 169+ 73C3              ; -------------------------------------------------------------------
- 170+ 73C3              DrawItemGraphic:
- 171+ 73C3 C5               push bc
- 172+ 73C4 D5               push de
- 173+ 73C5 E5               push hl
- 174+ 73C6
- 175+ 73C6                  ; 1. Calcola l'indirizzo dello schermo (bitmap) per Row B, Col C, scanline 0
- 176+ 73C6 78               ld   a, b
- 177+ 73C7 E6 18            and  $18
- 178+ 73C9 C6 40            add  a, $40
- 179+ 73CB 57               ld   d, a              ; D = High byte dell'indirizzo dello schermo
- 180+ 73CC
- 181+ 73CC 78               ld   a, b
- 182+ 73CD E6 07            and  7
- 183+ 73CF 87               add  a, a              ; *2
- 184+ 73D0 87               add  a, a              ; *4
- 185+ 73D1 87               add  a, a              ; *8
- 186+ 73D2 87               add  a, a              ; *16
- 187+ 73D3 87               add  a, a              ; *32
- 188+ 73D4 81               add  a, c              ; + Col C
- 189+ 73D5 5F               ld   e, a              ; E = Low byte dell'indirizzo dello schermo
- 190+ 73D6
- 191+ 73D6                  ; 2. Copia gli 8 byte del bitmap dello sprite
- 192+ 73D6 C5               push bc                ; Salva BC (contiene Row e Col)
- 193+ 73D7 06 08            ld   b, 8              ; 8 scanline
- 194+ 73D9              .line_loop:
- 195+ 73D9 7E               ld   a, (hl)
- 196+ 73DA 12               ld   (de), a
- 197+ 73DB 14               inc  d                 ; Prossima scanline
- 198+ 73DC 23               inc  hl
- 199+ 73DD 05               dec  b
- 200+ 73DE 20 F9            jr   nz, .line_loop
- 201+ 73E0 C1               pop  bc                ; Ripristina BC
- 202+ 73E1
- 203+ 73E1                  ; 3. Calcola l'indirizzo degli attributi dello schermo
- 204+ 73E1                  ; HL = $5800 + B * 32 + C
- 205+ 73E1 26 00            ld   h, 0
- 206+ 73E3 68               ld   l, b              ; HL = B (Row)
- 207+ 73E4 29               add  hl, hl            ; *2
- 208+ 73E5 29               add  hl, hl            ; *4
- 209+ 73E6 29               add  hl, hl            ; *8
- 210+ 73E7 29               add  hl, hl            ; *16
- 211+ 73E8 29               add  hl, hl            ; *32
- 212+ 73E9
- 213+ 73E9 79               ld   a, c              ; A = Col
- 214+ 73EA 85               add  a, l
- 215+ 73EB 6F               ld   l, a
- 216+ 73EC 30 01            jr   nc, .no_carry
- 217+ 73EE 24               inc  h
- 218+ 73EF              .no_carry:
- 219+ 73EF                  ; HL = B * 32 + C
- 220+ 73EF 11 00 58         ld   de, $5800
- 221+ 73F2 19               add  hl, de            ; HL = AttrAddr
- 222+ 73F3
- 223+ 73F3                  ; Ripristina i registri dallo stack per estrarre il colore in E
- 224+ 73F3                  ; Lo stack ha: HL (originale), DE (originale con colore in E), BC (originale)
- 225+ 73F3 C1               pop  bc                ; BC = HL originale
- 226+ 73F4 D1               pop  de                ; DE = DE originale (colore in E)
- 227+ 73F5
- 228+ 73F5 7B               ld   a, e              ; A = Colore
- 229+ 73F6 77               ld   (hl), a           ; Scrivi in memoria attributi (HL)
- 230+ 73F7
- 231+ 73F7                  ; Ripristina lo stack e i registri originari
- 232+ 73F7 C5               push bc                ; Rimetti HL originale sulla pila
- 233+ 73F8 E1               pop  hl                ; HL = HL originale
- 234+ 73F9 C1               pop  bc                ; BC = BC originale
- 235+ 73FA C9               ret
- 236+ 73FB
- 237+ 73FB              ; -------------------------------------------------------------------
- 238+ 73FB              ; Ripristina la cella dello sfondo originale per cancellare l'item
- 239+ 73FB              ; Input: B = Row (3..18), C = Col (0..31)
- 240+ 73FB              ; -------------------------------------------------------------------
- 241+ 73FB              RestoreBackgroundCell:
- 242+ 73FB FD E5            push iy                ; Preserva IY
- 243+ 73FD C5               push bc
- 244+ 73FE D5               push de
- 245+ 73FF E5               push hl
- 246+ 7400 DD E5            push ix
- 247+ 7402
- 248+ 7402 C5               push bc
- 249+ 7403 FD E1            pop  iy                ; IY = original BC (IYH = Row, IYL = Col)
- 250+ 7405
- 251+ 7405                  ; Riga di layout: r = B - 3
- 252+ 7405 78               ld   a, b
- 253+ 7406 D6 03            sub  3                 ; A = r (0..15)
- 254+ 7408
- 255+ 7408                  ; Colonna: c = C (Col)
- 256+ 7408 CD 57 70         call GetCellFromUnpacked ; A = cell type (0..3)
- 257+ 740B
- 258+ 740B ED 5B 9D 78      ld   de, (room_ptr)
- 259+ 740F B7               or   a
- 260+ 7410 20 06            jr   nz, .not_bg
- 261+ 7412 21 A0 00         ld   hl, OFFSET_BG
- 262+ 7415 19               add  hl, de
- 263+ 7416 18 16            jr   .draw_cell
- 264+ 7418              .not_bg:
- 265+ 7418 3D               dec  a
- 266+ 7419 20 06            jr   nz, .not_floor
- 267+ 741B 21 A9 00         ld   hl, OFFSET_FLOOR
- 268+ 741E 19               add  hl, de
- 269+ 741F 18 0D            jr   .draw_cell
- 270+ 7421              .not_floor:
- 271+ 7421 3D               dec  a
- 272+ 7422 20 06            jr   nz, .not_wall
- 273+ 7424 21 B2 00         ld   hl, OFFSET_WALL
- 274+ 7427 19               add  hl, de
- 275+ 7428 18 04            jr   .draw_cell
- 276+ 742A              .not_wall:
- 277+ 742A 21 BB 00         ld   hl, OFFSET_NASTY
- 278+ 742D 19               add  hl, de
- 279+ 742E
- 280+ 742E              .draw_cell:
- 281+ 742E E5               push hl
- 282+ 742F DD E1            pop  ix                ; IX = tile pointer
- 283+ 7431
- 284+ 7431 FD E5            push iy
- 285+ 7433 C1               pop  bc                ; B = Row, C = Col
- 286+ 7434
- 287+ 7434 CD 63 60         call DrawTile
- 288+ 7437
- 289+ 7437 DD E1            pop  ix
- 290+ 7439 E1               pop  hl
- 291+ 743A D1               pop  de
- 292+ 743B C1               pop  bc
- 293+ 743C FD E1            pop  iy                ; Ripristina IY
- 294+ 743E C9               ret
- 295+ 743F
- 296+ 743F              ; -------------------------------------------------------------------
- 297+ 743F              ; Controlla se Willy collide con un item (pixel-level check)
- 298+ 743F              ; Input: A = ItemX (0..31), H = ItemY (3..18)
- 299+ 743F              ; Output: Carry set se collide, altrimenti clear
- 300+ 743F              ; -------------------------------------------------------------------
- 301+ 743F              CheckWillyItemCollision:
- 302+ 743F C5               push bc
- 303+ 7440 D5               push de
- 304+ 7441 E5               push hl
- 305+ 7442
- 306+ 7442                  ; Calcola ItemLeft = ItemX * 8, ItemRight = ItemLeft + 7
- 307+ 7442 6F               ld   l, a
- 308+ 7443 7D               ld   a, l
- 309+ 7444 87               add  a, a              ; *2
- 310+ 7445 87               add  a, a              ; *4
- 311+ 7446 87               add  a, a              ; *8
- 312+ 7447 5F               ld   e, a              ; E = ItemLeft
- 313+ 7448 C6 07            add  a, 7
- 314+ 744A 57               ld   d, a              ; D = ItemRight
- 315+ 744B
- 316+ 744B                  ; WillyLeft = WillyX (C), WillyRight = WillyX + 15
- 317+ 744B ED 4B 82 75      ld   bc, (PlayerPos)   ; C = WillyX, B = WillyY
- 318+ 744F
- 319+ 744F                  ; Controlla X: WillyX <= ItemRight (D) e WillyX + 15 >= ItemLeft (E)
- 320+ 744F 79               ld   a, c
- 321+ 7450 BA               cp   d
- 322+ 7451 28 04            jr   z, .x_ok
- 323+ 7453 38 02            jr   c, .x_ok
- 324+ 7455 18 29            jr   .no_collision
- 325+ 7457              .x_ok:
- 326+ 7457 C6 0F            add  a, 15
- 327+ 7459 BB               cp   e
- 328+ 745A 28 04            jr   z, .y_check
- 329+ 745C 30 02            jr   nc, .y_check
- 330+ 745E 18 20            jr   .no_collision
- 331+ 7460
- 332+ 7460              .y_check:
- 333+ 7460 E1               pop  hl                ; Recupera HL originale (H = ItemY)
- 334+ 7461 E5               push hl
- 335+ 7462 7C               ld   a, h
- 336+ 7463 87               add  a, a              ; *2
- 337+ 7464 87               add  a, a              ; *4
- 338+ 7465 87               add  a, a              ; *8
- 339+ 7466 5F               ld   e, a              ; E = ItemTop
- 340+ 7467 C6 07            add  a, 7
- 341+ 7469 57               ld   d, a              ; D = ItemBottom
- 342+ 746A
- 343+ 746A                  ; WillyTop = WillyY (B), WillyBottom = WillyY + 15
- 344+ 746A 78               ld   a, b
- 345+ 746B BA               cp   d
- 346+ 746C 28 04            jr   z, .y_ok
- 347+ 746E 38 02            jr   c, .y_ok
- 348+ 7470 18 0E            jr   .no_collision
- 349+ 7472              .y_ok:
- 350+ 7472 C6 0F            add  a, 15
- 351+ 7474 BB               cp   e
- 352+ 7475 28 04            jr   z, .collision
- 353+ 7477 30 02            jr   nc, .collision
- 354+ 7479 18 05            jr   .no_collision
- 355+ 747B
- 356+ 747B              .collision:
- 357+ 747B E1               pop  hl
- 358+ 747C D1               pop  de
- 359+ 747D C1               pop  bc
- 360+ 747E 37               scf                    ; Set carry (collisione!)
- 361+ 747F C9               ret
- 362+ 7480
- 363+ 7480              .no_collision:
- 364+ 7480 E1               pop  hl
- 365+ 7481 D1               pop  de
- 366+ 7482 C1               pop  bc
- 367+ 7483 B7               or   a                 ; Clear carry
- 368+ 7484 C9               ret
- 369+ 7485
- 370+ 7485              ; -------------------------------------------------------------------
- 371+ 7485              ; Controlla se Willy tocca un item attivo nella stanza corrente
- 372+ 7485              ; -------------------------------------------------------------------
- 373+ 7485              CheckRoomItemsCollision:
- 374+ 7485 E5               push hl
- 375+ 7486 D5               push de
- 376+ 7487 C5               push bc
- 377+ 7488
- 378+ 7488 21 EC 72         ld   hl, ItemsTable
- 379+ 748B              .loop:
- 380+ 748B 7E               ld   a, (hl)           ; A = Room ID
- 381+ 748C FE FF            cp   $FF               ; Fine tabella?
- 382+ 748E 28 2B            jr   z, .done
- 383+ 7490
- 384+ 7490                  ; Stanza corrente?
- 385+ 7490 57               ld   d, a              ; D = Room ID
- 386+ 7491 3A 94 78         ld   a, (current_room)
- 387+ 7494 BA               cp   d
- 388+ 7495 20 1D            jr   nz, .next_item
- 389+ 7497
- 390+ 7497 23               inc  hl                ; HL punta a X
- 391+ 7498 4E               ld   c, (hl)           ; C = X
- 392+ 7499 23               inc  hl                ; HL punta a Y
- 393+ 749A 46               ld   b, (hl)           ; B = Y
- 394+ 749B 23               inc  hl                ; HL punta al colore (lo saltiamo per il controllo collisione)
- 395+ 749C 23               inc  hl                ; HL punta a collected
- 396+ 749D 7E               ld   a, (hl)           ; A = collected
- 397+ 749E B7               or   a
- 398+ 749F 20 17            jr   nz, .next_no_inc  ; Già raccolto, salta
- 399+ 74A1
- 400+ 74A1                  ; Controlla collisione
- 401+ 74A1 79               ld   a, c
- 402+ 74A2 60               ld   h, b
- 403+ 74A3 CD 3F 74         call CheckWillyItemCollision
- 404+ 74A6 30 10            jr   nc, .next_no_inc
- 405+ 74A8
- 406+ 74A8                  ; RACCOLTO!
- 407+ 74A8 36 01            ld   (hl), 1           ; Imposta collected = 1
- 408+ 74AA
- 409+ 74AA E5               push hl
- 410+ 74AB
- 411+ 74AB                  ; Cancella item dallo schermo
- 412+ 74AB CD FB 73         call RestoreBackgroundCell
- 413+ 74AE
- 414+ 74AE                  ; Suono di raccolta
- 415+ 74AE CD BF 74         call PlayCollectSound
- 416+ 74B1
- 417+ 74B1 E1               pop  hl
- 418+ 74B2
- 419+ 74B2 18 04            jr   .next_no_inc
- 420+ 74B4
- 421+ 74B4              .next_item:
- 422+ 74B4 23               inc  hl                ; salta X
- 423+ 74B5 23               inc  hl                ; salta Y
- 424+ 74B6 23               inc  hl                ; salta colore
- 425+ 74B7 23               inc  hl                ; salta collected
- 426+ 74B8              .next_no_inc:
- 427+ 74B8 23               inc  hl                ; vai al prossimo item
- 428+ 74B9 18 D0            jr   .loop
- 429+ 74BB
- 430+ 74BB              .done:
- 431+ 74BB C1               pop  bc
- 432+ 74BC D1               pop  de
- 433+ 74BD E1               pop  hl
- 434+ 74BE C9               ret
- 435+ 74BF
- 436+ 74BF              ; -------------------------------------------------------------------
- 437+ 74BF              ; Riproduce un breve segnale acustico all'altoparlante
- 438+ 74BF              ; -------------------------------------------------------------------
- 439+ 74BF              PlayCollectSound:
- 440+ 74BF C5               push bc
- 441+ 74C0 D5               push de
- 442+ 74C1
- 443+ 74C1 06 78            ld   b, 120            ; Cicli della nota
- 444+ 74C3              .sound_loop:
- 445+ 74C3 3A 8D 75         ld   a, (room_border_color)
- 446+ 74C6 F6 10            or   $10               ; Speaker ON (bit 4 = 1)
- 447+ 74C8 D3 FE            out  ($fe), a
- 448+ 74CA 0E 3C            ld   c, 60             ; Mezzo periodo delay
- 449+ 74CC 0D           .d1: dec  c
- 450+ 74CD 20 FD            jr   nz, .d1
- 451+ 74CF
- 452+ 74CF 3A 8D 75         ld   a, (room_border_color)
- 453+ 74D2 E6 EF            and  $ef               ; Speaker OFF (bit 4 = 0)
- 454+ 74D4 D3 FE            out  ($fe), a
- 455+ 74D6 0E 3C            ld   c, 60             ; Mezzo periodo delay
- 456+ 74D8 0D           .d2: dec  c
- 457+ 74D9 20 FD            jr   nz, .d2
- 458+ 74DB
- 459+ 74DB 10 E6            djnz .sound_loop
- 460+ 74DD
- 461+ 74DD D1               pop  de
- 462+ 74DE C1               pop  bc
- 463+ 74DF C9               ret
- 464+ 74E0
+  33+ 732D                  ; Stanza 4 (Under the MegaTree)
+  34+ 732D 04 16 03 03      db 4, 22, 3, 3, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
+  34+ 7331 00
+  35+ 7332
+  36+ 7332                  ; Stanza 4 (Under the MegaTree)
+  37+ 7332 05 01 0E 03      db 5, 1, 14, 3, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
+  37+ 7336 00
+  38+ 7337 05 04 0D 04      db 5, 4, 13, 4, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
+  38+ 733B 00
+  39+ 733C 05 07 0E 05      db 5, 7, 14, 5, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
+  39+ 7340 00
+  40+ 7341
+  41+ 7341
+  42+ 7341 FF               db $FF                        ; Fine tabella
+  43+ 7342
+  44+ 7342              ; -------------------------------------------------------------------
+  45+ 7342              ; Determina e imposta il current_room ID in base a room_ptr
+  46+ 7342              ; -------------------------------------------------------------------
+  47+ 7342              DetermineCurrentRoomID:
+  48+ 7342 E5               push hl
+  49+ 7343 D5               push de
+  50+ 7344
+  51+ 7344 2A C0 78         ld   hl, (room_ptr)
+  52+ 7347
+  53+ 7347                  ; Test Room?
+  54+ 7347 11 0A 7E         ld   de, TheTestRoomLayout
+  55+ 734A B7               or   a
+  56+ 734B ED 52            sbc  hl, de
+  57+ 734D 20 04            jr   nz, .not_test
+  58+ 734F 3E 00            ld   a, 0
+  59+ 7351 18 4D            jr   .set_room
+  60+ 7353
+  61+ 7353              .not_test:
+  62+ 7353 2A C0 78         ld   hl, (room_ptr)
+  63+ 7356 11 02 7A         ld   de, TheBridgeLayout
+  64+ 7359 B7               or   a
+  65+ 735A ED 52            sbc  hl, de
+  66+ 735C 20 04            jr   nz, .not_bridge
+  67+ 735E 3E 01            ld   a, 1
+  68+ 7360 18 3E            jr   .set_room
+  69+ 7362
+  70+ 7362              .not_bridge:
+  71+ 7362 2A C0 78         ld   hl, (room_ptr)
+  72+ 7365 11 00 79         ld   de, TheOffLicenceLayout
+  73+ 7368 B7               or   a
+  74+ 7369 ED 52            sbc  hl, de
+  75+ 736B 20 04            jr   nz, .not_office
+  76+ 736D 3E 02            ld   a, 2
+  77+ 736F 18 2F            jr   .set_room
+  78+ 7371
+  79+ 7371              .not_office:
+  80+ 7371 2A C0 78         ld   hl, (room_ptr)
+  81+ 7374 11 08 7D         ld   de, MastreBedRoomLayout
+  82+ 7377 B7               or   a
+  83+ 7378 ED 52            sbc  hl, de
+  84+ 737A 20 04            jr   nz, .not_masterbed
+  85+ 737C 3E 03            ld   a, 3
+  86+ 737E 18 20            jr   .set_room
+  87+ 7380
+  88+ 7380              .not_masterbed:
+  89+ 7380 2A C0 78         ld   hl, (room_ptr)
+  90+ 7383 11 04 7B         ld   de, UnderTheMegaTreeLayout
+  91+ 7386 B7               or   a
+  92+ 7387 ED 52            sbc  hl, de
+  93+ 7389 20 04            jr   nz, .not_undertree
+  94+ 738B 3E 04            ld   a, 4
+  95+ 738D 18 11            jr   .set_room
+  96+ 738F
+  97+ 738F              .not_undertree:
+  98+ 738F 2A C0 78         ld   hl, (room_ptr)
+  99+ 7392 11 06 7C         ld   de, AtTheFootTheMegaTreeLayout
+ 100+ 7395 B7               or   a
+ 101+ 7396 ED 52            sbc  hl, de
+ 102+ 7398 20 04            jr   nz, .unknown
+ 103+ 739A 3E 05            ld   a, 5
+ 104+ 739C 18 02            jr   .set_room
+ 105+ 739E
+ 106+ 739E
+ 107+ 739E              .unknown:
+ 108+ 739E 3E 00            ld   a, 0                    ; Default fallback
+ 109+ 73A0
+ 110+ 73A0              .set_room:
+ 111+ 73A0 32 B7 78         ld   (current_room), a
+ 112+ 73A3
+ 113+ 73A3 D1               pop  de
+ 114+ 73A4 E1               pop  hl
+ 115+ 73A5 C9               ret
+ 116+ 73A6
+ 117+ 73A6              ; -------------------------------------------------------------------
+ 118+ 73A6              ; Disegna tutti gli oggetti attivi della stanza corrente
+ 119+ 73A6              ; -------------------------------------------------------------------
+ 120+ 73A6              DrawRoomItems:
+ 121+ 73A6 E5               push hl
+ 122+ 73A7 D5               push de
+ 123+ 73A8 C5               push bc
+ 124+ 73A9 DD E5            push ix
+ 125+ 73AB
+ 126+ 73AB                  ; Ottieni il puntatore alla grafica dell'item della stanza corrente:
+ 127+ 73AB                  ; room_ptr + OFFSET_ITEM_GRAPHIC
+ 128+ 73AB 2A C0 78         ld   hl, (room_ptr)
+ 129+ 73AE 11 E3 00         ld   de, OFFSET_ITEM_GRAPHIC
+ 130+ 73B1 19               add  hl, de
+ 131+ 73B2 E5               push hl
+ 132+ 73B3 DD E1            pop  ix                ; IX = puntatore alla grafica dell'item della stanza
+ 133+ 73B5
+ 134+ 73B5 21 EC 72         ld   hl, ItemsTable
+ 135+ 73B8              .loop:
+ 136+ 73B8 7E               ld   a, (hl)           ; A = Room ID
+ 137+ 73B9 FE FF            cp   $FF               ; Fine tabella?
+ 138+ 73BB 28 23            jr   z, .done
+ 139+ 73BD
+ 140+ 73BD                  ; Confronta con la stanza corrente
+ 141+ 73BD 57               ld   d, a              ; D = Room ID dell'item
+ 142+ 73BE 3A B7 78         ld   a, (current_room)
+ 143+ 73C1 BA               cp   d
+ 144+ 73C2 20 15            jr   nz, .next_item    ; Stanza diversa, salta
+ 145+ 73C4
+ 146+ 73C4                  ; Leggi coordinate, colore e stato
+ 147+ 73C4 23               inc  hl                ; HL punta a X
+ 148+ 73C5 4E               ld   c, (hl)           ; C = X colonna
+ 149+ 73C6 23               inc  hl                ; HL punta a Y
+ 150+ 73C7 46               ld   b, (hl)           ; B = Y riga
+ 151+ 73C8 23               inc  hl                ; HL punta al Colore
+ 152+ 73C9 5E               ld   e, (hl)           ; E = Colore
+ 153+ 73CA 23               inc  hl                ; HL punta a collected flag
+ 154+ 73CB 7E               ld   a, (hl)           ; A = collected flag
+ 155+ 73CC B7               or   a
+ 156+ 73CD 20 0E            jr   nz, .next_no_inc  ; Già raccolto, salta
+ 157+ 73CF
+ 158+ 73CF                  ; Disegna l'item!
+ 159+ 73CF                  ; B = Row, C = Col, IX = bitmap graphic (8 byte), E = Colore
+ 160+ 73CF E5               push hl
+ 161+ 73D0 DD E5            push ix
+ 162+ 73D2 E1               pop  hl                ; HL = bitmap pointer
+ 163+ 73D3 CD E6 73         call DrawItemGraphic
+ 164+ 73D6 E1               pop  hl
+ 165+ 73D7
+ 166+ 73D7 18 04            jr   .next_no_inc
+ 167+ 73D9
+ 168+ 73D9              .next_item:
+ 169+ 73D9 23               inc  hl                ; salta X
+ 170+ 73DA 23               inc  hl                ; salta Y
+ 171+ 73DB 23               inc  hl                ; salta colore
+ 172+ 73DC 23               inc  hl                ; salta collected
+ 173+ 73DD              .next_no_inc:
+ 174+ 73DD 23               inc  hl                ; vai al prossimo record (prossimo Room ID)
+ 175+ 73DE 18 D8            jr   .loop
+ 176+ 73E0
+ 177+ 73E0              .done:
+ 178+ 73E0 DD E1            pop  ix
+ 179+ 73E2 D1               pop  de
+ 180+ 73E3 C1               pop  bc
+ 181+ 73E4 E1               pop  hl
+ 182+ 73E5 C9               ret
+ 183+ 73E6
+ 184+ 73E6              ; -------------------------------------------------------------------
+ 185+ 73E6              ; Disegna un singolo item (8x8 pixel) a schermo con colore personalizzato
+ 186+ 73E6              ; Input: B = Row (3..18), C = Col (0..31), HL = Puntatore al bitmap (8 byte), E = Colore
+ 187+ 73E6              ; -------------------------------------------------------------------
+ 188+ 73E6              DrawItemGraphic:
+ 189+ 73E6 C5               push bc
+ 190+ 73E7 D5               push de
+ 191+ 73E8 E5               push hl
+ 192+ 73E9
+ 193+ 73E9                  ; 1. Calcola l'indirizzo dello schermo (bitmap) per Row B, Col C, scanline 0
+ 194+ 73E9 78               ld   a, b
+ 195+ 73EA E6 18            and  $18
+ 196+ 73EC C6 40            add  a, $40
+ 197+ 73EE 57               ld   d, a              ; D = High byte dell'indirizzo dello schermo
+ 198+ 73EF
+ 199+ 73EF 78               ld   a, b
+ 200+ 73F0 E6 07            and  7
+ 201+ 73F2 87               add  a, a              ; *2
+ 202+ 73F3 87               add  a, a              ; *4
+ 203+ 73F4 87               add  a, a              ; *8
+ 204+ 73F5 87               add  a, a              ; *16
+ 205+ 73F6 87               add  a, a              ; *32
+ 206+ 73F7 81               add  a, c              ; + Col C
+ 207+ 73F8 5F               ld   e, a              ; E = Low byte dell'indirizzo dello schermo
+ 208+ 73F9
+ 209+ 73F9                  ; 2. Copia gli 8 byte del bitmap dello sprite
+ 210+ 73F9 C5               push bc                ; Salva BC (contiene Row e Col)
+ 211+ 73FA 06 08            ld   b, 8              ; 8 scanline
+ 212+ 73FC              .line_loop:
+ 213+ 73FC 7E               ld   a, (hl)
+ 214+ 73FD 12               ld   (de), a
+ 215+ 73FE 14               inc  d                 ; Prossima scanline
+ 216+ 73FF 23               inc  hl
+ 217+ 7400 05               dec  b
+ 218+ 7401 20 F9            jr   nz, .line_loop
+ 219+ 7403 C1               pop  bc                ; Ripristina BC
+ 220+ 7404
+ 221+ 7404                  ; 3. Calcola l'indirizzo degli attributi dello schermo
+ 222+ 7404                  ; HL = $5800 + B * 32 + C
+ 223+ 7404 26 00            ld   h, 0
+ 224+ 7406 68               ld   l, b              ; HL = B (Row)
+ 225+ 7407 29               add  hl, hl            ; *2
+ 226+ 7408 29               add  hl, hl            ; *4
+ 227+ 7409 29               add  hl, hl            ; *8
+ 228+ 740A 29               add  hl, hl            ; *16
+ 229+ 740B 29               add  hl, hl            ; *32
+ 230+ 740C
+ 231+ 740C 79               ld   a, c              ; A = Col
+ 232+ 740D 85               add  a, l
+ 233+ 740E 6F               ld   l, a
+ 234+ 740F 30 01            jr   nc, .no_carry
+ 235+ 7411 24               inc  h
+ 236+ 7412              .no_carry:
+ 237+ 7412                  ; HL = B * 32 + C
+ 238+ 7412 11 00 58         ld   de, $5800
+ 239+ 7415 19               add  hl, de            ; HL = AttrAddr
+ 240+ 7416
+ 241+ 7416                  ; Ripristina i registri dallo stack per estrarre il colore in E
+ 242+ 7416                  ; Lo stack ha: HL (originale), DE (originale con colore in E), BC (originale)
+ 243+ 7416 C1               pop  bc                ; BC = HL originale
+ 244+ 7417 D1               pop  de                ; DE = DE originale (colore in E)
+ 245+ 7418
+ 246+ 7418 7B               ld   a, e              ; A = Colore
+ 247+ 7419 77               ld   (hl), a           ; Scrivi in memoria attributi (HL)
+ 248+ 741A
+ 249+ 741A                  ; Ripristina lo stack e i registri originari
+ 250+ 741A C5               push bc                ; Rimetti HL originale sulla pila
+ 251+ 741B E1               pop  hl                ; HL = HL originale
+ 252+ 741C C1               pop  bc                ; BC = BC originale
+ 253+ 741D C9               ret
+ 254+ 741E
+ 255+ 741E              ; -------------------------------------------------------------------
+ 256+ 741E              ; Ripristina la cella dello sfondo originale per cancellare l'item
+ 257+ 741E              ; Input: B = Row (3..18), C = Col (0..31)
+ 258+ 741E              ; -------------------------------------------------------------------
+ 259+ 741E              RestoreBackgroundCell:
+ 260+ 741E FD E5            push iy                ; Preserva IY
+ 261+ 7420 C5               push bc
+ 262+ 7421 D5               push de
+ 263+ 7422 E5               push hl
+ 264+ 7423 DD E5            push ix
+ 265+ 7425
+ 266+ 7425 C5               push bc
+ 267+ 7426 FD E1            pop  iy                ; IY = original BC (IYH = Row, IYL = Col)
+ 268+ 7428
+ 269+ 7428                  ; Riga di layout: r = B - 3
+ 270+ 7428 78               ld   a, b
+ 271+ 7429 D6 03            sub  3                 ; A = r (0..15)
+ 272+ 742B
+ 273+ 742B                  ; Colonna: c = C (Col)
+ 274+ 742B CD 57 70         call GetCellFromUnpacked ; A = cell type (0..3)
+ 275+ 742E
+ 276+ 742E ED 5B C0 78      ld   de, (room_ptr)
+ 277+ 7432 B7               or   a
+ 278+ 7433 20 06            jr   nz, .not_bg
+ 279+ 7435 21 A0 00         ld   hl, OFFSET_BG
+ 280+ 7438 19               add  hl, de
+ 281+ 7439 18 16            jr   .draw_cell
+ 282+ 743B              .not_bg:
+ 283+ 743B 3D               dec  a
+ 284+ 743C 20 06            jr   nz, .not_floor
+ 285+ 743E 21 A9 00         ld   hl, OFFSET_FLOOR
+ 286+ 7441 19               add  hl, de
+ 287+ 7442 18 0D            jr   .draw_cell
+ 288+ 7444              .not_floor:
+ 289+ 7444 3D               dec  a
+ 290+ 7445 20 06            jr   nz, .not_wall
+ 291+ 7447 21 B2 00         ld   hl, OFFSET_WALL
+ 292+ 744A 19               add  hl, de
+ 293+ 744B 18 04            jr   .draw_cell
+ 294+ 744D              .not_wall:
+ 295+ 744D 21 BB 00         ld   hl, OFFSET_NASTY
+ 296+ 7450 19               add  hl, de
+ 297+ 7451
+ 298+ 7451              .draw_cell:
+ 299+ 7451 E5               push hl
+ 300+ 7452 DD E1            pop  ix                ; IX = tile pointer
+ 301+ 7454
+ 302+ 7454 FD E5            push iy
+ 303+ 7456 C1               pop  bc                ; B = Row, C = Col
+ 304+ 7457
+ 305+ 7457 CD 63 60         call DrawTile
+ 306+ 745A
+ 307+ 745A DD E1            pop  ix
+ 308+ 745C E1               pop  hl
+ 309+ 745D D1               pop  de
+ 310+ 745E C1               pop  bc
+ 311+ 745F FD E1            pop  iy                ; Ripristina IY
+ 312+ 7461 C9               ret
+ 313+ 7462
+ 314+ 7462              ; -------------------------------------------------------------------
+ 315+ 7462              ; Controlla se Willy collide con un item (pixel-level check)
+ 316+ 7462              ; Input: A = ItemX (0..31), H = ItemY (3..18)
+ 317+ 7462              ; Output: Carry set se collide, altrimenti clear
+ 318+ 7462              ; -------------------------------------------------------------------
+ 319+ 7462              CheckWillyItemCollision:
+ 320+ 7462 C5               push bc
+ 321+ 7463 D5               push de
+ 322+ 7464 E5               push hl
+ 323+ 7465
+ 324+ 7465                  ; Calcola ItemLeft = ItemX * 8, ItemRight = ItemLeft + 7
+ 325+ 7465 6F               ld   l, a
+ 326+ 7466 7D               ld   a, l
+ 327+ 7467 87               add  a, a              ; *2
+ 328+ 7468 87               add  a, a              ; *4
+ 329+ 7469 87               add  a, a              ; *8
+ 330+ 746A 5F               ld   e, a              ; E = ItemLeft
+ 331+ 746B C6 07            add  a, 7
+ 332+ 746D 57               ld   d, a              ; D = ItemRight
+ 333+ 746E
+ 334+ 746E                  ; WillyLeft = WillyX (C), WillyRight = WillyX + 15
+ 335+ 746E ED 4B A5 75      ld   bc, (PlayerPos)   ; C = WillyX, B = WillyY
+ 336+ 7472
+ 337+ 7472                  ; Controlla X: WillyX <= ItemRight (D) e WillyX + 15 >= ItemLeft (E)
+ 338+ 7472 79               ld   a, c
+ 339+ 7473 BA               cp   d
+ 340+ 7474 28 04            jr   z, .x_ok
+ 341+ 7476 38 02            jr   c, .x_ok
+ 342+ 7478 18 29            jr   .no_collision
+ 343+ 747A              .x_ok:
+ 344+ 747A C6 0F            add  a, 15
+ 345+ 747C BB               cp   e
+ 346+ 747D 28 04            jr   z, .y_check
+ 347+ 747F 30 02            jr   nc, .y_check
+ 348+ 7481 18 20            jr   .no_collision
+ 349+ 7483
+ 350+ 7483              .y_check:
+ 351+ 7483 E1               pop  hl                ; Recupera HL originale (H = ItemY)
+ 352+ 7484 E5               push hl
+ 353+ 7485 7C               ld   a, h
+ 354+ 7486 87               add  a, a              ; *2
+ 355+ 7487 87               add  a, a              ; *4
+ 356+ 7488 87               add  a, a              ; *8
+ 357+ 7489 5F               ld   e, a              ; E = ItemTop
+ 358+ 748A C6 07            add  a, 7
+ 359+ 748C 57               ld   d, a              ; D = ItemBottom
+ 360+ 748D
+ 361+ 748D                  ; WillyTop = WillyY (B), WillyBottom = WillyY + 15
+ 362+ 748D 78               ld   a, b
+ 363+ 748E BA               cp   d
+ 364+ 748F 28 04            jr   z, .y_ok
+ 365+ 7491 38 02            jr   c, .y_ok
+ 366+ 7493 18 0E            jr   .no_collision
+ 367+ 7495              .y_ok:
+ 368+ 7495 C6 0F            add  a, 15
+ 369+ 7497 BB               cp   e
+ 370+ 7498 28 04            jr   z, .collision
+ 371+ 749A 30 02            jr   nc, .collision
+ 372+ 749C 18 05            jr   .no_collision
+ 373+ 749E
+ 374+ 749E              .collision:
+ 375+ 749E E1               pop  hl
+ 376+ 749F D1               pop  de
+ 377+ 74A0 C1               pop  bc
+ 378+ 74A1 37               scf                    ; Set carry (collisione!)
+ 379+ 74A2 C9               ret
+ 380+ 74A3
+ 381+ 74A3              .no_collision:
+ 382+ 74A3 E1               pop  hl
+ 383+ 74A4 D1               pop  de
+ 384+ 74A5 C1               pop  bc
+ 385+ 74A6 B7               or   a                 ; Clear carry
+ 386+ 74A7 C9               ret
+ 387+ 74A8
+ 388+ 74A8              ; -------------------------------------------------------------------
+ 389+ 74A8              ; Controlla se Willy tocca un item attivo nella stanza corrente
+ 390+ 74A8              ; -------------------------------------------------------------------
+ 391+ 74A8              CheckRoomItemsCollision:
+ 392+ 74A8 E5               push hl
+ 393+ 74A9 D5               push de
+ 394+ 74AA C5               push bc
+ 395+ 74AB
+ 396+ 74AB 21 EC 72         ld   hl, ItemsTable
+ 397+ 74AE              .loop:
+ 398+ 74AE 7E               ld   a, (hl)           ; A = Room ID
+ 399+ 74AF FE FF            cp   $FF               ; Fine tabella?
+ 400+ 74B1 28 2B            jr   z, .done
+ 401+ 74B3
+ 402+ 74B3                  ; Stanza corrente?
+ 403+ 74B3 57               ld   d, a              ; D = Room ID
+ 404+ 74B4 3A B7 78         ld   a, (current_room)
+ 405+ 74B7 BA               cp   d
+ 406+ 74B8 20 1D            jr   nz, .next_item
+ 407+ 74BA
+ 408+ 74BA 23               inc  hl                ; HL punta a X
+ 409+ 74BB 4E               ld   c, (hl)           ; C = X
+ 410+ 74BC 23               inc  hl                ; HL punta a Y
+ 411+ 74BD 46               ld   b, (hl)           ; B = Y
+ 412+ 74BE 23               inc  hl                ; HL punta al colore (lo saltiamo per il controllo collisione)
+ 413+ 74BF 23               inc  hl                ; HL punta a collected
+ 414+ 74C0 7E               ld   a, (hl)           ; A = collected
+ 415+ 74C1 B7               or   a
+ 416+ 74C2 20 17            jr   nz, .next_no_inc  ; Già raccolto, salta
+ 417+ 74C4
+ 418+ 74C4                  ; Controlla collisione
+ 419+ 74C4 79               ld   a, c
+ 420+ 74C5 60               ld   h, b
+ 421+ 74C6 CD 62 74         call CheckWillyItemCollision
+ 422+ 74C9 30 10            jr   nc, .next_no_inc
+ 423+ 74CB
+ 424+ 74CB                  ; RACCOLTO!
+ 425+ 74CB 36 01            ld   (hl), 1           ; Imposta collected = 1
+ 426+ 74CD
+ 427+ 74CD E5               push hl
+ 428+ 74CE
+ 429+ 74CE                  ; Cancella item dallo schermo
+ 430+ 74CE CD 1E 74         call RestoreBackgroundCell
+ 431+ 74D1
+ 432+ 74D1                  ; Suono di raccolta
+ 433+ 74D1 CD E2 74         call PlayCollectSound
+ 434+ 74D4
+ 435+ 74D4 E1               pop  hl
+ 436+ 74D5
+ 437+ 74D5 18 04            jr   .next_no_inc
+ 438+ 74D7
+ 439+ 74D7              .next_item:
+ 440+ 74D7 23               inc  hl                ; salta X
+ 441+ 74D8 23               inc  hl                ; salta Y
+ 442+ 74D9 23               inc  hl                ; salta colore
+ 443+ 74DA 23               inc  hl                ; salta collected
+ 444+ 74DB              .next_no_inc:
+ 445+ 74DB 23               inc  hl                ; vai al prossimo item
+ 446+ 74DC 18 D0            jr   .loop
+ 447+ 74DE
+ 448+ 74DE              .done:
+ 449+ 74DE C1               pop  bc
+ 450+ 74DF D1               pop  de
+ 451+ 74E0 E1               pop  hl
+ 452+ 74E1 C9               ret
+ 453+ 74E2
+ 454+ 74E2              ; -------------------------------------------------------------------
+ 455+ 74E2              ; Riproduce un breve segnale acustico all'altoparlante
+ 456+ 74E2              ; -------------------------------------------------------------------
+ 457+ 74E2              PlayCollectSound:
+ 458+ 74E2 C5               push bc
+ 459+ 74E3 D5               push de
+ 460+ 74E4
+ 461+ 74E4 06 78            ld   b, 120            ; Cicli della nota
+ 462+ 74E6              .sound_loop:
+ 463+ 74E6 3A B0 75         ld   a, (room_border_color)
+ 464+ 74E9 F6 10            or   $10               ; Speaker ON (bit 4 = 1)
+ 465+ 74EB D3 FE            out  ($fe), a
+ 466+ 74ED 0E 3C            ld   c, 60             ; Mezzo periodo delay
+ 467+ 74EF 0D           .d1: dec  c
+ 468+ 74F0 20 FD            jr   nz, .d1
+ 469+ 74F2
+ 470+ 74F2 3A B0 75         ld   a, (room_border_color)
+ 471+ 74F5 E6 EF            and  $ef               ; Speaker OFF (bit 4 = 0)
+ 472+ 74F7 D3 FE            out  ($fe), a
+ 473+ 74F9 0E 3C            ld   c, 60             ; Mezzo periodo delay
+ 474+ 74FB 0D           .d2: dec  c
+ 475+ 74FC 20 FD            jr   nz, .d2
+ 476+ 74FE
+ 477+ 74FE 10 E6            djnz .sound_loop
+ 478+ 7500
+ 479+ 7500 D1               pop  de
+ 480+ 7501 C1               pop  bc
+ 481+ 7502 C9               ret
+ 482+ 7503
 # file closed: items.asm
-  19  74E0
-  20  74E0              start:
-  21  74E0 CD AD 5D         call SetupIM2
-  22  74E3
-  23  74E3
-  24  74E3
-  25  74E3              Main:
-  26  74E3                  ; Inizializza
-  27  74E3 AF               xor  a
-  28  74E4 32 88 75         ld  (body_state), a
-  29  74E7
-  30  74E7 CD DB 5D         call CopyChars
-  31  74EA CD E7 5D         call DefineChars
-  32  74ED
-  33  74ED 3E 02            ld   a, $02
-  34  74EF CD 01 16         call OPENCHAN
-  35  74F2 21 00 80         ld   hl, $8000
-  36  74F5 22 7B 5C         ld   (UDG), hl
-  37  74F8
-  38  74F8 21 8D 5C         ld   hl, ATTR_P
-  39  74FB 36 07            ld   (hl), $07
-  40  74FD CD AF 0D         call CLS
-  41  7500 CD 2E 73         call DetermineCurrentRoomID
-  42  7503 CD A0 60         call DrawRoom
-  43  7506 CD 12 6C         call DrawConveyorsAndRamps
-  44  7509 CD 48 60         call PrintRoomName
-  45  750C CD 83 73         call DrawRoomItems
-  46  750F CD 95 70         call LoadRoomEnemies
-  47  7512 CD 4C 6D         call LoadPositionPlayeinRoom
-  48  7515
-  49  7515                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
-  50  7515 2A 9D 78         ld   hl, (room_ptr)
-  51  7518 11 DE 00         ld   de, OFFSET_BORDER_COLOR
-  52  751B 19               add  hl, de
-  53  751C 7E               ld   a, (hl)
-  54  751D 32 8D 75         ld   (room_border_color), a
-  55  7520 D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
-  56  7522
-  57  7522                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
-  58  7522 87               add  a, a
-  59  7523 87               add  a, a
-  60  7524 87               add  a, a              ; Sposta nei bit 3-5
-  61  7525 47               ld   b, a
-  62  7526 3A 48 5C         ld   a, (BORDCR)
-  63  7529 E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
-  64  752B B0               or   b                 ; Imposta nuovo colore bordo
-  65  752C F6 07            or   $07               ; Imposta ink a bianco
-  66  752E 32 48 5C         ld   (BORDCR), a
-  67  7531
-  68  7531 CD DC 5F         call PrintPlayer
-  69  7534
-  70  7534              Main_loop:
-  71  7534 76               halt
-  72  7535
-  73  7535                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
-  74  7535 CD 2F 60         call DeleteCharAtOldPos
-  75  7538 CD DC 5F         call PrintPlayer
-  76  753B
-  77  753B CD 1B 71         call EraseRoomEnemies
-  78  753E CD 4F 71         call DrawRoomEnemies
-  79  7541
-  80  7541                  ; 3. Salva le posizioni correnti del player per il prossimo frame
-  81  7541 ED 4B 82 75      ld   bc, (PlayerPos)
-  82  7545 ED 43 84 75      ld   (PlayerPosOld), bc
-  83  7549
-  84  7549                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
-  85  7549 CD 5E 6D         call CheckCtrl
-  86  754C CD D9 6C         call MovePlayer
-  87  754F CD F3 6D         call ApplyGravity
-  88  7552 CD 7B 6F         call ApplyConveyorForce
-  89  7555 CD 22 72         call UpdateRoomEnemies
-  90  7558 CD 85 74         call CheckRoomItemsCollision
-  91  755B
-  92  755B                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
-  93  755B CD C5 6E         call CheckCollision
-  94  755E 30 1A            jr   nc, .no_collision
-  95  7560
-  96  7560                  ; Collisione attiva: disegna le raster bar nel bordo
-  97  7560 3A 92 75         ld   a, (counter)
-  98  7563 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
-  99  7565 06 1E            ld   b, 30             ; Numero di righe della barra raster
- 100  7567              .raster_loop:
- 101  7567 D3 FE            out  ($fe), a
- 102  7569 3C               inc  a
- 103  756A E6 07            and  7
- 104  756C 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
- 105  756E              .delay:
- 106  756E 0D               dec  c
- 107  756F 20 FD            jr   nz, .delay
- 108  7571 10 F4            djnz .raster_loop
- 109  7573
- 110  7573                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
- 111  7573 3A 8D 75         ld   a, (room_border_color)
- 112  7576 D3 FE            out  ($fe), a
- 113  7578 18 05            jr   .no_collision_change
- 114  757A
- 115  757A              .no_collision:
- 116  757A                  ; Nessuna collisione: mantieni il bordo al colore della stanza
- 117  757A 3A 8D 75         ld   a, (room_border_color)
- 118  757D D3 FE            out  ($fe), a
- 119  757F
- 120  757F              .no_collision_change:
- 121  757F C3 34 75         jp   Main_loop
- 122  7582
- 123  7582              ; -------------------------------------------------------------------
- 124  7582              ; Variabili
- 125  7582              ; -------------------------------------------------------------------
- 126  7582              ; Posizioni
- 127  7582 88 80        PlayerPos:      db 136, 128 ;136, 100
- 128  7584 88 80        PlayerPosOld:   db 136, 128 ;136, 100
- 129  7586 11 11        bodyPos:        dw $1111
- 130  7588
- 131  7588              ; Stato player
- 132  7588 00           body_state:     db $00
- 133  7589 00           direction:      db $00
- 134  758A 00           flags:          db $00
- 135  758B
- 136  758B 00           collision_active: db $00
- 137  758C 00           sprite_shift:     db $00
- 138  758D 00           room_border_color: db $00
- 139  758E
- 140  758E              ; Fisica
- 141  758E 00           velocity_y:     db $00
- 142  758F 01           on_ground:      db $01
- 143  7590 00           jump_pressed:   db $00
- 144  7591 00           jump_prev:      db $00
- 145  7592
- 146  7592              ; Buffer e contatori
- 147  7592 00 00        counter:        dw 0
- 148  7594 00          > db 0
- 148  7595 00          > db 0
- 148  7596 00          > db 0
- 148  7597 00          > db 0
- 148  7598 00          > db 0
- 148  7599 00          > db 0
- 148  759A 00          > db 0
- 148  759B 00          > db 0
- 148  759C 00          > db 0
- 148  759D 00          > db 0
- 148  759E 00          > db 0
- 148  759F 00          > db 0
- 148  75A0 00          > db 0
- 148  75A1 00          > db 0
- 148  75A2 00          > db 0
- 148  75A3 00          > db 0
- 148  75A4 00          > db 0
- 148  75A5 00          > db 0
- 148  75A6 00          > db 0
- 148  75A7 00          > db 0
- 148  75A8 00          > db 0
- 148  75A9 00          > db 0
- 148  75AA 00          > db 0
- 148  75AB 00          > db 0
- 148  75AC 00          > db 0
- 148  75AD 00          > db 0
- 148  75AE 00          > db 0
- 148  75AF 00          > db 0
- 148  75B0 00          > db 0
- 148  75B1 00          > db 0
- 148  75B2 00          > db 0
- 148  75B3 00          > db 0
- 148  75B4 00          > db 0
- 148  75B5 00          > db 0
- 148  75B6 00          > db 0
+  19  7503
+  20  7503              start:
+  21  7503 CD AD 5D         call SetupIM2
+  22  7506
+  23  7506
+  24  7506
+  25  7506              Main:
+  26  7506                  ; Inizializza
+  27  7506 AF               xor  a
+  28  7507 32 AB 75         ld  (body_state), a
+  29  750A
+  30  750A CD DB 5D         call CopyChars
+  31  750D CD E7 5D         call DefineChars
+  32  7510
+  33  7510 3E 02            ld   a, $02
+  34  7512 CD 01 16         call OPENCHAN
+  35  7515 21 00 80         ld   hl, $8000
+  36  7518 22 7B 5C         ld   (UDG), hl
+  37  751B
+  38  751B 21 8D 5C         ld   hl, ATTR_P
+  39  751E 36 07            ld   (hl), $07
+  40  7520 CD AF 0D         call CLS
+  41  7523 CD 42 73         call DetermineCurrentRoomID
+  42  7526 CD A0 60         call DrawRoom
+  43  7529 CD 12 6C         call DrawConveyorsAndRamps
+  44  752C CD 48 60         call PrintRoomName
+  45  752F CD A6 73         call DrawRoomItems
+  46  7532 CD 95 70         call LoadRoomEnemies
+  47  7535 CD 4C 6D         call LoadPositionPlayeinRoom
+  48  7538
+  49  7538                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
+  50  7538 2A C0 78         ld   hl, (room_ptr)
+  51  753B 11 DE 00         ld   de, OFFSET_BORDER_COLOR
+  52  753E 19               add  hl, de
+  53  753F 7E               ld   a, (hl)
+  54  7540 32 B0 75         ld   (room_border_color), a
+  55  7543 D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
+  56  7545
+  57  7545                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
+  58  7545 87               add  a, a
+  59  7546 87               add  a, a
+  60  7547 87               add  a, a              ; Sposta nei bit 3-5
+  61  7548 47               ld   b, a
+  62  7549 3A 48 5C         ld   a, (BORDCR)
+  63  754C E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
+  64  754E B0               or   b                 ; Imposta nuovo colore bordo
+  65  754F F6 07            or   $07               ; Imposta ink a bianco
+  66  7551 32 48 5C         ld   (BORDCR), a
+  67  7554
+  68  7554 CD DC 5F         call PrintPlayer
+  69  7557
+  70  7557              Main_loop:
+  71  7557 76               halt
+  72  7558
+  73  7558                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
+  74  7558 CD 2F 60         call DeleteCharAtOldPos
+  75  755B CD DC 5F         call PrintPlayer
+  76  755E
+  77  755E CD 1B 71         call EraseRoomEnemies
+  78  7561 CD 4F 71         call DrawRoomEnemies
+  79  7564
+  80  7564                  ; 3. Salva le posizioni correnti del player per il prossimo frame
+  81  7564 ED 4B A5 75      ld   bc, (PlayerPos)
+  82  7568 ED 43 A7 75      ld   (PlayerPosOld), bc
+  83  756C
+  84  756C                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
+  85  756C CD 5E 6D         call CheckCtrl
+  86  756F CD D9 6C         call MovePlayer
+  87  7572 CD F3 6D         call ApplyGravity
+  88  7575 CD 7B 6F         call ApplyConveyorForce
+  89  7578 CD 22 72         call UpdateRoomEnemies
+  90  757B CD A8 74         call CheckRoomItemsCollision
+  91  757E
+  92  757E                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
+  93  757E CD C5 6E         call CheckCollision
+  94  7581 30 1A            jr   nc, .no_collision
+  95  7583
+  96  7583                  ; Collisione attiva: disegna le raster bar nel bordo
+  97  7583 3A B5 75         ld   a, (counter)
+  98  7586 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+  99  7588 06 1E            ld   b, 30             ; Numero di righe della barra raster
+ 100  758A              .raster_loop:
+ 101  758A D3 FE            out  ($fe), a
+ 102  758C 3C               inc  a
+ 103  758D E6 07            and  7
+ 104  758F 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+ 105  7591              .delay:
+ 106  7591 0D               dec  c
+ 107  7592 20 FD            jr   nz, .delay
+ 108  7594 10 F4            djnz .raster_loop
+ 109  7596
+ 110  7596                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+ 111  7596 3A B0 75         ld   a, (room_border_color)
+ 112  7599 D3 FE            out  ($fe), a
+ 113  759B 18 05            jr   .no_collision_change
+ 114  759D
+ 115  759D              .no_collision:
+ 116  759D                  ; Nessuna collisione: mantieni il bordo al colore della stanza
+ 117  759D 3A B0 75         ld   a, (room_border_color)
+ 118  75A0 D3 FE            out  ($fe), a
+ 119  75A2
+ 120  75A2              .no_collision_change:
+ 121  75A2 C3 57 75         jp   Main_loop
+ 122  75A5
+ 123  75A5              ; -------------------------------------------------------------------
+ 124  75A5              ; Variabili
+ 125  75A5              ; -------------------------------------------------------------------
+ 126  75A5              ; Posizioni
+ 127  75A5 88 80        PlayerPos:      db 136, 128 ;136, 100
+ 128  75A7 88 80        PlayerPosOld:   db 136, 128 ;136, 100
+ 129  75A9 11 11        bodyPos:        dw $1111
+ 130  75AB
+ 131  75AB              ; Stato player
+ 132  75AB 00           body_state:     db $00
+ 133  75AC 00           direction:      db $00
+ 134  75AD 00           flags:          db $00
+ 135  75AE
+ 136  75AE 00           collision_active: db $00
+ 137  75AF 00           sprite_shift:     db $00
+ 138  75B0 00           room_border_color: db $00
+ 139  75B1
+ 140  75B1              ; Fisica
+ 141  75B1 00           velocity_y:     db $00
+ 142  75B2 01           on_ground:      db $01
+ 143  75B3 00           jump_pressed:   db $00
+ 144  75B4 00           jump_prev:      db $00
+ 145  75B5
+ 146  75B5              ; Buffer e contatori
+ 147  75B5 00 00        counter:        dw 0
  148  75B7 00          > db 0
  148  75B8 00          > db 0
  148  75B9 00          > db 0
@@ -4321,41 +4308,41 @@
  148  7691 00          > db 0
  148  7692 00          > db 0
  148  7693 00          > db 0
- 149  7694 00          > db 0
- 149  7695 00          > db 0
- 149  7696 00          > db 0
- 149  7697 00          > db 0
- 149  7698 00          > db 0
- 149  7699 00          > db 0
- 149  769A 00          > db 0
- 149  769B 00          > db 0
- 149  769C 00          > db 0
- 149  769D 00          > db 0
- 149  769E 00          > db 0
- 149  769F 00          > db 0
- 149  76A0 00          > db 0
- 149  76A1 00          > db 0
- 149  76A2 00          > db 0
- 149  76A3 00          > db 0
- 149  76A4 00          > db 0
- 149  76A5 00          > db 0
- 149  76A6 00          > db 0
- 149  76A7 00          > db 0
- 149  76A8 00          > db 0
- 149  76A9 00          > db 0
- 149  76AA 00          > db 0
- 149  76AB 00          > db 0
- 149  76AC 00          > db 0
- 149  76AD 00          > db 0
- 149  76AE 00          > db 0
- 149  76AF 00          > db 0
- 149  76B0 00          > db 0
- 149  76B1 00          > db 0
- 149  76B2 00          > db 0
- 149  76B3 00          > db 0
- 149  76B4 00          > db 0
- 149  76B5 00          > db 0
- 149  76B6 00          > db 0
+ 148  7694 00          > db 0
+ 148  7695 00          > db 0
+ 148  7696 00          > db 0
+ 148  7697 00          > db 0
+ 148  7698 00          > db 0
+ 148  7699 00          > db 0
+ 148  769A 00          > db 0
+ 148  769B 00          > db 0
+ 148  769C 00          > db 0
+ 148  769D 00          > db 0
+ 148  769E 00          > db 0
+ 148  769F 00          > db 0
+ 148  76A0 00          > db 0
+ 148  76A1 00          > db 0
+ 148  76A2 00          > db 0
+ 148  76A3 00          > db 0
+ 148  76A4 00          > db 0
+ 148  76A5 00          > db 0
+ 148  76A6 00          > db 0
+ 148  76A7 00          > db 0
+ 148  76A8 00          > db 0
+ 148  76A9 00          > db 0
+ 148  76AA 00          > db 0
+ 148  76AB 00          > db 0
+ 148  76AC 00          > db 0
+ 148  76AD 00          > db 0
+ 148  76AE 00          > db 0
+ 148  76AF 00          > db 0
+ 148  76B0 00          > db 0
+ 148  76B1 00          > db 0
+ 148  76B2 00          > db 0
+ 148  76B3 00          > db 0
+ 148  76B4 00          > db 0
+ 148  76B5 00          > db 0
+ 148  76B6 00          > db 0
  149  76B7 00          > db 0
  149  76B8 00          > db 0
  149  76B9 00          > db 0
@@ -4833,20 +4820,55 @@
  149  7891 00          > db 0
  149  7892 00          > db 0
  149  7893 00          > db 0
- 150  7894
- 151  7894              ; Gestione Stanze
- 152  7894 00           current_room:   db 0
- 153  7895 00           conveyor_dir:   db 0
- 154  7896 00           conveyor_len:   db 0
- 155  7897 00           conveyor_row:   db 0
- 156  7898 00           conveyor_col:   db 0
- 157  7899 00           ramp_dir:       db 0
- 158  789A 00           ramp_len:       db 0
- 159  789B 00           ramp_row:       db 0
- 160  789C 00           ramp_col:       db 0
- 161  789D 02 7A        room_ptr:       dw UnderTheMegaTreeLayout ;MastreBedRoomLayout; TheOffLicenceLayout; TheBridgeLayout; TheTestRoomLayout;
- 162  789F
- 163  789F 00 00 00...      ALIGN 256
+ 149  7894 00          > db 0
+ 149  7895 00          > db 0
+ 149  7896 00          > db 0
+ 149  7897 00          > db 0
+ 149  7898 00          > db 0
+ 149  7899 00          > db 0
+ 149  789A 00          > db 0
+ 149  789B 00          > db 0
+ 149  789C 00          > db 0
+ 149  789D 00          > db 0
+ 149  789E 00          > db 0
+ 149  789F 00          > db 0
+ 149  78A0 00          > db 0
+ 149  78A1 00          > db 0
+ 149  78A2 00          > db 0
+ 149  78A3 00          > db 0
+ 149  78A4 00          > db 0
+ 149  78A5 00          > db 0
+ 149  78A6 00          > db 0
+ 149  78A7 00          > db 0
+ 149  78A8 00          > db 0
+ 149  78A9 00          > db 0
+ 149  78AA 00          > db 0
+ 149  78AB 00          > db 0
+ 149  78AC 00          > db 0
+ 149  78AD 00          > db 0
+ 149  78AE 00          > db 0
+ 149  78AF 00          > db 0
+ 149  78B0 00          > db 0
+ 149  78B1 00          > db 0
+ 149  78B2 00          > db 0
+ 149  78B3 00          > db 0
+ 149  78B4 00          > db 0
+ 149  78B5 00          > db 0
+ 149  78B6 00          > db 0
+ 150  78B7
+ 151  78B7              ; Gestione Stanze
+ 152  78B7 00           current_room:   db 0
+ 153  78B8 00           conveyor_dir:   db 0
+ 154  78B9 00           conveyor_len:   db 0
+ 155  78BA 00           conveyor_row:   db 0
+ 156  78BB 00           conveyor_col:   db 0
+ 157  78BC 00           ramp_dir:       db 0
+ 158  78BD 00           ramp_len:       db 0
+ 159  78BE 00           ramp_row:       db 0
+ 160  78BF 00           ramp_col:       db 0
+ 161  78C0 06 7C        room_ptr:       dw AtTheFootTheMegaTreeLayout; UnderTheMegaTreeLayout ;MastreBedRoomLayout; TheOffLicenceLayout; TheBridgeLayout; TheTestRoomLayout;
+ 162  78C2
+ 163  78C2 00 00 00...      ALIGN 256
  164  7900              RoomsStart:
  165  7900                  include "Rooms/TheOffLicence.asm"
 # file opened: Rooms/TheOffLicence.asm
@@ -4992,619 +5014,772 @@
  104+ 7A00              TheOffLicencePosWilly:
  105+ 7A00 88 80            db 136, 128                   ; Posizione di Willy
 # file closed: Rooms/TheOffLicence.asm
- 166  7A02                  include "Rooms/UnderTheMegaTree.asm"
-# file opened: Rooms/UnderTheMegaTree.asm
+ 166  7A02                  include "Rooms/TheBridge.asm"
+# file opened: Rooms/TheBridge.asm
    1+ 7A02              ;===========================================================================
-   2+ 7A02              ; UnderTheMegaTree.asm
+   2+ 7A02              ; TheBridge.asm
    3+ 7A02              ;
-   4+ 7A02              ; UnderTheMegaTreeLayout       Size 128 Byte, Start Byte   0
-   5+ 7A02              ; UnderTheMegaTreeTile         Size  32 Byte, Start Byte 128
-   6+ 7A02              ; UnderTheMegaTreeBackground   Size   9 Byte, Start Byte 160
-   7+ 7A02              ; UnderTheMegaTreeFloor        Size   9 Byte, Start Byte 169
-   8+ 7A02              ; UnderTheMegaTreeWall         Size   9 Byte, Start Byte 178
-   9+ 7A02              ; UnderTheMegaTreeNasty        Size   9 Byte, Start Byte 187
-  10+ 7A02              ; UnderTheMegaTreeRamp         Size   9 Byte, Start Byte 196
-  11+ 7A02              ; UnderTheMegaTreeConveyor     Size   9 Byte, Start Byte 205
-  12+ 7A02              ; UnderTheMegaTreeConveyorData Size   4 Byte, Start Byte 214
-  13+ 7A02              ; UnderTheMegaTreeRampData     Size   4 Byte, Start Byte 218
-  14+ 7A02              ; UnderTheMegaTreeBorderColor  Size   1 Byte, Start Byte 222
-  15+ 7A02              ; UnderTheMegaTreeReserved     Size   4 Byte, Start Byte 223
-  16+ 7A02              ; UnderTheMegaTreeItem		    Size   8 Byte, Start Byte 227
-  17+ 7A02              ; UnderTheMegaTreeDirection    Size   4 Byte, Start Byte 235
-  18+ 7A02              ; UnderTheMegaTreeUnused       Size   1 Byte, Start Byte 239
-  19+ 7A02              ; UnderTheMegaTreeEnemy1		Size   4 Byte, Start Byte 240
-  20+ 7A02              ; UnderTheMegaTreeEnemy2		Size   4 Byte, Start Byte 244
-  21+ 7A02              ; UnderTheMegaTreeEnemy3		Size   4 Byte, Start Byte 248
-  22+ 7A02              ; UnderTheMegaTreeEnemy4		Size   4 Byte, Start Byte 252
-  23+ 7A02              ; UnderTheMegaTreePosWilly     Size   2 Byte, Start Byte 256
+   4+ 7A02              ; TheBridgeLayout       Size 128 Byte, Start Byte   0
+   5+ 7A02              ; TheBridgeTile         Size  32 Byte, Start Byte 128
+   6+ 7A02              ; TheBridgeBackground   Size   9 Byte, Start Byte 160
+   7+ 7A02              ; TheBridgeFloor        Size   9 Byte, Start Byte 169
+   8+ 7A02              ; TheBridgeWall         Size   9 Byte, Start Byte 178
+   9+ 7A02              ; TheBridgeNasty        Size   9 Byte, Start Byte 187
+  10+ 7A02              ; TheBridgeRamp         Size   9 Byte, Start Byte 196
+  11+ 7A02              ; TheBridgeConveyor     Size   9 Byte, Start Byte 205
+  12+ 7A02              ; TheBridgeConveyorData Size   4 Byte, Start Byte 214
+  13+ 7A02              ; TheBridgeRampData     Size   4 Byte, Start Byte 218
+  14+ 7A02              ; TheBridgeBorderColor  Size   1 Byte, Start Byte 222
+  15+ 7A02              ; TheBridgeReserved     Size   4 Byte, Start Byte 223
+  16+ 7A02              ; TheBridgeItem		    Size   8 Byte, Start Byte 227
+  17+ 7A02              ; TheBridgeDirection    Size   4 Byte, Start Byte 235
+  18+ 7A02              ; TheBridgeUnused       Size   1 Byte, Start Byte 239
+  19+ 7A02              ; TheBridgeEnemy1		Size   4 Byte, Start Byte 240
+  20+ 7A02              ; TheBridgeEnemy2		Size   4 Byte, Start Byte 244
+  21+ 7A02              ; TheBridgeEnemy3		Size   4 Byte, Start Byte 248
+  22+ 7A02              ; TheBridgeEnemy4		Size   4 Byte, Start Byte 252
+  23+ 7A02              ; TheBridgePosWilly     Size   2 Byte, Start Byte 256
   24+ 7A02              ;
   25+ 7A02              ;===========================================================================
   26+ 7A02
-  27+ 7A02              ; Room layout for Room  (Master Bedroom)
-  28+ 7A02              UnderTheMegaTreeLayout:
-  29+ 7A02 00 03 FF CF      DEFB 0,3,255,207,252,0,0,0
-  29+ 7A06 FC 00 00 00
-  30+ 7A0A AA AA AF FF      DEFB 170,170,175,255,63,0,0,0
-  30+ 7A0E 3F 00 00 00
-  31+ 7A12 00 00 3F D0      DEFB 0,0,63,208,92,0,0,0
-  31+ 7A16 5C 00 00 00
+  27+ 7A02              ; Room layout for Room  (The Bridge)
+  28+ 7A02              TheBridgeLayout:
+  29+ 7A02 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  29+ 7A06 00 00 00 00
+  30+ 7A0A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  30+ 7A0E 00 00 00 00
+  31+ 7A12 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  31+ 7A16 00 00 00 00
   32+ 7A1A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
   32+ 7A1E 00 00 00 00
-  33+ 7A22 AA 80 00 00      DEFB 170,128,0,0,0,0,0,0
+  33+ 7A22 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
   33+ 7A26 00 00 00 00
-  34+ 7A2A 00 01 40 04      DEFB 0,1,64,4,0,4,0,0
-  34+ 7A2E 00 04 00 00
-  35+ 7A32 00 00 01 00      DEFB 0,0,1,0,4,0,0,0
-  35+ 7A36 04 00 00 00
-  36+ 7A3A AA A8 00 00      DEFB 170,168,0,0,0,1,0,0
-  36+ 7A3E 00 01 00 00
-  37+ 7A42 00 00 14 10      DEFB 0,0,20,16,16,0,0,0
-  37+ 7A46 10 00 00 00
+  34+ 7A2A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  34+ 7A2E 00 00 00 00
+  35+ 7A32 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  35+ 7A36 00 00 00 00
+  36+ 7A3A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  36+ 7A3E 00 00 00 00
+  37+ 7A42 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  37+ 7A46 00 00 00 00
   38+ 7A4A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
   38+ 7A4E 00 00 00 00
   39+ 7A52 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
   39+ 7A56 00 00 00 00
   40+ 7A5A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
   40+ 7A5E 00 00 00 00
-  41+ 7A62 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  41+ 7A66 00 00 00 00
-  42+ 7A6A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  42+ 7A6E 00 00 00 00
-  43+ 7A72 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  43+ 7A76 00 00 00 00
-  44+ 7A7A 55 55 55 55      DEFB 85,85,85,85,85,85,85,85
-  44+ 7A7E 55 55 55 55
+  41+ 7A62 00 00 0A 00      DEFB 0,0,10,0,42,0,0,0
+  41+ 7A66 2A 00 00 00
+  42+ 7A6A 00 00 2A 00      DEFB 0,0,42,0,42,128,0,0
+  42+ 7A6E 2A 80 00 00
+  43+ 7A72 00 00 AA FF      DEFB 0,0,170,255,234,160,0,0
+  43+ 7A76 EA A0 00 00
+  44+ 7A7A 55 55 AA FF      DEFB 85,85,170,255,234,165,85,85
+  44+ 7A7E EA A5 55 55
   45+ 7A82
-  46+ 7A82              UnderTheMegaTreeTile:
+  46+ 7A82              TheBridgeTile:
   47+ 7A82              ;The next 32 bytes are copied to 32896 and specify the room name.
-  48+ 7A82 20 20 20 20      DEFM "       Under the MegaTree       "	    ;Room name
-  48+ 7A86 20 20 20 55
-  48+ 7A8A 6E 64 65 72
-  48+ 7A8E 20 74 68 65
-  48+ 7A92 20 4D 65 67
-  48+ 7A96 61 54 72 65
-  48+ 7A9A 65 20 20 20
+  48+ 7A82 20 20 20 20      DEFM "         The Bridge             "	    ;Room name
+  48+ 7A86 20 20 20 20
+  48+ 7A8A 20 54 68 65
+  48+ 7A8E 20 42 72 69
+  48+ 7A92 64 67 65 20
+  48+ 7A96 20 20 20 20
+  48+ 7A9A 20 20 20 20
   48+ 7A9E 20 20 20 20
   49+ 7AA2
   50+ 7AA2              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  51+ 7AA2              UnderTheMegaTreeBackground:
-  52+ 7AA2 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+  51+ 7AA2              TheBridgeBackground:
+  52+ 7AA2 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
   52+ 7AA6 00 00 00 00
   52+ 7AAA 00
   53+ 7AAB
-  54+ 7AAB              UnderTheMegaTreeFloor:
-  55+ 7AAB 44 D7 B3 75      DEFB 68,215,179,117,109,92,24,8,4	    ;Floor Solid
-  55+ 7AAF 6D 5C 18 08
-  55+ 7AB3 04
+  54+ 7AAB              TheBridgeFloor:
+  55+ 7AAB 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64	;Floor Solid
+  55+ 7AAF BB D6 72 60
+  55+ 7AB3 40
   56+ 7AB4
-  57+ 7AB4              UnderTheMegaTreeWall:
-  58+ 7AB4 42 BD AA 5D      DEFB 66,189,170,93,162,243,10,6,1	    ;Wall Solid
-  58+ 7AB8 A2 F3 0A 06
-  58+ 7ABC 01
+  57+ 7AB4              TheBridgeWall:
+  58+ 7AB4 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136	    ;Wall Solid
+  58+ 7AB8 88 22 77 22
+  58+ 7ABC 88
   59+ 7ABD
-  60+ 7ABD              UnderTheMegaTreeNasty:
-  61+ 7ABD 46 49 6A 3B      DEFB 70,73,106,59,58,252,30,107,232	    ;Nasty
-  61+ 7AC1 3A FC 1E 6B
-  61+ 7AC5 E8
+  60+ 7ABD              TheBridgeNasty:
+  61+ 7ABD 2F 03 84 48      DEFB 47,3,132,72,48,3,132,72,48	        ;Nasty
+  61+ 7AC1 30 03 84 48
+  61+ 7AC5 30
   62+ 7AC6
-  63+ 7AC6              UnderTheMegaTreeRamp:
-  64+ 7AC6 FF 00 00 00      DEFB 255,0,0,0,255,0,0,0,0	            ;Ramp Solid
-  64+ 7ACA FF 00 00 00
-  64+ 7ACE 00
+  63+ 7AC6              TheBridgeRamp:
+  64+ 7AC6 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200	        ;Ramp Solid
+  64+ 7ACA 0D 32 37 C2
+  64+ 7ACE C8
   65+ 7ACF
-  66+ 7ACF              UnderTheMegaTreeConveyor:
-  67+ 7ACF FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
-  67+ 7AD3 00 00 00 00
-  67+ 7AD7 00
+  66+ 7ACF              TheBridgeConveyor:
+  67+ 7ACF 2C 01 40 04      DEFB 44,1,64,4,70,79,121,240,249	    ;Conveyor
+  67+ 7AD3 46 4F 79 F0
+  67+ 7AD7 F9
   68+ 7AD8
   69+ 7AD8              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  70+ 7AD8              UnderTheMegaTreeConveyorData:
-  71+ 7AD8 00               DEFB 0	                                ;Direction (right)
-  72+ 7AD9 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
-  73+ 7ADB 00               DEFB 0	                                ;Length
+  70+ 7AD8              TheBridgeConveyorData:
+  71+ 7AD8 01               DEFB 1	                                ;Direction (right)
+  72+ 7AD9 EC 5F            DEFW 24556	                            ;Location in the attribute buffer at 24064: (15,12)
+  73+ 7ADB 05               DEFB 5	                                ;Length
   74+ 7ADC
   75+ 7ADC              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  76+ 7ADC              UnderTheMegaTreeRampData:
-  77+ 7ADC 00               DEFB 0	                                ;Direction (up to the right)
-  78+ 7ADD 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (14,7)
-  79+ 7ADF 00               DEFB 0	                                ;Length
+  76+ 7ADC              TheBridgeRampData:
+  77+ 7ADC 01               DEFB 1	                                ;Direction (up to the right)
+  78+ 7ADD C7 5F            DEFW 24519	                            ;Location in the attribute buffer at 24064: (14,7)
+  79+ 7ADF 03               DEFB 3	                                ;Length
   80+ 7AE0
   81+ 7AE0              ;The next byte is copied to 32990 and specifies the border colour.
-  82+ 7AE0              UnderTheMegaTreeBorderColor:
+  82+ 7AE0              TheBridgeBorderColor:
   83+ 7AE0 04               DEFB 4	                                ;Border colour
   84+ 7AE1
   85+ 7AE1              ;The next two bytes are copied to 32991, but are not used.
-  86+ 7AE1              UnderTheMegaTreeReserved:
+  86+ 7AE1              TheBridgeReserved:
   87+ 7AE1 02 03 04 07      DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
   88+ 7AE5
   89+ 7AE5              ;The next eight bytes are copied to 32993 and define the item graphic.
-  90+ 7AE5              UnderTheMegaTreeItem:
-  91+ 7AE5 81 42 24 18      DEFB 129,66,36,24,60,24,60,19	                ;Item graphic (unused)
-  91+ 7AE9 3C 18 3C 13
+  90+ 7AE5              TheBridgeItem:
+  91+ 7AE5 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
+  91+ 7AE9 00 00 00 00
   92+ 7AED
   93+ 7AED              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  94+ 7AED              UnderTheMegaTreeDirection:
-  95+ 7AED 03               DEFB 3	                                ;Room to the left (Under the MegaTree)
-  96+ 7AEE 01               DEFB 1	                                ;Room to the right (The Off Licence)
+  94+ 7AED              TheBridgeDirection:
+  95+ 7AED 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
+  96+ 7AEE 00               DEFB 0	                                ;Room to the right (The Off Licence)
   97+ 7AEF 00               DEFB 0	                                ;Room above (The Off Licence)
   98+ 7AF0 00               DEFB 0	                                ;Room below (The Off Licence)
   99+ 7AF1
- 100+ 7AF1              UnderTheMegaTreeUnused:
+ 100+ 7AF1              TheBridgeUnused:
  101+ 7AF1 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
  102+ 7AF2
  103+ 7AF2              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 104+ 7AF2              UnderTheMegaTreeEnemy1:
+ 104+ 7AF2              TheBridgeEnemy1:
  105+ 7AF2 80 08 64 C8      DEFB $80, 8, 100, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
- 106+ 7AF6              UnderTheMegaTreeEnemy2:
+ 106+ 7AF6              TheBridgeEnemy2:
  107+ 7AF6 80 50 64 B4      DEFB $80, 80, 100, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
- 108+ 7AFA              UnderTheMegaTreeEnemy3:
- 109+ 7AFA C1 78 28 64      DEFB $C1, 120, 40, 100        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
- 110+ 7AFE              UnderTheMegaTreeEnemy4:
+ 108+ 7AFA              TheBridgeEnemy3:
+ 109+ 7AFA C1 78 28 82      DEFB $C1, 120, 40, 130        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+ 110+ 7AFE              TheBridgeEnemy4:
  111+ 7AFE 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
  112+ 7B02
- 113+ 7B02              UnderTheMegaTreePosWilly:
- 114+ 7B02 C8 7D            db 200, 125                   ; Posizione di Willy
-# file closed: Rooms/UnderTheMegaTree.asm
- 167  7B04                  include "Rooms/TheBridge.asm"
-# file opened: Rooms/TheBridge.asm
+ 113+ 7B02              TheBridgePosWilly:
+ 114+ 7B02 88 64            db 136, 100                   ; Posizione di Willy
+# file closed: Rooms/TheBridge.asm
+ 167  7B04                  include "Rooms/UnderTheMegaTree.asm"
+# file opened: Rooms/UnderTheMegaTree.asm
    1+ 7B04              ;===========================================================================
-   2+ 7B04              ; TheBridge.asm
+   2+ 7B04              ; UnderTheMegaTree.asm
    3+ 7B04              ;
-   4+ 7B04              ; TheBridgeLayout       Size 128 Byte, Start Byte   0
-   5+ 7B04              ; TheBridgeTile         Size  32 Byte, Start Byte 128
-   6+ 7B04              ; TheBridgeBackground   Size   9 Byte, Start Byte 160
-   7+ 7B04              ; TheBridgeFloor        Size   9 Byte, Start Byte 169
-   8+ 7B04              ; TheBridgeWall         Size   9 Byte, Start Byte 178
-   9+ 7B04              ; TheBridgeNasty        Size   9 Byte, Start Byte 187
-  10+ 7B04              ; TheBridgeRamp         Size   9 Byte, Start Byte 196
-  11+ 7B04              ; TheBridgeConveyor     Size   9 Byte, Start Byte 205
-  12+ 7B04              ; TheBridgeConveyorData Size   4 Byte, Start Byte 214
-  13+ 7B04              ; TheBridgeRampData     Size   4 Byte, Start Byte 218
-  14+ 7B04              ; TheBridgeBorderColor  Size   1 Byte, Start Byte 222
-  15+ 7B04              ; TheBridgeReserved     Size   4 Byte, Start Byte 223
-  16+ 7B04              ; TheBridgeItem		    Size   8 Byte, Start Byte 227
-  17+ 7B04              ; TheBridgeDirection    Size   4 Byte, Start Byte 235
-  18+ 7B04              ; TheBridgeUnused       Size   1 Byte, Start Byte 239
-  19+ 7B04              ; TheBridgeEnemy1		Size   4 Byte, Start Byte 240
-  20+ 7B04              ; TheBridgeEnemy2		Size   4 Byte, Start Byte 244
-  21+ 7B04              ; TheBridgeEnemy3		Size   4 Byte, Start Byte 248
-  22+ 7B04              ; TheBridgeEnemy4		Size   4 Byte, Start Byte 252
-  23+ 7B04              ; TheBridgePosWilly     Size   2 Byte, Start Byte 256
+   4+ 7B04              ; UnderTheMegaTreeLayout       Size 128 Byte, Start Byte   0
+   5+ 7B04              ; UnderTheMegaTreeTile         Size  32 Byte, Start Byte 128
+   6+ 7B04              ; UnderTheMegaTreeBackground   Size   9 Byte, Start Byte 160
+   7+ 7B04              ; UnderTheMegaTreeFloor        Size   9 Byte, Start Byte 169
+   8+ 7B04              ; UnderTheMegaTreeWall         Size   9 Byte, Start Byte 178
+   9+ 7B04              ; UnderTheMegaTreeNasty        Size   9 Byte, Start Byte 187
+  10+ 7B04              ; UnderTheMegaTreeRamp         Size   9 Byte, Start Byte 196
+  11+ 7B04              ; UnderTheMegaTreeConveyor     Size   9 Byte, Start Byte 205
+  12+ 7B04              ; UnderTheMegaTreeConveyorData Size   4 Byte, Start Byte 214
+  13+ 7B04              ; UnderTheMegaTreeRampData     Size   4 Byte, Start Byte 218
+  14+ 7B04              ; UnderTheMegaTreeBorderColor  Size   1 Byte, Start Byte 222
+  15+ 7B04              ; UnderTheMegaTreeReserved     Size   4 Byte, Start Byte 223
+  16+ 7B04              ; UnderTheMegaTreeItem		    Size   8 Byte, Start Byte 227
+  17+ 7B04              ; UnderTheMegaTreeDirection    Size   4 Byte, Start Byte 235
+  18+ 7B04              ; UnderTheMegaTreeUnused       Size   1 Byte, Start Byte 239
+  19+ 7B04              ; UnderTheMegaTreeEnemy1		Size   4 Byte, Start Byte 240
+  20+ 7B04              ; UnderTheMegaTreeEnemy2		Size   4 Byte, Start Byte 244
+  21+ 7B04              ; UnderTheMegaTreeEnemy3		Size   4 Byte, Start Byte 248
+  22+ 7B04              ; UnderTheMegaTreeEnemy4		Size   4 Byte, Start Byte 252
+  23+ 7B04              ; UnderTheMegaTreePosWilly     Size   2 Byte, Start Byte 256
   24+ 7B04              ;
   25+ 7B04              ;===========================================================================
   26+ 7B04
-  27+ 7B04              ; Room layout for Room  (The Bridge)
-  28+ 7B04              TheBridgeLayout:
-  29+ 7B04 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  29+ 7B08 00 00 00 00
-  30+ 7B0C 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  30+ 7B10 00 00 00 00
-  31+ 7B14 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  31+ 7B18 00 00 00 00
+  27+ 7B04              ; Room layout for Room  (Master Bedroom)
+  28+ 7B04              UnderTheMegaTreeLayout:
+  29+ 7B04 00 03 FF CF      DEFB 0,3,255,207,252,0,0,0
+  29+ 7B08 FC 00 00 00
+  30+ 7B0C AA AA AF FF      DEFB 170,170,175,255,63,0,0,0
+  30+ 7B10 3F 00 00 00
+  31+ 7B14 00 00 3F D0      DEFB 0,0,63,208,92,0,0,0
+  31+ 7B18 5C 00 00 00
   32+ 7B1C 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
   32+ 7B20 00 00 00 00
-  33+ 7B24 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  33+ 7B24 AA 80 00 00      DEFB 170,128,0,0,0,0,0,0
   33+ 7B28 00 00 00 00
-  34+ 7B2C 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  34+ 7B30 00 00 00 00
-  35+ 7B34 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  35+ 7B38 00 00 00 00
-  36+ 7B3C 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  36+ 7B40 00 00 00 00
-  37+ 7B44 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  37+ 7B48 00 00 00 00
+  34+ 7B2C 00 01 40 04      DEFB 0,1,64,4,0,4,0,0
+  34+ 7B30 00 04 00 00
+  35+ 7B34 00 00 01 00      DEFB 0,0,1,0,4,0,0,0
+  35+ 7B38 04 00 00 00
+  36+ 7B3C AA A8 00 00      DEFB 170,168,0,0,0,1,0,0
+  36+ 7B40 00 01 00 00
+  37+ 7B44 00 00 14 10      DEFB 0,0,20,16,16,0,0,0
+  37+ 7B48 10 00 00 00
   38+ 7B4C 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
   38+ 7B50 00 00 00 00
   39+ 7B54 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
   39+ 7B58 00 00 00 00
   40+ 7B5C 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
   40+ 7B60 00 00 00 00
-  41+ 7B64 00 00 0A 00      DEFB 0,0,10,0,42,0,0,0
-  41+ 7B68 2A 00 00 00
-  42+ 7B6C 00 00 2A 00      DEFB 0,0,42,0,42,128,0,0
-  42+ 7B70 2A 80 00 00
-  43+ 7B74 00 00 AA FF      DEFB 0,0,170,255,234,160,0,0
-  43+ 7B78 EA A0 00 00
-  44+ 7B7C 55 55 AA FF      DEFB 85,85,170,255,234,165,85,85
-  44+ 7B80 EA A5 55 55
+  41+ 7B64 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  41+ 7B68 00 00 00 00
+  42+ 7B6C 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  42+ 7B70 00 00 00 00
+  43+ 7B74 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  43+ 7B78 00 00 00 00
+  44+ 7B7C 55 55 55 55      DEFB 85,85,85,85,85,85,85,85
+  44+ 7B80 55 55 55 55
   45+ 7B84
-  46+ 7B84              TheBridgeTile:
+  46+ 7B84              UnderTheMegaTreeTile:
   47+ 7B84              ;The next 32 bytes are copied to 32896 and specify the room name.
-  48+ 7B84 20 20 20 20      DEFM "         The Bridge             "	    ;Room name
-  48+ 7B88 20 20 20 20
-  48+ 7B8C 20 54 68 65
-  48+ 7B90 20 42 72 69
-  48+ 7B94 64 67 65 20
-  48+ 7B98 20 20 20 20
-  48+ 7B9C 20 20 20 20
+  48+ 7B84 20 20 20 20      DEFM "       Under the MegaTree       "	    ;Room name
+  48+ 7B88 20 20 20 55
+  48+ 7B8C 6E 64 65 72
+  48+ 7B90 20 74 68 65
+  48+ 7B94 20 4D 65 67
+  48+ 7B98 61 54 72 65
+  48+ 7B9C 65 20 20 20
   48+ 7BA0 20 20 20 20
   49+ 7BA4
   50+ 7BA4              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  51+ 7BA4              TheBridgeBackground:
-  52+ 7BA4 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
+  51+ 7BA4              UnderTheMegaTreeBackground:
+  52+ 7BA4 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
   52+ 7BA8 00 00 00 00
   52+ 7BAC 00
   53+ 7BAD
-  54+ 7BAD              TheBridgeFloor:
-  55+ 7BAD 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64	;Floor Solid
-  55+ 7BB1 BB D6 72 60
-  55+ 7BB5 40
+  54+ 7BAD              UnderTheMegaTreeFloor:
+  55+ 7BAD 44 D7 B3 75      DEFB 68,215,179,117,109,92,24,8,4	    ;Floor Solid
+  55+ 7BB1 6D 5C 18 08
+  55+ 7BB5 04
   56+ 7BB6
-  57+ 7BB6              TheBridgeWall:
-  58+ 7BB6 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136	    ;Wall Solid
-  58+ 7BBA 88 22 77 22
-  58+ 7BBE 88
+  57+ 7BB6              UnderTheMegaTreeWall:
+  58+ 7BB6 42 BD AA 5D      DEFB 66,189,170,93,162,243,10,6,1	    ;Wall Solid
+  58+ 7BBA A2 F3 0A 06
+  58+ 7BBE 01
   59+ 7BBF
-  60+ 7BBF              TheBridgeNasty:
-  61+ 7BBF 2F 03 84 48      DEFB 47,3,132,72,48,3,132,72,48	        ;Nasty
-  61+ 7BC3 30 03 84 48
-  61+ 7BC7 30
+  60+ 7BBF              UnderTheMegaTreeNasty:
+  61+ 7BBF 46 49 6A 3B      DEFB 70,73,106,59,58,252,30,107,232	    ;Nasty
+  61+ 7BC3 3A FC 1E 6B
+  61+ 7BC7 E8
   62+ 7BC8
-  63+ 7BC8              TheBridgeRamp:
-  64+ 7BC8 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200	        ;Ramp Solid
-  64+ 7BCC 0D 32 37 C2
-  64+ 7BD0 C8
+  63+ 7BC8              UnderTheMegaTreeRamp:
+  64+ 7BC8 FF 00 00 00      DEFB 255,0,0,0,255,0,0,0,0	            ;Ramp Solid
+  64+ 7BCC FF 00 00 00
+  64+ 7BD0 00
   65+ 7BD1
-  66+ 7BD1              TheBridgeConveyor:
-  67+ 7BD1 2C 01 40 04      DEFB 44,1,64,4,70,79,121,240,249	    ;Conveyor
-  67+ 7BD5 46 4F 79 F0
-  67+ 7BD9 F9
+  66+ 7BD1              UnderTheMegaTreeConveyor:
+  67+ 7BD1 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  67+ 7BD5 00 00 00 00
+  67+ 7BD9 00
   68+ 7BDA
   69+ 7BDA              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  70+ 7BDA              TheBridgeConveyorData:
-  71+ 7BDA 01               DEFB 1	                                ;Direction (right)
-  72+ 7BDB EC 5F            DEFW 24556	                            ;Location in the attribute buffer at 24064: (15,12)
-  73+ 7BDD 05               DEFB 5	                                ;Length
+  70+ 7BDA              UnderTheMegaTreeConveyorData:
+  71+ 7BDA 00               DEFB 0	                                ;Direction (right)
+  72+ 7BDB 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
+  73+ 7BDD 00               DEFB 0	                                ;Length
   74+ 7BDE
   75+ 7BDE              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  76+ 7BDE              TheBridgeRampData:
-  77+ 7BDE 01               DEFB 1	                                ;Direction (up to the right)
-  78+ 7BDF C7 5F            DEFW 24519	                            ;Location in the attribute buffer at 24064: (14,7)
-  79+ 7BE1 03               DEFB 3	                                ;Length
+  76+ 7BDE              UnderTheMegaTreeRampData:
+  77+ 7BDE 00               DEFB 0	                                ;Direction (up to the right)
+  78+ 7BDF 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (14,7)
+  79+ 7BE1 00               DEFB 0	                                ;Length
   80+ 7BE2
   81+ 7BE2              ;The next byte is copied to 32990 and specifies the border colour.
-  82+ 7BE2              TheBridgeBorderColor:
+  82+ 7BE2              UnderTheMegaTreeBorderColor:
   83+ 7BE2 04               DEFB 4	                                ;Border colour
   84+ 7BE3
   85+ 7BE3              ;The next two bytes are copied to 32991, but are not used.
-  86+ 7BE3              TheBridgeReserved:
+  86+ 7BE3              UnderTheMegaTreeReserved:
   87+ 7BE3 02 03 04 07      DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
   88+ 7BE7
   89+ 7BE7              ;The next eight bytes are copied to 32993 and define the item graphic.
-  90+ 7BE7              TheBridgeItem:
-  91+ 7BE7 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
-  91+ 7BEB 00 00 00 00
+  90+ 7BE7              UnderTheMegaTreeItem:
+  91+ 7BE7 81 42 24 18      DEFB 129,66,36,24,60,24,60,195	                ;Item graphic (unused)
+  91+ 7BEB 3C 18 3C C3
   92+ 7BEF
   93+ 7BEF              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  94+ 7BEF              TheBridgeDirection:
-  95+ 7BEF 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
-  96+ 7BF0 00               DEFB 0	                                ;Room to the right (The Off Licence)
+  94+ 7BEF              UnderTheMegaTreeDirection:
+  95+ 7BEF 03               DEFB 3	                                ;Room to the left (Under the MegaTree)
+  96+ 7BF0 01               DEFB 1	                                ;Room to the right (The Off Licence)
   97+ 7BF1 00               DEFB 0	                                ;Room above (The Off Licence)
   98+ 7BF2 00               DEFB 0	                                ;Room below (The Off Licence)
   99+ 7BF3
- 100+ 7BF3              TheBridgeUnused:
+ 100+ 7BF3              UnderTheMegaTreeUnused:
  101+ 7BF3 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
  102+ 7BF4
  103+ 7BF4              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 104+ 7BF4              TheBridgeEnemy1:
+ 104+ 7BF4              UnderTheMegaTreeEnemy1:
  105+ 7BF4 80 08 64 C8      DEFB $80, 8, 100, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
- 106+ 7BF8              TheBridgeEnemy2:
+ 106+ 7BF8              UnderTheMegaTreeEnemy2:
  107+ 7BF8 80 50 64 B4      DEFB $80, 80, 100, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
- 108+ 7BFC              TheBridgeEnemy3:
- 109+ 7BFC C1 78 28 82      DEFB $C1, 120, 40, 130        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
- 110+ 7C00              TheBridgeEnemy4:
+ 108+ 7BFC              UnderTheMegaTreeEnemy3:
+ 109+ 7BFC C1 78 28 64      DEFB $C1, 120, 40, 100        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+ 110+ 7C00              UnderTheMegaTreeEnemy4:
  111+ 7C00 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
  112+ 7C04
- 113+ 7C04              TheBridgePosWilly:
- 114+ 7C04 88 64            db 136, 100                   ; Posizione di Willy
-# file closed: Rooms/TheBridge.asm
- 168  7C06                  include "Rooms/MasterBedRoom.asm"
-# file opened: Rooms/MasterBedRoom.asm
+ 113+ 7C04              UnderTheMegaTreePosWilly:
+ 114+ 7C04 C8 7D            db 200, 125                   ; Posizione di Willy
+# file closed: Rooms/UnderTheMegaTree.asm
+ 168  7C06                  include "Rooms/AtTheFootTheMegaTree.asm"
+# file opened: Rooms/AtTheFootTheMegaTree.asm
    1+ 7C06              ;===========================================================================
-   2+ 7C06              ; MasterBedroom.asm
+   2+ 7C06              ; AtTheFootTheMegaTree.asm
    3+ 7C06              ;
-   4+ 7C06              ; Ho creato solo il template deve essere gestito con i dati corretti della stanza
-   5+ 7C06              ;
-   6+ 7C06              ; MasterBedroomLayout       Size 128 Byte, Start Byte   0
-   7+ 7C06              ; MasterBedroomTile         Size  32 Byte, Start Byte 128
-   8+ 7C06              ; MasterBedroomBackground   Size   9 Byte, Start Byte 160
-   9+ 7C06              ; MasterBedroomFloor        Size   9 Byte, Start Byte 169
-  10+ 7C06              ; MasterBedroomWall         Size   9 Byte, Start Byte 178
-  11+ 7C06              ; MasterBedroomNasty        Size   9 Byte, Start Byte 187
-  12+ 7C06              ; MasterBedroomRamp         Size   9 Byte, Start Byte 196
-  13+ 7C06              ; MasterBedroomConveyor     Size   9 Byte, Start Byte 205
-  14+ 7C06              ; MasterBedroomConveyorData Size   4 Byte, Start Byte 214
-  15+ 7C06              ; MasterBedroomRampData     Size   4 Byte, Start Byte 218
-  16+ 7C06              ; MasterBedroomBorderColor  Size   1 Byte, Start Byte 222
-  17+ 7C06              ; MasterBedroomReserved     Size   4 Byte, Start Byte 223
-  18+ 7C06              ; MasterBedroomItem		    Size   8 Byte, Start Byte 227
-  19+ 7C06              ; MasterBedroomDirection    Size   4 Byte, Start Byte 235
-  20+ 7C06              ; MasterBedroomUnused       Size   1 Byte, Start Byte 239
-  21+ 7C06              ; MasterBedroomEnemy1		Size   4 Byte, Start Byte 240
-  22+ 7C06              ; MasterBedroomEnemy2		Size   4 Byte, Start Byte 244
-  23+ 7C06              ; MasterBedroomEnemy3		Size   4 Byte, Start Byte 248
-  24+ 7C06              ; MasterBedroomEnemy4		Size   4 Byte, Start Byte 252
-  25+ 7C06              ; MasterBedroomPosWilly     Size   2 Byte, Start Byte 256
-  26+ 7C06              ;
-  27+ 7C06              ;===========================================================================
-  28+ 7C06
-  29+ 7C06              ; Room layout for Room  (Master Bedroom)
-  30+ 7C06              MastreBedRoomLayout:
-  31+ 7C06 AA AA AA AA      DEFB 170,170,170,170,170,170,170,170
-  31+ 7C0A AA AA AA AA
-  32+ 7C0E A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  32+ 7C12 00 00 00 00
-  33+ 7C16 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  33+ 7C1A 00 00 00 00
-  34+ 7C1E A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  34+ 7C22 00 00 00 00
-  35+ 7C26 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  35+ 7C2A 00 00 00 00
-  36+ 7C2E A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  36+ 7C32 00 00 00 00
-  37+ 7C36 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  37+ 7C3A 00 00 00 00
-  38+ 7C3E A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  38+ 7C42 00 00 00 00
-  39+ 7C46 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  39+ 7C4A 00 00 00 00
-  40+ 7C4E A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  40+ 7C52 00 00 00 00
-  41+ 7C56 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  41+ 7C5A 00 00 00 00
-  42+ 7C5E AC 00 00 00      DEFB 172,0,0,0,0,0,0,0
-  42+ 7C62 00 00 00 00
-  43+ 7C66 A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
-  43+ 7C6A 00 00 00 00
-  44+ 7C6E 95 55 55 55      DEFB 149,85,85,85,64,0,0,0
-  44+ 7C72 40 00 00 00
-  45+ 7C76 AA AA AA AA      DEFB 170,170,170,170,160,0,0,0
-  45+ 7C7A A0 00 00 00
-  46+ 7C7E AA AA AA AA      DEFB 170,170,170,170,169,85,85,85
-  46+ 7C82 A9 55 55 55
-  47+ 7C86
-  48+ 7C86              MastreBedRoomTile:
-  49+ 7C86              ;The next 32 bytes are copied to 32896 and specify the room name.
-  50+ 7C86 20 20 20 20      DEFM "         Master Bedroom         "	    ;Room name
-  50+ 7C8A 20 20 20 20
-  50+ 7C8E 20 4D 61 73
-  50+ 7C92 74 65 72 20
-  50+ 7C96 42 65 64 72
-  50+ 7C9A 6F 6F 6D 20
-  50+ 7C9E 20 20 20 20
-  50+ 7CA2 20 20 20 20
-  51+ 7CA6
-  52+ 7CA6              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  53+ 7CA6              MastreBedRoomBackground:
-  54+ 7CA6 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
-  54+ 7CAA 00 00 00 00
-  54+ 7CAE 00
-  55+ 7CAF
-  56+ 7CAF              MastreBedRoomFloor:
-  57+ 7CAF 06 FF 6B B5      DEFB 6,255,107,181,0,173,0,74,0	        ;Floor Solid
-  57+ 7CB3 00 AD 00 4A
-  57+ 7CB7 00
-  58+ 7CB8
-  59+ 7CB8              MastreBedRoomWall:
-  60+ 7CB8 33 00 51 FB      DEFB 51,0,81,251,81,0,170,191,170	    ;Wall Solid
-  60+ 7CBC 51 00 AA BF
-  60+ 7CC0 AA
-  61+ 7CC1
-  62+ 7CC1              MastreBedRoomNasty:
-  63+ 7CC1 47 00 00 00      DEFB 71,0,0,0,0,124,254,127,62	        ;Nasty
-  63+ 7CC5 00 7C FE 7F
-  63+ 7CC9 3E
-  64+ 7CCA
-  65+ 7CCA              MastreBedRoomRamp:
-  66+ 7CCA 07 C0 40 B0      DEFB 7,192,64,176,0,172,0,83,0	        ;Ramp Solid
-  66+ 7CCE 00 AC 00 53
-  66+ 7CD2 00
-  67+ 7CD3
-  68+ 7CD3              MastreBedRoomConveyor:
-  69+ 7CD3 29 55 55 55      DEFB 41,85,85,85,85,81,95,64,170	    ;Conveyor
-  69+ 7CD7 55 51 5F 40
-  69+ 7CDB AA
-  70+ 7CDC
-  71+ 7CDC              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  72+ 7CDC              MastreBedRoomConveyorData:
-  73+ 7CDC 01               DEFB 1	                                ;Direction (right)
-  74+ 7CDD 82 5F            DEFW 24450	                            ;Location in the attribute buffer at 24064: (15,12)
-  75+ 7CDF 04               DEFB 4	                                ;Length
-  76+ 7CE0
-  77+ 7CE0              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  78+ 7CE0              MastreBedRoomRampData:
-  79+ 7CE0 00               DEFB 0	                                ;Direction (up to the right)
-  80+ 7CE1 D2 5F            DEFW 24530	                            ;Location in the attribute buffer at 24064: (14,7)
-  81+ 7CE3 02               DEFB 2	                                ;Length
-  82+ 7CE4
-  83+ 7CE4              ;The next byte is copied to 32990 and specifies the border colour.
-  84+ 7CE4              MastreBedRoomBorderColor:
-  85+ 7CE4 04               DEFB 4	                                ;Border colour
-  86+ 7CE5
-  87+ 7CE5              ;The next two bytes are copied to 32991, but are not used.
-  88+ 7CE5              MastreBedRoomReserved:
-  89+ 7CE5 02 03 04 07      DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
-  90+ 7CE9
-  91+ 7CE9              ;The next eight bytes are copied to 32993 and define the item graphic.
-  92+ 7CE9              MastreBedRoomItem:
-  93+ 7CE9 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
-  93+ 7CED 00 00 00 00
-  94+ 7CF1
-  95+ 7CF1              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  96+ 7CF1              MastreBedRoomDirection:
-  97+ 7CF1 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
-  98+ 7CF2 00               DEFB 0	                                ;Room to the right (The Off Licence)
-  99+ 7CF3 00               DEFB 0	                                ;Room above (The Off Licence)
- 100+ 7CF4 00               DEFB 0	                                ;Room below (The Off Licence)
- 101+ 7CF5
- 102+ 7CF5              MastreBedRoomUnused:
- 103+ 7CF5 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
- 104+ 7CF6
- 105+ 7CF6              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 106+ 7CF6              MastreBedRoomEnemy1:
- 107+ 7CF6 80 08 64 C8      DEFB $80, 8, 100, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
- 108+ 7CFA              MastreBedRoomEnemy2:
- 109+ 7CFA 80 50 64 B4      DEFB $80, 80, 100, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
- 110+ 7CFE              MastreBedRoomEnemy3:
- 111+ 7CFE C1 78 28 64      DEFB $C1, 120, 40, 100        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
- 112+ 7D02              MastreBedRoomEnemy4:
- 113+ 7D02 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
- 114+ 7D06
- 115+ 7D06              MastreBedRoomPosWilly:
- 116+ 7D06 C8 7D            db 200, 125                   ; Posizione di Willy
-# file closed: Rooms/MasterBedRoom.asm
- 169  7D08                  include "Rooms/TheTestRoom.asm"
-# file opened: Rooms/TheTestRoom.asm
+   4+ 7C06              ; AtTheFootTheMegaTreeLayout       Size 128 Byte, Start Byte   0
+   5+ 7C06              ; AtTheFootTheMegaTreeTile         Size  32 Byte, Start Byte 128
+   6+ 7C06              ; AtTheFootTheMegaTreeBackground   Size   9 Byte, Start Byte 160
+   7+ 7C06              ; AtTheFootTheMegaTreeFloor        Size   9 Byte, Start Byte 169
+   8+ 7C06              ; AtTheFootTheMegaTreeWall         Size   9 Byte, Start Byte 178
+   9+ 7C06              ; AtTheFootTheMegaTreeNasty        Size   9 Byte, Start Byte 187
+  10+ 7C06              ; AtTheFootTheMegaTreeRamp         Size   9 Byte, Start Byte 196
+  11+ 7C06              ; AtTheFootTheMegaTreeConveyor     Size   9 Byte, Start Byte 205
+  12+ 7C06              ; AtTheFootTheMegaTreeConveyorData Size   4 Byte, Start Byte 214
+  13+ 7C06              ; AtTheFootTheMegaTreeRampData     Size   4 Byte, Start Byte 218
+  14+ 7C06              ; AtTheFootTheMegaTreeBorderColor  Size   1 Byte, Start Byte 222
+  15+ 7C06              ; AtTheFootTheMegaTreeReserved     Size   4 Byte, Start Byte 223
+  16+ 7C06              ; AtTheFootTheMegaTreeItem		   Size   8 Byte, Start Byte 227
+  17+ 7C06              ; AtTheFootTheMegaTreeDirection    Size   4 Byte, Start Byte 235
+  18+ 7C06              ; AtTheFootTheMegaTreeUnused       Size   1 Byte, Start Byte 239
+  19+ 7C06              ; AtTheFootTheMegaTreeEnemy1		Size   4 Byte, Start Byte 240
+  20+ 7C06              ; AtTheFootTheMegaTreeEnemy2		Size   4 Byte, Start Byte 244
+  21+ 7C06              ; AtTheFootTheMegaTreeEnemy3		Size   4 Byte, Start Byte 248
+  22+ 7C06              ; AtTheFootTheMegaTreeEnemy4		Size   4 Byte, Start Byte 252
+  23+ 7C06              ; AtTheFootTheMegaTreePosWilly     Size   2 Byte, Start Byte 256
+  24+ 7C06              ;
+  25+ 7C06              ;===========================================================================
+  26+ 7C06
+  27+ 7C06              ; Room layout for Room  (Master Bedroom)
+  28+ 7C06              AtTheFootTheMegaTreeLayout:
+  29+ 7C06 30 C3 08 00      DEFB 48,195,8,0,8,0,0,0
+  29+ 7C0A 08 00 00 00
+  30+ 7C0E 30 C3 08 00      DEFB 48,195,8,0,10,170,170,170
+  30+ 7C12 0A AA AA AA
+  31+ 7C16 30 C3 08 00      DEFB 48,195,8,0,8,0,0,0
+  31+ 7C1A 08 00 00 00
+  32+ 7C1E 30 C3 08 01      DEFB 48,195,8,1,88,0,0,0
+  32+ 7C22 58 00 00 00
+  33+ 7C26 30 C3 09 00      DEFB 48,195,9,0,10,170,170,170
+  33+ 7C2A 0A AA AA AA
+  34+ 7C2E 30 C3 08 14      DEFB 48,195,8,20,0,0,0,0
+  34+ 7C32 00 00 00 00
+  35+ 7C36 30 C3 08 00      DEFB 48,195,8,0,0,0,0,0
+  35+ 7C3A 00 00 00 00
+  36+ 7C3E 30 C3 09 00      DEFB 48,195,9,0,26,170,170,170
+  36+ 7C42 1A AA AA AA
+  37+ 7C46 30 C3 08 00      DEFB 48,195,8,0,8,0,0,0
+  37+ 7C4A 08 00 00 00
+  38+ 7C4E 30 C3 08 00      DEFB 48,195,8,0,88,0,0,0
+  38+ 7C52 58 00 00 00
+  39+ 7C56 30 03 09 40      DEFB 48,3,9,64,8,0,0,0
+  39+ 7C5A 08 00 00 00
+  40+ 7C5E 00 00 08 00      DEFB 0,0,8,0,8,0,0,0
+  40+ 7C62 08 00 00 00
+  41+ 7C66 00 00 08 00      DEFB 0,0,8,0,8,0,0,0
+  41+ 7C6A 08 00 00 00
+  42+ 7C6E 00 00 00 00      DEFB 0,0,0,0,80,0,0,0
+  42+ 7C72 50 00 00 00
+  43+ 7C76 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  43+ 7C7A 00 00 00 00
+  44+ 7C7E 55 55 55 55      DEFB 85,85,85,85,85,85,85,85
+  44+ 7C82 55 55 55 55
+  45+ 7C86
+  46+ 7C86              AtTheFootTheMegaTreeTile:
+  47+ 7C86              ;The next 32 bytes are copied to 32896 and specify the room name.
+  48+ 7C86 20 20 41 74      DEFM "  At the Foot of the MegaTree   "	    ;Room name
+  48+ 7C8A 20 74 68 65
+  48+ 7C8E 20 46 6F 6F
+  48+ 7C92 74 20 6F 66
+  48+ 7C96 20 74 68 65
+  48+ 7C9A 20 4D 65 67
+  48+ 7C9E 61 54 72 65
+  48+ 7CA2 65 20 20 20
+  49+ 7CA6
+  50+ 7CA6              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  51+ 7CA6              AtTheFootTheMegaTreeBackground:
+  52+ 7CA6 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+  52+ 7CAA 00 00 00 00
+  52+ 7CAE 00
+  53+ 7CAF
+  54+ 7CAF              AtTheFootTheMegaTreeFloor:
+  55+ 7CAF 04 F0 F9 BF      DEFB 4,240,249,191,31,12,16,40,68	    ;Floor Solid
+  55+ 7CB3 1F 0C 10 28
+  55+ 7CB7 44
+  56+ 7CB8
+  57+ 7CB8              AtTheFootTheMegaTreeWall:
+  58+ 7CB8 16 AB AB AD      DEFB 22,171,171,173,170,170,174,85,85	    ;Wall Solid
+  58+ 7CBC AA AA AE 55
+  58+ 7CC0 55
+  59+ 7CC1
+  60+ 7CC1              AtTheFootTheMegaTreeNasty:
+  61+ 7CC1 06 6E 74 38      DEFB 6,110,116,56,30,110,116,56,30	    ;Nasty
+  61+ 7CC5 1E 6E 74 38
+  61+ 7CC9 1E
+  62+ 7CCA
+  63+ 7CCA              AtTheFootTheMegaTreeRamp:
+  64+ 7CCA 07 C0 00 30      DEFB 7,192,0,48,0,12,0,3,0	            ;Ramp Solid
+  64+ 7CCE 00 0C 00 03
+  64+ 7CD2 00
+  65+ 7CD3
+  66+ 7CD3              AtTheFootTheMegaTreeConveyor:
+  67+ 7CD3 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  67+ 7CD7 00 00 00 00
+  67+ 7CDB 00
+  68+ 7CDC
+  69+ 7CDC              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  70+ 7CDC              AtTheFootTheMegaTreeConveyorData:
+  71+ 7CDC 00               DEFB 0	                                ;Direction (right)
+  72+ 7CDD 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
+  73+ 7CDF 00               DEFB 0	                                ;Length
+  74+ 7CE0
+  75+ 7CE0              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  76+ 7CE0              AtTheFootTheMegaTreeRampData:
+  77+ 7CE0 00               DEFB 0	                                ;Direction (up to the right)
+  78+ 7CE1 8F 5F            DEFW 24463                              ;Location in the attribute buffer at 24064: (14,7)
+  79+ 7CE3 03               DEFB 3	                                ;Length
+  80+ 7CE4
+  81+ 7CE4              ;The next byte is copied to 32990 and specifies the border colour.
+  82+ 7CE4              AtTheFootTheMegaTreeBorderColor:
+  83+ 7CE4 04               DEFB 4	                                ;Border colour
+  84+ 7CE5
+  85+ 7CE5              ;The next two bytes are copied to 32991, but are not used.
+  86+ 7CE5              AtTheFootTheMegaTreeReserved:
+  87+ 7CE5 02 03 04 07      DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+  88+ 7CE9
+  89+ 7CE9              ;The next eight bytes are copied to 32993 and define the item graphic.
+  90+ 7CE9              AtTheFootTheMegaTreeItem:
+  91+ 7CE9 40 A0 5C 22      DEFB 64,160,92,34,33,34,20,8	                ;Item graphic (unused)
+  91+ 7CED 21 22 14 08
+  92+ 7CF1
+  93+ 7CF1              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  94+ 7CF1              AtTheFootTheMegaTreeDirection:
+  95+ 7CF1 03               DEFB 3	                                ;Room to the left (AtTheFoot the MegaTree)
+  96+ 7CF2 01               DEFB 1	                                ;Room to the right (The Off Licence)
+  97+ 7CF3 00               DEFB 0	                                ;Room above (The Off Licence)
+  98+ 7CF4 00               DEFB 0	                                ;Room below (The Off Licence)
+  99+ 7CF5
+ 100+ 7CF5              AtTheFootTheMegaTreeUnused:
+ 101+ 7CF5 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 102+ 7CF6
+ 103+ 7CF6              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 104+ 7CF6              AtTheFootTheMegaTreeEnemy1:
+ 105+ 7CF6 00 00 00 00      DEFB 0,0,0,0        ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+ 106+ 7CFA              AtTheFootTheMegaTreeEnemy2:
+ 107+ 7CFA 00 00 00 00      DEFB 0,0,0,0         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+ 108+ 7CFE              AtTheFootTheMegaTreeEnemy3:
+ 109+ 7CFE C1 78 28 64      DEFB $C1, 120, 40, 100        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+ 110+ 7D02              AtTheFootTheMegaTreeEnemy4:
+ 111+ 7D02 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
+ 112+ 7D06
+ 113+ 7D06              AtTheFootTheMegaTreePosWilly:
+ 114+ 7D06 C8 7D            db 200, 125                   ; Posizione di Willy
+# file closed: Rooms/AtTheFootTheMegaTree.asm
+ 169  7D08                  include "Rooms/MasterBedRoom.asm"
+# file opened: Rooms/MasterBedRoom.asm
    1+ 7D08              ;===========================================================================
-   2+ 7D08              ; TheTestRoom.asm
+   2+ 7D08              ; MasterBedroom.asm
    3+ 7D08              ;
-   4+ 7D08              ; TheTestRoomLayout       Size 128 Byte, Start Byte   0
-   5+ 7D08              ; TheTestRoomTile         Size  32 Byte, Start Byte 128
-   6+ 7D08              ; TheTestRoomBackground   Size   9 Byte, Start Byte 160
-   7+ 7D08              ; TheTestRoomFloor        Size   9 Byte, Start Byte 169
-   8+ 7D08              ; TheTestRoomWall         Size   9 Byte, Start Byte 178
-   9+ 7D08              ; TheTestRoomNasty        Size   9 Byte, Start Byte 187
-  10+ 7D08              ; TheTestRoomRamp         Size   9 Byte, Start Byte 196
-  11+ 7D08              ; TheTestRoomConveyor     Size   9 Byte, Start Byte 205
-  12+ 7D08              ; TheTestRoomConveyorData Size   4 Byte, Start Byte 214
-  13+ 7D08              ; TheTestRoomRampData     Size   4 Byte, Start Byte 218
-  14+ 7D08              ; TheTestRoomBorderColor  Size   1 Byte, Start Byte 222
-  15+ 7D08              ; TheTestRoomReserved     Size   4 Byte, Start Byte 223
-  16+ 7D08              ; TheTestRoomItem         Size   8 Byte, Start Byte 227
-  17+ 7D08              ; TheTestRoomDirection    Size   4 Byte, Start Byte 235
-  18+ 7D08              ; TheTestRoomUnused       Size   1 Byte, Start Byte 239
-  19+ 7D08              ; TheTestRoomEnemy1       Size   4 Byte, Start Byte 240
-  20+ 7D08              ; TheTestRoomEnemy2       Size   4 Byte, Start Byte 244
-  21+ 7D08              ; TheTestRoomEnemy3       Size   4 Byte, Start Byte 248
-  22+ 7D08              ; TheTestRoomEnemy4       Size   4 Byte, Start Byte 252
-  23+ 7D08              ; TheTestRoomPosWilly     Size   2 Byte, Start Byte 256
-  24+ 7D08              ;
-  25+ 7D08              ;===========================================================================
-  26+ 7D08
-  27+ 7D08              ; Room layout for the TEST level with its platforms and floor
-  28+ 7D08              TheTestRoomLayout:
-  29+ 7D08 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 0
-  29+ 7D0C 00 00 00 00
-  30+ 7D10 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 1
-  30+ 7D14 00 00 00 00
-  31+ 7D18 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 2
-  31+ 7D1C 00 00 00 00
-  32+ 7D20 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 3
-  32+ 7D24 00 00 00 00
-  33+ 7D28 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 4
-  33+ 7D2C 00 00 00 00
-  34+ 7D30 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 5
-  34+ 7D34 00 00 00 00
-  35+ 7D38 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 6
-  35+ 7D3C 00 00 00 00
-  36+ 7D40 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 7
-  36+ 7D44 00 00 00 00
-  37+ 7D48 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 8
-  37+ 7D4C 00 00 00 00
-  38+ 7D50 01 55 55 40      DEFB 1,85,85,64,0,85,85,80    ; Row 9 (Platform 3: cols 3..12; Platform 2: cols 20..29)
-  38+ 7D54 00 55 55 50
-  39+ 7D58 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 10
-  39+ 7D5C 00 00 00 00
-  40+ 7D60 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 11
-  40+ 7D64 00 00 00 00
-  41+ 7D68 00 00 55 55      DEFB 0,0,85,85,85,85,0,0      ; Row 12 (Platform 1: cols 8..23)
-  41+ 7D6C 55 55 00 00
-  42+ 7D70 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 13
-  42+ 7D74 00 00 00 00
-  43+ 7D78 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 14
-  43+ 7D7C 00 00 00 00
-  44+ 7D80 55 55 55 55      DEFB 85,85,85,85,85,85,85,85  ; Row 15 (Floor: cols 0..31)
-  44+ 7D84 55 55 55 55
-  45+ 7D88
-  46+ 7D88              TheTestRoomTile:
-  47+ 7D88              ; 32 bytes for the room name
-  48+ 7D88 20 20 20 20      DEFM "          TEST LEVEL            "
-  48+ 7D8C 20 20 20 20
-  48+ 7D90 20 20 54 45
-  48+ 7D94 53 54 20 4C
-  48+ 7D98 45 56 45 4C
-  48+ 7D9C 20 20 20 20
-  48+ 7DA0 20 20 20 20
-  48+ 7DA4 20 20 20 20
-  49+ 7DA8
-  50+ 7DA8              ; Attributes and graphic data for the tiles (1 byte attribute + 8 bytes bitmap)
-  51+ 7DA8              TheTestRoomBackground:
-  52+ 7DA8 07 00 00 00      DEFB $07, 0,0,0,0,0,0,0,0
-  52+ 7DAC 00 00 00 00
-  52+ 7DB0 00
-  53+ 7DB1
-  54+ 7DB1              TheTestRoomFloor:
-  55+ 7DB1 02 FF 88 FF      DEFB $02, 255, 136, 255, 34, 255, 136, 255, 36
-  55+ 7DB5 22 FF 88 FF
-  55+ 7DB9 24
-  56+ 7DBA
-  57+ 7DBA              TheTestRoomWall:
-  58+ 7DBA 06 22 77 22      DEFB $06, 34,119,34,136,34,119,34,136
-  58+ 7DBE 88 22 77 22
-  58+ 7DC2 88
-  59+ 7DC3
-  60+ 7DC3              TheTestRoomNasty:
-  61+ 7DC3 02 F8 88 9E      DEFB $02, 248,136,158,189,189,158,136,248
-  61+ 7DC7 BD BD 9E 88
-  61+ 7DCB F8
-  62+ 7DCC
-  63+ 7DCC              TheTestRoomRamp:
-  64+ 7DCC 07 03 03 0C      DEFB $07, 3,3,12,13,50,55,194,200
-  64+ 7DD0 0D 32 37 C2
-  64+ 7DD4 C8
-  65+ 7DD5
-  66+ 7DD5              TheTestRoomConveyor:
-  67+ 7DD5 05 01 40 04      DEFB $05, 1,64,4,70,79,121,240,249
-  67+ 7DD9 46 4F 79 F0
-  67+ 7DDD F9
-  68+ 7DDE
-  69+ 7DDE              ; Conveyor specs (direction, location, length)
-  70+ 7DDE              TheTestRoomConveyorData:
-  71+ 7DDE 00               DEFB 0
-  72+ 7DDF 00 00            DEFW 0
-  73+ 7DE1 00               DEFB 0
-  74+ 7DE2
-  75+ 7DE2              ; Ramp specs (direction, location, length)
-  76+ 7DE2              TheTestRoomRampData:
-  77+ 7DE2 00               DEFB 0
-  78+ 7DE3 00 00            DEFW 0
-  79+ 7DE5 00               DEFB 0
-  80+ 7DE6
-  81+ 7DE6              ; Border color
-  82+ 7DE6              TheTestRoomBorderColor:
-  83+ 7DE6 05               DEFB 5                        ; Black border
-  84+ 7DE7
-  85+ 7DE7              ; Reserved bytes
-  86+ 7DE7              TheTestRoomReserved:
-  87+ 7DE7 07 07 07 07      DEFB 7, 7, 7, 7               ; Enemy colors: all WHITE (7)
-  88+ 7DEB
-  89+ 7DEB              TheTestRoomItem:
-  90+ 7DEB 18 3C 7E FF      DEFB 24,60,126,255,255,126,60,24          ; Diamond graphic for the item
-  90+ 7DEF FF 7E 3C 18
-  91+ 7DF3
-  92+ 7DF3              ; Room connections (left, right, above, below)
-  93+ 7DF3              TheTestRoomDirection:
-  94+ 7DF3 01               DEFB 1                        ; Left: The Bridge (Room 1)
-  95+ 7DF4 02               DEFB 2                        ; Right: The Off Licence (Room 2)
-  96+ 7DF5 00               DEFB 0                        ; Above: Self
-  97+ 7DF6 00               DEFB 0                        ; Below: Self
-  98+ 7DF7
-  99+ 7DF7              TheTestRoomUnused:
- 100+ 7DF7 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
- 101+ 7DF8
- 102+ 7DF8              ; Room entities slots (ropes, arrows, guardians)
- 103+ 7DF8              TheTestRoomEnemy1:
- 104+ 7DF8 80 18 80 E7      DEFB $80, 24, 128, 231        ; Enemy 1 (Lametta), horizontal, Starts X=24, Y=128, Limit X=231
- 105+ 7DFC              TheTestRoomEnemy2:
- 106+ 7DFC 81 A0 50 E0      DEFB $81, 160, 80, 224        ; Enemy 2 (Egg), horizontal, Starts X=160, Y=80, Limit X=224
- 107+ 7E00              TheTestRoomEnemy3:
- 108+ 7E00 82 40 68 B0      DEFB $82, 64, 104, 176        ; Enemy 3 (Robot), horizontal, Starts X=64, Y=104, Limit X=176
- 109+ 7E04              TheTestRoomEnemy4:
- 110+ 7E04 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
- 111+ 7E08
- 112+ 7E08              TheTestRoomPosWilly:
- 113+ 7E08 88 80            db 136, 128                   ; Posizione di Willy
+   4+ 7D08              ; Ho creato solo il template deve essere gestito con i dati corretti della stanza
+   5+ 7D08              ;
+   6+ 7D08              ; MasterBedroomLayout       Size 128 Byte, Start Byte   0
+   7+ 7D08              ; MasterBedroomTile         Size  32 Byte, Start Byte 128
+   8+ 7D08              ; MasterBedroomBackground   Size   9 Byte, Start Byte 160
+   9+ 7D08              ; MasterBedroomFloor        Size   9 Byte, Start Byte 169
+  10+ 7D08              ; MasterBedroomWall         Size   9 Byte, Start Byte 178
+  11+ 7D08              ; MasterBedroomNasty        Size   9 Byte, Start Byte 187
+  12+ 7D08              ; MasterBedroomRamp         Size   9 Byte, Start Byte 196
+  13+ 7D08              ; MasterBedroomConveyor     Size   9 Byte, Start Byte 205
+  14+ 7D08              ; MasterBedroomConveyorData Size   4 Byte, Start Byte 214
+  15+ 7D08              ; MasterBedroomRampData     Size   4 Byte, Start Byte 218
+  16+ 7D08              ; MasterBedroomBorderColor  Size   1 Byte, Start Byte 222
+  17+ 7D08              ; MasterBedroomReserved     Size   4 Byte, Start Byte 223
+  18+ 7D08              ; MasterBedroomItem		    Size   8 Byte, Start Byte 227
+  19+ 7D08              ; MasterBedroomDirection    Size   4 Byte, Start Byte 235
+  20+ 7D08              ; MasterBedroomUnused       Size   1 Byte, Start Byte 239
+  21+ 7D08              ; MasterBedroomEnemy1		Size   4 Byte, Start Byte 240
+  22+ 7D08              ; MasterBedroomEnemy2		Size   4 Byte, Start Byte 244
+  23+ 7D08              ; MasterBedroomEnemy3		Size   4 Byte, Start Byte 248
+  24+ 7D08              ; MasterBedroomEnemy4		Size   4 Byte, Start Byte 252
+  25+ 7D08              ; MasterBedroomPosWilly     Size   2 Byte, Start Byte 256
+  26+ 7D08              ;
+  27+ 7D08              ;===========================================================================
+  28+ 7D08
+  29+ 7D08              ; Room layout for Room  (Master Bedroom)
+  30+ 7D08              MastreBedRoomLayout:
+  31+ 7D08 AA AA AA AA      DEFB 170,170,170,170,170,170,170,170
+  31+ 7D0C AA AA AA AA
+  32+ 7D10 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  32+ 7D14 00 00 00 00
+  33+ 7D18 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  33+ 7D1C 00 00 00 00
+  34+ 7D20 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  34+ 7D24 00 00 00 00
+  35+ 7D28 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  35+ 7D2C 00 00 00 00
+  36+ 7D30 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  36+ 7D34 00 00 00 00
+  37+ 7D38 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  37+ 7D3C 00 00 00 00
+  38+ 7D40 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  38+ 7D44 00 00 00 00
+  39+ 7D48 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  39+ 7D4C 00 00 00 00
+  40+ 7D50 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  40+ 7D54 00 00 00 00
+  41+ 7D58 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  41+ 7D5C 00 00 00 00
+  42+ 7D60 AC 00 00 00      DEFB 172,0,0,0,0,0,0,0
+  42+ 7D64 00 00 00 00
+  43+ 7D68 A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
+  43+ 7D6C 00 00 00 00
+  44+ 7D70 95 55 55 55      DEFB 149,85,85,85,64,0,0,0
+  44+ 7D74 40 00 00 00
+  45+ 7D78 AA AA AA AA      DEFB 170,170,170,170,160,0,0,0
+  45+ 7D7C A0 00 00 00
+  46+ 7D80 AA AA AA AA      DEFB 170,170,170,170,169,85,85,85
+  46+ 7D84 A9 55 55 55
+  47+ 7D88
+  48+ 7D88              MastreBedRoomTile:
+  49+ 7D88              ;The next 32 bytes are copied to 32896 and specify the room name.
+  50+ 7D88 20 20 20 20      DEFM "         Master Bedroom         "	    ;Room name
+  50+ 7D8C 20 20 20 20
+  50+ 7D90 20 4D 61 73
+  50+ 7D94 74 65 72 20
+  50+ 7D98 42 65 64 72
+  50+ 7D9C 6F 6F 6D 20
+  50+ 7DA0 20 20 20 20
+  50+ 7DA4 20 20 20 20
+  51+ 7DA8
+  52+ 7DA8              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  53+ 7DA8              MastreBedRoomBackground:
+  54+ 7DA8 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
+  54+ 7DAC 00 00 00 00
+  54+ 7DB0 00
+  55+ 7DB1
+  56+ 7DB1              MastreBedRoomFloor:
+  57+ 7DB1 06 FF 6B B5      DEFB 6,255,107,181,0,173,0,74,0	        ;Floor Solid
+  57+ 7DB5 00 AD 00 4A
+  57+ 7DB9 00
+  58+ 7DBA
+  59+ 7DBA              MastreBedRoomWall:
+  60+ 7DBA 33 00 51 FB      DEFB 51,0,81,251,81,0,170,191,170	    ;Wall Solid
+  60+ 7DBE 51 00 AA BF
+  60+ 7DC2 AA
+  61+ 7DC3
+  62+ 7DC3              MastreBedRoomNasty:
+  63+ 7DC3 47 00 00 00      DEFB 71,0,0,0,0,124,254,127,62	        ;Nasty
+  63+ 7DC7 00 7C FE 7F
+  63+ 7DCB 3E
+  64+ 7DCC
+  65+ 7DCC              MastreBedRoomRamp:
+  66+ 7DCC 07 C0 40 B0      DEFB 7,192,64,176,0,172,0,83,0	        ;Ramp Solid
+  66+ 7DD0 00 AC 00 53
+  66+ 7DD4 00
+  67+ 7DD5
+  68+ 7DD5              MastreBedRoomConveyor:
+  69+ 7DD5 29 55 55 55      DEFB 41,85,85,85,85,81,95,64,170	    ;Conveyor
+  69+ 7DD9 55 51 5F 40
+  69+ 7DDD AA
+  70+ 7DDE
+  71+ 7DDE              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  72+ 7DDE              MastreBedRoomConveyorData:
+  73+ 7DDE 01               DEFB 1	                                ;Direction (right)
+  74+ 7DDF 82 5F            DEFW 24450	                            ;Location in the attribute buffer at 24064: (15,12)
+  75+ 7DE1 04               DEFB 4	                                ;Length
+  76+ 7DE2
+  77+ 7DE2              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  78+ 7DE2              MastreBedRoomRampData:
+  79+ 7DE2 00               DEFB 0	                                ;Direction (up to the right)
+  80+ 7DE3 D2 5F            DEFW 24530	                            ;Location in the attribute buffer at 24064: (14,7)
+  81+ 7DE5 02               DEFB 2	                                ;Length
+  82+ 7DE6
+  83+ 7DE6              ;The next byte is copied to 32990 and specifies the border colour.
+  84+ 7DE6              MastreBedRoomBorderColor:
+  85+ 7DE6 04               DEFB 4	                                ;Border colour
+  86+ 7DE7
+  87+ 7DE7              ;The next two bytes are copied to 32991, but are not used.
+  88+ 7DE7              MastreBedRoomReserved:
+  89+ 7DE7 02 03 04 07      DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+  90+ 7DEB
+  91+ 7DEB              ;The next eight bytes are copied to 32993 and define the item graphic.
+  92+ 7DEB              MastreBedRoomItem:
+  93+ 7DEB 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
+  93+ 7DEF 00 00 00 00
+  94+ 7DF3
+  95+ 7DF3              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  96+ 7DF3              MastreBedRoomDirection:
+  97+ 7DF3 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
+  98+ 7DF4 00               DEFB 0	                                ;Room to the right (The Off Licence)
+  99+ 7DF5 00               DEFB 0	                                ;Room above (The Off Licence)
+ 100+ 7DF6 00               DEFB 0	                                ;Room below (The Off Licence)
+ 101+ 7DF7
+ 102+ 7DF7              MastreBedRoomUnused:
+ 103+ 7DF7 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 104+ 7DF8
+ 105+ 7DF8              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 106+ 7DF8              MastreBedRoomEnemy1:
+ 107+ 7DF8 80 08 64 C8      DEFB $80, 8, 100, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+ 108+ 7DFC              MastreBedRoomEnemy2:
+ 109+ 7DFC 80 50 64 B4      DEFB $80, 80, 100, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+ 110+ 7E00              MastreBedRoomEnemy3:
+ 111+ 7E00 C1 78 28 64      DEFB $C1, 120, 40, 100        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+ 112+ 7E04              MastreBedRoomEnemy4:
+ 113+ 7E04 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
+ 114+ 7E08
+ 115+ 7E08              MastreBedRoomPosWilly:
+ 116+ 7E08 C8 7D            db 200, 125                   ; Posizione di Willy
+# file closed: Rooms/MasterBedRoom.asm
+ 170  7E0A                  include "Rooms/TheTestRoom.asm"
+# file opened: Rooms/TheTestRoom.asm
+   1+ 7E0A              ;===========================================================================
+   2+ 7E0A              ; TheTestRoom.asm
+   3+ 7E0A              ;
+   4+ 7E0A              ; TheTestRoomLayout       Size 128 Byte, Start Byte   0
+   5+ 7E0A              ; TheTestRoomTile         Size  32 Byte, Start Byte 128
+   6+ 7E0A              ; TheTestRoomBackground   Size   9 Byte, Start Byte 160
+   7+ 7E0A              ; TheTestRoomFloor        Size   9 Byte, Start Byte 169
+   8+ 7E0A              ; TheTestRoomWall         Size   9 Byte, Start Byte 178
+   9+ 7E0A              ; TheTestRoomNasty        Size   9 Byte, Start Byte 187
+  10+ 7E0A              ; TheTestRoomRamp         Size   9 Byte, Start Byte 196
+  11+ 7E0A              ; TheTestRoomConveyor     Size   9 Byte, Start Byte 205
+  12+ 7E0A              ; TheTestRoomConveyorData Size   4 Byte, Start Byte 214
+  13+ 7E0A              ; TheTestRoomRampData     Size   4 Byte, Start Byte 218
+  14+ 7E0A              ; TheTestRoomBorderColor  Size   1 Byte, Start Byte 222
+  15+ 7E0A              ; TheTestRoomReserved     Size   4 Byte, Start Byte 223
+  16+ 7E0A              ; TheTestRoomItem         Size   8 Byte, Start Byte 227
+  17+ 7E0A              ; TheTestRoomDirection    Size   4 Byte, Start Byte 235
+  18+ 7E0A              ; TheTestRoomUnused       Size   1 Byte, Start Byte 239
+  19+ 7E0A              ; TheTestRoomEnemy1       Size   4 Byte, Start Byte 240
+  20+ 7E0A              ; TheTestRoomEnemy2       Size   4 Byte, Start Byte 244
+  21+ 7E0A              ; TheTestRoomEnemy3       Size   4 Byte, Start Byte 248
+  22+ 7E0A              ; TheTestRoomEnemy4       Size   4 Byte, Start Byte 252
+  23+ 7E0A              ; TheTestRoomPosWilly     Size   2 Byte, Start Byte 256
+  24+ 7E0A              ;
+  25+ 7E0A              ;===========================================================================
+  26+ 7E0A
+  27+ 7E0A              ; Room layout for the TEST level with its platforms and floor
+  28+ 7E0A              TheTestRoomLayout:
+  29+ 7E0A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 0
+  29+ 7E0E 00 00 00 00
+  30+ 7E12 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 1
+  30+ 7E16 00 00 00 00
+  31+ 7E1A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 2
+  31+ 7E1E 00 00 00 00
+  32+ 7E22 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 3
+  32+ 7E26 00 00 00 00
+  33+ 7E2A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 4
+  33+ 7E2E 00 00 00 00
+  34+ 7E32 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 5
+  34+ 7E36 00 00 00 00
+  35+ 7E3A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 6
+  35+ 7E3E 00 00 00 00
+  36+ 7E42 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 7
+  36+ 7E46 00 00 00 00
+  37+ 7E4A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 8
+  37+ 7E4E 00 00 00 00
+  38+ 7E52 01 55 55 40      DEFB 1,85,85,64,0,85,85,80    ; Row 9 (Platform 3: cols 3..12; Platform 2: cols 20..29)
+  38+ 7E56 00 55 55 50
+  39+ 7E5A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 10
+  39+ 7E5E 00 00 00 00
+  40+ 7E62 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 11
+  40+ 7E66 00 00 00 00
+  41+ 7E6A 00 00 55 55      DEFB 0,0,85,85,85,85,0,0      ; Row 12 (Platform 1: cols 8..23)
+  41+ 7E6E 55 55 00 00
+  42+ 7E72 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 13
+  42+ 7E76 00 00 00 00
+  43+ 7E7A 00 00 00 00      DEFB 0,0,0,0,0,0,0,0          ; Row 14
+  43+ 7E7E 00 00 00 00
+  44+ 7E82 55 55 55 55      DEFB 85,85,85,85,85,85,85,85  ; Row 15 (Floor: cols 0..31)
+  44+ 7E86 55 55 55 55
+  45+ 7E8A
+  46+ 7E8A              TheTestRoomTile:
+  47+ 7E8A              ; 32 bytes for the room name
+  48+ 7E8A 20 20 20 20      DEFM "          TEST LEVEL            "
+  48+ 7E8E 20 20 20 20
+  48+ 7E92 20 20 54 45
+  48+ 7E96 53 54 20 4C
+  48+ 7E9A 45 56 45 4C
+  48+ 7E9E 20 20 20 20
+  48+ 7EA2 20 20 20 20
+  48+ 7EA6 20 20 20 20
+  49+ 7EAA
+  50+ 7EAA              ; Attributes and graphic data for the tiles (1 byte attribute + 8 bytes bitmap)
+  51+ 7EAA              TheTestRoomBackground:
+  52+ 7EAA 07 00 00 00      DEFB $07, 0,0,0,0,0,0,0,0
+  52+ 7EAE 00 00 00 00
+  52+ 7EB2 00
+  53+ 7EB3
+  54+ 7EB3              TheTestRoomFloor:
+  55+ 7EB3 02 FF 88 FF      DEFB $02, 255, 136, 255, 34, 255, 136, 255, 36
+  55+ 7EB7 22 FF 88 FF
+  55+ 7EBB 24
+  56+ 7EBC
+  57+ 7EBC              TheTestRoomWall:
+  58+ 7EBC 06 22 77 22      DEFB $06, 34,119,34,136,34,119,34,136
+  58+ 7EC0 88 22 77 22
+  58+ 7EC4 88
+  59+ 7EC5
+  60+ 7EC5              TheTestRoomNasty:
+  61+ 7EC5 02 F8 88 9E      DEFB $02, 248,136,158,189,189,158,136,248
+  61+ 7EC9 BD BD 9E 88
+  61+ 7ECD F8
+  62+ 7ECE
+  63+ 7ECE              TheTestRoomRamp:
+  64+ 7ECE 07 03 03 0C      DEFB $07, 3,3,12,13,50,55,194,200
+  64+ 7ED2 0D 32 37 C2
+  64+ 7ED6 C8
+  65+ 7ED7
+  66+ 7ED7              TheTestRoomConveyor:
+  67+ 7ED7 05 01 40 04      DEFB $05, 1,64,4,70,79,121,240,249
+  67+ 7EDB 46 4F 79 F0
+  67+ 7EDF F9
+  68+ 7EE0
+  69+ 7EE0              ; Conveyor specs (direction, location, length)
+  70+ 7EE0              TheTestRoomConveyorData:
+  71+ 7EE0 00               DEFB 0
+  72+ 7EE1 00 00            DEFW 0
+  73+ 7EE3 00               DEFB 0
+  74+ 7EE4
+  75+ 7EE4              ; Ramp specs (direction, location, length)
+  76+ 7EE4              TheTestRoomRampData:
+  77+ 7EE4 00               DEFB 0
+  78+ 7EE5 00 00            DEFW 0
+  79+ 7EE7 00               DEFB 0
+  80+ 7EE8
+  81+ 7EE8              ; Border color
+  82+ 7EE8              TheTestRoomBorderColor:
+  83+ 7EE8 05               DEFB 5                        ; Black border
+  84+ 7EE9
+  85+ 7EE9              ; Reserved bytes
+  86+ 7EE9              TheTestRoomReserved:
+  87+ 7EE9 07 07 07 07      DEFB 7, 7, 7, 7               ; Enemy colors: all WHITE (7)
+  88+ 7EED
+  89+ 7EED              TheTestRoomItem:
+  90+ 7EED 18 3C 7E FF      DEFB 24,60,126,255,255,126,60,24          ; Diamond graphic for the item
+  90+ 7EF1 FF 7E 3C 18
+  91+ 7EF5
+  92+ 7EF5              ; Room connections (left, right, above, below)
+  93+ 7EF5              TheTestRoomDirection:
+  94+ 7EF5 01               DEFB 1                        ; Left: The Bridge (Room 1)
+  95+ 7EF6 02               DEFB 2                        ; Right: The Off Licence (Room 2)
+  96+ 7EF7 00               DEFB 0                        ; Above: Self
+  97+ 7EF8 00               DEFB 0                        ; Below: Self
+  98+ 7EF9
+  99+ 7EF9              TheTestRoomUnused:
+ 100+ 7EF9 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 101+ 7EFA
+ 102+ 7EFA              ; Room entities slots (ropes, arrows, guardians)
+ 103+ 7EFA              TheTestRoomEnemy1:
+ 104+ 7EFA 80 18 80 E7      DEFB $80, 24, 128, 231        ; Enemy 1 (Lametta), horizontal, Starts X=24, Y=128, Limit X=231
+ 105+ 7EFE              TheTestRoomEnemy2:
+ 106+ 7EFE 81 A0 50 E0      DEFB $81, 160, 80, 224        ; Enemy 2 (Egg), horizontal, Starts X=160, Y=80, Limit X=224
+ 107+ 7F02              TheTestRoomEnemy3:
+ 108+ 7F02 82 40 68 B0      DEFB $82, 64, 104, 176        ; Enemy 3 (Robot), horizontal, Starts X=64, Y=104, Limit X=176
+ 109+ 7F06              TheTestRoomEnemy4:
+ 110+ 7F06 00 00 00 00      DEFB 0,0,0,0                  ; Empty slot
+ 111+ 7F0A
+ 112+ 7F0A              TheTestRoomPosWilly:
+ 113+ 7F0A 88 80            db 136, 128                   ; Posizione di Willy
 # file closed: Rooms/TheTestRoom.asm
- 170  7E0A
- 171  7E0A                  SAVESNA "jet set willy.sna", start
+ 171  7F0C
+ 172  7F0C                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm
