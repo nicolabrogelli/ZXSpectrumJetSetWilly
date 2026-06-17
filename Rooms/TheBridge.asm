@@ -1,4 +1,31 @@
-TheBridgeLayout:    
+;===========================================================================
+; TheBridge.asm
+;
+; TheBridgeLayout       Size 128 Byte, Start Byte   0
+; TheBridgeTile         Size  32 Byte, Start Byte 128
+; TheBridgeBackground   Size   9 Byte, Start Byte 160
+; TheBridgeFloor        Size   9 Byte, Start Byte 169
+; TheBridgeWall         Size   9 Byte, Start Byte 178
+; TheBridgeNasty        Size   9 Byte, Start Byte 187
+; TheBridgeRamp         Size   9 Byte, Start Byte 196
+; TheBridgeConveyor     Size   9 Byte, Start Byte 205
+; TheBridgeConveyorData Size   4 Byte, Start Byte 214
+; TheBridgeRampData     Size   4 Byte, Start Byte 218
+; TheBridgeBorderColor  Size   1 Byte, Start Byte 222
+; TheBridgeReserved     Size   4 Byte, Start Byte 223
+; TheBridgeItem		    Size   8 Byte, Start Byte 227
+; TheBridgeDirection    Size   4 Byte, Start Byte 235
+; TheBridgeUnused       Size   1 Byte, Start Byte 239
+; TheBridgeEnemy1		Size   4 Byte, Start Byte 240
+; TheBridgeEnemy2		Size   4 Byte, Start Byte 244
+; TheBridgeEnemy3		Size   4 Byte, Start Byte 248
+; TheBridgeEnemy4		Size   4 Byte, Start Byte 252
+; TheBridgePosWilly     Size   2 Byte, Start Byte 256
+;
+;===========================================================================
+
+; Room layout for Room  (The Bridge)
+TheBridgeLayout:           
     DEFB 0,0,0,0,0,0,0,0
     DEFB 0,0,0,0,0,0,0,0
     DEFB 0,0,0,0,0,0,0,0

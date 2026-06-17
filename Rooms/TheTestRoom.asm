@@ -1,3 +1,29 @@
+;===========================================================================
+; TheTestRoom.asm
+;
+; TheTestRoomLayout       Size 128 Byte, Start Byte   0
+; TheTestRoomTile         Size  32 Byte, Start Byte 128
+; TheTestRoomBackground   Size   9 Byte, Start Byte 160
+; TheTestRoomFloor        Size   9 Byte, Start Byte 169
+; TheTestRoomWall         Size   9 Byte, Start Byte 178
+; TheTestRoomNasty        Size   9 Byte, Start Byte 187
+; TheTestRoomRamp         Size   9 Byte, Start Byte 196
+; TheTestRoomConveyor     Size   9 Byte, Start Byte 205
+; TheTestRoomConveyorData Size   4 Byte, Start Byte 214
+; TheTestRoomRampData     Size   4 Byte, Start Byte 218
+; TheTestRoomBorderColor  Size   1 Byte, Start Byte 222
+; TheTestRoomReserved     Size   4 Byte, Start Byte 223
+; TheTestRoomItem         Size   8 Byte, Start Byte 227
+; TheTestRoomDirection    Size   4 Byte, Start Byte 235
+; TheTestRoomUnused       Size   1 Byte, Start Byte 239
+; TheTestRoomEnemy1       Size   4 Byte, Start Byte 240
+; TheTestRoomEnemy2       Size   4 Byte, Start Byte 244
+; TheTestRoomEnemy3       Size   4 Byte, Start Byte 248
+; TheTestRoomEnemy4       Size   4 Byte, Start Byte 252
+; TheTestRoomPosWilly     Size   2 Byte, Start Byte 256
+;
+;===========================================================================
+
 ; Room layout for the TEST level with its platforms and floor
 TheTestRoomLayout:
     DEFB 0,0,0,0,0,0,0,0          ; Row 0

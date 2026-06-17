@@ -1,3 +1,29 @@
+;===========================================================================
+; TheOffLicence.asm
+;
+; TheOffLicenceLayout       Size 128 Byte, Start Byte   0
+; TheOffLicenceTile         Size  32 Byte, Start Byte 128
+; TheOffLicenceBackground   Size   9 Byte, Start Byte 160
+; TheOffLicenceFloor        Size   9 Byte, Start Byte 169
+; TheOffLicenceWall         Size   9 Byte, Start Byte 178
+; TheOffLicenceNasty        Size   9 Byte, Start Byte 187
+; TheOffLicenceRamp         Size   9 Byte, Start Byte 196
+; TheOffLicenceConveyor     Size   9 Byte, Start Byte 205
+; TheOffLicenceConveyorData Size   4 Byte, Start Byte 214
+; TheOffLicenceRampData     Size   4 Byte, Start Byte 218
+; TheOffLicenceBorderColor  Size   1 Byte, Start Byte 222
+; TheOffLicenceReserved     Size   4 Byte, Start Byte 223
+; TheOffLicenceItem         Size   8 Byte, Start Byte 227
+; TheOffLicenceDirection    Size   4 Byte, Start Byte 235
+; TheOffLicenceUnused       Size   1 Byte, Start Byte 239
+; TheOffLicenceEnemy1       Size   4 Byte, Start Byte 240
+; TheOffLicenceEnemy2       Size   4 Byte, Start Byte 244
+; TheOffLicenceEnemy3       Size   4 Byte, Start Byte 248
+; TheOffLicenceEnemy4       Size   4 Byte, Start Byte 252
+; TheOffLicencePosWilly     Size   2 Byte, Start Byte 256
+;
+;===========================================================================
+
 ; Room layout for Room 2 (The Off Licence)
 TheOffLicenceLayout:
     DEFB  0,0,0,0,0,0,0,0	

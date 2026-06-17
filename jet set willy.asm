@@ -44,17 +44,7 @@ Main:
     call PrintRoomName
     call DrawRoomItems
     call LoadRoomEnemies
-
-    ; Carica la posizione iniziale di Willy definita nei dati della stanza
-    ld   hl, (room_ptr)
-    ld   de, OFFSET_POS_WILLY
-    add  hl, de
-    ld   a, (hl)           ; A = Willy X
-    inc  hl
-    ld   h, (hl)           ; H = Willy Y
-    ld   l, a              ; HL = Willy position (Y, X)
-    ld   (PlayerPos), hl
-    ld   (PlayerPosOld), hl
+    call LoadPositionPlayeinRoom
 
     ; Leggi il colore del bordo dalla stanza corrente e impostalo
     ld   hl, (room_ptr)
@@ -168,10 +158,11 @@ ramp_dir:       db 0
 ramp_len:       db 0
 ramp_row:       db 0
 ramp_col:       db 0
-room_ptr:       dw TheOffLicenceLayout; TheBridgeLayout;  TheTestRoomLayout;      
+room_ptr:       dw TheBedRoomLayout; TheOffLicenceLayout; TheBridgeLayout; TheTestRoomLayout;      
 
     ALIGN 256
 RoomsStart:
+    include "Rooms/TheBedRoom.asm"
     include "Rooms/TheBridge.asm"
     include "Rooms/TheOffLicence.asm"
     include "Rooms/TheTestRoom.asm"

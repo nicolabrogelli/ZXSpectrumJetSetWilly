@@ -94,3 +94,20 @@ movePlayer_print:
 .save_state:
     ld   (body_state), a
     ret
+
+
+; -------------------------------------------------------------------
+; Carica la posiziona il Player nella stanza
+; -------------------------------------------------------------------
+LoadPositionPlayeinRoom:
+    ; Carica la posizione iniziale di Willy definita nei dati della stanza
+    ld   hl, (room_ptr)
+    ld   de, OFFSET_POS_WILLY
+    add  hl, de
+    ld   a, (hl)           ; A = Willy X
+    inc  hl
+    ld   h, (hl)           ; H = Willy Y
+    ld   l, a              ; HL = Willy position (Y, X)
+    ld   (PlayerPos), hl
+    ld   (PlayerPosOld), hl
+    ret

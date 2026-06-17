@@ -63,10 +63,19 @@ DetermineCurrentRoomID:
     ld   de, TheOffLicenceLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_office
     ld   a, 2
     jr   .set_room
     
+.not_office:
+    ld   hl, (room_ptr)
+    ld   de, TheBedRoomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+    ld   a, 2
+    jr   .set_room
+
 .unknown:
     ld   a, 0                    ; Default fallback
     
