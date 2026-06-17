@@ -13,17 +13,22 @@ CheckSolidCell:
     push de
     push bc
     
-    call CheckConveyorOrRampCell
-    jr   c, .solid
-    
-    ; 1. Controlla se Y (in B) è fuori dalla griglia di layout (Y < 24 o Y >= 152)
+    ; 1. Controlla se Y (in B) è fuori dalla griglia di layout (Y < 24)
     ld   a, b
     cp   24
     jr   c, .not_solid
+    
+    ; Se Y >= 152, clampiamo a 151 per poter controllare il pavimento (riga 15)
     cp   152
-    jr   nc, .not_solid
+    jr   c, .y_ok
+    ld   b, 151
+.y_ok:
+    
+    call CheckConveyorOrRampCell
+    jr   c, .solid
     
     ; 2. Calcola riga di layout: r = (Y - 24) / 8
+    ld   a, b
     sub  24
     srl  a
     srl  a
@@ -149,7 +154,11 @@ ApplyGravity:
     ; --- CONTROLLO COLLISIONE CON IL TERRENO DURANTE LA CADUTA ---
     ld   a, b
     add  a, 16
-    ld   b, a              ; B = Nuovo Y + 16
+    cp   152
+    jr   c, .y_ok_fall
+    ld   a, 151
+.y_ok_fall:
+    ld   b, a              ; B = Nuovo Y + 16 (clampato a 151 se >= 152)
     
     ; Controlla se il piede sinistro tocca solido
     call CheckSolidCell
@@ -220,8 +229,17 @@ ApplyGravity:
 .save_pos:
     ld   a, b
     cp   8
-    jr   nc, .save_ok
+    jr   nc, .check_max
     ld   b, 8
+    xor  a
+    ld   (velocity_y), a
+    jr   .save_ok
+
+.check_max:
+    ld   a, b
+    cp   176
+    jr   c, .save_ok
+    ld   b, 176
     xor  a
     ld   (velocity_y), a
 
