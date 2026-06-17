@@ -1,0 +1,114 @@
+;===========================================================================
+; TheDrive.asm  
+;
+; TheDriveLayout       Size 128 Byte, Start Byte   0
+; TheDriveTile         Size  32 Byte, Start Byte 128
+; TheDriveBackground   Size   9 Byte, Start Byte 160
+; TheDriveFloor        Size   9 Byte, Start Byte 169
+; TheDriveWall         Size   9 Byte, Start Byte 178
+; TheDriveNasty        Size   9 Byte, Start Byte 187
+; TheDriveRamp         Size   9 Byte, Start Byte 196
+; TheDriveConveyor     Size   9 Byte, Start Byte 205
+; TheDriveConveyorData Size   4 Byte, Start Byte 214
+; TheDriveRampData     Size   4 Byte, Start Byte 218
+; TheDriveBorderColor  Size   1 Byte, Start Byte 222
+; TheDriveReserved     Size   4 Byte, Start Byte 223
+; TheDriveItem		   Size   8 Byte, Start Byte 227
+; TheDriveDirection    Size   4 Byte, Start Byte 235
+; TheDriveUnused       Size   1 Byte, Start Byte 239
+; TheDriveEnemy1		Size   4 Byte, Start Byte 240
+; TheDriveEnemy2		Size   4 Byte, Start Byte 244
+; TheDriveEnemy3		Size   4 Byte, Start Byte 248
+; TheDriveEnemy4		Size   4 Byte, Start Byte 252
+; TheDrivePosWilly     Size   2 Byte, Start Byte 256
+;
+;===========================================================================
+
+; Room layout for Room  (Master Bedroom)
+TheDriveLayout:           
+    DEFB 0,0,0,0,0,0,0,0	
+    DEFB 0,0,0,0,0,0,0,0
+    DEFB 0,0,0,0,0,0,0,0
+    DEFB 0,0,0,0,0,0,0,0
+    DEFB 0,0,0,0,0,0,0,0
+    DEFB 0,0,0,0,0,0,0,0
+    DEFB 0,0,0,0,0,0,0,0
+    DEFB 0,0,0,0,0,0,0,0
+    DEFB 84,0,0,0,0,0,0,0
+    DEFB 170,0,0,0,0,0,0,0
+    DEFB 170,128,0,0,0,0,0,0
+    DEFB 0,160,0,0,0,0,0,0
+    DEFB 0,168,0,0,0,0,0,0
+    DEFB 0,170,0,0,0,0,0,0
+    DEFB 160,170,128,0,0,0,0,0
+    DEFB 160,170,165,85,85,90,85,85
+
+TheDriveTile:
+;The next 32 bytes are copied to 32896 and specify the room name.
+    DEFM "            The Drive           "	    ;Room name
+
+;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+TheDriveBackground:
+    DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+
+TheDriveFloor:
+    DEFB 6,170,85,170,255,255,85,170,85	    ;Floor Solid
+
+TheDriveWall:
+    DEFB 13,112,7,119,119,0,59,11,125	    ;Wall Solid
+
+TheDriveNasty:
+    DEFB 68,20,42,20,9,106,156,8,8	        ;Nasty
+
+TheDriveRamp:
+    DEFB 5,192,64,112,112,12,116,119,5	            ;Ramp Solid
+
+TheDriveConveyor:
+    DEFB 66,123,0,237,0,170,85,170,85	            ;Conveyor
+
+;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+TheDriveConveyorData:
+    DEFB 1	                                ;Direction (right)
+    DEFW 24480	                            ;Location in the attribute buffer at 24064: (15,12)
+    DEFB 2	                                ;Length
+
+;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+TheDriveRampData:
+    DEFB 0	                                ;Direction (up to the right)
+    DEFW 24521                              ;Location in the attribute buffer at 24064: (14,7)
+    DEFB 7	                                ;Length
+
+;The next byte is copied to 32990 and specifies the border colour.
+TheDriveBorderColor:
+    DEFB 4	                                ;Border colour
+
+;The next two bytes are copied to 32991, but are not used.
+TheDriveReserved:
+    DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+
+;The next eight bytes are copied to 32993 and define the item graphic.
+TheDriveItem:
+    DEFB 64,160,92,34,33,34,20,8	                ;Item graphic (unused)
+
+;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+TheDriveDirection:
+    DEFB 4	                                ;Room to the left (AtTheFoot the MegaTree)
+    DEFB 2	                                ;Room to the right (The Off Licence)
+    DEFB 8	                                ;Room above (The Off Licence)
+    DEFB 0	                                ;Room below (The Off Licence)
+
+TheDriveUnused:
+    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+
+;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+TheDriveEnemy1:
+    DEFB 0,0,0,0        ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+TheDriveEnemy2:
+    DEFB 0,0,0,0         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+TheDriveEnemy3:
+    DEFB $C1, 120, 40, 100        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+TheDriveEnemy4:
+    DEFB 0,0,0,0                  ; Empty slot
+
+TheDrivePosWilly:
+    db 200, 125                   ; Posizione di Willy

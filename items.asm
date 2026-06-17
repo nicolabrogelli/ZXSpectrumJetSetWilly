@@ -99,10 +99,18 @@ DetermineCurrentRoomID:
     ld   de, AtTheFootTheMegaTreeLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_foottree
     ld   a, 5
     jr   .set_room
 
+.not_foottree:
+    ld   hl, (room_ptr)
+    ld   de, TheDriveLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+    ld   a, 6
+    jr   .set_room
 
 .unknown:
     ld   a, 0                    ; Default fallback
