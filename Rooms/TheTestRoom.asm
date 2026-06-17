@@ -82,3 +82,6 @@ TheTestRoomEnemy3:
     DEFB $82, 64, 104, 176        ; Enemy 3 (Robot), horizontal, Starts X=64, Y=104, Limit X=176
 TheTestRoomEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+
+TheTestRoomPosWilly:
+    db 136, 128                   ; Posizione di Willy

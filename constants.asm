@@ -97,6 +97,7 @@ OFFSET_RAMP:         EQU 196
 OFFSET_CONVEYOR:     EQU 205
 OFFSET_CONVEYOR_DATA: EQU 214
 OFFSET_RAMP_DATA:    EQU 218
+OFFSET_POS_WILLY:    EQU 256
 
 ; Aggiungi nelle costanti
 VERTICAL_BORDER: EQU $49  ; Codice del carattere per i bordi verticali ($49 = 73, lettera 'I')

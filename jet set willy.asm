@@ -14,11 +14,9 @@
     include "player.asm"
     include "input.asm"
     include "physics.asm"
-    include "screen.asm"
     include "enemy.asm"
     include "items.asm"
-    ;include "level.asm"
-
+    
 start:
     call SetupIM2
 
@@ -47,6 +45,17 @@ Main:
     call DrawRoomItems
     call LoadRoomEnemies
 
+    ; Carica la posizione iniziale di Willy definita nei dati della stanza
+    ld   hl, (room_ptr)
+    ld   de, OFFSET_POS_WILLY
+    add  hl, de
+    ld   a, (hl)           ; A = Willy X
+    inc  hl
+    ld   h, (hl)           ; H = Willy Y
+    ld   l, a              ; HL = Willy position (Y, X)
+    ld   (PlayerPos), hl
+    ld   (PlayerPosOld), hl
+
     ; Leggi il colore del bordo dalla stanza corrente e impostalo
     ld   hl, (room_ptr)
     ld   de, OFFSET_BORDER_COLOR
@@ -66,7 +75,6 @@ Main:
     or   $07               ; Imposta ink a bianco
     ld   (BORDCR), a
 
-    ;call DrawVerticalBorders
     call PrintPlayer
 
 Main_loop:
@@ -126,8 +134,8 @@ Main_loop:
 ; Variabili
 ; -------------------------------------------------------------------
 ; Posizioni
-PlayerPos:      db 136, 128
-PlayerPosOld:   db 136, 128
+PlayerPos:      db 136, 128 ;136, 100
+PlayerPosOld:   db 136, 128 ;136, 100
 bodyPos:        dw $1111
 
 ; Stato player
@@ -160,7 +168,7 @@ ramp_dir:       db 0
 ramp_len:       db 0
 ramp_row:       db 0
 ramp_col:       db 0
-room_ptr:       dw TheOffLicenceLayout; TheBridgeLayout; TheTestRoomLayout
+room_ptr:       dw TheOffLicenceLayout; TheBridgeLayout;  TheTestRoomLayout;      
 
     ALIGN 256
 RoomsStart:

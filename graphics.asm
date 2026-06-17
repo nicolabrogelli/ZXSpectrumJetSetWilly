@@ -17,7 +17,7 @@ CopyChars:
 ; Ridefinisci i caratteri (incluso quello per i bordi)
 ; -------------------------------------------------------------------
 DefineChars:
-    ld hl, TilesDef             ; Indirizzo dei dati del nuovo carattere
+    ld hl, Willy             ; Indirizzo dei dati del nuovo carattere
     ld de, $7F00 + (1 * 8)      ; Indirizzo di ASCII 1 nel nuovo set di caratteri
     ld bc, 72                   ; Numero di byte da copiare (9 caratteri * 8 byte)
     ldir                        ; Effettua la copia dei caratteri
@@ -495,11 +495,11 @@ PrintPlayer:
     cp   1                 ; Sinistra?
     jr   nz, .right_head
     
-    ld   ix, TilesDef + (4 * 8) ; 5° tile (HEAD_GRAPH_LEFT)
+    ld   ix, Willy + (4 * 8) ; 5° tile (HEAD_GRAPH_LEFT)
     jr   .draw_head
     
 .right_head:
-    ld   ix, TilesDef + (0 * 8) ; 1° tile (HEAD_GRAPH_RIGHT)
+    ld   ix, Willy + (0 * 8) ; 1° tile (HEAD_GRAPH_RIGHT)
     
 .draw_head:
     ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
@@ -518,7 +518,7 @@ PrintPlayer:
     add  a, a              ; *8
     ld   e, a
     ld   d, 0
-    ld   ix, TilesDef
+    ld   ix, Willy
     add  ix, de
     jr   .draw_body
 
@@ -531,7 +531,7 @@ PrintPlayer:
     add  a, a              ; *8
     ld   e, a
     ld   d, 0
-    ld   ix, TilesDef
+    ld   ix, Willy
     add  ix, de
 
 .draw_body:
@@ -591,172 +591,6 @@ PrintRoomName:
     call PrintString
     ret
 
-
-; -------------------------------------------------------------------
-; NUOVA ROUTINE: Disegna bordi verticali
-; Input: B = riga di partenza, C = numero di righe
-; -------------------------------------------------------------------
-DrawVerticalBorders:
-    push bc
-    push de
-    push hl
-    push ix
-    
-    ld   b, 8            ; B = coordinata Y pixel (inizia a Y=8, riga 1)
-    ld   c, 16           ; C = numero di righe di caratteri (16)
-    
-.row_loop:
-    push bc              ; Salva contatore riga e Y
-    
-    ; 1. Disegna bordo sinistro (X = 0)
-    ld   h, b            ; H = Y
-    ld   l, 0            ; L = X (0)
-    call GetScreenAddr   ; HL = indirizzo schermo
-    ld   ix, TilesDef + 64 ; IX = grafica del bordo (9° carattere)
-    ld   d, 8            ; 8 scanline
-.left_loop:
-    ld   a, (ix+0)
-    ld   (hl), a         ; Scrivi direttamente in memoria schermo
-    call IncScreenLine   ; Prossima scanline
-    inc  ix
-    dec  d
-    jr   nz, .left_loop
-    
-    ; 2. Disegna bordo destro (X = 248, colonna 31)
-    pop  bc              ; Ripristina Y
-    push bc
-    ld   h, b            ; H = Y
-    ld   l, 248          ; L = X (248, colonna 31)
-    call GetScreenAddr   ; HL = indirizzo schermo
-    ld   ix, TilesDef + 64
-    ld   d, 8
-.right_loop:
-    ld   a, (ix+0)
-    ld   (hl), a
-    call IncScreenLine
-    inc  ix
-    dec  d
-    jr   nz, .right_loop
-    
-    pop  bc              ; Ripristina Y e contatore righe
-    ld   a, b
-    add  a, 8
-    ld   b, a            ; Y = Y + 8
-    dec  c
-    jr   nz, .row_loop
-    
-    ; Imposta gli attributi a ROSSO per le colonne 0 e 31 (righe 1..16)
-    ld   hl, $5800 + (1 * 32)      ; Riga 1, Colonna 0
-    ld   de, $5800 + (1 * 32) + 31 ; Riga 1, Colonna 31
-    ld   b, 16                     ; 16 righe
-.attr_loop:
-    ld   (hl), RED                 ; Colonna 0 = ROSSO
-    ld   a, RED
-    ld   (de), a                   ; Colonna 31 = ROSSO
-    
-    ; Prossima riga di attributi (HL = HL + 32, DE = DE + 32)
-    ld   a, l
-    add  a, 32
-    ld   l, a
-    ld   a, h
-    adc  a, 0
-    ld   h, a
-    
-    ld   a, e
-    add  a, 32
-    ld   e, a
-    ld   a, d
-    adc  a, 0
-    ld   d, a
-    
-    dec  b
-    jr   nz, .attr_loop
-    
-    pop  ix
-    pop  hl
-    pop  de
-    pop  bc
-    ret
-
-; -------------------------------------------------------------------
-; Cancella i bordi verticali (colonne 1 e 32)
-; -------------------------------------------------------------------
-EraseVerticalBorders:
-    push bc
-    push de
-    push hl
-    push ix
-    
-    ld   b, 8            ; B = Y (inizia a Y=8, riga 1)
-    ld   c, 16           ; C = 16 righe
-    
-.row_loop:
-    push bc
-    
-    ; 1. Cancella bordo sinistro (X = 0)
-    ld   h, b
-    ld   l, 0
-    call GetScreenAddr   ; HL = indirizzo schermo
-    ld   d, 8            ; 8 scanline
-.left_loop:
-    xor  a
-    ld   (hl), a         ; Scrivi 0 (spazio nero)
-    call IncScreenLine
-    dec  d
-    jr   nz, .left_loop
-    
-    ; 2. Cancella bordo destro (X = 248, colonna 31)
-    pop  bc
-    push bc
-    ld   h, b
-    ld   l, 248
-    call GetScreenAddr
-    ld   d, 8
-.right_loop:
-    xor  a
-    ld   (hl), a
-    call IncScreenLine
-    dec  d
-    jr   nz, .right_loop
-    
-    pop  bc
-    ld   a, b
-    add  a, 8
-    ld   b, a            ; Y = Y + 8
-    dec  c
-    jr   nz, .row_loop
-    
-    ; Ripristina gli attributi a BIANCO per le colonne 0 e 31 (righe 1..16)
-    ld   hl, $5800 + (1 * 32)
-    ld   de, $5800 + (1 * 32) + 31
-    ld   b, 16
-.attr_loop:
-    ld   (hl), WHITE               ; Colonna 0 = BIANCO
-    ld   a, WHITE
-    ld   (de), a                   ; Colonna 31 = BIANCO
-    
-    ld   a, l
-    add  a, 32
-    ld   l, a
-    ld   a, h
-    adc  a, 0
-    ld   h, a
-    
-    ld   a, e
-    add  a, 32
-    ld   e, a
-    ld   a, d
-    adc  a, 0
-    ld   d, a
-    
-    dec  b
-    jr   nz, .attr_loop
-    
-    pop  ix
-    pop  hl
-    pop  de
-    pop  bc
-    ret
 
 ; -------------------------------------------------------------------
 ; Disegna la riga/pavimento sotto i piedi degli sprite (Riga 18, Y = 144)
@@ -936,7 +770,7 @@ DrawRoom:
 ; -------------------------------------------------------------------
 ; Dati grafici (9 caratteri)
 ; -------------------------------------------------------------------
-TilesDef:
+Willy:
     ; 8 caratteri per il player
     db %00000110, %00111110, %01111110, %00110100, %00111110, %00111100, %00011000, %00111100
     db %01111110, %01111110, %11110111, %11111011, %00111100, %01110110, %01101110, %01110111
@@ -948,7 +782,7 @@ TilesDef:
     db %01111110, %01111110, %11101111, %11011111, %00111100, %10110111, %11100011, %01100111
     
     ; 9° carattere per i bordi verticali
-    db %11111111, %10001000, %11111111, %00100010, %11111111, %10001000, %11111111, %00100100
+    ;db %11111111, %10001000, %11111111, %00100010, %11111111, %10001000, %11111111, %00100100
 
 LamettaSpriteRight: ; appears in Top Landing, Tree Root and West Bedroom.
     db 0,0,0,0,0,0,127,254,64,2,255,255,222,123,192,3	
