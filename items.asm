@@ -5,38 +5,49 @@
 ; -------------------------------------------------------------------
 ; Tabella Globale degli Oggetti (Items)
 ; Ciascun item occupa 5 byte:
-;   Byte 0: ID della stanza (0 = Test Room, 1 = The Bridge, 2 = The Off Licence, 3 = Master Bedroom, 4 = Under the MegaTree)
+;   Byte 0: ID della stanza (0 = Test Room, 1 = The Bridge, 2 = The Off Licence, 3 = Master Bedroom, 4 = Under the MegaTree, 5 = At TheFoot The Mega Tree, 6 = The Drive, 7 = The Security Guard)
 ;   Byte 1: X colonna dello schermo (0..31)
 ;   Byte 2: Y riga dello schermo (3..18)
 ;   Byte 3: Attributo colore (es. $C6 per Giallo Flashing, $C5 per Cyan Flashing)
 ;   Byte 4: Stato (0 = Attivo/Non raccolto, 1 = Raccolto)
 ; La tabella termina con $FF
+;
+; La tabella riposrta solamente le stanza in cui effettivamente ci sono degli oggetti le altre sono omesse
+;
+; Tabella dei colori, se aggiungiamo $C davanti al colore questo diventa lampeggiante
+; 1 - BLUE
+; 2 - RED
+; 3 - MAGENTA
+; 4 - GREEN
+; 5 - CYAN
+; 6 - YELLOW
+; 7 - WHITE
 ; -------------------------------------------------------------------
 ItemsTable:
     ; Stanza 2 (The Off Licence)
-    db 2, 30, 7, 6, 0               ; Oggetto 1 alla colonna X=30, riga Y=7 (Stato: 0=attivo)    
-    db 2, 29, 7, 5, 0               ; Oggetto 2 alla colonna X=10, riga Y=7     
-    db 2, 28, 7, 4, 0               ; Oggetto 12 alla colonna X=10, riga Y=7     
-    db 2, 27, 7, 3, 0               ; Oggetto 3 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
-    db 2, 26, 7, 6, 0               ; Oggetto 4 alla colonna X=10, riga Y=7     
-    db 2, 25, 7, 5, 0               ; Oggetto 5 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
-    db 2, 24, 7, 4, 0               ; Oggetto 6 alla colonna X=10, riga Y=7     
-    db 2, 23, 7, 3, 0               ; Oggetto 7 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
-    db 2, 22, 7, 6, 0               ; Oggetto 8 alla colonna X=10, riga Y=7     
-    db 2, 21, 7, 5, 0               ; Oggetto 9 alla colonna X=20, riga Y=7 (Stato: 0=attivo)   
-    db 2, 20, 7, 4, 0               ; Oggetto 10 alla colonna X=10, riga Y=7     
-    db 2, 19, 7, 3, 0               ; Oggetto 11 alla colonna X=20, riga Y=7 (Stato: 0=attivo)  
+    db 2, 30, 7, YELLOW, 0              ; Oggetto 1 alla colonna X=30,  riga Y=7, YELLOW, (Stato: 0=attivo)    
+    db 2, 29, 7, CYAN, 0                ; Oggetto 2 alla colonna X=29,  riga Y=7, CYAN, (Stato: 0=attivo)      
+    db 2, 28, 7, GREEN, 0               ; Oggetto 4 alla colonna X=28,  riga Y=7, GREEN, (Stato: 0=attivo)      
+    db 2, 27, 7, MAGENTA, 0             ; Oggetto 5 alla colonna X=27,  riga Y=7, GREEN, (Stato: 0=attivo)   
+    db 2, 26, 7, YELLOW, 0              ; Oggetto 6 alla colonna X=26,  riga Y=7, YELLOW, (Stato: 0=attivo)      
+    db 2, 25, 7, CYAN, 0                ; Oggetto 7 alla colonna X=25,  riga Y=7, CYAN, (Stato: 0=attivo)   
+    db 2, 24, 7, GREEN, 0               ; Oggetto 8 alla colonna X=24,  riga Y=7, GREEN, (Stato: 0=attivo)      
+    db 2, 23, 7, MAGENTA, 0             ; Oggetto 9 alla colonna X=23,  riga Y=7, MAGENTA, (Stato: 0=attivo)   
+    db 2, 22, 7, YELLOW, 0              ; Oggetto 10 alla colonna X=22, riga Y=7, YELLOW, (Stato: 0=attivo)      
+    db 2, 21, 7, CYAN, 0                ; Oggetto 11 alla colonna X=21, riga Y=7, CYAN, (Stato: 0=attivo)   
+    db 2, 20, 7, GREEN, 0               ; Oggetto 12 alla colonna X=20, riga Y=7, GREEN, (Stato: 0=attivo)      
+    db 2, 19, 7, MAGENTA, 0             ; Oggetto 13 alla colonna X=19, riga Y=7, MAGENTA, (Stato: 0=attivo)  
     
     ; Stanza 0 (The Test Room)
-    db 0, 15, 17, $C2, 0           ; Oggetto 3: Rosso Flashing ($C2) al centro
+    db 0, 15, 17, RED_FLASH, 0          ; Oggetto 1 alla colonna X=15, riga Y=17, RED FLASH, (Stato: 0=attivo)  
     
     ; Stanza 4 (Under the MegaTree)
-    db 4, 22, 3, 3, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
+    db 4, 22, 3, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=3, MAGENTA, (Stato: 0=attivo)  
 
     ; Stanza 4 (Under the MegaTree)
-    db 5, 1, 14, 3, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
-    db 5, 4, 13, 4, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
-    db 5, 7, 14, 5, 0            ; Oggetto in UnderTheMegaTree: Y=3 (Layout Row 0), X=22 (Cyan Flashing)
+    db 5, 1, 14, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=14, MAGENTA, (Stato: 0=attivo)  
+    db 5, 4, 13, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=13, GREEN, (Stato: 0=attivo)  
+    db 5, 7, 14, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=14, CYAN, (Stato: 0=attivo)  
 
     
     db $FF                        ; Fine tabella
@@ -108,9 +119,19 @@ DetermineCurrentRoomID:
     ld   de, TheDriveLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_thedrive
     ld   a, 6
     jr   .set_room
+
+.not_thedrive:
+    ld   hl, (room_ptr)
+    ld   de, TheSecurityGuardLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+    ld   a, 7
+    jr   .set_room
+
 
 .unknown:
     ld   a, 0                    ; Default fallback

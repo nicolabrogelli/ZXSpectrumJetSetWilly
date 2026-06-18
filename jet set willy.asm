@@ -158,7 +158,7 @@ ramp_dir:       db 0
 ramp_len:       db 0
 ramp_row:       db 0
 ramp_col:       db 0
-room_ptr:       dw TheSecurityGuardLayout; TheSecurityGuardTheDriveLayout; AtTheFootTheMegaTreeLayout; UnderTheMegaTreeLayout ;MastreBedRoomLayout; TheOffLicenceLayout; TheBridgeLayout; TheTestRoomLayout;      
+room_ptr:       dw TheSecurityGuardLayout; TheOffLicenceLayout; TheDriveLayout; AtTheFootTheMegaTreeLayout; UnderTheMegaTreeLayout ;MastreBedRoomLayout; TheBridgeLayout; TheTestRoomLayout;      
 
     ALIGN 256
 RoomsStart:
