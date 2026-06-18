@@ -24,6 +24,11 @@
 ; 7 - WHITE
 ; -------------------------------------------------------------------
 ItemsTable:
+    ; Stanza 0 (The Test Room)
+    db 0, 15, 17, RED_FLASH, 0          ; Oggetto 1 alla colonna X=15, riga Y=17, RED FLASH, (Stato: 0=attivo)  
+
+    ; Stanza 1 (The Bridge)
+
     ; Stanza 2 (The Off Licence)
     db 2, 30, 7, YELLOW, 0              ; Oggetto 1 alla colonna X=30,  riga Y=7, YELLOW, (Stato: 0=attivo)    
     db 2, 29, 7, CYAN, 0                ; Oggetto 2 alla colonna X=29,  riga Y=7, CYAN, (Stato: 0=attivo)      
@@ -38,18 +43,23 @@ ItemsTable:
     db 2, 20, 7, GREEN, 0               ; Oggetto 12 alla colonna X=20, riga Y=7, GREEN, (Stato: 0=attivo)      
     db 2, 19, 7, MAGENTA, 0             ; Oggetto 13 alla colonna X=19, riga Y=7, MAGENTA, (Stato: 0=attivo)  
     
-    ; Stanza 0 (The Test Room)
-    db 0, 15, 17, RED_FLASH, 0          ; Oggetto 1 alla colonna X=15, riga Y=17, RED FLASH, (Stato: 0=attivo)  
-    
+    ; Stanza 3 (The Bridge)
+
     ; Stanza 4 (Under the MegaTree)
     db 4, 22, 3, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=3, MAGENTA, (Stato: 0=attivo)  
 
-    ; Stanza 4 (Under the MegaTree)
+    ; Stanza 5 (At The Foot TheMega Tree)
     db 5, 1, 14, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=14, MAGENTA, (Stato: 0=attivo)  
     db 5, 4, 13, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=13, GREEN, (Stato: 0=attivo)  
     db 5, 7, 14, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=14, CYAN, (Stato: 0=attivo)  
 
-    
+    ; Stabza 6 (The Drive)
+
+    ; Stanza 7 (The Security Guard)
+
+    ; Stanza 8 (The Bathroom)
+    db 8, 23, 16, CYAN, 0                ; Oggetto 1 alla colonna X=7, riga Y=14, CYAN, (Stato: 0=attivo)  
+
     db $FF                        ; Fine tabella
 
 ; -------------------------------------------------------------------
@@ -128,10 +138,18 @@ DetermineCurrentRoomID:
     ld   de, TheSecurityGuardLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_securityguard
     ld   a, 7
     jr   .set_room
 
+.not_securityguard:
+    ld   hl, (room_ptr)
+    ld   de, TheBathroomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+    ld   a, 8
+    jr   .set_room
 
 .unknown:
     ld   a, 0                    ; Default fallback
@@ -446,8 +464,10 @@ CheckRoomItemsCollision:
     
     ; Controlla collisione
     ld   a, c
+    push hl
     ld   h, b
     call CheckWillyItemCollision
+    pop  hl
     jr   nc, .next_no_inc
     
     ; RACCOLTO!

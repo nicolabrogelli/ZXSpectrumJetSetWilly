@@ -247,11 +247,25 @@ DrawRoomEnemies:
     sbc  hl, de
     jr   z, .offlicence_radar
 
+    ld   hl, (room_ptr)
+    ld   de, TheBathroomLayout
+    or   a
+    sbc  hl, de
+    jr   z, .bathroom_doubleball
+
     ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
     ld   hl, LamettaSpriteLeft
     jr   z, .got_sprite
     ld   hl, LamettaSpriteRight
+    jr   .got_sprite
+
+.bathroom_doubleball:
+    ld   a, (ix+5)         ; Direction
+    cp   1                 ; Sinistra?
+    ld   hl, DoubleBallSpriteLeft
+    jr   z, .got_sprite
+    ld   hl, DoubleBallSpriteRight
     jr   .got_sprite
 
 .bridge_lametta:

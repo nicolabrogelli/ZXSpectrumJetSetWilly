@@ -158,9 +158,9 @@ ramp_dir:       db 0
 ramp_len:       db 0
 ramp_row:       db 0
 ramp_col:       db 0
-room_ptr:       dw TheSecurityGuardLayout; TheOffLicenceLayout; TheDriveLayout; AtTheFootTheMegaTreeLayout; UnderTheMegaTreeLayout ;MastreBedRoomLayout; TheBridgeLayout; TheTestRoomLayout;      
+room_ptr:       dw TheBathroomLayout; TheBridgeLayout; TheSecurityGuardLayout; TheOffLicenceLayout; TheDriveLayout; AtTheFootTheMegaTreeLayout; UnderTheMegaTreeLayout ;MastreBedRoomLayout; T TheTestRoomLayout;      
 
-    ALIGN 256
+    org $8300
 RoomsStart:
     include "Rooms/TheOffLicence.asm"
     include "Rooms/TheBridge.asm"
@@ -168,6 +168,8 @@ RoomsStart:
     include "Rooms/AtTheFootTheMegaTree.asm"
     include "Rooms/TheDrive.asm"
     include "Rooms/TheSecurityGuard.asm"
+
+    include "Rooms/TheBathroom.asm"
 
     include "Rooms/MasterBedRoom.asm"
     include "Rooms/TheTestRoom.asm"
