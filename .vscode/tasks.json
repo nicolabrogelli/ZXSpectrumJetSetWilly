@@ -56,7 +56,17 @@
           "cwd": "${config:cspect_dir}",
       },
       "problemMatcher": []
-  }          
-    ]
-  }
+    },
+    {
+      "label": "start fuse",
+      "type": "shell",
+      "command": "C:\\Users\\nicol\\Documents\\BACKUP\\DOC - RETROCOMPUTER\\COMPUTER\\SINCLAIR\\EMULATORI\\ZX SPECTRUM\\fuse-1.6.0-win32\\fuse.exe",
+      "args": [
+        "${workspaceFolder}/jet set willy.sna"
+      ],
+      "dependsOn": "buildZXSpectrum",
+      "problemMatcher": []
+    }
+  ]
+}
   
