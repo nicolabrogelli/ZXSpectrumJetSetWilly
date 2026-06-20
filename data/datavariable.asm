@@ -37,4 +37,6 @@ ramp_dir:       db 0
 ramp_len:       db 0
 ramp_row:       db 0
 ramp_col:       db 0
+current_room_items: .80 db 0
+num_room_items:     db 0
 room_ptr:       dw AtTheFootTheMegaTreeLayout; TheBridgeLayout; TheOffLicenceLayout;  TheBathroomLayout; UnderTheMegaTreeLayout;   MastreBedRoomLayout; TheSecurityGuardLayout;  TheDriveLayout;   TheTestRoomLayout;    

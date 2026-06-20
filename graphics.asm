@@ -198,7 +198,39 @@ GetBackgroundByte:
     srl  a
     srl  a                 ; A = column c (0..31)
     ld   c, a              ; C = c (Col)
+
+    ; --- Controlla se c'è un Item Attivo in questa cella ---
+    push de
+    push bc
+    ld   b, c              ; B = Col
+    ld   c, e              ; C = Row
+    call CheckActiveItemAtCell
+    jr   nc, .no_item
     
+    pop  bc
+    pop  de
+    
+    ld   a, d
+    and  7                 ; A = scanline (0..7)
+    ld   e, a
+    ld   d, 0              ; DE = scanline offset
+    ld   hl, (room_ptr)
+    push bc
+    ld   bc, OFFSET_ITEM_GRAPHIC
+    add  hl, bc
+    pop  bc
+    add  hl, de            ; HL = indirizzo del byte dello sprite
+    ld   a, (hl)           ; A = byte dello sprite dell'item
+    
+    pop  bc
+    pop  de
+    pop  hl
+    ret
+
+.no_item:
+    pop  bc
+    pop  de
+
     ; --- Controlla Conveyor ---
     ld   a, (conveyor_len)
     or   a
@@ -927,6 +959,23 @@ GetCellAttribute:
     push hl
     push de
     push bc
+
+    push de
+    push bc
+    ld   c, h              ; C = Row
+    call CheckActiveItemAtCell
+    jr   nc, .no_item_attr
+    
+    pop  bc
+    pop  de
+    pop  bc
+    pop  de
+    pop  hl
+    ret
+
+.no_item_attr:
+    pop  bc
+    pop  de
 
     ; 1. Controlla se Row (H) è fuori dal layout (H < 0 o H >= 16)
     ld   a, h

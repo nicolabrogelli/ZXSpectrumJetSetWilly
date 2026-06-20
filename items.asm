@@ -169,6 +169,12 @@ DrawRoomItems:
     push de
     push bc
     push ix
+    push iy
+    
+    ; Azzera il numero di item attivi in questa stanza
+    xor  a
+    ld   (num_room_items), a
+    ld   iy, current_room_items
     
     ; Ottieni il puntatore alla grafica dell'item della stanza corrente:
     ; room_ptr + OFFSET_ITEM_GRAPHIC
@@ -208,7 +214,21 @@ DrawRoomItems:
     push ix
     pop  hl                ; HL = bitmap pointer
     call DrawItemGraphic
-    pop  hl
+    pop  hl                ; HL = collected flag address
+    
+    ; Cacha l'item attivo per velocizzare CheckActiveItemAtCell
+    ld   (iy+0), c         ; Col
+    ld   (iy+1), b         ; Row
+    ld   (iy+2), e         ; Color
+    ld   (iy+3), l         ; Pointer to collected flag (Low)
+    ld   (iy+4), h         ; Pointer to collected flag (High)
+    
+    ld   bc, 5
+    add  iy, bc
+    
+    ld   a, (num_room_items)
+    inc  a
+    ld   (num_room_items), a
     
     jr   .next_no_inc
 
@@ -222,6 +242,7 @@ DrawRoomItems:
     jr   .loop
 
 .done:
+    pop  iy
     pop  ix
     pop  de
     pop  bc
@@ -536,3 +557,59 @@ PlayCollectSound:
     pop  de
     pop  bc
     ret
+
+; -------------------------------------------------------------------
+; Cerca se c'è un item attivo (non raccolto) alla cella specificata.
+; Input: B = Colonna (0..31), C = Riga (0..15)
+; Output: Carry flag impostato se trovato, in tal caso HL punta all'inizio dell'entry in ItemsTable.
+; -------------------------------------------------------------------
+CheckActiveItemAtCell:
+    push de
+    push bc
+    push ix
+    
+    ld   a, (num_room_items)
+    or   a
+    jr   z, .not_found
+    
+    ld   ix, current_room_items
+    ld   d, a              ; D = loop counter
+.loop:
+    ld   a, (ix+0)         ; Colonna dell'item cachato
+    cp   b
+    jr   nz, .next
+    
+    ld   a, (ix+1)         ; Riga dell'item cachato
+    cp   c
+    jr   nz, .next
+    
+    ; Controlla se l'item è già stato raccolto
+    ld   l, (ix+3)
+    ld   h, (ix+4)
+    ld   a, (hl)
+    or   a
+    jr   nz, .next
+    
+    ; Trovato! Ritorna il colore in A
+    ld   a, (ix+2)
+    pop  ix
+    pop  bc
+    pop  de
+    scf                    ; Set carry
+    ret
+
+.next:
+    push de
+    ld   de, 5
+    add  ix, de
+    pop  de
+    dec  d
+    jr   nz, .loop
+
+.not_found:
+    pop  ix
+    pop  bc
+    pop  de
+    or   a                 ; Clear carry
+    ret
+
