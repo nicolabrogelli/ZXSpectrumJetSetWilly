@@ -652,19 +652,19 @@ DrawWillyLifeIcon:
     add  a, a              ; *4
     add  a, a              ; *8
     ld   c, a              ; C = X pixel
-    ld   b, 152            ; B = Y pixel (Row 19)
+    ld   b, 160            ; B = Y pixel (Row 19)
     ld   ix, Willy + 0*8   ; IX = head facing right
     call DrawPixelSprite8x8
     
     ; 2. Disegna il corpo a Row 20, Colonna E
-    ld   b, 160            ; B = Y pixel (Row 20)
+    ld   b, 168            ; B = Y pixel (Row 20)
     ld   ix, Willy + 1*8   ; IX = body frame 1
     call DrawPixelSprite8x8
     
     ; 3. Imposta l'attributo colore per la testa (Row 19, Colonna E)
     ; AttrAddr = $5A60 + E
     ld   h, $5a
-    ld   a, $60
+    ld   a, $80
     add  a, e
     ld   l, a
     jr   nc, .no_carry1
@@ -675,7 +675,7 @@ DrawWillyLifeIcon:
     ; 4. Imposta l'attributo colore per il corpo (Row 20, Colonna E)
     ; AttrAddr = $5A80 + E
     ld   h, $5a
-    ld   a, $80
+    ld   a, $A0
     add  a, e
     ld   l, a
     jr   nc, .no_carry2

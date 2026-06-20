@@ -803,19 +803,19 @@
  652+ 60ED 87               add  a, a              ; *4
  653+ 60EE 87               add  a, a              ; *8
  654+ 60EF 4F               ld   c, a              ; C = X pixel
- 655+ 60F0 06 98            ld   b, 152            ; B = Y pixel (Row 19)
+ 655+ 60F0 06 A0            ld   b, 160            ; B = Y pixel (Row 19)
  656+ 60F2 DD 21 35 6C      ld   ix, Willy + 0*8   ; IX = head facing right
  657+ 60F6 CD 3D 5E         call DrawPixelSprite8x8
  658+ 60F9
  659+ 60F9                  ; 2. Disegna il corpo a Row 20, Colonna E
- 660+ 60F9 06 A0            ld   b, 160            ; B = Y pixel (Row 20)
+ 660+ 60F9 06 A8            ld   b, 168            ; B = Y pixel (Row 20)
  661+ 60FB DD 21 3D 6C      ld   ix, Willy + 1*8   ; IX = body frame 1
  662+ 60FF CD 3D 5E         call DrawPixelSprite8x8
  663+ 6102
  664+ 6102                  ; 3. Imposta l'attributo colore per la testa (Row 19, Colonna E)
  665+ 6102                  ; AttrAddr = $5A60 + E
  666+ 6102 26 5A            ld   h, $5a
- 667+ 6104 3E 60            ld   a, $60
+ 667+ 6104 3E 80            ld   a, $80
  668+ 6106 83               add  a, e
  669+ 6107 6F               ld   l, a
  670+ 6108 30 01            jr   nc, .no_carry1
@@ -826,7 +826,7 @@
  675+ 610C                  ; 4. Imposta l'attributo colore per il corpo (Row 20, Colonna E)
  676+ 610C                  ; AttrAddr = $5A80 + E
  677+ 610C 26 5A            ld   h, $5a
- 678+ 610E 3E 80            ld   a, $80
+ 678+ 610E 3E A0            ld   a, $A0
  679+ 6110 83               add  a, e
  680+ 6111 6F               ld   l, a
  681+ 6112 30 01            jr   nc, .no_carry2
