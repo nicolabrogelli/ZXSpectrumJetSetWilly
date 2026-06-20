@@ -84,10 +84,10 @@ TheOffLicenceItem:
     DEFB 24,24,60,126,98,98,98,126
 
 TheOffLicenceDirection:
-    DEFB 1
-    DEFB 0
-    DEFB 0
-    DEFB 0
+    DEFB 1	;Room to the left (The Bridge)
+    DEFB 0	;Room to the right (The Off Licence)
+    DEFB 0	;Room above (The Off Licence)
+    DEFB 0	;Room below (The Off Licence)
 
 TheOffLicenceUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

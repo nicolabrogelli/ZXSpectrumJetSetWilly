@@ -33,58 +33,53 @@
   20+ 5DAD              BODY_GRAPH_LEFT_2:  EQU $47
   21+ 5DAD              BODY_GRAPH_LEFT_3:  EQU $48
   22+ 5DAD
-  23+ 5DAD              ; Limiti movimento
-  24+ 5DAD              ;PLAYER_TOP_L:   EQU $1e
-  25+ 5DAD              ;PLAYER_TOP_R:   EQU $01
-  26+ 5DAD              ;WHITE_GRAPH:    EQU $7F
-  27+ 5DAD
-  28+ 5DAD              ; Colori
-  29+ 5DAD              BLUE:   EQU $01
-  30+ 5DAD              RED:    EQU $02
-  31+ 5DAD              MAGENTA: EQU $03
-  32+ 5DAD              GREEN:  EQU $04
-  33+ 5DAD              CYAN:   EQU $05
-  34+ 5DAD              YELLOW: EQU $06
-  35+ 5DAD              WHITE:  EQU $07
-  36+ 5DAD
-  37+ 5DAD              ; Colori
-  38+ 5DAD              BLUE_FLASH:   EQU $C1
-  39+ 5DAD              RED_FLASH:    EQU $C2
-  40+ 5DAD              MAGENTA_FLASH: EQU $C3
-  41+ 5DAD              GREEN_FLASH:  EQU $C4
-  42+ 5DAD              CYAN_FLASH:   EQU $C5
-  43+ 5DAD              YELLOW_FLASH: EQU $C6
-  44+ 5DAD              WHITE_FLASH:  EQU $C7
+  23+ 5DAD              ; Colori
+  24+ 5DAD              BLUE:   EQU $01
+  25+ 5DAD              RED:    EQU $02
+  26+ 5DAD              MAGENTA: EQU $03
+  27+ 5DAD              GREEN:  EQU $04
+  28+ 5DAD              CYAN:   EQU $05
+  29+ 5DAD              YELLOW: EQU $06
+  30+ 5DAD              WHITE:  EQU $07
+  31+ 5DAD
+  32+ 5DAD              ; Colori
+  33+ 5DAD              BLUE_FLASH:   EQU $C1
+  34+ 5DAD              RED_FLASH:    EQU $C2
+  35+ 5DAD              MAGENTA_FLASH: EQU $C3
+  36+ 5DAD              GREEN_FLASH:  EQU $C4
+  37+ 5DAD              CYAN_FLASH:   EQU $C5
+  38+ 5DAD              YELLOW_FLASH: EQU $C6
+  39+ 5DAD              WHITE_FLASH:  EQU $C7
+  40+ 5DAD
+  41+ 5DAD              ; Interrupt
+  42+ 5DAD              IM2_TABLE   = $FE00
+  43+ 5DAD              IM2_VECTOR  = $FDFD
+  44+ 5DAD              SCREEN_LINE = $4860
   45+ 5DAD
-  46+ 5DAD              ; Interrupt
-  47+ 5DAD              IM2_TABLE   = $FE00
-  48+ 5DAD              IM2_VECTOR  = $FDFD
-  49+ 5DAD              SCREEN_LINE = $4860
+  46+ 5DAD              ; Fisica (Derivata dai parametri geometrici)
+  47+ 5DAD              MAX_FALL_SPEED: EQU 12
+  48+ 5DAD              JUMP_STRENGTH:  EQU 12
+  49+ 5DAD              GRAVITY:        EQU 2
   50+ 5DAD
-  51+ 5DAD              ; Fisica (Derivata dai parametri geometrici)
-  52+ 5DAD              MAX_FALL_SPEED: EQU 12
-  53+ 5DAD              JUMP_STRENGTH:  EQU 12
-  54+ 5DAD              GRAVITY:        EQU 2
-  55+ 5DAD
-  56+ 5DAD              ; Limiti schermo del Player
-  57+ 5DAD              PLAYER_MIN_X:    EQU 8
-  58+ 5DAD              PLAYER_MAX_X:    EQU 240
-  59+ 5DAD
-  60+ 5DAD              ; Offsets all'interno della struttura dati della Stanza (256 byte)
-  61+ 5DAD              OFFSET_BG:       EQU 160
-  62+ 5DAD              OFFSET_FLOOR:    EQU 169
-  63+ 5DAD              OFFSET_WALL:     EQU 178
-  64+ 5DAD              OFFSET_NASTY:    EQU 187
-  65+ 5DAD              OFFSET_BORDER_COLOR: EQU 222
-  66+ 5DAD              OFFSET_ITEM_GRAPHIC: EQU 227
-  67+ 5DAD              OFFSET_RAMP:         EQU 196
-  68+ 5DAD              OFFSET_CONVEYOR:     EQU 205
-  69+ 5DAD              OFFSET_CONVEYOR_DATA: EQU 214
-  70+ 5DAD              OFFSET_RAMP_DATA:    EQU 218
-  71+ 5DAD              OFFSET_POS_WILLY:    EQU 256
-  72+ 5DAD
-  73+ 5DAD
-  74+ 5DAD
+  51+ 5DAD              ; Limiti schermo del Player
+  52+ 5DAD              PLAYER_MIN_X:    EQU 5
+  53+ 5DAD              PLAYER_MAX_X:    EQU 245
+  54+ 5DAD
+  55+ 5DAD              ; Offsets all'interno della struttura dati della Stanza (256 byte)
+  56+ 5DAD              OFFSET_BG:       EQU 160
+  57+ 5DAD              OFFSET_FLOOR:    EQU 169
+  58+ 5DAD              OFFSET_WALL:     EQU 178
+  59+ 5DAD              OFFSET_NASTY:    EQU 187
+  60+ 5DAD              OFFSET_BORDER_COLOR: EQU 222
+  61+ 5DAD              OFFSET_ITEM_GRAPHIC: EQU 227
+  62+ 5DAD              OFFSET_RAMP:         EQU 196
+  63+ 5DAD              OFFSET_CONVEYOR:     EQU 205
+  64+ 5DAD              OFFSET_CONVEYOR_DATA: EQU 214
+  65+ 5DAD              OFFSET_RAMP_DATA:    EQU 218
+  66+ 5DAD              OFFSET_POS_WILLY:    EQU 256
+  67+ 5DAD
+  68+ 5DAD
+  69+ 5DAD
 # file closed: constants.asm
   12  5DAD                  include "interrupts.asm"
 # file opened: interrupts.asm
@@ -1427,7 +1422,7 @@
   25+ 6331              movePlayer_left:
   26+ 6331 79               ld   a, c
   27+ 6332 D6 02            sub  2                 ; Prova a muoverti di 2 pixel a sinistra
-  28+ 6334 FE 08            cp   PLAYER_MIN_X      ; Confronta con il limite sinistro
+  28+ 6334 FE 05            cp   PLAYER_MIN_X      ; Confronta con il limite sinistro
   29+ 6336 38 0E            jr   c, .clamp_left    ; Se < PLAYER_MIN_X, clampa
   30+ 6338
   31+ 6338                  ; Controlla collisione con Wall a sinistra
@@ -1444,18 +1439,18 @@
   42+ 6346
   43+ 6346              .clamp_left:
   44+ 6346 C5               push bc
-  45+ 6347 0E 08            ld   c, PLAYER_MIN_X
+  45+ 6347 0E 05            ld   c, PLAYER_MIN_X
   46+ 6349 CD 5E 66         call CheckWillyWallCollision
   47+ 634C C1               pop  bc
   48+ 634D 38 2B            jr   c, save_x         ; Se collide al limite, mantieni la posizione precedente
   49+ 634F
-  50+ 634F 0E 08            ld   c, PLAYER_MIN_X
+  50+ 634F 0E 05            ld   c, PLAYER_MIN_X
   51+ 6351 18 27            jr   save_x
   52+ 6353
   53+ 6353              movePlayer_right:
   54+ 6353 79               ld   a, c
   55+ 6354 C6 02            add  a, 2              ; Prova a muoverti di 2 pixel a destra
-  56+ 6356 FE F0            cp   PLAYER_MAX_X      ; Confronta con il limite destro
+  56+ 6356 FE F5            cp   PLAYER_MAX_X      ; Confronta con il limite destro
   57+ 6358 28 02            jr   z, .ok_right      ; Se == PLAYER_MAX_X, va bene
   58+ 635A 30 10            jr   nc, .clamp_right  ; Se > PLAYER_MAX_X, clampa
   59+ 635C              .ok_right:
@@ -1474,14 +1469,14 @@
   72+ 636C
   73+ 636C              .clamp_right:
   74+ 636C C5               push bc
-  75+ 636D 3E F0            ld   a, PLAYER_MAX_X
+  75+ 636D 3E F5            ld   a, PLAYER_MAX_X
   76+ 636F C6 0F            add  a, 15
   77+ 6371 4F               ld   c, a
   78+ 6372 CD 5E 66         call CheckWillyWallCollision
   79+ 6375 C1               pop  bc
   80+ 6376 38 02            jr   c, save_x         ; Se collide al limite, mantieni la posizione precedente
   81+ 6378
-  82+ 6378 0E F0            ld   c, PLAYER_MAX_X
+  82+ 6378 0E F5            ld   c, PLAYER_MAX_X
   83+ 637A
   84+ 637A              save_x:
   85+ 637A ED 43 67 76      ld   (PlayerPos), bc
@@ -2064,17 +2059,17 @@
  472+ 6615              .move_right:
  473+ 6615 79               ld   a, c
  474+ 6616 C6 01            add  a, 1              ; trascina di 1 pixel a destra per frame
- 475+ 6618 FE F0            cp   PLAYER_MAX_X
+ 475+ 6618 FE F5            cp   PLAYER_MAX_X
  476+ 661A 38 0D            jr   c, .store_x
- 477+ 661C 3E F0            ld   a, PLAYER_MAX_X
+ 477+ 661C 3E F5            ld   a, PLAYER_MAX_X
  478+ 661E 18 09            jr   .store_x
  479+ 6620
  480+ 6620              .move_left:
  481+ 6620 79               ld   a, c
  482+ 6621 D6 01            sub  1                 ; trascina di 1 pixel a sinistra per frame
- 483+ 6623 FE 08            cp   PLAYER_MIN_X
+ 483+ 6623 FE 05            cp   PLAYER_MIN_X
  484+ 6625 30 02            jr   nc, .store_x
- 485+ 6627 3E 08            ld   a, PLAYER_MIN_X
+ 485+ 6627 3E 05            ld   a, PLAYER_MIN_X
  486+ 6629
  487+ 6629              .store_x:
  488+ 6629 4F               ld   c, a
@@ -4890,7 +4885,7 @@
   36+ 797F 00           ramp_len:       db 0
   37+ 7980 00           ramp_row:       db 0
   38+ 7981 00           ramp_col:       db 0
-  39+ 7982 0C 89        room_ptr:       dw TheBathroomLayout; MastreBedRoomLayout; TheBridgeLayout; TheSecurityGuardLayout; TheOffLicenceLayout; TheDriveLayout; AtTheFootTheMegaTreeLayout; UnderTheMegaTreeLayout ; T TheTestRoomLayout;
+  39+ 7982 02 84        room_ptr:       dw TheBridgeLayout; TheBathroomLayout; MastreBedRoomLayout; TheSecurityGuardLayout; TheOffLicenceLayout; TheDriveLayout; AtTheFootTheMegaTreeLayout; UnderTheMegaTreeLayout ; T TheTestRoomLayout;
 # file closed: data/datavariable.asm
   21  7984
   22  7984              start:
@@ -5124,10 +5119,10 @@
   84+ 83E7 62 62 62 7E
   85+ 83EB
   86+ 83EB              TheOffLicenceDirection:
-  87+ 83EB 01               DEFB 1
-  88+ 83EC 00               DEFB 0
-  89+ 83ED 00               DEFB 0
-  90+ 83EE 00               DEFB 0
+  87+ 83EB 01               DEFB 1	;Room to the left (The Bridge)
+  88+ 83EC 00               DEFB 0	;Room to the right (The Off Licence)
+  89+ 83ED 00               DEFB 0	;Room above (The Off Licence)
+  90+ 83EE 00               DEFB 0	;Room below (The Off Licence)
   91+ 83EF
   92+ 83EF              TheOffLicenceUnused:
   93+ 83EF 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

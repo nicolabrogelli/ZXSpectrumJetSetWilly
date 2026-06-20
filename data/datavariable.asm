@@ -36,4 +36,4 @@ ramp_dir:       db 0
 ramp_len:       db 0
 ramp_row:       db 0
 ramp_col:       db 0
-room_ptr:       dw TheBathroomLayout; MastreBedRoomLayout; TheBridgeLayout; TheSecurityGuardLayout; TheOffLicenceLayout; TheDriveLayout; AtTheFootTheMegaTreeLayout; UnderTheMegaTreeLayout ; T TheTestRoomLayout;    
+room_ptr:       dw TheBridgeLayout; TheBathroomLayout; MastreBedRoomLayout; TheSecurityGuardLayout; TheOffLicenceLayout; TheDriveLayout; AtTheFootTheMegaTreeLayout; UnderTheMegaTreeLayout ; T TheTestRoomLayout;    

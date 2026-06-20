@@ -20,11 +20,6 @@ BODY_GRAPH_LEFT_1:  EQU $46
 BODY_GRAPH_LEFT_2:  EQU $47
 BODY_GRAPH_LEFT_3:  EQU $48
 
-; Limiti movimento
-;PLAYER_TOP_L:   EQU $1e
-;PLAYER_TOP_R:   EQU $01
-;WHITE_GRAPH:    EQU $7F
-
 ; Colori
 BLUE:   EQU $01
 RED:    EQU $02
@@ -54,8 +49,8 @@ JUMP_STRENGTH:  EQU 12
 GRAVITY:        EQU 2
 
 ; Limiti schermo del Player
-PLAYER_MIN_X:    EQU 8
-PLAYER_MAX_X:    EQU 240
+PLAYER_MIN_X:    EQU 5
+PLAYER_MAX_X:    EQU 245
 
 ; Offsets all'interno della struttura dati della Stanza (256 byte)
 OFFSET_BG:       EQU 160
