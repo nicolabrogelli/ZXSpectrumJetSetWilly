@@ -21,7 +21,7 @@
       {
         "label": "start zesarux",
         "type": "shell",
-        "command": "./zesarux",
+        "command": "${config:zesarux_dir}\\zesarux.exe",
         "args": [
             "--noconfigfile",           // Do not load configuration file
             "--machine", "tbblue",      // Emulate ZX Next
@@ -30,7 +30,8 @@
             "--enable-esxdos-handler",  // Enable ESXDOS traps handler
             "--enable-remoteprotocol",  // Enable ZRCP remote protocol
             "--disable-autoframeskip",  // Dissable auto skip
-            "--esxdos-root-dir", "."    // Set ESXDOS root directory
+            "--esxdos-root-dir", ".",    // Set ESXDOS root directory
+            "--ignoremouseclickopenmenu" // Prevent left-click from pausing/opening the menu
         ],
         "options": {
            "cwd": "${config:zesarux_dir}",
@@ -42,7 +43,7 @@
       "label": "start cspect",
       "type": "shell",
       //"command": "mono", // For windows users: Remove 'mono' and add 'CSpect.exe' instead
-      "command": "CSpect.exe",
+      "command": "${config:cspect_dir}\\CSpect.exe",
       "args": [
           //"CSpect.exe", // For windows users: remove this entry
           "-w4", // Window size
