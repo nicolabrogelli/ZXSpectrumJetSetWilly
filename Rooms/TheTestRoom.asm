@@ -101,13 +101,13 @@ TheTestRoomUnused:
 
 ; Room entities slots (ropes, arrows, guardians)
 TheTestRoomEnemy1:
-    DEFB $80, 24, 128, 231        ; Enemy 1 (Lametta), horizontal, Starts X=24, Y=128, Limit X=231
+    DEFB $80, 24, 104, 231        ; Enemy 1 (Lametta), horizontal, Starts X=24, Y=104, Limit X=231
 TheTestRoomEnemy2:
-    DEFB $81, 160, 80, 224        ; Enemy 2 (Egg), horizontal, Starts X=160, Y=80, Limit X=224
+    DEFB $81, 160, 56, 224        ; Enemy 2 (Egg), horizontal, Starts X=160, Y=56, Limit X=224
 TheTestRoomEnemy3:
-    DEFB $82, 64, 104, 176        ; Enemy 3 (Robot), horizontal, Starts X=64, Y=104, Limit X=176
+    DEFB $82, 64, 80, 176        ; Enemy 3 (Robot), horizontal, Starts X=64, Y=80, Limit X=176
 TheTestRoomEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
 
 TheTestRoomPosWilly:
-    db 136, 128                   ; Posizione di Willy
+    db 136, 104                   ; Posizione di Willy

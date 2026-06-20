@@ -13,23 +13,18 @@ CheckSolidCell:
     push de
     push bc
     
-    ; 1. Controlla se Y (in B) è fuori dalla griglia di layout (Y < 24)
+    ; Se Y >= 128, clampiamo a 127 per poter controllare il pavimento (riga 15)
     ld   a, b
-    cp   24
-    jr   c, .not_solid
-    
-    ; Se Y >= 152, clampiamo a 151 per poter controllare il pavimento (riga 15)
-    cp   152
+    cp   128
     jr   c, .y_ok
-    ld   b, 151
+    ld   b, 127
 .y_ok:
     
     call CheckConveyorOrRampCell
     jr   c, .solid
     
-    ; 2. Calcola riga di layout: r = (Y - 24) / 8
+    ; 2. Calcola riga di layout: r = Y / 8
     ld   a, b
-    sub  24
     srl  a
     srl  a
     srl  a                 ; A = r (0..15)
@@ -154,11 +149,11 @@ ApplyGravity:
     ; --- CONTROLLO COLLISIONE CON IL TERRENO DURANTE LA CADUTA ---
     ld   a, b
     add  a, 16
-    cp   152
+    cp   128
     jr   c, .y_ok_fall
-    ld   a, 151
+    ld   a, 127
 .y_ok_fall:
-    ld   b, a              ; B = Nuovo Y + 16 (clampato a 151 se >= 152)
+    ld   b, a              ; B = Nuovo Y + 16 (clampato a 127 se >= 128)
     
     ; Controlla se il piede sinistro tocca solido
     call CheckSolidCell
@@ -177,17 +172,15 @@ ApplyGravity:
 .check_landing:
     ; Abbiamo toccato una cella solida!
     ld   a, b
-    sub  24
     srl  a
     srl  a
     srl  a                 ; A = r (0..15)
     
-    ; Controlliamo se Vecchio Y + 16 <= r * 8 + 24
+    ; Controlliamo se Vecchio Y + 16 <= r * 8
     ld   e, a              ; E = r
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    add  a, 24             ; A = r * 8 + 24 (limite superiore della riga)
     ld   d, a              ; D = limite superiore
     
     ; Vecchio Y + 16
@@ -206,7 +199,7 @@ ApplyGravity:
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    add  a, 8              ; A = PlayerY di atterraggio
+    sub  16             ; A = PlayerY di atterraggio
     
     ld   bc, (PlayerPos)   ; Ripristina C = PlayerX
     ld   b, a              ; B = Nuovo PlayerY
@@ -228,18 +221,18 @@ ApplyGravity:
     
 .save_pos:
     ld   a, b
-    cp   8
-    jr   nc, .check_max
-    ld   b, 8
+    bit  7, a              ; Se Y è negativo (sotto 0)
+    jr   z, .check_max
+    ld   b, 0
     xor  a
     ld   (velocity_y), a
     jr   .save_ok
 
 .check_max:
     ld   a, b
-    cp   176
+    cp   112
     jr   c, .save_ok
-    ld   b, 176
+    ld   b, 112
     xor  a
     ld   (velocity_y), a
 
@@ -313,13 +306,10 @@ CheckConveyorOrRampCell:
     push de
     push bc
     
-    ; 1. Converti Y pixel in B a layout row: r = (Y - 24) / 8
+    ; 1. Converti Y pixel in B a layout row: r = Y / 8
     ld   a, b
-    cp   24
-    jr   c, .not_solid
-    cp   152
+    cp   128
     jr   nc, .not_solid
-    sub  24
     srl  a
     srl  a
     srl  a                 ; A = r (0..15)
@@ -339,7 +329,6 @@ CheckConveyorOrRampCell:
     
     ; Controlla se Row corrisponde
     ld   a, (conveyor_row)
-    sub  3                 ; Converti in layout row
     cp   d
     jr   nz, .check_ramp   ; Row diversa, controlla rampa
     
@@ -365,8 +354,7 @@ CheckConveyorOrRampCell:
     or   a
     jr   z, .not_solid     ; Se non c'è rampa, fine
     
-    ld   a, (ramp_row)
-    sub  3                 ; A = RampRowStart
+    ld   a, (ramp_row)     ; A = RampRowStart
     cp   d                 ; compare with player row D
     jr   c, .not_solid     ; if RampRowStart < D, skip!
     
@@ -422,9 +410,10 @@ ApplyConveyorForce:
     
     ; Calcola screenRow dei piedi del player: RowPiedi = Y / 8
     ld   a, b
+    add  a, 16
     srl  a
     srl  a
-    srl  a                 ; A = Y / 8
+    srl  a                 ; A = (Y + 16) / 8
     
     ; Confronta con conveyor_row
     ld   d, a              ; D = RowPiedi
@@ -501,13 +490,10 @@ CheckWallCell:
     
     ; 1. Controlla se Y (in B) è fuori dalla griglia di layout
     ld   a, b
-    cp   24
-    jr   c, .not_wall
-    cp   152
+    cp   128
     jr   nc, .not_wall
     
-    ; 2. Calcola riga di layout: r = (Y - 24) / 8
-    sub  24
+    ; 2. Calcola riga di layout: r = Y / 8
     srl  a
     srl  a
     srl  a                 ; A = r (0..15)

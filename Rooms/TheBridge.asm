@@ -102,13 +102,13 @@ TheBridgeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBridgeEnemy1:
-    DEFB $80, 8, 100, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
 TheBridgeEnemy2:
-    DEFB $80, 80, 100, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
 TheBridgeEnemy3:
-    DEFB $C1, 120, 40, 130        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C1, 120, 16, 106        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 TheBridgeEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
 
 TheBridgePosWilly:
-    db 136, 100                   ; Posizione di Willy
+    db 136, 76                   ; Posizione di Willy

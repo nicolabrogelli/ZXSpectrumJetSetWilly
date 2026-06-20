@@ -102,7 +102,7 @@ TheBathroomUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBathroomEnemy1:
-    DEFB $80, 8, 47, 200          ; DoubleBall 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 8, 23, 200          ; DoubleBall 1 (Uccello), horizontal, Starts X=8, Y=96, Limit X=200
 TheBathroomEnemy2:
     DEFB 0,0,0,0                  ; Empty
 TheBathroomEnemy3:
@@ -111,4 +111,4 @@ TheBathroomEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
 
 TheBathroomPosWilly:
-    db 200, 125                   ; Posizione di Willy
+    db 200, 90                  ; Posizione di Willy

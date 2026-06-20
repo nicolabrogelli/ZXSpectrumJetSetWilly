@@ -25,40 +25,40 @@
 ; -------------------------------------------------------------------
 ItemsTable:
     ; Stanza 0 (The Test Room)
-    db 0, 15, 17, RED_FLASH, 0          ; Oggetto 1 alla colonna X=15, riga Y=17, RED FLASH, (Stato: 0=attivo)  
+    db 0, 15, 14, RED_FLASH, 0          ; Oggetto 1 alla colonna X=15, riga Y=14, RED FLASH, (Stato: 0=attivo)  
 
     ; Stanza 1 (The Bridge)
 
     ; Stanza 2 (The Off Licence)
-    db 2, 30, 7, YELLOW, 0              ; Oggetto 1 alla colonna X=30,  riga Y=7, YELLOW, (Stato: 0=attivo)    
-    db 2, 29, 7, CYAN, 0                ; Oggetto 2 alla colonna X=29,  riga Y=7, CYAN, (Stato: 0=attivo)      
-    db 2, 28, 7, GREEN, 0               ; Oggetto 4 alla colonna X=28,  riga Y=7, GREEN, (Stato: 0=attivo)      
-    db 2, 27, 7, MAGENTA, 0             ; Oggetto 5 alla colonna X=27,  riga Y=7, GREEN, (Stato: 0=attivo)   
-    db 2, 26, 7, YELLOW, 0              ; Oggetto 6 alla colonna X=26,  riga Y=7, YELLOW, (Stato: 0=attivo)      
-    db 2, 25, 7, CYAN, 0                ; Oggetto 7 alla colonna X=25,  riga Y=7, CYAN, (Stato: 0=attivo)   
-    db 2, 24, 7, GREEN, 0               ; Oggetto 8 alla colonna X=24,  riga Y=7, GREEN, (Stato: 0=attivo)      
-    db 2, 23, 7, MAGENTA, 0             ; Oggetto 9 alla colonna X=23,  riga Y=7, MAGENTA, (Stato: 0=attivo)   
-    db 2, 22, 7, YELLOW, 0              ; Oggetto 10 alla colonna X=22, riga Y=7, YELLOW, (Stato: 0=attivo)      
-    db 2, 21, 7, CYAN, 0                ; Oggetto 11 alla colonna X=21, riga Y=7, CYAN, (Stato: 0=attivo)   
-    db 2, 20, 7, GREEN, 0               ; Oggetto 12 alla colonna X=20, riga Y=7, GREEN, (Stato: 0=attivo)      
-    db 2, 19, 7, MAGENTA, 0             ; Oggetto 13 alla colonna X=19, riga Y=7, MAGENTA, (Stato: 0=attivo)  
+    db 2, 30, 4, YELLOW, 0              ; Oggetto 1 alla colonna X=30,  riga Y=4, YELLOW, (Stato: 0=attivo)    
+    db 2, 29, 4, CYAN, 0                ; Oggetto 2 alla colonna X=29,  riga Y=4, CYAN, (Stato: 0=attivo)      
+    db 2, 28, 4, GREEN, 0               ; Oggetto 4 alla colonna X=28,  riga Y=4, GREEN, (Stato: 0=attivo)      
+    db 2, 27, 4, MAGENTA, 0             ; Oggetto 5 alla colonna X=27,  riga Y=4, GREEN, (Stato: 0=attivo)   
+    db 2, 26, 4, YELLOW, 0              ; Oggetto 6 alla colonna X=26,  riga Y=4, YELLOW, (Stato: 0=attivo)      
+    db 2, 25, 4, CYAN, 0                ; Oggetto 7 alla colonna X=25,  riga Y=4, CYAN, (Stato: 0=attivo)   
+    db 2, 24, 4, GREEN, 0               ; Oggetto 8 alla colonna X=24,  riga Y=4, GREEN, (Stato: 0=attivo)      
+    db 2, 23, 4, MAGENTA, 0             ; Oggetto 9 alla colonna X=23,  riga Y=4, MAGENTA, (Stato: 0=attivo)   
+    db 2, 22, 4, YELLOW, 0              ; Oggetto 10 alla colonna X=22, riga Y=4, YELLOW, (Stato: 0=attivo)      
+    db 2, 21, 4, CYAN, 0                ; Oggetto 11 alla colonna X=21, riga Y=4, CYAN, (Stato: 0=attivo)   
+    db 2, 20, 4, GREEN, 0               ; Oggetto 12 alla colonna X=20, riga Y=4, GREEN, (Stato: 0=attivo)      
+    db 2, 19, 4, MAGENTA, 0             ; Oggetto 13 alla colonna X=19, riga Y=4, MAGENTA, (Stato: 0=attivo)  
     
     ; Stanza 3 (The Bridge)
 
     ; Stanza 4 (Under the MegaTree)
-    db 4, 22, 3, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=3, MAGENTA, (Stato: 0=attivo)  
+    db 4, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)  
 
     ; Stanza 5 (At The Foot TheMega Tree)
-    db 5, 1, 14, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=14, MAGENTA, (Stato: 0=attivo)  
-    db 5, 4, 13, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=13, GREEN, (Stato: 0=attivo)  
-    db 5, 7, 14, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=14, CYAN, (Stato: 0=attivo)  
+    db 5, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)  
+    db 5, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)  
+    db 5, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)  
 
     ; Stabza 6 (The Drive)
 
     ; Stanza 7 (The Security Guard)
 
     ; Stanza 8 (The Bathroom)
-    db 8, 23, 16, CYAN, 0                ; Oggetto 1 alla colonna X=7, riga Y=14, CYAN, (Stato: 0=attivo)  
+    db 8, 23, 13, CYAN, 0                ; Oggetto 1 alla colonna X=7, riga Y=13, CYAN, (Stato: 0=attivo)  
 
     db $FF                        ; Fine tabella
 
@@ -313,9 +313,9 @@ RestoreBackgroundCell:
     push bc
     pop  iy                ; IY = original BC (IYH = Row, IYL = Col)
     
-    ; Riga di layout: r = B - 3
+    ; Riga di layout: r = B
     ld   a, b
-    sub  3                 ; A = r (0..15)
+    ; A = r (0..15)
     
     ; Colonna: c = C (Col)
     call GetCellFromUnpacked ; A = cell type (0..3)

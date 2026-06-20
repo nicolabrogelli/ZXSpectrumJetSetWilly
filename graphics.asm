@@ -182,15 +182,12 @@ GetBackgroundByte:
 
     ld   b, a              ; B = X (pixel)
     
-    ; 1. Controlla se Y (in D) è fuori dalla griglia di layout (Y < 24 o Y >= 152)
+    ; 1. Controlla se Y (in D) è fuori dalla griglia di layout (Y >= 128)
     ld   a, d
-    cp   24
-    jp   c, .blank
-    cp   152
+    cp   128
     jp   nc, .blank
     
     ; Converti Y (in D) e X (in B) a cella
-    sub  24
     srl  a
     srl  a
     srl  a                 ; A = layout row r (0..15)
@@ -208,7 +205,6 @@ GetBackgroundByte:
     jp   z, .check_ramp
     
     ld   a, (conveyor_row)
-    sub  3
     cp   e
     jp   nz, .check_ramp
     
@@ -232,8 +228,7 @@ GetBackgroundByte:
     or   a
     jp   z, .normal_grid
     
-    ld   a, (ramp_row)
-    sub  3                 ; A = RampRowStart
+    ld   a, (ramp_row)     ; A = RampRowStart
     cp   e                 ; compare with player row E
     jp   c, .normal_grid   ; if RampRowStart < E, skip!
     
@@ -569,13 +564,13 @@ PrintString:
     ret
 
 ; -------------------------------------------------------------------
-; Disegna il nome della stanza sotto la piattaforma di base (Riga 19)
+; Disegna il nome della stanza sotto la piattaforma di base (Riga 16)
 ; -------------------------------------------------------------------
 PrintRoomName:
-    ; Posiziona il cursore a Y = 19, X = 0 usando i codici di controllo rst $10
+    ; Posiziona il cursore a Y = 16, X = 0 usando i codici di controllo rst $10
     ld   a, 22             ; Codice di controllo AT (22)
     rst  $10
-    ld   a, 19             ; Riga 19
+    ld   a, 16             ; Riga 16
     rst  $10
     ld   a, 0              ; Colonna 0
     rst  $10
@@ -588,12 +583,107 @@ PrintRoomName:
     add  hl, de            ; HL = indirizzo nome stanza
     ld   b, 32             ; B = 32 caratteri
     call PrintString
+
+    ; Posiziona il cursore a Y = 18, X = 0 usando i codici di controllo rst $10
+    ld   a, 22             ; Codice di controllo AT (22)
+    rst  $10
+    ld   a, 18             ; Riga 18
+    rst  $10
+    ld   a, 0              ; Colonna 0
+    rst  $10
+    
+    ld   hl, status_line   ; HL = indirizzo stringa di stato
+    ld   b, 32             ; B = 32 caratteri
+    call PrintString
+
+    ; Applica i colori agli attributi di Riga 18 ($5A40)
+    ld   hl, status_line_attrs
+    ld   de, $5a40         ; Indirizzo attributi Riga 18
+    ld   bc, 32            ; 32 byte
+    ldir
+
+    ; Disegna i 7 Willy in basso a sinistra (Row 19, 20)
+    call PrintWillyLives
     ret
 
+PrintWillyLives:
+    ld   c, 0              ; Colonna 0
+    ld   a, $40 | YELLOW
+    call DrawWillyLifeIcon
+    ld   c, 2              ; Colonna 2
+    ld   a, $40 | CYAN
+    call DrawWillyLifeIcon
+    ld   c, 4              ; Colonna 4
+    ld   a, $40 | GREEN
+    call DrawWillyLifeIcon
+    ld   c, 6              ; Colonna 6
+    ld   a, $40 | MAGENTA
+    call DrawWillyLifeIcon
+    ld   c, 8              ; Colonna 8
+    ld   a, $40 | RED
+    call DrawWillyLifeIcon
+    ld   c, 10             ; Colonna 10
+    ld   a, $40 | BLUE
+    call DrawWillyLifeIcon
+    ld   c, 12             ; Colonna 12
+    ld   a, $40 | WHITE
+    call DrawWillyLifeIcon
+    ret
+
+status_line:
+    db "Items collected 000 Time  7:30am"
+
+status_line_attrs:
+    db 65, 66, 67, 68, 69, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 70, 69, 68, 67, 66, 65
 
 ; -------------------------------------------------------------------
-; Disegna la riga/pavimento sotto i piedi degli sprite (Riga 18, Y = 144)
+; Disegna riga/pavimento sotto i piedi degli sprite (Riga 18, Y = 144)
 ; -------------------------------------------------------------------
+DrawWillyLifeIcon:
+    ; Input: C = Colonna (0..31), A = Colore Ink (1..7 / bright color)
+    ; D = Colore, E = Colonna
+    ld   d, a              ; D = Colore
+    ld   e, c              ; E = Colonna
+    
+    ; 1. Disegna la testa a Row 19, Colonna E
+    ; X pixel = E * 8
+    ld   a, e
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    ld   c, a              ; C = X pixel
+    ld   b, 152            ; B = Y pixel (Row 19)
+    ld   ix, Willy + 0*8   ; IX = head facing right
+    call DrawPixelSprite8x8
+    
+    ; 2. Disegna il corpo a Row 20, Colonna E
+    ld   b, 160            ; B = Y pixel (Row 20)
+    ld   ix, Willy + 1*8   ; IX = body frame 1
+    call DrawPixelSprite8x8
+    
+    ; 3. Imposta l'attributo colore per la testa (Row 19, Colonna E)
+    ; AttrAddr = $5A60 + E
+    ld   h, $5a
+    ld   a, $60
+    add  a, e
+    ld   l, a
+    jr   nc, .no_carry1
+    inc  h
+.no_carry1:
+    ld   (hl), d           ; Scrivi colore testa
+    
+    ; 4. Imposta l'attributo colore per il corpo (Row 20, Colonna E)
+    ; AttrAddr = $5A80 + E
+    ld   h, $5a
+    ld   a, $80
+    add  a, e
+    ld   l, a
+    jr   nc, .no_carry2
+    inc  h
+.no_carry2:
+    ld   (hl), d           ; Scrivi colore corpo
+    ret
+
 ; -------------------------------------------------------------------
 ; Disegna un tile 8x8 sullo schermo
 ; Input: B = Row (0..23), C = Col (0..31), IX = Puntatore al Tile (9 byte: 1 attr + 8 bitmap)
@@ -728,7 +818,6 @@ DrawRoom:
     push bc                ; Save for next iteration
     
     ld   a, b
-    add  a, 3              ; A = screen Row (R = r + 3)
     ld   h, a
     
     ld   a, c
@@ -777,16 +866,14 @@ GetCellAttribute:
     push de
     push bc
 
-    ; 1. Controlla se Row (H) è fuori dal layout (H < 3 o H >= 19)
+    ; 1. Controlla se Row (H) è fuori dal layout (H < 0 o H >= 16)
     ld   a, h
-    cp   3
+    cp   0
     jr   c, .blank
-    cp   19
+    cp   16
     jr   nc, .blank
 
-    ; 2. Calcola riga di layout: r = H - 3
-    sub  3
-    
+    ; 2. Calcola riga di layout: r = H
     ; 3. HL = r * 8
     ld   l, a
     ld   h, 0
@@ -884,9 +971,7 @@ SetEnemyColorAttributes:
     
     ; Se Y è fuori dai limiti della griglia di gioco, non fare nulla
     ld   a, b
-    cp   24
-    jr   c, .done
-    cp   152
+    cp   128
     jr   nc, .done
     
     ; Calcola ColStart: col = X / 8
@@ -989,9 +1074,7 @@ RestoreEnemyColorAttributes:
     
     ; Se Y è fuori dai limiti della griglia di gioco, non fare nulla
     ld   a, b
-    cp   24
-    jr   c, .done
-    cp   152
+    cp   128
     jr   nc, .done
     
     ; Calcola ColStart: col = X / 8
@@ -1117,8 +1200,6 @@ DrawConveyorsAndRamps:
     ld   hl, -24064
     add  hl, de            ; HL = Offset
     
-    ; Row = Offset / 32
-    ; Col = Offset % 32
     ld   d, h
     ld   e, l              ; DE = Offset
     
@@ -1139,7 +1220,6 @@ DrawConveyorsAndRamps:
     srl  h
     rr   l
     ld   a, l
-    add  a, 3              ; A = screen Row
     ld   b, a              ; B = Row
     pop  hl                ; HL = original pointer (Length)
     
@@ -1148,7 +1228,7 @@ DrawConveyorsAndRamps:
     ld   a, c
     ld   (conveyor_col), a
     
-    ld   a, (hl)           ; A = Length
+    ld   a, (conveyor_len) ; A = Length
     ld   d, a              ; D = contatore lunghezza
     
     ; IX = room_ptr + OFFSET_CONVEYOR
@@ -1211,7 +1291,6 @@ DrawConveyorsAndRamps:
     srl  h
     rr   l
     ld   a, l
-    add  a, 3              ; A = screen Row
     ld   b, a              ; B = Row
     pop  hl                ; HL = original pointer (Length)
     
@@ -1220,7 +1299,7 @@ DrawConveyorsAndRamps:
     ld   a, c
     ld   (ramp_col), a
     
-    ld   a, (hl)           ; A = Length
+    ld   a, (ramp_len)     ; A = Length
     ld   d, a              ; D = contatore lunghezza
     
     ; IX = room_ptr + OFFSET_RAMP
