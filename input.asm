@@ -8,6 +8,31 @@
 ; Output: D = tasti premuti
 ; -------------------------------------------------------------------
 CheckCtrl:
+    ; --- Controlla tasto Q per cambio stanza ciclico ---
+    ld   a, $fb
+    in   a, ($fe)
+    bit  0, a
+    jr   nz, .q_not_pressed
+    
+    ; Q è premuto! Controlla se era già premuto nel frame precedente
+    ld   a, (q_prev)
+    or   a
+    jr   nz, .q_handled    ; Se era già premuto, ignora
+    
+    ; Primo frame di pressione! Imposta q_prev = 1
+    ld   a, 1
+    ld   (q_prev), a
+    
+    ; Esegui il cambio stanza! Poiché siamo dentro una call (CheckCtrl),
+    ; dobbiamo fare pop di hl per ripulire lo stack prima di saltare.
+    pop  hl                ; Rimuove l'indirizzo di ritorno di CheckCtrl
+    jp   PerformRoomChange
+
+.q_not_pressed:
+    xor  a
+    ld   (q_prev), a
+
+.q_handled:
     ld  d, $00
     ld  a, $fe
     in  a, ($fe)
@@ -69,3 +94,49 @@ checkCtrl_jump:
     and  $04
     ld   d, a
     ret
+
+; -------------------------------------------------------------------
+; Esegue il cambio di stanza ciclico alla stanza successiva
+; -------------------------------------------------------------------
+PerformRoomChange:
+    ; 1. Determina l'ID della stanza corrente (0..8)
+    call DetermineCurrentRoomID   ; A = current_room (0..8)
+    
+    ; 2. Incrementa e calcola il prossimo ID (A = (A + 1) % 9)
+    inc  a
+    cp   9
+    jr   c, .no_wrap
+    xor  a
+.no_wrap:
+    ; A = nuovo ID stanza (0..8)
+    
+    ; 3. Trova l'indirizzo del layout corrispondente da RoomsListTable
+    ld   hl, RoomsListTable
+    ld   c, a
+    ld   b, 0
+    add  hl, bc
+    add  hl, bc                    ; HL = RoomsListTable + A * 2
+    
+    ld   e, (hl)
+    inc  hl
+    ld   d, (hl)                   ; DE = puntatore al layout della nuova stanza
+    
+    ld   (room_ptr), de            ; Aggiorna room_ptr
+    
+    ; 4. Pulisci lo schermo e ricarica la stanza
+    ld   hl, ATTR_P
+    ld   (hl), $07
+    call CLS
+    
+    jp   LoadRoomAndRestart
+
+RoomsListTable:
+    dw TheTestRoomLayout          ; 0
+    dw TheBridgeLayout            ; 1
+    dw TheOffLicenceLayout        ; 2
+    dw MastreBedRoomLayout        ; 3
+    dw UnderTheMegaTreeLayout     ; 4
+    dw AtTheFootTheMegaTreeLayout ; 5
+    dw TheDriveLayout             ; 6
+    dw TheSecurityGuardLayout     ; 7
+    dw TheBathroomLayout          ; 8

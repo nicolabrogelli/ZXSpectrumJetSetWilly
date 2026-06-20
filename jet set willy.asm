@@ -41,6 +41,7 @@ Main:
     ld   hl, ATTR_P
     ld   (hl), $07
     call CLS
+LoadRoomAndRestart:
     call DetermineCurrentRoomID
     call DrawRoom
     call DrawConveyorsAndRamps

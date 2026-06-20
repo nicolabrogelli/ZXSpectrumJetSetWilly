@@ -21,6 +21,7 @@ velocity_y:     db $00
 on_ground:      db $01
 jump_pressed:   db $00
 jump_prev:      db $00
+q_prev:         db $00
 
 ; Buffer e contatori
 counter:        dw 0
@@ -39,4 +40,4 @@ ramp_row:       db 0
 ramp_col:       db 0
 current_room_items: .80 db 0
 num_room_items:     db 0
-room_ptr:       dw AtTheFootTheMegaTreeLayout; TheBridgeLayout; TheOffLicenceLayout;  TheBathroomLayout; UnderTheMegaTreeLayout;   MastreBedRoomLayout; TheSecurityGuardLayout;  TheDriveLayout;   TheTestRoomLayout;    
+room_ptr:       dw TheSecurityGuardLayout; MastreBedRoomLayout; UnderTheMegaTreeLayout; TheBathroomLayout; TheBridgeLayout; AtTheFootTheMegaTreeLayout; TheOffLicenceLayout; TheDriveLayout;  TheTestRoomLayout;    
