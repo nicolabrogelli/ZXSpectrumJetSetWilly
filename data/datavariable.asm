@@ -12,6 +12,7 @@ direction:      db $00
 flags:          db $00
 
 collision_active: db $00
+items_collected:  db $00
 sprite_shift:     db $00
 room_border_color: db $00
 
@@ -36,4 +37,4 @@ ramp_dir:       db 0
 ramp_len:       db 0
 ramp_row:       db 0
 ramp_col:       db 0
-room_ptr:       dw TheBathroomLayout; AtTheFootTheMegaTreeLayout; UnderTheMegaTreeLayout;  TheBridgeLayout;  MastreBedRoomLayout; TheSecurityGuardLayout; TheOffLicenceLayout; TheDriveLayout;   TheTestRoomLayout;    
+room_ptr:       dw AtTheFootTheMegaTreeLayout; TheBathroomLayout;  UnderTheMegaTreeLayout;  TheBridgeLayout;  MastreBedRoomLayout; TheSecurityGuardLayout; TheOffLicenceLayout; TheDriveLayout;   TheTestRoomLayout;    

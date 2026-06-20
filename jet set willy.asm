@@ -28,6 +28,7 @@ Main:
     ; Inizializza
     xor  a
     ld  (body_state), a
+    ld  (items_collected), a
 
     call CopyChars
     call DefineChars

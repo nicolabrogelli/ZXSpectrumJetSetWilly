@@ -630,6 +630,62 @@ PrintWillyLives:
     call DrawWillyLifeIcon
     ret
 
+UpdateItemsCollectedDisplay:
+    push af
+    push bc
+    push de
+    push hl
+
+    ld   a, (items_collected)
+    ld   c, 0              ; C = centinaia
+.loop100:
+    cp   100
+    jr   c, .done100
+    sub  100
+    inc  c
+    jr   .loop100
+.done100:
+    ld   e, a              ; Salva il resto in E
+    ld   a, c
+    add  a, '0'
+    ld   (status_line + 16), a ; Centinaia
+    
+    ld   a, e              ; Ripristina il resto
+    ld   c, 0              ; C = decine
+.loop10:
+    cp   10
+    jr   c, .done10
+    sub  10
+    inc  c
+    jr   .loop10
+.done10:
+    ld   e, a              ; E = unità
+    ld   a, c
+    add  a, '0'
+    ld   (status_line + 17), a ; Decine
+    
+    ld   a, e
+    add  a, '0'
+    ld   (status_line + 18), a ; Unità
+
+    ; Ora ristampa la riga di stato a riga 18
+    ld   a, 22             ; Codice di controllo AT (22)
+    rst  $10
+    ld   a, 18             ; Riga 18
+    rst  $10
+    ld   a, 0              ; Colonna 0
+    rst  $10
+    
+    ld   hl, status_line   ; HL = indirizzo stringa di stato
+    ld   b, 32             ; B = 32 caratteri
+    call PrintString
+
+    pop  hl
+    pop  de
+    pop  bc
+    pop  af
+    ret
+
 status_line:
     db "Items collected 000 Time  7:30am"
 

@@ -475,6 +475,14 @@ CheckRoomItemsCollision:
     
     push hl
     
+    ; Incrementa contatore oggetti raccolti
+    ld   a, (items_collected)
+    inc  a
+    ld   (items_collected), a
+    
+    ; Aggiorna stringa e visualizzazione a schermo
+    call UpdateItemsCollectedDisplay
+    
     ; Cancella item dallo schermo
     call RestoreBackgroundCell
     
