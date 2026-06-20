@@ -102,11 +102,11 @@ AtTheFootTheMegaTreeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 AtTheFootTheMegaTreeEnemy1:
-    DEFB 0,0,0,0        ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $C1, 16, 16, 96       ; Enemy 1 (Scimmia), horizontal, Starts X, Y, Limit X
 AtTheFootTheMegaTreeEnemy2:
-    DEFB 0,0,0,0         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $C1, 40, 16, 76        ; Enemy 2 (Scimmia), horizontal, Starts X, Y, Limit X
 AtTheFootTheMegaTreeEnemy3:
-    DEFB $C1, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C1, 64, 16, 86        ; Enemy 3 (Scimmia), horizontal, Starts X, Y, Limit X
 AtTheFootTheMegaTreeEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
 

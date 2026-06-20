@@ -680,6 +680,12 @@ UpdateItemsCollectedDisplay:
     ld   b, 32             ; B = 32 caratteri
     call PrintString
 
+    ; Ripristina i colori degli attributi di Riga 18 ($5A40)
+    ld   hl, status_line_attrs
+    ld   de, $5a40         ; Indirizzo attributi Riga 18
+    ld   bc, 32            ; 32 byte
+    ldir
+
     pop  hl
     pop  de
     pop  bc

@@ -297,6 +297,12 @@ DrawRoomEnemies:
     sbc  hl, de
     jr   z, .offlicence_face
 
+    ld   hl, (room_ptr)
+    ld   de, AtTheFootTheMegaTreeLayout
+    or   a
+    sbc  hl, de
+    jr   z, .foottree_monkey
+
     ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
     ld   hl, EggSpriteLeft
@@ -310,6 +316,10 @@ DrawRoomEnemies:
 
 .offlicence_face:
     ld   hl, FaceSprite
+    jr   .got_sprite
+
+.foottree_monkey:
+    ld   hl, ScimmiaSprite
     jr   .got_sprite
     
 .not_egg:
