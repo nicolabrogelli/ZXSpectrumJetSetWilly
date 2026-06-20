@@ -2091,799 +2091,808 @@ enemy.asm|253||0|1|26817|T|
 enemy.asm|254||0|1|26819|T|
 enemy.asm|256||0|1|26821|T|
 enemy.asm|257||0|1|26824|T|
-enemy.asm|258||0|1|26826|T|
-enemy.asm|259||0|1|26829|T|
-enemy.asm|260||0|1|26831|T|
-enemy.asm|261||0|1|26834|T|
-enemy.asm|263||0|1|26836|F|DrawRoomEnemies.bathroom_doubleball
-enemy.asm|263||0|1|26836|L|,DrawRoomEnemies,bathroom_doubleball,+used
-enemy.asm|264||0|1|26836|T|
-enemy.asm|265||0|1|26839|T|
-enemy.asm|266||0|1|26841|T|
-enemy.asm|267||0|1|26844|T|
-enemy.asm|268||0|1|26846|T|
-enemy.asm|269||0|1|26849|T|
-enemy.asm|271||0|1|26851|F|DrawRoomEnemies.bridge_lametta
-enemy.asm|271||0|1|26851|L|,DrawRoomEnemies,bridge_lametta,+used
-enemy.asm|272||0|1|26851|T|
-enemy.asm|273||0|1|26854|T|
-enemy.asm|274||0|1|26856|T|
-enemy.asm|275||0|1|26859|T|
-enemy.asm|276||0|1|26861|T|
-enemy.asm|277||0|1|26864|T|
-enemy.asm|279||0|1|26866|F|DrawRoomEnemies.offlicence_radar
-enemy.asm|279||0|1|26866|L|,DrawRoomEnemies,offlicence_radar,+used
-enemy.asm|280||0|1|26866|T|
-enemy.asm|281||0|1|26869|T|
-enemy.asm|283||0|1|26871|F|DrawRoomEnemies.not_lametta
-enemy.asm|283||0|1|26871|L|,DrawRoomEnemies,not_lametta,+used
-enemy.asm|284||0|1|26871|T|
-enemy.asm|285||0|1|26872|T|
-enemy.asm|288||0|1|26875|T|
-enemy.asm|289||0|1|26878|T|
-enemy.asm|290||0|1|26881|T|
-enemy.asm|291||0|1|26882|T|
-enemy.asm|292||0|1|26884|T|
-enemy.asm|294||0|1|26886|T|
-enemy.asm|295||0|1|26889|T|
-enemy.asm|296||0|1|26892|T|
-enemy.asm|297||0|1|26893|T|
-enemy.asm|298||0|1|26895|T|
-enemy.asm|300||0|1|26897|T|
-enemy.asm|301||0|1|26900|T|
-enemy.asm|302||0|1|26903|T|
-enemy.asm|303||0|1|26904|T|
-enemy.asm|304||0|1|26906|T|
-enemy.asm|306||0|1|26908|T|
-enemy.asm|307||0|1|26911|T|
-enemy.asm|308||0|1|26913|T|
-enemy.asm|309||0|1|26916|T|
-enemy.asm|310||0|1|26918|T|
-enemy.asm|311||0|1|26921|T|
-enemy.asm|313||0|1|26923|F|DrawRoomEnemies.bridge_egg
-enemy.asm|313||0|1|26923|L|,DrawRoomEnemies,bridge_egg,+used
-enemy.asm|314||0|1|26923|T|
-enemy.asm|315||0|1|26926|T|
-enemy.asm|317||0|1|26928|F|DrawRoomEnemies.offlicence_face
-enemy.asm|317||0|1|26928|L|,DrawRoomEnemies,offlicence_face,+used
-enemy.asm|318||0|1|26928|T|
-enemy.asm|319||0|1|26931|T|
-enemy.asm|321||0|1|26933|F|DrawRoomEnemies.foottree_monkey
-enemy.asm|321||0|1|26933|L|,DrawRoomEnemies,foottree_monkey,+used
-enemy.asm|322||0|1|26933|T|
-enemy.asm|323||0|1|26936|T|
-enemy.asm|325||0|1|26938|F|DrawRoomEnemies.not_egg
-enemy.asm|325||0|1|26938|L|,DrawRoomEnemies,not_egg,+used
-enemy.asm|327||0|1|26938|T|
-enemy.asm|328||0|1|26941|T|
-enemy.asm|329||0|1|26944|T|
-enemy.asm|330||0|1|26945|T|
-enemy.asm|331||0|1|26947|T|
-enemy.asm|333||0|1|26949|T|
-enemy.asm|334||0|1|26952|T|
-enemy.asm|336||0|1|26954|F|DrawRoomEnemies.offlicence_ball
-enemy.asm|336||0|1|26954|L|,DrawRoomEnemies,offlicence_ball,+used
-enemy.asm|337||0|1|26954|T|
-enemy.asm|339||0|1|26957|F|DrawRoomEnemies.got_sprite
-enemy.asm|339||0|1|26957|L|,DrawRoomEnemies,got_sprite,+used
-enemy.asm|341||0|1|26957|T|
-enemy.asm|342||0|1|26960|T|
-enemy.asm|343||0|1|26961|T|
-enemy.asm|344||0|1|26962|T|
-enemy.asm|345||0|1|26963|T|
-enemy.asm|346||0|1|26964|T|
-enemy.asm|347||0|1|26965|T|
-enemy.asm|348||0|1|26966|T|
-enemy.asm|349||0|1|26968|T|
-enemy.asm|352||0|1|26969|T|
-enemy.asm|353||0|1|26972|T|
-enemy.asm|355||0|1|26975|T|
-enemy.asm|356||0|1|26977|T|
-enemy.asm|357||0|1|26978|T|
-enemy.asm|358||0|1|26980|T|
-enemy.asm|359||0|1|26983|T|
-enemy.asm|362||0|1|26985|T|
-enemy.asm|363||0|1|26988|T|
-enemy.asm|364||0|1|26991|T|
-enemy.asm|365||0|1|26994|T|
-enemy.asm|367||0|1|26997|T|
-enemy.asm|369||0|1|26998|F|DrawRoomEnemies.next
-enemy.asm|369||0|1|26998|L|,DrawRoomEnemies,next,+used
-enemy.asm|370||0|1|26998|T|
-enemy.asm|371||0|1|27001|T|
-enemy.asm|372||0|1|27003|T|
-enemy.asm|373||0|1|27004|T|
-enemy.asm|375||0|1|27007|T|
-enemy.asm|376||0|1|27009|T|
-enemy.asm|377||0|1|27010|T|
-enemy.asm|378||0|1|27011|T|
-enemy.asm|379||0|1|27012|T|
-enemy.asm|384||0|1|27013|F|UpdateRoomEnemies
-enemy.asm|384||0|1|27013|L|,UpdateRoomEnemies,,+used
-enemy.asm|385||0|1|27013|T|
-enemy.asm|386||0|1|27014|T|
-enemy.asm|387||0|1|27015|T|
-enemy.asm|388||0|1|27016|T|
-enemy.asm|390||0|1|27018|T|
-enemy.asm|391||0|1|27022|T|
-enemy.asm|392||0|1|27024|F|UpdateRoomEnemies.loop
-enemy.asm|392||0|1|27024|L|,UpdateRoomEnemies,loop,+used
-enemy.asm|393||0|1|27024|T|
-enemy.asm|394||0|1|27027|T|
-enemy.asm|395||0|1|27029|T|
-enemy.asm|398||0|1|27032|T|
-enemy.asm|399||0|1|27035|T|
-enemy.asm|400||0|1|27038|T|
-enemy.asm|401||0|1|27041|T|
-enemy.asm|404||0|1|27044|T|
-enemy.asm|405||0|1|27047|T|
-enemy.asm|406||0|1|27048|T|
-enemy.asm|407||0|1|27050|T|
-enemy.asm|410||0|1|27053|T|
-enemy.asm|411||0|1|27056|T|
-enemy.asm|412||0|1|27058|T|
-enemy.asm|414||0|1|27061|F|UpdateRoomEnemies.horizontal
-enemy.asm|414||0|1|27061|L|,UpdateRoomEnemies,horizontal
-enemy.asm|415||0|1|27061|T|
-enemy.asm|416||0|1|27064|T|
-enemy.asm|417||0|1|27066|T|
-enemy.asm|419||0|1|27068|F|UpdateRoomEnemies.horiz_left
-enemy.asm|419||0|1|27068|L|,UpdateRoomEnemies,horiz_left
-enemy.asm|420||0|1|27068|T|
-enemy.asm|421||0|1|27071|T|
-enemy.asm|422||0|1|27073|T|
-enemy.asm|423||0|1|27076|T|
-enemy.asm|424||0|1|27078|T|
-enemy.asm|425||0|1|27080|T|
-enemy.asm|426||0|1|27083|T|
-enemy.asm|428||0|1|27086|F|UpdateRoomEnemies.h_rev_right
-enemy.asm|428||0|1|27086|L|,UpdateRoomEnemies,h_rev_right,+used
-enemy.asm|429||0|1|27086|T|
-enemy.asm|430||0|1|27089|T|
-enemy.asm|431||0|1|27092|T|
-enemy.asm|432||0|1|27094|T|
-enemy.asm|433||0|1|27097|T|
-enemy.asm|435||0|1|27100|F|UpdateRoomEnemies.horiz_right
-enemy.asm|435||0|1|27100|L|,UpdateRoomEnemies,horiz_right,+used
-enemy.asm|436||0|1|27100|T|
-enemy.asm|437||0|1|27103|T|
-enemy.asm|438||0|1|27105|T|
-enemy.asm|439||0|1|27108|T|
-enemy.asm|440||0|1|27110|T|
-enemy.asm|441||0|1|27112|T|
-enemy.asm|442||0|1|27115|T|
-enemy.asm|444||0|1|27118|F|UpdateRoomEnemies.h_rev_left
-enemy.asm|444||0|1|27118|L|,UpdateRoomEnemies,h_rev_left,+used
-enemy.asm|445||0|1|27118|T|
-enemy.asm|446||0|1|27121|T|
-enemy.asm|447||0|1|27124|T|
-enemy.asm|448||0|1|27126|T|
-enemy.asm|449||0|1|27129|T|
-enemy.asm|451||0|1|27132|F|UpdateRoomEnemies.vertical
-enemy.asm|451||0|1|27132|L|,UpdateRoomEnemies,vertical,+used
-enemy.asm|452||0|1|27132|T|
-enemy.asm|453||0|1|27135|T|
-enemy.asm|454||0|1|27137|T|
-enemy.asm|456||0|1|27139|F|UpdateRoomEnemies.vert_up
-enemy.asm|456||0|1|27139|L|,UpdateRoomEnemies,vert_up
-enemy.asm|457||0|1|27139|T|
-enemy.asm|458||0|1|27142|T|
-enemy.asm|459||0|1|27144|T|
-enemy.asm|460||0|1|27147|T|
-enemy.asm|461||0|1|27149|T|
-enemy.asm|462||0|1|27151|T|
-enemy.asm|463||0|1|27154|T|
-enemy.asm|465||0|1|27157|F|UpdateRoomEnemies.v_rev_down
-enemy.asm|465||0|1|27157|L|,UpdateRoomEnemies,v_rev_down,+used
-enemy.asm|466||0|1|27157|T|
-enemy.asm|467||0|1|27160|T|
-enemy.asm|468||0|1|27163|T|
-enemy.asm|469||0|1|27165|T|
-enemy.asm|470||0|1|27168|T|
-enemy.asm|472||0|1|27171|F|UpdateRoomEnemies.vert_down
-enemy.asm|472||0|1|27171|L|,UpdateRoomEnemies,vert_down,+used
-enemy.asm|473||0|1|27171|T|
-enemy.asm|474||0|1|27174|T|
-enemy.asm|475||0|1|27176|T|
-enemy.asm|476||0|1|27179|T|
-enemy.asm|477||0|1|27181|T|
-enemy.asm|478||0|1|27183|T|
-enemy.asm|479||0|1|27186|T|
-enemy.asm|481||0|1|27189|F|UpdateRoomEnemies.v_rev_up
-enemy.asm|481||0|1|27189|L|,UpdateRoomEnemies,v_rev_up,+used
-enemy.asm|482||0|1|27189|T|
-enemy.asm|483||0|1|27192|T|
-enemy.asm|484||0|1|27195|T|
-enemy.asm|485||0|1|27197|T|
-enemy.asm|487||0|1|27200|F|UpdateRoomEnemies.next
-enemy.asm|487||0|1|27200|L|,UpdateRoomEnemies,next,+used
-enemy.asm|488||0|1|27200|T|
-enemy.asm|489||0|1|27203|T|
-enemy.asm|490||0|1|27205|T|
-enemy.asm|491||0|1|27206|T|
-enemy.asm|493||0|1|27209|T|
-enemy.asm|494||0|1|27211|T|
-enemy.asm|495||0|1|27212|T|
-enemy.asm|496||0|1|27213|T|
-enemy.asm|497||0|1|27214|T|
-items.asm|26||0|1|27215|F|ItemsTable
-items.asm|26||0|1|27215|L|,ItemsTable,,+used
-items.asm|68||0|1|27306|F|DetermineCurrentRoomID
-items.asm|68||0|1|27306|L|,DetermineCurrentRoomID,,+used
-items.asm|69||0|1|27306|T|
-items.asm|70||0|1|27307|T|
-items.asm|72||0|1|27308|T|
-items.asm|75||0|1|27311|T|
-items.asm|76||0|1|27314|T|
-items.asm|77||0|1|27315|T|
-items.asm|78||0|1|27317|T|
-items.asm|79||0|1|27319|T|
-items.asm|80||0|1|27321|T|
-items.asm|82||0|1|27323|F|DetermineCurrentRoomID.not_test
-items.asm|82||0|1|27323|L|,DetermineCurrentRoomID,not_test,+used
-items.asm|83||0|1|27323|T|
-items.asm|84||0|1|27326|T|
-items.asm|85||0|1|27329|T|
-items.asm|86||0|1|27330|T|
-items.asm|87||0|1|27332|T|
-items.asm|88||0|1|27334|T|
-items.asm|89||0|1|27336|T|
-items.asm|91||0|1|27338|F|DetermineCurrentRoomID.not_bridge
-items.asm|91||0|1|27338|L|,DetermineCurrentRoomID,not_bridge,+used
-items.asm|92||0|1|27338|T|
-items.asm|93||0|1|27341|T|
-items.asm|94||0|1|27344|T|
-items.asm|95||0|1|27345|T|
-items.asm|96||0|1|27347|T|
-items.asm|97||0|1|27349|T|
-items.asm|98||0|1|27351|T|
-items.asm|100||0|1|27353|F|DetermineCurrentRoomID.not_office
-items.asm|100||0|1|27353|L|,DetermineCurrentRoomID,not_office,+used
-items.asm|101||0|1|27353|T|
-items.asm|102||0|1|27356|T|
-items.asm|103||0|1|27359|T|
-items.asm|104||0|1|27360|T|
-items.asm|105||0|1|27362|T|
-items.asm|106||0|1|27364|T|
-items.asm|107||0|1|27366|T|
-items.asm|109||0|1|27368|F|DetermineCurrentRoomID.not_masterbed
-items.asm|109||0|1|27368|L|,DetermineCurrentRoomID,not_masterbed,+used
-items.asm|110||0|1|27368|T|
-items.asm|111||0|1|27371|T|
-items.asm|112||0|1|27374|T|
-items.asm|113||0|1|27375|T|
-items.asm|114||0|1|27377|T|
-items.asm|115||0|1|27379|T|
-items.asm|116||0|1|27381|T|
-items.asm|118||0|1|27383|F|DetermineCurrentRoomID.not_undertree
-items.asm|118||0|1|27383|L|,DetermineCurrentRoomID,not_undertree,+used
-items.asm|119||0|1|27383|T|
-items.asm|120||0|1|27386|T|
-items.asm|121||0|1|27389|T|
-items.asm|122||0|1|27390|T|
-items.asm|123||0|1|27392|T|
-items.asm|124||0|1|27394|T|
-items.asm|125||0|1|27396|T|
-items.asm|127||0|1|27398|F|DetermineCurrentRoomID.not_foottree
-items.asm|127||0|1|27398|L|,DetermineCurrentRoomID,not_foottree,+used
-items.asm|128||0|1|27398|T|
-items.asm|129||0|1|27401|T|
-items.asm|130||0|1|27404|T|
-items.asm|131||0|1|27405|T|
-items.asm|132||0|1|27407|T|
-items.asm|133||0|1|27409|T|
-items.asm|134||0|1|27411|T|
-items.asm|136||0|1|27413|F|DetermineCurrentRoomID.not_thedrive
-items.asm|136||0|1|27413|L|,DetermineCurrentRoomID,not_thedrive,+used
-items.asm|137||0|1|27413|T|
-items.asm|138||0|1|27416|T|
-items.asm|139||0|1|27419|T|
-items.asm|140||0|1|27420|T|
-items.asm|141||0|1|27422|T|
-items.asm|142||0|1|27424|T|
-items.asm|143||0|1|27426|T|
-items.asm|145||0|1|27428|F|DetermineCurrentRoomID.not_securityguard
-items.asm|145||0|1|27428|L|,DetermineCurrentRoomID,not_securityguard,+used
-items.asm|146||0|1|27428|T|
-items.asm|147||0|1|27431|T|
-items.asm|148||0|1|27434|T|
-items.asm|149||0|1|27435|T|
-items.asm|150||0|1|27437|T|
-items.asm|151||0|1|27439|T|
-items.asm|152||0|1|27441|T|
-items.asm|154||0|1|27443|F|DetermineCurrentRoomID.unknown
-items.asm|154||0|1|27443|L|,DetermineCurrentRoomID,unknown,+used
-items.asm|155||0|1|27443|T|
-items.asm|157||0|1|27445|F|DetermineCurrentRoomID.set_room
-items.asm|157||0|1|27445|L|,DetermineCurrentRoomID,set_room,+used
-items.asm|158||0|1|27445|T|
-items.asm|160||0|1|27448|T|
-items.asm|161||0|1|27449|T|
-items.asm|162||0|1|27450|T|
-items.asm|167||0|1|27451|F|DrawRoomItems
-items.asm|167||0|1|27451|L|,DrawRoomItems,,+used
-items.asm|168||0|1|27451|T|
-items.asm|169||0|1|27452|T|
-items.asm|170||0|1|27453|T|
-items.asm|171||0|1|27454|T|
-items.asm|175||0|1|27456|T|
-items.asm|176||0|1|27459|T|
-items.asm|177||0|1|27462|T|
-items.asm|178||0|1|27463|T|
-items.asm|179||0|1|27464|T|
-items.asm|181||0|1|27466|T|
-items.asm|182||0|1|27469|F|DrawRoomItems.loop
-items.asm|182||0|1|27469|L|,DrawRoomItems,loop,+used
-items.asm|183||0|1|27469|T|
-items.asm|184||0|1|27470|T|
-items.asm|185||0|1|27472|T|
-items.asm|188||0|1|27474|T|
-items.asm|189||0|1|27475|T|
-items.asm|190||0|1|27478|T|
-items.asm|191||0|1|27479|T|
-items.asm|194||0|1|27481|T|
-items.asm|195||0|1|27482|T|
-items.asm|196||0|1|27483|T|
-items.asm|197||0|1|27484|T|
-items.asm|198||0|1|27485|T|
-items.asm|199||0|1|27486|T|
-items.asm|200||0|1|27487|T|
-items.asm|201||0|1|27488|T|
-items.asm|202||0|1|27489|T|
-items.asm|203||0|1|27490|T|
-items.asm|207||0|1|27492|T|
-items.asm|208||0|1|27493|T|
-items.asm|209||0|1|27495|T|
-items.asm|210||0|1|27496|T|
-items.asm|211||0|1|27499|T|
-items.asm|213||0|1|27500|T|
-items.asm|215||0|1|27502|F|DrawRoomItems.next_item
-items.asm|215||0|1|27502|L|,DrawRoomItems,next_item,+used
-items.asm|216||0|1|27502|T|
-items.asm|217||0|1|27503|T|
-items.asm|218||0|1|27504|T|
-items.asm|219||0|1|27505|T|
-items.asm|220||0|1|27506|F|DrawRoomItems.next_no_inc
-items.asm|220||0|1|27506|L|,DrawRoomItems,next_no_inc,+used
-items.asm|221||0|1|27506|T|
-items.asm|222||0|1|27507|T|
-items.asm|224||0|1|27509|F|DrawRoomItems.done
-items.asm|224||0|1|27509|L|,DrawRoomItems,done,+used
-items.asm|225||0|1|27509|T|
-items.asm|226||0|1|27511|T|
-items.asm|227||0|1|27512|T|
-items.asm|228||0|1|27513|T|
-items.asm|229||0|1|27514|T|
-items.asm|235||0|1|27515|F|DrawItemGraphic
-items.asm|235||0|1|27515|L|,DrawItemGraphic,,+used
-items.asm|236||0|1|27515|T|
-items.asm|237||0|1|27516|T|
-items.asm|238||0|1|27517|T|
-items.asm|241||0|1|27518|T|
-items.asm|242||0|1|27519|T|
-items.asm|243||0|1|27521|T|
-items.asm|244||0|1|27523|T|
-items.asm|246||0|1|27524|T|
-items.asm|247||0|1|27525|T|
-items.asm|248||0|1|27527|T|
-items.asm|249||0|1|27528|T|
-items.asm|250||0|1|27529|T|
-items.asm|251||0|1|27530|T|
-items.asm|252||0|1|27531|T|
-items.asm|253||0|1|27532|T|
-items.asm|254||0|1|27533|T|
-items.asm|257||0|1|27534|T|
-items.asm|258||0|1|27535|T|
-items.asm|259||0|1|27537|F|DrawItemGraphic.line_loop
-items.asm|259||0|1|27537|L|,DrawItemGraphic,line_loop,+used
-items.asm|260||0|1|27537|T|
-items.asm|261||0|1|27538|T|
-items.asm|262||0|1|27539|T|
-items.asm|263||0|1|27540|T|
-items.asm|264||0|1|27541|T|
-items.asm|265||0|1|27542|T|
-items.asm|266||0|1|27544|T|
-items.asm|270||0|1|27545|T|
-items.asm|271||0|1|27547|T|
-items.asm|272||0|1|27548|T|
-items.asm|273||0|1|27549|T|
-items.asm|274||0|1|27550|T|
-items.asm|275||0|1|27551|T|
-items.asm|276||0|1|27552|T|
-items.asm|278||0|1|27553|T|
-items.asm|279||0|1|27554|T|
-items.asm|280||0|1|27555|T|
-items.asm|281||0|1|27556|T|
-items.asm|282||0|1|27558|T|
-items.asm|283||0|1|27559|F|DrawItemGraphic.no_carry
-items.asm|283||0|1|27559|L|,DrawItemGraphic,no_carry,+used
-items.asm|285||0|1|27559|T|
-items.asm|286||0|1|27562|T|
-items.asm|290||0|1|27563|T|
-items.asm|291||0|1|27564|T|
-items.asm|293||0|1|27565|T|
-items.asm|294||0|1|27566|T|
-items.asm|297||0|1|27567|T|
-items.asm|298||0|1|27568|T|
-items.asm|299||0|1|27569|T|
-items.asm|300||0|1|27570|T|
-items.asm|306||0|1|27571|F|RestoreBackgroundCell
-items.asm|306||0|1|27571|L|,RestoreBackgroundCell,,+used
-items.asm|307||0|1|27571|T|
-items.asm|308||0|1|27573|T|
-items.asm|309||0|1|27574|T|
-items.asm|310||0|1|27575|T|
-items.asm|311||0|1|27576|T|
-items.asm|313||0|1|27578|T|
-items.asm|314||0|1|27579|T|
-items.asm|317||0|1|27581|T|
-items.asm|321||0|1|27582|T|
-items.asm|323||0|1|27585|T|
-items.asm|324||0|1|27589|T|
-items.asm|325||0|1|27590|T|
-items.asm|326||0|1|27592|T|
-items.asm|327||0|1|27595|T|
-items.asm|328||0|1|27596|T|
-items.asm|329||0|1|27598|F|RestoreBackgroundCell.not_bg
-items.asm|329||0|1|27598|L|,RestoreBackgroundCell,not_bg,+used
-items.asm|330||0|1|27598|T|
-items.asm|331||0|1|27599|T|
-items.asm|332||0|1|27601|T|
-items.asm|333||0|1|27604|T|
-items.asm|334||0|1|27605|T|
-items.asm|335||0|1|27607|F|RestoreBackgroundCell.not_floor
-items.asm|335||0|1|27607|L|,RestoreBackgroundCell,not_floor,+used
-items.asm|336||0|1|27607|T|
-items.asm|337||0|1|27608|T|
-items.asm|338||0|1|27610|T|
-items.asm|339||0|1|27613|T|
-items.asm|340||0|1|27614|T|
-items.asm|341||0|1|27616|F|RestoreBackgroundCell.not_wall
-items.asm|341||0|1|27616|L|,RestoreBackgroundCell,not_wall,+used
-items.asm|342||0|1|27616|T|
-items.asm|343||0|1|27619|T|
-items.asm|345||0|1|27620|F|RestoreBackgroundCell.draw_cell
-items.asm|345||0|1|27620|L|,RestoreBackgroundCell,draw_cell,+used
-items.asm|346||0|1|27620|T|
-items.asm|347||0|1|27621|T|
-items.asm|349||0|1|27623|T|
-items.asm|350||0|1|27625|T|
-items.asm|352||0|1|27626|T|
-items.asm|354||0|1|27629|T|
-items.asm|355||0|1|27631|T|
-items.asm|356||0|1|27632|T|
-items.asm|357||0|1|27633|T|
-items.asm|358||0|1|27634|T|
-items.asm|359||0|1|27636|T|
-items.asm|366||0|1|27637|F|CheckWillyItemCollision
-items.asm|366||0|1|27637|L|,CheckWillyItemCollision,,+used
-items.asm|367||0|1|27637|T|
-items.asm|368||0|1|27638|T|
-items.asm|369||0|1|27639|T|
-items.asm|372||0|1|27640|T|
-items.asm|373||0|1|27641|T|
-items.asm|374||0|1|27642|T|
-items.asm|375||0|1|27643|T|
-items.asm|376||0|1|27644|T|
-items.asm|377||0|1|27645|T|
-items.asm|378||0|1|27646|T|
-items.asm|379||0|1|27648|T|
-items.asm|382||0|1|27649|T|
-items.asm|385||0|1|27653|T|
-items.asm|386||0|1|27654|T|
-items.asm|387||0|1|27655|T|
-items.asm|388||0|1|27657|T|
-items.asm|389||0|1|27659|T|
-items.asm|390||0|1|27661|F|CheckWillyItemCollision.x_ok
-items.asm|390||0|1|27661|L|,CheckWillyItemCollision,x_ok,+used
-items.asm|391||0|1|27661|T|
-items.asm|392||0|1|27663|T|
-items.asm|393||0|1|27664|T|
-items.asm|394||0|1|27666|T|
-items.asm|395||0|1|27668|T|
-items.asm|397||0|1|27670|F|CheckWillyItemCollision.y_check
-items.asm|397||0|1|27670|L|,CheckWillyItemCollision,y_check,+used
-items.asm|398||0|1|27670|T|
-items.asm|399||0|1|27671|T|
-items.asm|400||0|1|27672|T|
-items.asm|401||0|1|27673|T|
-items.asm|402||0|1|27674|T|
-items.asm|403||0|1|27675|T|
-items.asm|404||0|1|27676|T|
-items.asm|405||0|1|27677|T|
-items.asm|406||0|1|27679|T|
-items.asm|409||0|1|27680|T|
-items.asm|410||0|1|27681|T|
-items.asm|411||0|1|27682|T|
-items.asm|412||0|1|27684|T|
-items.asm|413||0|1|27686|T|
-items.asm|414||0|1|27688|F|CheckWillyItemCollision.y_ok
-items.asm|414||0|1|27688|L|,CheckWillyItemCollision,y_ok,+used
-items.asm|415||0|1|27688|T|
-items.asm|416||0|1|27690|T|
-items.asm|417||0|1|27691|T|
-items.asm|418||0|1|27693|T|
-items.asm|419||0|1|27695|T|
-items.asm|421||0|1|27697|F|CheckWillyItemCollision.collision
-items.asm|421||0|1|27697|L|,CheckWillyItemCollision,collision,+used
-items.asm|422||0|1|27697|T|
-items.asm|423||0|1|27698|T|
-items.asm|424||0|1|27699|T|
-items.asm|425||0|1|27700|T|
-items.asm|426||0|1|27701|T|
-items.asm|428||0|1|27702|F|CheckWillyItemCollision.no_collision
-items.asm|428||0|1|27702|L|,CheckWillyItemCollision,no_collision,+used
-items.asm|429||0|1|27702|T|
-items.asm|430||0|1|27703|T|
-items.asm|431||0|1|27704|T|
-items.asm|432||0|1|27705|T|
-items.asm|433||0|1|27706|T|
-items.asm|438||0|1|27707|F|CheckRoomItemsCollision
-items.asm|438||0|1|27707|L|,CheckRoomItemsCollision,,+used
-items.asm|439||0|1|27707|T|
-items.asm|440||0|1|27708|T|
-items.asm|441||0|1|27709|T|
-items.asm|443||0|1|27710|T|
-items.asm|444||0|1|27713|F|CheckRoomItemsCollision.loop
-items.asm|444||0|1|27713|L|,CheckRoomItemsCollision,loop,+used
-items.asm|445||0|1|27713|T|
-items.asm|446||0|1|27714|T|
-items.asm|447||0|1|27716|T|
-items.asm|450||0|1|27718|T|
-items.asm|451||0|1|27719|T|
-items.asm|452||0|1|27722|T|
-items.asm|453||0|1|27723|T|
-items.asm|455||0|1|27725|T|
-items.asm|456||0|1|27726|T|
-items.asm|457||0|1|27727|T|
-items.asm|458||0|1|27728|T|
-items.asm|459||0|1|27729|T|
-items.asm|460||0|1|27730|T|
-items.asm|461||0|1|27731|T|
-items.asm|462||0|1|27732|T|
-items.asm|463||0|1|27733|T|
-items.asm|466||0|1|27735|T|
-items.asm|467||0|1|27736|T|
-items.asm|468||0|1|27737|T|
-items.asm|469||0|1|27738|T|
-items.asm|470||0|1|27741|T|
-items.asm|471||0|1|27742|T|
-items.asm|474||0|1|27744|T|
-items.asm|476||0|1|27746|T|
-items.asm|479||0|1|27747|T|
-items.asm|480||0|1|27750|T|
-items.asm|481||0|1|27751|T|
-items.asm|484||0|1|27754|T|
-items.asm|487||0|1|27757|T|
-items.asm|490||0|1|27760|T|
-items.asm|492||0|1|27763|T|
-items.asm|494||0|1|27764|T|
-items.asm|496||0|1|27766|F|CheckRoomItemsCollision.next_item
-items.asm|496||0|1|27766|L|,CheckRoomItemsCollision,next_item,+used
-items.asm|497||0|1|27766|T|
-items.asm|498||0|1|27767|T|
-items.asm|499||0|1|27768|T|
-items.asm|500||0|1|27769|T|
-items.asm|501||0|1|27770|F|CheckRoomItemsCollision.next_no_inc
-items.asm|501||0|1|27770|L|,CheckRoomItemsCollision,next_no_inc,+used
-items.asm|502||0|1|27770|T|
-items.asm|503||0|1|27771|T|
-items.asm|505||0|1|27773|F|CheckRoomItemsCollision.done
-items.asm|505||0|1|27773|L|,CheckRoomItemsCollision,done,+used
-items.asm|506||0|1|27773|T|
-items.asm|507||0|1|27774|T|
-items.asm|508||0|1|27775|T|
-items.asm|509||0|1|27776|T|
-items.asm|514||0|1|27777|F|PlayCollectSound
-items.asm|514||0|1|27777|L|,PlayCollectSound,,+used
-items.asm|515||0|1|27777|T|
-items.asm|516||0|1|27778|T|
-items.asm|518||0|1|27779|T|
-items.asm|519||0|1|27781|F|PlayCollectSound.sound_loop
-items.asm|519||0|1|27781|L|,PlayCollectSound,sound_loop,+used
-items.asm|520||0|1|27781|T|
-items.asm|521||0|1|27784|T|
-items.asm|522||0|1|27786|T|
-items.asm|523||0|1|27788|T|
-items.asm|524||0|1|27790|F|PlayCollectSound.d1
-items.asm|524||0|1|27790|L|,PlayCollectSound,d1,+used
-items.asm|524||0|1|27790|T|
-items.asm|525||0|1|27791|T|
-items.asm|527||0|1|27793|T|
-items.asm|528||0|1|27796|T|
-items.asm|529||0|1|27798|T|
-items.asm|530||0|1|27800|T|
-items.asm|531||0|1|27802|F|PlayCollectSound.d2
-items.asm|531||0|1|27802|L|,PlayCollectSound,d2,+used
-items.asm|531||0|1|27802|T|
-items.asm|532||0|1|27803|T|
-items.asm|534||0|1|27805|T|
-items.asm|536||0|1|27807|T|
-items.asm|537||0|1|27808|T|
-items.asm|538||0|1|27809|T|
-data/datasprite.asm|7||0|1|27810|F|Willy
-data/datasprite.asm|7||0|1|27810|L|,Willy,,+used
-data/datasprite.asm|21||0|1|27874|F|LamettaSpriteRight
-data/datasprite.asm|21||0|1|27874|L|,LamettaSpriteRight,,+used
-data/datasprite.asm|31||0|1|28002|F|LamettaSpriteLeft
-data/datasprite.asm|31||0|1|28002|L|,LamettaSpriteLeft,,+used
-data/datasprite.asm|41||0|1|28130|F|ChipSprite
-data/datasprite.asm|41||0|1|28130|L|,ChipSprite,
-data/datasprite.asm|51||0|1|28258|F|TheChapelSprite
-data/datasprite.asm|51||0|1|28258|L|,TheChapelSprite,
-data/datasprite.asm|61||0|1|28386|F|WallBaseSprite
-data/datasprite.asm|61||0|1|28386|L|,WallBaseSprite,
-data/datasprite.asm|71||0|1|28514|F|SpirlaSprite
-data/datasprite.asm|71||0|1|28514|L|,SpirlaSprite,
-data/datasprite.asm|81||0|1|28642|F|CutSprite
-data/datasprite.asm|81||0|1|28642|L|,CutSprite,
-data/datasprite.asm|91||0|1|28770|F|PliersSprite
-data/datasprite.asm|91||0|1|28770|L|,PliersSprite,
-data/datasprite.asm|101||0|1|28898|F|RobotSprite
-data/datasprite.asm|101||0|1|28898|L|,RobotSprite,,+used
-data/datasprite.asm|111||0|1|29026|F|SwissArmyKife
-data/datasprite.asm|111||0|1|29026|L|,SwissArmyKife,
-data/datasprite.asm|121||0|1|29154|F|EggSpriteRight
-data/datasprite.asm|121||0|1|29154|L|,EggSpriteRight,,+used
-data/datasprite.asm|131||0|1|29282|F|EggSpriteLeft
-data/datasprite.asm|131||0|1|29282|L|,EggSpriteLeft,,+used
-data/datasprite.asm|141||0|1|29410|F|PacManSprite
-data/datasprite.asm|141||0|1|29410|L|,PacManSprite,
-data/datasprite.asm|151||0|1|29538|F|UfoSprite
-data/datasprite.asm|151||0|1|29538|L|,UfoSprite,,+used
-data/datasprite.asm|161||0|1|29666|F|UccelloSpriteLeft
-data/datasprite.asm|161||0|1|29666|L|,UccelloSpriteLeft,,+used
-data/datasprite.asm|171||0|1|29794|F|UccelloSpriteRight
-data/datasprite.asm|171||0|1|29794|L|,UccelloSpriteRight,,+used
-data/datasprite.asm|181||0|1|29922|F|FaceSprite
-data/datasprite.asm|181||0|1|29922|L|,FaceSprite,,+used
-data/datasprite.asm|192||0|1|30050|F|RadarSprite
-data/datasprite.asm|192||0|1|30050|L|,RadarSprite,,+used
-data/datasprite.asm|202||0|1|30178|F|BallSprite
-data/datasprite.asm|202||0|1|30178|L|,BallSprite,,+used
-data/datasprite.asm|212||0|1|30306|F|DoubleBallSpriteRight
-data/datasprite.asm|212||0|1|30306|L|,DoubleBallSpriteRight,,+used
-data/datasprite.asm|222||0|1|30434|F|DoubleBallSpriteLeft
-data/datasprite.asm|222||0|1|30434|L|,DoubleBallSpriteLeft,,+used
-data/datasprite.asm|232||0|1|30562|F|ScimmiaSprite
-data/datasprite.asm|232||0|1|30562|L|,ScimmiaSprite,,+used
-data/datasprite.asm|243||0|1|30690|F|SegaSprite
-data/datasprite.asm|243||0|1|30690|L|,SegaSprite,
-data/datavariable.asm|5||0|1|30946|F|PlayerPos
-data/datavariable.asm|5||0|1|30946|L|,PlayerPos,,+used
-data/datavariable.asm|6||0|1|30948|F|PlayerPosOld
-data/datavariable.asm|6||0|1|30948|L|,PlayerPosOld,,+used
-data/datavariable.asm|7||0|1|30950|F|bodyPos
-data/datavariable.asm|7||0|1|30950|L|,bodyPos,
-data/datavariable.asm|10||0|1|30952|F|body_state
-data/datavariable.asm|10||0|1|30952|L|,body_state,,+used
-data/datavariable.asm|11||0|1|30953|F|direction
-data/datavariable.asm|11||0|1|30953|L|,direction,,+used
-data/datavariable.asm|12||0|1|30954|F|flags
-data/datavariable.asm|12||0|1|30954|L|,flags,,+used
-data/datavariable.asm|14||0|1|30955|F|collision_active
-data/datavariable.asm|14||0|1|30955|L|,collision_active,
-data/datavariable.asm|15||0|1|30956|F|items_collected
-data/datavariable.asm|15||0|1|30956|L|,items_collected,,+used
-data/datavariable.asm|16||0|1|30957|F|sprite_shift
-data/datavariable.asm|16||0|1|30957|L|,sprite_shift,,+used
-data/datavariable.asm|17||0|1|30958|F|room_border_color
-data/datavariable.asm|17||0|1|30958|L|,room_border_color,,+used
-data/datavariable.asm|20||0|1|30959|F|velocity_y
-data/datavariable.asm|20||0|1|30959|L|,velocity_y,,+used
-data/datavariable.asm|21||0|1|30960|F|on_ground
-data/datavariable.asm|21||0|1|30960|L|,on_ground,,+used
-data/datavariable.asm|22||0|1|30961|F|jump_pressed
-data/datavariable.asm|22||0|1|30961|L|,jump_pressed,,+used
-data/datavariable.asm|23||0|1|30962|F|jump_prev
-data/datavariable.asm|23||0|1|30962|L|,jump_prev,,+used
-data/datavariable.asm|26||0|1|30963|F|counter
-data/datavariable.asm|26||0|1|30963|L|,counter,,+used
-data/datavariable.asm|27||0|1|30965|F|line_buffer
-data/datavariable.asm|27||0|1|30965|L|,line_buffer,
-data/datavariable.asm|28||0|1|31221|F|unpacked_layout
-data/datavariable.asm|28||0|1|31221|L|,unpacked_layout,,+used
-data/datavariable.asm|31||0|1|31733|F|current_room
-data/datavariable.asm|31||0|1|31733|L|,current_room,,+used
-data/datavariable.asm|32||0|1|31734|F|conveyor_dir
-data/datavariable.asm|32||0|1|31734|L|,conveyor_dir,,+used
-data/datavariable.asm|33||0|1|31735|F|conveyor_len
-data/datavariable.asm|33||0|1|31735|L|,conveyor_len,,+used
-data/datavariable.asm|34||0|1|31736|F|conveyor_row
-data/datavariable.asm|34||0|1|31736|L|,conveyor_row,,+used
-data/datavariable.asm|35||0|1|31737|F|conveyor_col
-data/datavariable.asm|35||0|1|31737|L|,conveyor_col,,+used
-data/datavariable.asm|36||0|1|31738|F|ramp_dir
-data/datavariable.asm|36||0|1|31738|L|,ramp_dir,,+used
-data/datavariable.asm|37||0|1|31739|F|ramp_len
-data/datavariable.asm|37||0|1|31739|L|,ramp_len,,+used
-data/datavariable.asm|38||0|1|31740|F|ramp_row
-data/datavariable.asm|38||0|1|31740|L|,ramp_row,,+used
-data/datavariable.asm|39||0|1|31741|F|ramp_col
-data/datavariable.asm|39||0|1|31741|L|,ramp_col,,+used
-data/datavariable.asm|40||0|1|31742|F|room_ptr
-data/datavariable.asm|40||0|1|31742|L|,room_ptr,,+used
-jet set willy.asm|22||0|1|31744|F|start
-jet set willy.asm|22||0|1|31744|L|,start,
-jet set willy.asm|23||0|1|31744|T|
-jet set willy.asm|27||0|1|31747|F|Main
-jet set willy.asm|27||0|1|31747|L|,Main,
-jet set willy.asm|29||0|1|31747|T|
-jet set willy.asm|30||0|1|31748|T|
-jet set willy.asm|31||0|1|31751|T|
-jet set willy.asm|33||0|1|31754|T|
-jet set willy.asm|34||0|1|31757|T|
-jet set willy.asm|36||0|1|31760|T|
-jet set willy.asm|37||0|1|31762|T|
-jet set willy.asm|38||0|1|31765|T|
-jet set willy.asm|39||0|1|31768|T|
-jet set willy.asm|41||0|1|31771|T|
-jet set willy.asm|42||0|1|31774|T|
-jet set willy.asm|43||0|1|31776|T|
-jet set willy.asm|44||0|1|31779|T|
-jet set willy.asm|45||0|1|31782|T|
-jet set willy.asm|46||0|1|31785|T|
-jet set willy.asm|47||0|1|31788|T|
-jet set willy.asm|48||0|1|31791|T|
-jet set willy.asm|49||0|1|31794|T|
-jet set willy.asm|50||0|1|31797|T|
-jet set willy.asm|53||0|1|31800|T|
-jet set willy.asm|54||0|1|31803|T|
-jet set willy.asm|55||0|1|31806|T|
-jet set willy.asm|56||0|1|31807|T|
-jet set willy.asm|57||0|1|31808|T|
-jet set willy.asm|58||0|1|31811|T|
-jet set willy.asm|61||0|1|31813|T|
-jet set willy.asm|62||0|1|31814|T|
-jet set willy.asm|63||0|1|31815|T|
-jet set willy.asm|64||0|1|31816|T|
-jet set willy.asm|65||0|1|31817|T|
-jet set willy.asm|66||0|1|31820|T|
-jet set willy.asm|67||0|1|31822|T|
-jet set willy.asm|68||0|1|31823|T|
-jet set willy.asm|69||0|1|31825|T|
-jet set willy.asm|71||0|1|31828|T|
-jet set willy.asm|73||0|1|31831|F|Main_loop
-jet set willy.asm|73||0|1|31831|L|,Main_loop,,+used
-jet set willy.asm|74||0|1|31831|T|
-jet set willy.asm|77||0|1|31832|T|
-jet set willy.asm|78||0|1|31835|T|
-jet set willy.asm|80||0|1|31838|T|
-jet set willy.asm|81||0|1|31841|T|
-jet set willy.asm|84||0|1|31844|T|
-jet set willy.asm|85||0|1|31848|T|
-jet set willy.asm|88||0|1|31852|T|
-jet set willy.asm|89||0|1|31855|T|
-jet set willy.asm|90||0|1|31858|T|
-jet set willy.asm|91||0|1|31861|T|
-jet set willy.asm|92||0|1|31864|T|
-jet set willy.asm|93||0|1|31867|T|
-jet set willy.asm|96||0|1|31870|T|
-jet set willy.asm|97||0|1|31873|T|
-jet set willy.asm|100||0|1|31875|T|
-jet set willy.asm|101||0|1|31878|T|
-jet set willy.asm|102||0|1|31880|T|
-jet set willy.asm|103||0|1|31882|F|Main_loop.raster_loop
-jet set willy.asm|103||0|1|31882|L|,Main_loop,raster_loop,+used
-jet set willy.asm|104||0|1|31882|T|
-jet set willy.asm|105||0|1|31884|T|
-jet set willy.asm|106||0|1|31885|T|
-jet set willy.asm|107||0|1|31887|T|
-jet set willy.asm|108||0|1|31889|F|Main_loop.delay
-jet set willy.asm|108||0|1|31889|L|,Main_loop,delay,+used
-jet set willy.asm|109||0|1|31889|T|
-jet set willy.asm|110||0|1|31890|T|
-jet set willy.asm|111||0|1|31892|T|
-jet set willy.asm|114||0|1|31894|T|
-jet set willy.asm|115||0|1|31897|T|
-jet set willy.asm|116||0|1|31899|T|
-jet set willy.asm|118||0|1|31901|F|Main_loop.no_collision
-jet set willy.asm|118||0|1|31901|L|,Main_loop,no_collision,+used
-jet set willy.asm|120||0|1|31901|T|
-jet set willy.asm|121||0|1|31904|T|
-jet set willy.asm|123||0|1|31906|F|Main_loop.no_collision_change
-jet set willy.asm|123||0|1|31906|L|,Main_loop,no_collision_change,+used
-jet set willy.asm|124||0|1|31906|T|
+enemy.asm|258||0|1|26827|T|
+enemy.asm|259||0|1|26828|T|
+enemy.asm|260||0|1|26830|T|
+enemy.asm|262||0|1|26833|T|
+enemy.asm|263||0|1|26836|T|
+enemy.asm|264||0|1|26838|T|
+enemy.asm|265||0|1|26841|T|
+enemy.asm|266||0|1|26844|T|
+enemy.asm|267||0|1|26847|T|
+enemy.asm|269||0|1|26850|F|DrawRoomEnemies.bathroom_doubleball
+enemy.asm|269||0|1|26850|L|,DrawRoomEnemies,bathroom_doubleball,+used
+enemy.asm|270||0|1|26850|T|
+enemy.asm|271||0|1|26853|T|
+enemy.asm|272||0|1|26855|T|
+enemy.asm|273||0|1|26858|T|
+enemy.asm|274||0|1|26861|T|
+enemy.asm|275||0|1|26864|T|
+enemy.asm|277||0|1|26867|F|DrawRoomEnemies.foottree_sega
+enemy.asm|277||0|1|26867|L|,DrawRoomEnemies,foottree_sega,+used
+enemy.asm|278||0|1|26867|T|
+enemy.asm|279||0|1|26870|T|
+enemy.asm|281||0|1|26873|F|DrawRoomEnemies.bridge_lametta
+enemy.asm|281||0|1|26873|L|,DrawRoomEnemies,bridge_lametta,+used
+enemy.asm|282||0|1|26873|T|
+enemy.asm|283||0|1|26876|T|
+enemy.asm|284||0|1|26878|T|
+enemy.asm|285||0|1|26881|T|
+enemy.asm|286||0|1|26884|T|
+enemy.asm|287||0|1|26887|T|
+enemy.asm|289||0|1|26890|F|DrawRoomEnemies.offlicence_radar
+enemy.asm|289||0|1|26890|L|,DrawRoomEnemies,offlicence_radar,+used
+enemy.asm|290||0|1|26890|T|
+enemy.asm|291||0|1|26893|T|
+enemy.asm|293||0|1|26896|F|DrawRoomEnemies.not_lametta
+enemy.asm|293||0|1|26896|L|,DrawRoomEnemies,not_lametta,+used
+enemy.asm|294||0|1|26896|T|
+enemy.asm|295||0|1|26897|T|
+enemy.asm|298||0|1|26900|T|
+enemy.asm|299||0|1|26903|T|
+enemy.asm|300||0|1|26906|T|
+enemy.asm|301||0|1|26907|T|
+enemy.asm|302||0|1|26909|T|
+enemy.asm|304||0|1|26912|T|
+enemy.asm|305||0|1|26915|T|
+enemy.asm|306||0|1|26918|T|
+enemy.asm|307||0|1|26919|T|
+enemy.asm|308||0|1|26921|T|
+enemy.asm|310||0|1|26924|T|
+enemy.asm|311||0|1|26927|T|
+enemy.asm|312||0|1|26930|T|
+enemy.asm|313||0|1|26931|T|
+enemy.asm|314||0|1|26933|T|
+enemy.asm|316||0|1|26936|T|
+enemy.asm|317||0|1|26939|T|
+enemy.asm|318||0|1|26941|T|
+enemy.asm|319||0|1|26944|T|
+enemy.asm|320||0|1|26947|T|
+enemy.asm|321||0|1|26950|T|
+enemy.asm|323||0|1|26953|F|DrawRoomEnemies.bridge_egg
+enemy.asm|323||0|1|26953|L|,DrawRoomEnemies,bridge_egg,+used
+enemy.asm|324||0|1|26953|T|
+enemy.asm|325||0|1|26956|T|
+enemy.asm|327||0|1|26959|F|DrawRoomEnemies.offlicence_face
+enemy.asm|327||0|1|26959|L|,DrawRoomEnemies,offlicence_face,+used
+enemy.asm|328||0|1|26959|T|
+enemy.asm|329||0|1|26962|T|
+enemy.asm|331||0|1|26965|F|DrawRoomEnemies.foottree_monkey
+enemy.asm|331||0|1|26965|L|,DrawRoomEnemies,foottree_monkey,+used
+enemy.asm|332||0|1|26965|T|
+enemy.asm|333||0|1|26968|T|
+enemy.asm|335||0|1|26971|F|DrawRoomEnemies.not_egg
+enemy.asm|335||0|1|26971|L|,DrawRoomEnemies,not_egg,+used
+enemy.asm|337||0|1|26971|T|
+enemy.asm|338||0|1|26974|T|
+enemy.asm|339||0|1|26977|T|
+enemy.asm|340||0|1|26978|T|
+enemy.asm|341||0|1|26980|T|
+enemy.asm|343||0|1|26983|T|
+enemy.asm|344||0|1|26986|T|
+enemy.asm|346||0|1|26989|F|DrawRoomEnemies.offlicence_ball
+enemy.asm|346||0|1|26989|L|,DrawRoomEnemies,offlicence_ball,+used
+enemy.asm|347||0|1|26989|T|
+enemy.asm|349||0|1|26992|F|DrawRoomEnemies.got_sprite
+enemy.asm|349||0|1|26992|L|,DrawRoomEnemies,got_sprite,+used
+enemy.asm|351||0|1|26992|T|
+enemy.asm|352||0|1|26995|T|
+enemy.asm|353||0|1|26996|T|
+enemy.asm|354||0|1|26997|T|
+enemy.asm|355||0|1|26998|T|
+enemy.asm|356||0|1|26999|T|
+enemy.asm|357||0|1|27000|T|
+enemy.asm|358||0|1|27001|T|
+enemy.asm|359||0|1|27003|T|
+enemy.asm|362||0|1|27004|T|
+enemy.asm|363||0|1|27007|T|
+enemy.asm|365||0|1|27010|T|
+enemy.asm|366||0|1|27012|T|
+enemy.asm|367||0|1|27013|T|
+enemy.asm|368||0|1|27015|T|
+enemy.asm|369||0|1|27018|T|
+enemy.asm|372||0|1|27020|T|
+enemy.asm|373||0|1|27023|T|
+enemy.asm|374||0|1|27026|T|
+enemy.asm|375||0|1|27029|T|
+enemy.asm|377||0|1|27032|T|
+enemy.asm|379||0|1|27033|F|DrawRoomEnemies.next
+enemy.asm|379||0|1|27033|L|,DrawRoomEnemies,next,+used
+enemy.asm|380||0|1|27033|T|
+enemy.asm|381||0|1|27036|T|
+enemy.asm|382||0|1|27038|T|
+enemy.asm|383||0|1|27039|T|
+enemy.asm|385||0|1|27042|T|
+enemy.asm|386||0|1|27044|T|
+enemy.asm|387||0|1|27045|T|
+enemy.asm|388||0|1|27046|T|
+enemy.asm|389||0|1|27047|T|
+enemy.asm|394||0|1|27048|F|UpdateRoomEnemies
+enemy.asm|394||0|1|27048|L|,UpdateRoomEnemies,,+used
+enemy.asm|395||0|1|27048|T|
+enemy.asm|396||0|1|27049|T|
+enemy.asm|397||0|1|27050|T|
+enemy.asm|398||0|1|27051|T|
+enemy.asm|400||0|1|27053|T|
+enemy.asm|401||0|1|27057|T|
+enemy.asm|402||0|1|27059|F|UpdateRoomEnemies.loop
+enemy.asm|402||0|1|27059|L|,UpdateRoomEnemies,loop,+used
+enemy.asm|403||0|1|27059|T|
+enemy.asm|404||0|1|27062|T|
+enemy.asm|405||0|1|27064|T|
+enemy.asm|408||0|1|27067|T|
+enemy.asm|409||0|1|27070|T|
+enemy.asm|410||0|1|27073|T|
+enemy.asm|411||0|1|27076|T|
+enemy.asm|414||0|1|27079|T|
+enemy.asm|415||0|1|27082|T|
+enemy.asm|416||0|1|27083|T|
+enemy.asm|417||0|1|27085|T|
+enemy.asm|420||0|1|27088|T|
+enemy.asm|421||0|1|27091|T|
+enemy.asm|422||0|1|27093|T|
+enemy.asm|424||0|1|27096|F|UpdateRoomEnemies.horizontal
+enemy.asm|424||0|1|27096|L|,UpdateRoomEnemies,horizontal
+enemy.asm|425||0|1|27096|T|
+enemy.asm|426||0|1|27099|T|
+enemy.asm|427||0|1|27101|T|
+enemy.asm|429||0|1|27103|F|UpdateRoomEnemies.horiz_left
+enemy.asm|429||0|1|27103|L|,UpdateRoomEnemies,horiz_left
+enemy.asm|430||0|1|27103|T|
+enemy.asm|431||0|1|27106|T|
+enemy.asm|432||0|1|27108|T|
+enemy.asm|433||0|1|27111|T|
+enemy.asm|434||0|1|27113|T|
+enemy.asm|435||0|1|27115|T|
+enemy.asm|436||0|1|27118|T|
+enemy.asm|438||0|1|27121|F|UpdateRoomEnemies.h_rev_right
+enemy.asm|438||0|1|27121|L|,UpdateRoomEnemies,h_rev_right,+used
+enemy.asm|439||0|1|27121|T|
+enemy.asm|440||0|1|27124|T|
+enemy.asm|441||0|1|27127|T|
+enemy.asm|442||0|1|27129|T|
+enemy.asm|443||0|1|27132|T|
+enemy.asm|445||0|1|27135|F|UpdateRoomEnemies.horiz_right
+enemy.asm|445||0|1|27135|L|,UpdateRoomEnemies,horiz_right,+used
+enemy.asm|446||0|1|27135|T|
+enemy.asm|447||0|1|27138|T|
+enemy.asm|448||0|1|27140|T|
+enemy.asm|449||0|1|27143|T|
+enemy.asm|450||0|1|27145|T|
+enemy.asm|451||0|1|27147|T|
+enemy.asm|452||0|1|27150|T|
+enemy.asm|454||0|1|27153|F|UpdateRoomEnemies.h_rev_left
+enemy.asm|454||0|1|27153|L|,UpdateRoomEnemies,h_rev_left,+used
+enemy.asm|455||0|1|27153|T|
+enemy.asm|456||0|1|27156|T|
+enemy.asm|457||0|1|27159|T|
+enemy.asm|458||0|1|27161|T|
+enemy.asm|459||0|1|27164|T|
+enemy.asm|461||0|1|27167|F|UpdateRoomEnemies.vertical
+enemy.asm|461||0|1|27167|L|,UpdateRoomEnemies,vertical,+used
+enemy.asm|462||0|1|27167|T|
+enemy.asm|463||0|1|27170|T|
+enemy.asm|464||0|1|27172|T|
+enemy.asm|466||0|1|27174|F|UpdateRoomEnemies.vert_up
+enemy.asm|466||0|1|27174|L|,UpdateRoomEnemies,vert_up
+enemy.asm|467||0|1|27174|T|
+enemy.asm|468||0|1|27177|T|
+enemy.asm|469||0|1|27179|T|
+enemy.asm|470||0|1|27182|T|
+enemy.asm|471||0|1|27184|T|
+enemy.asm|472||0|1|27186|T|
+enemy.asm|473||0|1|27189|T|
+enemy.asm|475||0|1|27192|F|UpdateRoomEnemies.v_rev_down
+enemy.asm|475||0|1|27192|L|,UpdateRoomEnemies,v_rev_down,+used
+enemy.asm|476||0|1|27192|T|
+enemy.asm|477||0|1|27195|T|
+enemy.asm|478||0|1|27198|T|
+enemy.asm|479||0|1|27200|T|
+enemy.asm|480||0|1|27203|T|
+enemy.asm|482||0|1|27206|F|UpdateRoomEnemies.vert_down
+enemy.asm|482||0|1|27206|L|,UpdateRoomEnemies,vert_down,+used
+enemy.asm|483||0|1|27206|T|
+enemy.asm|484||0|1|27209|T|
+enemy.asm|485||0|1|27211|T|
+enemy.asm|486||0|1|27214|T|
+enemy.asm|487||0|1|27216|T|
+enemy.asm|488||0|1|27218|T|
+enemy.asm|489||0|1|27221|T|
+enemy.asm|491||0|1|27224|F|UpdateRoomEnemies.v_rev_up
+enemy.asm|491||0|1|27224|L|,UpdateRoomEnemies,v_rev_up,+used
+enemy.asm|492||0|1|27224|T|
+enemy.asm|493||0|1|27227|T|
+enemy.asm|494||0|1|27230|T|
+enemy.asm|495||0|1|27232|T|
+enemy.asm|497||0|1|27235|F|UpdateRoomEnemies.next
+enemy.asm|497||0|1|27235|L|,UpdateRoomEnemies,next,+used
+enemy.asm|498||0|1|27235|T|
+enemy.asm|499||0|1|27238|T|
+enemy.asm|500||0|1|27240|T|
+enemy.asm|501||0|1|27241|T|
+enemy.asm|503||0|1|27244|T|
+enemy.asm|504||0|1|27246|T|
+enemy.asm|505||0|1|27247|T|
+enemy.asm|506||0|1|27248|T|
+enemy.asm|507||0|1|27249|T|
+items.asm|26||0|1|27250|F|ItemsTable
+items.asm|26||0|1|27250|L|,ItemsTable,,+used
+items.asm|68||0|1|27341|F|DetermineCurrentRoomID
+items.asm|68||0|1|27341|L|,DetermineCurrentRoomID,,+used
+items.asm|69||0|1|27341|T|
+items.asm|70||0|1|27342|T|
+items.asm|72||0|1|27343|T|
+items.asm|75||0|1|27346|T|
+items.asm|76||0|1|27349|T|
+items.asm|77||0|1|27350|T|
+items.asm|78||0|1|27352|T|
+items.asm|79||0|1|27354|T|
+items.asm|80||0|1|27356|T|
+items.asm|82||0|1|27358|F|DetermineCurrentRoomID.not_test
+items.asm|82||0|1|27358|L|,DetermineCurrentRoomID,not_test,+used
+items.asm|83||0|1|27358|T|
+items.asm|84||0|1|27361|T|
+items.asm|85||0|1|27364|T|
+items.asm|86||0|1|27365|T|
+items.asm|87||0|1|27367|T|
+items.asm|88||0|1|27369|T|
+items.asm|89||0|1|27371|T|
+items.asm|91||0|1|27373|F|DetermineCurrentRoomID.not_bridge
+items.asm|91||0|1|27373|L|,DetermineCurrentRoomID,not_bridge,+used
+items.asm|92||0|1|27373|T|
+items.asm|93||0|1|27376|T|
+items.asm|94||0|1|27379|T|
+items.asm|95||0|1|27380|T|
+items.asm|96||0|1|27382|T|
+items.asm|97||0|1|27384|T|
+items.asm|98||0|1|27386|T|
+items.asm|100||0|1|27388|F|DetermineCurrentRoomID.not_office
+items.asm|100||0|1|27388|L|,DetermineCurrentRoomID,not_office,+used
+items.asm|101||0|1|27388|T|
+items.asm|102||0|1|27391|T|
+items.asm|103||0|1|27394|T|
+items.asm|104||0|1|27395|T|
+items.asm|105||0|1|27397|T|
+items.asm|106||0|1|27399|T|
+items.asm|107||0|1|27401|T|
+items.asm|109||0|1|27403|F|DetermineCurrentRoomID.not_masterbed
+items.asm|109||0|1|27403|L|,DetermineCurrentRoomID,not_masterbed,+used
+items.asm|110||0|1|27403|T|
+items.asm|111||0|1|27406|T|
+items.asm|112||0|1|27409|T|
+items.asm|113||0|1|27410|T|
+items.asm|114||0|1|27412|T|
+items.asm|115||0|1|27414|T|
+items.asm|116||0|1|27416|T|
+items.asm|118||0|1|27418|F|DetermineCurrentRoomID.not_undertree
+items.asm|118||0|1|27418|L|,DetermineCurrentRoomID,not_undertree,+used
+items.asm|119||0|1|27418|T|
+items.asm|120||0|1|27421|T|
+items.asm|121||0|1|27424|T|
+items.asm|122||0|1|27425|T|
+items.asm|123||0|1|27427|T|
+items.asm|124||0|1|27429|T|
+items.asm|125||0|1|27431|T|
+items.asm|127||0|1|27433|F|DetermineCurrentRoomID.not_foottree
+items.asm|127||0|1|27433|L|,DetermineCurrentRoomID,not_foottree,+used
+items.asm|128||0|1|27433|T|
+items.asm|129||0|1|27436|T|
+items.asm|130||0|1|27439|T|
+items.asm|131||0|1|27440|T|
+items.asm|132||0|1|27442|T|
+items.asm|133||0|1|27444|T|
+items.asm|134||0|1|27446|T|
+items.asm|136||0|1|27448|F|DetermineCurrentRoomID.not_thedrive
+items.asm|136||0|1|27448|L|,DetermineCurrentRoomID,not_thedrive,+used
+items.asm|137||0|1|27448|T|
+items.asm|138||0|1|27451|T|
+items.asm|139||0|1|27454|T|
+items.asm|140||0|1|27455|T|
+items.asm|141||0|1|27457|T|
+items.asm|142||0|1|27459|T|
+items.asm|143||0|1|27461|T|
+items.asm|145||0|1|27463|F|DetermineCurrentRoomID.not_securityguard
+items.asm|145||0|1|27463|L|,DetermineCurrentRoomID,not_securityguard,+used
+items.asm|146||0|1|27463|T|
+items.asm|147||0|1|27466|T|
+items.asm|148||0|1|27469|T|
+items.asm|149||0|1|27470|T|
+items.asm|150||0|1|27472|T|
+items.asm|151||0|1|27474|T|
+items.asm|152||0|1|27476|T|
+items.asm|154||0|1|27478|F|DetermineCurrentRoomID.unknown
+items.asm|154||0|1|27478|L|,DetermineCurrentRoomID,unknown,+used
+items.asm|155||0|1|27478|T|
+items.asm|157||0|1|27480|F|DetermineCurrentRoomID.set_room
+items.asm|157||0|1|27480|L|,DetermineCurrentRoomID,set_room,+used
+items.asm|158||0|1|27480|T|
+items.asm|160||0|1|27483|T|
+items.asm|161||0|1|27484|T|
+items.asm|162||0|1|27485|T|
+items.asm|167||0|1|27486|F|DrawRoomItems
+items.asm|167||0|1|27486|L|,DrawRoomItems,,+used
+items.asm|168||0|1|27486|T|
+items.asm|169||0|1|27487|T|
+items.asm|170||0|1|27488|T|
+items.asm|171||0|1|27489|T|
+items.asm|175||0|1|27491|T|
+items.asm|176||0|1|27494|T|
+items.asm|177||0|1|27497|T|
+items.asm|178||0|1|27498|T|
+items.asm|179||0|1|27499|T|
+items.asm|181||0|1|27501|T|
+items.asm|182||0|1|27504|F|DrawRoomItems.loop
+items.asm|182||0|1|27504|L|,DrawRoomItems,loop,+used
+items.asm|183||0|1|27504|T|
+items.asm|184||0|1|27505|T|
+items.asm|185||0|1|27507|T|
+items.asm|188||0|1|27509|T|
+items.asm|189||0|1|27510|T|
+items.asm|190||0|1|27513|T|
+items.asm|191||0|1|27514|T|
+items.asm|194||0|1|27516|T|
+items.asm|195||0|1|27517|T|
+items.asm|196||0|1|27518|T|
+items.asm|197||0|1|27519|T|
+items.asm|198||0|1|27520|T|
+items.asm|199||0|1|27521|T|
+items.asm|200||0|1|27522|T|
+items.asm|201||0|1|27523|T|
+items.asm|202||0|1|27524|T|
+items.asm|203||0|1|27525|T|
+items.asm|207||0|1|27527|T|
+items.asm|208||0|1|27528|T|
+items.asm|209||0|1|27530|T|
+items.asm|210||0|1|27531|T|
+items.asm|211||0|1|27534|T|
+items.asm|213||0|1|27535|T|
+items.asm|215||0|1|27537|F|DrawRoomItems.next_item
+items.asm|215||0|1|27537|L|,DrawRoomItems,next_item,+used
+items.asm|216||0|1|27537|T|
+items.asm|217||0|1|27538|T|
+items.asm|218||0|1|27539|T|
+items.asm|219||0|1|27540|T|
+items.asm|220||0|1|27541|F|DrawRoomItems.next_no_inc
+items.asm|220||0|1|27541|L|,DrawRoomItems,next_no_inc,+used
+items.asm|221||0|1|27541|T|
+items.asm|222||0|1|27542|T|
+items.asm|224||0|1|27544|F|DrawRoomItems.done
+items.asm|224||0|1|27544|L|,DrawRoomItems,done,+used
+items.asm|225||0|1|27544|T|
+items.asm|226||0|1|27546|T|
+items.asm|227||0|1|27547|T|
+items.asm|228||0|1|27548|T|
+items.asm|229||0|1|27549|T|
+items.asm|235||0|1|27550|F|DrawItemGraphic
+items.asm|235||0|1|27550|L|,DrawItemGraphic,,+used
+items.asm|236||0|1|27550|T|
+items.asm|237||0|1|27551|T|
+items.asm|238||0|1|27552|T|
+items.asm|241||0|1|27553|T|
+items.asm|242||0|1|27554|T|
+items.asm|243||0|1|27556|T|
+items.asm|244||0|1|27558|T|
+items.asm|246||0|1|27559|T|
+items.asm|247||0|1|27560|T|
+items.asm|248||0|1|27562|T|
+items.asm|249||0|1|27563|T|
+items.asm|250||0|1|27564|T|
+items.asm|251||0|1|27565|T|
+items.asm|252||0|1|27566|T|
+items.asm|253||0|1|27567|T|
+items.asm|254||0|1|27568|T|
+items.asm|257||0|1|27569|T|
+items.asm|258||0|1|27570|T|
+items.asm|259||0|1|27572|F|DrawItemGraphic.line_loop
+items.asm|259||0|1|27572|L|,DrawItemGraphic,line_loop,+used
+items.asm|260||0|1|27572|T|
+items.asm|261||0|1|27573|T|
+items.asm|262||0|1|27574|T|
+items.asm|263||0|1|27575|T|
+items.asm|264||0|1|27576|T|
+items.asm|265||0|1|27577|T|
+items.asm|266||0|1|27579|T|
+items.asm|270||0|1|27580|T|
+items.asm|271||0|1|27582|T|
+items.asm|272||0|1|27583|T|
+items.asm|273||0|1|27584|T|
+items.asm|274||0|1|27585|T|
+items.asm|275||0|1|27586|T|
+items.asm|276||0|1|27587|T|
+items.asm|278||0|1|27588|T|
+items.asm|279||0|1|27589|T|
+items.asm|280||0|1|27590|T|
+items.asm|281||0|1|27591|T|
+items.asm|282||0|1|27593|T|
+items.asm|283||0|1|27594|F|DrawItemGraphic.no_carry
+items.asm|283||0|1|27594|L|,DrawItemGraphic,no_carry,+used
+items.asm|285||0|1|27594|T|
+items.asm|286||0|1|27597|T|
+items.asm|290||0|1|27598|T|
+items.asm|291||0|1|27599|T|
+items.asm|293||0|1|27600|T|
+items.asm|294||0|1|27601|T|
+items.asm|297||0|1|27602|T|
+items.asm|298||0|1|27603|T|
+items.asm|299||0|1|27604|T|
+items.asm|300||0|1|27605|T|
+items.asm|306||0|1|27606|F|RestoreBackgroundCell
+items.asm|306||0|1|27606|L|,RestoreBackgroundCell,,+used
+items.asm|307||0|1|27606|T|
+items.asm|308||0|1|27608|T|
+items.asm|309||0|1|27609|T|
+items.asm|310||0|1|27610|T|
+items.asm|311||0|1|27611|T|
+items.asm|313||0|1|27613|T|
+items.asm|314||0|1|27614|T|
+items.asm|317||0|1|27616|T|
+items.asm|321||0|1|27617|T|
+items.asm|323||0|1|27620|T|
+items.asm|324||0|1|27624|T|
+items.asm|325||0|1|27625|T|
+items.asm|326||0|1|27627|T|
+items.asm|327||0|1|27630|T|
+items.asm|328||0|1|27631|T|
+items.asm|329||0|1|27633|F|RestoreBackgroundCell.not_bg
+items.asm|329||0|1|27633|L|,RestoreBackgroundCell,not_bg,+used
+items.asm|330||0|1|27633|T|
+items.asm|331||0|1|27634|T|
+items.asm|332||0|1|27636|T|
+items.asm|333||0|1|27639|T|
+items.asm|334||0|1|27640|T|
+items.asm|335||0|1|27642|F|RestoreBackgroundCell.not_floor
+items.asm|335||0|1|27642|L|,RestoreBackgroundCell,not_floor,+used
+items.asm|336||0|1|27642|T|
+items.asm|337||0|1|27643|T|
+items.asm|338||0|1|27645|T|
+items.asm|339||0|1|27648|T|
+items.asm|340||0|1|27649|T|
+items.asm|341||0|1|27651|F|RestoreBackgroundCell.not_wall
+items.asm|341||0|1|27651|L|,RestoreBackgroundCell,not_wall,+used
+items.asm|342||0|1|27651|T|
+items.asm|343||0|1|27654|T|
+items.asm|345||0|1|27655|F|RestoreBackgroundCell.draw_cell
+items.asm|345||0|1|27655|L|,RestoreBackgroundCell,draw_cell,+used
+items.asm|346||0|1|27655|T|
+items.asm|347||0|1|27656|T|
+items.asm|349||0|1|27658|T|
+items.asm|350||0|1|27660|T|
+items.asm|352||0|1|27661|T|
+items.asm|354||0|1|27664|T|
+items.asm|355||0|1|27666|T|
+items.asm|356||0|1|27667|T|
+items.asm|357||0|1|27668|T|
+items.asm|358||0|1|27669|T|
+items.asm|359||0|1|27671|T|
+items.asm|366||0|1|27672|F|CheckWillyItemCollision
+items.asm|366||0|1|27672|L|,CheckWillyItemCollision,,+used
+items.asm|367||0|1|27672|T|
+items.asm|368||0|1|27673|T|
+items.asm|369||0|1|27674|T|
+items.asm|372||0|1|27675|T|
+items.asm|373||0|1|27676|T|
+items.asm|374||0|1|27677|T|
+items.asm|375||0|1|27678|T|
+items.asm|376||0|1|27679|T|
+items.asm|377||0|1|27680|T|
+items.asm|378||0|1|27681|T|
+items.asm|379||0|1|27683|T|
+items.asm|382||0|1|27684|T|
+items.asm|385||0|1|27688|T|
+items.asm|386||0|1|27689|T|
+items.asm|387||0|1|27690|T|
+items.asm|388||0|1|27692|T|
+items.asm|389||0|1|27694|T|
+items.asm|390||0|1|27696|F|CheckWillyItemCollision.x_ok
+items.asm|390||0|1|27696|L|,CheckWillyItemCollision,x_ok,+used
+items.asm|391||0|1|27696|T|
+items.asm|392||0|1|27698|T|
+items.asm|393||0|1|27699|T|
+items.asm|394||0|1|27701|T|
+items.asm|395||0|1|27703|T|
+items.asm|397||0|1|27705|F|CheckWillyItemCollision.y_check
+items.asm|397||0|1|27705|L|,CheckWillyItemCollision,y_check,+used
+items.asm|398||0|1|27705|T|
+items.asm|399||0|1|27706|T|
+items.asm|400||0|1|27707|T|
+items.asm|401||0|1|27708|T|
+items.asm|402||0|1|27709|T|
+items.asm|403||0|1|27710|T|
+items.asm|404||0|1|27711|T|
+items.asm|405||0|1|27712|T|
+items.asm|406||0|1|27714|T|
+items.asm|409||0|1|27715|T|
+items.asm|410||0|1|27716|T|
+items.asm|411||0|1|27717|T|
+items.asm|412||0|1|27719|T|
+items.asm|413||0|1|27721|T|
+items.asm|414||0|1|27723|F|CheckWillyItemCollision.y_ok
+items.asm|414||0|1|27723|L|,CheckWillyItemCollision,y_ok,+used
+items.asm|415||0|1|27723|T|
+items.asm|416||0|1|27725|T|
+items.asm|417||0|1|27726|T|
+items.asm|418||0|1|27728|T|
+items.asm|419||0|1|27730|T|
+items.asm|421||0|1|27732|F|CheckWillyItemCollision.collision
+items.asm|421||0|1|27732|L|,CheckWillyItemCollision,collision,+used
+items.asm|422||0|1|27732|T|
+items.asm|423||0|1|27733|T|
+items.asm|424||0|1|27734|T|
+items.asm|425||0|1|27735|T|
+items.asm|426||0|1|27736|T|
+items.asm|428||0|1|27737|F|CheckWillyItemCollision.no_collision
+items.asm|428||0|1|27737|L|,CheckWillyItemCollision,no_collision,+used
+items.asm|429||0|1|27737|T|
+items.asm|430||0|1|27738|T|
+items.asm|431||0|1|27739|T|
+items.asm|432||0|1|27740|T|
+items.asm|433||0|1|27741|T|
+items.asm|438||0|1|27742|F|CheckRoomItemsCollision
+items.asm|438||0|1|27742|L|,CheckRoomItemsCollision,,+used
+items.asm|439||0|1|27742|T|
+items.asm|440||0|1|27743|T|
+items.asm|441||0|1|27744|T|
+items.asm|443||0|1|27745|T|
+items.asm|444||0|1|27748|F|CheckRoomItemsCollision.loop
+items.asm|444||0|1|27748|L|,CheckRoomItemsCollision,loop,+used
+items.asm|445||0|1|27748|T|
+items.asm|446||0|1|27749|T|
+items.asm|447||0|1|27751|T|
+items.asm|450||0|1|27753|T|
+items.asm|451||0|1|27754|T|
+items.asm|452||0|1|27757|T|
+items.asm|453||0|1|27758|T|
+items.asm|455||0|1|27760|T|
+items.asm|456||0|1|27761|T|
+items.asm|457||0|1|27762|T|
+items.asm|458||0|1|27763|T|
+items.asm|459||0|1|27764|T|
+items.asm|460||0|1|27765|T|
+items.asm|461||0|1|27766|T|
+items.asm|462||0|1|27767|T|
+items.asm|463||0|1|27768|T|
+items.asm|466||0|1|27770|T|
+items.asm|467||0|1|27771|T|
+items.asm|468||0|1|27772|T|
+items.asm|469||0|1|27773|T|
+items.asm|470||0|1|27776|T|
+items.asm|471||0|1|27777|T|
+items.asm|474||0|1|27779|T|
+items.asm|476||0|1|27781|T|
+items.asm|479||0|1|27782|T|
+items.asm|480||0|1|27785|T|
+items.asm|481||0|1|27786|T|
+items.asm|484||0|1|27789|T|
+items.asm|487||0|1|27792|T|
+items.asm|490||0|1|27795|T|
+items.asm|492||0|1|27798|T|
+items.asm|494||0|1|27799|T|
+items.asm|496||0|1|27801|F|CheckRoomItemsCollision.next_item
+items.asm|496||0|1|27801|L|,CheckRoomItemsCollision,next_item,+used
+items.asm|497||0|1|27801|T|
+items.asm|498||0|1|27802|T|
+items.asm|499||0|1|27803|T|
+items.asm|500||0|1|27804|T|
+items.asm|501||0|1|27805|F|CheckRoomItemsCollision.next_no_inc
+items.asm|501||0|1|27805|L|,CheckRoomItemsCollision,next_no_inc,+used
+items.asm|502||0|1|27805|T|
+items.asm|503||0|1|27806|T|
+items.asm|505||0|1|27808|F|CheckRoomItemsCollision.done
+items.asm|505||0|1|27808|L|,CheckRoomItemsCollision,done,+used
+items.asm|506||0|1|27808|T|
+items.asm|507||0|1|27809|T|
+items.asm|508||0|1|27810|T|
+items.asm|509||0|1|27811|T|
+items.asm|514||0|1|27812|F|PlayCollectSound
+items.asm|514||0|1|27812|L|,PlayCollectSound,,+used
+items.asm|515||0|1|27812|T|
+items.asm|516||0|1|27813|T|
+items.asm|518||0|1|27814|T|
+items.asm|519||0|1|27816|F|PlayCollectSound.sound_loop
+items.asm|519||0|1|27816|L|,PlayCollectSound,sound_loop,+used
+items.asm|520||0|1|27816|T|
+items.asm|521||0|1|27819|T|
+items.asm|522||0|1|27821|T|
+items.asm|523||0|1|27823|T|
+items.asm|524||0|1|27825|F|PlayCollectSound.d1
+items.asm|524||0|1|27825|L|,PlayCollectSound,d1,+used
+items.asm|524||0|1|27825|T|
+items.asm|525||0|1|27826|T|
+items.asm|527||0|1|27828|T|
+items.asm|528||0|1|27831|T|
+items.asm|529||0|1|27833|T|
+items.asm|530||0|1|27835|T|
+items.asm|531||0|1|27837|F|PlayCollectSound.d2
+items.asm|531||0|1|27837|L|,PlayCollectSound,d2,+used
+items.asm|531||0|1|27837|T|
+items.asm|532||0|1|27838|T|
+items.asm|534||0|1|27840|T|
+items.asm|536||0|1|27842|T|
+items.asm|537||0|1|27843|T|
+items.asm|538||0|1|27844|T|
+data/datasprite.asm|7||0|1|27845|F|Willy
+data/datasprite.asm|7||0|1|27845|L|,Willy,,+used
+data/datasprite.asm|21||0|1|27909|F|LamettaSpriteRight
+data/datasprite.asm|21||0|1|27909|L|,LamettaSpriteRight,,+used
+data/datasprite.asm|31||0|1|28037|F|LamettaSpriteLeft
+data/datasprite.asm|31||0|1|28037|L|,LamettaSpriteLeft,,+used
+data/datasprite.asm|41||0|1|28165|F|ChipSprite
+data/datasprite.asm|41||0|1|28165|L|,ChipSprite,
+data/datasprite.asm|51||0|1|28293|F|TheChapelSprite
+data/datasprite.asm|51||0|1|28293|L|,TheChapelSprite,
+data/datasprite.asm|61||0|1|28421|F|WallBaseSprite
+data/datasprite.asm|61||0|1|28421|L|,WallBaseSprite,
+data/datasprite.asm|71||0|1|28549|F|SpirlaSprite
+data/datasprite.asm|71||0|1|28549|L|,SpirlaSprite,
+data/datasprite.asm|81||0|1|28677|F|CutSprite
+data/datasprite.asm|81||0|1|28677|L|,CutSprite,
+data/datasprite.asm|91||0|1|28805|F|PliersSprite
+data/datasprite.asm|91||0|1|28805|L|,PliersSprite,
+data/datasprite.asm|101||0|1|28933|F|RobotSprite
+data/datasprite.asm|101||0|1|28933|L|,RobotSprite,,+used
+data/datasprite.asm|111||0|1|29061|F|SwissArmyKife
+data/datasprite.asm|111||0|1|29061|L|,SwissArmyKife,
+data/datasprite.asm|121||0|1|29189|F|EggSpriteRight
+data/datasprite.asm|121||0|1|29189|L|,EggSpriteRight,,+used
+data/datasprite.asm|131||0|1|29317|F|EggSpriteLeft
+data/datasprite.asm|131||0|1|29317|L|,EggSpriteLeft,,+used
+data/datasprite.asm|141||0|1|29445|F|PacManSprite
+data/datasprite.asm|141||0|1|29445|L|,PacManSprite,
+data/datasprite.asm|151||0|1|29573|F|UfoSprite
+data/datasprite.asm|151||0|1|29573|L|,UfoSprite,,+used
+data/datasprite.asm|161||0|1|29701|F|UccelloSpriteLeft
+data/datasprite.asm|161||0|1|29701|L|,UccelloSpriteLeft,,+used
+data/datasprite.asm|171||0|1|29829|F|UccelloSpriteRight
+data/datasprite.asm|171||0|1|29829|L|,UccelloSpriteRight,,+used
+data/datasprite.asm|181||0|1|29957|F|FaceSprite
+data/datasprite.asm|181||0|1|29957|L|,FaceSprite,,+used
+data/datasprite.asm|192||0|1|30085|F|RadarSprite
+data/datasprite.asm|192||0|1|30085|L|,RadarSprite,,+used
+data/datasprite.asm|202||0|1|30213|F|BallSprite
+data/datasprite.asm|202||0|1|30213|L|,BallSprite,,+used
+data/datasprite.asm|212||0|1|30341|F|DoubleBallSpriteRight
+data/datasprite.asm|212||0|1|30341|L|,DoubleBallSpriteRight,,+used
+data/datasprite.asm|222||0|1|30469|F|DoubleBallSpriteLeft
+data/datasprite.asm|222||0|1|30469|L|,DoubleBallSpriteLeft,,+used
+data/datasprite.asm|232||0|1|30597|F|ScimmiaSprite
+data/datasprite.asm|232||0|1|30597|L|,ScimmiaSprite,,+used
+data/datasprite.asm|243||0|1|30725|F|SegaSprite
+data/datasprite.asm|243||0|1|30725|L|,SegaSprite,,+used
+data/datavariable.asm|5||0|1|30981|F|PlayerPos
+data/datavariable.asm|5||0|1|30981|L|,PlayerPos,,+used
+data/datavariable.asm|6||0|1|30983|F|PlayerPosOld
+data/datavariable.asm|6||0|1|30983|L|,PlayerPosOld,,+used
+data/datavariable.asm|7||0|1|30985|F|bodyPos
+data/datavariable.asm|7||0|1|30985|L|,bodyPos,
+data/datavariable.asm|10||0|1|30987|F|body_state
+data/datavariable.asm|10||0|1|30987|L|,body_state,,+used
+data/datavariable.asm|11||0|1|30988|F|direction
+data/datavariable.asm|11||0|1|30988|L|,direction,,+used
+data/datavariable.asm|12||0|1|30989|F|flags
+data/datavariable.asm|12||0|1|30989|L|,flags,,+used
+data/datavariable.asm|14||0|1|30990|F|collision_active
+data/datavariable.asm|14||0|1|30990|L|,collision_active,
+data/datavariable.asm|15||0|1|30991|F|items_collected
+data/datavariable.asm|15||0|1|30991|L|,items_collected,,+used
+data/datavariable.asm|16||0|1|30992|F|sprite_shift
+data/datavariable.asm|16||0|1|30992|L|,sprite_shift,,+used
+data/datavariable.asm|17||0|1|30993|F|room_border_color
+data/datavariable.asm|17||0|1|30993|L|,room_border_color,,+used
+data/datavariable.asm|20||0|1|30994|F|velocity_y
+data/datavariable.asm|20||0|1|30994|L|,velocity_y,,+used
+data/datavariable.asm|21||0|1|30995|F|on_ground
+data/datavariable.asm|21||0|1|30995|L|,on_ground,,+used
+data/datavariable.asm|22||0|1|30996|F|jump_pressed
+data/datavariable.asm|22||0|1|30996|L|,jump_pressed,,+used
+data/datavariable.asm|23||0|1|30997|F|jump_prev
+data/datavariable.asm|23||0|1|30997|L|,jump_prev,,+used
+data/datavariable.asm|26||0|1|30998|F|counter
+data/datavariable.asm|26||0|1|30998|L|,counter,,+used
+data/datavariable.asm|27||0|1|31000|F|line_buffer
+data/datavariable.asm|27||0|1|31000|L|,line_buffer,
+data/datavariable.asm|28||0|1|31256|F|unpacked_layout
+data/datavariable.asm|28||0|1|31256|L|,unpacked_layout,,+used
+data/datavariable.asm|31||0|1|31768|F|current_room
+data/datavariable.asm|31||0|1|31768|L|,current_room,,+used
+data/datavariable.asm|32||0|1|31769|F|conveyor_dir
+data/datavariable.asm|32||0|1|31769|L|,conveyor_dir,,+used
+data/datavariable.asm|33||0|1|31770|F|conveyor_len
+data/datavariable.asm|33||0|1|31770|L|,conveyor_len,,+used
+data/datavariable.asm|34||0|1|31771|F|conveyor_row
+data/datavariable.asm|34||0|1|31771|L|,conveyor_row,,+used
+data/datavariable.asm|35||0|1|31772|F|conveyor_col
+data/datavariable.asm|35||0|1|31772|L|,conveyor_col,,+used
+data/datavariable.asm|36||0|1|31773|F|ramp_dir
+data/datavariable.asm|36||0|1|31773|L|,ramp_dir,,+used
+data/datavariable.asm|37||0|1|31774|F|ramp_len
+data/datavariable.asm|37||0|1|31774|L|,ramp_len,,+used
+data/datavariable.asm|38||0|1|31775|F|ramp_row
+data/datavariable.asm|38||0|1|31775|L|,ramp_row,,+used
+data/datavariable.asm|39||0|1|31776|F|ramp_col
+data/datavariable.asm|39||0|1|31776|L|,ramp_col,,+used
+data/datavariable.asm|40||0|1|31777|F|room_ptr
+data/datavariable.asm|40||0|1|31777|L|,room_ptr,,+used
+jet set willy.asm|22||0|1|31779|F|start
+jet set willy.asm|22||0|1|31779|L|,start,
+jet set willy.asm|23||0|1|31779|T|
+jet set willy.asm|27||0|1|31782|F|Main
+jet set willy.asm|27||0|1|31782|L|,Main,
+jet set willy.asm|29||0|1|31782|T|
+jet set willy.asm|30||0|1|31783|T|
+jet set willy.asm|31||0|1|31786|T|
+jet set willy.asm|33||0|1|31789|T|
+jet set willy.asm|34||0|1|31792|T|
+jet set willy.asm|36||0|1|31795|T|
+jet set willy.asm|37||0|1|31797|T|
+jet set willy.asm|38||0|1|31800|T|
+jet set willy.asm|39||0|1|31803|T|
+jet set willy.asm|41||0|1|31806|T|
+jet set willy.asm|42||0|1|31809|T|
+jet set willy.asm|43||0|1|31811|T|
+jet set willy.asm|44||0|1|31814|T|
+jet set willy.asm|45||0|1|31817|T|
+jet set willy.asm|46||0|1|31820|T|
+jet set willy.asm|47||0|1|31823|T|
+jet set willy.asm|48||0|1|31826|T|
+jet set willy.asm|49||0|1|31829|T|
+jet set willy.asm|50||0|1|31832|T|
+jet set willy.asm|53||0|1|31835|T|
+jet set willy.asm|54||0|1|31838|T|
+jet set willy.asm|55||0|1|31841|T|
+jet set willy.asm|56||0|1|31842|T|
+jet set willy.asm|57||0|1|31843|T|
+jet set willy.asm|58||0|1|31846|T|
+jet set willy.asm|61||0|1|31848|T|
+jet set willy.asm|62||0|1|31849|T|
+jet set willy.asm|63||0|1|31850|T|
+jet set willy.asm|64||0|1|31851|T|
+jet set willy.asm|65||0|1|31852|T|
+jet set willy.asm|66||0|1|31855|T|
+jet set willy.asm|67||0|1|31857|T|
+jet set willy.asm|68||0|1|31858|T|
+jet set willy.asm|69||0|1|31860|T|
+jet set willy.asm|71||0|1|31863|T|
+jet set willy.asm|73||0|1|31866|F|Main_loop
+jet set willy.asm|73||0|1|31866|L|,Main_loop,,+used
+jet set willy.asm|74||0|1|31866|T|
+jet set willy.asm|77||0|1|31867|T|
+jet set willy.asm|78||0|1|31870|T|
+jet set willy.asm|80||0|1|31873|T|
+jet set willy.asm|81||0|1|31876|T|
+jet set willy.asm|84||0|1|31879|T|
+jet set willy.asm|85||0|1|31883|T|
+jet set willy.asm|88||0|1|31887|T|
+jet set willy.asm|89||0|1|31890|T|
+jet set willy.asm|90||0|1|31893|T|
+jet set willy.asm|91||0|1|31896|T|
+jet set willy.asm|92||0|1|31899|T|
+jet set willy.asm|93||0|1|31902|T|
+jet set willy.asm|96||0|1|31905|T|
+jet set willy.asm|97||0|1|31908|T|
+jet set willy.asm|100||0|1|31910|T|
+jet set willy.asm|101||0|1|31913|T|
+jet set willy.asm|102||0|1|31915|T|
+jet set willy.asm|103||0|1|31917|F|Main_loop.raster_loop
+jet set willy.asm|103||0|1|31917|L|,Main_loop,raster_loop,+used
+jet set willy.asm|104||0|1|31917|T|
+jet set willy.asm|105||0|1|31919|T|
+jet set willy.asm|106||0|1|31920|T|
+jet set willy.asm|107||0|1|31922|T|
+jet set willy.asm|108||0|1|31924|F|Main_loop.delay
+jet set willy.asm|108||0|1|31924|L|,Main_loop,delay,+used
+jet set willy.asm|109||0|1|31924|T|
+jet set willy.asm|110||0|1|31925|T|
+jet set willy.asm|111||0|1|31927|T|
+jet set willy.asm|114||0|1|31929|T|
+jet set willy.asm|115||0|1|31932|T|
+jet set willy.asm|116||0|1|31934|T|
+jet set willy.asm|118||0|1|31936|F|Main_loop.no_collision
+jet set willy.asm|118||0|1|31936|L|,Main_loop,no_collision,+used
+jet set willy.asm|120||0|1|31936|T|
+jet set willy.asm|121||0|1|31939|T|
+jet set willy.asm|123||0|1|31941|F|Main_loop.no_collision_change
+jet set willy.asm|123||0|1|31941|L|,Main_loop,no_collision_change,+used
+jet set willy.asm|124||0|1|31941|T|
 jet set willy.asm|129||0|2|33536|F|RoomsStart
 jet set willy.asm|129||0|2|33536|L|,RoomsStart,
 rooms/TheOffLicence.asm|28||0|2|33536|F|TheOffLicenceLayout

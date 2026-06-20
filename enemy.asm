@@ -253,32 +253,42 @@ DrawRoomEnemies:
     sbc  hl, de
     jr   z, .bathroom_doubleball
 
+    ld   hl, (room_ptr)
+    ld   de, AtTheFootTheMegaTreeLayout
+    or   a
+    sbc  hl, de
+    jp   z, .foottree_sega
+
     ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
     ld   hl, LamettaSpriteLeft
-    jr   z, .got_sprite
+    jp   z, .got_sprite
     ld   hl, LamettaSpriteRight
-    jr   .got_sprite
+    jp   .got_sprite
 
 .bathroom_doubleball:
     ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
     ld   hl, DoubleBallSpriteLeft
-    jr   z, .got_sprite
+    jp   z, .got_sprite
     ld   hl, DoubleBallSpriteRight
-    jr   .got_sprite
+    jp   .got_sprite
+
+.foottree_sega:
+    ld   hl, SegaSprite
+    jp   .got_sprite
 
 .bridge_lametta:
     ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
     ld   hl, UccelloSpriteLeft
-    jr   z, .got_sprite
+    jp   z, .got_sprite
     ld   hl, UccelloSpriteRight
-    jr   .got_sprite
+    jp   .got_sprite
 
 .offlicence_radar:
     ld   hl, RadarSprite
-    jr   .got_sprite
+    jp   .got_sprite
     
 .not_lametta:
     dec  a
@@ -289,38 +299,38 @@ DrawRoomEnemies:
     ld   de, TheBridgeLayout
     or   a
     sbc  hl, de
-    jr   z, .bridge_egg
+    jp   z, .bridge_egg
     
     ld   hl, (room_ptr)
     ld   de, TheOffLicenceLayout
     or   a
     sbc  hl, de
-    jr   z, .offlicence_face
+    jp   z, .offlicence_face
 
     ld   hl, (room_ptr)
     ld   de, AtTheFootTheMegaTreeLayout
     or   a
     sbc  hl, de
-    jr   z, .foottree_monkey
+    jp   z, .foottree_monkey
 
     ld   a, (ix+5)         ; Direction
     cp   1                 ; Sinistra?
     ld   hl, EggSpriteLeft
-    jr   z, .got_sprite
+    jp   z, .got_sprite
     ld   hl, EggSpriteRight
-    jr   .got_sprite
+    jp   .got_sprite
 
 .bridge_egg:
     ld   hl, UfoSprite
-    jr   .got_sprite
+    jp   .got_sprite
 
 .offlicence_face:
     ld   hl, FaceSprite
-    jr   .got_sprite
+    jp   .got_sprite
 
 .foottree_monkey:
     ld   hl, ScimmiaSprite
-    jr   .got_sprite
+    jp   .got_sprite
     
 .not_egg:
     ; Robot (Tipo 2)
@@ -328,10 +338,10 @@ DrawRoomEnemies:
     ld   de, TheOffLicenceLayout
     or   a
     sbc  hl, de
-    jr   z, .offlicence_ball
+    jp   z, .offlicence_ball
 
     ld   hl, RobotSprite
-    jr   .got_sprite
+    jp   .got_sprite
 
 .offlicence_ball:
     ld   hl, BallSprite
