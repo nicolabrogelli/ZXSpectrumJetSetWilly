@@ -84,7 +84,7 @@ AtTheFootTheMegaTreeBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 AtTheFootTheMegaTreeReserved:
-    DEFB CYAN, CYAN, RED, 7                         ; Enemy colors: all WHITE (7)
+    DEFB CYAN, CYAN, RED, MAGENTA                         ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 AtTheFootTheMegaTreeItem:

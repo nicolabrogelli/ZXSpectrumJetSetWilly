@@ -275,7 +275,11 @@ DrawRoomEnemies:
     jp   .got_sprite
 
 .foottree_sega:
+    ld   a, (ix+5)         ; Direction
+    cp   1                 ; Sinistra?
     ld   hl, SegaSprite
+    jp   z, .got_sprite
+    ld   hl, SegaSprite + 128
     jp   .got_sprite
 
 .bridge_lametta:
