@@ -23,8 +23,10 @@ MovePlayer:
     ret  z
 
 movePlayer_left:
+    ld   a, (player_speed)
+    ld   e, a
     ld   a, c
-    sub  2                 ; Prova a muoverti di 2 pixel a sinistra
+    sub  e                 ; Prova a muoverti a sinistra
     cp   PLAYER_MIN_X      ; Confronta con il limite sinistro
     jr   c, .clamp_left    ; Se < PLAYER_MIN_X, clampa
     
@@ -35,8 +37,10 @@ movePlayer_left:
     pop  bc
     jr   c, save_x         ; Se collide, mantieni la posizione precedente
     
+    ld   a, (player_speed)
+    ld   e, a
     ld   a, c
-    sub  2
+    sub  e
     ld   c, a              ; Altrimenti memorizza la nuova posizione
     jr   save_x
 
@@ -51,8 +55,10 @@ movePlayer_left:
     jr   save_x
 
 movePlayer_right:
+    ld   a, (player_speed)
+    ld   e, a
     ld   a, c
-    add  a, 2              ; Prova a muoverti di 2 pixel a destra
+    add  a, e              ; Prova a muoverti a destra
     cp   PLAYER_MAX_X      ; Confronta con il limite destro
     jr   z, .ok_right      ; Se == PLAYER_MAX_X, va bene
     jr   nc, .clamp_right  ; Se > PLAYER_MAX_X, clampa
@@ -65,8 +71,10 @@ movePlayer_right:
     pop  bc
     jr   c, save_x         ; Se collide, mantieni la posizione precedente
     
+    ld   a, (player_speed)
+    ld   e, a
     ld   a, c
-    add  a, 2
+    add  a, e
     ld   c, a              ; Altrimenti memorizza la nuova posizione
     jr   save_x
 
