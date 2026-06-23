@@ -401,6 +401,36 @@ UpdateRoomEnemies:
     push bc
     push ix
     
+    ; Controlla il tasso di aggiornamento dei nemici (speed divider)
+    ld   a, (enemy_update_rate)
+    cp   1
+    jr   z, .do_update             ; Se 1, aggiorna ad ogni frame (velocità normale)
+    
+    ld   a, (enemy_update_timer)
+    inc  a
+    ld   b, a                      ; B = timer + 1
+    ld   a, (enemy_update_rate)
+    cp   b
+    jr   z, .reset_timer
+    jr   c, .reset_timer
+    
+    ; Salva contatore incrementato e salta l'aggiornamento
+    ld   a, b
+    ld   (enemy_update_timer), a
+    
+.skip_update:
+    pop  ix
+    pop  bc
+    pop  de
+    pop  hl
+    ret
+
+.reset_timer:
+    xor  a
+    ld   (enemy_update_timer), a
+    jr   .do_update
+    
+.do_update:
     ld   ix, ActiveEnemies
     ld   b, 4              ; 4 slot
 .loop:

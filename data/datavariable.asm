@@ -41,3 +41,5 @@ ramp_col:       db 0
 current_room_items: .80 db 0
 num_room_items:     db 0
 room_ptr:       dw TheSecurityGuardLayout; MastreBedRoomLayout; UnderTheMegaTreeLayout; TheBathroomLayout; TheBridgeLayout; AtTheFootTheMegaTreeLayout; TheOffLicenceLayout; TheDriveLayout;  TheTestRoomLayout;    
+enemy_update_rate:  db 1
+enemy_update_timer: db 0

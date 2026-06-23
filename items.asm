@@ -171,6 +171,13 @@ DrawRoomItems:
     push ix
     push iy
     
+    ; Clear items_grid (512 bytes)
+    ld   hl, items_grid
+    ld   de, items_grid + 1
+    ld   (hl), 0
+    ld   bc, 511
+    ldir
+
     ; Azzera il numero di item attivi in questa stanza
     xor  a
     ld   (num_room_items), a
@@ -215,6 +222,25 @@ DrawRoomItems:
     pop  hl                ; HL = bitmap pointer
     call DrawItemGraphic
     pop  hl                ; HL = collected flag address
+    
+    ; Set items_grid[Row * 32 + Col] = Color
+    push hl
+    push de
+    ld   h, 0
+    ld   l, b              ; HL = Row
+    add  hl, hl            ; Row * 2
+    add  hl, hl            ; Row * 4
+    add  hl, hl            ; Row * 8
+    add  hl, hl            ; Row * 16
+    add  hl, hl            ; Row * 32
+    ld   d, 0
+    ld   e, c              ; DE = Col
+    add  hl, de            ; HL = Row * 32 + Col
+    ld   de, items_grid
+    add  hl, de            ; HL = pointer in items_grid
+    pop  de                ; Restore E = Colore
+    ld   (hl), e           ; Store Color
+    pop  hl
     
     ; Cacha l'item attivo per velocizzare CheckActiveItemAtCell
     ld   (iy+0), c         ; Col
@@ -494,6 +520,25 @@ CheckRoomItemsCollision:
     ; RACCOLTO!
     ld   (hl), 1           ; Imposta collected = 1
     
+    ; Clear items_grid[b * 32 + c]
+    push hl
+    push de
+    ld   h, 0
+    ld   l, b              ; HL = Row
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl
+    add  hl, hl            ; HL = Row * 32
+    ld   e, c
+    ld   d, 0
+    add  hl, de            ; HL = Row * 32 + Col
+    ld   de, items_grid
+    add  hl, de
+    ld   (hl), 0           ; Clear grid cell
+    pop  de
+    pop  hl
+    
     push hl
     
     ; Incrementa contatore oggetti raccolti
@@ -565,50 +610,32 @@ PlayCollectSound:
 ; -------------------------------------------------------------------
 CheckActiveItemAtCell:
     push de
-    push bc
-    push ix
+    push hl
     
-    ld   a, (num_room_items)
+    ld   h, 0
+    ld   l, c              ; HL = Row
+    add  hl, hl            ; Row * 2
+    add  hl, hl            ; Row * 4
+    add  hl, hl            ; Row * 8
+    add  hl, hl            ; Row * 16
+    add  hl, hl            ; Row * 32
+    ld   e, b
+    ld   d, 0
+    add  hl, de            ; HL = Row * 32 + Col
+    ld   de, items_grid
+    add  hl, de            ; HL = pointer in items_grid
+    
+    ld   a, (hl)           ; A = Color (0 if no item, >0 if active item)
     or   a
-    jr   z, .not_found
+    jr   z, .not_active
     
-    ld   ix, current_room_items
-    ld   d, a              ; D = loop counter
-.loop:
-    ld   a, (ix+0)         ; Colonna dell'item cachato
-    cp   b
-    jr   nz, .next
-    
-    ld   a, (ix+1)         ; Riga dell'item cachato
-    cp   c
-    jr   nz, .next
-    
-    ; Controlla se l'item è già stato raccolto
-    ld   l, (ix+3)
-    ld   h, (ix+4)
-    ld   a, (hl)
-    or   a
-    jr   nz, .next
-    
-    ; Trovato! Ritorna il colore in A
-    ld   a, (ix+2)
-    pop  ix
-    pop  bc
+    pop  hl
     pop  de
     scf                    ; Set carry
     ret
-
-.next:
-    push de
-    ld   de, 5
-    add  ix, de
-    pop  de
-    dec  d
-    jr   nz, .loop
-
-.not_found:
-    pop  ix
-    pop  bc
+    
+.not_active:
+    pop  hl
     pop  de
     or   a                 ; Clear carry
     ret
