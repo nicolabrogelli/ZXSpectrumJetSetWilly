@@ -94,7 +94,7 @@ TheBathroomItem:
 TheBathroomDirection:
     DEFB 2	                                ;Room to the left (Under the MegaTree)
     DEFB 0	                                ;Room to the right (The Off Licence)
-    DEFB 7	                                ;Room above (The Bathroom)
+    DEFB 33	                                ;Room above (The Bathroom)
     DEFB $FF                                ;Room below (None)
 
 TheBathroomUnused:

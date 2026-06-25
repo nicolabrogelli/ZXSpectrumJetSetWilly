@@ -191,6 +191,6 @@ RoomsListTable:
     dw UnderTheMegaTreeLayout     ; 2
     dw AtTheFootTheMegaTreeLayout ; 3
     dw TheDriveLayout             ; 4
-    dw TheSecurityGuardLayout     ; 6
-    dw TheBathroomLayout          ; 7
+    dw TheSecurityGuardLayout     ; 5
+    dw TheBathroomLayout          ; 33
     dw MastreBedRoomLayout        ; 35

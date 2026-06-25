@@ -2063,9 +2063,9 @@
  190+ 65DC 02 84            dw TheBridgeLayout            ; 1
  191+ 65DE 04 85            dw UnderTheMegaTreeLayout     ; 2
  192+ 65E0 06 86            dw AtTheFootTheMegaTreeLayout ; 3
- 193+ 65E2 08 87            dw TheDriveLayout             ; 5
- 194+ 65E4 0A 88            dw TheSecurityGuardLayout     ; 6
- 195+ 65E6 0C 89            dw TheBathroomLayout          ; 7
+ 193+ 65E2 08 87            dw TheDriveLayout             ; 4
+ 194+ 65E4 0A 88            dw TheSecurityGuardLayout     ; 5
+ 195+ 65E6 0C 89            dw TheBathroomLayout          ; 33
  196+ 65E8 0E 8A            dw MastreBedRoomLayout        ; 35
 # file closed: input.asm
   16  65EA                  include "physics.asm"
@@ -3409,7 +3409,7 @@
   53+ 6C07                  ; Stanza 6 (The Security Guard)
   54+ 6C07
   55+ 6C07                  ; Stanza 7 (The Bathroom)
-  56+ 6C07 07 17 0D 05      db 7, 23, 13, CYAN, 0                ; Oggetto 1 alla colonna X=7, riga Y=13, CYAN, (Stato: 0=attivo)
+  56+ 6C07 21 17 0D 05      db 33, 23, 13, CYAN, 0                ; Oggetto 1 alla colonna X=7, riga Y=13, CYAN, (Stato: 0=attivo)
   56+ 6C0B 00
   57+ 6C0C
   58+ 6C0C                  ; Stanza 35 (Master Bedroom)
@@ -3510,7 +3510,7 @@
  153+ 6C52 ED 52            sbc  hl, de
  154+ 6C54 20 04            jr   nz, .not_thedrive
  155+ 6C56
- 156+ 6C56 3E 05            ld   a, 5               ; Room ID = 5
+ 156+ 6C56 3E 04            ld   a, 4               ; Room ID = 4
  157+ 6C58 18 2F            jr   .set_room
  158+ 6C5A
  159+ 6C5A              .not_thedrive:
@@ -3524,7 +3524,7 @@
  167+ 6C61 ED 52            sbc  hl, de
  168+ 6C63 20 04            jr   nz, .not_securityguard
  169+ 6C65
- 170+ 6C65 3E 06            ld   a, 6               ; Room ID = 6
+ 170+ 6C65 3E 05            ld   a, 5               ; Room ID = 5
  171+ 6C67 18 20            jr   .set_room
  172+ 6C69
  173+ 6C69              .not_securityguard:
@@ -3538,7 +3538,7 @@
  181+ 6C70 ED 52            sbc  hl, de
  182+ 6C72 20 04            jr   nz, .not_thebathroom
  183+ 6C74
- 184+ 6C74 3E 07            ld   a, 7               ; Room ID = 7
+ 184+ 6C74 3E 21            ld   a, 33               ; Room ID = 33
  185+ 6C76 18 11            jr   .set_room
  186+ 6C78
  187+ 6C78              .not_thebathroom:
@@ -7083,7 +7083,7 @@
   94+ 86F1              AtTheFootTheMegaTreeDirection:
   95+ 86F1 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
   96+ 86F2 00               DEFB 0	                                ;Room to the right (The Off Licence)
-  97+ 86F3 07               DEFB 7	                                ;Room above (The Bathroom)
+  97+ 86F3 21               DEFB 33	                                ;Room above (The Bathroom)
   98+ 86F4 FF               DEFB $FF                                ;Room below (None)
   99+ 86F5
  100+ 86F5              AtTheFootTheMegaTreeUnused:
@@ -7236,7 +7236,7 @@
   94+ 87F3              TheDriveDirection:
   95+ 87F3 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
   96+ 87F4 00               DEFB 0	                                ;Room to the right (The Off Licence)
-  97+ 87F5 07               DEFB 7	                                ;Room above (The Bathroom)
+  97+ 87F5 21               DEFB 33	                                ;Room above (The Bathroom)
   98+ 87F6 FF               DEFB $FF                                ;Room below (None)
   99+ 87F7
  100+ 87F7              TheDriveUnused:
@@ -7389,7 +7389,7 @@
   94+ 88F5              TheSecurityGuardDirection:
   95+ 88F5 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
   96+ 88F6 00               DEFB 0	                                ;Room to the right (The Off Licence)
-  97+ 88F7 07               DEFB 7	                                ;Room above (The Bathroom)
+  97+ 88F7 21               DEFB 33	                                ;Room above (The Bathroom)
   98+ 88F8 FF               DEFB $FF                                ;Room below (None)
   99+ 88F9
  100+ 88F9              TheSecurityGuardUnused:
@@ -7543,7 +7543,7 @@
   94+ 89F7              TheBathroomDirection:
   95+ 89F7 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
   96+ 89F8 00               DEFB 0	                                ;Room to the right (The Off Licence)
-  97+ 89F9 07               DEFB 7	                                ;Room above (The Bathroom)
+  97+ 89F9 21               DEFB 33	                                ;Room above (The Bathroom)
   98+ 89FA FF               DEFB $FF                                ;Room below (None)
   99+ 89FB
  100+ 89FB              TheBathroomUnused:

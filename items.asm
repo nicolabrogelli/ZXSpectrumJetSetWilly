@@ -53,7 +53,7 @@ ItemsTable:
     ; Stanza 6 (The Security Guard)
 
     ; Stanza 7 (The Bathroom)
-    db 7, 23, 13, CYAN, 0                ; Oggetto 1 alla colonna X=7, riga Y=13, CYAN, (Stato: 0=attivo)  
+    db 33, 23, 13, CYAN, 0                ; Oggetto 1 alla colonna X=7, riga Y=13, CYAN, (Stato: 0=attivo)  
 
     ; Stanza 35 (Master Bedroom)
 
@@ -167,7 +167,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_securityguard
 
-    ld   a, 6               ; Room ID = 6
+    ld   a, 5               ; Room ID = 5
     jr   .set_room
 
 .not_securityguard:
@@ -181,7 +181,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_thebathroom
 
-    ld   a, 7               ; Room ID = 7
+    ld   a, 33               ; Room ID = 33
     jr   .set_room
 
 .not_thebathroom:
