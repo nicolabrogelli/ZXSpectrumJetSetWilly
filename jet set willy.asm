@@ -48,7 +48,16 @@ LoadRoomAndRestart:
     call PrintRoomName
     call DrawRoomItems
     call LoadRoomEnemies
+    
+    ld   a, (transition_active)
+    or   a
+    jr   nz, .skip_player_pos
     call LoadPositionPlayeinRoom
+    jr   .after_player_pos
+.skip_player_pos:
+    xor  a
+    ld   (transition_active), a
+.after_player_pos:
 
     ; Leggi il colore del bordo dalla stanza corrente e impostalo
     ld   hl, (room_ptr)

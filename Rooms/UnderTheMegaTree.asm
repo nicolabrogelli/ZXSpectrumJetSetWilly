@@ -92,8 +92,8 @@ UnderTheMegaTreeItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 UnderTheMegaTreeDirection:
-    DEFB 3	                                ;Room to the left (Under the MegaTree)
-    DEFB 1	                                ;Room to the right (The Off Licence)
+    DEFB 5	                                ;Room to the left (At the Foot of the MegaTree)
+    DEFB 1	                                ;Room to the right (The Bridge)
     DEFB 0	                                ;Room above (The Off Licence)
     DEFB 0	                                ;Room below (The Off Licence)
 

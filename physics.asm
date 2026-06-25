@@ -223,6 +223,21 @@ ApplyGravity:
     ld   a, b
     bit  7, a              ; Se Y è negativo (sotto 0)
     jr   z, .check_max
+    
+    ; Willy sta andando sopra il bordo superiore (Y < 0)
+    ; Controlla se c'è una stanza sopra
+    ld   hl, (room_ptr)
+    ld   de, 237           ; Offset per stanza sopra
+    add  hl, de
+    ld   a, (hl)           ; A = ID stanza sopra
+    or   a
+    jr   z, .no_up_transition
+    
+    ; C'è una stanza sopra!
+    ld   b, 112            ; Posiziona Willy in fondo alla nuova stanza
+    jp   TriggerRoomChange
+    
+.no_up_transition:
     ld   b, 0
     xor  a
     ld   (velocity_y), a
@@ -230,8 +245,23 @@ ApplyGravity:
 
 .check_max:
     ld   a, b
-    cp   112
+    cp   113               ; Se Y >= 113, Willy sta cadendo sotto il bordo inferiore
     jr   c, .save_ok
+    
+    ; Willy sta andando sotto il bordo inferiore (Y >= 113)
+    ; Controlla se c'è una stanza sotto
+    ld   hl, (room_ptr)
+    ld   de, 238           ; Offset per stanza sotto
+    add  hl, de
+    ld   a, (hl)           ; A = ID stanza sotto
+    or   a
+    jr   z, .no_down_transition
+    
+    ; C'è una stanza sotto!
+    ld   b, 0              ; Posiziona Willy in cima alla nuova stanza
+    jp   TriggerRoomChange
+    
+.no_down_transition:
     ld   b, 112
     xor  a
     ld   (velocity_y), a

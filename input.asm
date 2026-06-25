@@ -130,6 +130,41 @@ PerformRoomChange:
     
     jp   LoadRoomAndRestart
 
+TriggerRoomChange:
+    ; Input: A = nuovo room ID, C = Willy X, B = Willy Y
+    ld   (PlayerPos), bc
+    ld   (PlayerPosOld), bc
+    
+    ; Reset velocity_y
+    ld   hl, velocity_y
+    ld   (hl), 0
+    
+    ; Trova l'indirizzo del layout corrispondente da RoomsListTable
+    ld   hl, RoomsListTable
+    ld   c, a
+    ld   b, 0
+    add  hl, bc
+    add  hl, bc                    ; HL = RoomsListTable + A * 2
+    
+    ld   e, (hl)
+    inc  hl
+    ld   d, (hl)                   ; DE = puntatore al layout della nuova stanza
+    
+    ld   (room_ptr), de            ; Aggiorna room_ptr
+    
+    ; Imposta il flag di transizione per non caricare la posizione di default
+    ld   a, 1
+    ld   (transition_active), a
+    
+    ; Pulisci lo schermo
+    ld   hl, ATTR_P
+    ld   (hl), $07
+    call CLS
+    
+    ; Pulisci lo stack (rimuove il ritorno alla routine chiamante dal Main_loop)
+    pop  hl
+    jp   LoadRoomAndRestart
+
 RoomsListTable:
     dw TheTestRoomLayout          ; 0
     dw TheBridgeLayout            ; 1
