@@ -72,12 +72,12 @@ ItemsTable:
 ; Mappatura:
 ;   0 = The Off Licence
 ;   1 = The Bridge
-;   2 = Master Bedroom
-;   3 = Under The Mega Tree
+;   2 = Under The Mega Tree
 ;   4 = At The Foot Of The Mega Tree
 ;   5 = The Drive
-;   6 = The Security Guard
-;   7 = The Bathroom
+;   6 = Entrance To Hades
+;   33 = The Bathroom
+;   35 = Master Bedroom
 ;
 ; Se nessuna stanza corrisponde viene impostato:
 ;   current_room = 0
@@ -171,6 +171,20 @@ DetermineCurrentRoomID:
     jr   .set_room
 
 .not_securityguard:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con EntranceToHadesLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, EntranceToHadesLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_entrancehades
+
+    ld   a, 6               ; Room ID = 6
+    jr   .set_room
+
+.not_entrancehades:
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout

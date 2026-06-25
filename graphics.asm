@@ -1340,6 +1340,8 @@ DrawConveyorsAndRamps:
     ld   (conveyor_col), a
     
     ld   a, (conveyor_len) ; A = Length
+    or   a
+    jr   z, .draw_ramp
     ld   d, a              ; D = contatore lunghezza
     
     ; IX = room_ptr + OFFSET_CONVEYOR
@@ -1411,6 +1413,8 @@ DrawConveyorsAndRamps:
     ld   (ramp_col), a
     
     ld   a, (ramp_len)     ; A = Length
+    or   a
+    jr   z, .done_ramp
     ld   d, a              ; D = contatore lunghezza
     
     ; IX = room_ptr + OFFSET_RAMP

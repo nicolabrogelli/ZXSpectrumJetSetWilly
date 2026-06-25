@@ -143,6 +143,7 @@ RoomsStart:
     include "rooms/AtTheFootTheMegaTree.asm"
     include "rooms/TheDrive.asm"
     include "rooms/TheSecurityGuard.asm"
+    include "rooms/EntranceToHades.asm"
 
     include "rooms/TheBathroom.asm"
 
