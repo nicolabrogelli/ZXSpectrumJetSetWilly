@@ -63,9 +63,9 @@ movePlayer_right:
     jr   z, .ok_right      ; Se == PLAYER_MAX_X, va bene
     jr   nc, .clamp_right  ; Se > PLAYER_MAX_X, clampa
 .ok_right:
-    ; Controlla collisione con Wall a destra (coordinata X destra = X + 15)
+    ; Controlla collisione con Wall a destra (coordinata X destra = X + 7)
     push bc
-    add  a, 15
+    add  a, 7
     ld   c, a              ; C = coordinata X destra da testare
     call CheckWillyWallCollision
     pop  bc
@@ -81,7 +81,7 @@ movePlayer_right:
 .clamp_right:
     push bc
     ld   a, PLAYER_MAX_X
-    add  a, 15
+    add  a, 7
     ld   c, a
     call CheckWillyWallCollision
     pop  bc

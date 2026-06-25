@@ -428,9 +428,9 @@ ApplyConveyorForce:
     srl  a                 ; A = ColStart
     ld   e, a              ; E = ColStart
     
-    ; ColEnd = (WillyX + 15) / 8
+    ; ColEnd = (WillyX + 7) / 8
     ld   a, c
-    add  a, 15
+    add  a, 7
     srl  a
     srl  a
     srl  a                 ; A = ColEnd

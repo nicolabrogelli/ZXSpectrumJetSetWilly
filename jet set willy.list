@@ -1666,9 +1666,9 @@
   63+ 648E 28 02            jr   z, .ok_right      ; Se == PLAYER_MAX_X, va bene
   64+ 6490 30 13            jr   nc, .clamp_right  ; Se > PLAYER_MAX_X, clampa
   65+ 6492              .ok_right:
-  66+ 6492                  ; Controlla collisione con Wall a destra (coordinata X destra = X + 15)
+  66+ 6492                  ; Controlla collisione con Wall a destra (coordinata X destra = X + 7)
   67+ 6492 C5               push bc
-  68+ 6493 C6 0F            add  a, 15
+  68+ 6493 C6 07            add  a, 7
   69+ 6495 4F               ld   c, a              ; C = coordinata X destra da testare
   70+ 6496 CD CF 67         call CheckWillyWallCollision
   71+ 6499 C1               pop  bc
@@ -1684,7 +1684,7 @@
   81+ 64A5              .clamp_right:
   82+ 64A5 C5               push bc
   83+ 64A6 3E F5            ld   a, PLAYER_MAX_X
-  84+ 64A8 C6 0F            add  a, 15
+  84+ 64A8 C6 07            add  a, 7
   85+ 64AA 4F               ld   c, a
   86+ 64AB CD CF 67         call CheckWillyWallCollision
   87+ 64AE C1               pop  bc
@@ -2300,9 +2300,9 @@
  428+ 6768 CB 3F            srl  a                 ; A = ColStart
  429+ 676A 5F               ld   e, a              ; E = ColStart
  430+ 676B
- 431+ 676B                  ; ColEnd = (WillyX + 15) / 8
+ 431+ 676B                  ; ColEnd = (WillyX + 7) / 8
  432+ 676B 79               ld   a, c
- 433+ 676C C6 0F            add  a, 15
+ 433+ 676C C6 07            add  a, 7
  434+ 676E CB 3F            srl  a
  435+ 6770 CB 3F            srl  a
  436+ 6772 CB 3F            srl  a                 ; A = ColEnd
@@ -3191,583 +3191,1245 @@
   63+ 6B89 FF               db $FF                        ; Fine tabella
   64+ 6B8A
   65+ 6B8A              ; -------------------------------------------------------------------
-  66+ 6B8A              ; Determina e imposta il current_room ID in base a room_ptr
-  67+ 6B8A              ; -------------------------------------------------------------------
-  68+ 6B8A              DetermineCurrentRoomID:
-  69+ 6B8A E5               push hl
-  70+ 6B8B D5               push de
-  71+ 6B8C
-  72+ 6B8C 2A AD 7D         ld   hl, (room_ptr)
-  73+ 6B8F
-  74+ 6B8F                  ; Test Room?
-  75+ 6B8F 11 10 8B         ld   de, TheTestRoomLayout
-  76+ 6B92 B7               or   a
-  77+ 6B93 ED 52            sbc  hl, de
-  78+ 6B95 20 04            jr   nz, .not_test
-  79+ 6B97 3E 00            ld   a, 0
-  80+ 6B99 18 7A            jr   .set_room
-  81+ 6B9B
-  82+ 6B9B              .not_test:
-  83+ 6B9B 2A AD 7D         ld   hl, (room_ptr)
-  84+ 6B9E 11 02 84         ld   de, TheBridgeLayout
-  85+ 6BA1 B7               or   a
-  86+ 6BA2 ED 52            sbc  hl, de
-  87+ 6BA4 20 04            jr   nz, .not_bridge
-  88+ 6BA6 3E 01            ld   a, 1
-  89+ 6BA8 18 6B            jr   .set_room
-  90+ 6BAA
-  91+ 6BAA              .not_bridge:
-  92+ 6BAA 2A AD 7D         ld   hl, (room_ptr)
-  93+ 6BAD 11 00 83         ld   de, TheOffLicenceLayout
-  94+ 6BB0 B7               or   a
-  95+ 6BB1 ED 52            sbc  hl, de
-  96+ 6BB3 20 04            jr   nz, .not_office
-  97+ 6BB5 3E 02            ld   a, 2
-  98+ 6BB7 18 5C            jr   .set_room
-  99+ 6BB9
- 100+ 6BB9              .not_office:
- 101+ 6BB9 2A AD 7D         ld   hl, (room_ptr)
- 102+ 6BBC 11 0E 8A         ld   de, MastreBedRoomLayout
- 103+ 6BBF B7               or   a
- 104+ 6BC0 ED 52            sbc  hl, de
- 105+ 6BC2 20 04            jr   nz, .not_masterbed
- 106+ 6BC4 3E 03            ld   a, 3
- 107+ 6BC6 18 4D            jr   .set_room
- 108+ 6BC8
- 109+ 6BC8              .not_masterbed:
- 110+ 6BC8 2A AD 7D         ld   hl, (room_ptr)
- 111+ 6BCB 11 04 85         ld   de, UnderTheMegaTreeLayout
- 112+ 6BCE B7               or   a
- 113+ 6BCF ED 52            sbc  hl, de
- 114+ 6BD1 20 04            jr   nz, .not_undertree
- 115+ 6BD3 3E 04            ld   a, 4
- 116+ 6BD5 18 3E            jr   .set_room
- 117+ 6BD7
- 118+ 6BD7              .not_undertree:
- 119+ 6BD7 2A AD 7D         ld   hl, (room_ptr)
- 120+ 6BDA 11 06 86         ld   de, AtTheFootTheMegaTreeLayout
- 121+ 6BDD B7               or   a
- 122+ 6BDE ED 52            sbc  hl, de
- 123+ 6BE0 20 04            jr   nz, .not_foottree
- 124+ 6BE2 3E 05            ld   a, 5
- 125+ 6BE4 18 2F            jr   .set_room
- 126+ 6BE6
- 127+ 6BE6              .not_foottree:
- 128+ 6BE6 2A AD 7D         ld   hl, (room_ptr)
- 129+ 6BE9 11 08 87         ld   de, TheDriveLayout
- 130+ 6BEC B7               or   a
- 131+ 6BED ED 52            sbc  hl, de
- 132+ 6BEF 20 04            jr   nz, .not_thedrive
- 133+ 6BF1 3E 06            ld   a, 6
- 134+ 6BF3 18 20            jr   .set_room
- 135+ 6BF5
- 136+ 6BF5              .not_thedrive:
- 137+ 6BF5 2A AD 7D         ld   hl, (room_ptr)
- 138+ 6BF8 11 0A 88         ld   de, TheSecurityGuardLayout
- 139+ 6BFB B7               or   a
- 140+ 6BFC ED 52            sbc  hl, de
- 141+ 6BFE 20 04            jr   nz, .not_securityguard
- 142+ 6C00 3E 07            ld   a, 7
- 143+ 6C02 18 11            jr   .set_room
- 144+ 6C04
- 145+ 6C04              .not_securityguard:
- 146+ 6C04 2A AD 7D         ld   hl, (room_ptr)
- 147+ 6C07 11 0C 89         ld   de, TheBathroomLayout
- 148+ 6C0A B7               or   a
- 149+ 6C0B ED 52            sbc  hl, de
- 150+ 6C0D 20 04            jr   nz, .unknown
- 151+ 6C0F 3E 08            ld   a, 8
- 152+ 6C11 18 02            jr   .set_room
- 153+ 6C13
- 154+ 6C13              .unknown:
- 155+ 6C13 3E 00            ld   a, 0                    ; Default fallback
- 156+ 6C15
- 157+ 6C15              .set_room:
- 158+ 6C15 32 53 7D         ld   (current_room), a
- 159+ 6C18
- 160+ 6C18 D1               pop  de
- 161+ 6C19 E1               pop  hl
- 162+ 6C1A C9               ret
- 163+ 6C1B
- 164+ 6C1B              ; -------------------------------------------------------------------
- 165+ 6C1B              ; Disegna tutti gli oggetti attivi della stanza corrente
- 166+ 6C1B              ; -------------------------------------------------------------------
- 167+ 6C1B              DrawRoomItems:
- 168+ 6C1B E5               push hl
- 169+ 6C1C D5               push de
- 170+ 6C1D C5               push bc
- 171+ 6C1E DD E5            push ix
- 172+ 6C20 FD E5            push iy
- 173+ 6C22
- 174+ 6C22                  ; Clear items_grid (512 bytes)
- 175+ 6C22 21 00 90         ld   hl, items_grid
- 176+ 6C25 11 01 90         ld   de, items_grid + 1
- 177+ 6C28 36 00            ld   (hl), 0
- 178+ 6C2A 01 FF 01         ld   bc, 511
- 179+ 6C2D ED B0            ldir
- 180+ 6C2F
- 181+ 6C2F                  ; Azzera il numero di item attivi in questa stanza
- 182+ 6C2F AF               xor  a
- 183+ 6C30 32 AC 7D         ld   (num_room_items), a
- 184+ 6C33 FD 21 5C 7D      ld   iy, current_room_items
- 185+ 6C37
- 186+ 6C37                  ; Ottieni il puntatore alla grafica dell'item della stanza corrente:
- 187+ 6C37                  ; room_ptr + OFFSET_ITEM_GRAPHIC
- 188+ 6C37 2A AD 7D         ld   hl, (room_ptr)
- 189+ 6C3A 11 E3 00         ld   de, OFFSET_ITEM_GRAPHIC
- 190+ 6C3D 19               add  hl, de
- 191+ 6C3E E5               push hl
- 192+ 6C3F DD E1            pop  ix                ; IX = puntatore alla grafica dell'item della stanza
- 193+ 6C41
- 194+ 6C41 21 2F 6B         ld   hl, ItemsTable
- 195+ 6C44              .loop:
- 196+ 6C44 7E               ld   a, (hl)           ; A = Room ID
- 197+ 6C45 FE FF            cp   $FF               ; Fine tabella?
- 198+ 6C47 28 53            jr   z, .done
- 199+ 6C49
- 200+ 6C49                  ; Confronta con la stanza corrente
- 201+ 6C49 57               ld   d, a              ; D = Room ID dell'item
- 202+ 6C4A 3A 53 7D         ld   a, (current_room)
- 203+ 6C4D BA               cp   d
- 204+ 6C4E 20 45            jr   nz, .next_item    ; Stanza diversa, salta
- 205+ 6C50
- 206+ 6C50                  ; Leggi coordinate, colore e stato
- 207+ 6C50 23               inc  hl                ; HL punta a X
- 208+ 6C51 4E               ld   c, (hl)           ; C = X colonna
- 209+ 6C52 23               inc  hl                ; HL punta a Y
- 210+ 6C53 46               ld   b, (hl)           ; B = Y riga
- 211+ 6C54 23               inc  hl                ; HL punta al Colore
- 212+ 6C55 5E               ld   e, (hl)           ; E = Colore
- 213+ 6C56 23               inc  hl                ; HL punta a collected flag
- 214+ 6C57 7E               ld   a, (hl)           ; A = collected flag
- 215+ 6C58 B7               or   a
- 216+ 6C59 20 3E            jr   nz, .next_no_inc  ; Già raccolto, salta
- 217+ 6C5B
- 218+ 6C5B                  ; Disegna l'item!
- 219+ 6C5B                  ; B = Row, C = Col, IX = bitmap graphic (8 byte), E = Colore
- 220+ 6C5B E5               push hl
- 221+ 6C5C DD E5            push ix
- 222+ 6C5E E1               pop  hl                ; HL = bitmap pointer
- 223+ 6C5F CD A4 6C         call DrawItemGraphic
- 224+ 6C62 E1               pop  hl                ; HL = collected flag address
- 225+ 6C63
- 226+ 6C63                  ; Set items_grid[Row * 32 + Col] = Color
- 227+ 6C63 E5               push hl
- 228+ 6C64 D5               push de
- 229+ 6C65 26 00            ld   h, 0
- 230+ 6C67 68               ld   l, b              ; HL = Row
- 231+ 6C68 29               add  hl, hl            ; Row * 2
- 232+ 6C69 29               add  hl, hl            ; Row * 4
- 233+ 6C6A 29               add  hl, hl            ; Row * 8
- 234+ 6C6B 29               add  hl, hl            ; Row * 16
- 235+ 6C6C 29               add  hl, hl            ; Row * 32
- 236+ 6C6D 16 00            ld   d, 0
- 237+ 6C6F 59               ld   e, c              ; DE = Col
- 238+ 6C70 19               add  hl, de            ; HL = Row * 32 + Col
- 239+ 6C71 11 00 90         ld   de, items_grid
- 240+ 6C74 19               add  hl, de            ; HL = pointer in items_grid
- 241+ 6C75 D1               pop  de                ; Restore E = Colore
- 242+ 6C76 73               ld   (hl), e           ; Store Color
- 243+ 6C77 E1               pop  hl
- 244+ 6C78
- 245+ 6C78                  ; Cacha l'item attivo per velocizzare CheckActiveItemAtCell
- 246+ 6C78 FD 71 00         ld   (iy+0), c         ; Col
- 247+ 6C7B FD 70 01         ld   (iy+1), b         ; Row
- 248+ 6C7E FD 73 02         ld   (iy+2), e         ; Color
- 249+ 6C81 FD 75 03         ld   (iy+3), l         ; Pointer to collected flag (Low)
- 250+ 6C84 FD 74 04         ld   (iy+4), h         ; Pointer to collected flag (High)
- 251+ 6C87
- 252+ 6C87 01 05 00         ld   bc, 5
- 253+ 6C8A FD 09            add  iy, bc
- 254+ 6C8C
- 255+ 6C8C 3A AC 7D         ld   a, (num_room_items)
- 256+ 6C8F 3C               inc  a
- 257+ 6C90 32 AC 7D         ld   (num_room_items), a
- 258+ 6C93
- 259+ 6C93 18 04            jr   .next_no_inc
- 260+ 6C95
- 261+ 6C95              .next_item:
- 262+ 6C95 23               inc  hl                ; salta X
- 263+ 6C96 23               inc  hl                ; salta Y
- 264+ 6C97 23               inc  hl                ; salta colore
- 265+ 6C98 23               inc  hl                ; salta collected
- 266+ 6C99              .next_no_inc:
- 267+ 6C99 23               inc  hl                ; vai al prossimo record (prossimo Room ID)
- 268+ 6C9A 18 A8            jr   .loop
- 269+ 6C9C
- 270+ 6C9C              .done:
- 271+ 6C9C FD E1            pop  iy
- 272+ 6C9E DD E1            pop  ix
- 273+ 6CA0 D1               pop  de
- 274+ 6CA1 C1               pop  bc
- 275+ 6CA2 E1               pop  hl
- 276+ 6CA3 C9               ret
- 277+ 6CA4
- 278+ 6CA4              ; -------------------------------------------------------------------
- 279+ 6CA4              ; Disegna un singolo item (8x8 pixel) a schermo con colore personalizzato
- 280+ 6CA4              ; Input: B = Row (3..18), C = Col (0..31), HL = Puntatore al bitmap (8 byte), E = Colore
- 281+ 6CA4              ; -------------------------------------------------------------------
- 282+ 6CA4              DrawItemGraphic:
- 283+ 6CA4 C5               push bc
- 284+ 6CA5 D5               push de
- 285+ 6CA6 E5               push hl
- 286+ 6CA7
- 287+ 6CA7                  ; 1. Calcola l'indirizzo dello schermo (bitmap) per Row B, Col C, scanline 0
- 288+ 6CA7 78               ld   a, b
- 289+ 6CA8 E6 18            and  $18
- 290+ 6CAA C6 40            add  a, $40
- 291+ 6CAC 57               ld   d, a              ; D = High byte dell'indirizzo dello schermo
- 292+ 6CAD
- 293+ 6CAD 78               ld   a, b
- 294+ 6CAE E6 07            and  7
- 295+ 6CB0 87               add  a, a              ; *2
- 296+ 6CB1 87               add  a, a              ; *4
- 297+ 6CB2 87               add  a, a              ; *8
- 298+ 6CB3 87               add  a, a              ; *16
- 299+ 6CB4 87               add  a, a              ; *32
- 300+ 6CB5 81               add  a, c              ; + Col C
- 301+ 6CB6 5F               ld   e, a              ; E = Low byte dell'indirizzo dello schermo
- 302+ 6CB7
- 303+ 6CB7                  ; 2. Copia gli 8 byte del bitmap dello sprite
- 304+ 6CB7 C5               push bc                ; Salva BC (contiene Row e Col)
- 305+ 6CB8 06 08            ld   b, 8              ; 8 scanline
- 306+ 6CBA              .line_loop:
- 307+ 6CBA 7E               ld   a, (hl)
- 308+ 6CBB 12               ld   (de), a
- 309+ 6CBC 14               inc  d                 ; Prossima scanline
- 310+ 6CBD 23               inc  hl
- 311+ 6CBE 05               dec  b
- 312+ 6CBF 20 F9            jr   nz, .line_loop
- 313+ 6CC1 C1               pop  bc                ; Ripristina BC
- 314+ 6CC2
- 315+ 6CC2                  ; 3. Calcola l'indirizzo degli attributi dello schermo
- 316+ 6CC2                  ; HL = $5800 + B * 32 + C
- 317+ 6CC2 26 00            ld   h, 0
- 318+ 6CC4 68               ld   l, b              ; HL = B (Row)
- 319+ 6CC5 29               add  hl, hl            ; *2
- 320+ 6CC6 29               add  hl, hl            ; *4
- 321+ 6CC7 29               add  hl, hl            ; *8
- 322+ 6CC8 29               add  hl, hl            ; *16
- 323+ 6CC9 29               add  hl, hl            ; *32
- 324+ 6CCA
- 325+ 6CCA 79               ld   a, c              ; A = Col
- 326+ 6CCB 85               add  a, l
- 327+ 6CCC 6F               ld   l, a
- 328+ 6CCD 30 01            jr   nc, .no_carry
- 329+ 6CCF 24               inc  h
- 330+ 6CD0              .no_carry:
- 331+ 6CD0                  ; HL = B * 32 + C
- 332+ 6CD0 11 00 58         ld   de, $5800
- 333+ 6CD3 19               add  hl, de            ; HL = AttrAddr
- 334+ 6CD4
- 335+ 6CD4                  ; Ripristina i registri dallo stack per estrarre il colore in E
- 336+ 6CD4                  ; Lo stack ha: HL (originale), DE (originale con colore in E), BC (originale)
- 337+ 6CD4 C1               pop  bc                ; BC = HL originale
- 338+ 6CD5 D1               pop  de                ; DE = DE originale (colore in E)
- 339+ 6CD6
- 340+ 6CD6 7B               ld   a, e              ; A = Colore
- 341+ 6CD7 77               ld   (hl), a           ; Scrivi in memoria attributi (HL)
- 342+ 6CD8
- 343+ 6CD8                  ; Ripristina lo stack e i registri originari
- 344+ 6CD8 C5               push bc                ; Rimetti HL originale sulla pila
- 345+ 6CD9 E1               pop  hl                ; HL = HL originale
- 346+ 6CDA C1               pop  bc                ; BC = BC originale
- 347+ 6CDB C9               ret
- 348+ 6CDC
- 349+ 6CDC              ; -------------------------------------------------------------------
- 350+ 6CDC              ; Ripristina la cella dello sfondo originale per cancellare l'item
- 351+ 6CDC              ; Input: B = Row (3..18), C = Col (0..31)
- 352+ 6CDC              ; -------------------------------------------------------------------
- 353+ 6CDC              RestoreBackgroundCell:
- 354+ 6CDC FD E5            push iy                ; Preserva IY
- 355+ 6CDE C5               push bc
- 356+ 6CDF D5               push de
- 357+ 6CE0 E5               push hl
- 358+ 6CE1 DD E5            push ix
- 359+ 6CE3
- 360+ 6CE3 C5               push bc
- 361+ 6CE4 FD E1            pop  iy                ; IY = original BC (IYH = Row, IYL = Col)
- 362+ 6CE6
- 363+ 6CE6                  ; Riga di layout: r = B
- 364+ 6CE6 78               ld   a, b
- 365+ 6CE7                  ; A = r (0..15)
- 366+ 6CE7
- 367+ 6CE7                  ; Colonna: c = C (Col)
- 368+ 6CE7 CD 1E 68         call GetCellFromUnpacked ; A = cell type (0..3)
- 369+ 6CEA
- 370+ 6CEA ED 5B AD 7D      ld   de, (room_ptr)
- 371+ 6CEE B7               or   a
- 372+ 6CEF 20 06            jr   nz, .not_bg
- 373+ 6CF1 21 A0 00         ld   hl, OFFSET_BG
- 374+ 6CF4 19               add  hl, de
- 375+ 6CF5 18 16            jr   .draw_cell
- 376+ 6CF7              .not_bg:
- 377+ 6CF7 3D               dec  a
- 378+ 6CF8 20 06            jr   nz, .not_floor
- 379+ 6CFA 21 A9 00         ld   hl, OFFSET_FLOOR
- 380+ 6CFD 19               add  hl, de
- 381+ 6CFE 18 0D            jr   .draw_cell
- 382+ 6D00              .not_floor:
- 383+ 6D00 3D               dec  a
- 384+ 6D01 20 06            jr   nz, .not_wall
- 385+ 6D03 21 B2 00         ld   hl, OFFSET_WALL
- 386+ 6D06 19               add  hl, de
- 387+ 6D07 18 04            jr   .draw_cell
- 388+ 6D09              .not_wall:
- 389+ 6D09 21 BB 00         ld   hl, OFFSET_NASTY
- 390+ 6D0C 19               add  hl, de
- 391+ 6D0D
- 392+ 6D0D              .draw_cell:
- 393+ 6D0D E5               push hl
- 394+ 6D0E DD E1            pop  ix                ; IX = tile pointer
- 395+ 6D10
- 396+ 6D10 FD E5            push iy
- 397+ 6D12 C1               pop  bc                ; B = Row, C = Col
- 398+ 6D13
- 399+ 6D13 CD 8C 61         call DrawTile
- 400+ 6D16
- 401+ 6D16 DD E1            pop  ix
- 402+ 6D18 E1               pop  hl
- 403+ 6D19 D1               pop  de
- 404+ 6D1A C1               pop  bc
- 405+ 6D1B FD E1            pop  iy                ; Ripristina IY
- 406+ 6D1D C9               ret
- 407+ 6D1E
- 408+ 6D1E              ; -------------------------------------------------------------------
- 409+ 6D1E              ; Controlla se Willy collide con un item (pixel-level check)
- 410+ 6D1E              ; Input: A = ItemX (0..31), H = ItemY (3..18)
- 411+ 6D1E              ; Output: Carry set se collide, altrimenti clear
- 412+ 6D1E              ; -------------------------------------------------------------------
- 413+ 6D1E              CheckWillyItemCollision:
- 414+ 6D1E C5               push bc
- 415+ 6D1F D5               push de
- 416+ 6D20 E5               push hl
- 417+ 6D21
- 418+ 6D21                  ; Calcola ItemLeft = ItemX * 8, ItemRight = ItemLeft + 7
- 419+ 6D21 6F               ld   l, a
- 420+ 6D22 7D               ld   a, l
- 421+ 6D23 87               add  a, a              ; *2
- 422+ 6D24 87               add  a, a              ; *4
- 423+ 6D25 87               add  a, a              ; *8
- 424+ 6D26 5F               ld   e, a              ; E = ItemLeft
- 425+ 6D27 C6 07            add  a, 7
- 426+ 6D29 57               ld   d, a              ; D = ItemRight
- 427+ 6D2A
- 428+ 6D2A                  ; WillyLeft = WillyX (C), WillyRight = WillyX + 15
- 429+ 6D2A ED 4B 3F 7A      ld   bc, (PlayerPos)   ; C = WillyX, B = WillyY
- 430+ 6D2E
- 431+ 6D2E                  ; Controlla X: WillyX <= ItemRight (D) e WillyX + 15 >= ItemLeft (E)
- 432+ 6D2E 79               ld   a, c
- 433+ 6D2F BA               cp   d
- 434+ 6D30 28 04            jr   z, .x_ok
- 435+ 6D32 38 02            jr   c, .x_ok
- 436+ 6D34 18 29            jr   .no_collision
- 437+ 6D36              .x_ok:
- 438+ 6D36 C6 0F            add  a, 15
- 439+ 6D38 BB               cp   e
- 440+ 6D39 28 04            jr   z, .y_check
- 441+ 6D3B 30 02            jr   nc, .y_check
- 442+ 6D3D 18 20            jr   .no_collision
- 443+ 6D3F
- 444+ 6D3F              .y_check:
- 445+ 6D3F E1               pop  hl                ; Recupera HL originale (H = ItemY)
- 446+ 6D40 E5               push hl
- 447+ 6D41 7C               ld   a, h
- 448+ 6D42 87               add  a, a              ; *2
- 449+ 6D43 87               add  a, a              ; *4
- 450+ 6D44 87               add  a, a              ; *8
- 451+ 6D45 5F               ld   e, a              ; E = ItemTop
- 452+ 6D46 C6 07            add  a, 7
- 453+ 6D48 57               ld   d, a              ; D = ItemBottom
- 454+ 6D49
- 455+ 6D49                  ; WillyTop = WillyY (B), WillyBottom = WillyY + 15
- 456+ 6D49 78               ld   a, b
- 457+ 6D4A BA               cp   d
- 458+ 6D4B 28 04            jr   z, .y_ok
- 459+ 6D4D 38 02            jr   c, .y_ok
- 460+ 6D4F 18 0E            jr   .no_collision
- 461+ 6D51              .y_ok:
- 462+ 6D51 C6 0F            add  a, 15
- 463+ 6D53 BB               cp   e
- 464+ 6D54 28 04            jr   z, .collision
- 465+ 6D56 30 02            jr   nc, .collision
- 466+ 6D58 18 05            jr   .no_collision
- 467+ 6D5A
- 468+ 6D5A              .collision:
- 469+ 6D5A E1               pop  hl
- 470+ 6D5B D1               pop  de
- 471+ 6D5C C1               pop  bc
- 472+ 6D5D 37               scf                    ; Set carry (collisione!)
- 473+ 6D5E C9               ret
- 474+ 6D5F
- 475+ 6D5F              .no_collision:
- 476+ 6D5F E1               pop  hl
- 477+ 6D60 D1               pop  de
- 478+ 6D61 C1               pop  bc
- 479+ 6D62 B7               or   a                 ; Clear carry
- 480+ 6D63 C9               ret
- 481+ 6D64
- 482+ 6D64              ; -------------------------------------------------------------------
- 483+ 6D64              ; Controlla se Willy tocca un item attivo nella stanza corrente
- 484+ 6D64              ; -------------------------------------------------------------------
- 485+ 6D64              CheckRoomItemsCollision:
- 486+ 6D64 E5               push hl
- 487+ 6D65 D5               push de
- 488+ 6D66 C5               push bc
- 489+ 6D67
- 490+ 6D67 21 2F 6B         ld   hl, ItemsTable
- 491+ 6D6A              .loop:
- 492+ 6D6A 7E               ld   a, (hl)           ; A = Room ID
- 493+ 6D6B FE FF            cp   $FF               ; Fine tabella?
- 494+ 6D6D 28 4D            jr   z, .done
- 495+ 6D6F
- 496+ 6D6F                  ; Stanza corrente?
- 497+ 6D6F 57               ld   d, a              ; D = Room ID
- 498+ 6D70 3A 53 7D         ld   a, (current_room)
- 499+ 6D73 BA               cp   d
- 500+ 6D74 20 3F            jr   nz, .next_item
- 501+ 6D76
- 502+ 6D76 23               inc  hl                ; HL punta a X
- 503+ 6D77 4E               ld   c, (hl)           ; C = X
- 504+ 6D78 23               inc  hl                ; HL punta a Y
- 505+ 6D79 46               ld   b, (hl)           ; B = Y
- 506+ 6D7A 23               inc  hl                ; HL punta al colore (lo saltiamo per il controllo collisione)
- 507+ 6D7B 23               inc  hl                ; HL punta a collected
- 508+ 6D7C 7E               ld   a, (hl)           ; A = collected
- 509+ 6D7D B7               or   a
- 510+ 6D7E 20 39            jr   nz, .next_no_inc  ; Già raccolto, salta
- 511+ 6D80
- 512+ 6D80                  ; Controlla collisione
- 513+ 6D80 79               ld   a, c
- 514+ 6D81 E5               push hl
- 515+ 6D82 60               ld   h, b
- 516+ 6D83 CD 1E 6D         call CheckWillyItemCollision
- 517+ 6D86 E1               pop  hl
- 518+ 6D87 30 30            jr   nc, .next_no_inc
- 519+ 6D89
- 520+ 6D89                  ; RACCOLTO!
- 521+ 6D89 36 01            ld   (hl), 1           ; Imposta collected = 1
- 522+ 6D8B
- 523+ 6D8B                  ; Clear items_grid[b * 32 + c]
- 524+ 6D8B E5               push hl
- 525+ 6D8C D5               push de
- 526+ 6D8D 26 00            ld   h, 0
- 527+ 6D8F 68               ld   l, b              ; HL = Row
- 528+ 6D90 29               add  hl, hl
- 529+ 6D91 29               add  hl, hl
- 530+ 6D92 29               add  hl, hl
- 531+ 6D93 29               add  hl, hl
- 532+ 6D94 29               add  hl, hl            ; HL = Row * 32
- 533+ 6D95 59               ld   e, c
- 534+ 6D96 16 00            ld   d, 0
- 535+ 6D98 19               add  hl, de            ; HL = Row * 32 + Col
- 536+ 6D99 11 00 90         ld   de, items_grid
- 537+ 6D9C 19               add  hl, de
- 538+ 6D9D 36 00            ld   (hl), 0           ; Clear grid cell
- 539+ 6D9F D1               pop  de
- 540+ 6DA0 E1               pop  hl
- 541+ 6DA1
- 542+ 6DA1 E5               push hl
- 543+ 6DA2
- 544+ 6DA2                  ; Incrementa contatore oggetti raccolti
- 545+ 6DA2 3A 49 7A         ld   a, (items_collected)
- 546+ 6DA5 3C               inc  a
- 547+ 6DA6 32 49 7A         ld   (items_collected), a
- 548+ 6DA9
- 549+ 6DA9                  ; Aggiorna stringa e visualizzazione a schermo
- 550+ 6DA9 CD CB 60         call UpdateItemsCollectedDisplay
- 551+ 6DAC
- 552+ 6DAC                  ; Cancella item dallo schermo
- 553+ 6DAC CD DC 6C         call RestoreBackgroundCell
- 554+ 6DAF
- 555+ 6DAF                  ; Suono di raccolta
- 556+ 6DAF CD C0 6D         call PlayCollectSound
- 557+ 6DB2
- 558+ 6DB2 E1               pop  hl
- 559+ 6DB3
- 560+ 6DB3 18 04            jr   .next_no_inc
- 561+ 6DB5
- 562+ 6DB5              .next_item:
- 563+ 6DB5 23               inc  hl                ; salta X
- 564+ 6DB6 23               inc  hl                ; salta Y
- 565+ 6DB7 23               inc  hl                ; salta colore
- 566+ 6DB8 23               inc  hl                ; salta collected
- 567+ 6DB9              .next_no_inc:
- 568+ 6DB9 23               inc  hl                ; vai al prossimo item
- 569+ 6DBA 18 AE            jr   .loop
- 570+ 6DBC
- 571+ 6DBC              .done:
- 572+ 6DBC C1               pop  bc
- 573+ 6DBD D1               pop  de
- 574+ 6DBE E1               pop  hl
- 575+ 6DBF C9               ret
- 576+ 6DC0
- 577+ 6DC0              ; -------------------------------------------------------------------
- 578+ 6DC0              ; Riproduce un breve segnale acustico all'altoparlante
- 579+ 6DC0              ; -------------------------------------------------------------------
- 580+ 6DC0              PlayCollectSound:
- 581+ 6DC0 C5               push bc
- 582+ 6DC1 D5               push de
- 583+ 6DC2
- 584+ 6DC2 06 78            ld   b, 120            ; Cicli della nota
- 585+ 6DC4              .sound_loop:
- 586+ 6DC4 3A 4B 7A         ld   a, (room_border_color)
- 587+ 6DC7 F6 10            or   $10               ; Speaker ON (bit 4 = 1)
- 588+ 6DC9 D3 FE            out  ($fe), a
- 589+ 6DCB 0E 3C            ld   c, 60             ; Mezzo periodo delay
- 590+ 6DCD 0D           .d1: dec  c
- 591+ 6DCE 20 FD            jr   nz, .d1
- 592+ 6DD0
- 593+ 6DD0 3A 4B 7A         ld   a, (room_border_color)
- 594+ 6DD3 E6 EF            and  $ef               ; Speaker OFF (bit 4 = 0)
- 595+ 6DD5 D3 FE            out  ($fe), a
- 596+ 6DD7 0E 3C            ld   c, 60             ; Mezzo periodo delay
- 597+ 6DD9 0D           .d2: dec  c
- 598+ 6DDA 20 FD            jr   nz, .d2
- 599+ 6DDC
- 600+ 6DDC 10 E6            djnz .sound_loop
- 601+ 6DDE
- 602+ 6DDE D1               pop  de
- 603+ 6DDF C1               pop  bc
- 604+ 6DE0 C9               ret
- 605+ 6DE1
- 606+ 6DE1              ; -------------------------------------------------------------------
- 607+ 6DE1              ; Cerca se c'è un item attivo (non raccolto) alla cella specificata.
- 608+ 6DE1              ; Input: B = Colonna (0..31), C = Riga (0..15)
- 609+ 6DE1              ; Output: Carry flag impostato se trovato, in tal caso HL punta all'inizio dell'entry in ItemsTable.
- 610+ 6DE1              ; -------------------------------------------------------------------
- 611+ 6DE1              CheckActiveItemAtCell:
- 612+ 6DE1 D5               push de
- 613+ 6DE2 E5               push hl
- 614+ 6DE3
- 615+ 6DE3 26 00            ld   h, 0
- 616+ 6DE5 69               ld   l, c              ; HL = Row
- 617+ 6DE6 29               add  hl, hl            ; Row * 2
- 618+ 6DE7 29               add  hl, hl            ; Row * 4
- 619+ 6DE8 29               add  hl, hl            ; Row * 8
- 620+ 6DE9 29               add  hl, hl            ; Row * 16
- 621+ 6DEA 29               add  hl, hl            ; Row * 32
- 622+ 6DEB 58               ld   e, b
- 623+ 6DEC 16 00            ld   d, 0
- 624+ 6DEE 19               add  hl, de            ; HL = Row * 32 + Col
- 625+ 6DEF 11 00 90         ld   de, items_grid
- 626+ 6DF2 19               add  hl, de            ; HL = pointer in items_grid
- 627+ 6DF3
- 628+ 6DF3 7E               ld   a, (hl)           ; A = Color (0 if no item, >0 if active item)
- 629+ 6DF4 B7               or   a
- 630+ 6DF5 28 04            jr   z, .not_active
- 631+ 6DF7
- 632+ 6DF7 E1               pop  hl
- 633+ 6DF8 D1               pop  de
- 634+ 6DF9 37               scf                    ; Set carry
- 635+ 6DFA C9               ret
- 636+ 6DFB
- 637+ 6DFB              .not_active:
- 638+ 6DFB E1               pop  hl
- 639+ 6DFC D1               pop  de
- 640+ 6DFD B7               or   a                 ; Clear carry
- 641+ 6DFE C9               ret
- 642+ 6DFF
+  66+ 6B8A              ; DetermineCurrentRoomID
+  67+ 6B8A              ;
+  68+ 6B8A              ; Determina l'ID numerico della stanza corrente confrontando
+  69+ 6B8A              ; il puntatore room_ptr con gli indirizzi dei layout delle stanze.
+  70+ 6B8A              ;
+  71+ 6B8A              ; Se viene trovata una corrispondenza:
+  72+ 6B8A              ;   A = ID della stanza
+  73+ 6B8A              ;   current_room = A
+  74+ 6B8A              ;
+  75+ 6B8A              ; Mappatura:
+  76+ 6B8A              ;   0 = Test Room
+  77+ 6B8A              ;   1 = The Bridge
+  78+ 6B8A              ;   2 = The Off Licence
+  79+ 6B8A              ;   3 = Master Bedroom
+  80+ 6B8A              ;   4 = Under The Mega Tree
+  81+ 6B8A              ;   5 = At The Foot Of The Mega Tree
+  82+ 6B8A              ;   6 = The Drive
+  83+ 6B8A              ;   7 = The Security Guard
+  84+ 6B8A              ;   8 = The Bathroom
+  85+ 6B8A              ;
+  86+ 6B8A              ; Se nessuna stanza corrisponde viene impostato:
+  87+ 6B8A              ;   current_room = 0
+  88+ 6B8A              ; -------------------------------------------------------------------
+  89+ 6B8A              DetermineCurrentRoomID:
+  90+ 6B8A
+  91+ 6B8A                  ; Salva i registri utilizzati
+  92+ 6B8A E5               push hl
+  93+ 6B8B D5               push de
+  94+ 6B8C
+  95+ 6B8C                  ; Carica il puntatore alla stanza corrente
+  96+ 6B8C 2A AD 7D         ld   hl, (room_ptr)
+  97+ 6B8F
+  98+ 6B8F                  ; ---------------------------------------------------------------
+  99+ 6B8F                  ; Confronto con TheTestRoomLayout
+ 100+ 6B8F                  ; ---------------------------------------------------------------
+ 101+ 6B8F 11 10 8B         ld   de, TheTestRoomLayout
+ 102+ 6B92 B7               or   a                  ; Azzera il Carry
+ 103+ 6B93 ED 52            sbc  hl, de             ; HL - DE
+ 104+ 6B95 20 04            jr   nz, .not_test      ; Se diversi passa al test successivo
+ 105+ 6B97
+ 106+ 6B97 3E 00            ld   a, 0               ; Room ID = 0
+ 107+ 6B99 18 7A            jr   .set_room
+ 108+ 6B9B
+ 109+ 6B9B              .not_test:
+ 110+ 6B9B
+ 111+ 6B9B                  ; ---------------------------------------------------------------
+ 112+ 6B9B                  ; Confronto con TheBridgeLayout
+ 113+ 6B9B                  ; ---------------------------------------------------------------
+ 114+ 6B9B 2A AD 7D         ld   hl, (room_ptr)
+ 115+ 6B9E 11 02 84         ld   de, TheBridgeLayout
+ 116+ 6BA1 B7               or   a
+ 117+ 6BA2 ED 52            sbc  hl, de
+ 118+ 6BA4 20 04            jr   nz, .not_bridge
+ 119+ 6BA6
+ 120+ 6BA6 3E 01            ld   a, 1               ; Room ID = 1
+ 121+ 6BA8 18 6B            jr   .set_room
+ 122+ 6BAA
+ 123+ 6BAA              .not_bridge:
+ 124+ 6BAA
+ 125+ 6BAA                  ; ---------------------------------------------------------------
+ 126+ 6BAA                  ; Confronto con TheOffLicenceLayout
+ 127+ 6BAA                  ; ---------------------------------------------------------------
+ 128+ 6BAA 2A AD 7D         ld   hl, (room_ptr)
+ 129+ 6BAD 11 00 83         ld   de, TheOffLicenceLayout
+ 130+ 6BB0 B7               or   a
+ 131+ 6BB1 ED 52            sbc  hl, de
+ 132+ 6BB3 20 04            jr   nz, .not_office
+ 133+ 6BB5
+ 134+ 6BB5 3E 02            ld   a, 2               ; Room ID = 2
+ 135+ 6BB7 18 5C            jr   .set_room
+ 136+ 6BB9
+ 137+ 6BB9              .not_office:
+ 138+ 6BB9
+ 139+ 6BB9                  ; ---------------------------------------------------------------
+ 140+ 6BB9                  ; Confronto con MastreBedRoomLayout
+ 141+ 6BB9                  ; ---------------------------------------------------------------
+ 142+ 6BB9 2A AD 7D         ld   hl, (room_ptr)
+ 143+ 6BBC 11 0E 8A         ld   de, MastreBedRoomLayout
+ 144+ 6BBF B7               or   a
+ 145+ 6BC0 ED 52            sbc  hl, de
+ 146+ 6BC2 20 04            jr   nz, .not_masterbed
+ 147+ 6BC4
+ 148+ 6BC4 3E 03            ld   a, 3               ; Room ID = 3
+ 149+ 6BC6 18 4D            jr   .set_room
+ 150+ 6BC8
+ 151+ 6BC8              .not_masterbed:
+ 152+ 6BC8
+ 153+ 6BC8                  ; ---------------------------------------------------------------
+ 154+ 6BC8                  ; Confronto con UnderTheMegaTreeLayout
+ 155+ 6BC8                  ; ---------------------------------------------------------------
+ 156+ 6BC8 2A AD 7D         ld   hl, (room_ptr)
+ 157+ 6BCB 11 04 85         ld   de, UnderTheMegaTreeLayout
+ 158+ 6BCE B7               or   a
+ 159+ 6BCF ED 52            sbc  hl, de
+ 160+ 6BD1 20 04            jr   nz, .not_undertree
+ 161+ 6BD3
+ 162+ 6BD3 3E 04            ld   a, 4               ; Room ID = 4
+ 163+ 6BD5 18 3E            jr   .set_room
+ 164+ 6BD7
+ 165+ 6BD7              .not_undertree:
+ 166+ 6BD7
+ 167+ 6BD7                  ; ---------------------------------------------------------------
+ 168+ 6BD7                  ; Confronto con AtTheFootTheMegaTreeLayout
+ 169+ 6BD7                  ; ---------------------------------------------------------------
+ 170+ 6BD7 2A AD 7D         ld   hl, (room_ptr)
+ 171+ 6BDA 11 06 86         ld   de, AtTheFootTheMegaTreeLayout
+ 172+ 6BDD B7               or   a
+ 173+ 6BDE ED 52            sbc  hl, de
+ 174+ 6BE0 20 04            jr   nz, .not_foottree
+ 175+ 6BE2
+ 176+ 6BE2 3E 05            ld   a, 5               ; Room ID = 5
+ 177+ 6BE4 18 2F            jr   .set_room
+ 178+ 6BE6
+ 179+ 6BE6              .not_foottree:
+ 180+ 6BE6
+ 181+ 6BE6                  ; ---------------------------------------------------------------
+ 182+ 6BE6                  ; Confronto con TheDriveLayout
+ 183+ 6BE6                  ; ---------------------------------------------------------------
+ 184+ 6BE6 2A AD 7D         ld   hl, (room_ptr)
+ 185+ 6BE9 11 08 87         ld   de, TheDriveLayout
+ 186+ 6BEC B7               or   a
+ 187+ 6BED ED 52            sbc  hl, de
+ 188+ 6BEF 20 04            jr   nz, .not_thedrive
+ 189+ 6BF1
+ 190+ 6BF1 3E 06            ld   a, 6               ; Room ID = 6
+ 191+ 6BF3 18 20            jr   .set_room
+ 192+ 6BF5
+ 193+ 6BF5              .not_thedrive:
+ 194+ 6BF5
+ 195+ 6BF5                  ; ---------------------------------------------------------------
+ 196+ 6BF5                  ; Confronto con TheSecurityGuardLayout
+ 197+ 6BF5                  ; ---------------------------------------------------------------
+ 198+ 6BF5 2A AD 7D         ld   hl, (room_ptr)
+ 199+ 6BF8 11 0A 88         ld   de, TheSecurityGuardLayout
+ 200+ 6BFB B7               or   a
+ 201+ 6BFC ED 52            sbc  hl, de
+ 202+ 6BFE 20 04            jr   nz, .not_securityguard
+ 203+ 6C00
+ 204+ 6C00 3E 07            ld   a, 7               ; Room ID = 7
+ 205+ 6C02 18 11            jr   .set_room
+ 206+ 6C04
+ 207+ 6C04              .not_securityguard:
+ 208+ 6C04
+ 209+ 6C04                  ; ---------------------------------------------------------------
+ 210+ 6C04                  ; Confronto con TheBathroomLayout
+ 211+ 6C04                  ; ---------------------------------------------------------------
+ 212+ 6C04 2A AD 7D         ld   hl, (room_ptr)
+ 213+ 6C07 11 0C 89         ld   de, TheBathroomLayout
+ 214+ 6C0A B7               or   a
+ 215+ 6C0B ED 52            sbc  hl, de
+ 216+ 6C0D 20 04            jr   nz, .unknown
+ 217+ 6C0F
+ 218+ 6C0F 3E 08            ld   a, 8               ; Room ID = 8
+ 219+ 6C11 18 02            jr   .set_room
+ 220+ 6C13
+ 221+ 6C13              .unknown:
+ 222+ 6C13
+ 223+ 6C13                  ; Nessuna corrispondenza trovata.
+ 224+ 6C13                  ; Imposta la stanza di default.
+ 225+ 6C13 3E 00            ld   a, 0
+ 226+ 6C15
+ 227+ 6C15              .set_room:
+ 228+ 6C15
+ 229+ 6C15                  ; Salva l'ID della stanza corrente
+ 230+ 6C15 32 53 7D         ld   (current_room), a
+ 231+ 6C18
+ 232+ 6C18                  ; Ripristina i registri
+ 233+ 6C18 D1               pop  de
+ 234+ 6C19 E1               pop  hl
+ 235+ 6C1A
+ 236+ 6C1A C9               ret
+ 237+ 6C1B
+ 238+ 6C1B              ; -------------------------------------------------------------------
+ 239+ 6C1B              ; DrawRoomItems
+ 240+ 6C1B              ;
+ 241+ 6C1B              ; Disegna tutti gli oggetti attivi appartenenti alla stanza corrente.
+ 242+ 6C1B              ;
+ 243+ 6C1B              ; Operazioni eseguite:
+ 244+ 6C1B              ;   1. Azzera la griglia items_grid.
+ 245+ 6C1B              ;   2. Svuota la cache degli oggetti attivi.
+ 246+ 6C1B              ;   3. Scansiona ItemsTable.
+ 247+ 6C1B              ;   4. Per ogni item della stanza corrente:
+ 248+ 6C1B              ;        - verifica se è già stato raccolto
+ 249+ 6C1B              ;        - disegna la grafica
+ 250+ 6C1B              ;        - aggiorna items_grid
+ 251+ 6C1B              ;        - memorizza l'item nella cache current_room_items
+ 252+ 6C1B              ;   5. Aggiorna num_room_items.
+ 253+ 6C1B              ;
+ 254+ 6C1B              ; Record ItemsTable:
+ 255+ 6C1B              ;   +0  Room ID
+ 256+ 6C1B              ;   +1  X (colonna)
+ 257+ 6C1B              ;   +2  Y (riga)
+ 258+ 6C1B              ;   +3  Colore
+ 259+ 6C1B              ;   +4  Collected flag
+ 260+ 6C1B              ;
+ 261+ 6C1B              ; Cache current_room_items:
+ 262+ 6C1B              ;   +0  Colonna
+ 263+ 6C1B              ;   +1  Riga
+ 264+ 6C1B              ;   +2  Colore
+ 265+ 6C1B              ;   +3  Collected flag ptr (Low)
+ 266+ 6C1B              ;   +4  Collected flag ptr (High)
+ 267+ 6C1B              ;
+ 268+ 6C1B              ; Ogni record cache occupa 5 byte.
+ 269+ 6C1B              ; -------------------------------------------------------------------
+ 270+ 6C1B              DrawRoomItems:
+ 271+ 6C1B
+ 272+ 6C1B                  ; Salva tutti i registri utilizzati
+ 273+ 6C1B E5               push hl
+ 274+ 6C1C D5               push de
+ 275+ 6C1D C5               push bc
+ 276+ 6C1E DD E5            push ix
+ 277+ 6C20 FD E5            push iy
+ 278+ 6C22
+ 279+ 6C22                  ; ---------------------------------------------------------------
+ 280+ 6C22                  ; Azzera items_grid (32 x 16 = 512 byte)
+ 281+ 6C22                  ; ---------------------------------------------------------------
+ 282+ 6C22 21 00 90         ld   hl, items_grid
+ 283+ 6C25 11 01 90         ld   de, items_grid + 1
+ 284+ 6C28 36 00            ld   (hl), 0
+ 285+ 6C2A 01 FF 01         ld   bc, 511
+ 286+ 6C2D ED B0            ldir
+ 287+ 6C2F
+ 288+ 6C2F                  ; ---------------------------------------------------------------
+ 289+ 6C2F                  ; Nessun item attivo nella stanza
+ 290+ 6C2F                  ; ---------------------------------------------------------------
+ 291+ 6C2F AF               xor  a
+ 292+ 6C30 32 AC 7D         ld   (num_room_items), a
+ 293+ 6C33
+ 294+ 6C33                  ; IY punta alla cache degli item attivi
+ 295+ 6C33 FD 21 5C 7D      ld   iy, current_room_items
+ 296+ 6C37
+ 297+ 6C37                  ; ---------------------------------------------------------------
+ 298+ 6C37                  ; Recupera il puntatore alla bitmap dell'oggetto associato
+ 299+ 6C37                  ; alla stanza corrente.
+ 300+ 6C37                  ;
+ 301+ 6C37                  ; room_ptr + OFFSET_ITEM_GRAPHIC
+ 302+ 6C37                  ; ---------------------------------------------------------------
+ 303+ 6C37 2A AD 7D         ld   hl, (room_ptr)
+ 304+ 6C3A 11 E3 00         ld   de, OFFSET_ITEM_GRAPHIC
+ 305+ 6C3D 19               add  hl, de
+ 306+ 6C3E
+ 307+ 6C3E E5               push hl
+ 308+ 6C3F DD E1            pop  ix                ; IX = bitmap item
+ 309+ 6C41
+ 310+ 6C41                  ; ---------------------------------------------------------------
+ 311+ 6C41                  ; Inizio scansione della tabella degli item
+ 312+ 6C41                  ; ---------------------------------------------------------------
+ 313+ 6C41 21 2F 6B         ld   hl, ItemsTable
+ 314+ 6C44
+ 315+ 6C44              .loop:
+ 316+ 6C44
+ 317+ 6C44                  ; ---------------------------------------------------------------
+ 318+ 6C44                  ; Legge il Room ID del record corrente
+ 319+ 6C44                  ; ---------------------------------------------------------------
+ 320+ 6C44 7E               ld   a, (hl)
+ 321+ 6C45
+ 322+ 6C45                  ; $FF indica fine tabella
+ 323+ 6C45 FE FF            cp   $FF
+ 324+ 6C47 28 53            jr   z, .done
+ 325+ 6C49
+ 326+ 6C49                  ; ---------------------------------------------------------------
+ 327+ 6C49                  ; Verifica se l'item appartiene alla stanza corrente
+ 328+ 6C49                  ; ---------------------------------------------------------------
+ 329+ 6C49 57               ld   d, a
+ 330+ 6C4A
+ 331+ 6C4A 3A 53 7D         ld   a, (current_room)
+ 332+ 6C4D BA               cp   d
+ 333+ 6C4E 20 45            jr   nz, .next_item
+ 334+ 6C50
+ 335+ 6C50                  ; ---------------------------------------------------------------
+ 336+ 6C50                  ; Legge i dati dell'item
+ 337+ 6C50                  ; ---------------------------------------------------------------
+ 338+ 6C50
+ 339+ 6C50 23               inc  hl
+ 340+ 6C51 4E               ld   c, (hl)           ; X (colonna)
+ 341+ 6C52
+ 342+ 6C52 23               inc  hl
+ 343+ 6C53 46               ld   b, (hl)           ; Y (riga)
+ 344+ 6C54
+ 345+ 6C54 23               inc  hl
+ 346+ 6C55 5E               ld   e, (hl)           ; Colore
+ 347+ 6C56
+ 348+ 6C56 23               inc  hl
+ 349+ 6C57 7E               ld   a, (hl)           ; Collected flag
+ 350+ 6C58
+ 351+ 6C58                  ; Se diverso da zero l'item è già stato raccolto
+ 352+ 6C58 B7               or   a
+ 353+ 6C59 20 3E            jr   nz, .next_no_inc
+ 354+ 6C5B
+ 355+ 6C5B                  ; ---------------------------------------------------------------
+ 356+ 6C5B                  ; Disegna l'item sullo schermo
+ 357+ 6C5B                  ;
+ 358+ 6C5B                  ; B = Row
+ 359+ 6C5B                  ; C = Column
+ 360+ 6C5B                  ; HL = bitmap pointer
+ 361+ 6C5B                  ; E = Color
+ 362+ 6C5B                  ; ---------------------------------------------------------------
+ 363+ 6C5B E5               push hl
+ 364+ 6C5C
+ 365+ 6C5C DD E5            push ix
+ 366+ 6C5E E1               pop  hl
+ 367+ 6C5F
+ 368+ 6C5F CD A4 6C         call DrawItemGraphic
+ 369+ 6C62
+ 370+ 6C62 E1               pop  hl                ; ritorna al flag collected
+ 371+ 6C63
+ 372+ 6C63                  ; ---------------------------------------------------------------
+ 373+ 6C63                  ; Aggiorna items_grid
+ 374+ 6C63                  ;
+ 375+ 6C63                  ; Calcolo:
+ 376+ 6C63                  ;   offset = Row * 32 + Col
+ 377+ 6C63                  ; ---------------------------------------------------------------
+ 378+ 6C63 E5               push hl
+ 379+ 6C64 D5               push de
+ 380+ 6C65
+ 381+ 6C65 26 00            ld   h, 0
+ 382+ 6C67 68               ld   l, b              ; HL = Row
+ 383+ 6C68
+ 384+ 6C68 29               add  hl, hl            ; *2
+ 385+ 6C69 29               add  hl, hl            ; *4
+ 386+ 6C6A 29               add  hl, hl            ; *8
+ 387+ 6C6B 29               add  hl, hl            ; *16
+ 388+ 6C6C 29               add  hl, hl            ; *32
+ 389+ 6C6D
+ 390+ 6C6D 16 00            ld   d, 0
+ 391+ 6C6F 59               ld   e, c              ; DE = Col
+ 392+ 6C70
+ 393+ 6C70 19               add  hl, de            ; Row*32 + Col
+ 394+ 6C71
+ 395+ 6C71 11 00 90         ld   de, items_grid
+ 396+ 6C74 19               add  hl, de            ; puntatore nella griglia
+ 397+ 6C75
+ 398+ 6C75 D1               pop  de                ; ripristina colore
+ 399+ 6C76
+ 400+ 6C76 73               ld   (hl), e           ; salva colore cella
+ 401+ 6C77
+ 402+ 6C77 E1               pop  hl
+ 403+ 6C78
+ 404+ 6C78                  ; ---------------------------------------------------------------
+ 405+ 6C78                  ; Salva l'item nella cache della stanza
+ 406+ 6C78                  ;
+ 407+ 6C78                  ; Questo evita di dover scansionare tutta ItemsTable
+ 408+ 6C78                  ; durante il controllo delle collisioni.
+ 409+ 6C78                  ; ---------------------------------------------------------------
+ 410+ 6C78
+ 411+ 6C78 FD 71 00         ld   (iy+0), c         ; Colonna
+ 412+ 6C7B FD 70 01         ld   (iy+1), b         ; Riga
+ 413+ 6C7E FD 73 02         ld   (iy+2), e         ; Colore
+ 414+ 6C81
+ 415+ 6C81                  ; Salva il puntatore al flag "collected"
+ 416+ 6C81 FD 75 03         ld   (iy+3), l         ; Low byte
+ 417+ 6C84 FD 74 04         ld   (iy+4), h         ; High byte
+ 418+ 6C87
+ 419+ 6C87                  ; Passa al record successivo della cache
+ 420+ 6C87 01 05 00         ld   bc, 5
+ 421+ 6C8A FD 09            add  iy, bc
+ 422+ 6C8C
+ 423+ 6C8C                  ; Incrementa il numero di item attivi
+ 424+ 6C8C 3A AC 7D         ld   a, (num_room_items)
+ 425+ 6C8F 3C               inc  a
+ 426+ 6C90 32 AC 7D         ld   (num_room_items), a
+ 427+ 6C93
+ 428+ 6C93 18 04            jr   .next_no_inc
+ 429+ 6C95
+ 430+ 6C95              .next_item:
+ 431+ 6C95
+ 432+ 6C95                  ; ---------------------------------------------------------------
+ 433+ 6C95                  ; L'item non appartiene alla stanza corrente.
+ 434+ 6C95                  ; Salta i campi del record:
+ 435+ 6C95                  ;   X
+ 436+ 6C95                  ;   Y
+ 437+ 6C95                  ;   Color
+ 438+ 6C95                  ;   Collected
+ 439+ 6C95                  ; ---------------------------------------------------------------
+ 440+ 6C95 23               inc  hl
+ 441+ 6C96 23               inc  hl
+ 442+ 6C97 23               inc  hl
+ 443+ 6C98 23               inc  hl
+ 444+ 6C99
+ 445+ 6C99              .next_no_inc:
+ 446+ 6C99
+ 447+ 6C99                  ; ---------------------------------------------------------------
+ 448+ 6C99                  ; Avanza al record successivo
+ 449+ 6C99                  ; (prossimo Room ID)
+ 450+ 6C99                  ; ---------------------------------------------------------------
+ 451+ 6C99 23               inc  hl
+ 452+ 6C9A 18 A8            jr   .loop
+ 453+ 6C9C
+ 454+ 6C9C              .done:
+ 455+ 6C9C
+ 456+ 6C9C                  ; Ripristina i registri
+ 457+ 6C9C FD E1            pop  iy
+ 458+ 6C9E DD E1            pop  ix
+ 459+ 6CA0 D1               pop  de
+ 460+ 6CA1 C1               pop  bc
+ 461+ 6CA2 E1               pop  hl
+ 462+ 6CA3
+ 463+ 6CA3 C9               ret
+ 464+ 6CA4
+ 465+ 6CA4              ; -------------------------------------------------------------------
+ 466+ 6CA4              ; DrawItemGraphic
+ 467+ 6CA4              ;
+ 468+ 6CA4              ; Disegna un oggetto 8x8 pixel sullo schermo dello ZX Spectrum
+ 469+ 6CA4              ; utilizzando una bitmap di 8 byte e un attributo colore.
+ 470+ 6CA4              ;
+ 471+ 6CA4              ; Input:
+ 472+ 6CA4              ;   B = Riga attributi (3..18)
+ 473+ 6CA4              ;   C = Colonna attributi (0..31)
+ 474+ 6CA4              ;   HL = Puntatore alla bitmap dell'oggetto (8 byte)
+ 475+ 6CA4              ;   E = Attributo colore
+ 476+ 6CA4              ;
+ 477+ 6CA4              ; Output:
+ 478+ 6CA4              ;   Nessuno
+ 479+ 6CA4              ;
+ 480+ 6CA4              ; Registri preservati:
+ 481+ 6CA4              ;   BC, DE, HL
+ 482+ 6CA4              ; -------------------------------------------------------------------
+ 483+ 6CA4              DrawItemGraphic:
+ 484+ 6CA4
+ 485+ 6CA4                  ; Salva i registri originali
+ 486+ 6CA4 C5               push bc
+ 487+ 6CA5 D5               push de
+ 488+ 6CA6 E5               push hl
+ 489+ 6CA7
+ 490+ 6CA7                  ; ---------------------------------------------------------------
+ 491+ 6CA7                  ; Calcolo indirizzo bitmap dello Spectrum
+ 492+ 6CA7                  ;
+ 493+ 6CA7                  ; Ogni item occupa una cella attributi (8x8 pixel).
+ 494+ 6CA7                  ;
+ 495+ 6CA7                  ; Formula:
+ 496+ 6CA7                  ;   High = $40 + (Row AND $18)
+ 497+ 6CA7                  ;   Low  = (Row AND 7) * 32 + Col
+ 498+ 6CA7                  ;
+ 499+ 6CA7                  ; DE conterrà l'indirizzo della prima scanline.
+ 500+ 6CA7                  ; ---------------------------------------------------------------
+ 501+ 6CA7
+ 502+ 6CA7 78               ld   a, b
+ 503+ 6CA8 E6 18            and  $18
+ 504+ 6CAA C6 40            add  a, $40
+ 505+ 6CAC 57               ld   d, a              ; Byte alto indirizzo video
+ 506+ 6CAD
+ 507+ 6CAD 78               ld   a, b
+ 508+ 6CAE E6 07            and  7                 ; Riga interna al blocco da 8
+ 509+ 6CB0
+ 510+ 6CB0 87               add  a, a              ; *2
+ 511+ 6CB1 87               add  a, a              ; *4
+ 512+ 6CB2 87               add  a, a              ; *8
+ 513+ 6CB3 87               add  a, a              ; *16
+ 514+ 6CB4 87               add  a, a              ; *32
+ 515+ 6CB5
+ 516+ 6CB5 81               add  a, c              ; + colonna
+ 517+ 6CB6
+ 518+ 6CB6 5F               ld   e, a              ; Byte basso indirizzo video
+ 519+ 6CB7
+ 520+ 6CB7                  ; ---------------------------------------------------------------
+ 521+ 6CB7                  ; Disegno bitmap
+ 522+ 6CB7                  ;
+ 523+ 6CB7                  ; Copia 8 byte consecutivi nella memoria video.
+ 524+ 6CB7                  ; Ogni byte rappresenta una scanline da 8 pixel.
+ 525+ 6CB7                  ; ---------------------------------------------------------------
+ 526+ 6CB7
+ 527+ 6CB7 C5               push bc                ; Conserva Row e Col
+ 528+ 6CB8
+ 529+ 6CB8 06 08            ld   b, 8              ; Numero scanline
+ 530+ 6CBA
+ 531+ 6CBA              .line_loop:
+ 532+ 6CBA
+ 533+ 6CBA 7E               ld   a, (hl)           ; Legge scanline bitmap
+ 534+ 6CBB 12               ld   (de), a           ; Scrive nella memoria video
+ 535+ 6CBC
+ 536+ 6CBC 14               inc  d                 ; Scanline successiva
+ 537+ 6CBD 23               inc  hl                ; Byte bitmap successivo
+ 538+ 6CBE
+ 539+ 6CBE 05               dec  b
+ 540+ 6CBF 20 F9            jr   nz, .line_loop
+ 541+ 6CC1
+ 542+ 6CC1 C1               pop  bc                ; Ripristina Row e Col
+ 543+ 6CC2
+ 544+ 6CC2                  ; ---------------------------------------------------------------
+ 545+ 6CC2                  ; Calcolo indirizzo attributo
+ 546+ 6CC2                  ;
+ 547+ 6CC2                  ; Formula:
+ 548+ 6CC2                  ;   AttrAddr = $5800 + Row * 32 + Col
+ 549+ 6CC2                  ;
+ 550+ 6CC2                  ; HL conterrà l'indirizzo della cella attributi.
+ 551+ 6CC2                  ; ---------------------------------------------------------------
+ 552+ 6CC2
+ 553+ 6CC2 26 00            ld   h, 0
+ 554+ 6CC4 68               ld   l, b              ; HL = Row
+ 555+ 6CC5
+ 556+ 6CC5 29               add  hl, hl            ; *2
+ 557+ 6CC6 29               add  hl, hl            ; *4
+ 558+ 6CC7 29               add  hl, hl            ; *8
+ 559+ 6CC8 29               add  hl, hl            ; *16
+ 560+ 6CC9 29               add  hl, hl            ; *32
+ 561+ 6CCA
+ 562+ 6CCA 79               ld   a, c              ; A = Colonna
+ 563+ 6CCB
+ 564+ 6CCB 85               add  a, l
+ 565+ 6CCC 6F               ld   l, a
+ 566+ 6CCD
+ 567+ 6CCD 30 01            jr   nc, .no_carry
+ 568+ 6CCF 24               inc  h
+ 569+ 6CD0
+ 570+ 6CD0              .no_carry:
+ 571+ 6CD0
+ 572+ 6CD0                  ; HL = Row * 32 + Col
+ 573+ 6CD0
+ 574+ 6CD0 11 00 58         ld   de, $5800
+ 575+ 6CD3 19               add  hl, de            ; HL = indirizzo attributi
+ 576+ 6CD4
+ 577+ 6CD4                  ; ---------------------------------------------------------------
+ 578+ 6CD4                  ; Recupera il colore originale dallo stack.
+ 579+ 6CD4                  ;
+ 580+ 6CD4                  ; Layout stack:
+ 581+ 6CD4                  ;   HL originale
+ 582+ 6CD4                  ;   DE originale (E = colore)
+ 583+ 6CD4                  ;   BC originale
+ 584+ 6CD4                  ; ---------------------------------------------------------------
+ 585+ 6CD4
+ 586+ 6CD4 C1               pop  bc                ; Recupera HL originale
+ 587+ 6CD5 D1               pop  de                ; Recupera DE originale
+ 588+ 6CD6
+ 589+ 6CD6                  ; ---------------------------------------------------------------
+ 590+ 6CD6                  ; Scrive l'attributo colore
+ 591+ 6CD6                  ; ---------------------------------------------------------------
+ 592+ 6CD6
+ 593+ 6CD6 7B               ld   a, e              ; A = colore
+ 594+ 6CD7 77               ld   (hl), a           ; Scrive nella RAM attributi
+ 595+ 6CD8
+ 596+ 6CD8                  ; ---------------------------------------------------------------
+ 597+ 6CD8                  ; Ripristina HL e BC originali
+ 598+ 6CD8                  ; ---------------------------------------------------------------
+ 599+ 6CD8
+ 600+ 6CD8 C5               push bc
+ 601+ 6CD9 E1               pop  hl                ; HL originale
+ 602+ 6CDA
+ 603+ 6CDA C1               pop  bc                ; BC originale
+ 604+ 6CDB
+ 605+ 6CDB C9               ret
+ 606+ 6CDC
+ 607+ 6CDC              ; -------------------------------------------------------------------
+ 608+ 6CDC              ; RestoreBackgroundCell
+ 609+ 6CDC              ;
+ 610+ 6CDC              ; Ripristina il contenuto originale di una cella della stanza.
+ 611+ 6CDC              ; Viene utilizzata principalmente quando un item viene raccolto:
+ 612+ 6CDC              ; invece di lasciare un "buco", la routine ridisegna il tile
+ 613+ 6CDC              ; originale presente nella mappa della stanza.
+ 614+ 6CDC              ;
+ 615+ 6CDC              ; Input:
+ 616+ 6CDC              ;   B = Row (3..18)
+ 617+ 6CDC              ;   C = Col (0..31)
+ 618+ 6CDC              ;
+ 619+ 6CDC              ; Utilizza:
+ 620+ 6CDC              ;   room_ptr -> struttura dati della stanza corrente
+ 621+ 6CDC              ;   GetCellFromUnpacked -> restituisce il tipo di cella
+ 622+ 6CDC              ;   DrawTile -> ridisegna il tile selezionato
+ 623+ 6CDC              ;
+ 624+ 6CDC              ; Tipi di cella:
+ 625+ 6CDC              ;   0 = Background
+ 626+ 6CDC              ;   1 = Floor
+ 627+ 6CDC              ;   2 = Wall
+ 628+ 6CDC              ;   3 = Nasty
+ 629+ 6CDC              ; -------------------------------------------------------------------
+ 630+ 6CDC              RestoreBackgroundCell:
+ 631+ 6CDC
+ 632+ 6CDC                  ; Salva tutti i registri utilizzati
+ 633+ 6CDC FD E5            push iy
+ 634+ 6CDE C5               push bc
+ 635+ 6CDF D5               push de
+ 636+ 6CE0 E5               push hl
+ 637+ 6CE1 DD E5            push ix
+ 638+ 6CE3
+ 639+ 6CE3                  ; ---------------------------------------------------------------
+ 640+ 6CE3                  ; Conserva Row e Col in IY.
+ 641+ 6CE3                  ;
+ 642+ 6CE3                  ; Dopo la chiamata a GetCellFromUnpacked e i calcoli successivi
+ 643+ 6CE3                  ; BC potrebbe essere modificato.
+ 644+ 6CE3                  ; ---------------------------------------------------------------
+ 645+ 6CE3 C5               push bc
+ 646+ 6CE4 FD E1            pop  iy                ; IYH = Row, IYL = Col
+ 647+ 6CE6
+ 648+ 6CE6                  ; ---------------------------------------------------------------
+ 649+ 6CE6                  ; Determina quale tipo di cella è presente nella posizione
+ 650+ 6CE6                  ; specificata.
+ 651+ 6CE6                  ;
+ 652+ 6CE6                  ; Input:
+ 653+ 6CE6                  ;   B = Row
+ 654+ 6CE6                  ;   C = Col
+ 655+ 6CE6                  ;
+ 656+ 6CE6                  ; Output:
+ 657+ 6CE6                  ;   A = tipo cella
+ 658+ 6CE6                  ; ---------------------------------------------------------------
+ 659+ 6CE6 78               ld   a, b
+ 660+ 6CE7
+ 661+ 6CE7 CD 1E 68         call GetCellFromUnpacked
+ 662+ 6CEA
+ 663+ 6CEA                  ; ---------------------------------------------------------------
+ 664+ 6CEA                  ; Recupera il puntatore alla stanza corrente.
+ 665+ 6CEA                  ;
+ 666+ 6CEA                  ; DE = base della struttura stanza
+ 667+ 6CEA                  ; ---------------------------------------------------------------
+ 668+ 6CEA ED 5B AD 7D      ld   de, (room_ptr)
+ 669+ 6CEE
+ 670+ 6CEE                  ; ---------------------------------------------------------------
+ 671+ 6CEE                  ; Seleziona il tile corretto in base al tipo di cella.
+ 672+ 6CEE                  ;
+ 673+ 6CEE                  ; A = 0 -> Background
+ 674+ 6CEE                  ; A = 1 -> Floor
+ 675+ 6CEE                  ; A = 2 -> Wall
+ 676+ 6CEE                  ; A = 3 -> Nasty
+ 677+ 6CEE                  ; ---------------------------------------------------------------
+ 678+ 6CEE
+ 679+ 6CEE B7               or   a
+ 680+ 6CEF 20 06            jr   nz, .not_bg
+ 681+ 6CF1
+ 682+ 6CF1                  ; Background
+ 683+ 6CF1 21 A0 00         ld   hl, OFFSET_BG
+ 684+ 6CF4 19               add  hl, de
+ 685+ 6CF5 18 16            jr   .draw_cell
+ 686+ 6CF7
+ 687+ 6CF7              .not_bg:
+ 688+ 6CF7
+ 689+ 6CF7 3D               dec  a
+ 690+ 6CF8 20 06            jr   nz, .not_floor
+ 691+ 6CFA
+ 692+ 6CFA                  ; Floor
+ 693+ 6CFA 21 A9 00         ld   hl, OFFSET_FLOOR
+ 694+ 6CFD 19               add  hl, de
+ 695+ 6CFE 18 0D            jr   .draw_cell
+ 696+ 6D00
+ 697+ 6D00              .not_floor:
+ 698+ 6D00
+ 699+ 6D00 3D               dec  a
+ 700+ 6D01 20 06            jr   nz, .not_wall
+ 701+ 6D03
+ 702+ 6D03                  ; Wall
+ 703+ 6D03 21 B2 00         ld   hl, OFFSET_WALL
+ 704+ 6D06 19               add  hl, de
+ 705+ 6D07 18 04            jr   .draw_cell
+ 706+ 6D09
+ 707+ 6D09              .not_wall:
+ 708+ 6D09
+ 709+ 6D09                  ; Nasty
+ 710+ 6D09 21 BB 00         ld   hl, OFFSET_NASTY
+ 711+ 6D0C 19               add  hl, de
+ 712+ 6D0D
+ 713+ 6D0D              .draw_cell:
+ 714+ 6D0D
+ 715+ 6D0D                  ; ---------------------------------------------------------------
+ 716+ 6D0D                  ; HL punta ora alla grafica del tile da ridisegnare.
+ 717+ 6D0D                  ;
+ 718+ 6D0D                  ; DrawTile si aspetta:
+ 719+ 6D0D                  ;   IX = puntatore tile
+ 720+ 6D0D                  ;   B  = Row
+ 721+ 6D0D                  ;   C  = Col
+ 722+ 6D0D                  ; ---------------------------------------------------------------
+ 723+ 6D0D E5               push hl
+ 724+ 6D0E DD E1            pop  ix
+ 725+ 6D10
+ 726+ 6D10                  ; Ripristina Row e Col salvati in IY
+ 727+ 6D10 FD E5            push iy
+ 728+ 6D12 C1               pop  bc
+ 729+ 6D13
+ 730+ 6D13                  ; Disegna il tile originale
+ 731+ 6D13 CD 8C 61         call DrawTile
+ 732+ 6D16
+ 733+ 6D16                  ; ---------------------------------------------------------------
+ 734+ 6D16                  ; Ripristina i registri salvati
+ 735+ 6D16                  ; ---------------------------------------------------------------
+ 736+ 6D16 DD E1            pop  ix
+ 737+ 6D18 E1               pop  hl
+ 738+ 6D19 D1               pop  de
+ 739+ 6D1A C1               pop  bc
+ 740+ 6D1B FD E1            pop  iy
+ 741+ 6D1D
+ 742+ 6D1D C9               ret
+ 743+ 6D1E
+ 744+ 6D1E              ; -------------------------------------------------------------------
+ 745+ 6D1E              ; CheckWillyItemCollision
+ 746+ 6D1E              ;
+ 747+ 6D1E              ; Verifica se Willy collide con un item utilizzando il controllo
+ 748+ 6D1E              ; di sovrapposizione tra rettangoli (Bounding Box Collision).
+ 749+ 6D1E              ;
+ 750+ 6D1E              ; Input:
+ 751+ 6D1E              ;   A = ItemX (colonna attributi 0..31)
+ 752+ 6D1E              ;   H = ItemY (riga attributi 3..18)
+ 753+ 6D1E              ;
+ 754+ 6D1E              ; Coordinate item:
+ 755+ 6D1E              ;   Ogni item occupa una cella da 8x8 pixel.
+ 756+ 6D1E              ;
+ 757+ 6D1E              ; Coordinate Willy:
+ 758+ 6D1E              ;   Willy occupa un rettangolo di 16x16 pixel.
+ 759+ 6D1E              ;
+ 760+ 6D1E              ; Output:
+ 761+ 6D1E              ;   Carry Set   = collisione rilevata
+ 762+ 6D1E              ;   Carry Clear = nessuna collisione
+ 763+ 6D1E              ;
+ 764+ 6D1E              ; Registri preservati:
+ 765+ 6D1E              ;   BC, DE, HL
+ 766+ 6D1E              ; -------------------------------------------------------------------
+ 767+ 6D1E              CheckWillyItemCollision:
+ 768+ 6D1E
+ 769+ 6D1E                  ; Salva i registri utilizzati
+ 770+ 6D1E C5               push bc
+ 771+ 6D1F D5               push de
+ 772+ 6D20 E5               push hl
+ 773+ 6D21
+ 774+ 6D21                  ; ---------------------------------------------------------------
+ 775+ 6D21                  ; Calcola il bounding box orizzontale dell'item
+ 776+ 6D21                  ;
+ 777+ 6D21                  ; ItemLeft  = ItemX * 8
+ 778+ 6D21                  ; ItemRight = ItemLeft + 7
+ 779+ 6D21                  ;
+ 780+ 6D21                  ; E = ItemLeft
+ 781+ 6D21                  ; D = ItemRight
+ 782+ 6D21                  ; ---------------------------------------------------------------
+ 783+ 6D21 6F               ld   l, a              ; L = ItemX
+ 784+ 6D22
+ 785+ 6D22 7D               ld   a, l
+ 786+ 6D23 87               add  a, a              ; *2
+ 787+ 6D24 87               add  a, a              ; *4
+ 788+ 6D25 87               add  a, a              ; *8
+ 789+ 6D26
+ 790+ 6D26 5F               ld   e, a              ; E = ItemLeft
+ 791+ 6D27
+ 792+ 6D27 C6 07            add  a, 7
+ 793+ 6D29 57               ld   d, a              ; D = ItemRight
+ 794+ 6D2A
+ 795+ 6D2A                  ; ---------------------------------------------------------------
+ 796+ 6D2A                  ; Recupera la posizione corrente di Willy
+ 797+ 6D2A                  ;
+ 798+ 6D2A                  ; B = WillyY
+ 799+ 6D2A                  ; C = WillyX
+ 800+ 6D2A                  ; ---------------------------------------------------------------
+ 801+ 6D2A ED 4B 3F 7A      ld   bc, (PlayerPos)
+ 802+ 6D2E
+ 803+ 6D2E                  ; ---------------------------------------------------------------
+ 804+ 6D2E                  ; Primo test:
+ 805+ 6D2E                  ;
+ 806+ 6D2E                  ; WillyLeft <= ItemRight
+ 807+ 6D2E                  ;
+ 808+ 6D2E                  ; Se Willy è completamente a destra dell'item
+ 809+ 6D2E                  ; non può esserci collisione.
+ 810+ 6D2E                  ; ---------------------------------------------------------------
+ 811+ 6D2E 79               ld   a, c              ; A = WillyLeft
+ 812+ 6D2F
+ 813+ 6D2F BA               cp   d                 ; WillyLeft vs ItemRight
+ 814+ 6D30
+ 815+ 6D30 28 04            jr   z, .x_ok
+ 816+ 6D32 38 02            jr   c, .x_ok
+ 817+ 6D34
+ 818+ 6D34 18 29            jr   .no_collision
+ 819+ 6D36
+ 820+ 6D36              .x_ok:
+ 821+ 6D36
+ 822+ 6D36                  ; ---------------------------------------------------------------
+ 823+ 6D36                  ; Secondo test:
+ 824+ 6D36                  ;
+ 825+ 6D36                  ; WillyRight >= ItemLeft
+ 826+ 6D36                  ;
+ 827+ 6D36                  ; WillyRight = WillyX + 7
+ 828+ 6D36                  ; ---------------------------------------------------------------
+ 829+ 6D36 C6 07            add  a, 7
+ 830+ 6D38
+ 831+ 6D38 BB               cp   e                 ; WillyRight vs ItemLeft
+ 832+ 6D39
+ 833+ 6D39 28 04            jr   z, .y_check
+ 834+ 6D3B 30 02            jr   nc, .y_check
+ 835+ 6D3D
+ 836+ 6D3D 18 20            jr   .no_collision
+ 837+ 6D3F
+ 838+ 6D3F              .y_check:
+ 839+ 6D3F
+ 840+ 6D3F                  ; ---------------------------------------------------------------
+ 841+ 6D3F                  ; Recupera ItemY dal valore originale di HL
+ 842+ 6D3F                  ;
+ 843+ 6D3F                  ; H contiene la riga dell'item.
+ 844+ 6D3F                  ; ---------------------------------------------------------------
+ 845+ 6D3F E1               pop  hl
+ 846+ 6D40 E5               push hl
+ 847+ 6D41
+ 848+ 6D41                  ; ---------------------------------------------------------------
+ 849+ 6D41                  ; Calcola il bounding box verticale dell'item
+ 850+ 6D41                  ;
+ 851+ 6D41                  ; ItemTop    = ItemY * 8
+ 852+ 6D41                  ; ItemBottom = ItemTop + 7
+ 853+ 6D41                  ;
+ 854+ 6D41                  ; E = ItemTop
+ 855+ 6D41                  ; D = ItemBottom
+ 856+ 6D41                  ; ---------------------------------------------------------------
+ 857+ 6D41 7C               ld   a, h
+ 858+ 6D42
+ 859+ 6D42 87               add  a, a              ; *2
+ 860+ 6D43 87               add  a, a              ; *4
+ 861+ 6D44 87               add  a, a              ; *8
+ 862+ 6D45
+ 863+ 6D45 5F               ld   e, a              ; ItemTop
+ 864+ 6D46
+ 865+ 6D46 C6 07            add  a, 7
+ 866+ 6D48 57               ld   d, a              ; ItemBottom
+ 867+ 6D49
+ 868+ 6D49                  ; ---------------------------------------------------------------
+ 869+ 6D49                  ; Primo test verticale:
+ 870+ 6D49                  ;
+ 871+ 6D49                  ; WillyTop <= ItemBottom
+ 872+ 6D49                  ; ---------------------------------------------------------------
+ 873+ 6D49 78               ld   a, b              ; WillyTop
+ 874+ 6D4A
+ 875+ 6D4A BA               cp   d
+ 876+ 6D4B
+ 877+ 6D4B 28 04            jr   z, .y_ok
+ 878+ 6D4D 38 02            jr   c, .y_ok
+ 879+ 6D4F
+ 880+ 6D4F 18 0E            jr   .no_collision
+ 881+ 6D51
+ 882+ 6D51              .y_ok:
+ 883+ 6D51
+ 884+ 6D51                  ; ---------------------------------------------------------------
+ 885+ 6D51                  ; Secondo test verticale:
+ 886+ 6D51                  ;
+ 887+ 6D51                  ; WillyBottom >= ItemTop
+ 888+ 6D51                  ;
+ 889+ 6D51                  ; WillyBottom = WillyY + 15
+ 890+ 6D51                  ; ---------------------------------------------------------------
+ 891+ 6D51 C6 0F            add  a, 15
+ 892+ 6D53
+ 893+ 6D53 BB               cp   e
+ 894+ 6D54
+ 895+ 6D54 28 04            jr   z, .collision
+ 896+ 6D56 30 02            jr   nc, .collision
+ 897+ 6D58
+ 898+ 6D58 18 05            jr   .no_collision
+ 899+ 6D5A
+ 900+ 6D5A              .collision:
+ 901+ 6D5A
+ 902+ 6D5A                  ; ---------------------------------------------------------------
+ 903+ 6D5A                  ; Collisione rilevata
+ 904+ 6D5A                  ; ---------------------------------------------------------------
+ 905+ 6D5A E1               pop  hl
+ 906+ 6D5B D1               pop  de
+ 907+ 6D5C C1               pop  bc
+ 908+ 6D5D
+ 909+ 6D5D 37               scf                    ; Carry = 1
+ 910+ 6D5E
+ 911+ 6D5E C9               ret
+ 912+ 6D5F
+ 913+ 6D5F              .no_collision:
+ 914+ 6D5F
+ 915+ 6D5F                  ; ---------------------------------------------------------------
+ 916+ 6D5F                  ; Nessuna collisione
+ 917+ 6D5F                  ; ---------------------------------------------------------------
+ 918+ 6D5F E1               pop  hl
+ 919+ 6D60 D1               pop  de
+ 920+ 6D61 C1               pop  bc
+ 921+ 6D62
+ 922+ 6D62 B7               or   a                 ; Carry = 0
+ 923+ 6D63
+ 924+ 6D63 C9               ret
+ 925+ 6D64
+ 926+ 6D64              ; -------------------------------------------------------------------
+ 927+ 6D64              ; CheckRoomItemsCollision
+ 928+ 6D64              ;
+ 929+ 6D64              ; Controlla se Willy entra in collisione con uno degli item
+ 930+ 6D64              ; attivi presenti nella stanza corrente.
+ 931+ 6D64              ;
+ 932+ 6D64              ; Per ogni item:
+ 933+ 6D64              ;   - verifica che appartenga alla stanza corrente
+ 934+ 6D64              ;   - verifica che non sia già stato raccolto
+ 935+ 6D64              ;   - esegue il test di collisione con Willy
+ 936+ 6D64              ;
+ 937+ 6D64              ; Se l'item viene raccolto:
+ 938+ 6D64              ;   - imposta il flag "collected"
+ 939+ 6D64              ;   - rimuove l'item dalla cache items_grid
+ 940+ 6D64              ;   - incrementa il contatore degli oggetti raccolti
+ 941+ 6D64              ;   - aggiorna l'HUD
+ 942+ 6D64              ;   - ripristina il tile di sfondo
+ 943+ 6D64              ;   - riproduce il suono di raccolta
+ 944+ 6D64              ;
+ 945+ 6D64              ; Formato record ItemsTable:
+ 946+ 6D64              ;   +0 RoomID
+ 947+ 6D64              ;   +1 X
+ 948+ 6D64              ;   +2 Y
+ 949+ 6D64              ;   +3 Color
+ 950+ 6D64              ;   +4 Collected
+ 951+ 6D64              ;
+ 952+ 6D64              ; Fine tabella:
+ 953+ 6D64              ;   RoomID = $FF
+ 954+ 6D64              ; -------------------------------------------------------------------
+ 955+ 6D64              CheckRoomItemsCollision:
+ 956+ 6D64
+ 957+ 6D64                  ; Salva i registri utilizzati
+ 958+ 6D64 E5               push hl
+ 959+ 6D65 D5               push de
+ 960+ 6D66 C5               push bc
+ 961+ 6D67
+ 962+ 6D67                  ; Inizio scansione della tabella degli item
+ 963+ 6D67 21 2F 6B         ld   hl, ItemsTable
+ 964+ 6D6A
+ 965+ 6D6A              .loop:
+ 966+ 6D6A
+ 967+ 6D6A                  ; ---------------------------------------------------------------
+ 968+ 6D6A                  ; Legge il Room ID dell'item corrente
+ 969+ 6D6A                  ; ---------------------------------------------------------------
+ 970+ 6D6A 7E               ld   a, (hl)
+ 971+ 6D6B
+ 972+ 6D6B                  ; $FF indica fine tabella
+ 973+ 6D6B FE FF            cp   $FF
+ 974+ 6D6D 28 4D            jr   z, .done
+ 975+ 6D6F
+ 976+ 6D6F                  ; ---------------------------------------------------------------
+ 977+ 6D6F                  ; Verifica se l'item appartiene alla stanza corrente
+ 978+ 6D6F                  ; ---------------------------------------------------------------
+ 979+ 6D6F 57               ld   d, a              ; D = RoomID item
+ 980+ 6D70
+ 981+ 6D70 3A 53 7D         ld   a, (current_room)
+ 982+ 6D73 BA               cp   d
+ 983+ 6D74
+ 984+ 6D74                  ; Se appartiene a un'altra stanza salta il record
+ 985+ 6D74 20 3F            jr   nz, .next_item
+ 986+ 6D76
+ 987+ 6D76                  ; ---------------------------------------------------------------
+ 988+ 6D76                  ; Legge coordinate e stato dell'item
+ 989+ 6D76                  ; ---------------------------------------------------------------
+ 990+ 6D76
+ 991+ 6D76 23               inc  hl
+ 992+ 6D77 4E               ld   c, (hl)           ; C = X
+ 993+ 6D78
+ 994+ 6D78 23               inc  hl
+ 995+ 6D79 46               ld   b, (hl)           ; B = Y
+ 996+ 6D7A
+ 997+ 6D7A 23               inc  hl                ; salta Color
+ 998+ 6D7B
+ 999+ 6D7B 23               inc  hl                ; punta a Collected
+1000+ 6D7C
+1001+ 6D7C 7E               ld   a, (hl)
+1002+ 6D7D
+1003+ 6D7D                  ; ---------------------------------------------------------------
+1004+ 6D7D                  ; Item già raccolto?
+1005+ 6D7D                  ; ---------------------------------------------------------------
+1006+ 6D7D B7               or   a
+1007+ 6D7E 20 39            jr   nz, .next_no_inc
+1008+ 6D80
+1009+ 6D80                  ; ---------------------------------------------------------------
+1010+ 6D80                  ; Test collisione Willy ↔ Item
+1011+ 6D80                  ;
+1012+ 6D80                  ; Input richiesto:
+1013+ 6D80                  ;   A = ItemX
+1014+ 6D80                  ;   H = ItemY
+1015+ 6D80                  ; ---------------------------------------------------------------
+1016+ 6D80 79               ld   a, c
+1017+ 6D81
+1018+ 6D81 E5               push hl                ; salva puntatore al flag Collected
+1019+ 6D82
+1020+ 6D82 60               ld   h, b
+1021+ 6D83
+1022+ 6D83 CD 1E 6D         call CheckWillyItemCollision
+1023+ 6D86
+1024+ 6D86 E1               pop  hl
+1025+ 6D87
+1026+ 6D87                  ; Nessuna collisione
+1027+ 6D87 30 30            jr   nc, .next_no_inc
+1028+ 6D89
+1029+ 6D89                  ; ===============================================================
+1030+ 6D89                  ; ITEM RACCOLTO
+1031+ 6D89                  ; ===============================================================
+1032+ 6D89
+1033+ 6D89                  ; ---------------------------------------------------------------
+1034+ 6D89                  ; Marca l'item come raccolto
+1035+ 6D89                  ; ---------------------------------------------------------------
+1036+ 6D89 36 01            ld   (hl), 1
+1037+ 6D8B
+1038+ 6D8B                  ; ---------------------------------------------------------------
+1039+ 6D8B                  ; Rimuove l'item dalla cache items_grid
+1040+ 6D8B                  ;
+1041+ 6D8B                  ; Calcolo:
+1042+ 6D8B                  ;   offset = Row * 32 + Col
+1043+ 6D8B                  ; ---------------------------------------------------------------
+1044+ 6D8B E5               push hl
+1045+ 6D8C D5               push de
+1046+ 6D8D
+1047+ 6D8D 26 00            ld   h, 0
+1048+ 6D8F 68               ld   l, b              ; HL = Row
+1049+ 6D90
+1050+ 6D90 29               add  hl, hl            ; *2
+1051+ 6D91 29               add  hl, hl            ; *4
+1052+ 6D92 29               add  hl, hl            ; *8
+1053+ 6D93 29               add  hl, hl            ; *16
+1054+ 6D94 29               add  hl, hl            ; *32
+1055+ 6D95
+1056+ 6D95 59               ld   e, c
+1057+ 6D96 16 00            ld   d, 0
+1058+ 6D98
+1059+ 6D98 19               add  hl, de            ; Row*32 + Col
+1060+ 6D99
+1061+ 6D99 11 00 90         ld   de, items_grid
+1062+ 6D9C 19               add  hl, de
+1063+ 6D9D
+1064+ 6D9D                  ; La cella non contiene più un item
+1065+ 6D9D 36 00            ld   (hl), 0
+1066+ 6D9F
+1067+ 6D9F D1               pop  de
+1068+ 6DA0 E1               pop  hl
+1069+ 6DA1
+1070+ 6DA1                  ; ---------------------------------------------------------------
+1071+ 6DA1                  ; Conserva il puntatore all'entry corrente
+1072+ 6DA1                  ; poiché le routine successive possono alterare HL.
+1073+ 6DA1                  ; ---------------------------------------------------------------
+1074+ 6DA1 E5               push hl
+1075+ 6DA2
+1076+ 6DA2                  ; ---------------------------------------------------------------
+1077+ 6DA2                  ; Aggiorna il numero di oggetti raccolti
+1078+ 6DA2                  ; ---------------------------------------------------------------
+1079+ 6DA2 3A 49 7A         ld   a, (items_collected)
+1080+ 6DA5
+1081+ 6DA5 3C               inc  a
+1082+ 6DA6
+1083+ 6DA6 32 49 7A         ld   (items_collected), a
+1084+ 6DA9
+1085+ 6DA9                  ; ---------------------------------------------------------------
+1086+ 6DA9                  ; Aggiorna il contatore visualizzato a schermo
+1087+ 6DA9                  ; ---------------------------------------------------------------
+1088+ 6DA9 CD CB 60         call UpdateItemsCollectedDisplay
+1089+ 6DAC
+1090+ 6DAC                  ; ---------------------------------------------------------------
+1091+ 6DAC                  ; Ripristina il tile originale della stanza
+1092+ 6DAC                  ; eliminando la grafica dell'item.
+1093+ 6DAC                  ;
+1094+ 6DAC                  ; Input:
+1095+ 6DAC                  ;   B = Row
+1096+ 6DAC                  ;   C = Col
+1097+ 6DAC                  ; ---------------------------------------------------------------
+1098+ 6DAC CD DC 6C         call RestoreBackgroundCell
+1099+ 6DAF
+1100+ 6DAF                  ; ---------------------------------------------------------------
+1101+ 6DAF                  ; Riproduce il suono di raccolta
+1102+ 6DAF                  ; ---------------------------------------------------------------
+1103+ 6DAF CD C0 6D         call PlayCollectSound
+1104+ 6DB2
+1105+ 6DB2                  ; Ripristina il puntatore alla tabella
+1106+ 6DB2 E1               pop  hl
+1107+ 6DB3
+1108+ 6DB3                  ; Continua con il record successivo
+1109+ 6DB3 18 04            jr   .next_no_inc
+1110+ 6DB5
+1111+ 6DB5              .next_item:
+1112+ 6DB5
+1113+ 6DB5                  ; ---------------------------------------------------------------
+1114+ 6DB5                  ; Salta i campi del record:
+1115+ 6DB5                  ;   X
+1116+ 6DB5                  ;   Y
+1117+ 6DB5                  ;   Color
+1118+ 6DB5                  ;   Collected
+1119+ 6DB5                  ; ---------------------------------------------------------------
+1120+ 6DB5 23               inc  hl
+1121+ 6DB6 23               inc  hl
+1122+ 6DB7 23               inc  hl
+1123+ 6DB8 23               inc  hl
+1124+ 6DB9
+1125+ 6DB9              .next_no_inc:
+1126+ 6DB9
+1127+ 6DB9                  ; ---------------------------------------------------------------
+1128+ 6DB9                  ; Avanza al record successivo.
+1129+ 6DB9                  ;
+1130+ 6DB9                  ; Dopo Collected troviamo il RoomID dell'item seguente.
+1131+ 6DB9                  ; ---------------------------------------------------------------
+1132+ 6DB9 23               inc  hl
+1133+ 6DBA
+1134+ 6DBA 18 AE            jr   .loop
+1135+ 6DBC
+1136+ 6DBC              .done:
+1137+ 6DBC
+1138+ 6DBC                  ; Ripristina i registri
+1139+ 6DBC C1               pop  bc
+1140+ 6DBD D1               pop  de
+1141+ 6DBE E1               pop  hl
+1142+ 6DBF
+1143+ 6DBF C9               ret
+1144+ 6DC0
+1145+ 6DC0              ; -------------------------------------------------------------------
+1146+ 6DC0              ; PlayCollectSound
+1147+ 6DC0              ;
+1148+ 6DC0              ; Genera un breve effetto sonoro (beep) tramite il buzzer
+1149+ 6DC0              ; dello ZX Spectrum utilizzando il port $FE.
+1150+ 6DC0              ;
+1151+ 6DC0              ; Il suono viene prodotto alternando ON/OFF del bit 4
+1152+ 6DC0              ; (speaker) con un semplice delay software.
+1153+ 6DC0              ;
+1154+ 6DC0              ; Effetto risultante:
+1155+ 6DC0              ;   beep breve tipo "pickup item"
+1156+ 6DC0              ; -------------------------------------------------------------------
+1157+ 6DC0              PlayCollectSound:
+1158+ 6DC0
+1159+ 6DC0                  ; Salva registri utilizzati
+1160+ 6DC0 C5               push bc
+1161+ 6DC1 D5               push de
+1162+ 6DC2
+1163+ 6DC2                  ; ---------------------------------------------------------------
+1164+ 6DC2                  ; Numero di cicli del beep (durata complessiva del suono)
+1165+ 6DC2                  ; ---------------------------------------------------------------
+1166+ 6DC2 06 78            ld   b, 120
+1167+ 6DC4
+1168+ 6DC4              .sound_loop:
+1169+ 6DC4
+1170+ 6DC4                  ; ---------------------------------------------------------------
+1171+ 6DC4                  ; SPEAKER ON
+1172+ 6DC4                  ;
+1173+ 6DC4                  ; Legge il colore del bordo corrente e attiva il bit 4
+1174+ 6DC4                  ; per pilotare lo speaker.
+1175+ 6DC4                  ; ---------------------------------------------------------------
+1176+ 6DC4 3A 4B 7A         ld   a, (room_border_color)
+1177+ 6DC7 F6 10            or   $10               ; bit 4 = 1 → speaker ON
+1178+ 6DC9
+1179+ 6DC9 D3 FE            out  ($fe), a         ; scrive sul port ULA
+1180+ 6DCB
+1181+ 6DCB                  ; ---------------------------------------------------------------
+1182+ 6DCB                  ; Delay (mezzo periodo)
+1183+ 6DCB                  ; Loop software a consumo CPU
+1184+ 6DCB                  ; ---------------------------------------------------------------
+1185+ 6DCB 0E 3C            ld   c, 60
+1186+ 6DCD
+1187+ 6DCD              .d1:
+1188+ 6DCD 0D               dec  c
+1189+ 6DCE 20 FD            jr   nz, .d1
+1190+ 6DD0
+1191+ 6DD0                  ; ---------------------------------------------------------------
+1192+ 6DD0                  ; SPEAKER OFF
+1193+ 6DD0                  ;
+1194+ 6DD0                  ; Mantiene il colore del bordo ma disattiva lo speaker
+1195+ 6DD0                  ; ---------------------------------------------------------------
+1196+ 6DD0 3A 4B 7A         ld   a, (room_border_color)
+1197+ 6DD3 E6 EF            and  $ef              ; bit 4 = 0 → speaker OFF
+1198+ 6DD5
+1199+ 6DD5 D3 FE            out  ($fe), a
+1200+ 6DD7
+1201+ 6DD7                  ; ---------------------------------------------------------------
+1202+ 6DD7                  ; Secondo delay (mezzo periodo)
+1203+ 6DD7                  ; Completa l’onda quadra
+1204+ 6DD7                  ; ---------------------------------------------------------------
+1205+ 6DD7 0E 3C            ld   c, 60
+1206+ 6DD9
+1207+ 6DD9              .d2:
+1208+ 6DD9 0D               dec  c
+1209+ 6DDA 20 FD            jr   nz, .d2
+1210+ 6DDC
+1211+ 6DDC                  ; ---------------------------------------------------------------
+1212+ 6DDC                  ; Ripete fino a completare il numero di cicli
+1213+ 6DDC                  ; ---------------------------------------------------------------
+1214+ 6DDC 10 E6            djnz .sound_loop
+1215+ 6DDE
+1216+ 6DDE                  ; Ripristina registri salvati
+1217+ 6DDE D1               pop  de
+1218+ 6DDF C1               pop  bc
+1219+ 6DE0
+1220+ 6DE0 C9               ret
+1221+ 6DE1
+1222+ 6DE1              ; -------------------------------------------------------------------
+1223+ 6DE1              ; CheckActiveItemAtCell
+1224+ 6DE1              ;
+1225+ 6DE1              ; Verifica in modo rapido se esiste un item attivo (non raccolto)
+1226+ 6DE1              ; nella cella specificata della griglia items_grid.
+1227+ 6DE1              ;
+1228+ 6DE1              ; Questa routine usa una lookup diretta su una mappa 32x16,
+1229+ 6DE1              ; evitando la scansione della ItemsTable.
+1230+ 6DE1              ;
+1231+ 6DE1              ; Input:
+1232+ 6DE1              ;   B = Colonna (0..31)
+1233+ 6DE1              ;   C = Riga (0..15)
+1234+ 6DE1              ;
+1235+ 6DE1              ; Output:
+1236+ 6DE1              ;   Carry Set   = item presente nella cella
+1237+ 6DE1              ;   Carry Clear = nessun item
+1238+ 6DE1              ;
+1239+ 6DE1              ; Nota:
+1240+ 6DE1              ;   HL NON è restituito valido (commento originale non corretto:
+1241+ 6DE1              ;   la routine non punta a ItemsTable).
+1242+ 6DE1              ; -------------------------------------------------------------------
+1243+ 6DE1              CheckActiveItemAtCell:
+1244+ 6DE1
+1245+ 6DE1                  ; Salva registri usati
+1246+ 6DE1 D5               push de
+1247+ 6DE2 E5               push hl
+1248+ 6DE3
+1249+ 6DE3                  ; ---------------------------------------------------------------
+1250+ 6DE3                  ; Calcolo indice lineare nella griglia 32x16:
+1251+ 6DE3                  ;
+1252+ 6DE3                  ; offset = Row * 32 + Col
+1253+ 6DE3                  ; ---------------------------------------------------------------
+1254+ 6DE3 26 00            ld   h, 0
+1255+ 6DE5 69               ld   l, c              ; HL = Row
+1256+ 6DE6
+1257+ 6DE6 29               add  hl, hl            ; *2
+1258+ 6DE7 29               add  hl, hl            ; *4
+1259+ 6DE8 29               add  hl, hl            ; *8
+1260+ 6DE9 29               add  hl, hl            ; *16
+1261+ 6DEA 29               add  hl, hl            ; *32
+1262+ 6DEB
+1263+ 6DEB                  ; Aggiunge la colonna
+1264+ 6DEB 58               ld   e, b
+1265+ 6DEC 16 00            ld   d, 0
+1266+ 6DEE 19               add  hl, de            ; HL = Row*32 + Col
+1267+ 6DEF
+1268+ 6DEF                  ; ---------------------------------------------------------------
+1269+ 6DEF                  ; Accesso alla griglia degli item attivi
+1270+ 6DEF                  ; ---------------------------------------------------------------
+1271+ 6DEF 11 00 90         ld   de, items_grid
+1272+ 6DF2 19               add  hl, de            ; HL = address cella
+1273+ 6DF3
+1274+ 6DF3                  ; ---------------------------------------------------------------
+1275+ 6DF3                  ; Controllo presenza item
+1276+ 6DF3                  ;
+1277+ 6DF3                  ; items_grid contiene:
+1278+ 6DF3                  ;   0 = nessun item
+1279+ 6DF3                  ;   >0 = item attivo (colore o flag)
+1280+ 6DF3                  ; ---------------------------------------------------------------
+1281+ 6DF3 7E               ld   a, (hl)
+1282+ 6DF4 B7               or   a
+1283+ 6DF5 28 04            jr   z, .not_active
+1284+ 6DF7
+1285+ 6DF7                  ; ---------------------------------------------------------------
+1286+ 6DF7                  ; Item trovato
+1287+ 6DF7                  ; ---------------------------------------------------------------
+1288+ 6DF7 E1               pop  hl
+1289+ 6DF8 D1               pop  de
+1290+ 6DF9
+1291+ 6DF9 37               scf                    ; Carry = 1
+1292+ 6DFA C9               ret
+1293+ 6DFB
+1294+ 6DFB              .not_active:
+1295+ 6DFB
+1296+ 6DFB                  ; ---------------------------------------------------------------
+1297+ 6DFB                  ; Nessun item nella cella
+1298+ 6DFB                  ; ---------------------------------------------------------------
+1299+ 6DFB E1               pop  hl
+1300+ 6DFC D1               pop  de
+1301+ 6DFD
+1302+ 6DFD B7               or   a                 ; Carry = 0
+1303+ 6DFE C9               ret
+1304+ 6DFF
 # file closed: items.asm
   19  6DFF                  include "data/datasprite.asm"
 # file opened: data/datasprite.asm
