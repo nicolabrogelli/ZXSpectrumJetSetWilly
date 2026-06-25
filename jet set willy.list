@@ -1605,123 +1605,211 @@
    2+ 6446              ; player.asm
    3+ 6446              ;===========================================================================
    4+ 6446
-   5+ 6446
-   6+ 6446              ; -------------------------------------------------------------------
-   7+ 6446              ; Muove il player
-   8+ 6446              ; Input: D = stato controlli
-   9+ 6446              ; -------------------------------------------------------------------
-  10+ 6446              MovePlayer:
-  11+ 6446                  ; Verifica se un tasto di movimento è premuto
-  12+ 6446 DD 21 47 7A      ld   ix, flags
-  13+ 644A DD CB 00 46      bit  $00, (ix)
-  14+ 644E C8               ret  z
-  15+ 644F DD CB 00 86      res  $00, (ix)
-  16+ 6453
-  17+ 6453 ED 4B 3F 7A      ld   bc, (PlayerPos)   ; C = PlayerX (pixel), B = PlayerY (pixel)
-  18+ 6457
-  19+ 6457 CB 4A            bit  $01, d            ; Tasto Destra premuto?
-  20+ 6459 20 2B            jr   nz, movePlayer_right
-  21+ 645B
-  22+ 645B CB 42            bit  $00, d            ; Tasto Sinistra premuto?
-  23+ 645D C8               ret  z
-  24+ 645E
-  25+ 645E              movePlayer_left:
-  26+ 645E 3A B1 7D         ld   a, (player_speed)
-  27+ 6461 5F               ld   e, a
-  28+ 6462 79               ld   a, c
-  29+ 6463 93               sub  e                 ; Prova a muoverti a sinistra
-  30+ 6464 FE 05            cp   PLAYER_MIN_X      ; Confronta con il limite sinistro
-  31+ 6466 38 11            jr   c, .clamp_left    ; Se < PLAYER_MIN_X, clampa
-  32+ 6468
-  33+ 6468                  ; Controlla collisione con Wall a sinistra
-  34+ 6468 C5               push bc
-  35+ 6469 4F               ld   c, a              ; C = nuova coordinata X da testare
-  36+ 646A CD CF 67         call CheckWillyWallCollision
-  37+ 646D C1               pop  bc
-  38+ 646E 38 43            jr   c, save_x         ; Se collide, mantieni la posizione precedente
-  39+ 6470
-  40+ 6470 3A B1 7D         ld   a, (player_speed)
-  41+ 6473 5F               ld   e, a
-  42+ 6474 79               ld   a, c
-  43+ 6475 93               sub  e
-  44+ 6476 4F               ld   c, a              ; Altrimenti memorizza la nuova posizione
-  45+ 6477 18 3A            jr   save_x
-  46+ 6479
-  47+ 6479              .clamp_left:
-  48+ 6479 C5               push bc
-  49+ 647A 0E 05            ld   c, PLAYER_MIN_X
-  50+ 647C CD CF 67         call CheckWillyWallCollision
-  51+ 647F C1               pop  bc
-  52+ 6480 38 31            jr   c, save_x         ; Se collide al limite, mantieni la posizione precedente
-  53+ 6482
-  54+ 6482 0E 05            ld   c, PLAYER_MIN_X
-  55+ 6484 18 2D            jr   save_x
-  56+ 6486
-  57+ 6486              movePlayer_right:
-  58+ 6486 3A B1 7D         ld   a, (player_speed)
-  59+ 6489 5F               ld   e, a
-  60+ 648A 79               ld   a, c
-  61+ 648B 83               add  a, e              ; Prova a muoverti a destra
-  62+ 648C FE F5            cp   PLAYER_MAX_X      ; Confronta con il limite destro
-  63+ 648E 28 02            jr   z, .ok_right      ; Se == PLAYER_MAX_X, va bene
-  64+ 6490 30 13            jr   nc, .clamp_right  ; Se > PLAYER_MAX_X, clampa
-  65+ 6492              .ok_right:
-  66+ 6492                  ; Controlla collisione con Wall a destra (coordinata X destra = X + 7)
-  67+ 6492 C5               push bc
-  68+ 6493 C6 07            add  a, 7
-  69+ 6495 4F               ld   c, a              ; C = coordinata X destra da testare
-  70+ 6496 CD CF 67         call CheckWillyWallCollision
-  71+ 6499 C1               pop  bc
-  72+ 649A 38 17            jr   c, save_x         ; Se collide, mantieni la posizione precedente
-  73+ 649C
-  74+ 649C 3A B1 7D         ld   a, (player_speed)
-  75+ 649F 5F               ld   e, a
-  76+ 64A0 79               ld   a, c
-  77+ 64A1 83               add  a, e
-  78+ 64A2 4F               ld   c, a              ; Altrimenti memorizza la nuova posizione
-  79+ 64A3 18 0E            jr   save_x
-  80+ 64A5
-  81+ 64A5              .clamp_right:
-  82+ 64A5 C5               push bc
-  83+ 64A6 3E F5            ld   a, PLAYER_MAX_X
-  84+ 64A8 C6 07            add  a, 7
-  85+ 64AA 4F               ld   c, a
-  86+ 64AB CD CF 67         call CheckWillyWallCollision
-  87+ 64AE C1               pop  bc
-  88+ 64AF 38 02            jr   c, save_x         ; Se collide al limite, mantieni la posizione precedente
-  89+ 64B1
-  90+ 64B1 0E F5            ld   c, PLAYER_MAX_X
-  91+ 64B3
-  92+ 64B3              save_x:
-  93+ 64B3 ED 43 3F 7A      ld   (PlayerPos), bc
-  94+ 64B7
-  95+ 64B7              movePlayer_print:
-  96+ 64B7                  ; Alterna lo stato delle gambe ad ogni movimento (0, 1, 2, 0, 1, 2...)
-  97+ 64B7 3A 45 7A         ld   a, (body_state)
-  98+ 64BA 3C               inc  a
-  99+ 64BB FE 03            cp   3
- 100+ 64BD 20 02            jr   nz, .save_state
- 101+ 64BF 3E 00            ld   a, 0
- 102+ 64C1              .save_state:
- 103+ 64C1 32 45 7A         ld   (body_state), a
- 104+ 64C4 C9               ret
- 105+ 64C5
- 106+ 64C5
- 107+ 64C5              ; -------------------------------------------------------------------
- 108+ 64C5              ; Carica la posiziona il Player nella stanza
- 109+ 64C5              ; -------------------------------------------------------------------
- 110+ 64C5              LoadPositionPlayeinRoom:
- 111+ 64C5                  ; Carica la posizione iniziale di Willy definita nei dati della stanza
- 112+ 64C5 2A AD 7D         ld   hl, (room_ptr)
- 113+ 64C8 11 00 01         ld   de, OFFSET_POS_WILLY
- 114+ 64CB 19               add  hl, de
- 115+ 64CC 7E               ld   a, (hl)           ; A = Willy X
- 116+ 64CD 23               inc  hl
- 117+ 64CE 66               ld   h, (hl)           ; H = Willy Y
- 118+ 64CF 6F               ld   l, a              ; HL = Willy position (Y, X)
- 119+ 64D0 22 3F 7A         ld   (PlayerPos), hl
- 120+ 64D3 22 41 7A         ld   (PlayerPosOld), hl
- 121+ 64D6 C9               ret
+   5+ 6446              ; -------------------------------------------------------------------
+   6+ 6446              ; MovePlayer
+   7+ 6446              ;
+   8+ 6446              ; Gestisce il movimento orizzontale del player (Willy),
+   9+ 6446              ; applicando input da controlli, limiti di schermo e collisioni
+  10+ 6446              ; con i muri.
+  11+ 6446              ;
+  12+ 6446              ; Input:
+  13+ 6446              ;   D = stato dei controlli (bitfield)
+  14+ 6446              ;
+  15+ 6446              ; Strutture utilizzate:
+  16+ 6446              ;   PlayerPos       -> posizione (B = Y, C = X in pixel)
+  17+ 6446              ;   player_speed    -> velocità orizzontale
+  18+ 6446              ;   flags           -> flag di stato input
+  19+ 6446              ;
+  20+ 6446              ; Bit controlli:
+  21+ 6446              ;   bit 0 = sinistra
+  22+ 6446              ;   bit 1 = destra
+  23+ 6446              ;
+  24+ 6446              ; Output:
+  25+ 6446              ;   aggiorna PlayerPos e body_state
+  26+ 6446              ; -------------------------------------------------------------------
+  27+ 6446              MovePlayer:
+  28+ 6446
+  29+ 6446                  ; ---------------------------------------------------------------
+  30+ 6446                  ; Verifica flag di aggiornamento movimento
+  31+ 6446                  ; (evita aggiornamenti multipli per frame)
+  32+ 6446                  ; ---------------------------------------------------------------
+  33+ 6446 DD 21 47 7A      ld   ix, flags
+  34+ 644A DD CB 00 46      bit  $00, (ix)
+  35+ 644E C8               ret  z
+  36+ 644F
+  37+ 644F DD CB 00 86      res  $00, (ix)
+  38+ 6453
+  39+ 6453                  ; ---------------------------------------------------------------
+  40+ 6453                  ; Carica posizione corrente player
+  41+ 6453                  ;
+  42+ 6453                  ; B = Y (pixel)
+  43+ 6453                  ; C = X (pixel)
+  44+ 6453                  ; ---------------------------------------------------------------
+  45+ 6453 ED 4B 3F 7A      ld   bc, (PlayerPos)
+  46+ 6457
+  47+ 6457                  ; ---------------------------------------------------------------
+  48+ 6457                  ; Input: destra?
+  49+ 6457                  ; ---------------------------------------------------------------
+  50+ 6457 CB 4A            bit  $01, d
+  51+ 6459 20 2B            jr   nz, movePlayer_right
+  52+ 645B
+  53+ 645B                  ; ---------------------------------------------------------------
+  54+ 645B                  ; Input: sinistra?
+  55+ 645B                  ; ---------------------------------------------------------------
+  56+ 645B CB 42            bit  $00, d
+  57+ 645D C8               ret  z
+  58+ 645E
+  59+ 645E              ; ===============================================================
+  60+ 645E              ; MOVIMENTO SINISTRA
+  61+ 645E              ; ===============================================================
+  62+ 645E              movePlayer_left:
+  63+ 645E
+  64+ 645E                  ; Calcola nuova posizione: X - speed
+  65+ 645E 3A B1 7D         ld   a, (player_speed)
+  66+ 6461 5F               ld   e, a
+  67+ 6462
+  68+ 6462 79               ld   a, c
+  69+ 6463 93               sub  e
+  70+ 6464
+  71+ 6464                  ; Controllo limite sinistro schermo
+  72+ 6464 FE 05            cp   PLAYER_MIN_X
+  73+ 6466 38 11            jr   c, .clamp_left
+  74+ 6468
+  75+ 6468                  ; -----------------------------------------------------------
+  76+ 6468                  ; Collisione con muro (pre-check)
+  77+ 6468                  ; -----------------------------------------------------------
+  78+ 6468 C5               push bc
+  79+ 6469 4F               ld   c, a
+  80+ 646A CD CF 67         call CheckWillyWallCollision
+  81+ 646D C1               pop  bc
+  82+ 646E
+  83+ 646E                  ; Se collisione: non aggiornare posizione
+  84+ 646E 38 43            jr   c, save_x
+  85+ 6470
+  86+ 6470                  ; Applica movimento
+  87+ 6470 3A B1 7D         ld   a, (player_speed)
+  88+ 6473 5F               ld   e, a
+  89+ 6474
+  90+ 6474 79               ld   a, c
+  91+ 6475 93               sub  e
+  92+ 6476 4F               ld   c, a
+  93+ 6477
+  94+ 6477 18 3A            jr   save_x
+  95+ 6479
+  96+ 6479              ; ---------------------------------------------------------------
+  97+ 6479              ; Clamp sinistra: forzatura al limite minimo
+  98+ 6479              ; ---------------------------------------------------------------
+  99+ 6479              .clamp_left:
+ 100+ 6479
+ 101+ 6479 C5               push bc
+ 102+ 647A 0E 05            ld   c, PLAYER_MIN_X
+ 103+ 647C CD CF 67         call CheckWillyWallCollision
+ 104+ 647F C1               pop  bc
+ 105+ 6480
+ 106+ 6480 38 31            jr   c, save_x
+ 107+ 6482
+ 108+ 6482 0E 05            ld   c, PLAYER_MIN_X
+ 109+ 6484 18 2D            jr   save_x
+ 110+ 6486
+ 111+ 6486              ; ===============================================================
+ 112+ 6486              ; MOVIMENTO DESTRA
+ 113+ 6486              ; ===============================================================
+ 114+ 6486              movePlayer_right:
+ 115+ 6486
+ 116+ 6486                  ; Prova movimento X + speed
+ 117+ 6486 3A B1 7D         ld   a, (player_speed)
+ 118+ 6489 5F               ld   e, a
+ 119+ 648A
+ 120+ 648A 79               ld   a, c
+ 121+ 648B 83               add  a, e
+ 122+ 648C
+ 123+ 648C                  ; Controllo limite destro
+ 124+ 648C FE F5            cp   PLAYER_MAX_X
+ 125+ 648E 28 02            jr   z, .ok_right
+ 126+ 6490 30 13            jr   nc, .clamp_right
+ 127+ 6492
+ 128+ 6492              .ok_right:
+ 129+ 6492
+ 130+ 6492                  ; -----------------------------------------------------------
+ 131+ 6492                  ; Collisione muro a destra
+ 132+ 6492                  ; usa bordo destro player (X + 7)
+ 133+ 6492                  ; -----------------------------------------------------------
+ 134+ 6492 C5               push bc
+ 135+ 6493 C6 07            add  a, 7
+ 136+ 6495 4F               ld   c, a
+ 137+ 6496 CD CF 67         call CheckWillyWallCollision
+ 138+ 6499 C1               pop  bc
+ 139+ 649A
+ 140+ 649A 38 17            jr   c, save_x
+ 141+ 649C
+ 142+ 649C                  ; Applica movimento
+ 143+ 649C 3A B1 7D         ld   a, (player_speed)
+ 144+ 649F 5F               ld   e, a
+ 145+ 64A0
+ 146+ 64A0 79               ld   a, c
+ 147+ 64A1 83               add  a, e
+ 148+ 64A2 4F               ld   c, a
+ 149+ 64A3
+ 150+ 64A3 18 0E            jr   save_x
+ 151+ 64A5
+ 152+ 64A5              ; ---------------------------------------------------------------
+ 153+ 64A5              ; Clamp destro: forzatura al limite massimo
+ 154+ 64A5              ; ---------------------------------------------------------------
+ 155+ 64A5              .clamp_right:
+ 156+ 64A5
+ 157+ 64A5 C5               push bc
+ 158+ 64A6 3E F5            ld   a, PLAYER_MAX_X
+ 159+ 64A8 C6 07            add  a, 7
+ 160+ 64AA 4F               ld   c, a
+ 161+ 64AB CD CF 67         call CheckWillyWallCollision
+ 162+ 64AE C1               pop  bc
+ 163+ 64AF
+ 164+ 64AF 38 02            jr   c, save_x
+ 165+ 64B1
+ 166+ 64B1 0E F5            ld   c, PLAYER_MAX_X
+ 167+ 64B3
+ 168+ 64B3              ; ===============================================================
+ 169+ 64B3              ; Salvataggio posizione finale
+ 170+ 64B3              ; ===============================================================
+ 171+ 64B3              save_x:
+ 172+ 64B3
+ 173+ 64B3 ED 43 3F 7A      ld   (PlayerPos), bc
+ 174+ 64B7
+ 175+ 64B7              ; ===============================================================
+ 176+ 64B7              ; Animazione corpo (gambe)
+ 177+ 64B7              ; ciclo: 0 → 1 → 2 → 0 ...
+ 178+ 64B7              ; ===============================================================
+ 179+ 64B7              movePlayer_print:
+ 180+ 64B7
+ 181+ 64B7 3A 45 7A         ld   a, (body_state)
+ 182+ 64BA 3C               inc  a
+ 183+ 64BB
+ 184+ 64BB FE 03            cp   3
+ 185+ 64BD 20 02            jr   nz, .save_state
+ 186+ 64BF
+ 187+ 64BF 3E 00            ld   a, 0
+ 188+ 64C1
+ 189+ 64C1              .save_state:
+ 190+ 64C1
+ 191+ 64C1 32 45 7A         ld   (body_state), a
+ 192+ 64C4
+ 193+ 64C4 C9               ret
+ 194+ 64C5
+ 195+ 64C5              ; -------------------------------------------------------------------
+ 196+ 64C5              ; Carica la posiziona il Player nella stanza
+ 197+ 64C5              ; -------------------------------------------------------------------
+ 198+ 64C5              LoadPositionPlayeinRoom:
+ 199+ 64C5                  ; Carica la posizione iniziale di Willy definita nei dati della stanza
+ 200+ 64C5 2A AD 7D         ld   hl, (room_ptr)
+ 201+ 64C8 11 00 01         ld   de, OFFSET_POS_WILLY
+ 202+ 64CB 19               add  hl, de
+ 203+ 64CC 7E               ld   a, (hl)           ; A = Willy X
+ 204+ 64CD 23               inc  hl
+ 205+ 64CE 66               ld   h, (hl)           ; H = Willy Y
+ 206+ 64CF 6F               ld   l, a              ; HL = Willy position (Y, X)
+ 207+ 64D0 22 3F 7A         ld   (PlayerPos), hl
+ 208+ 64D3 22 41 7A         ld   (PlayerPosOld), hl
+ 209+ 64D6 C9               ret
 # file closed: player.asm
   15  64D7                  include "input.asm"
 # file opened: input.asm

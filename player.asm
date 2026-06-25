@@ -2,120 +2,244 @@
 ; player.asm
 ;===========================================================================
 
-
 ; -------------------------------------------------------------------
-; Muove il player
-; Input: D = stato controlli
+; MovePlayer
+;
+; Gestisce il movimento orizzontale del player (Willy),
+; applicando input da controlli, limiti di schermo e collisioni
+; con i muri.
+;
+; Input:
+;   D = stato dei controlli (bitfield)
+;
+; Strutture utilizzate:
+;   PlayerPos       -> posizione (B = Y, C = X in pixel)
+;   player_speed    -> velocità orizzontale
+;   flags           -> flag di stato input
+;
+; Bit controlli:
+;   bit 0 = sinistra
+;   bit 1 = destra
+;
+; Output:
+;   aggiorna PlayerPos e body_state
 ; -------------------------------------------------------------------
 MovePlayer:
-    ; Verifica se un tasto di movimento è premuto
+
+    ; ---------------------------------------------------------------
+    ; Verifica flag di aggiornamento movimento
+    ; (evita aggiornamenti multipli per frame)
+    ; ---------------------------------------------------------------
     ld   ix, flags
     bit  $00, (ix)
     ret  z
+
     res  $00, (ix)
 
-    ld   bc, (PlayerPos)   ; C = PlayerX (pixel), B = PlayerY (pixel)
-    
-    bit  $01, d            ; Tasto Destra premuto?
+    ; ---------------------------------------------------------------
+    ; Carica posizione corrente player
+    ;
+    ; B = Y (pixel)
+    ; C = X (pixel)
+    ; ---------------------------------------------------------------
+    ld   bc, (PlayerPos)
+
+    ; ---------------------------------------------------------------
+    ; Input: destra?
+    ; ---------------------------------------------------------------
+    bit  $01, d
     jr   nz, movePlayer_right
 
-    bit  $00, d            ; Tasto Sinistra premuto?
+    ; ---------------------------------------------------------------
+    ; Input: sinistra?
+    ; ---------------------------------------------------------------
+    bit  $00, d
     ret  z
 
+; ===============================================================
+; MOVIMENTO SINISTRA
+; ===============================================================
 movePlayer_left:
+
+    ; Calcola nuova posizione: X - speed
     ld   a, (player_speed)
     ld   e, a
-    ld   a, c
-    sub  e                 ; Prova a muoverti a sinistra
-    cp   PLAYER_MIN_X      ; Confronta con il limite sinistro
-    jr   c, .clamp_left    ; Se < PLAYER_MIN_X, clampa
-    
-    ; Controlla collisione con Wall a sinistra
-    push bc
-    ld   c, a              ; C = nuova coordinata X da testare
-    call CheckWillyWallCollision
-    pop  bc
-    jr   c, save_x         ; Se collide, mantieni la posizione precedente
-    
-    ld   a, (player_speed)
-    ld   e, a
+
     ld   a, c
     sub  e
-    ld   c, a              ; Altrimenti memorizza la nuova posizione
-    jr   save_x
 
-.clamp_left:
+    ; Controllo limite sinistro schermo
+    cp   PLAYER_MIN_X
+    jr   c, .clamp_left
+
+    ; -----------------------------------------------------------
+    ; Collisione con muro (pre-check)
+    ; -----------------------------------------------------------
     push bc
-    ld   c, PLAYER_MIN_X
+    ld   c, a
     call CheckWillyWallCollision
     pop  bc
-    jr   c, save_x         ; Se collide al limite, mantieni la posizione precedente
-    
-    ld   c, PLAYER_MIN_X
-    jr   save_x
 
-movePlayer_right:
+    ; Se collisione: non aggiornare posizione
+    jr   c, save_x
+
+    ; Applica movimento
     ld   a, (player_speed)
     ld   e, a
+
     ld   a, c
-    add  a, e              ; Prova a muoverti a destra
-    cp   PLAYER_MAX_X      ; Confronta con il limite destro
-    jr   z, .ok_right      ; Se == PLAYER_MAX_X, va bene
-    jr   nc, .clamp_right  ; Se > PLAYER_MAX_X, clampa
-.ok_right:
-    ; Controlla collisione con Wall a destra (coordinata X destra = X + 7)
+    sub  e
+    ld   c, a
+
+    jr   save_x
+
+; ---------------------------------------------------------------
+; Clamp sinistra: forzatura al limite minimo
+; ---------------------------------------------------------------
+.clamp_left:
+
     push bc
-    add  a, 7
-    ld   c, a              ; C = coordinata X destra da testare
+    ld   c, PLAYER_MIN_X
     call CheckWillyWallCollision
     pop  bc
-    jr   c, save_x         ; Se collide, mantieni la posizione precedente
-    
+
+    jr   c, save_x
+
+    ld   c, PLAYER_MIN_X
+    jr   save_x
+
+; ===============================================================
+; MOVIMENTO DESTRA
+; ===============================================================
+movePlayer_right:
+
+    ; Prova movimento X + speed
     ld   a, (player_speed)
     ld   e, a
+
     ld   a, c
     add  a, e
-    ld   c, a              ; Altrimenti memorizza la nuova posizione
+
+    ; Controllo limite destro
+    cp   PLAYER_MAX_X
+    jr   z, .ok_right
+    jr   nc, .clamp_right
+
+.ok_right:
+
+    ; -----------------------------------------------------------
+    ; Collisione muro a destra
+    ; usa bordo destro player (X + 7)
+    ; -----------------------------------------------------------
+    push bc
+    add  a, 7
+    ld   c, a
+    call CheckWillyWallCollision
+    pop  bc
+
+    jr   c, save_x
+
+    ; Applica movimento
+    ld   a, (player_speed)
+    ld   e, a
+
+    ld   a, c
+    add  a, e
+    ld   c, a
+
     jr   save_x
 
+; ---------------------------------------------------------------
+; Clamp destro: forzatura al limite massimo
+; ---------------------------------------------------------------
 .clamp_right:
+
     push bc
     ld   a, PLAYER_MAX_X
     add  a, 7
     ld   c, a
     call CheckWillyWallCollision
     pop  bc
-    jr   c, save_x         ; Se collide al limite, mantieni la posizione precedente
-    
+
+    jr   c, save_x
+
     ld   c, PLAYER_MAX_X
 
+; ===============================================================
+; Salvataggio posizione finale
+; ===============================================================
 save_x:
+
     ld   (PlayerPos), bc
 
+; ===============================================================
+; Animazione corpo (gambe)
+; ciclo: 0 → 1 → 2 → 0 ...
+; ===============================================================
 movePlayer_print:
-    ; Alterna lo stato delle gambe ad ogni movimento (0, 1, 2, 0, 1, 2...)
+
     ld   a, (body_state)
     inc  a
+
     cp   3
     jr   nz, .save_state
+
     ld   a, 0
+
 .save_state:
+
     ld   (body_state), a
+
     ret
 
-
 ; -------------------------------------------------------------------
-; Carica la posiziona il Player nella stanza
+; LoadPositionPlayeinRoom
+;
+; Inizializza la posizione del player (Willy) quando entra
+; in una nuova stanza.
+;
+; La posizione viene letta direttamente dai dati della stanza
+; (layout/metadata) a partire da room_ptr.
+;
+; Output:
+;   PlayerPos     = posizione iniziale (Y, X)
+;   PlayerPosOld  = copia della posizione iniziale
+;
+; Struttura dati stanza:
+;   OFFSET_POS_WILLY:
+;       +0 = X
+;       +1 = Y
 ; -------------------------------------------------------------------
 LoadPositionPlayeinRoom:
-    ; Carica la posizione iniziale di Willy definita nei dati della stanza
+
+    ; ---------------------------------------------------------------
+    ; Accede alla struttura dati della stanza corrente
+    ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
+
+    ; ---------------------------------------------------------------
+    ; Salta all’offset dove è memorizzata la posizione iniziale
+    ; di Willy nella stanza
+    ; ---------------------------------------------------------------
     ld   de, OFFSET_POS_WILLY
     add  hl, de
-    ld   a, (hl)           ; A = Willy X
+
+    ; ---------------------------------------------------------------
+    ; Legge posizione iniziale del player
+    ; ---------------------------------------------------------------
+
+    ld   a, (hl)           ; A = X iniziale
+
     inc  hl
-    ld   h, (hl)           ; H = Willy Y
-    ld   l, a              ; HL = Willy position (Y, X)
+
+    ld   h, (hl)           ; H = Y iniziale
+
+    ld   l, a              ; HL = (Y, X)
+
+    ; ---------------------------------------------------------------
+    ; Salva posizione corrente e posizione precedente
+    ; ---------------------------------------------------------------
     ld   (PlayerPos), hl
     ld   (PlayerPosOld), hl
+
     ret
