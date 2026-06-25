@@ -2062,7 +2062,7 @@
  189+ 65DA 00 83            dw TheOffLicenceLayout        ; 0
  190+ 65DC 02 84            dw TheBridgeLayout            ; 1
  191+ 65DE 04 85            dw UnderTheMegaTreeLayout     ; 2
- 192+ 65E0 06 86            dw AtTheFootTheMegaTreeLayout ; 4
+ 192+ 65E0 06 86            dw AtTheFootTheMegaTreeLayout ; 3
  193+ 65E2 08 87            dw TheDriveLayout             ; 5
  194+ 65E4 0A 88            dw TheSecurityGuardLayout     ; 6
  195+ 65E6 0C 89            dw TheBathroomLayout          ; 7
@@ -3396,12 +3396,12 @@
   44+ 6BF3 02 16 00 03      db 2, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)
   44+ 6BF7 00
   45+ 6BF8
-  46+ 6BF8                  ; Stanza 4 (At The Foot TheMega Tree)
-  47+ 6BF8 04 01 0B 03      db 4, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)
+  46+ 6BF8                  ; Stanza 3 (At The Foot TheMega Tree)
+  47+ 6BF8 03 01 0B 03      db 3, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)
   47+ 6BFC 00
-  48+ 6BFD 04 04 0A 04      db 4, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)
+  48+ 6BFD 03 04 0A 04      db 3, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)
   48+ 6C01 00
-  49+ 6C02 04 07 0B 05      db 4, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)
+  49+ 6C02 03 07 0B 05      db 3, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)
   49+ 6C06 00
   50+ 6C07
   51+ 6C07                  ; Stanza 5 (The Drive)
@@ -3482,7 +3482,7 @@
  125+ 6C34 ED 52            sbc  hl, de
  126+ 6C36 20 04            jr   nz, .not_undertree
  127+ 6C38
- 128+ 6C38 3E 02            ld   a, 2               ; Room ID = 3
+ 128+ 6C38 3E 02            ld   a, 2               ; Room ID = 2
  129+ 6C3A 18 4D            jr   .set_room
  130+ 6C3C
  131+ 6C3C              .not_undertree:
@@ -3496,7 +3496,7 @@
  139+ 6C43 ED 52            sbc  hl, de
  140+ 6C45 20 04            jr   nz, .not_foottree
  141+ 6C47
- 142+ 6C47 3E 04            ld   a, 4               ; Room ID = 4
+ 142+ 6C47 3E 03            ld   a, 3               ; Room ID = 3
  143+ 6C49 18 3E            jr   .set_room
  144+ 6C4B
  145+ 6C4B              .not_foottree:

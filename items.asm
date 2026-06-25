@@ -43,10 +43,10 @@ ItemsTable:
     ; Stanza 2 (Under the MegaTree)
     db 2, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)  
 
-    ; Stanza 4 (At The Foot TheMega Tree)
-    db 4, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)  
-    db 4, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)  
-    db 4, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)  
+    ; Stanza 3 (At The Foot TheMega Tree)
+    db 3, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)  
+    db 3, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)  
+    db 3, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)  
 
     ; Stanza 5 (The Drive)
 
@@ -139,7 +139,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_foottree
 
-    ld   a, 4               ; Room ID = 4
+    ld   a, 3               ; Room ID = 3
     jr   .set_room
 
 .not_foottree:
