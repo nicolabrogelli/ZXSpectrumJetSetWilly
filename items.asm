@@ -153,7 +153,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_thedrive
 
-    ld   a, 5               ; Room ID = 5
+    ld   a, 4               ; Room ID = 4
     jr   .set_room
 
 .not_thedrive:
