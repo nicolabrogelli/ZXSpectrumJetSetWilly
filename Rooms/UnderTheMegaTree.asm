@@ -92,7 +92,7 @@ UnderTheMegaTreeItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 UnderTheMegaTreeDirection:
-    DEFB 4	                                ;Room to the left (At the Foot of the MegaTree)
+    DEFB 3	                                ;Room to the left (At the Foot of the MegaTree)
     DEFB 1	                                ;Room to the right (The Bridge)
     DEFB $FF                                ;Room above (None)
     DEFB $FF                                ;Room below (None)

@@ -92,10 +92,10 @@ TheBathroomItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheBathroomDirection:
-    DEFB 2	                                ;Room to the left (Under the MegaTree)
-    DEFB 0	                                ;Room to the right (The Off Licence)
-    DEFB 33	                                ;Room above (The Bathroom)
-    DEFB $FF                                ;Room below (None)
+    DEFB 34	                                ;Room to the left (Top Landing)
+    DEFB 32	                                ;Room to the right (Halfway up the East Wall)
+    DEFB 39	                                ;Room above (Emergency Generator)
+    DEFB 27                                 ;Room below (The Chapel)
 
 TheBathroomUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

@@ -92,10 +92,10 @@ TheDriveItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheDriveDirection:
-    DEFB 2	                                ;Room to the left (Under the MegaTree)
-    DEFB 0	                                ;Room to the right (The Off Licence)
-    DEFB 33	                                ;Room above (The Bathroom)
-    DEFB $FF                                ;Room below (None)
+    DEFB 5	                                ;Room to the left (The Security Guard)
+    DEFB 3	                                ;Room to the right  (At the Foot of the MegaTree)
+    DEFB 6	                                ;Room above (Entrance to Hades)
+    DEFB 45                                 ;Room below (Under the Drive)
 
 TheDriveUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
