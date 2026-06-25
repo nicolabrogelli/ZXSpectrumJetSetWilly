@@ -1796,20 +1796,56 @@
  193+ 64C4 C9               ret
  194+ 64C5
  195+ 64C5              ; -------------------------------------------------------------------
- 196+ 64C5              ; Carica la posiziona il Player nella stanza
- 197+ 64C5              ; -------------------------------------------------------------------
- 198+ 64C5              LoadPositionPlayeinRoom:
- 199+ 64C5                  ; Carica la posizione iniziale di Willy definita nei dati della stanza
- 200+ 64C5 2A AD 7D         ld   hl, (room_ptr)
- 201+ 64C8 11 00 01         ld   de, OFFSET_POS_WILLY
- 202+ 64CB 19               add  hl, de
- 203+ 64CC 7E               ld   a, (hl)           ; A = Willy X
- 204+ 64CD 23               inc  hl
- 205+ 64CE 66               ld   h, (hl)           ; H = Willy Y
- 206+ 64CF 6F               ld   l, a              ; HL = Willy position (Y, X)
- 207+ 64D0 22 3F 7A         ld   (PlayerPos), hl
- 208+ 64D3 22 41 7A         ld   (PlayerPosOld), hl
- 209+ 64D6 C9               ret
+ 196+ 64C5              ; LoadPositionPlayeinRoom
+ 197+ 64C5              ;
+ 198+ 64C5              ; Inizializza la posizione del player (Willy) quando entra
+ 199+ 64C5              ; in una nuova stanza.
+ 200+ 64C5              ;
+ 201+ 64C5              ; La posizione viene letta direttamente dai dati della stanza
+ 202+ 64C5              ; (layout/metadata) a partire da room_ptr.
+ 203+ 64C5              ;
+ 204+ 64C5              ; Output:
+ 205+ 64C5              ;   PlayerPos     = posizione iniziale (Y, X)
+ 206+ 64C5              ;   PlayerPosOld  = copia della posizione iniziale
+ 207+ 64C5              ;
+ 208+ 64C5              ; Struttura dati stanza:
+ 209+ 64C5              ;   OFFSET_POS_WILLY:
+ 210+ 64C5              ;       +0 = X
+ 211+ 64C5              ;       +1 = Y
+ 212+ 64C5              ; -------------------------------------------------------------------
+ 213+ 64C5              LoadPositionPlayeinRoom:
+ 214+ 64C5
+ 215+ 64C5                  ; ---------------------------------------------------------------
+ 216+ 64C5                  ; Accede alla struttura dati della stanza corrente
+ 217+ 64C5                  ; ---------------------------------------------------------------
+ 218+ 64C5 2A AD 7D         ld   hl, (room_ptr)
+ 219+ 64C8
+ 220+ 64C8                  ; ---------------------------------------------------------------
+ 221+ 64C8                  ; Salta all’offset dove è memorizzata la posizione iniziale
+ 222+ 64C8                  ; di Willy nella stanza
+ 223+ 64C8                  ; ---------------------------------------------------------------
+ 224+ 64C8 11 00 01         ld   de, OFFSET_POS_WILLY
+ 225+ 64CB 19               add  hl, de
+ 226+ 64CC
+ 227+ 64CC                  ; ---------------------------------------------------------------
+ 228+ 64CC                  ; Legge posizione iniziale del player
+ 229+ 64CC                  ; ---------------------------------------------------------------
+ 230+ 64CC
+ 231+ 64CC 7E               ld   a, (hl)           ; A = X iniziale
+ 232+ 64CD
+ 233+ 64CD 23               inc  hl
+ 234+ 64CE
+ 235+ 64CE 66               ld   h, (hl)           ; H = Y iniziale
+ 236+ 64CF
+ 237+ 64CF 6F               ld   l, a              ; HL = (Y, X)
+ 238+ 64D0
+ 239+ 64D0                  ; ---------------------------------------------------------------
+ 240+ 64D0                  ; Salva posizione corrente e posizione precedente
+ 241+ 64D0                  ; ---------------------------------------------------------------
+ 242+ 64D0 22 3F 7A         ld   (PlayerPos), hl
+ 243+ 64D3 22 41 7A         ld   (PlayerPosOld), hl
+ 244+ 64D6
+ 245+ 64D6 C9               ret
 # file closed: player.asm
   15  64D7                  include "input.asm"
 # file opened: input.asm
