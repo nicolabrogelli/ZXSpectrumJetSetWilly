@@ -92,7 +92,7 @@ TheBathroomItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheBathroomDirection:
-    DEFB 3	                                ;Room to the left (Under the MegaTree)
+    DEFB 2	                                ;Room to the left (Under the MegaTree)
     DEFB 0	                                ;Room to the right (The Off Licence)
     DEFB 7	                                ;Room above (The Bathroom)
     DEFB $FF                                ;Room below (None)

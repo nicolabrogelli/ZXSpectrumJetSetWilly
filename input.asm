@@ -99,16 +99,36 @@ checkCtrl_jump:
 ; Esegue il cambio di stanza ciclico alla stanza successiva
 ; -------------------------------------------------------------------
 PerformRoomChange:
-    ; 1. Determina l'ID della stanza corrente (0..7)
-    call DetermineCurrentRoomID   ; A = current_room (0..7)
+    ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..7)
+    ld   hl, RoomsListTable
+    ld   bc, (room_ptr)            ; BC = layout corrente
+    ld   e, 0                      ; E = contatore indice
+.loop:
+    ld   a, (hl)
+    inc  hl
+    cp   c
+    jr   nz, .no_match
+    ld   a, (hl)
+    cp   b
+    jr   z, .found
+.no_match:
+    inc  hl
+    inc  e
+    ld   a, e
+    cp   8                         ; 8 stanze in totale
+    jr   c, .loop
     
-    ; 2. Incrementa e calcola il prossimo ID (A = (A + 1) % 8)
+    ld   e, 0                      ; Se non trovato, riparte da 0
+
+.found:
+    ; 2. Incrementa e calcola il prossimo indice (E = (E + 1) % 8)
+    ld   a, e
     inc  a
     cp   8
     jr   c, .no_wrap
     xor  a
 .no_wrap:
-    ; A = nuovo ID stanza (0..7)
+    ; A = nuovo indice in RoomsListTable (0..7)
     
     ; 3. Trova l'indirizzo del layout corrispondente da RoomsListTable
     ld   hl, RoomsListTable
@@ -168,9 +188,9 @@ TriggerRoomChange:
 RoomsListTable:
     dw TheOffLicenceLayout        ; 0
     dw TheBridgeLayout            ; 1
-    dw MastreBedRoomLayout        ; 2
-    dw UnderTheMegaTreeLayout     ; 3
+    dw UnderTheMegaTreeLayout     ; 2
     dw AtTheFootTheMegaTreeLayout ; 4
     dw TheDriveLayout             ; 5
     dw TheSecurityGuardLayout     ; 6
     dw TheBathroomLayout          ; 7
+    dw MastreBedRoomLayout        ; 35

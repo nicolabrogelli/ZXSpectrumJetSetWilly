@@ -40,10 +40,8 @@ ItemsTable:
     
     ; Stanza 1 (The Bridge)
     
-    ; Stanza 2 (Master Bedroom)
-
-    ; Stanza 3 (Under the MegaTree)
-    db 3, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)  
+    ; Stanza 2 (Under the MegaTree)
+    db 2, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)  
 
     ; Stanza 4 (At The Foot TheMega Tree)
     db 4, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)  
@@ -56,6 +54,8 @@ ItemsTable:
 
     ; Stanza 7 (The Bathroom)
     db 7, 23, 13, CYAN, 0                ; Oggetto 1 alla colonna X=7, riga Y=13, CYAN, (Stato: 0=attivo)  
+
+    ; Stanza 35 (Master Bedroom)
 
     db $FF                        ; Fine tabella
 
@@ -89,6 +89,20 @@ DetermineCurrentRoomID:
     push de
 
     ; ---------------------------------------------------------------
+    ; Confronto con TheOffLicenceLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheOffLicenceLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_office
+
+    ld   a, 0               ; Room ID = 0
+    jr   .set_room
+
+.not_office:
+
+    ; -------------------------------------------------q--------------
     ; Confronto con TheBridgeLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
@@ -103,34 +117,6 @@ DetermineCurrentRoomID:
 .not_bridge:
 
     ; ---------------------------------------------------------------
-    ; Confronto con TheOffLicenceLayout
-    ; ---------------------------------------------------------------
-    ld   hl, (room_ptr)
-    ld   de, TheOffLicenceLayout
-    or   a
-    sbc  hl, de
-    jr   nz, .not_office
-
-    ld   a, 0               ; Room ID = 0
-    jr   .set_room
-
-.not_office:
-
-    ; ---------------------------------------------------------------
-    ; Confronto con MastreBedRoomLayout
-    ; ---------------------------------------------------------------
-    ld   hl, (room_ptr)
-    ld   de, MastreBedRoomLayout
-    or   a
-    sbc  hl, de
-    jr   nz, .not_masterbed
-
-    ld   a, 2               ; Room ID = 2
-    jr   .set_room
-
-.not_masterbed:
-
-    ; ---------------------------------------------------------------
     ; Confronto con UnderTheMegaTreeLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
@@ -139,7 +125,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_undertree
 
-    ld   a, 3               ; Room ID = 3
+    ld   a, 2               ; Room ID = 2
     jr   .set_room
 
 .not_undertree:
@@ -193,9 +179,22 @@ DetermineCurrentRoomID:
     ld   de, TheBathroomLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_thebathroom
 
     ld   a, 7               ; Room ID = 7
+    jr   .set_room
+
+.not_thebathroom:
+    ; ---------------------------------------------------------------
+    ; Confronto con MastreBedRoomLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, MastreBedRoomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+
+    ld   a, 35               ; Room ID = 35
     jr   .set_room
 
 .unknown:
