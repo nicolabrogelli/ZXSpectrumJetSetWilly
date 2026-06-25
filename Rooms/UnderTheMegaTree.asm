@@ -92,10 +92,10 @@ UnderTheMegaTreeItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 UnderTheMegaTreeDirection:
-    DEFB 5	                                ;Room to the left (At the Foot of the MegaTree)
+    DEFB 4	                                ;Room to the left (At the Foot of the MegaTree)
     DEFB 1	                                ;Room to the right (The Bridge)
-    DEFB 0	                                ;Room above (The Off Licence)
-    DEFB 0	                                ;Room below (The Off Licence)
+    DEFB $FF                                ;Room above (None)
+    DEFB $FF                                ;Room below (None)
 
 UnderTheMegaTreeUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

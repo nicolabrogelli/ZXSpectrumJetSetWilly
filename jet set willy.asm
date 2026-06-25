@@ -147,6 +147,5 @@ RoomsStart:
     include "rooms/TheBathroom.asm"
 
     include "rooms/MasterBedRoom.asm"
-    include "rooms/TheTestRoom.asm"
-
+    
     SAVESNA "jet set willy.sna", start

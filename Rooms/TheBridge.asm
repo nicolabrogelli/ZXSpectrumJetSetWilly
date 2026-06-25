@@ -92,10 +92,10 @@ TheBridgeItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheBridgeDirection:
-    DEFB 4	                                ;Room to the left (Under the MegaTree)
-    DEFB 2	                                ;Room to the right (The Off Licence)
-    DEFB 0	                                ;Room above (The Off Licence)
-    DEFB 0	                                ;Room below (The Off Licence)
+    DEFB 3	                                ;Room to the left (Under the MegaTree)
+    DEFB 0	                                ;Room to the right (The Off Licence)
+    DEFB $FF                                ;Room above (None)
+    DEFB $FF                                ;Room below (None)
 
 TheBridgeUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

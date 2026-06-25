@@ -230,7 +230,7 @@ ApplyGravity:
     ld   de, 237           ; Offset per stanza sopra
     add  hl, de
     ld   a, (hl)           ; A = ID stanza sopra
-    or   a
+    cp   $FF
     jr   z, .no_up_transition
     
     ; C'è una stanza sopra!
@@ -254,7 +254,7 @@ ApplyGravity:
     ld   de, 238           ; Offset per stanza sotto
     add  hl, de
     ld   a, (hl)           ; A = ID stanza sotto
-    or   a
+    cp   $FF
     jr   z, .no_down_transition
     
     ; C'è una stanza sotto!

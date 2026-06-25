@@ -24,41 +24,38 @@
 ; 7 - WHITE
 ; -------------------------------------------------------------------
 ItemsTable:
-    ; Stanza 0 (The Test Room)
-    db 0, 15, 14, RED_FLASH, 0          ; Oggetto 1 alla colonna X=15, riga Y=14, RED FLASH, (Stato: 0=attivo)  
-
-    ; Stanza 1 (The Bridge)
-
-    ; Stanza 2 (The Off Licence)
-    db 2, 30, 4, YELLOW, 0              ; Oggetto 1 alla colonna X=30,  riga Y=4, YELLOW, (Stato: 0=attivo)    
-    db 2, 29, 4, CYAN, 0                ; Oggetto 2 alla colonna X=29,  riga Y=4, CYAN, (Stato: 0=attivo)      
-    db 2, 28, 4, GREEN, 0               ; Oggetto 4 alla colonna X=28,  riga Y=4, GREEN, (Stato: 0=attivo)      
-    db 2, 27, 4, MAGENTA, 0             ; Oggetto 5 alla colonna X=27,  riga Y=4, GREEN, (Stato: 0=attivo)   
-    db 2, 26, 4, YELLOW, 0              ; Oggetto 6 alla colonna X=26,  riga Y=4, YELLOW, (Stato: 0=attivo)      
-    db 2, 25, 4, CYAN, 0                ; Oggetto 7 alla colonna X=25,  riga Y=4, CYAN, (Stato: 0=attivo)   
-    db 2, 24, 4, GREEN, 0               ; Oggetto 8 alla colonna X=24,  riga Y=4, GREEN, (Stato: 0=attivo)      
-    db 2, 23, 4, MAGENTA, 0             ; Oggetto 9 alla colonna X=23,  riga Y=4, MAGENTA, (Stato: 0=attivo)   
-    db 2, 22, 4, YELLOW, 0              ; Oggetto 10 alla colonna X=22, riga Y=4, YELLOW, (Stato: 0=attivo)      
-    db 2, 21, 4, CYAN, 0                ; Oggetto 11 alla colonna X=21, riga Y=4, CYAN, (Stato: 0=attivo)   
-    db 2, 20, 4, GREEN, 0               ; Oggetto 12 alla colonna X=20, riga Y=4, GREEN, (Stato: 0=attivo)      
-    db 2, 19, 4, MAGENTA, 0             ; Oggetto 13 alla colonna X=19, riga Y=4, MAGENTA, (Stato: 0=attivo)  
+    ; Stanza 0 (The Off Licence)
+    db 0, 30, 4, YELLOW, 0              ; Oggetto 1 alla colonna X=30,  riga Y=4, YELLOW, (Stato: 0=attivo)    
+    db 0, 29, 4, CYAN, 0                ; Oggetto 2 alla colonna X=29,  riga Y=4, CYAN, (Stato: 0=attivo)      
+    db 0, 28, 4, GREEN, 0               ; Oggetto 4 alla colonna X=28,  riga Y=4, GREEN, (Stato: 0=attivo)      
+    db 0, 27, 4, MAGENTA, 0             ; Oggetto 5 alla colonna X=27,  riga Y=4, GREEN, (Stato: 0=attivo)   
+    db 0, 26, 4, YELLOW, 0              ; Oggetto 6 alla colonna X=26,  riga Y=4, YELLOW, (Stato: 0=attivo)      
+    db 0, 25, 4, CYAN, 0                ; Oggetto 7 alla colonna X=25,  riga Y=4, CYAN, (Stato: 0=attivo)   
+    db 0, 24, 4, GREEN, 0               ; Oggetto 8 alla colonna X=24,  riga Y=4, GREEN, (Stato: 0=attivo)      
+    db 0, 23, 4, MAGENTA, 0             ; Oggetto 9 alla colonna X=23,  riga Y=4, MAGENTA, (Stato: 0=attivo)   
+    db 0, 22, 4, YELLOW, 0              ; Oggetto 10 alla colonna X=22, riga Y=4, YELLOW, (Stato: 0=attivo)      
+    db 0, 21, 4, CYAN, 0                ; Oggetto 11 alla colonna X=21, riga Y=4, CYAN, (Stato: 0=attivo)   
+    db 0, 20, 4, GREEN, 0               ; Oggetto 12 alla colonna X=20, riga Y=4, GREEN, (Stato: 0=attivo)      
+    db 0, 19, 4, MAGENTA, 0             ; Oggetto 13 alla colonna X=19, riga Y=4, MAGENTA, (Stato: 0=attivo)  
     
-    ; Stanza 3 (The Bridge)
+    ; Stanza 1 (The Bridge)
+    
+    ; Stanza 2 (Master Bedroom)
 
-    ; Stanza 4 (Under the MegaTree)
-    db 4, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)  
+    ; Stanza 3 (Under the MegaTree)
+    db 3, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)  
 
-    ; Stanza 5 (At The Foot TheMega Tree)
-    db 5, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)  
-    db 5, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)  
-    db 5, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)  
+    ; Stanza 4 (At The Foot TheMega Tree)
+    db 4, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)  
+    db 4, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)  
+    db 4, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)  
 
-    ; Stabza 6 (The Drive)
+    ; Stanza 5 (The Drive)
 
-    ; Stanza 7 (The Security Guard)
+    ; Stanza 6 (The Security Guard)
 
-    ; Stanza 8 (The Bathroom)
-    db 8, 23, 13, CYAN, 0                ; Oggetto 1 alla colonna X=7, riga Y=13, CYAN, (Stato: 0=attivo)  
+    ; Stanza 7 (The Bathroom)
+    db 7, 23, 13, CYAN, 0                ; Oggetto 1 alla colonna X=7, riga Y=13, CYAN, (Stato: 0=attivo)  
 
     db $FF                        ; Fine tabella
 
@@ -73,15 +70,14 @@ ItemsTable:
 ;   current_room = A
 ;
 ; Mappatura:
-;   0 = Test Room
+;   0 = The Off Licence
 ;   1 = The Bridge
-;   2 = The Off Licence
-;   3 = Master Bedroom
-;   4 = Under The Mega Tree
-;   5 = At The Foot Of The Mega Tree
-;   6 = The Drive
-;   7 = The Security Guard
-;   8 = The Bathroom
+;   2 = Master Bedroom
+;   3 = Under The Mega Tree
+;   4 = At The Foot Of The Mega Tree
+;   5 = The Drive
+;   6 = The Security Guard
+;   7 = The Bathroom
 ;
 ; Se nessuna stanza corrisponde viene impostato:
 ;   current_room = 0
@@ -91,22 +87,6 @@ DetermineCurrentRoomID:
     ; Salva i registri utilizzati
     push hl
     push de
-
-    ; Carica il puntatore alla stanza corrente
-    ld   hl, (room_ptr)
-
-    ; ---------------------------------------------------------------
-    ; Confronto con TheTestRoomLayout
-    ; ---------------------------------------------------------------
-    ld   de, TheTestRoomLayout
-    or   a                  ; Azzera il Carry
-    sbc  hl, de             ; HL - DE
-    jr   nz, .not_test      ; Se diversi passa al test successivo
-
-    ld   a, 0               ; Room ID = 0
-    jr   .set_room
-
-.not_test:
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBridgeLayout
@@ -131,7 +111,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_office
 
-    ld   a, 2               ; Room ID = 2
+    ld   a, 0               ; Room ID = 0
     jr   .set_room
 
 .not_office:
@@ -145,7 +125,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_masterbed
 
-    ld   a, 3               ; Room ID = 3
+    ld   a, 2               ; Room ID = 2
     jr   .set_room
 
 .not_masterbed:
@@ -159,7 +139,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_undertree
 
-    ld   a, 4               ; Room ID = 4
+    ld   a, 3               ; Room ID = 3
     jr   .set_room
 
 .not_undertree:
@@ -173,7 +153,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_foottree
 
-    ld   a, 5               ; Room ID = 5
+    ld   a, 4               ; Room ID = 4
     jr   .set_room
 
 .not_foottree:
@@ -187,7 +167,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_thedrive
 
-    ld   a, 6               ; Room ID = 6
+    ld   a, 5               ; Room ID = 5
     jr   .set_room
 
 .not_thedrive:
@@ -201,7 +181,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_securityguard
 
-    ld   a, 7               ; Room ID = 7
+    ld   a, 6               ; Room ID = 6
     jr   .set_room
 
 .not_securityguard:
@@ -215,7 +195,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .unknown
 
-    ld   a, 8               ; Room ID = 8
+    ld   a, 7               ; Room ID = 7
     jr   .set_room
 
 .unknown:

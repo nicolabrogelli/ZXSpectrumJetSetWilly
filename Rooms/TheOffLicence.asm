@@ -85,9 +85,9 @@ TheOffLicenceItem:
 
 TheOffLicenceDirection:
     DEFB 1	;Room to the left (The Bridge)
-    DEFB 0	;Room to the right (The Off Licence)
-    DEFB 0	;Room above (The Off Licence)
-    DEFB 0	;Room below (The Off Licence)
+    DEFB $FF	;Room to the right (None)
+    DEFB $FF	;Room above (None)
+    DEFB $FF	;Room below (None)
 
 TheOffLicenceUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

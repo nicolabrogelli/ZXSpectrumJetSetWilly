@@ -102,7 +102,7 @@ movePlayer_left:
     ld   de, 235           ; Offset per stanza a sinistra
     add  hl, de
     ld   a, (hl)           ; A = ID stanza a sinistra
-    or   a
+    cp   $FF
     jr   z, .no_left_transition
     
     ; C'è una stanza a sinistra!
@@ -169,7 +169,7 @@ movePlayer_right:
     ld   de, 236           ; Offset per stanza a destra
     add  hl, de
     ld   a, (hl)           ; A = ID stanza a destra
-    or   a
+    cp   $FF
     jr   z, .no_right_transition
     
     ; C'è una stanza a destra!
