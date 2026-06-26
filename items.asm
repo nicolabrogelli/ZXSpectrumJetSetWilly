@@ -247,6 +247,19 @@ DetermineCurrentRoomID:
 
 .not_thefrontdoor:
 
+    ; ---------------------------------------------------------------
+    ; Confronto con TheFrontDoor
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheHallLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_thehall
+
+    ld   a, 11               ; Room ID = 11
+    jp   .set_room
+
+.not_thehall:
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout

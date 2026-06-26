@@ -197,5 +197,6 @@ RoomsListTable:
     dw InsideTheMegaTrunkLayout     ; 8
     dw OnABranchOverTheDriveLayout  ; 9
     dw TheFrontDoorLayout           ; 10
+    dw TheHallLayout                ; 11
     dw TheBathroomLayout            ; 33
     dw MastreBedRoomLayout          ; 35

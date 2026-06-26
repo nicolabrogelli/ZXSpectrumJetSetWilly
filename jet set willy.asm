@@ -149,6 +149,7 @@ RoomsStart:
     include "rooms/InsideTheMegaTrunk.asm"          ; ID 08
     include "rooms/OnABranchOverTheDrive.asm"       ; ID 09
     include "rooms/TheFrontDoor.asm"                ; ID 10
+    include "rooms/TheHall.asm"                     ; ID 11
 
     include "rooms/TheBathroom.asm"                 ; ID 33
     include "rooms/MasterBedRoom.asm"               ; ID 35s
