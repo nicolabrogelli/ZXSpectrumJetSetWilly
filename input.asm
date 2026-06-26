@@ -115,20 +115,20 @@ PerformRoomChange:
     inc  hl
     inc  e
     ld   a, e
-    cp   9                         ; 9 stanze in totale
+    cp   10                        ; 10 stanze in totale
     jr   c, .loop
     
     ld   e, 0                      ; Se non trovato, riparte da 0
 
 .found:
-    ; 2. Incrementa e calcola il prossimo indice (E = (E + 1) % 9)
+    ; 2. Incrementa e calcola il prossimo indice (E = (E + 1) % 10)
     ld   a, e
     inc  a
-    cp   9
+    cp   10
     jr   c, .no_wrap
     xor  a
 .no_wrap:
-    ; A = nuovo indice in RoomsListTable (0..8)
+    ; A = nuovo indice in RoomsListTable (0..9)
     
     ; 3. Trova l'indirizzo del layout corrispondente da RoomsListTable
     ld   hl, RoomsListTable
@@ -193,5 +193,6 @@ RoomsListTable:
     dw TheDriveLayout             ; 4
     dw TheSecurityGuardLayout     ; 5
     dw EntranceToHadesLayout      ; 6
+    dw CuckoosNestLayout          ; 7
     dw TheBathroomLayout          ; 33
     dw MastreBedRoomLayout        ; 35

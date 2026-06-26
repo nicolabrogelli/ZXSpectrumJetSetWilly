@@ -24,6 +24,7 @@ start:
 
     
 
+    org $7F50
 Main:
     ; Inizializza
     xor  a
@@ -144,6 +145,7 @@ RoomsStart:
     include "rooms/TheDrive.asm"
     include "rooms/TheSecurityGuard.asm"
     include "rooms/EntranceToHades.asm"
+    include "rooms/CuckoosNest.asm"
 
     include "rooms/TheBathroom.asm"
 

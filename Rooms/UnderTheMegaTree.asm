@@ -94,7 +94,7 @@ UnderTheMegaTreeItem:
 UnderTheMegaTreeDirection:
     DEFB 3	                                ;Room to the left (At the Foot of the MegaTree)
     DEFB 1	                                ;Room to the right (The Bridge)
-    DEFB $FF                                ;Room above (None)
+    DEFB 7                                  ;Room above (CuckoosNest)
     DEFB $FF                                ;Room below (None)
 
 UnderTheMegaTreeUnused:

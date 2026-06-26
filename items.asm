@@ -98,7 +98,7 @@ DetermineCurrentRoomID:
     jr   nz, .not_office
 
     ld   a, 0               ; Room ID = 0
-    jr   .set_room
+    jp   .set_room
 
 .not_office:
 
@@ -112,7 +112,7 @@ DetermineCurrentRoomID:
     jr   nz, .not_bridge
 
     ld   a, 1               ; Room ID = 1
-    jr   .set_room
+    jp   .set_room
 
 .not_bridge:
 
@@ -126,7 +126,7 @@ DetermineCurrentRoomID:
     jr   nz, .not_undertree
 
     ld   a, 2               ; Room ID = 2
-    jr   .set_room
+    jp   .set_room
 
 .not_undertree:
 
@@ -140,7 +140,7 @@ DetermineCurrentRoomID:
     jr   nz, .not_foottree
 
     ld   a, 3               ; Room ID = 3
-    jr   .set_room
+    jp   .set_room
 
 .not_foottree:
 
@@ -154,7 +154,7 @@ DetermineCurrentRoomID:
     jr   nz, .not_thedrive
 
     ld   a, 4               ; Room ID = 4
-    jr   .set_room
+    jp   .set_room
 
 .not_thedrive:
 
@@ -168,7 +168,7 @@ DetermineCurrentRoomID:
     jr   nz, .not_securityguard
 
     ld   a, 5               ; Room ID = 5
-    jr   .set_room
+    jp   .set_room
 
 .not_securityguard:
 
@@ -182,9 +182,23 @@ DetermineCurrentRoomID:
     jr   nz, .not_entrancehades
 
     ld   a, 6               ; Room ID = 6
-    jr   .set_room
+    jp   .set_room
 
 .not_entrancehades:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con CuckoosNestLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, CuckoosNestLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_cuckoosnest
+
+    ld   a, 7               ; Room ID = 7
+    jp   .set_room
+
+.not_cuckoosnest:
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
@@ -196,7 +210,7 @@ DetermineCurrentRoomID:
     jr   nz, .not_thebathroom
 
     ld   a, 33               ; Room ID = 33
-    jr   .set_room
+    jp   .set_room
 
 .not_thebathroom:
     ; ---------------------------------------------------------------
@@ -209,7 +223,7 @@ DetermineCurrentRoomID:
     jr   nz, .unknown
 
     ld   a, 35               ; Room ID = 35
-    jr   .set_room
+    jp   .set_room
 
 .unknown:
 

@@ -101,4 +101,4 @@ EntranceToHadesEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
 
 EntranceToHadesPosWilly:
-    db 136, 104                   ; Willy starting position
+    db 136, 30                   ; Willy starting position

@@ -242,6 +242,12 @@ DrawRoomEnemies:
     jr   z, .bridge_lametta
     
     ld   hl, (room_ptr)
+    ld   de, CuckoosNestLayout
+    or   a
+    sbc  hl, de
+    jr   z, .bridge_lametta
+    
+    ld   hl, (room_ptr)
     ld   de, TheOffLicenceLayout
     or   a
     sbc  hl, de
@@ -301,6 +307,12 @@ DrawRoomEnemies:
     ; Uovo (Tipo 1)
     ld   hl, (room_ptr)
     ld   de, TheBridgeLayout
+    or   a
+    sbc  hl, de
+    jp   z, .bridge_egg
+    
+    ld   hl, (room_ptr)
+    ld   de, CuckoosNestLayout
     or   a
     sbc  hl, de
     jp   z, .bridge_egg
