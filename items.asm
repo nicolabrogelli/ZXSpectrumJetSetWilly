@@ -80,7 +80,9 @@ ItemsTable:
 ;    7 = Cuckoo's Nest
 ;    8 = Inside The Mega Trunk
 ;    9 = On A Branch Over The Drive
-;   10 = The Fornt Door
+;   10 = The Front Door
+;   11 = The Hall
+;   12 = Tree Top
 ;   33 = The Bathroom
 ;   35 = Master Bedroom
 ;
@@ -248,7 +250,7 @@ DetermineCurrentRoomID:
 .not_thefrontdoor:
 
     ; ---------------------------------------------------------------
-    ; Confronto con TheFrontDoor
+    ; Confronto con TheHall
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
     ld   de, TheHallLayout
@@ -260,6 +262,20 @@ DetermineCurrentRoomID:
     jp   .set_room
 
 .not_thehall:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TreeTop
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TreeTopLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_treetop
+
+    ld   a, 12               ; Room ID = 12
+    jp   .set_room
+
+.not_treetop:
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout

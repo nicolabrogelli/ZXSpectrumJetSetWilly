@@ -250,18 +250,14 @@ LoadPositionPlayeinRoom:
     ; Legge posizione iniziale del player
     ; ---------------------------------------------------------------
 
-    ld   a, (hl)           ; A = X iniziale
-
+    ld   c, (hl)           ; C = X iniziale
     inc  hl
-
-    ld   h, (hl)           ; H = Y iniziale
-
-    ld   l, a              ; HL = (Y, X)
+    ld   b, (hl)           ; B = Y iniziale
 
     ; ---------------------------------------------------------------
     ; Salva posizione corrente e posizione precedente
     ; ---------------------------------------------------------------
-    ld   (PlayerPos), hl
-    ld   (PlayerPosOld), hl
+    ld   (PlayerPos), bc
+    ld   (PlayerPosOld), bc
 
     ret

@@ -99,7 +99,7 @@ checkCtrl_jump:
 ; Esegue il cambio di stanza ciclico alla stanza successiva
 ; -------------------------------------------------------------------
 PerformRoomChange:
-    ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..11)
+    ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..14)
     ld   hl, RoomsListTable
     ld   bc, (room_ptr)            ; BC = layout corrente
     ld   e, 0                      ; E = contatore indice
@@ -115,20 +115,20 @@ PerformRoomChange:
     inc  hl
     inc  e
     ld   a, e
-    cp   12                        ; 12 stanze in totale
+    cp   15                        ; 15 stanze in totale
     jr   c, .loop
     
     ld   e, 0                      ; Se non trovato, riparte da 0
 
 .found:
-    ; 2. Incrementa e calcola il prossimo indice (E = (E + 1) % 12)
+    ; 2. Incrementa e calcola il prossimo indice (E = (E + 1) % 15)
     ld   a, e
     inc  a
-    cp   12
+    cp   15
     jr   c, .no_wrap
     xor  a
 .no_wrap:
-    ; A = nuovo indice in RoomsListTable (0..11)
+    ; A = nuovo indice in RoomsListTable (0..14)
     
     ; 3. Trova l'indirizzo del layout corrispondente da RoomsListTable
     ld   hl, RoomsListTable
@@ -198,5 +198,6 @@ RoomsListTable:
     dw OnABranchOverTheDriveLayout  ; 9
     dw TheFrontDoorLayout           ; 10
     dw TheHallLayout                ; 11
+    dw TreeTopLayout                ; 12
     dw TheBathroomLayout            ; 33
     dw MastreBedRoomLayout          ; 35
