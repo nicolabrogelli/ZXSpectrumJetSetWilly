@@ -24,14 +24,14 @@
   11+ 5DAD              UDG:        EQU $5c7b
   12+ 5DAD
   13+ 5DAD              ; Codici caratteri
-  14+ 5DAD              HEAD_GRAPH_RIGHT:   EQU $41
-  15+ 5DAD              BODY_GRAPH_RIGHT_1: EQU $42
-  16+ 5DAD              BODY_GRAPH_RIGHT_2: EQU $43
-  17+ 5DAD              BODY_GRAPH_RIGHT_3: EQU $44
-  18+ 5DAD              HEAD_GRAPH_LEFT:    EQU $45
-  19+ 5DAD              BODY_GRAPH_LEFT_1:  EQU $46
-  20+ 5DAD              BODY_GRAPH_LEFT_2:  EQU $47
-  21+ 5DAD              BODY_GRAPH_LEFT_3:  EQU $48
+  14+ 5DAD              ;HEAD_GRAPH_RIGHT:   EQU $41
+  15+ 5DAD              ;BODY_GRAPH_RIGHT_1: EQU $42
+  16+ 5DAD              ;BODY_GRAPH_RIGHT_2: EQU $43
+  17+ 5DAD              ;BODY_GRAPH_RIGHT_3: EQU $44
+  18+ 5DAD              ;HEAD_GRAPH_LEFT:    EQU $45
+  19+ 5DAD              ;BODY_GRAPH_LEFT_1:  EQU $46
+  20+ 5DAD              ;BODY_GRAPH_LEFT_2:  EQU $47
+  21+ 5DAD              ;BODY_GRAPH_LEFT_3:  EQU $48
   22+ 5DAD
   23+ 5DAD              ; Colori
   24+ 5DAD              BLUE:   EQU $01
