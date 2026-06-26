@@ -73,9 +73,13 @@ ItemsTable:
 ;   0 = The Off Licence
 ;   1 = The Bridge
 ;   2 = Under The Mega Tree
-;   4 = At The Foot Of The Mega Tree
-;   5 = The Drive
+;   3 = At The Foot Of The Mega Tree
+;   4 = The Drive
+;   5 = The Security Guard
 ;   6 = Entrance To Hades
+;   7 = Cuckoo's Nest
+;   8 = Inside The Mega Trunk
+;   9 = On A Branch Over The Drive
 ;   33 = The Bathroom
 ;   35 = Master Bedroom
 ;
@@ -199,6 +203,34 @@ DetermineCurrentRoomID:
     jp   .set_room
 
 .not_cuckoosnest:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con InsideTheMegaTrunkLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, InsideTheMegaTrunkLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_megatrunk
+
+    ld   a, 8               ; Room ID = 8
+    jp   .set_room
+
+.not_megatrunk:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con OnABranchOverTheDriveLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, OnABranchOverTheDriveLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_branchoverdrive
+
+    ld   a, 9               ; Room ID = 9
+    jp   .set_room
+
+.not_branchoverdrive:
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout

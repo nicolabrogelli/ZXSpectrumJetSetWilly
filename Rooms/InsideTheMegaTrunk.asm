@@ -111,4 +111,4 @@ InsideTheMegaTrunkEnemy4:
     DEFB 0,0,0,0                            ; Empty slot
 
 InsideTheMegaTrunkPosWilly:
-    db 200, 101                             ; Posizione di Willy
+    db 200, 90                             ; Posizione di Willy

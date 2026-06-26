@@ -146,6 +146,8 @@ RoomsStart:
     include "rooms/TheSecurityGuard.asm"
     include "rooms/EntranceToHades.asm"
     include "rooms/CuckoosNest.asm"
+    include "rooms/InsideTheMegaTrunk.asm"
+    include "rooms/OnABranchOverTheDrive.asm"
 
     include "rooms/TheBathroom.asm"
 
