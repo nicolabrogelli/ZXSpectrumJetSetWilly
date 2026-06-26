@@ -40,7 +40,7 @@ ramp_row:       db 0
 ramp_col:       db 0
 current_room_items: .80 db 0
 num_room_items:     db 0
-room_ptr:           dw TheOffLicenceLayout; TheSecurityGuardLayout; MastreBedRoomLayout; UnderTheMegaTreeLayout; TheBathroomLayout; TheBridgeLayout; AtTheFootTheMegaTreeLayout;  TheDriveLayout; InsideTheMegaTrunkLayout; OnABranchOverTheDriveLayout;
+room_ptr:           dw TheOffLicenceLayout; TheSecurityGuardLayout; MastreBedRoomLayout; UnderTheMegaTreeLayout; TheBathroomLayout; TheBridgeLayout; AtTheFootTheMegaTreeLayout;  TheDriveLayout; InsideTheMegaTrunkLayout; OnABranchOverTheDriveLayout; TheFrontDoorLayout.asm
 enemy_update_rate:  db 1
 enemy_update_timer: db 0
 player_speed:       db 3

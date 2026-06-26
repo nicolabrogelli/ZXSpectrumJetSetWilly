@@ -186,15 +186,16 @@ TriggerRoomChange:
     jp   LoadRoomAndRestart
 
 RoomsListTable:
-    dw TheOffLicenceLayout        ; 0
-    dw TheBridgeLayout            ; 1
-    dw UnderTheMegaTreeLayout     ; 2
-    dw AtTheFootTheMegaTreeLayout ; 3
-    dw TheDriveLayout             ; 4
-    dw TheSecurityGuardLayout     ; 5
-    dw EntranceToHadesLayout      ; 6
-    dw CuckoosNestLayout          ; 7
-    dw InsideTheMegaTrunkLayout   ; 8
-    dw OnABranchOverTheDriveLayout; 9
-    dw TheBathroomLayout          ; 33
-    dw MastreBedRoomLayout        ; 35
+    dw TheOffLicenceLayout          ; 0
+    dw TheBridgeLayout              ; 1
+    dw UnderTheMegaTreeLayout       ; 2
+    dw AtTheFootTheMegaTreeLayout   ; 3
+    dw TheDriveLayout               ; 4
+    dw TheSecurityGuardLayout       ; 5
+    dw EntranceToHadesLayout        ; 6
+    dw CuckoosNestLayout            ; 7
+    dw InsideTheMegaTrunkLayout     ; 8
+    dw OnABranchOverTheDriveLayout  ; 9
+    dw TheFrontDoorLayout           ; 10
+    dw TheBathroomLayout            ; 33
+    dw MastreBedRoomLayout          ; 35

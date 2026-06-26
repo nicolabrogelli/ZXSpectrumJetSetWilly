@@ -70,16 +70,17 @@ ItemsTable:
 ;   current_room = A
 ;
 ; Mappatura:
-;   0 = The Off Licence
-;   1 = The Bridge
-;   2 = Under The Mega Tree
-;   3 = At The Foot Of The Mega Tree
-;   4 = The Drive
-;   5 = The Security Guard
-;   6 = Entrance To Hades
-;   7 = Cuckoo's Nest
-;   8 = Inside The Mega Trunk
-;   9 = On A Branch Over The Drive
+;    0 = The Off Licence
+;    1 = The Bridge
+;    2 = Under The Mega Tree
+;    3 = At The Foot Of The Mega Tree
+;    4 = The Drive
+;    5 = The Security Guard
+;    6 = Entrance To Hades
+;    7 = Cuckoo's Nest
+;    8 = Inside The Mega Trunk
+;    9 = On A Branch Over The Drive
+;   10 = The Fornt Door
 ;   33 = The Bathroom
 ;   35 = Master Bedroom
 ;
@@ -231,6 +232,21 @@ DetermineCurrentRoomID:
     jp   .set_room
 
 .not_branchoverdrive:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheFrontDoor
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheFrontDoorLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_thefrontdoor
+
+    ld   a, 10               ; Room ID = 10
+    jp   .set_room
+
+.not_thefrontdoor:
+
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout

@@ -1,0 +1,15 @@
+### Summary of Changes:
+
+  1. Added Inclusions: Updated jet set willy.asm to include the new rooms:
+      •  rooms/OnABranchOverTheDrive.asm  (requested room, ID 9)
+      •  rooms/InsideTheMegaTrunk.asm  (room ID 8, which is connected directly to  OnABranchOverTheDrive 's right exit and was missing from the compiler
+      inclusion list).
+  2. Updated Layout Comments: Updated the developer comments next to  room_ptr  in datavariable.asm to reflect the new rooms.
+  3. Mapped Room IDs in Table: Added the new layouts to  RoomsListTable  in input.asm at their correct JSW indices:
+      • Index 8:  InsideTheMegaTrunkLayout 
+      • Index 9:  OnABranchOverTheDriveLayout 
+  4. Debug Room Cycle ('Q' key): Increased the total room count logic in  PerformRoomChange  inside input.asm from 10 to 12, allowing the player to
+  cycle through all implemented rooms (including the two new ones, plus Bathroom and Master Bedroom).
+  5. Room ID Mapping: Updated  DetermineCurrentRoomID  in items.asm to properly identify and return the correct Room IDs ( 8  and  9 ) for rendering
+  items and general game state.
+  6. Compiled Snapshot: Built the project using  sjasmplus  to ensure it compiles flawlessly (0 errors) and updated the  jet set willy.sna  snapshot file.

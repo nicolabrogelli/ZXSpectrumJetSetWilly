@@ -138,19 +138,19 @@ Main_loop:
 
     org $8300
 RoomsStart:
-    include "rooms/TheOffLicence.asm"
-    include "rooms/TheBridge.asm"
-    include "rooms/UnderTheMegaTree.asm"
-    include "rooms/AtTheFootTheMegaTree.asm"
-    include "rooms/TheDrive.asm"
-    include "rooms/TheSecurityGuard.asm"
-    include "rooms/EntranceToHades.asm"
-    include "rooms/CuckoosNest.asm"
-    include "rooms/InsideTheMegaTrunk.asm"
-    include "rooms/OnABranchOverTheDrive.asm"
+    include "rooms/TheOffLicence.asm"               ; ID 00
+    include "rooms/TheBridge.asm"                   ; ID 01
+    include "rooms/UnderTheMegaTree.asm"            ; ID 02
+    include "rooms/AtTheFootTheMegaTree.asm"        ; ID 03
+    include "rooms/TheDrive.asm"                    ; ID 04
+    include "rooms/TheSecurityGuard.asm"            ; ID 05
+    include "rooms/EntranceToHades.asm"             ; ID 06
+    include "rooms/CuckoosNest.asm"                 ; ID 07
+    include "rooms/InsideTheMegaTrunk.asm"          ; ID 08
+    include "rooms/OnABranchOverTheDrive.asm"       ; ID 09
+    include "rooms/TheFrontDoor.asm"                ; ID 10
 
-    include "rooms/TheBathroom.asm"
-
-    include "rooms/MasterBedRoom.asm"
+    include "rooms/TheBathroom.asm"                 ; ID 33
+    include "rooms/MasterBedRoom.asm"               ; ID 35s
     
     SAVESNA "jet set willy.sna", start
