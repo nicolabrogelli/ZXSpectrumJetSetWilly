@@ -795,38 +795,16 @@ GetRampY:
     cp   8
     jp   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary + 8, fuori
     
-    ; Col = ramp_col + ramp_len
-    ld   a, (ramp_col)
-    ld   hl, ramp_len
-    add  a, (hl)
-    ld   c, a              ; C = Col
-    
-    ; Row = ramp_row - ramp_len + 1
+    ; Piattaforma adiacente! Restituisci PlayerY = (ramp_row - ramp_len + 1) * 8 - 16
     ld   a, (ramp_row)
+    ld   hl, ramp_len
     sub  (hl)
-    inc  a
-    ld   d, a              ; D = Row
-    
-    call GetCellFromUnpacked ; A = cell type
-    cp   1
-    jr   z, .platform_solid
-    cp   2
-    jr   z, .platform_solid
-    
-    ld   a, (PlayerPos)
-    ld   c, a              ; Ripristina C
-    jp   .out_of_ramp
-    
-.platform_solid:
-    ld   a, (PlayerPos)
-    ld   c, a              ; Ripristina C
-    
-    ld   a, d              ; A = Row
+    inc  a                 ; A = Row
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
     sub  16                ; A = Row * 8 - 16
-    scf                    ; Set carry
+    scf                    ; Set carry (dentro rampa/piattaforma)
     ret
     
 .on_ramp_slope:
@@ -837,7 +815,30 @@ GetRampY:
     sub  16                ; A = ramp_row * 8 - 16
     add  a, e              ; A = ramp_row * 8 - 16 + X_left
     sub  c                 ; A = A - PlayerX
+    
+    ; Calcola la quota della piattaforma:
+    ; platform_Y = (ramp_row - ramp_len + 1) * 8 - 16
+    ld   d, a              ; D = calculated Y
+    
+    ld   a, (ramp_row)
+    ld   hl, ramp_len
+    sub  (hl)
+    inc  a                 ; A = Row
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    sub  16                ; A = platform_Y
+    
+    cp   d                 ; Compara platform_Y con calculated Y
+    jr   c, .no_clamp      ; Se platform_Y < calculated Y, non limitare
+    
+    ; Altrimenti, limita a platform_Y
     scf                    ; Set carry (dentro rampa)
+    ret
+    
+.no_clamp:
+    ld   a, d              ; Ripristina A = calculated Y
+    scf                    ; Set carry
     ret
     
 .dir_left:
@@ -871,33 +872,11 @@ GetRampY:
     cp   9
     jp   nc, .out_of_ramp  ; Se PlayerX <= X_left - 9, fuori
     
-    ; Col = ramp_col - ramp_len
-    ld   a, (ramp_col)
+    ; Piattaforma adiacente a sinistra! Restituisci PlayerY = (ramp_row - ramp_len + 1) * 8 - 16
+    ld   a, (ramp_row)
     ld   hl, ramp_len
     sub  (hl)
-    ld   c, a              ; C = Col
-    
-    ; Row = ramp_row - ramp_len + 1
-    ld   a, (ramp_row)
-    sub  (hl)
-    inc  a
-    ld   d, a              ; D = Row
-    
-    call GetCellFromUnpacked ; A = cell type
-    cp   1
-    jr   z, .platform_solid_left
-    cp   2
-    jr   z, .platform_solid_left
-    
-    ld   a, (PlayerPos)
-    ld   c, a              ; Ripristina C
-    jp   .out_of_ramp
-    
-.platform_solid_left:
-    ld   a, (PlayerPos)
-    ld   c, a              ; Ripristina C
-    
-    ld   a, d              ; A = Row
+    inc  a                 ; A = Row
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
@@ -919,7 +898,29 @@ GetRampY:
     sub  16                ; A = ramp_row * 8 - 16
     sub  d                 ; A = ramp_row * 8 - 16 - X_start
     add  a, c              ; A = A + PlayerX
-    scf                    ; Set carry (dentro rampa)
+    
+    ; Calcola la quota della piattaforma:
+    ; platform_Y = (ramp_row - ramp_len + 1) * 8 - 16
+    ld   d, a              ; D = calculated Y
+    
+    ld   a, (ramp_row)
+    ld   hl, ramp_len
+    sub  (hl)
+    inc  a                 ; A = Row
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    sub  16                ; A = platform_Y
+    
+    cp   d
+    jr   c, .no_clamp_left
+    
+    scf
+    ret
+    
+.no_clamp_left:
+    ld   a, d
+    scf
     ret
 
 .out_of_ramp:
