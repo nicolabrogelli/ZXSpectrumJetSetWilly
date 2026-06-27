@@ -68,6 +68,46 @@ ApplyGravity:
     ld  bc, (PlayerPos)
     ld  a, b              ; B = PlayerY (pixel)
     
+    ; --- CONTROLLO RAMPA PER IL MOVIMENTO ---
+    ld   a, (on_ground)
+    or   a
+    jr   z, .not_on_ramp_walk ; Se siamo in volo, non fare il snap della camminata sulla rampa
+    
+    call GetRampY           ; C = PlayerX, A = ramp_Y (se carry set)
+    jr   nc, .not_on_ramp_walk
+    
+    ; Siamo nel range della rampa!
+    ; Controlliamo se siamo abbastanza vicini verticalmente
+    ld   e, a               ; E = ramp_Y
+    ld   a, b               ; A = PlayerY
+    sub  e                  ; A = PlayerY - ramp_Y
+    bit  7, a
+    jr   z, .abs_ok
+    neg
+.abs_ok:
+    cp   12                 ; Soglia di vicinanza di 11 pixel
+    jr   nc, .not_on_ramp_walk ; Se troppo lontano, non agganciare la rampa
+    
+    ; Aggancia sulla rampa!
+    ld   b, e               ; B = ramp_Y
+    ld   (PlayerPos), bc    ; Salva la posizione Y allineata alla rampa
+    
+    ; Gestisci il salto mentre siamo sulla rampa
+    ld   a, (jump_pressed)
+    or   a
+    jp   z, .end            ; Se non salta, abbiamo finito per questo frame
+    
+    ld   a, JUMP_STRENGTH
+    ld   (velocity_y), a
+    xor  a
+    ld   (on_ground), a
+    ld   (jump_pressed), a
+    jp   .in_air
+    
+.not_on_ramp_walk:
+    ld  bc, (PlayerPos)
+    ld  a, b              ; B = PlayerY (pixel)
+
     ; Controlla se siamo a mezz'aria (on_ground == 0)
     ld  a, (on_ground)
     or  a
@@ -146,6 +186,39 @@ ApplyGravity:
     jr  .no_collision_checks ; Se stiamo salendo, non controlliamo collisioni
     
 .falling_checks:
+    ; --- CONTROLLO ATTERRAGGIO SU RAMPA ---
+    push bc
+    ; BC ha C = PlayerX, B = new_Y
+    ld   a, (PlayerPos+1)   ; A = old_Y
+    ld   d, a               ; D = old_Y
+    
+    call GetRampY           ; Calcola ramp_Y per PlayerX (in C)
+    jr   nc, .no_ramp_landing
+    
+    ld   h, a               ; H = ramp_Y
+    ld   a, d               ; A = old_Y
+    cp   h
+    jr   z, .check_new_y
+    jr   nc, .no_ramp_landing ; Se old_Y > ramp_Y (era sotto la rampa), non atterra
+    
+.check_new_y:
+    ld   a, b               ; A = new_Y (in B)
+    cp   h
+    jr   c, .no_ramp_landing ; Se new_Y < ramp_Y (non ha ancora toccato la rampa), non atterra
+    
+    ; Atterrato sulla rampa!
+    pop  bc                 ; BC ha C = PlayerX, B = new_Y
+    ld   b, h               ; B = ramp_Y
+    ld   (PlayerPos), bc
+    ld   a, 1
+    ld   (on_ground), a
+    xor  a
+    ld   (velocity_y), a
+    jp   .end
+    
+.no_ramp_landing:
+    pop  bc
+
     ; --- CONTROLLO COLLISIONE CON IL TERRENO DURANTE LA CADUTA ---
     ld   a, b
     add  a, 16
@@ -679,3 +752,95 @@ GetCellFromUnpacked:
     pop  hl
     ret
 
+; -------------------------------------------------------------------
+; GetRampY
+; Calcola la coordinata Y teorica di Willy se si trova sulla rampa
+; Input: C = PlayerX
+; Output: Carry flag impostato se PlayerX è nel range della rampa,
+;         in tal caso A = PlayerY (Y teorico del player sulla rampa)
+; -------------------------------------------------------------------
+GetRampY:
+    ld   a, (ramp_len)
+    or   a
+    ret  z                 ; Se non c'è rampa (len=0), return carry clear
+    
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .dir_left
+    
+.dir_right:
+    ; Rampa sale a destra (up-right)
+    ld   a, (ramp_col)
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8 (X start in pixel)
+    ld   e, a              ; E = X_left
+    
+    ld   a, (ramp_len)
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    add  a, e              ; A = (ramp_col + ramp_len) * 8
+    
+    ld   h, a              ; H = X_right_boundary
+    ld   a, c              ; A = PlayerX
+    cp   e
+    jr   c, .out_of_ramp   ; Se PlayerX < X_left, fuori
+    
+    cp   h
+    jr   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary, fuori
+    
+    ld   a, (ramp_row)
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    sub  16                ; A = ramp_row * 8 - 16
+    add  a, e              ; A = ramp_row * 8 - 16 + X_left
+    sub  c                 ; A = A - PlayerX
+    scf                    ; Set carry (dentro rampa)
+    ret
+    
+.dir_left:
+    ; Rampa sale a sinistra (up-left)
+    ld   hl, ramp_len
+    ld   a, (ramp_col)
+    sub  (hl)
+    inc  a                 ; A = ramp_col - ramp_len + 1
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    ld   e, a              ; E = X_left
+    
+    ld   a, (ramp_col)
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    add  a, 8              ; A = (ramp_col + 1) * 8 (X_right_boundary)
+    
+    ld   h, a              ; H = X_right_boundary
+    ld   a, c              ; A = PlayerX
+    cp   e
+    jr   c, .out_of_ramp   ; Se PlayerX < X_left, fuori
+    
+    cp   h
+    jr   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary, fuori
+    
+    ld   a, (ramp_col)
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    ld   d, a              ; D = X_start
+    
+    ld   a, (ramp_row)
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    sub  16                ; A = ramp_row * 8 - 16
+    sub  d                 ; A = ramp_row * 8 - 16 - X_start
+    add  a, c              ; A = A + PlayerX
+    scf                    ; Set carry (dentro rampa)
+    ret
+
+.out_of_ramp:
+    or   a                 ; Clear carry
+    ret

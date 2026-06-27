@@ -16,11 +16,11 @@
     include "physics.asm"
     include "enemy.asm"
     include "items.asm"
-    include "data/datasprite.asm"
     include "data/datavariable.asm"
     
 start:
     call SetupIM2
+    jp   Main
 
     
 
@@ -154,5 +154,6 @@ RoomsStart:
 
     include "rooms/TheBathroom.asm"                 ; ID 33
     include "rooms/MasterBedRoom.asm"               ; ID 35s
+    include "data/datasprite.asm"
     
     SAVESNA "jet set willy.sna", start
