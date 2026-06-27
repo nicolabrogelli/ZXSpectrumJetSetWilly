@@ -780,16 +780,56 @@ GetRampY:
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    add  a, e              ; A = (ramp_col + ramp_len) * 8
-    
+    add  a, e              ; A = (ramp_col + ramp_len) * 8 = X_right_boundary
     ld   h, a              ; H = X_right_boundary
+    
     ld   a, c              ; A = PlayerX
     cp   e
-    jr   c, .out_of_ramp   ; Se PlayerX < X_left, fuori
+    jp   c, .out_of_ramp   ; Se PlayerX < X_left, fuori
     
     cp   h
-    jr   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary, fuori
+    jr   c, .on_ramp_slope ; Se PlayerX < X_right_boundary, pendenza rampa
     
+    ; Controlla se è sulla cella della piattaforma adiacente in cima: [X_right_boundary, X_right_boundary + 7]
+    sub  h                 ; A = PlayerX - X_right_boundary
+    cp   8
+    jp   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary + 8, fuori
+    
+    ; Col = ramp_col + ramp_len
+    ld   a, (ramp_col)
+    ld   hl, ramp_len
+    add  a, (hl)
+    ld   c, a              ; C = Col
+    
+    ; Row = ramp_row - ramp_len + 1
+    ld   a, (ramp_row)
+    sub  (hl)
+    inc  a
+    ld   d, a              ; D = Row
+    
+    call GetCellFromUnpacked ; A = cell type
+    cp   1
+    jr   z, .platform_solid
+    cp   2
+    jr   z, .platform_solid
+    
+    ld   a, (PlayerPos)
+    ld   c, a              ; Ripristina C
+    jp   .out_of_ramp
+    
+.platform_solid:
+    ld   a, (PlayerPos)
+    ld   c, a              ; Ripristina C
+    
+    ld   a, d              ; A = Row
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    sub  16                ; A = Row * 8 - 16
+    scf                    ; Set carry
+    ret
+    
+.on_ramp_slope:
     ld   a, (ramp_row)
     add  a, a              ; *2
     add  a, a              ; *4
@@ -816,15 +856,56 @@ GetRampY:
     add  a, a              ; *4
     add  a, a              ; *8
     add  a, 8              ; A = (ramp_col + 1) * 8 (X_right_boundary)
-    
     ld   h, a              ; H = X_right_boundary
+    
     ld   a, c              ; A = PlayerX
-    cp   e
-    jr   c, .out_of_ramp   ; Se PlayerX < X_left, fuori
-    
     cp   h
-    jr   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary, fuori
+    jp   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary, fuori
     
+    cp   e
+    jr   nc, .on_ramp_slope_left ; Se PlayerX >= X_left, pendenza rampa
+    
+    ; Controlla se è sulla cella della piattaforma adiacente in cima a sinistra: [X_left - 8, X_left - 1]
+    ld   a, e              ; A = X_left
+    sub  c                 ; A = X_left - PlayerX
+    cp   9
+    jp   nc, .out_of_ramp  ; Se PlayerX <= X_left - 9, fuori
+    
+    ; Col = ramp_col - ramp_len
+    ld   a, (ramp_col)
+    ld   hl, ramp_len
+    sub  (hl)
+    ld   c, a              ; C = Col
+    
+    ; Row = ramp_row - ramp_len + 1
+    ld   a, (ramp_row)
+    sub  (hl)
+    inc  a
+    ld   d, a              ; D = Row
+    
+    call GetCellFromUnpacked ; A = cell type
+    cp   1
+    jr   z, .platform_solid_left
+    cp   2
+    jr   z, .platform_solid_left
+    
+    ld   a, (PlayerPos)
+    ld   c, a              ; Ripristina C
+    jp   .out_of_ramp
+    
+.platform_solid_left:
+    ld   a, (PlayerPos)
+    ld   c, a              ; Ripristina C
+    
+    ld   a, d              ; A = Row
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    sub  16                ; A = Row * 8 - 16
+    scf                    ; Set carry
+    ret
+    
+.on_ramp_slope_left:
     ld   a, (ramp_col)
     add  a, a              ; *2
     add  a, a              ; *4
