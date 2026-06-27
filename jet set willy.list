@@ -6498,7 +6498,7 @@
   41+ 7EC2 00          > db 0
   41+ 7EC3 00          > db 0
   42+ 7EC4 00           num_room_items:     db 0
-  43+ 7EC5 18 8F        room_ptr:           dw TreeTopLayout; TheOffLicenceLayout; TheSecurityGuardLayout; MastreBedRoomLayout; UnderTheMegaTreeLayout; TheBathroomLayout; TheBridgeLayout; AtTheFootTheMegaTreeLayout;  TheDriveLayout; InsideTheMegaTrunkLayout; OnABranchOverTheDriveLayout; TheFrontDoorLayout.asm
+  43+ 7EC5 00 83        room_ptr:           dw TheOffLicenceLayout;
   44+ 7EC7 01           enemy_update_rate:  db 1
   45+ 7EC8 00           enemy_update_timer: db 0
   46+ 7EC9 03           player_speed:       db 3
