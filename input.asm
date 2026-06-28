@@ -4,95 +4,143 @@
 
 
 ; -------------------------------------------------------------------
-; Controlla input tastiera
-; Output: D = tasti premuti
+; CheckCtrl
+; Legge la tastiera e popola il registro D con i flag di input.
+;
+; Output:
+;   D = bitmask tasti attivi:
+;       bit 0 → sinistra (O)
+;       bit 1 → destra   (P)
+;       bit 2 → salto    (Z)
+;
+; Effetti collaterali in RAM:
+;   (q_prev)        → debounce tasto Q (cambio stanza)
+;   (direction)     → 1=sinistra, 2=destra (ultimo movimento)
+;   (jump_prev)     → debounce tasto salto
+;   (jump_pressed)  → flag "salto appena premuto" (edge detection)
+;   (flags)         → bit 0 impostato se movimento rilevato
 ; -------------------------------------------------------------------
+
 CheckCtrl:
-    ; --- Controlla tasto Q per cambio stanza ciclico ---
+
+    ; ── Sezione 1: tasto Q (cambio stanza) ──────────────────────────
+    ;
+    ; Porta $FB → riga Q, W, E, R, T. Bit 0 = Q.
+    ; Se bit 0 = 0, Q è premuto.
+
     ld   a, $fb
     in   a, ($fe)
     bit  0, a
-    jr   nz, .q_not_pressed
-    
-    ; Q è premuto! Controlla se era già premuto nel frame precedente
+    jr   nz, .q_not_pressed     ; bit 0 = 1 → Q non premuto, salta
+
+    ; Q è premuto: debounce tramite (q_prev).
+    ; Se (q_prev) ≠ 0 il tasto era già giù nel frame precedente → ignora.
     ld   a, (q_prev)
     or   a
-    jr   nz, .q_handled    ; Se era già premuto, ignora
-    
-    ; Primo frame di pressione! Imposta q_prev = 1
+    jr   nz, .q_handled         ; era già premuto, niente da fare
+
+    ; ── Primo frame di pressione di Q ──
     ld   a, 1
-    ld   (q_prev), a
-    
-    ; Esegui il cambio stanza! Poiché siamo dentro una call (CheckCtrl),
-    ; dobbiamo fare pop di hl per ripulire lo stack prima di saltare.
-    pop  hl                ; Rimuove l'indirizzo di ritorno di CheckCtrl
-    jp   PerformRoomChange
+    ld   (q_prev), a            ; marca "Q era premuto"
+
+    ; NOTA sullo stack:
+    ; CheckCtrl è stata invocata con CALL, quindi l'indirizzo di ritorno
+    ; è in cima allo stack. Vogliamo saltare a PerformRoomChange senza
+    ; tornare al chiamante, quindi POP HL scarta quell'indirizzo,
+    ; poi JP salta direttamente.
+    pop  hl                     ; rimuove indirizzo di ritorno di CheckCtrl
+    jp   PerformRoomChange      ; salta al cambio stanza (non torna qui)
 
 .q_not_pressed:
     xor  a
-    ld   (q_prev), a
+    ld   (q_prev), a            ; Q rilasciato → azzera debounce
 
 .q_handled:
-    ld  d, $00
-    ld  a, $fe
-    in  a, ($fe)
-    ld  ix,flags
+
+    ; ── Sezione 2: movimento (sinistra / destra) ────────────────────
+    ;
+    ; Porta $DF → riga P, O, I, U, Y.
+    ; Bit 0 = P (destra), Bit 1 = O (sinistra).
+
+    ld  d, $00                  ; azzera output
+    ld  a, $df
+    in  a, ($fe)                ; legge riga $FE
+    ld  ix, flags               ; IX punta alla variabile flags
 
 checkCtrl_left:
-    bit $01, a
-    jr  nz, checkCtrl_right
-    set $00, d
-    set 0,(ix)
-    ld  e, a
+    bit $01, a                  ; bit 1 = O → sinistra?
+    jr  nz, checkCtrl_right     ; bit = 1 → O non premuto, prova destra
+    set $00, d                  ; imposta bit 0 di D = "sinistra attiva"
+    set 0, (ix)                 ; flags bit 0 = "movimento in corso"
+    ld  e, a                    ; salva A
     ld  a, 1
-    ld  (direction), a
-    ld  a, e
-    
+    ld  (direction), a          ; direction = 1 → sinistra
+    ld  a, e                    ; ripristina A
+
 checkCtrl_right:
-    bit $02, a
-    jr  nz, checkCtrl_jump
-    set $01, d
-    set 0,(ix)
+    bit $00, a                  ; bit 0 = P → destra?
+    jr  nz, checkCtrl_jump      ; bit = 1 → P non premuto, prova salto
+    set $01, d                  ; imposta bit 1 di D = "destra attiva"
+    set 0, (ix)                 ; flags bit 0 = "movimento in corso"
     ld  e, a
     ld  a, 2
-    ld  (direction), a
+    ld  (direction), a          ; direction = 2 → destra
     ld  a, e
 
 checkCtrl_jump:
-    ; Controlla tasto P (Porta $DF, Bit 0)
-    ld  a, $df
-    in  a, ($fe)
-    bit 0, a
-    jr  z, .pressed   ; Se P è premuto (bit 0 = 0)
 
-    ; Controlla tasto M (Porta $7F, Bit 2)
-    ld  a, $7f
+    ; ── Sezione 3: salto (Z) ────────────────────────────────────────
+    ;
+    ; Salto su Z.
+    ;
+    ; Z → porta $FE, bit 1  (riga CAPS, Z, X, C, V)
+
+    ld  a, $fe
     in  a, ($fe)
-    bit 2, a
-    jr  z, .pressed   ; Se M è premuto (bit 2 = 0)
+    bit 1, a
+    jr  z, .pressed             ; bit 1 = 0 → Z premuto
 
 .released:
+    ; Nessun tasto di salto premuto: azzera debounce.
     xor a
     ld  (jump_prev), a
     jr  .end
 
 .pressed:
+    ; Tasto salto premuto: edge detection.
+    ; Se (jump_prev) ≠ 0 era già premuto nel frame precedente → ignora.
     ld  a, (jump_prev)
     or  a
     jr  nz, .end
+    ; Primo frame di pressione:
     ld  a, 1
-    ld  (jump_pressed), a
-    ld  (jump_prev), a
-    set 2, d
+    ld  (jump_pressed), a       ; segnala "salto appena scattato"
+    ld  (jump_prev), a          ; marca come già premuto (debounce)
+    set 2, d                    ; imposta bit 2 di D = "salto attivo"
 
 .end:
+
+    ; ── Sezione 4: filtro "entrambe le direzioni" ───────────────────
+    ;
+    ; Se O e P sono premuti insieme i movimenti si annullano:
+    ; azzera entrambi i bit di direzione, mantieni solo l'eventuale salto.
+    ;
+    ;   A = D AND $03   → isola bit 0 (sinistra) e bit 1 (destra)
+    ;   A - $03         → zero solo se entrambi attivi
+    ;   RET NZ          → non entrambi attivi → ritorna con D intatto
+    ;
+    ;   (cade qui solo se O e P premuti insieme)
+    ;   A = D AND $04   → tieni solo bit 2 (salto)
+    ;   D = A           → direzioni cancellate, salto conservato
+
     ld   a, d
-    and  $03
-    sub  $03
-    ret  nz
+    and  $03                    ; isola bit 0 e bit 1 (direzioni)
+    sub  $03                    ; zero se e solo se entrambi attivi
+    ret  nz                     ; non entrambi → ritorna con D com'è
+
     ld   a, d
-    and  $04
-    ld   d, a
+    and  $04                    ; tieni solo il bit 2 (salto)
+    ld   d, a                   ; D = solo salto, direzioni azzerate
     ret
 
 ; -------------------------------------------------------------------
