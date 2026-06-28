@@ -335,11 +335,31 @@ ApplyGravity:
 .y_ok_fall:
     ld   b, a              ; B = Nuovo Y + 16 (clampato a 127 se >= 128)
     
-    ; Controlla se il piede sinistro tocca solido
+    ; Salva bc per poter controllare a Y - 8 se necessario
+    push bc
+    
+    ; Controlla se il piede sinistro tocca solido a Y
+    call CheckSolidCell
+    jr   c, .check_landing_pop
+    
+    ; Controlla se il piede destro tocca solido a Y
+    ld   a, c
+    add  a, 7
+    ld   c, a              ; C = PlayerX + 7
+    call CheckSolidCell
+    jr   c, .check_landing_pop
+    
+    ; Se entrambi falliscono, controlliamo a Y - 8 (riga precedente)
+    pop  bc
+    ld   a, b
+    sub  8
+    ld   b, a              ; B = Nuovo Y + 8 (riga precedente)
+    
+    ; Controlla se il piede sinistro tocca solido a Y - 8
     call CheckSolidCell
     jr   c, .check_landing
     
-    ; Controlla se il piede destro tocca solido
+    ; Controlla se il piede destro tocca solido a Y - 8
     ld   a, c
     add  a, 7
     ld   c, a              ; C = PlayerX + 7
@@ -349,6 +369,8 @@ ApplyGravity:
     ; Nessun atterraggio
     jr   .no_collision_checks
 
+.check_landing_pop:
+    pop  de                ; Rimuovi bc salvato dallo stack
 .check_landing:
     ; Abbiamo toccato una cella solida!
     ld   a, b
@@ -356,20 +378,20 @@ ApplyGravity:
     srl  a
     srl  a                 ; A = r (0..15)
     
-    ; Controlliamo se Vecchio Y + 16 <= r * 8
     ld   e, a              ; E = r
+    inc  a                 ; A = r + 1 (permetti tolleranza fino al fondo della cella per entrate orizzontali)
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    ld   d, a              ; D = limite superiore
+    ld   d, a              ; D = (r + 1) * 8 = limite superiore + 8
     
     ; Vecchio Y + 16
     ld   a, (PlayerPos+1)  ; A = Vecchio Y
     add  a, 16             ; A = Vecchio Y + 16
     
-    cp   d                 ; Confronta Vecchio Y + 16 con il limite
+    cp   d                 ; Confronta Vecchio Y + 16 con (r + 1) * 8
     jr   z, .do_landing    ; Se ==, atterra
-    jr   c, .do_landing    ; Se <, atterra (eravamo sopra)
+    jr   c, .do_landing    ; Se <, atterra (eravamo sopra o dentro la cella)
     
     jr   .no_collision_checks
 
