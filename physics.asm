@@ -104,6 +104,8 @@ ApplyGravity:
     ld   (jump_pressed), a
     ld   a, b              ; B = PlayerY (ramp_Y)
     ld   (jump_start_y), a
+    ld   a, (direction)
+    ld   (jump_dir), a
     jp   .in_air
     
 .not_on_ramp_walk:
@@ -156,6 +158,8 @@ ApplyGravity:
     ld   (jump_pressed), a
     ld   a, b              ; B = PlayerY
     ld   (jump_start_y), a
+    ld   a, (direction)
+    ld   (jump_dir), a
     jp   .in_air
 
 .in_air:
@@ -230,6 +234,7 @@ ApplyGravity:
     xor  a
     ld   (velocity_y), a
     ld   (jump_start_y), a  ; Reset jump Y
+    ld   (jump_dir), a
     jp   .end
     
 .no_ramp_landing:
@@ -299,6 +304,7 @@ ApplyGravity:
     xor  a
     ld   (velocity_y), a
     ld   (jump_start_y), a  ; Reset jump Y
+    ld   (jump_dir), a
     jp   .end
     
 .no_collision_checks:
@@ -331,6 +337,8 @@ ApplyGravity:
     ld   b, 0
     xor  a
     ld   (velocity_y), a
+    ld   (jump_start_y), a
+    ld   (jump_dir), a
     jr   .save_ok
 
 .check_max:
@@ -355,6 +363,8 @@ ApplyGravity:
     ld   b, 112
     xor  a
     ld   (velocity_y), a
+    ld   (jump_start_y), a
+    ld   (jump_dir), a
 
 .save_ok:
     ld   (PlayerPos), bc

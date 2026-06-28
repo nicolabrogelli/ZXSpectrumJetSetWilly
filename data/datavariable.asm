@@ -22,6 +22,7 @@ on_ground:      db $01
 jump_pressed:   db $00
 jump_prev:      db $00
 jump_start_y:   db $00
+jump_dir:       db $00
 q_prev:         db $00
 
 ; Buffer e contatori

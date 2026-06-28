@@ -21,6 +21,10 @@
 ;   bit 0 = sinistra
 ;   bit 1 = destra
 ;
+; Nota:
+;   Se Willy è in aria (on_ground = 0) il movimento orizzontale viene
+;   ignorato per tutta la durata del salto.
+;
 ; Output:
 ;   aggiorna PlayerPos e body_state
 ; -------------------------------------------------------------------
@@ -44,6 +48,23 @@ MovePlayer:
     ; ---------------------------------------------------------------
     ld   bc, (PlayerPos)
 
+    ; ---------------------------------------------------------------
+    ; Se siamo in aria, usa la direzione bloccata al momento del salto.
+    ; ---------------------------------------------------------------
+    ld   a, (on_ground)
+    or   a
+    jr   nz, .ground_input
+
+    ld   a, (jump_dir)
+    or   a
+    ret  z
+    cp   1
+    jr   z, movePlayer_left
+    cp   2
+    jr   z, movePlayer_right
+    ret
+
+.ground_input:
     ; ---------------------------------------------------------------
     ; Input: destra?
     ; ---------------------------------------------------------------
