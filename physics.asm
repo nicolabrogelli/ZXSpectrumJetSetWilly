@@ -609,6 +609,84 @@ ApplyConveyorForce:
     ret
 
 ; -------------------------------------------------------------------
+; Verifica se Willy si trova sopra un blocco Conveyor attivo
+; Output: Carry flag impostato se Willy è sul conveyor, altrimenti resettato
+; -------------------------------------------------------------------
+CheckWillyOnConveyor:
+    push bc
+    push de
+    push hl
+
+    ld   a, (on_ground)
+    or   a
+    jr   z, .not_on_conveyor
+
+    ld   a, (conveyor_len)
+    or   a
+    jr   z, .not_on_conveyor
+
+    ld   bc, (PlayerPos)   ; C = WillyX, B = WillyY
+    
+    ; Calcola screenRow dei piedi del player: RowPiedi = (Y + 16) / 8
+    ld   a, b
+    add  a, 16
+    srl  a
+    srl  a
+    srl  a                 ; A = (Y + 16) / 8
+    
+    ; Confronta con conveyor_row
+    ld   d, a              ; D = RowPiedi
+    ld   a, (conveyor_row)
+    cp   d
+    jr   nz, .not_on_conveyor
+    
+    ; ColStart = WillyX / 8
+    ld   a, c
+    srl  a
+    srl  a
+    srl  a                 ; A = ColStart
+    ld   e, a              ; E = ColStart
+    
+    ; ColEnd = (WillyX + 7) / 8
+    ld   a, c
+    add  a, 7
+    srl  a
+    srl  a
+    srl  a                 ; A = ColEnd
+    ld   d, a              ; D = ColEnd
+    
+    ; conveyor_col_end = conveyor_col + conveyor_len - 1
+    ld   a, (conveyor_col)
+    ld   hl, conveyor_len
+    add  a, (hl)
+    dec  a                 ; A = conveyor_col_end
+    
+    ; E <= conveyor_col_end (conveyor_col_end >= E)
+    cp   e
+    jr   c, .not_on_conveyor
+    
+    ; D >= conveyor_col
+    ld   a, (conveyor_col)
+    ld   e, a
+    ld   a, d
+    cp   e
+    jr   c, .not_on_conveyor
+
+    ; Willy è sul conveyor! Imposta carry
+    pop  hl
+    pop  de
+    pop  bc
+    scf
+    ret
+
+.not_on_conveyor:
+    pop  hl
+    pop  de
+    pop  bc
+    or   a                 ; Clear carry
+    ret
+
+; -------------------------------------------------------------------
 ; Verifica se c'è un blocco Wall (tipo 2) alle coordinate pixel (X, Y)
 ; Input: C = X, B = Y
 ; Output: Carry flag impostato se è un Wall, altrimenti resettato

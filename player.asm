@@ -144,7 +144,14 @@ movePlayer_left:
 ; MOVIMENTO DESTRA
 ; ===============================================================
 movePlayer_right:
+    ; Impedisci lo spostamento a destra se Willy è sul conveyor nella stanza The Off Licence (room 0).
+    ld   a, (current_room)
+    or   a                      ; Room 0 = The Off Licence
+    jr   nz, .continue_right
+    call CheckWillyOnConveyor
+    ret  c                      ; Se è sul conveyor, ritorna immediatamente senza muovere
 
+.continue_right:
     ; Prova movimento X + speed
     ld   a, (player_speed)
     ld   e, a

@@ -65,6 +65,21 @@ CheckCtrl:
     ld  d, $00                  ; azzera output
     ld  a, $df
     in  a, ($fe)                ; legge riga $FE
+
+    ; Se Willy è sul conveyor nella stanza The Off Licence (room 0),
+    ; impedisci lo spostamento da sinistra a destra (disabilita tasto destra P / bit 0).
+    push af
+    ld   a, (current_room)
+    or   a                      ; Room 0 = The Off Licence
+    jr   nz, .no_block_conveyor
+    call CheckWillyOnConveyor
+    jr   nc, .no_block_conveyor
+    pop  af
+    or   $01                    ; Forza bit 0 (destra) a 1 (non premuto)
+    push af
+.no_block_conveyor:
+    pop  af
+
     ld  ix, flags               ; IX punta alla variabile flags
 
 checkCtrl_left:
