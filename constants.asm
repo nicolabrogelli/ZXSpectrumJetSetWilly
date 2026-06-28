@@ -10,16 +10,6 @@ ATTR_T:     EQU $5c8f
 BORDCR:     EQU $5c48
 UDG:        EQU $5c7b
 
-; Codici caratteri
-;HEAD_GRAPH_RIGHT:   EQU $41
-;BODY_GRAPH_RIGHT_1: EQU $42
-;BODY_GRAPH_RIGHT_2: EQU $43
-;BODY_GRAPH_RIGHT_3: EQU $44
-;HEAD_GRAPH_LEFT:    EQU $45
-;BODY_GRAPH_LEFT_1:  EQU $46
-;BODY_GRAPH_LEFT_2:  EQU $47
-;BODY_GRAPH_LEFT_3:  EQU $48
-
 ; Colori
 BLUE:   EQU $01
 RED:    EQU $02
@@ -45,7 +35,7 @@ SCREEN_LINE = $4860
 
 ; Fisica (Derivata dai parametri geometrici)
 MAX_FALL_SPEED: EQU 12
-JUMP_STRENGTH:  EQU 12
+JUMP_STRENGTH:  EQU 11
 GRAVITY:        EQU 2
 
 ; Limiti schermo del Player

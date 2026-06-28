@@ -23,65 +23,55 @@
   10+ 5DAD              BORDCR:     EQU $5c48
   11+ 5DAD              UDG:        EQU $5c7b
   12+ 5DAD
-  13+ 5DAD              ; Codici caratteri
-  14+ 5DAD              ;HEAD_GRAPH_RIGHT:   EQU $41
-  15+ 5DAD              ;BODY_GRAPH_RIGHT_1: EQU $42
-  16+ 5DAD              ;BODY_GRAPH_RIGHT_2: EQU $43
-  17+ 5DAD              ;BODY_GRAPH_RIGHT_3: EQU $44
-  18+ 5DAD              ;HEAD_GRAPH_LEFT:    EQU $45
-  19+ 5DAD              ;BODY_GRAPH_LEFT_1:  EQU $46
-  20+ 5DAD              ;BODY_GRAPH_LEFT_2:  EQU $47
-  21+ 5DAD              ;BODY_GRAPH_LEFT_3:  EQU $48
-  22+ 5DAD
-  23+ 5DAD              ; Colori
-  24+ 5DAD              BLUE:   EQU $01
-  25+ 5DAD              RED:    EQU $02
-  26+ 5DAD              MAGENTA: EQU $03
-  27+ 5DAD              GREEN:  EQU $04
-  28+ 5DAD              CYAN:   EQU $05
-  29+ 5DAD              YELLOW: EQU $06
-  30+ 5DAD              WHITE:  EQU $07
-  31+ 5DAD
-  32+ 5DAD              ; Colori
-  33+ 5DAD              BLUE_FLASH:   EQU $C1
-  34+ 5DAD              RED_FLASH:    EQU $C2
-  35+ 5DAD              MAGENTA_FLASH: EQU $C3
-  36+ 5DAD              GREEN_FLASH:  EQU $C4
-  37+ 5DAD              CYAN_FLASH:   EQU $C5
-  38+ 5DAD              YELLOW_FLASH: EQU $C6
-  39+ 5DAD              WHITE_FLASH:  EQU $C7
+  13+ 5DAD              ; Colori
+  14+ 5DAD              BLUE:   EQU $01
+  15+ 5DAD              RED:    EQU $02
+  16+ 5DAD              MAGENTA: EQU $03
+  17+ 5DAD              GREEN:  EQU $04
+  18+ 5DAD              CYAN:   EQU $05
+  19+ 5DAD              YELLOW: EQU $06
+  20+ 5DAD              WHITE:  EQU $07
+  21+ 5DAD
+  22+ 5DAD              ; Colori
+  23+ 5DAD              BLUE_FLASH:   EQU $C1
+  24+ 5DAD              RED_FLASH:    EQU $C2
+  25+ 5DAD              MAGENTA_FLASH: EQU $C3
+  26+ 5DAD              GREEN_FLASH:  EQU $C4
+  27+ 5DAD              CYAN_FLASH:   EQU $C5
+  28+ 5DAD              YELLOW_FLASH: EQU $C6
+  29+ 5DAD              WHITE_FLASH:  EQU $C7
+  30+ 5DAD
+  31+ 5DAD              ; Interrupt
+  32+ 5DAD              IM2_TABLE   = $FE00
+  33+ 5DAD              IM2_VECTOR  = $FDFD
+  34+ 5DAD              SCREEN_LINE = $4860
+  35+ 5DAD
+  36+ 5DAD              ; Fisica (Derivata dai parametri geometrici)
+  37+ 5DAD              MAX_FALL_SPEED: EQU 12
+  38+ 5DAD              JUMP_STRENGTH:  EQU 11
+  39+ 5DAD              GRAVITY:        EQU 2
   40+ 5DAD
-  41+ 5DAD              ; Interrupt
-  42+ 5DAD              IM2_TABLE   = $FE00
-  43+ 5DAD              IM2_VECTOR  = $FDFD
-  44+ 5DAD              SCREEN_LINE = $4860
-  45+ 5DAD
-  46+ 5DAD              ; Fisica (Derivata dai parametri geometrici)
-  47+ 5DAD              MAX_FALL_SPEED: EQU 12
-  48+ 5DAD              JUMP_STRENGTH:  EQU 12
-  49+ 5DAD              GRAVITY:        EQU 2
-  50+ 5DAD
-  51+ 5DAD              ; Limiti schermo del Player
-  52+ 5DAD              PLAYER_MIN_X:    EQU 5
-  53+ 5DAD              PLAYER_MAX_X:    EQU 245
-  54+ 5DAD
-  55+ 5DAD              items_grid:      EQU $9000
-  56+ 5DAD
-  57+ 5DAD              ; Offsets all'interno della struttura dati della Stanza (256 byte)
-  58+ 5DAD              OFFSET_BG:       EQU 160
-  59+ 5DAD              OFFSET_FLOOR:    EQU 169
-  60+ 5DAD              OFFSET_WALL:     EQU 178
-  61+ 5DAD              OFFSET_NASTY:    EQU 187
-  62+ 5DAD              OFFSET_BORDER_COLOR: EQU 222
-  63+ 5DAD              OFFSET_ITEM_GRAPHIC: EQU 227
-  64+ 5DAD              OFFSET_RAMP:         EQU 196
-  65+ 5DAD              OFFSET_CONVEYOR:     EQU 205
-  66+ 5DAD              OFFSET_CONVEYOR_DATA: EQU 214
-  67+ 5DAD              OFFSET_RAMP_DATA:    EQU 218
-  68+ 5DAD              OFFSET_POS_WILLY:    EQU 256
-  69+ 5DAD
-  70+ 5DAD
-  71+ 5DAD
+  41+ 5DAD              ; Limiti schermo del Player
+  42+ 5DAD              PLAYER_MIN_X:    EQU 5
+  43+ 5DAD              PLAYER_MAX_X:    EQU 245
+  44+ 5DAD
+  45+ 5DAD              items_grid:      EQU $9000
+  46+ 5DAD
+  47+ 5DAD              ; Offsets all'interno della struttura dati della Stanza (256 byte)
+  48+ 5DAD              OFFSET_BG:       EQU 160
+  49+ 5DAD              OFFSET_FLOOR:    EQU 169
+  50+ 5DAD              OFFSET_WALL:     EQU 178
+  51+ 5DAD              OFFSET_NASTY:    EQU 187
+  52+ 5DAD              OFFSET_BORDER_COLOR: EQU 222
+  53+ 5DAD              OFFSET_ITEM_GRAPHIC: EQU 227
+  54+ 5DAD              OFFSET_RAMP:         EQU 196
+  55+ 5DAD              OFFSET_CONVEYOR:     EQU 205
+  56+ 5DAD              OFFSET_CONVEYOR_DATA: EQU 214
+  57+ 5DAD              OFFSET_RAMP_DATA:    EQU 218
+  58+ 5DAD              OFFSET_POS_WILLY:    EQU 256
+  59+ 5DAD
+  60+ 5DAD
+  61+ 5DAD
 # file closed: constants.asm
   12  5DAD                  include "interrupts.asm"
 # file opened: interrupts.asm
@@ -2269,7 +2259,7 @@
   97+ 6680 B7               or   a
   98+ 6681 CA 5B 68         jp   z, .end            ; Se non salta, abbiamo finito per questo frame
   99+ 6684
- 100+ 6684 3E 0C            ld   a, JUMP_STRENGTH
+ 100+ 6684 3E 0B            ld   a, JUMP_STRENGTH
  101+ 6686 32 DB 71         ld   (velocity_y), a
  102+ 6689 AF               xor  a
  103+ 668A 32 DC 71         ld   (on_ground), a
@@ -2409,7 +2399,7 @@
  237+ 6732 B7               or   a
  238+ 6733 CA 5B 68         jp   z, .end
  239+ 6736
- 240+ 6736 3E 0C            ld   a, JUMP_STRENGTH
+ 240+ 6736 3E 0B            ld   a, JUMP_STRENGTH
  241+ 6738 32 DB 71         ld   (velocity_y), a
  242+ 673B AF               xor  a
  243+ 673C 32 DC 71         ld   (on_ground), a
