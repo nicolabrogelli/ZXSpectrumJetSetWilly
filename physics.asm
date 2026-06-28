@@ -116,6 +116,92 @@ ApplyGravity:
     ld  a, (on_ground)
     or  a
     jp  z, .in_air        ; Se siamo in volo, continua a volare
+
+    ; --- CONTROLLO STEP DOWN DI 1 TILE (8 pixel) ---
+    ; Se stiamo scendendo da una rampa o gradino di 1 tile,
+    ; facciamo scendere Willy immediatamente per evitare che fluttui in aria.
+    ld   a, (direction)
+    cp   1
+    jr   z, .stepping_left
+    
+.stepping_right:
+    ; Muovendo a destra: piede sinistro (dietro) a Y + 16 deve essere solido
+    ld   a, b
+    add  a, 16
+    push bc
+    ld   b, a              ; B = Y + 16
+    call CheckSolidCell    ; C = X
+    pop  bc
+    jr   nc, .no_step_down
+    
+    ; Piede destro (davanti) a Y + 16 deve essere vuoto
+    ld   a, b
+    add  a, 16
+    push bc
+    ld   b, a              ; B = Y + 16
+    ld   a, c
+    add  a, 7
+    ld   c, a              ; C = X + 7
+    call CheckSolidCell
+    pop  bc
+    jr   c, .no_step_down
+    
+    ; Piede destro (davanti) a Y + 24 deve essere solido
+    ld   a, b
+    add  a, 24
+    cp   128
+    jr   nc, .no_step_down
+    push bc
+    ld   b, a              ; B = Y + 24
+    ld   a, c
+    add  a, 7
+    ld   c, a              ; C = X + 7
+    call CheckSolidCell
+    pop  bc
+    jr   nc, .no_step_down
+    
+    jr   .do_step_down
+    
+.stepping_left:
+    ; Muovendo a sinistra: piede destro (dietro) a Y + 16 deve essere solido
+    ld   a, b
+    add  a, 16
+    push bc
+    ld   b, a              ; B = Y + 16
+    ld   a, c
+    add  a, 7
+    ld   c, a              ; C = X + 7
+    call CheckSolidCell
+    pop  bc
+    jr   nc, .no_step_down
+    
+    ; Piede sinistro (davanti) a Y + 16 deve essere vuoto
+    ld   a, b
+    add  a, 16
+    push bc
+    ld   b, a              ; B = Y + 16
+    call CheckSolidCell    ; C = X
+    pop  bc
+    jr   c, .no_step_down
+    
+    ; Piede sinistro (davanti) a Y + 24 deve essere solido
+    ld   a, b
+    add  a, 24
+    cp   128
+    jr   nc, .no_step_down
+    push bc
+    ld   b, a              ; B = Y + 24
+    call CheckSolidCell    ; C = X
+    pop  bc
+    jr   nc, .no_step_down
+    
+.do_step_down:
+    ld   a, b
+    add  a, 8
+    ld   b, a              ; B = Y + 8
+    ld   (PlayerPos+1), a  ; Aggiorna Y
+    
+.no_step_down:
     
     ; Se on_ground == 1, controlliamo se siamo ancora su terreno solido
     ; Dobbiamo controllare i pixel direttamente sotto i piedi del player:
