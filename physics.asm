@@ -102,6 +102,8 @@ ApplyGravity:
     xor  a
     ld   (on_ground), a
     ld   (jump_pressed), a
+    ld   a, b              ; B = PlayerY (ramp_Y)
+    ld   (jump_start_y), a
     jp   .in_air
     
 .not_on_ramp_walk:
@@ -152,6 +154,8 @@ ApplyGravity:
     xor  a
     ld   (on_ground), a
     ld   (jump_pressed), a
+    ld   a, b              ; B = PlayerY
+    ld   (jump_start_y), a
     jp   .in_air
 
 .in_air:
@@ -183,7 +187,7 @@ ApplyGravity:
     jr  nz, .falling_checks
     or  a                 ; Se zero
     jr  z, .falling_checks
-    jr  .no_collision_checks ; Se stiamo salendo, non controlliamo collisioni
+    jp  .no_collision_checks ; Se stiamo salendo, non controlliamo collisioni
     
 .falling_checks:
     ; --- CONTROLLO ATTERRAGGIO SU RAMPA ---
@@ -193,18 +197,29 @@ ApplyGravity:
     ld   d, a               ; D = old_Y
     
     call GetRampY           ; Calcola ramp_Y per PlayerX (in C)
-    jr   nc, .no_ramp_landing
+    jp   nc, .no_ramp_landing
     
     ld   h, a               ; H = ramp_Y
+    
+    ; Controlla se il salto è iniziato da sotto la rampa
+    ld   a, (jump_start_y)
+    or   a
+    jr   z, .jump_start_ok  ; Se 0, non siamo in salto (è una caduta normale), permetti atterraggio
+    
+    cp   h
+    jr   z, .jump_start_ok
+    jp   nc, .no_ramp_landing ; Se jump_start_y > ramp_Y (numerico Y > H), eravamo sotto la rampa -> passa oltre
+    
+.jump_start_ok:
     ld   a, d               ; A = old_Y
     cp   h
     jr   z, .check_new_y
-    jr   nc, .no_ramp_landing ; Se old_Y > ramp_Y (era sotto la rampa), non atterra
+    jp   nc, .no_ramp_landing ; Se old_Y > ramp_Y (era sotto la rampa), non atterra
     
 .check_new_y:
     ld   a, b               ; A = new_Y (in B)
     cp   h
-    jr   c, .no_ramp_landing ; Se new_Y < ramp_Y (non ha ancora toccato la rampa), non atterra
+    jp   c, .no_ramp_landing ; Se new_Y < ramp_Y (non ha ancora toccato la rampa), non atterra
     
     ; Atterrato sulla rampa!
     pop  bc                 ; BC ha C = PlayerX, B = new_Y
@@ -214,6 +229,7 @@ ApplyGravity:
     ld   (on_ground), a
     xor  a
     ld   (velocity_y), a
+    ld   (jump_start_y), a  ; Reset jump Y
     jp   .end
     
 .no_ramp_landing:
@@ -282,6 +298,7 @@ ApplyGravity:
     ld   (on_ground), a
     xor  a
     ld   (velocity_y), a
+    ld   (jump_start_y), a  ; Reset jump Y
     jp   .end
     
 .no_collision_checks:
