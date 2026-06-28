@@ -509,6 +509,7 @@ CheckConveyorOrRampCell:
 .compare_col:
     cp   e                 ; Compare with player col E
     jr   nz, .not_solid    ; If not equal, not on ramp!
+    jr   .solid            ; Se corrisponde, è solido!
     
 .not_solid:
     pop  bc
@@ -687,6 +688,127 @@ CheckWillyOnConveyor:
     ret
 
 ; -------------------------------------------------------------------
+; Verifica se la cella (Col in E, Row in D) è sulla rampa, immediatamente sotto di essa,
+; o sulla piattaforma adiacente in cima.
+; Output: Carry flag impostato se è sulla rampa, altrimenti resettato
+; -------------------------------------------------------------------
+IsCellOnRamp:
+    push bc
+    push hl
+    
+    ld   a, (ramp_len)
+    or   a
+    jr   z, .no
+    
+    ; 1. Verifica se Col (in E) è nel range orizzontale della rampa
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .range_left
+.range_right:
+    ld   a, (ramp_col)
+    ld   b, a              ; B = ramp_col
+    ld   a, (ramp_len)
+    add  a, b              ; A = ramp_col + ramp_len
+    ld   c, a              ; C = limit_right (exclusive)
+    
+    ld   a, e              ; A = Col
+    cp   b
+    jr   c, .check_platform_case ; Col < ramp_col
+    cp   c
+    jr   nc, .check_platform_case ; Col >= limit_right
+    
+    ; Calcola B = Col - ramp_col
+    ld   a, e
+    sub  b
+    ld   b, a              ; B = offset (0..ramp_len-1)
+    
+    ; SlopeRow = ramp_row - B
+    ld   a, (ramp_row)
+    sub  b
+    ld   b, a              ; B = SlopeRow
+    jr   .check_row_match
+    
+.range_left:
+    ; Per rampa a sinistra, range è [ramp_col - ramp_len + 1, ramp_col]
+    ld   hl, ramp_len
+    ld   a, (ramp_col)
+    sub  (hl)
+    inc  a                 ; A = ramp_col - ramp_len + 1
+    ld   b, a              ; B = limit_left
+    
+    ld   a, (ramp_col)
+    inc  a
+    ld   c, a              ; C = limit_right (exclusive)
+    
+    ld   a, e              ; A = Col
+    cp   b
+    jr   c, .check_platform_case
+    cp   c
+    jr   nc, .check_platform_case
+    
+    ; Calcola B = ramp_col - Col
+    ld   a, (ramp_col)
+    sub  e
+    ld   b, a              ; B = offset
+    
+    ; SlopeRow = ramp_row - B
+    ld   a, (ramp_row)
+    sub  b
+    ld   b, a              ; B = SlopeRow
+
+.check_row_match:
+    ; D (Row) deve essere uguale a SlopeRow (in B) o SlopeRow + 1 (in B + 1)
+    ld   a, d              ; A = Row
+    cp   b
+    jr   z, .yes           ; Row == SlopeRow
+    
+    inc  b                 ; B = SlopeRow + 1
+    cp   b
+    jr   z, .yes           ; Row == SlopeRow + 1
+    
+.check_platform_case:
+    ; 2. Controlla se è sulla piattaforma adiacente in cima
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .plat_left
+.plat_right:
+    ld   a, (ramp_col)
+    ld   hl, ramp_len
+    add  a, (hl)           ; A = ramp_col + ramp_len
+    jr   .compare_plat
+.plat_left:
+    ld   a, (ramp_col)
+    ld   hl, ramp_len
+    sub  (hl)              ; A = ramp_col - ramp_len
+.compare_plat:
+    cp   e                 ; Compare with Col
+    jr   nz, .no
+    
+    ld   a, (ramp_row)
+    ld   hl, ramp_len
+    sub  (hl)
+    inc  a                 ; A = ramp_row - ramp_len + 1
+    cp   d                 ; Compare with Row
+    jr   z, .yes
+    
+    ; Permetti anche Row == ramp_row - ramp_len + 2 per la piattaforma adiacente (1 riga sotto)
+    inc  a
+    cp   d
+    jr   z, .yes
+
+.no:
+    pop  hl
+    pop  bc
+    or   a
+    ret
+    
+.yes:
+    pop  hl
+    pop  bc
+    scf
+    ret
+
+; -------------------------------------------------------------------
 ; Verifica se c'è un blocco Wall (tipo 2) alle coordinate pixel (X, Y)
 ; Input: C = X, B = Y
 ; Output: Carry flag impostato se è un Wall, altrimenti resettato
@@ -707,14 +829,21 @@ CheckWallCell:
     srl  a                 ; A = r (0..15)
     
     ; 3. Calcola colonna di layout: c = X / 8 (in C)
-    ld   e, a              ; E = r
+    ld   e, a              ; E = r (Row)
     ld   a, c
     srl  a
     srl  a
     srl  a                 ; A = c (0..31)
-    ld   c, a              ; C = c
-    ld   a, e              ; A = r
+    ld   c, a              ; C = c (Col)
     
+    ; Se la cella è sulla rampa, non considerarla un muro!
+    ld   d, e              ; D = Row
+    ld   e, c              ; E = Col
+    call IsCellOnRamp
+    jr   c, .not_wall
+    
+    ld   a, d              ; A = Row
+    ld   c, e              ; C = Col
     call GetCellFromUnpacked ; A = cell type
     
     ; Controlla se è Wall (2)
