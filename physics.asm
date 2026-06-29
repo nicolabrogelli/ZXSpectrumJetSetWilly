@@ -325,41 +325,40 @@ ApplyGravity:
     
 .no_ramp_landing:
     pop  bc
-
     ; --- CONTROLLO COLLISIONE CON IL TERRENO DURANTE LA CADUTA ---
+    ; 1. Controlliamo prima a Y + 8 (riga superiore) per evitare di penetrare nei muri/blocchi spessi
     ld   a, b
-    add  a, 16
-    cp   128
-    jr   c, .y_ok_fall
-    ld   a, 127
-.y_ok_fall:
-    ld   b, a              ; B = Nuovo Y + 16 (clampato a 127 se >= 128)
+    add  a, 8
+    ld   b, a              ; B = Nuovo Y + 8
     
-    ; Salva bc per poter controllare a Y - 8 se necessario
-    push bc
+    push bc                ; Salva BC per il controllo successivo a Y + 16
     
-    ; Controlla se il piede sinistro tocca solido a Y
+    ; Controlla se il piede sinistro tocca solido a Y + 8
     call CheckSolidCell
-    jr   c, .check_landing_pop
+    jr   c, .land_at_y8
     
-    ; Controlla se il piede destro tocca solido a Y
+    ; Controlla se il piede destro tocca solido a Y + 8
     ld   a, c
     add  a, 7
     ld   c, a              ; C = PlayerX + 7
     call CheckSolidCell
-    jr   c, .check_landing_pop
+    jr   c, .land_at_y8
     
-    ; Se entrambi falliscono, controlliamo a Y - 8 (riga precedente)
-    pop  bc
+    ; 2. Se a Y + 8 non c'è collisione, controlliamo al piede effettivo (Y + 16)
+    pop  bc                ; Ripristina BC (B = Nuovo Y + 8, C = PlayerX)
     ld   a, b
-    sub  8
-    ld   b, a              ; B = Nuovo Y + 8 (riga precedente)
+    add  a, 8              ; A = Nuovo Y + 16
+    cp   128
+    jr   c, .y_ok_fall
+    ld   a, 127
+.y_ok_fall:
+    ld   b, a              ; B = Nuovo Y + 16 (clampato)
     
-    ; Controlla se il piede sinistro tocca solido a Y - 8
+    ; Controlla se il piede sinistro tocca solido a Y + 16
     call CheckSolidCell
     jr   c, .check_landing
     
-    ; Controlla se il piede destro tocca solido a Y - 8
+    ; Controlla se il piede destro tocca solido a Y + 16
     ld   a, c
     add  a, 7
     ld   c, a              ; C = PlayerX + 7
@@ -369,8 +368,10 @@ ApplyGravity:
     ; Nessun atterraggio
     jr   .no_collision_checks
 
-.check_landing_pop:
-    pop  de                ; Rimuovi bc salvato dallo stack
+.land_at_y8:
+    pop  bc                ; BC ha B = Nuovo Y + 8, C = PlayerX
+    jr   .check_landing
+
 .check_landing:
     ; Abbiamo toccato una cella solida!
     ld   a, b
@@ -865,14 +866,10 @@ IsCellOnRamp:
     ld   b, a              ; B = SlopeRow
 
 .check_row_match:
-    ; D (Row) deve essere uguale a SlopeRow (in B) o SlopeRow + 1 (in B + 1)
+    ; D (Row) deve essere uguale a SlopeRow (in B)
     ld   a, d              ; A = Row
     cp   b
     jr   z, .yes           ; Row == SlopeRow
-    
-    inc  b                 ; B = SlopeRow + 1
-    cp   b
-    jr   z, .yes           ; Row == SlopeRow + 1
     
 .check_platform_case:
     ; 2. Controlla se è sulla piattaforma adiacente in cima
@@ -897,11 +894,6 @@ IsCellOnRamp:
     sub  (hl)
     inc  a                 ; A = ramp_row - ramp_len + 1
     cp   d                 ; Compare with Row
-    jr   z, .yes
-    
-    ; Permetti anche Row == ramp_row - ramp_len + 2 per la piattaforma adiacente (1 riga sotto)
-    inc  a
-    cp   d
     jr   z, .yes
 
 .no:
