@@ -88,8 +88,12 @@ checkCtrl_left:
     set $00, d                  ; imposta bit 0 di D = "sinistra attiva"
     set 0, (ix)                 ; flags bit 0 = "movimento in corso"
     ld  e, a                    ; salva A
+    ld  a, (on_ground)
+    or  a
+    jr  z, .skip_dir_left
     ld  a, 1
     ld  (direction), a          ; direction = 1 → sinistra
+.skip_dir_left:
     ld  a, e                    ; ripristina A
 
 checkCtrl_right:
@@ -98,8 +102,12 @@ checkCtrl_right:
     set $01, d                  ; imposta bit 1 di D = "destra attiva"
     set 0, (ix)                 ; flags bit 0 = "movimento in corso"
     ld  e, a
+    ld  a, (on_ground)
+    or  a
+    jr  z, .skip_dir_right
     ld  a, 2
     ld  (direction), a          ; direction = 2 → destra
+.skip_dir_right:
     ld  a, e
 
 checkCtrl_jump:
