@@ -550,10 +550,19 @@ UpdateRoomEnemies:
     and  $0F               ; Tipo
     cp   13                ; Tipo 13 = Canguro?
     jr   z, .canguro_anim
+    cp   11                ; Tipo 11 = Soldato?
+    jr   z, .soldato_anim
     
     ld   a, (ix+6)         ; Anim State (0..3)
     inc  a
     and  3                 ; Alterna 0..3
+    ld   (ix+6), a
+    jr   .anim_done
+
+.soldato_anim:
+    ld   a, (ix+6)         ; Anim State (0..1)
+    inc  a
+    and  1                 ; Alterna 0..1
     ld   (ix+6), a
     jr   .anim_done
 
