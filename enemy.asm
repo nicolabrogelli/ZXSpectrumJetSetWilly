@@ -255,7 +255,9 @@ DrawRoomEnemies:
     jr   z, .got_palla
     cp   10
     jr   z, .got_doubleball
-    
+    cp   11
+    jr   z, .got_soldato
+
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
     jp   .got_sprite
@@ -322,7 +324,12 @@ DrawRoomEnemies:
     ld   hl, DoubleBallSpriteLeft
     jp   z, .got_sprite
     ld   hl, DoubleBallSpriteRight
-    
+
+.got_soldato
+    ld   hl, SoldatoSprite
+    jp   .got_sprite
+
+
 .got_sprite:
     ; Calcola il frame dell'animazione: Anim State * 32
     ld   a, (ix+6)         ; Anim State (0..3)

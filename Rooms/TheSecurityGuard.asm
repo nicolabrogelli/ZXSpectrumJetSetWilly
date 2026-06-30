@@ -84,7 +84,7 @@ TheSecurityGuardBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheSecurityGuardReserved:
-    DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+    DEFB RED, GREEN, YELLOW, RED                         ; Enemy colors: all WHITE (7)
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheSecurityGuardItem:
@@ -102,13 +102,13 @@ TheSecurityGuardUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheSecurityGuardEnemy1:
-    DEFB 0,0,0,0        ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $CB,  90, 16, 105           ; Enemy 1 (Soldato), horizontal, Starts X=8, Y=120, Limit X=200
 TheSecurityGuardEnemy2:
-    DEFB 0,0,0,0         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $CB, 113, 16, 105           ; Enemy 2 (Soldato), horizontal, Starts X=80, Y=80, Limit X=180
 TheSecurityGuardEnemy3:
-    DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $CB, 136, 16, 105           ; Enemy 3 (Soldato), vertical, Starts X=120, Y=40, Limit Y=130
 TheSecurityGuardEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB $CB, 185, 16, 105           ; Enemy 3 (Soldato), vertical, Starts X=120, Y=40, Limit Y=130
 
 TheSecurityGuardPosWilly:
     db 200, 101                   ; Posizione di Willy

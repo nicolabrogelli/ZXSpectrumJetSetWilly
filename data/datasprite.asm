@@ -257,3 +257,9 @@ SegaSprite: ; This guardian (page 181, sprites 0-7) appears in At the Foot of th
     db 9,208,9,128,9,232,9,194,9,128,17,232,17,192,17,130	
     db 0,0,0,0,0,0,0,0,0,0,0,192,1,248,1,112	
     db 1,96,1,120,1,112,2,96,2,120,2,112,2,97,2,120
+
+SoldatoSprite: ; This guardian (page 191, sprites 4-5) appears in The Security Guard, I'm sure I've seen this before.. and Up on the Battlements.
+    db 2,4,5,14,10,132,21,196,23,68,43,228,47,224,18,68	
+    db 8,130,7,44,21,80,42,164,85,68,170,132,69,0,29,192	
+    db 2,0,5,0,10,132,21,206,23,68,43,228,47,228,18,68	
+    db 8,128,7,4,21,82,42,172,85,64,170,132,69,4,29,196
