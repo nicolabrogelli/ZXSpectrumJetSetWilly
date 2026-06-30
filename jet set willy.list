@@ -7261,7 +7261,7 @@
  104+ 87F8              TheDriveEnemy1:
  105+ 87F8 84 50 68 DC      DEFB $84, 80, 104, 220           ; Enemy 1 (Uovo), horizontal, Starts X=80, Y=80, Limit X=180
  106+ 87FC              TheDriveEnemy2:
- 107+ 87FC 82 50 50 B4      DEFB $82, 80, 80, 180           ; Enemy 2 (Uccello), horizontal, Starts X=8, Y=104, Limit X=120
+ 107+ 87FC B2 50 50 B4      DEFB $B2, 80, 80, 180           ; Enemy 2 (Uccello), horizontal, Starts X=8, Y=104, Limit X=120
  108+ 8800              TheDriveEnemy3:
  109+ 8800 82 28 30 A0      DEFB $82, 40, 48, 160           ; Enemy 3 (Uccello), horizontal, Starts X=40, Y=48, Limit X=160
  110+ 8804              TheDriveEnemy4:

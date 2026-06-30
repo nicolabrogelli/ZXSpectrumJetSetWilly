@@ -104,7 +104,7 @@ TheDriveUnused:
 TheDriveEnemy1:
     DEFB $84, 80, 104, 220           ; Enemy 1 (Uovo), horizontal, Starts X=80, Y=80, Limit X=180
 TheDriveEnemy2:
-    DEFB $82, 80, 80, 180           ; Enemy 2 (Uccello), horizontal, Starts X=8, Y=104, Limit X=120
+    DEFB $B2, 80, 80, 180           ; Enemy 2 (Uccello), horizontal, Starts X=8, Y=104, Limit X=120
 TheDriveEnemy3:
     DEFB $82, 40, 48, 160           ; Enemy 3 (Uccello), horizontal, Starts X=40, Y=48, Limit X=160
 TheDriveEnemy4:
