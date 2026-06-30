@@ -1,6 +1,5 @@
 
 # Ignora una cartella specifica
-.vscode/
 .tmp/
 .antigravitycli/
 .devcontainer/
