@@ -7508,13 +7508,13 @@
  102+ 895E
  103+ 895E              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  104+ 895E              TheSecurityGuardEnemy1:
- 105+ 895E CB 5A 10 69      DEFB $CB,  90, 16, 105           ; Enemy 1, Phase 0 (Y=16, Down)
+ 105+ 895E CB 58 10 69      DEFB $CB,  88, 16, 105           ; Enemy 1, Phase 0 (Y=16, Down)
  106+ 8962              TheSecurityGuardEnemy2:
  107+ 8962 DB 71 10 69      DEFB $DB, 113, 16, 105           ; Enemy 2, Phase 1 (Y=38, Down)
  108+ 8966              TheSecurityGuardEnemy3:
  109+ 8966 EB 88 10 69      DEFB $EB, 136, 16, 105           ; Enemy 3, Phase 2 (Y=60, Up)
  110+ 896A              TheSecurityGuardEnemy4:
- 111+ 896A FB B9 10 69      DEFB $FB, 185, 16, 105           ; Enemy 4, Phase 3 (Y=105, Up)
+ 111+ 896A FB B8 10 69      DEFB $FB, 184, 16, 105           ; Enemy 4, Phase 3 (Y=105, Up)
  112+ 896E              TheSecurityGuardEnemy5:
  113+ 896E 00 00 00 00      DEFB 0,0,0,0
  114+ 8972              TheSecurityGuardEnemy6:

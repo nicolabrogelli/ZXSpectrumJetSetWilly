@@ -102,13 +102,13 @@ TheSecurityGuardUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheSecurityGuardEnemy1:
-    DEFB $CB,  90, 16, 105           ; Enemy 1, Phase 0 (Y=16, Down)
+    DEFB $CB,  88, 16, 105           ; Enemy 1, Phase 0 (Y=16, Down)
 TheSecurityGuardEnemy2:
     DEFB $DB, 113, 16, 105           ; Enemy 2, Phase 1 (Y=38, Down)
 TheSecurityGuardEnemy3:
     DEFB $EB, 136, 16, 105           ; Enemy 3, Phase 2 (Y=60, Up)
 TheSecurityGuardEnemy4:
-    DEFB $FB, 185, 16, 105           ; Enemy 4, Phase 3 (Y=105, Up)
+    DEFB $FB, 184, 16, 105           ; Enemy 4, Phase 3 (Y=105, Up)
 TheSecurityGuardEnemy5:
     DEFB 0,0,0,0
 TheSecurityGuardEnemy6:
