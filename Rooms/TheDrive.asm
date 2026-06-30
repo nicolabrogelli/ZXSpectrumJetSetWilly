@@ -102,13 +102,13 @@ TheDriveUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheDriveEnemy1:
-    DEFB 0,0,0,0        ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $81, 80, 104, 220           ; Enemy 1 (Uovo), horizontal, Starts X=80, Y=80, Limit X=180
 TheDriveEnemy2:
-    DEFB 0,0,0,0         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 80, 80, 180           ; Enemy 2 (Uccello), horizontal, Starts X=8, Y=104, Limit X=120
 TheDriveEnemy3:
-    DEFB $C1, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $80, 40, 48, 160           ; Enemy 3 (Uccello), horizontal, Starts X=40, Y=48, Limit X=160
 TheDriveEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB $80, 120, 16, 200           ; Enemy 4 (Uccello), horizontal, Starts X=120, Y=16, Limit X=76
 
 TheDrivePosWilly:
     db 200, 101                   ; Posizione di Willy

@@ -242,6 +242,12 @@ DrawRoomEnemies:
     jr   z, .bridge_lametta
     
     ld   hl, (room_ptr)
+    ld   de, TheDriveLayout
+    or   a
+    sbc  hl, de
+    jr   z, .bridge_lametta
+    
+    ld   hl, (room_ptr)
     ld   de, CuckoosNestLayout
     or   a
     sbc  hl, de
