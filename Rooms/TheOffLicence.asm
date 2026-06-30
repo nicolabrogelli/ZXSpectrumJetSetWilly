@@ -93,11 +93,11 @@ TheOffLicenceUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 TheOffLicenceEnemy1:
-    DEFB $80, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $83, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
 TheOffLicenceEnemy2:
-    DEFB $C1, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $C6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
 TheOffLicenceEnemy3:
-    DEFB $C2, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $C9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 TheOffLicenceEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
 

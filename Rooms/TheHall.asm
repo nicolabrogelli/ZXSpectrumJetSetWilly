@@ -106,7 +106,7 @@ TheHallEnemy1:
 TheHallEnemy2:
     DEFB $80, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
 TheHallEnemy3:
-    DEFB $C1, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 TheHallEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
 

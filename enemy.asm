@@ -229,144 +229,99 @@ DrawRoomEnemies:
     
     push bc                ; Salva contatore ciclo
     
-    ; Determina quale sprite usare basato sul tipo (Bit 1-0)
+    ; Determina quale sprite usare basato sul tipo (Bit 3-0)
     ld   a, (ix+0)         ; Flags
-    and  3                 ; Tipo (0=Lametta, 1=Uovo, 2=Robot)
-    jp   nz, .not_lametta
+    and  $0F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall)
     
-    ; Lametta (Tipo 0)
-    ld   hl, (room_ptr)
-    ld   de, TheBridgeLayout
-    or   a
-    sbc  hl, de
-    jr   z, .bridge_lametta
+    cp   0
+    jr   z, .got_lametta
+    cp   1
+    jr   z, .got_sega
+    cp   2
+    jr   z, .got_uccello
+    cp   3
+    jr   z, .got_radar
+    cp   4
+    jr   z, .got_uovo
+    cp   5
+    jr   z, .got_ufo
+    cp   6
+    jr   z, .got_faccia
+    cp   7
+    jr   z, .got_scimmia
+    cp   8
+    jr   z, .got_robot
+    cp   9
+    jr   z, .got_palla
+    cp   10
+    jr   z, .got_doubleball
     
-    ld   hl, (room_ptr)
-    ld   de, TheDriveLayout
-    or   a
-    sbc  hl, de
-    jr   z, .bridge_lametta
-    
-    ld   hl, (room_ptr)
-    ld   de, CuckoosNestLayout
-    or   a
-    sbc  hl, de
-    jr   z, .bridge_lametta
-    
-    ld   hl, (room_ptr)
-    ld   de, TheOffLicenceLayout
-    or   a
-    sbc  hl, de
-    jr   z, .offlicence_radar
+    ; Fallback in caso di tipo sconosciuto
+    ld   hl, LamettaSpriteLeft
+    jp   .got_sprite
 
-    ld   hl, (room_ptr)
-    ld   de, TheBathroomLayout
-    or   a
-    sbc  hl, de
-    jr   z, .bathroom_doubleball
-
-    ld   hl, (room_ptr)
-    ld   de, AtTheFootTheMegaTreeLayout
-    or   a
-    sbc  hl, de
-    jp   z, .foottree_sega
-
-    ld   a, (ix+5)         ; Direction
-    cp   1                 ; Sinistra?
+.got_lametta:
+    ld   a, (ix+5)         ; Direction (1=Left, 2=Right)
+    cp   1
     ld   hl, LamettaSpriteLeft
     jp   z, .got_sprite
     ld   hl, LamettaSpriteRight
     jp   .got_sprite
 
-.bathroom_doubleball:
+.got_sega:
     ld   a, (ix+5)         ; Direction
-    cp   1                 ; Sinistra?
-    ld   hl, DoubleBallSpriteLeft
-    jp   z, .got_sprite
-    ld   hl, DoubleBallSpriteRight
-    jp   .got_sprite
-
-.foottree_sega:
-    ld   a, (ix+5)         ; Direction
-    cp   1                 ; Sinistra?
+    cp   1
     ld   hl, SegaSprite
     jp   z, .got_sprite
     ld   hl, SegaSprite + 128
     jp   .got_sprite
 
-.bridge_lametta:
+.got_uccello:
     ld   a, (ix+5)         ; Direction
-    cp   1                 ; Sinistra?
+    cp   1
     ld   hl, UccelloSpriteLeft
     jp   z, .got_sprite
     ld   hl, UccelloSpriteRight
     jp   .got_sprite
 
-.offlicence_radar:
+.got_radar:
     ld   hl, RadarSprite
     jp   .got_sprite
-    
-.not_lametta:
-    dec  a
-    jp   nz, .not_egg
-    
-    ; Uovo (Tipo 1)
-    ld   hl, (room_ptr)
-    ld   de, TheBridgeLayout
-    or   a
-    sbc  hl, de
-    jp   z, .bridge_egg
-    
-    ld   hl, (room_ptr)
-    ld   de, CuckoosNestLayout
-    or   a
-    sbc  hl, de
-    jp   z, .bridge_egg
-    
-    ld   hl, (room_ptr)
-    ld   de, TheOffLicenceLayout
-    or   a
-    sbc  hl, de
-    jp   z, .offlicence_face
 
-    ld   hl, (room_ptr)
-    ld   de, AtTheFootTheMegaTreeLayout
-    or   a
-    sbc  hl, de
-    jp   z, .foottree_monkey
-
+.got_uovo:
     ld   a, (ix+5)         ; Direction
-    cp   1                 ; Sinistra?
+    cp   1
     ld   hl, EggSpriteLeft
     jp   z, .got_sprite
     ld   hl, EggSpriteRight
     jp   .got_sprite
 
-.bridge_egg:
+.got_ufo:
     ld   hl, UfoSprite
     jp   .got_sprite
 
-.offlicence_face:
+.got_faccia:
     ld   hl, FaceSprite
     jp   .got_sprite
 
-.foottree_monkey:
+.got_scimmia:
     ld   hl, ScimmiaSprite
     jp   .got_sprite
-    
-.not_egg:
-    ; Robot (Tipo 2)
-    ld   hl, (room_ptr)
-    ld   de, TheOffLicenceLayout
-    or   a
-    sbc  hl, de
-    jp   z, .offlicence_ball
 
+.got_robot:
     ld   hl, RobotSprite
     jp   .got_sprite
 
-.offlicence_ball:
+.got_palla:
     ld   hl, BallSprite
+    jp   .got_sprite
+
+.got_doubleball:
+    ld   a, (ix+5)         ; Direction
+    cp   1
+    ld   hl, DoubleBallSpriteLeft
+    jp   z, .got_sprite
+    ld   hl, DoubleBallSpriteRight
     
 .got_sprite:
     ; Calcola il frame dell'animazione: Anim State * 32

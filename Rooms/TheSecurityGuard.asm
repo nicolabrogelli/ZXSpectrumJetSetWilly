@@ -106,7 +106,7 @@ TheSecurityGuardEnemy1:
 TheSecurityGuardEnemy2:
     DEFB 0,0,0,0         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
 TheSecurityGuardEnemy3:
-    DEFB $C1, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 TheSecurityGuardEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
 
