@@ -331,32 +331,36 @@ DrawRoomEnemies:
     
     ; Determina quale sprite usare basato sul tipo (Bit 3-0)
     ld   a, (ix+0)         ; Flags
-    and  $0F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall)
+    and  $0F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro)
     
     cp   0
-    jr   z, .got_lametta
+    jp   z, .got_lametta
     cp   1
-    jr   z, .got_sega
+    jp   z, .got_sega
     cp   2
-    jr   z, .got_uccello
+    jp   z, .got_uccello
     cp   3
-    jr   z, .got_radar
+    jp   z, .got_radar
     cp   4
-    jr   z, .got_uovo
+    jp   z, .got_uovo
     cp   5
-    jr   z, .got_ufo
+    jp   z, .got_ufo
     cp   6
-    jr   z, .got_faccia
+    jp   z, .got_faccia
     cp   7
-    jr   z, .got_scimmia
+    jp   z, .got_scimmia
     cp   8
-    jr   z, .got_robot
+    jp   z, .got_robot
     cp   9
-    jr   z, .got_palla
+    jp   z, .got_palla
     cp   10
-    jr   z, .got_doubleball
+    jp   z, .got_doubleball
     cp   11
-    jr   z, .got_soldato
+    jp   z, .got_soldato
+    cp   12
+    jp   z, .got_maiale
+    cp   13
+    jp   z, .got_canguro
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -424,9 +428,26 @@ DrawRoomEnemies:
     ld   hl, DoubleBallSpriteLeft
     jp   z, .got_sprite
     ld   hl, DoubleBallSpriteRight
+    jp   .got_sprite
 
-.got_soldato
+.got_soldato:
     ld   hl, SoldatoSprite
+    jp   .got_sprite
+
+.got_maiale:
+    ld   a, (ix+5)         ; Direction
+    cp   1
+    ld   hl, MaialeSpriteLeft
+    jp   z, .got_sprite
+    ld   hl, MaialeSpriteRight
+    jp   .got_sprite
+
+.got_canguro:
+    ld   a, (ix+5)         ; Direction
+    cp   1
+    ld   hl, CanguroSpriteLeft
+    jp   z, .got_sprite
+    ld   hl, CanguroSpriteRight
     jp   .got_sprite
 
 

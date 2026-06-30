@@ -84,7 +84,7 @@ UnderTheMegaTreeBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 UnderTheMegaTreeReserved:
-    DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+    DEFB CYAN, RED, MAGENTA, 7                         ; Enemy colors: all WHITE (7)
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 UnderTheMegaTreeItem:
@@ -102,11 +102,11 @@ UnderTheMegaTreeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 UnderTheMegaTreeEnemy1:
-    DEFB $80, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $8D, 8, 104, 200         ; Enemy 1 (Canguro), horizontal, Starts X=8, Y=120, Limit X=200
 UnderTheMegaTreeEnemy2:
-    DEFB $80, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $8C, 80, 30, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
 UnderTheMegaTreeEnemy3:
-    DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C6, 120, 16, 76        ; Enemy 3 (face), vertical, Starts X=120, Y=40, Limit Y=130
 UnderTheMegaTreeEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
 UnderTheMegaTreeEnemy5:
