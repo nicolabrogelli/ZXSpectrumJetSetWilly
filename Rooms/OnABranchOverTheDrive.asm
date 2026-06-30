@@ -109,6 +109,14 @@ OnABranchOverTheDriveEnemy3:
     DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 OnABranchOverTheDriveEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+OnABranchOverTheDriveEnemy5:
+    DEFB 0,0,0,0
+OnABranchOverTheDriveEnemy6:
+    DEFB 0,0,0,0
+OnABranchOverTheDriveEnemy7:
+    DEFB 0,0,0,0
+OnABranchOverTheDriveEnemy8:
+    DEFB 0,0,0,0
 
 OnABranchOverTheDrivePosWilly:
     db 200, 30                   ; Posizione di Willy

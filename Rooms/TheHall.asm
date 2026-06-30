@@ -109,6 +109,14 @@ TheHallEnemy3:
     DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 TheHallEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+TheHallEnemy5:
+    DEFB 0,0,0,0
+TheHallEnemy6:
+    DEFB 0,0,0,0
+TheHallEnemy7:
+    DEFB 0,0,0,0
+TheHallEnemy8:
+    DEFB 0,0,0,0
 
 TheHallPosWilly:
     db 50, 20                   ; Posizione di Willy

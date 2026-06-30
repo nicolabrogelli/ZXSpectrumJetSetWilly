@@ -109,6 +109,14 @@ TheFrontDoorEnemy3:
     DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 TheFrontDoorEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+TheFrontDoorEnemy5:
+    DEFB 0,0,0,0
+TheFrontDoorEnemy6:
+    DEFB 0,0,0,0
+TheFrontDoorEnemy7:
+    DEFB 0,0,0,0
+TheFrontDoorEnemy8:
+    DEFB 0,0,0,0
 
 TheFrontDoorPosWilly:
     db 50, 20                   ; Posizione di Willy

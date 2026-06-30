@@ -109,6 +109,14 @@ CuckoosNestEnemy3:
     DEFB $C5, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 CuckoosNestEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+CuckoosNestEnemy5:
+    DEFB 0,0,0,0
+CuckoosNestEnemy6:
+    DEFB 0,0,0,0
+CuckoosNestEnemy7:
+    DEFB 0,0,0,0
+CuckoosNestEnemy8:
+    DEFB 0,0,0,0
 
 CuckoosNestPosWilly:
     db 30, 80                   ; Posizione di Willy

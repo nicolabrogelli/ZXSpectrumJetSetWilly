@@ -109,6 +109,14 @@ TheBridgeEnemy3:
     DEFB $C5, 120, 16, 106        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 TheBridgeEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+TheBridgeEnemy5:
+    DEFB 0,0,0,0
+TheBridgeEnemy6:
+    DEFB 0,0,0,0
+TheBridgeEnemy7:
+    DEFB 0,0,0,0
+TheBridgeEnemy8:
+    DEFB 0,0,0,0
 
 TheBridgePosWilly:
     db 136, 76                   ; Posizione di Willy

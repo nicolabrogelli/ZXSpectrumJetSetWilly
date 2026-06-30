@@ -111,6 +111,14 @@ MastreBedRoomEnemy3:
     DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 MastreBedRoomEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+MastreBedRoomEnemy5:
+    DEFB 0,0,0,0
+MastreBedRoomEnemy6:
+    DEFB 0,0,0,0
+MastreBedRoomEnemy7:
+    DEFB 0,0,0,0
+MastreBedRoomEnemy8:
+    DEFB 0,0,0,0
 
 MastreBedRoomPosWilly:
     db 200, 101                   ; Posizione di Willy

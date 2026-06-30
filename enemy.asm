@@ -17,7 +17,7 @@
 ; Offset 9: Reserved
 ; -------------------------------------------------------------------
 ActiveEnemies:
-    .40 db 0
+    .80 db 0
 
 ; -------------------------------------------------------------------
 ; Carica i nemici della stanza corrente in ActiveEnemies.
@@ -42,8 +42,21 @@ LoadRoomEnemies:
     add  hl, de            ; HL = indirizzo di RoomXEnemy1
     
     ld   de, ActiveEnemies
-    ld   b, 4              ; 4 slot per stanza
+    ld   b, 8              ; 8 slot per stanza
 .loop:
+    ld   a, b
+    cp   4
+    jr   nz, .no_color_reset
+    
+    push hl
+    ld   hl, (room_ptr)
+    ld   de, 223
+    add  hl, de
+    push hl
+    pop  ix                ; Reset color pointer to support mirroring for slots 5-8
+    pop  hl
+.no_color_reset:
+
     ; Leggi il colore per questo nemico dal puntatore IX e salvalo sullo stack
     ld   a, (ix+0)
     inc  ix
@@ -171,17 +184,7 @@ LoadRoomEnemies:
     jr   .set_dir_1
 
 .phase_0:
-    ; Phase 0: Pos = Min Limit, Dir = 2
-    ld   a, (iy-5)         ; A = Flags
-    and  $40
-    jr   nz, .p0_vert
-.p0_horiz:
-    ld   a, (iy-2)
-    ld   (iy-4), a         ; Current X = Min Limit
-    jr   .set_dir_2
-.p0_vert:
-    ld   a, (iy-2)
-    ld   (iy-3), a         ; Current Y = Min Limit
+    ; Phase 0: Tieni la posizione iniziale impostata da ROM, Dir = 2
     jr   .set_dir_2
 
 .phase_1:
@@ -279,7 +282,7 @@ EraseRoomEnemies:
     push ix
     
     ld   ix, ActiveEnemies
-    ld   b, 4              ; 4 slot
+    ld   b, 8              ; 8 slot
 .loop:
     ld   a, (ix+0)         ; Flags
     and  $80               ; Active?
@@ -316,7 +319,7 @@ DrawRoomEnemies:
     push ix
     
     ld   ix, ActiveEnemies
-    ld   b, 4              ; 4 slot
+    ld   b, 8              ; 8 slot
 .loop:
     ld   a, (ix+0)         ; Flags
     and  $80               ; Active?
@@ -507,7 +510,7 @@ UpdateRoomEnemies:
     
 .do_update:
     ld   ix, ActiveEnemies
-    ld   b, 4              ; 4 slot
+    ld   b, 8              ; 8 slot
 .loop:
     ld   a, (ix+0)         ; Flags
     and  $80               ; Active?

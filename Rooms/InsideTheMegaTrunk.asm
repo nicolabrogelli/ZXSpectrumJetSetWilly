@@ -84,7 +84,7 @@ InsideTheMegaTrunkBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 InsideTheMegaTrunkReserved:
-    DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+    DEFB MAGENTA, MAGENTA, MAGENTA, RED                         ; Enemy colors: all WHITE (7)
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 InsideTheMegaTrunkItem:
@@ -102,13 +102,21 @@ InsideTheMegaTrunkUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 InsideTheMegaTrunkEnemy1:
-    DEFB $80, 8, 76, 200                    ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $C7, 16, 110, 65                    ; Enemy 1 (Scimmia), vertical, Starts X=8, Y=120, Limit X=200
 InsideTheMegaTrunkEnemy2:
-    DEFB $80, 80, 76, 180                   ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $C7, 40, 110, 65                   ; Enemy 2 (Scimmia), vertical, Starts X=80, Y=80, Limit X=180
 InsideTheMegaTrunkEnemy3:
-    DEFB $C4, 120, 16, 76                   ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C7, 64, 110, 65                   ; Enemy 3 (Scimmia), vertical, Starts X=120, Y=40, Limit Y=130
 InsideTheMegaTrunkEnemy4:
-    DEFB 0,0,0,0                            ; Empty slot
+    DEFB $C6, 94, 10, 100                   ; Enemy 4 (Faccia)
+InsideTheMegaTrunkEnemy5:
+    DEFB 0,0,0,0                            ; Enemy 5 (Uccello) 
+InsideTheMegaTrunkEnemy6:           
+    DEFB 0,0,0,0                            ; Enemy 6 (Uccello)
+InsideTheMegaTrunkEnemy7:
+    DEFB 0,0,0,0                            ; Enemy 7 (Fiore)
+InsideTheMegaTrunkEnemy8:
+    DEFB 0,0,0,0
 
 InsideTheMegaTrunkPosWilly:
     db 200, 90                             ; Posizione di Willy

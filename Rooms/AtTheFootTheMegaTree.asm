@@ -109,6 +109,14 @@ AtTheFootTheMegaTreeEnemy3:
     DEFB $C7, 64, 16, 86        ; Enemy 3 (Scimmia), horizontal, Starts X, Y, Limit X
 AtTheFootTheMegaTreeEnemy4:
     DEFB $81, 28, 104, 220      ; Enemy 3 (Sega), horizontal, Starts X, Y, Limit X
+AtTheFootTheMegaTreeEnemy5:
+    DEFB 0,0,0,0
+AtTheFootTheMegaTreeEnemy6:
+    DEFB 0,0,0,0
+AtTheFootTheMegaTreeEnemy7:
+    DEFB 0,0,0,0
+AtTheFootTheMegaTreeEnemy8:
+    DEFB 0,0,0,0
 
 AtTheFootTheMegaTreePosWilly:
     db 200, 101                   ; Posizione di Willy

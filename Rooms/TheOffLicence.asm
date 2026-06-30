@@ -100,6 +100,14 @@ TheOffLicenceEnemy3:
     DEFB $C9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 TheOffLicenceEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+TheOffLicenceEnemy5:
+    DEFB 0,0,0,0
+TheOffLicenceEnemy6:
+    DEFB 0,0,0,0
+TheOffLicenceEnemy7:
+    DEFB 0,0,0,0
+TheOffLicenceEnemy8:
+    DEFB 0,0,0,0
 
 TheOffLicencePosWilly:
     db 136, 104                   ; Posizione di Willy

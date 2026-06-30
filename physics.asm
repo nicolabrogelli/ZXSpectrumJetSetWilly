@@ -494,7 +494,7 @@ CheckCollision:
     push ix
     
     ld   ix, ActiveEnemies
-    ld   b, 4              ; 4 slot
+    ld   b, 8              ; 8 slot
 .loop:
     ld   a, (ix+0)         ; Flags
     and  $80               ; Active?

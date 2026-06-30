@@ -99,6 +99,14 @@ EntranceToHadesEnemy3:
     DEFB 0,0,0,0                  ; Empty slot
 EntranceToHadesEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+EntranceToHadesEnemy5:
+    DEFB 0,0,0,0
+EntranceToHadesEnemy6:
+    DEFB 0,0,0,0
+EntranceToHadesEnemy7:
+    DEFB 0,0,0,0
+EntranceToHadesEnemy8:
+    DEFB 0,0,0,0
 
 EntranceToHadesPosWilly:
     db 136, 30                   ; Willy starting position

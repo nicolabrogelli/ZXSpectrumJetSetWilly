@@ -109,6 +109,14 @@ UnderTheMegaTreeEnemy3:
     DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 UnderTheMegaTreeEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+UnderTheMegaTreeEnemy5:
+    DEFB 0,0,0,0
+UnderTheMegaTreeEnemy6:
+    DEFB 0,0,0,0
+UnderTheMegaTreeEnemy7:
+    DEFB 0,0,0,0
+UnderTheMegaTreeEnemy8:
+    DEFB 0,0,0,0
 
 UnderTheMegaTreePosWilly:
     db 200, 101                   ; Posizione di Willy

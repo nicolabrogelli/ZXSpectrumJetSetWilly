@@ -109,6 +109,14 @@ TheSecurityGuardEnemy3:
     DEFB $EB, 136, 16, 105           ; Enemy 3, Phase 2 (Y=60, Up)
 TheSecurityGuardEnemy4:
     DEFB $FB, 185, 16, 105           ; Enemy 4, Phase 3 (Y=105, Up)
+TheSecurityGuardEnemy5:
+    DEFB 0,0,0,0
+TheSecurityGuardEnemy6:
+    DEFB 0,0,0,0
+TheSecurityGuardEnemy7:
+    DEFB 0,0,0,0
+TheSecurityGuardEnemy8:
+    DEFB 0,0,0,0
 
 TheSecurityGuardPosWilly:
     db 200, 101                   ; Posizione di Willy

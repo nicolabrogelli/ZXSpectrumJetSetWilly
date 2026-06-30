@@ -109,6 +109,14 @@ TheDriveEnemy3:
     DEFB $82, 40, 48, 160           ; Enemy 3 (Uccello), horizontal, Starts X=40, Y=48, Limit X=160
 TheDriveEnemy4:
     DEFB $82, 120, 16, 200           ; Enemy 4 (Uccello), horizontal, Starts X=120, Y=16, Limit X=76
+TheDriveEnemy5:
+    DEFB 0,0,0,0
+TheDriveEnemy6:
+    DEFB 0,0,0,0
+TheDriveEnemy7:
+    DEFB 0,0,0,0
+TheDriveEnemy8:
+    DEFB 0,0,0,0
 
 TheDrivePosWilly:
     db 200, 101                   ; Posizione di Willy

@@ -109,6 +109,14 @@ TreeTopEnemy3:
     DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 TreeTopEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+TreeTopEnemy5:
+    DEFB 0,0,0,0
+TreeTopEnemy6:
+    DEFB 0,0,0,0
+TreeTopEnemy7:
+    DEFB 0,0,0,0
+TreeTopEnemy8:
+    DEFB 0,0,0,0
 
 TreeTopPosWilly:
     db 50, 120                 ; Posizione di Willy    

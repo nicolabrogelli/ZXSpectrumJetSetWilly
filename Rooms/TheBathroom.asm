@@ -109,6 +109,14 @@ TheBathroomEnemy3:
     DEFB 0,0,0,0                  ; Empty
 TheBathroomEnemy4:
     DEFB 0,0,0,0                  ; Empty slot
+TheBathroomEnemy5:
+    DEFB 0,0,0,0
+TheBathroomEnemy6:
+    DEFB 0,0,0,0
+TheBathroomEnemy7:
+    DEFB 0,0,0,0
+TheBathroomEnemy8:
+    DEFB 0,0,0,0
 
 TheBathroomPosWilly:
     db 200, 90                  ; Posizione di Willy
