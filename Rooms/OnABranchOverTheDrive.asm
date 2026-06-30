@@ -120,3 +120,5 @@ OnABranchOverTheDriveEnemy8:
 
 OnABranchOverTheDrivePosWilly:
     db 200, 30                   ; Posizione di Willy
+OnABranchOverTheDriveEnemyColors5_8:
+    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

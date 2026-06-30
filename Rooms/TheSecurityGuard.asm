@@ -120,3 +120,5 @@ TheSecurityGuardEnemy8:
 
 TheSecurityGuardPosWilly:
     db 200, 101                   ; Posizione di Willy
+TheSecurityGuardEnemyColors5_8:
+    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

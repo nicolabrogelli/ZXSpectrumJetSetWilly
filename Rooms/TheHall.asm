@@ -120,3 +120,5 @@ TheHallEnemy8:
 
 TheHallPosWilly:
     db 50, 20                   ; Posizione di Willy
+TheHallEnemyColors5_8:
+    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

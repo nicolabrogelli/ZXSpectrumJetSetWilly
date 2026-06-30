@@ -120,3 +120,5 @@ TreeTopEnemy8:
 
 TreeTopPosWilly:
     db 50, 120                 ; Posizione di Willy    
+TreeTopEnemyColors5_8:
+    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

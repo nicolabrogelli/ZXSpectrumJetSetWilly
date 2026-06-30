@@ -110,13 +110,16 @@ InsideTheMegaTrunkEnemy3:
 InsideTheMegaTrunkEnemy4:
     DEFB $C6, 94, 10, 100                   ; Enemy 4 (Faccia)
 InsideTheMegaTrunkEnemy5:
-    DEFB 0,0,0,0                            ; Enemy 5 (Uccello) 
+    DEFB $82, 1, 40, 100                    ; Enemy 5 (Uccello) 
 InsideTheMegaTrunkEnemy6:           
-    DEFB 0,0,0,0                            ; Enemy 6 (Uccello)
+    DEFB $82, 230, 87, 150                   ; Enemy 6 (Uccello)
 InsideTheMegaTrunkEnemy7:
     DEFB 0,0,0,0                            ; Enemy 7 (Fiore)
 InsideTheMegaTrunkEnemy8:
     DEFB 0,0,0,0
 
 InsideTheMegaTrunkPosWilly:
-    db 200, 90                             ; Posizione di Willy
+    db 200, 85                             ; Posizione di Willy
+
+InsideTheMegaTrunkEnemyColors5_8:
+    DEFB CYAN, GREEN, 4, 7               ; Colori per nemici 5-8

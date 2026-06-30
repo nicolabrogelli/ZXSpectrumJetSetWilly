@@ -120,3 +120,5 @@ AtTheFootTheMegaTreeEnemy8:
 
 AtTheFootTheMegaTreePosWilly:
     db 200, 101                   ; Posizione di Willy
+AtTheFootTheMegaTreeEnemyColors5_8:
+    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

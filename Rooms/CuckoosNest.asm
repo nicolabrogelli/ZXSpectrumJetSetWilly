@@ -120,3 +120,5 @@ CuckoosNestEnemy8:
 
 CuckoosNestPosWilly:
     db 30, 80                   ; Posizione di Willy
+CuckoosNestEnemyColors5_8:
+    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

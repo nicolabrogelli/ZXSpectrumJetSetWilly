@@ -49,11 +49,13 @@ LoadRoomEnemies:
     jr   nz, .no_color_reset
     
     push hl
+    push de
     ld   hl, (room_ptr)
-    ld   de, 223
+    ld   de, 274
     add  hl, de
     push hl
-    pop  ix                ; Reset color pointer to support mirroring for slots 5-8
+    pop  ix                ; Reset color pointer to ROM offset 274 (colors for enemies 5-8)
+    pop  de
     pop  hl
 .no_color_reset:
 

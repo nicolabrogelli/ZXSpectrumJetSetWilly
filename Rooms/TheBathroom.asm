@@ -120,3 +120,5 @@ TheBathroomEnemy8:
 
 TheBathroomPosWilly:
     db 200, 90                  ; Posizione di Willy
+TheBathroomEnemyColors5_8:
+    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

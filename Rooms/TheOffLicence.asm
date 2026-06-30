@@ -111,3 +111,5 @@ TheOffLicenceEnemy8:
 
 TheOffLicencePosWilly:
     db 136, 104                   ; Posizione di Willy
+TheOffLicenceEnemyColors5_8:
+    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

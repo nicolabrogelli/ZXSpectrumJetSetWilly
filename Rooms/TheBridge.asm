@@ -120,3 +120,5 @@ TheBridgeEnemy8:
 
 TheBridgePosWilly:
     db 136, 76                   ; Posizione di Willy
+TheBridgeEnemyColors5_8:
+    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
