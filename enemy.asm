@@ -133,10 +133,105 @@ LoadRoomEnemies:
     pop  hl                ; HL = Limit address in Room data
     inc  hl                ; HL = inizio del prossimo slot
     
-    ; Imposta Direction = 2 (Destra/Giù)
+    push hl                ; Salva HL
+    push iy                ; Salva IY
+    
+    push de
+    pop  iy                ; IY = puntatore a Offset 5 (Direction) in RAM
+    
+    ; Leggi Flags (Offset 0) per determinare la Fase (Bit 5 e 4)
+    ld   a, (iy-5)         ; A = Flags
+    
+    ; Estrai Bit 5-4: (Flags >> 4) & 3
+    rrca
+    rrca
+    rrca
+    rrca
+    and  3                 ; A = Phase (0..3)
+    
+    cp   0
+    jr   z, .phase_0
+    cp   1
+    jr   z, .phase_1
+    cp   2
+    jr   z, .phase_2
+    
+.phase_3:
+    ; Phase 3: Pos = Max Limit, Dir = 1
+    ld   a, (iy-5)         ; A = Flags
+    and  $40
+    jr   nz, .p3_vert
+.p3_horiz:
+    ld   a, (iy-1)
+    ld   (iy-4), a         ; Current X = Max Limit
+    jr   .set_dir_1
+.p3_vert:
+    ld   a, (iy-1)
+    ld   (iy-3), a         ; Current Y = Max Limit
+    jr   .set_dir_1
+
+.phase_0:
+    ; Phase 0: Pos = Min Limit, Dir = 2
+    ld   a, (iy-5)         ; A = Flags
+    and  $40
+    jr   nz, .p0_vert
+.p0_horiz:
+    ld   a, (iy-2)
+    ld   (iy-4), a         ; Current X = Min Limit
+    jr   .set_dir_2
+.p0_vert:
+    ld   a, (iy-2)
+    ld   (iy-3), a         ; Current Y = Min Limit
+    jr   .set_dir_2
+
+.phase_1:
+    ; Phase 1: Pos = Min Limit + Delta / 4, Dir = 2
+    ld   a, (iy-1)         ; A = Max Limit
+    sub  (iy-2)            ; A = Delta
+    srl  a
+    srl  a                 ; A = Delta / 4
+    add  a, (iy-2)         ; A = Min Limit + Delta / 4
+    ld   c, a              ; C = target pos
+    
+    ld   a, (iy-5)         ; A = Flags
+    and  $40
+    jr   nz, .p1_vert
+.p1_horiz:
+    ld   (iy-4), c         ; Current X = target pos
+    jr   .set_dir_2
+.p1_vert:
+    ld   (iy-3), c         ; Current Y = target pos
+    jr   .set_dir_2
+
+.phase_2:
+    ; Phase 2: Pos = Min Limit + Delta / 2, Dir = 1
+    ld   a, (iy-1)         ; A = Max Limit
+    sub  (iy-2)            ; A = Delta
+    srl  a                 ; A = Delta / 2
+    add  a, (iy-2)         ; A = Min Limit + Delta / 2
+    ld   c, a              ; C = target pos
+    
+    ld   a, (iy-5)         ; A = Flags
+    and  $40
+    jr   nz, .p2_vert
+.p2_horiz:
+    ld   (iy-4), c         ; Current X = target pos
+    jr   .set_dir_1
+.p2_vert:
+    ld   (iy-3), c         ; Current Y = target pos
+    jr   .set_dir_1
+
+.set_dir_1:
+    ld   a, 1
+    jr   .store_dir
+.set_dir_2:
     ld   a, 2
+.store_dir:
     ld   (de), a           ; Offset 5: Direction
     inc  de
+    
+    pop  iy                ; Ripristina IY
+    pop  hl                ; Ripristina HL
     
     ; Imposta Anim State = 0
     xor  a
