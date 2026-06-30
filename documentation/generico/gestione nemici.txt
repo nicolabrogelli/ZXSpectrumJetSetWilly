@@ -1,0 +1,26 @@
+Gestione dei nemici, questa è la tabelle da seguire per la loro confgiurazione all'interno della singola stanza
+
+  • Bit 7 (Attivo/Inattivo):
+      •  1  (≥$80): Il nemico è attivo e viene renderizzato/aggiornato.
+      •  0  (<$80): Il nemico è disattivato.
+  • Bit 6 (Movimento Orizzontale o Verticale):
+      •  1  (aggiunge +$40): Movimento Verticale.
+      •  0 : Movimento Orizzontale.
+  • Bit 0-3
+        •  %0000  (00): Tipo 00 (Lametta).
+        •  %0001  (01): Tipo 01 (Sega).
+        •  %0010  (02): Tipo 02 (Uccello).
+        •  %0011  (03): Tipo 03 (Radar).
+        •  %0100  (04): Tipo 04 (Uovo).
+        •  %0101  (05): Tipo 05 (Ufo).
+        •  %0110  (06): Tipo 06 (Faccia).
+        •  %0111  (07): Tipo 07 (Scimmia).
+        •  %1000  (08): Tipo 08 (Robot).
+        •  %1001  (09): Tipo 09 (Palla).
+	•  %1010  (10): Tipo 10 (Non utilizzato).
+	•  %1011  (11): Tipo 11 (Non utilizzato).
+	•  %1100  (12): Tipo 12 (Non utilizzato).
+	•  %1101  (13): Tipo 13 (Non utilizzato).
+	•  %1110  (14): Tipo 14 (Non utilizzato).
+	•  %1111  (15): Tipo 15 (Non utilizzato).
+
