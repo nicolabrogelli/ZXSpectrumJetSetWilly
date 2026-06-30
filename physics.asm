@@ -866,10 +866,13 @@ IsCellOnRamp:
     ld   b, a              ; B = SlopeRow
 
 .check_row_match:
-    ; D (Row) deve essere uguale a SlopeRow (in B)
+    ; D (Row) deve essere uguale a SlopeRow (in B) o SlopeRow + 1 (immediatamente sotto)
     ld   a, d              ; A = Row
     cp   b
     jr   z, .yes           ; Row == SlopeRow
+    inc  b                 ; B = SlopeRow + 1
+    cp   b
+    jr   z, .yes           ; Row == SlopeRow + 1
     
 .check_platform_case:
     ; 2. Controlla se è sulla piattaforma adiacente in cima
