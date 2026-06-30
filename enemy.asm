@@ -546,10 +546,24 @@ UpdateRoomEnemies:
     ld   (ix+8), a         ; Old Y = Current Y
     
     ; 2. Aggiorna Anim State
+    ld   a, (ix+0)         ; Flags
+    and  $0F               ; Tipo
+    cp   13                ; Tipo 13 = Canguro?
+    jr   z, .canguro_anim
+    
     ld   a, (ix+6)         ; Anim State (0..3)
     inc  a
     and  3                 ; Alterna 0..3
     ld   (ix+6), a
+    jr   .anim_done
+
+.canguro_anim:
+    ld   a, (ix+6)         ; Anim State (0..7)
+    inc  a
+    and  7                 ; Alterna 0..7
+    ld   (ix+6), a
+
+.anim_done:
     
     ; 3. Determina se orizzontale o verticale
     ld   a, (ix+0)         ; Flags
