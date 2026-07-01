@@ -26,8 +26,8 @@ Gestione dei nemici, questa è la tabelle da seguire per la loro confgiurazione 
     •  %1011  (11): Tipo 11 (Soldato)
     •  %1100  (12): Tipo 12 (Maiale)
     •  %1101  (13): Tipo 13 (Canguro)
-    •  %1110  (14): Tipo 14 (Vecchia)
-    •  %1111  (15): Tipo 15 (Prete)
+    •  %1110  (14): Tipo 14 (Vecchia) - Da implementare
+    •  %1111  (15): Tipo 15 (Prete)   - Da implementare
 
 
 
