@@ -6786,7 +6786,7 @@
   93+ 83EF 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
   94+ 83F0
   95+ 83F0              TheOffLicenceEnemy1:
-  96+ 83F0 80 03 8C 38      DEFB $80, 3, 140, 56, 230         ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+  96+ 83F0 80 03 8C 38      DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
   96+ 83F4 E6
   97+ 83F5              TheOffLicenceEnemy2:
   98+ 83F5 C0 06 3C 38      DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
@@ -6795,7 +6795,7 @@
  100+ 83FA C0 09 50 10      DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
  100+ 83FE 6A
  101+ 83FF              TheOffLicenceEnemy4:
- 102+ 83FF 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 102+ 83FF 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
  102+ 8403 00
  103+ 8404              TheOffLicenceEnemy5:
  104+ 8404 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -6957,10 +6957,10 @@
  102+ 850E
  103+ 850E              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  104+ 850E              TheBridgeEnemy1:
- 105+ 850E 80 02 08 4C      DEFB $80, 2, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+ 105+ 850E 80 02 08 4C      DEFB $80, 2, 8, 76, 200           ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
  105+ 8512 C8
  106+ 8513              TheBridgeEnemy2:
- 107+ 8513 80 02 50 4C      DEFB $80, 2, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+ 107+ 8513 80 02 50 4C      DEFB $80, 2, 80, 76, 180          ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
  107+ 8517 B4
  108+ 8518              TheBridgeEnemy3:
  109+ 8518 C0 05 78 10      DEFB $C0, 5, 120, 16, 106         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
@@ -7132,10 +7132,10 @@
  105+ 862C 80 0D 08 68      DEFB $80, 13, 8, 104, 200         ; Enemy 1 (Canguro), horizontal, Starts X=8, Y=120, Limit X=200
  105+ 8630 C8
  106+ 8631              UnderTheMegaTreeEnemy2:
- 107+ 8631 80 0C 50 1E      DEFB $80, 12, 80, 30, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+ 107+ 8631 80 0C 50 1E      DEFB $80, 12, 80, 30, 180         ; Enemy 2 (Maiale), horizontal, Starts X=80, Y=80, Limit X=180
  107+ 8635 B4
  108+ 8636              UnderTheMegaTreeEnemy3:
- 109+ 8636 C0 06 78 10      DEFB $C0, 6, 120, 16, 76         ; Enemy 3 (face), vertical, Starts X=120, Y=40, Limit Y=130
+ 109+ 8636 C0 06 78 10      DEFB $C0, 6, 120, 16, 76          ; Enemy 3 (face), vertical, Starts X=120, Y=40, Limit Y=130
  109+ 863A 4C
  110+ 863B              UnderTheMegaTreeEnemy4:
  111+ 863B 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
@@ -7310,7 +7310,7 @@
  109+ 8754 C0 07 40 10      DEFB $C0, 7, 64, 16, 86         ; Enemy 3 (Scimmia), horizontal, Starts X, Y, Limit X
  109+ 8758 56
  110+ 8759              AtTheFootTheMegaTreeEnemy4:
- 111+ 8759 80 01 1C 68      DEFB $80, 1, 28, 104, 220         ; Enemy 3 (Sega), horizontal, Starts X, Y, Limit X
+ 111+ 8759 80 01 1C 68      DEFB $80, 1, 28, 104, 220       ; Enemy 3 (Sega), horizontal, Starts X, Y, Limit X
  111+ 875D DC
  112+ 875E              AtTheFootTheMegaTreeEnemy5:
  113+ 875E 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -7643,16 +7643,16 @@
  102+ 8986
  103+ 8986              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  104+ 8986              TheSecurityGuardEnemy1:
- 105+ 8986 C0 0B 58 10      DEFB $C0, 11, 88, 16, 105         ; Enemy 1, Phase 0 (Y=16, Down)
+ 105+ 8986 C0 0B 58 10      DEFB $C0, 11, 88, 16, 105          ; Enemy 1 (Soldato), Phase 0 (Y=16, Down)
  105+ 898A 69
  106+ 898B              TheSecurityGuardEnemy2:
- 107+ 898B D0 0B 71 10      DEFB $D0, 11, 113, 16, 105         ; Enemy 2, Phase 1 (Y=38, Down)
+ 107+ 898B D0 0B 71 10      DEFB $D0, 11, 113, 16, 105         ; Enemy 2 (Soldato), Phase 1 (Y=38, Down)
  107+ 898F 69
  108+ 8990              TheSecurityGuardEnemy3:
- 109+ 8990 E0 0B 88 10      DEFB $E0, 11, 136, 16, 105         ; Enemy 3, Phase 2 (Y=60, Up)
+ 109+ 8990 E0 0B 88 10      DEFB $E0, 11, 136, 16, 105         ; Enemy 3 (Soldato), Phase 2 (Y=60, Up)
  109+ 8994 69
  110+ 8995              TheSecurityGuardEnemy4:
- 111+ 8995 F0 0B B8 10      DEFB $F0, 11, 184, 16, 105         ; Enemy 4, Phase 3 (Y=105, Up)
+ 111+ 8995 F0 0B B8 10      DEFB $F0, 11, 184, 16, 105         ; Enemy 4 (Soldato), Phase 3 (Y=105, Up)
  111+ 8999 69
  112+ 899A              TheSecurityGuardEnemy5:
  113+ 899A 00 00 00 00      DEFB 0, 0, 0, 0, 0

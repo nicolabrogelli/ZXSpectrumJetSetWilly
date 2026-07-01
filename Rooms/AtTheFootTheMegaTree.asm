@@ -108,7 +108,7 @@ AtTheFootTheMegaTreeEnemy2:
 AtTheFootTheMegaTreeEnemy3:
     DEFB $C0, 7, 64, 16, 86         ; Enemy 3 (Scimmia), horizontal, Starts X, Y, Limit X
 AtTheFootTheMegaTreeEnemy4:
-    DEFB $80, 1, 28, 104, 220         ; Enemy 3 (Sega), horizontal, Starts X, Y, Limit X
+    DEFB $80, 1, 28, 104, 220       ; Enemy 3 (Sega), horizontal, Starts X, Y, Limit X
 AtTheFootTheMegaTreeEnemy5:
     DEFB 0, 0, 0, 0, 0
 AtTheFootTheMegaTreeEnemy6:
