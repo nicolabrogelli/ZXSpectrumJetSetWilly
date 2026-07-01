@@ -16,11 +16,11 @@
 ; TheBridgeItem		    Size   8 Byte, Start Byte 227
 ; TheBridgeDirection    Size   4 Byte, Start Byte 235
 ; TheBridgeUnused       Size   1 Byte, Start Byte 239
-; TheBridgeEnemy1		Size   4 Byte, Start Byte 240
-; TheBridgeEnemy2		Size   4 Byte, Start Byte 244
-; TheBridgeEnemy3		Size   4 Byte, Start Byte 248
-; TheBridgeEnemy4		Size   4 Byte, Start Byte 252
-; TheBridgePosWilly     Size   2 Byte, Start Byte 256
+; TheBridgeEnemy1		Size   5 Byte, Start Byte 240
+; TheBridgeEnemy2		Size   5 Byte, Start Byte 245
+; TheBridgeEnemy3		Size   5 Byte, Start Byte 250
+; TheBridgeEnemy4		Size   5 Byte, Start Byte 255
+; TheBridgePosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -102,21 +102,21 @@ TheBridgeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBridgeEnemy1:
-    DEFB $82, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 2, 8, 76, 200           ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
 TheBridgeEnemy2:
-    DEFB $82, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 2, 80, 76, 180          ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
 TheBridgeEnemy3:
-    DEFB $C5, 120, 16, 106        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C0, 5, 120, 16, 106         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 TheBridgeEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 TheBridgeEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheBridgeEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheBridgeEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheBridgeEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 TheBridgePosWilly:
     db 136, 76                   ; Posizione di Willy

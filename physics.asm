@@ -502,14 +502,14 @@ CheckCollision:
     
     ; 1. Controllo orizzontale: PlayerX - EnemyX + 7 in [0, 22]
     ld   a, (PlayerPos)    ; A = PlayerX
-    sub  (ix+1)            ; A = PlayerX - EnemyX
+    sub  (ix+2)            ; A = PlayerX - EnemyX (Offset 2: Current X)
     add  a, 7              ; A = PlayerX - EnemyX + 7
     cp   23                ; Se >= 23, nessuna collisione con questo
     jr   nc, .next
     
     ; 2. Controllo verticale: PlayerY - EnemyY + 15 in [0, 30]
     ld   a, (PlayerPos+1)  ; A = PlayerY
-    sub  (ix+2)            ; A = PlayerY - EnemyY
+    sub  (ix+3)            ; A = PlayerY - EnemyY (Offset 3: Current Y)
     add  a, 15             ; A = PlayerY - EnemyY + 15
     cp   31                ; Se >= 31, nessuna collisione con questo
     jr   nc, .next
@@ -523,8 +523,8 @@ CheckCollision:
     ret
     
 .next:
-    ld   de, 10
-    add  ix, de            ; Prossimo slot
+    ld   de, 11
+    add  ix, de            ; Prossimo slot (11 byte)
     dec  b
     jr   nz, .loop
     

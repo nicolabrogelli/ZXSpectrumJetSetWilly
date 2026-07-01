@@ -16,11 +16,11 @@
 ; InsideTheMegaTrunkItem		 Size   8 Byte, Start Byte 227
 ; InsideTheMegaTrunkDirection    Size   4 Byte, Start Byte 235
 ; InsideTheMegaTrunkUnused       Size   1 Byte, Start Byte 239
-; InsideTheMegaTrunkEnemy1		 Size   4 Byte, Start Byte 240
-; InsideTheMegaTrunkEnemy2		 Size   4 Byte, Start Byte 244
-; InsideTheMegaTrunkEnemy3		 Size   4 Byte, Start Byte 248
-; InsideTheMegaTrunkEnemy4		 Size   4 Byte, Start Byte 252
-; InsideTheMegaTrunkPosWilly     Size   2 Byte, Start Byte 256
+; InsideTheMegaTrunkEnemy1		 Size   5 Byte, Start Byte 240
+; InsideTheMegaTrunkEnemy2		 Size   5 Byte, Start Byte 245
+; InsideTheMegaTrunkEnemy3		 Size   5 Byte, Start Byte 250
+; InsideTheMegaTrunkEnemy4		 Size   5 Byte, Start Byte 255
+; InsideTheMegaTrunkPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -102,21 +102,21 @@ InsideTheMegaTrunkUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 InsideTheMegaTrunkEnemy1:
-    DEFB $C7, 16, 110, 65                    ; Enemy 1 (Scimmia), vertical, Starts X=8, Y=120, Limit X=200
+    DEFB $C0, 7, 16, 110, 65         ; Enemy 1 (Scimmia), vertical, Starts X=8, Y=120, Limit X=200
 InsideTheMegaTrunkEnemy2:
-    DEFB $C7, 40, 110, 65                   ; Enemy 2 (Scimmia), vertical, Starts X=80, Y=80, Limit X=180
+    DEFB $C0, 7, 40, 110, 65         ; Enemy 2 (Scimmia), vertical, Starts X=80, Y=80, Limit X=180
 InsideTheMegaTrunkEnemy3:
-    DEFB $C7, 64, 110, 65                   ; Enemy 3 (Scimmia), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C0, 7, 64, 110, 65         ; Enemy 3 (Scimmia), vertical, Starts X=120, Y=40, Limit Y=130
 InsideTheMegaTrunkEnemy4:
-    DEFB $C6, 94, 10, 100                   ; Enemy 4 (Faccia)
+    DEFB $C0, 6, 94, 10, 100         ; Enemy 4 (Faccia)
 InsideTheMegaTrunkEnemy5:
-    DEFB $82, 1, 40, 100                    ; Enemy 5 (Uccello) 
+    DEFB $80, 2, 1, 40, 100         ; Enemy 5 (Uccello) 
 InsideTheMegaTrunkEnemy6:           
-    DEFB $82, 230, 87, 150                   ; Enemy 6 (Uccello)
+    DEFB $80, 2, 230, 87, 150         ; Enemy 6 (Uccello)
 InsideTheMegaTrunkEnemy7:
-    DEFB 0,0,0,0                            ; Enemy 7 (Fiore)
+    DEFB 0, 0, 0, 0, 0         ; Enemy 7 (Fiore)
 InsideTheMegaTrunkEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 InsideTheMegaTrunkPosWilly:
     db 200, 85                             ; Posizione di Willy

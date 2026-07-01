@@ -16,11 +16,11 @@
 ; CuckoosNestItem		    Size   8 Byte, Start Byte 227
 ; CuckoosNestDirection    Size   4 Byte, Start Byte 235
 ; CuckoosNestUnused       Size   1 Byte, Start Byte 239
-; CuckoosNestEnemy1		Size   4 Byte, Start Byte 240
-; CuckoosNestEnemy2		Size   4 Byte, Start Byte 244
-; CuckoosNestEnemy3		Size   4 Byte, Start Byte 248
-; CuckoosNestEnemy4		Size   4 Byte, Start Byte 252
-; CuckoosNestPosWilly     Size   2 Byte, Start Byte 256
+; CuckoosNestEnemy1		Size   5 Byte, Start Byte 240
+; CuckoosNestEnemy2		Size   5 Byte, Start Byte 245
+; CuckoosNestEnemy3		Size   5 Byte, Start Byte 250
+; CuckoosNestEnemy4		Size   5 Byte, Start Byte 255
+; CuckoosNestPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -102,21 +102,21 @@ CuckoosNestUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 CuckoosNestEnemy1:
-    DEFB $82, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 2, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
 CuckoosNestEnemy2:
-    DEFB $82, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 2, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
 CuckoosNestEnemy3:
-    DEFB $C5, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C0, 5, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 CuckoosNestEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 CuckoosNestEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 CuckoosNestEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 CuckoosNestEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 CuckoosNestEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 CuckoosNestPosWilly:
     db 30, 80                   ; Posizione di Willy

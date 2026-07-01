@@ -16,11 +16,11 @@
 ; TheSecurityGuardItem		   Size   8 Byte, Start Byte 227
 ; TheSecurityGuardDirection    Size   4 Byte, Start Byte 235
 ; TheSecurityGuardUnused       Size   1 Byte, Start Byte 239
-; TheSecurityGuardEnemy1		Size   4 Byte, Start Byte 240
-; TheSecurityGuardEnemy2		Size   4 Byte, Start Byte 244
-; TheSecurityGuardEnemy3		Size   4 Byte, Start Byte 248
-; TheSecurityGuardEnemy4		Size   4 Byte, Start Byte 252
-; TheSecurityGuardPosWilly     Size   2 Byte, Start Byte 256
+; TheSecurityGuardEnemy1		Size   5 Byte, Start Byte 240
+; TheSecurityGuardEnemy2		Size   5 Byte, Start Byte 245
+; TheSecurityGuardEnemy3		Size   5 Byte, Start Byte 250
+; TheSecurityGuardEnemy4		Size   5 Byte, Start Byte 255
+; TheSecurityGuardPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -102,21 +102,21 @@ TheSecurityGuardUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheSecurityGuardEnemy1:
-    DEFB $CB,  88, 16, 105           ; Enemy 1, Phase 0 (Y=16, Down)
+    DEFB $C0, 11, 88, 16, 105          ; Enemy 1 (Soldato), Phase 0 (Y=16, Down)
 TheSecurityGuardEnemy2:
-    DEFB $DB, 113, 16, 105           ; Enemy 2, Phase 1 (Y=38, Down)
+    DEFB $D0, 11, 113, 16, 105         ; Enemy 2 (Soldato), Phase 1 (Y=38, Down)
 TheSecurityGuardEnemy3:
-    DEFB $EB, 136, 16, 105           ; Enemy 3, Phase 2 (Y=60, Up)
+    DEFB $E0, 11, 136, 16, 105         ; Enemy 3 (Soldato), Phase 2 (Y=60, Up)
 TheSecurityGuardEnemy4:
-    DEFB $FB, 184, 16, 105           ; Enemy 4, Phase 3 (Y=105, Up)
+    DEFB $F0, 11, 184, 16, 105         ; Enemy 4 (Soldato), Phase 3 (Y=105, Up)
 TheSecurityGuardEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheSecurityGuardEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheSecurityGuardEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheSecurityGuardEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 TheSecurityGuardPosWilly:
     db 200, 101                   ; Posizione di Willy

@@ -16,11 +16,11 @@
 ; TheFrontDoorItem		    Size   8 Byte, Start Byte 227
 ; TheFrontDoorDirection    Size   4 Byte, Start Byte 235
 ; TheFrontDoorUnused       Size   1 Byte, Start Byte 239
-; TheFrontDoorEnemy1		Size   4 Byte, Start Byte 240
-; TheFrontDoorEnemy2		Size   4 Byte, Start Byte 244
-; TheFrontDoorEnemy3		Size   4 Byte, Start Byte 248
-; TheFrontDoorEnemy4		Size   4 Byte, Start Byte 252
-; TheFrontDoorPosWilly     Size   2 Byte, Start Byte 256
+; TheFrontDoorEnemy1		Size   5 Byte, Start Byte 240
+; TheFrontDoorEnemy2		Size   5 Byte, Start Byte 245
+; TheFrontDoorEnemy3		Size   5 Byte, Start Byte 250
+; TheFrontDoorEnemy4		Size   5 Byte, Start Byte 255
+; TheFrontDoorPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -102,21 +102,21 @@ TheFrontDoorUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheFrontDoorEnemy1:
-    DEFB $80, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
 TheFrontDoorEnemy2:
-    DEFB $80, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
 TheFrontDoorEnemy3:
-    DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 TheFrontDoorEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 TheFrontDoorEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheFrontDoorEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheFrontDoorEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheFrontDoorEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 TheFrontDoorPosWilly:
     db 50, 20                   ; Posizione di Willy

@@ -16,11 +16,11 @@
 ; TreeTopItem		    Size   8 Byte, Start Byte 227
 ; TreeTopDirection    Size   4 Byte, Start Byte 235
 ; TreeTopUnused       Size   1 Byte, Start Byte 239
-; TreeTopEnemy1		Size   4 Byte, Start Byte 240
-; TreeTopEnemy2		Size   4 Byte, Start Byte 244
-; TreeTopEnemy3		Size   4 Byte, Start Byte 248
-; TreeTopEnemy4		Size   4 Byte, Start Byte 252
-; TreeTopPosWilly     Size   2 Byte, Start Byte 256
+; TreeTopEnemy1		Size   5 Byte, Start Byte 240
+; TreeTopEnemy2		Size   5 Byte, Start Byte 245
+; TreeTopEnemy3		Size   5 Byte, Start Byte 250
+; TreeTopEnemy4		Size   5 Byte, Start Byte 255
+; TreeTopPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -102,21 +102,21 @@ TreeTopUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TreeTopEnemy1:
-    DEFB $80, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
 TreeTopEnemy2:
-    DEFB $80, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
 TreeTopEnemy3:
-    DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 TreeTopEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 TreeTopEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TreeTopEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TreeTopEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TreeTopEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 TreeTopPosWilly:
     db 50, 120                 ; Posizione di Willy    

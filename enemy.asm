@@ -4,20 +4,21 @@
 
 ; -------------------------------------------------------------------
 ; Struttura dati per i nemici attivi della stanza corrente (RAM)
-; 4 slot, 10 byte ciascuno:
-; Offset 0: Flags (Active, Vertical, Sprite)
-; Offset 1: Current X
-; Offset 2: Current Y
-; Offset 3: Min Limit
-; Offset 4: Max Limit
-; Offset 5: Direction
-; Offset 6: Anim State
-; Offset 7: Old X
-; Offset 8: Old Y
-; Offset 9: Reserved
+; 8 slot, 11 byte ciascuno:
+; Offset 0: Flags (Active, Vertical, Phase)
+; Offset 1: Sprite Type (0..31)
+; Offset 2: Current X
+; Offset 3: Current Y
+; Offset 4: Min Limit
+; Offset 5: Max Limit
+; Offset 6: Direction
+; Offset 7: Anim State
+; Offset 8: Old X
+; Offset 9: Old Y
+; Offset 10: Color
 ; -------------------------------------------------------------------
 ActiveEnemies:
-    .80 db 0
+    .88 db 0
 
 ; -------------------------------------------------------------------
 ; Carica i nemici della stanza corrente in ActiveEnemies.
@@ -51,10 +52,10 @@ LoadRoomEnemies:
     push hl
     push de
     ld   hl, (room_ptr)
-    ld   de, 274
+    ld   de, OFFSET_COLORS_5_8
     add  hl, de
     push hl
-    pop  ix                ; Reset color pointer to ROM offset 274 (colors for enemies 5-8)
+    pop  ix                ; Reset color pointer to ROM offset for enemies 5-8
     pop  de
     pop  hl
 .no_color_reset:
@@ -64,98 +65,111 @@ LoadRoomEnemies:
     inc  ix
     push af                ; Salva colore sullo stack
     
-    ; 1. Copia Flags, StartX, StartY
+    ; 1. Copia Flags (Byte 0), Type (Byte 1), StartX (Byte 2), StartY (Byte 3)
     ld   a, (hl)           ; A = Flags
     ld   (de), a           ; Offset 0
     inc  hl
     inc  de
     
-    ld   a, (hl)           ; A = StartX
+    ld   a, (hl)           ; A = Type
     ld   (de), a           ; Offset 1
     inc  hl
     inc  de
     
-    ld   a, (hl)           ; A = StartY
-    ld   (de), a           ; Offset 2
+    ld   a, (hl)           ; A = StartX
+    ld   (de), a           ; Offset 2: Current X
     inc  hl
     inc  de
     
-    ; 2. Determina se orizzontale o verticale per calcolare Min e Max Limit
+    ld   a, (hl)           ; A = StartY
+    ld   (de), a           ; Offset 3: Current Y
+    inc  hl
+    inc  de
+    
+    ; 2. Determina se orizzontale o verticale per calcolare Min e Max Limit (ROM Byte 4: Limit)
     push hl
+    push de
+    pop  hl
     dec  hl
     dec  hl
-    dec  hl                ; HL = Flags address
+    dec  hl
+    dec  hl                ; HL points to RAM Offset 0 (Flags)
     ld   a, (hl)           ; A = Flags
+    pop  hl                ; Restore HL (points to ROM Byte 4: Limit)
     and  $40               ; Vertical? (Bit 6)
     jr   nz, .is_vert
     
 .is_horiz:
-    inc  hl                ; HL = StartX address
+    push hl
+    push de
+    pop  hl
+    dec  hl
+    dec  hl                ; HL points to RAM Offset 2 (Current X / StartX)
     ld   a, (hl)           ; A = StartX
-    inc  hl
-    inc  hl                ; HL = Limit address
-    ld   c, (hl)           ; C = Limit
+    pop  hl                ; HL points to ROM Byte 4 (Limit)
+    ld   c, (hl)           ; C = Limit (from ROM)
     
     ; Confronta StartX (A) con Limit (C)
     cp   c
     jr   c, .h_start_smaller
     ; StartX >= Limit
-    push af
-    ld   a, c
-    ld   (de), a           ; Offset 3: Min Limit = Limit
+    push af                ; Save StartX
+    ld   a, c              ; A = Limit
+    ld   (de), a           ; Offset 4: Min Limit = Limit
     inc  de
-    pop  af
-    ld   (de), a           ; Offset 4: Max Limit = StartX
+    pop  af                ; Restore StartX
+    ld   (de), a           ; Offset 5: Max Limit = StartX
     inc  de
     jr   .done_min_max
     
 .h_start_smaller:
-    ld   (de), a           ; Offset 3: Min Limit = StartX
+    ld   (de), a           ; Offset 4: Min Limit = StartX
     inc  de
     ld   a, c
-    ld   (de), a           ; Offset 4: Max Limit = Limit
+    ld   (de), a           ; Offset 5: Max Limit = Limit
     inc  de
     jr   .done_min_max
     
 .is_vert:
-    inc  hl
-    inc  hl                ; HL = StartY address
+    push hl
+    push de
+    pop  hl
+    dec  hl                ; HL points to RAM Offset 3 (Current Y / StartY)
     ld   a, (hl)           ; A = StartY
-    inc  hl                ; HL = Limit address
+    pop  hl                ; HL points to ROM Byte 4 (Limit)
     ld   c, (hl)           ; C = Limit
     
     ; Confronta StartY (A) con Limit (C)
     cp   c
     jr   c, .v_start_smaller
     ; StartY >= Limit
-    push af
-    ld   a, c
-    ld   (de), a           ; Offset 3: Min Limit = Limit
+    push af                ; Save StartY
+    ld   a, c              ; A = Limit
+    ld   (de), a           ; Offset 4: Min Limit = Limit
     inc  de
-    pop  af
-    ld   (de), a           ; Offset 4: Max Limit = StartY
+    pop  af                ; Restore StartY
+    ld   (de), a           ; Offset 5: Max Limit = StartY
     inc  de
     jr   .done_min_max
     
 .v_start_smaller:
-    ld   (de), a           ; Offset 3: Min Limit = StartY
+    ld   (de), a           ; Offset 4: Min Limit = StartY
     inc  de
     ld   a, c
-    ld   (de), a           ; Offset 4: Max Limit = Limit
+    ld   (de), a           ; Offset 5: Max Limit = Limit
     inc  de
     
 .done_min_max:
-    pop  hl                ; HL = Limit address in Room data
-    inc  hl                ; HL = inizio del prossimo slot
+    inc  hl                ; HL = inizio del prossimo slot in ROM
     
     push hl                ; Salva HL
     push iy                ; Salva IY
     
     push de
-    pop  iy                ; IY = puntatore a Offset 5 (Direction) in RAM
+    pop  iy                ; IY = puntatore a Offset 6 (Direction) in RAM
     
     ; Leggi Flags (Offset 0) per determinare la Fase (Bit 5 e 4)
-    ld   a, (iy-5)         ; A = Flags
+    ld   a, (iy-6)         ; A = Flags (Offset 0)
     
     ; Estrai Bit 5-4: (Flags >> 4) & 3
     rrca
@@ -173,15 +187,15 @@ LoadRoomEnemies:
     
 .phase_3:
     ; Phase 3: Pos = Max Limit, Dir = 1
-    ld   a, (iy-5)         ; A = Flags
+    ld   a, (iy-6)         ; A = Flags
     and  $40
     jr   nz, .p3_vert
 .p3_horiz:
-    ld   a, (iy-1)
+    ld   a, (iy-1)         ; Max Limit
     ld   (iy-4), a         ; Current X = Max Limit
     jr   .set_dir_1
 .p3_vert:
-    ld   a, (iy-1)
+    ld   a, (iy-1)         ; Max Limit
     ld   (iy-3), a         ; Current Y = Max Limit
     jr   .set_dir_1
 
@@ -198,7 +212,7 @@ LoadRoomEnemies:
     add  a, (iy-2)         ; A = Min Limit + Delta / 4
     ld   c, a              ; C = target pos
     
-    ld   a, (iy-5)         ; A = Flags
+    ld   a, (iy-6)         ; A = Flags
     and  $40
     jr   nz, .p1_vert
 .p1_horiz:
@@ -216,7 +230,7 @@ LoadRoomEnemies:
     add  a, (iy-2)         ; A = Min Limit + Delta / 2
     ld   c, a              ; C = target pos
     
-    ld   a, (iy-5)         ; A = Flags
+    ld   a, (iy-6)         ; A = Flags
     and  $40
     jr   nz, .p2_vert
 .p2_horiz:
@@ -232,7 +246,7 @@ LoadRoomEnemies:
 .set_dir_2:
     ld   a, 2
 .store_dir:
-    ld   (de), a           ; Offset 5: Direction
+    ld   (de), a           ; Offset 6: Direction
     inc  de
     
     pop  iy                ; Ripristina IY
@@ -240,29 +254,43 @@ LoadRoomEnemies:
     
     ; Imposta Anim State = 0
     xor  a
-    ld   (de), a           ; Offset 6: Anim State
+    ld   (de), a           ; Offset 7: Anim State
     inc  de
     
-    ; Imposta Old X = Start X
+    ; Imposta Old X = Current X
     push hl
-    dec  hl
-    dec  hl
-    dec  hl                ; HL = Start X
-    ld   a, (hl)
-    ld   (de), a           ; Offset 7: Old X
-    inc  de
-    
-    ; Imposta Old Y = Start Y
-    inc  hl                ; HL = Start Y
-    ld   a, (hl)
-    ld   (de), a           ; Offset 8: Old Y
-    inc  de
-    
+    push de
     pop  hl
+    dec  hl
+    dec  hl
+    dec  hl
+    dec  hl
+    dec  hl
+    dec  hl                ; HL points to RAM Offset 2 (Current X)
+    ld   a, (hl)
+    pop  hl
+    ld   (de), a           ; Offset 8: Old X
+    inc  de
     
-    ; Offset 9: Color
+    ; Imposta Old Y = Current Y
+    push hl
+    push de
+    pop  hl
+    dec  hl
+    dec  hl
+    dec  hl
+    dec  hl
+    dec  hl
+    dec  hl                ; HL points to RAM Offset 3 (Current Y)
+    ld   a, (hl)
+    pop  hl
+    ld   (de), a           ; Offset 9: Old Y
+    inc  de
+
+    
+    ; Offset 10: Color
     pop  af                ; Ripristina colore dallo stack
-    ld   (de), a           ; Offset 9: Color
+    ld   (de), a           ; Offset 10: Color
     inc  de
     
     dec  b
@@ -291,17 +319,17 @@ EraseRoomEnemies:
     jr   z, .next
     
     push bc                ; Salva contatore ciclo
-    ld   c, (ix+7)         ; C = Old X
-    ld   b, (ix+8)         ; B = Old Y
+    ld   c, (ix+8)         ; C = Old X (Offset 8)
+    ld   b, (ix+9)         ; B = Old Y (Offset 9)
     call ErasePixelSprite16x16
-    ld   c, (ix+7)         ; C = Old X
-    ld   b, (ix+8)         ; B = Old Y
+    ld   c, (ix+8)         ; C = Old X
+    ld   b, (ix+9)         ; B = Old Y
     call RestoreEnemyColorAttributes
     pop  bc
     
 .next:
-    ld   de, 10
-    add  ix, de            ; Prossimo slot
+    ld   de, 11
+    add  ix, de            ; Prossimo slot (11 byte)
     dec  b
     jr   nz, .loop
     
@@ -329,9 +357,9 @@ DrawRoomEnemies:
     
     push bc                ; Salva contatore ciclo
     
-    ; Determina quale sprite usare basato sul tipo (Bit 3-0)
-    ld   a, (ix+0)         ; Flags
-    and  $0F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro)
+    ; Determina quale sprite usare basato sul tipo (Offset 1, Bit 5-0)
+    ld   a, (ix+1)         ; Tipo
+    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro)
     
     cp   0
     jp   z, .got_lametta
@@ -367,7 +395,7 @@ DrawRoomEnemies:
     jp   .got_sprite
 
 .got_lametta:
-    ld   a, (ix+5)         ; Direction (1=Left, 2=Right)
+    ld   a, (ix+6)         ; Direction (1=Left, 2=Right) (Offset 6)
     cp   1
     ld   hl, LamettaSpriteLeft
     jp   z, .got_sprite
@@ -375,7 +403,7 @@ DrawRoomEnemies:
     jp   .got_sprite
 
 .got_sega:
-    ld   a, (ix+5)         ; Direction
+    ld   a, (ix+6)         ; Direction
     cp   1
     ld   hl, SegaSprite
     jp   z, .got_sprite
@@ -383,7 +411,7 @@ DrawRoomEnemies:
     jp   .got_sprite
 
 .got_uccello:
-    ld   a, (ix+5)         ; Direction
+    ld   a, (ix+6)         ; Direction
     cp   1
     ld   hl, UccelloSpriteLeft
     jp   z, .got_sprite
@@ -395,7 +423,7 @@ DrawRoomEnemies:
     jp   .got_sprite
 
 .got_uovo:
-    ld   a, (ix+5)         ; Direction
+    ld   a, (ix+6)         ; Direction
     cp   1
     ld   hl, EggSpriteLeft
     jp   z, .got_sprite
@@ -423,7 +451,7 @@ DrawRoomEnemies:
     jp   .got_sprite
 
 .got_doubleball:
-    ld   a, (ix+5)         ; Direction
+    ld   a, (ix+6)         ; Direction
     cp   1
     ld   hl, DoubleBallSpriteLeft
     jp   z, .got_sprite
@@ -435,7 +463,7 @@ DrawRoomEnemies:
     jp   .got_sprite
 
 .got_maiale:
-    ld   a, (ix+5)         ; Direction
+    ld   a, (ix+6)         ; Direction
     cp   1
     ld   hl, MaialeSpriteLeft
     jp   z, .got_sprite
@@ -443,7 +471,7 @@ DrawRoomEnemies:
     jp   .got_sprite
 
 .got_canguro:
-    ld   a, (ix+5)         ; Direction
+    ld   a, (ix+6)         ; Direction
     cp   1
     ld   hl, CanguroSpriteLeft
     jp   z, .got_sprite
@@ -453,7 +481,7 @@ DrawRoomEnemies:
 
 .got_sprite:
     ; Calcola il frame dell'animazione: Anim State * 32
-    ld   a, (ix+6)         ; Anim State (0..3)
+    ld   a, (ix+7)         ; Anim State (0..3) (Offset 7)
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
@@ -464,8 +492,8 @@ DrawRoomEnemies:
     add  hl, de            ; HL = indirizzo del frame corretto
     
     ; Disegna alla coordinata corrente
-    ld   c, (ix+1)         ; C = Current X
-    ld   b, (ix+2)         ; B = Current Y
+    ld   c, (ix+2)         ; C = Current X (Offset 2)
+    ld   b, (ix+3)         ; B = Current Y (Offset 3)
     
     push ix                ; Salva slot pointer
     push hl
@@ -474,16 +502,16 @@ DrawRoomEnemies:
     pop  ix                ; Ripristina slot pointer
     
     ; Applica gli attributi colore per la posizione corrente
-    ld   c, (ix+1)         ; C = Current X
-    ld   b, (ix+2)         ; B = Current Y
-    ld   a, (ix+9)         ; A = Color
+    ld   c, (ix+2)         ; C = Current X
+    ld   b, (ix+3)         ; B = Current Y
+    ld   a, (ix+10)        ; A = Color (Offset 10)
     call SetEnemyColorAttributes
     
     pop  bc                ; Ripristina contatore ciclo
     
 .next:
-    ld   de, 10
-    add  ix, de            ; Prossimo slot
+    ld   de, 11
+    add  ix, de            ; Prossimo slot (11 byte)
     dec  b
     jp   nz, .loop
     
@@ -540,37 +568,37 @@ UpdateRoomEnemies:
     jp   z, .next
     
     ; 1. Salva la posizione corrente in Old X/Y per la cancellazione nel prossimo frame
-    ld   a, (ix+1)
-    ld   (ix+7), a         ; Old X = Current X
-    ld   a, (ix+2)
-    ld   (ix+8), a         ; Old Y = Current Y
+    ld   a, (ix+2)         ; Current X (Offset 2)
+    ld   (ix+8), a         ; Old X = Current X (Offset 8)
+    ld   a, (ix+3)         ; Current Y (Offset 3)
+    ld   (ix+9), a         ; Old Y = Current Y (Offset 9)
     
     ; 2. Aggiorna Anim State
-    ld   a, (ix+0)         ; Flags
-    and  $0F               ; Tipo
+    ld   a, (ix+1)         ; Sprite Type (Offset 1)
+    and  $3F               ; Tipo
     cp   13                ; Tipo 13 = Canguro?
     jr   z, .canguro_anim
     cp   11                ; Tipo 11 = Soldato?
     jr   z, .soldato_anim
     
-    ld   a, (ix+6)         ; Anim State (0..3)
+    ld   a, (ix+7)         ; Anim State (Offset 7)
     inc  a
     and  3                 ; Alterna 0..3
-    ld   (ix+6), a
+    ld   (ix+7), a
     jr   .anim_done
 
 .soldato_anim:
-    ld   a, (ix+6)         ; Anim State (0..1)
+    ld   a, (ix+7)         ; Anim State
     inc  a
     and  1                 ; Alterna 0..1
-    ld   (ix+6), a
+    ld   (ix+7), a
     jr   .anim_done
 
 .canguro_anim:
-    ld   a, (ix+6)         ; Anim State (0..7)
+    ld   a, (ix+7)         ; Anim State
     inc  a
     and  7                 ; Alterna 0..7
-    ld   (ix+6), a
+    ld   (ix+7), a
 
 .anim_done:
     
@@ -580,83 +608,89 @@ UpdateRoomEnemies:
     jp   nz, .vertical
     
 .horizontal:
-    ld   a, (ix+5)         ; Direction (1=Left, 2=Right)
+    ld   a, (ix+6)         ; Direction (1=Left, 2=Right) (Offset 6)
     cp   1
     jr   nz, .horiz_right
     
 .horiz_left:
-    ld   a, (ix+1)         ; Current X
+    ld   a, (ix+2)         ; Current X
     sub  2                 ; Muovi a sinistra di 2 pixel
-    cp   (ix+3)            ; Min Limit
+    cp   (ix+4)            ; Min Limit (Offset 4)
     jr   z, .h_rev_right
     jr   c, .h_rev_right
-    ld   (ix+1), a
+    ld   (ix+2), a
     jp   .next
     
 .h_rev_right:
-    ld   a, (ix+3)         ; Min Limit
-    ld   (ix+1), a
+    ld   a, (ix+4)         ; Min Limit
+    ld   (ix+2), a
     ld   a, 2
-    ld   (ix+5), a         ; Cambia direzione a Destra
+    ld   (ix+6), a         ; Cambia direzione a Destra (Offset 6)
     jp   .next
     
 .horiz_right:
-    ld   a, (ix+1)         ; Current X
+    ld   a, (ix+2)         ; Current X
     add  a, 2              ; Muovi a destra di 2 pixel
-    cp   (ix+4)            ; Max Limit
+    cp   (ix+5)            ; Max Limit (Offset 5)
     jr   z, .h_rev_left
     jr   nc, .h_rev_left
-    ld   (ix+1), a
+    ld   (ix+2), a
     jp   .next
     
 .h_rev_left:
-    ld   a, (ix+4)         ; Max Limit
-    ld   (ix+1), a
+    ld   a, (ix+5)         ; Max Limit
+    ld   (ix+2), a
     ld   a, 1
-    ld   (ix+5), a         ; Cambia direzione a Sinistra
+    ld   (ix+6), a         ; Cambia direzione a Sinistra
     jp   .next
 
 .vertical:
-    ld   a, (ix+5)         ; Direction (1=Up, 2=Down)
+    ld   a, (ix+6)         ; Direction (1=Up, 2=Down)
     cp   1
     jr   nz, .vert_down
     
 .vert_up:
-    ld   a, (ix+2)         ; Current Y
+    ld   a, (ix+3)         ; Current Y
     sub  2                 ; Muovi in alto di 2 pixel
-    cp   (ix+3)            ; Min Limit (Top)
+    cp   (ix+4)            ; Min Limit (Top)
     jr   z, .v_rev_down
     jr   c, .v_rev_down
-    ld   (ix+2), a
+    ld   (ix+3), a
     jp   .next
     
 .v_rev_down:
-    ld   a, (ix+3)         ; Min Limit
-    ld   (ix+2), a
+    ld   a, (ix+4)         ; Min Limit
+    ld   (ix+3), a
     ld   a, 2
-    ld   (ix+5), a         ; Cambia direzione in Basso
+    ld   (ix+6), a         ; Cambia direzione in Basso
     jp   .next
     
 .vert_down:
-    ld   a, (ix+2)         ; Current Y
+    ld   a, (ix+3)         ; Current Y
     add  a, 2              ; Muovi in basso di 2 pixel
-    cp   (ix+4)            ; Max Limit (Bottom)
+    cp   (ix+5)            ; Max Limit (Bottom)
     jr   z, .v_rev_up
     jr   nc, .v_rev_up
-    ld   (ix+2), a
+    ld   (ix+3), a
     jp   .next
     
 .v_rev_up:
-    ld   a, (ix+4)         ; Max Limit
-    ld   (ix+2), a
+    ld   a, (ix+5)         ; Max Limit
+    ld   (ix+3), a
     ld   a, 1
-    ld   (ix+5), a         ; Cambia direzione in Alto
+    ld   (ix+6), a         ; Cambia direzione in Alto
     
 .next:
-    ld   de, 10
-    add  ix, de            ; Prossimo slot (10 byte)
+    ld   de, 11
+    add  ix, de            ; Prossimo slot (11 byte)
     dec  b
     jp   nz, .loop
+    
+    pop  ix
+    pop  bc
+    pop  de
+    pop  hl
+    ret
     
     pop  ix
     pop  bc

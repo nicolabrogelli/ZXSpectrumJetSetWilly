@@ -16,11 +16,11 @@
 ; TheDriveItem		   Size   8 Byte, Start Byte 227
 ; TheDriveDirection    Size   4 Byte, Start Byte 235
 ; TheDriveUnused       Size   1 Byte, Start Byte 239
-; TheDriveEnemy1		Size   4 Byte, Start Byte 240
-; TheDriveEnemy2		Size   4 Byte, Start Byte 244
-; TheDriveEnemy3		Size   4 Byte, Start Byte 248
-; TheDriveEnemy4		Size   4 Byte, Start Byte 252
-; TheDrivePosWilly     Size   2 Byte, Start Byte 256
+; TheDriveEnemy1		Size   5 Byte, Start Byte 240
+; TheDriveEnemy2		Size   5 Byte, Start Byte 245
+; TheDriveEnemy3		Size   5 Byte, Start Byte 250
+; TheDriveEnemy4		Size   5 Byte, Start Byte 255
+; TheDrivePosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -102,21 +102,21 @@ TheDriveUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheDriveEnemy1:
-    DEFB $84, 80, 104, 220           ; Enemy 1 (Uovo), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 4, 80, 104, 220         ; Enemy 1 (Uovo), horizontal, Starts X=80, Y=80, Limit X=180
 TheDriveEnemy2:
-    DEFB $B2, 80, 80, 180           ; Enemy 2 (Uccello), horizontal, Starts X=8, Y=104, Limit X=120
+    DEFB $B0, 2, 80, 80, 180         ; Enemy 2 (Uccello), horizontal, Starts X=8, Y=104, Limit X=120
 TheDriveEnemy3:
-    DEFB $82, 40, 48, 160           ; Enemy 3 (Uccello), horizontal, Starts X=40, Y=48, Limit X=160
+    DEFB $80, 2, 40, 48, 160         ; Enemy 3 (Uccello), horizontal, Starts X=40, Y=48, Limit X=160
 TheDriveEnemy4:
-    DEFB $82, 120, 16, 200           ; Enemy 4 (Uccello), horizontal, Starts X=120, Y=16, Limit X=76
+    DEFB $80, 2, 120, 16, 200         ; Enemy 4 (Uccello), horizontal, Starts X=120, Y=16, Limit X=76
 TheDriveEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheDriveEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheDriveEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheDriveEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 TheDrivePosWilly:
     db 200, 101                   ; Posizione di Willy
