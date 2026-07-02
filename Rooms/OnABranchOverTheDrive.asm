@@ -49,7 +49,7 @@ OnABranchOverTheDriveTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 OnABranchOverTheDriveBackground:
-    DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+    DEFB $0F,0,0,0,0,0,0,0,0	            ;Background
 
 OnABranchOverTheDriveFloor:
     DEFB 10,31,243,225,96,48,44,64,128	    ;Floor Solid
@@ -80,7 +80,7 @@ OnABranchOverTheDriveRampData:
 
 ;The next byte is copied to 32990 and specifies the border colour.
 OnABranchOverTheDriveBorderColor:
-    DEFB 4	                                ;Border colour
+    DEFB 2	                                ;Border colour
 
 ;The next two bytes are copied to 32991, but are not used.
 OnABranchOverTheDriveReserved:

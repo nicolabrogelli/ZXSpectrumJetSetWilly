@@ -8252,7 +8252,7 @@
   49+ 8DAE
   50+ 8DAE              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
   51+ 8DAE              OnABranchOverTheDriveBackground:
-  52+ 8DAE 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+  52+ 8DAE 0F 00 00 00      DEFB $0F,0,0,0,0,0,0,0,0	            ;Background
   52+ 8DB2 00 00 00 00
   52+ 8DB6 00
   53+ 8DB7
@@ -8295,7 +8295,7 @@
   80+ 8DEC
   81+ 8DEC              ;The next byte is copied to 32990 and specifies the border colour.
   82+ 8DEC              OnABranchOverTheDriveBorderColor:
-  83+ 8DEC 04               DEFB 4	                                ;Border colour
+  83+ 8DEC 02               DEFB 2	                                ;Border colour
   84+ 8DED
   85+ 8DED              ;The next two bytes are copied to 32991, but are not used.
   86+ 8DED              OnABranchOverTheDriveReserved:
