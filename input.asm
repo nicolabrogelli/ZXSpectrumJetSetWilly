@@ -22,6 +22,8 @@
 ; -------------------------------------------------------------------
 
 CheckCtrl:
+    xor  a
+    ld   (current_input_dir), a
 
     ; ── Sezione 1: tasto Q (cambio stanza) ──────────────────────────
     ;
@@ -88,6 +90,8 @@ checkCtrl_left:
     set $00, d                  ; imposta bit 0 di D = "sinistra attiva"
     set 0, (ix)                 ; flags bit 0 = "movimento in corso"
     ld  e, a                    ; salva A
+    ld  a, 1
+    ld  (current_input_dir), a
     ld  a, (on_ground)
     or  a
     jr  z, .skip_dir_left
@@ -102,6 +106,8 @@ checkCtrl_right:
     set $01, d                  ; imposta bit 1 di D = "destra attiva"
     set 0, (ix)                 ; flags bit 0 = "movimento in corso"
     ld  e, a
+    ld  a, 2
+    ld  (current_input_dir), a
     ld  a, (on_ground)
     or  a
     jr  z, .skip_dir_right
@@ -164,6 +170,8 @@ checkCtrl_jump:
     ld   a, d
     and  $04                    ; tieni solo il bit 2 (salto)
     ld   d, a                   ; D = solo salto, direzioni azzerate
+    xor  a
+    ld   (current_input_dir), a
     ret
 
 ; -------------------------------------------------------------------

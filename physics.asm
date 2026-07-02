@@ -104,7 +104,7 @@ ApplyGravity:
     ld   (jump_pressed), a
     ld   a, b              ; B = PlayerY (ramp_Y)
     ld   (jump_start_y), a
-    ld   a, (direction)
+    ld   a, (current_input_dir)
     ld   (jump_dir), a
     jp   .in_air
     
@@ -244,7 +244,7 @@ ApplyGravity:
     ld   (jump_pressed), a
     ld   a, b              ; B = PlayerY
     ld   (jump_start_y), a
-    ld   a, (direction)
+    ld   a, (current_input_dir)
     ld   (jump_dir), a
     jp   .in_air
 

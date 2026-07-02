@@ -31,8 +31,32 @@
 MovePlayer:
 
     ; ---------------------------------------------------------------
-    ; Verifica flag di aggiornamento movimento
-    ; (evita aggiornamenti multipli per frame)
+    ; Se siamo in aria, usa la direzione bloccata al momento del salto.
+    ; Il movimento orizzontale in aria continua anche se non ci sono
+    ; tasti di direzione premuti (jump_dir decide).
+    ; ---------------------------------------------------------------
+    ld   a, (on_ground)
+    or   a
+    jr   nz, .on_ground_check
+
+    ld   a, (jump_dir)
+    or   a
+    ret  z                  ; Se jump_dir è 0, salto verticale -> nessun movimento orizzontale
+    
+    ; In volo: resetta comunque il flag di aggiornamento movimento se era impostato
+    ld   ix, flags
+    res  $00, (ix)
+
+    ld   bc, (PlayerPos)
+    cp   1
+    jr   z, movePlayer_left
+    cp   2
+    jr   z, movePlayer_right
+    ret
+
+.on_ground_check:
+    ; ---------------------------------------------------------------
+    ; Se siamo a terra, muoviti solo se c'è input (bit 0 di flags impostato)
     ; ---------------------------------------------------------------
     ld   ix, flags
     bit  $00, (ix)
@@ -40,29 +64,7 @@ MovePlayer:
 
     res  $00, (ix)
 
-    ; ---------------------------------------------------------------
-    ; Carica posizione corrente player
-    ;
-    ; B = Y (pixel)
-    ; C = X (pixel)
-    ; ---------------------------------------------------------------
     ld   bc, (PlayerPos)
-
-    ; ---------------------------------------------------------------
-    ; Se siamo in aria, usa la direzione bloccata al momento del salto.
-    ; ---------------------------------------------------------------
-    ld   a, (on_ground)
-    or   a
-    jr   nz, .ground_input
-
-    ld   a, (jump_dir)
-    or   a
-    ret  z
-    cp   1
-    jr   z, movePlayer_left
-    cp   2
-    jr   z, movePlayer_right
-    ret
 
 .ground_input:
     ; ---------------------------------------------------------------
