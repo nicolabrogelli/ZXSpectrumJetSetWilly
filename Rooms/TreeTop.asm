@@ -49,7 +49,7 @@ TreeTopTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 TreeTopBackground:
-    DEFB 40,0,0,0,0,0,0,0,0	            		;Background
+    DEFB 47,0,0,0,0,0,0,0,0	            		;Background
 
 TreeTopFloor:
     DEFB 4,170,85,170,88,48,16,16,8	    ;Floor Solid

@@ -49,7 +49,7 @@ TheFrontDoorTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 TheFrontDoorBackground:
-    DEFB 40,0,0,0,0,0,0,0,0	            		;Background
+    DEFB 47,0,0,0,0,0,0,0,0	            		;Background
 
 TheFrontDoorFloor:
     DEFB 71,255,170,119,170,119,170,85,170	    ;Floor Solid
