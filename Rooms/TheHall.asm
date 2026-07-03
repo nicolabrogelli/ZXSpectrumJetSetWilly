@@ -92,10 +92,10 @@ TheHallItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheHallDirection:
-	DEFB 11									;Room to the left (The Hall)
-	DEFB 9									;Room to the right (On a Branch Over the Drive)
-	DEFB 0									;Room above (The Off Licence)
-	DEFB 5									;Room below (The Security Guard)
+    DEFB 20	                        ;Room to the left (Ballroom East)
+    DEFB 10	                        ;Room to the right (The Front Door)
+    DEFB 0	                        ;Room above (The Off Licence)
+    DEFB 0	                        ;Room below (The Off Licence)
 
 TheHallUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
@@ -120,5 +120,6 @@ TheHallEnemy8:
 
 TheHallPosWilly:
     db 50, 20                   ; Posizione di Willy
+    
 TheHallEnemyColors5_8:
     DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

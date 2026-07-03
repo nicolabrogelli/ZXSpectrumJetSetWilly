@@ -6545,126 +6545,127 @@
 # file closed: data/datavariable.asm
   20  767C
   21  767C              start:
-  22  767C CD AD 5D         call SetupIM2
-  23  767F C3 50 7F         jp   Main
-  24  7682
-  25  7682
-  26  7682
-  27  7682                  org $7F50
-  28  7F50              Main:
-  29  7F50                  ; Inizializza
-  30  7F50 AF               xor  a
-  31  7F51 32 0B 73         ld  (body_state), a
-  32  7F54 32 0F 73         ld  (items_collected), a
-  33  7F57
-  34  7F57 CD DB 5D         call CopyChars
-  35  7F5A CD E7 5D         call DefineChars
-  36  7F5D
-  37  7F5D 3E 02            ld   a, $02
-  38  7F5F CD 01 16         call OPENCHAN
-  39  7F62 21 00 80         ld   hl, $8000
-  40  7F65 22 7B 5C         ld   (UDG), hl
-  41  7F68
-  42  7F68 21 8D 5C         ld   hl, ATTR_P
-  43  7F6B 36 07            ld   (hl), $07
-  44  7F6D CD AF 0D         call CLS
-  45  7F70              LoadRoomAndRestart:
-  46  7F70 CD 27 70         call DetermineCurrentRoomID
-  47  7F73 CD C9 61         call DrawRoom
-  48  7F76 CD 7F 63         call DrawConveyorsAndRamps
-  49  7F79 CD 5F 60         call PrintRoomName
-  50  7F7C CD 21 71         call DrawRoomItems
-  51  7F7F CD 1E 6C         call LoadRoomEnemies
-  52  7F82
-  53  7F82 3A 7B 76         ld   a, (transition_active)
-  54  7F85 B7               or   a
-  55  7F86 20 05            jr   nz, .skip_player_pos
-  56  7F88 CD 17 65         call LoadPositionPlayeinRoom
-  57  7F8B 18 04            jr   .after_player_pos
-  58  7F8D              .skip_player_pos:
-  59  7F8D AF               xor  a
-  60  7F8E 32 7B 76         ld   (transition_active), a
-  61  7F91              .after_player_pos:
-  62  7F91
-  63  7F91                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
-  64  7F91 2A 76 76         ld   hl, (room_ptr)
-  65  7F94 11 DE 00         ld   de, OFFSET_BORDER_COLOR
-  66  7F97 19               add  hl, de
-  67  7F98 7E               ld   a, (hl)
-  68  7F99 32 11 73         ld   (room_border_color), a
-  69  7F9C D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
-  70  7F9E
-  71  7F9E                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
-  72  7F9E 87               add  a, a
-  73  7F9F 87               add  a, a
-  74  7FA0 87               add  a, a              ; Sposta nei bit 3-5
-  75  7FA1 47               ld   b, a
-  76  7FA2 3A 48 5C         ld   a, (BORDCR)
-  77  7FA5 E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
-  78  7FA7 B0               or   b                 ; Imposta nuovo colore bordo
-  79  7FA8 F6 07            or   $07               ; Imposta ink a bianco
-  80  7FAA 32 48 5C         ld   (BORDCR), a
-  81  7FAD
-  82  7FAD CD F3 5F         call PrintPlayer
-  83  7FB0
-  84  7FB0              Main_loop:
-  85  7FB0 76               halt
-  86  7FB1
-  87  7FB1                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
-  88  7FB1 CD 46 60         call DeleteCharAtOldPos
-  89  7FB4 CD F3 5F         call PrintPlayer
-  90  7FB7
-  91  7FB7 CD 48 6D         call EraseRoomEnemies
-  92  7FBA CD 7C 6D         call DrawRoomEnemies
-  93  7FBD
-  94  7FBD                  ; 3. Salva le posizioni correnti del player per il prossimo frame
-  95  7FBD ED 4B 05 73      ld   bc, (PlayerPos)
-  96  7FC1 ED 43 07 73      ld   (PlayerPosOld), bc
-  97  7FC5
-  98  7FC5                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
-  99  7FC5 CD 2A 65         call CheckCtrl
- 100  7FC8 CD 4C 64         call MovePlayer
- 101  7FCB CD 85 66         call ApplyGravity
- 102  7FCE CD 50 69         call ApplyConveyorForce
- 103  7FD1 CD BA 6E         call UpdateRoomEnemies
- 104  7FD4 CD 6A 72         call CheckRoomItemsCollision
- 105  7FD7
- 106  7FD7                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
- 107  7FD7 CD A2 68         call CheckCollision
- 108  7FDA 30 1A            jr   nc, .no_collision
- 109  7FDC
- 110  7FDC                  ; Collisione attiva: disegna le raster bar nel bordo
- 111  7FDC 3A 1A 73         ld   a, (counter)
- 112  7FDF E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
- 113  7FE1 06 1E            ld   b, 30             ; Numero di righe della barra raster
- 114  7FE3              .raster_loop:
- 115  7FE3 D3 FE            out  ($fe), a
- 116  7FE5 3C               inc  a
- 117  7FE6 E6 07            and  7
- 118  7FE8 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
- 119  7FEA              .delay:
- 120  7FEA 0D               dec  c
- 121  7FEB 20 FD            jr   nz, .delay
- 122  7FED 10 F4            djnz .raster_loop
- 123  7FEF
- 124  7FEF                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
- 125  7FEF 3A 11 73         ld   a, (room_border_color)
- 126  7FF2 D3 FE            out  ($fe), a
- 127  7FF4 18 05            jr   .no_collision_change
- 128  7FF6
- 129  7FF6              .no_collision:
- 130  7FF6                  ; Nessuna collisione: mantieni il bordo al colore della stanza
- 131  7FF6 3A 11 73         ld   a, (room_border_color)
- 132  7FF9 D3 FE            out  ($fe), a
- 133  7FFB
- 134  7FFB              .no_collision_change:
- 135  7FFB C3 B0 7F         jp   Main_loop
- 136  7FFE
+  22  767C 31 FF FF         ld   sp, $ffff
+  23  767F CD AD 5D         call SetupIM2
+  24  7682 C3 50 7F         jp   Main
+  25  7685
+  26  7685
+  27  7685
+  28  7685                  org $7F50
+  29  7F50              Main:
+  30  7F50                  ; Inizializza
+  31  7F50 AF               xor  a
+  32  7F51 32 0B 73         ld  (body_state), a
+  33  7F54 32 0F 73         ld  (items_collected), a
+  34  7F57
+  35  7F57 CD DB 5D         call CopyChars
+  36  7F5A CD E7 5D         call DefineChars
+  37  7F5D
+  38  7F5D 3E 02            ld   a, $02
+  39  7F5F CD 01 16         call OPENCHAN
+  40  7F62 21 00 80         ld   hl, $8000
+  41  7F65 22 7B 5C         ld   (UDG), hl
+  42  7F68
+  43  7F68 21 8D 5C         ld   hl, ATTR_P
+  44  7F6B 36 07            ld   (hl), $07
+  45  7F6D CD AF 0D         call CLS
+  46  7F70              LoadRoomAndRestart:
+  47  7F70 CD 27 70         call DetermineCurrentRoomID
+  48  7F73 CD C9 61         call DrawRoom
+  49  7F76 CD 7F 63         call DrawConveyorsAndRamps
+  50  7F79 CD 5F 60         call PrintRoomName
+  51  7F7C CD 21 71         call DrawRoomItems
+  52  7F7F CD 1E 6C         call LoadRoomEnemies
+  53  7F82
+  54  7F82 3A 7B 76         ld   a, (transition_active)
+  55  7F85 B7               or   a
+  56  7F86 20 05            jr   nz, .skip_player_pos
+  57  7F88 CD 17 65         call LoadPositionPlayeinRoom
+  58  7F8B 18 04            jr   .after_player_pos
+  59  7F8D              .skip_player_pos:
+  60  7F8D AF               xor  a
+  61  7F8E 32 7B 76         ld   (transition_active), a
+  62  7F91              .after_player_pos:
+  63  7F91
+  64  7F91                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
+  65  7F91 2A 76 76         ld   hl, (room_ptr)
+  66  7F94 11 DE 00         ld   de, OFFSET_BORDER_COLOR
+  67  7F97 19               add  hl, de
+  68  7F98 7E               ld   a, (hl)
+  69  7F99 32 11 73         ld   (room_border_color), a
+  70  7F9C D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
+  71  7F9E
+  72  7F9E                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
+  73  7F9E 87               add  a, a
+  74  7F9F 87               add  a, a
+  75  7FA0 87               add  a, a              ; Sposta nei bit 3-5
+  76  7FA1 47               ld   b, a
+  77  7FA2 3A 48 5C         ld   a, (BORDCR)
+  78  7FA5 E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
+  79  7FA7 B0               or   b                 ; Imposta nuovo colore bordo
+  80  7FA8 F6 07            or   $07               ; Imposta ink a bianco
+  81  7FAA 32 48 5C         ld   (BORDCR), a
+  82  7FAD
+  83  7FAD CD F3 5F         call PrintPlayer
+  84  7FB0
+  85  7FB0              Main_loop:
+  86  7FB0 76               halt
+  87  7FB1
+  88  7FB1                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
+  89  7FB1 CD 46 60         call DeleteCharAtOldPos
+  90  7FB4 CD F3 5F         call PrintPlayer
+  91  7FB7
+  92  7FB7 CD 48 6D         call EraseRoomEnemies
+  93  7FBA CD 7C 6D         call DrawRoomEnemies
+  94  7FBD
+  95  7FBD                  ; 3. Salva le posizioni correnti del player per il prossimo frame
+  96  7FBD ED 4B 05 73      ld   bc, (PlayerPos)
+  97  7FC1 ED 43 07 73      ld   (PlayerPosOld), bc
+  98  7FC5
+  99  7FC5                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
+ 100  7FC5 CD 2A 65         call CheckCtrl
+ 101  7FC8 CD 4C 64         call MovePlayer
+ 102  7FCB CD 85 66         call ApplyGravity
+ 103  7FCE CD 50 69         call ApplyConveyorForce
+ 104  7FD1 CD BA 6E         call UpdateRoomEnemies
+ 105  7FD4 CD 6A 72         call CheckRoomItemsCollision
+ 106  7FD7
+ 107  7FD7                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
+ 108  7FD7 CD A2 68         call CheckCollision
+ 109  7FDA 30 1A            jr   nc, .no_collision
+ 110  7FDC
+ 111  7FDC                  ; Collisione attiva: disegna le raster bar nel bordo
+ 112  7FDC 3A 1A 73         ld   a, (counter)
+ 113  7FDF E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+ 114  7FE1 06 1E            ld   b, 30             ; Numero di righe della barra raster
+ 115  7FE3              .raster_loop:
+ 116  7FE3 D3 FE            out  ($fe), a
+ 117  7FE5 3C               inc  a
+ 118  7FE6 E6 07            and  7
+ 119  7FE8 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+ 120  7FEA              .delay:
+ 121  7FEA 0D               dec  c
+ 122  7FEB 20 FD            jr   nz, .delay
+ 123  7FED 10 F4            djnz .raster_loop
+ 124  7FEF
+ 125  7FEF                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+ 126  7FEF 3A 11 73         ld   a, (room_border_color)
+ 127  7FF2 D3 FE            out  ($fe), a
+ 128  7FF4 18 05            jr   .no_collision_change
+ 129  7FF6
+ 130  7FF6              .no_collision:
+ 131  7FF6                  ; Nessuna collisione: mantieni il bordo al colore della stanza
+ 132  7FF6 3A 11 73         ld   a, (room_border_color)
+ 133  7FF9 D3 FE            out  ($fe), a
+ 134  7FFB
+ 135  7FFB              .no_collision_change:
+ 136  7FFB C3 B0 7F         jp   Main_loop
  137  7FFE
  138  7FFE
- 139  7FFE                  org $8300
- 140  8300              RoomsStart:
- 141  8300                  include "rooms/TheOffLicence.asm"               ; ID 00
+ 139  7FFE
+ 140  7FFE                  org $8300
+ 141  8300              RoomsStart:
+ 142  8300                  include "rooms/TheOffLicence.asm"               ; ID 00
 # file opened: rooms/TheOffLicence.asm
    1+ 8300              ;===========================================================================
    2+ 8300              ; TheOffLicence.asm
@@ -6826,7 +6827,7 @@
  114+ 841A              TheOffLicenceEnemyColors5_8:
  115+ 841A 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheOffLicence.asm
- 142  841E                  include "rooms/TheBridge.asm"                   ; ID 01
+ 143  841E                  include "rooms/TheBridge.asm"                   ; ID 01
 # file opened: rooms/TheBridge.asm
    1+ 841E              ;===========================================================================
    2+ 841E              ; TheBridge.asm
@@ -6998,7 +6999,7 @@
  124+ 8538 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
  125+ 853C
 # file closed: rooms/TheBridge.asm
- 143  853C                  include "rooms/UnderTheMegaTree.asm"            ; ID 02
+ 144  853C                  include "rooms/UnderTheMegaTree.asm"            ; ID 02
 # file opened: rooms/UnderTheMegaTree.asm
    1+ 853C              ;===========================================================================
    2+ 853C              ; UnderTheMegaTree.asm
@@ -7170,7 +7171,7 @@
  124+ 8656              UnderTheMegaTreeEnemyColors5_8:
  125+ 8656 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/UnderTheMegaTree.asm
- 144  865A                  include "rooms/AtTheFootTheMegaTree.asm"        ; ID 03
+ 145  865A                  include "rooms/AtTheFootTheMegaTree.asm"        ; ID 03
 # file opened: rooms/AtTheFootTheMegaTree.asm
    1+ 865A              ;===========================================================================
    2+ 865A              ; AtTheFootTheMegaTree.asm
@@ -7341,7 +7342,7 @@
  123+ 8774              AtTheFootTheMegaTreeEnemyColors5_8:
  124+ 8774 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/AtTheFootTheMegaTree.asm
- 145  8778                  include "rooms/TheDrive.asm"                    ; ID 04
+ 146  8778                  include "rooms/TheDrive.asm"                    ; ID 04
 # file opened: rooms/TheDrive.asm
    1+ 8778              ;===========================================================================
    2+ 8778              ; TheDrive.asm
@@ -7512,7 +7513,7 @@
  123+ 8892              TheDriveEnemyColors5_8:
  124+ 8892 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheDrive.asm
- 146  8896                  include "rooms/TheSecurityGuard.asm"            ; ID 05
+ 147  8896                  include "rooms/TheSecurityGuard.asm"            ; ID 05
 # file opened: rooms/TheSecurityGuard.asm
    1+ 8896              ;===========================================================================
    2+ 8896              ; TheSecurityGuard.asm
@@ -7683,7 +7684,7 @@
  123+ 89B0              TheSecurityGuardEnemyColors5_8:
  124+ 89B0 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheSecurityGuard.asm
- 147  89B4                  include "rooms/EntranceToHades.asm"             ; ID 06
+ 148  89B4                  include "rooms/EntranceToHades.asm"             ; ID 06
 # file opened: rooms/EntranceToHades.asm
    1+ 89B4              ;===========================================================================
    2+ 89B4              ; EntranceToHades.asm
@@ -7756,7 +7757,7 @@
   46+ 8A50 20 20 20 20
   47+ 8A54
   48+ 8A54              EntranceToHadesBackground:                    ; Background
-  49+ 8A54 34 00 00 00      DEFB 52,0,0,0,0,0,0,0,0
+  49+ 8A54 37 00 00 00      DEFB 55,0,0,0,0,0,0,0,0
   49+ 8A58 00 00 00 00
   49+ 8A5C 00
   50+ 8A5D
@@ -7792,7 +7793,7 @@
   70+ 8A8E
   71+ 8A8E              EntranceToHadesRampData:
   72+ 8A8E 00               DEFB 0
-  73+ 8A8F 00 00            DEFW 0
+  73+ 8A8F C7 5F            DEFW 24519
   74+ 8A91 00               DEFB 0
   75+ 8A92
   76+ 8A92              EntranceToHadesBorderColor:
@@ -7844,7 +7845,7 @@
  113+ 8ACE              EntranceToHadesEnemyColors5_8:
  114+ 8ACE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/EntranceToHades.asm
- 148  8AD2                  include "rooms/CuckoosNest.asm"                 ; ID 07
+ 149  8AD2                  include "rooms/CuckoosNest.asm"                 ; ID 07
 # file opened: rooms/CuckoosNest.asm
    1+ 8AD2              ;===========================================================================
    2+ 8AD2              ; CuckoosNest.asm
@@ -8015,7 +8016,7 @@
  123+ 8BEC              CuckoosNestEnemyColors5_8:
  124+ 8BEC 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/CuckoosNest.asm
- 149  8BF0                  include "rooms/InsideTheMegaTrunk.asm"          ; ID 08
+ 150  8BF0                  include "rooms/InsideTheMegaTrunk.asm"          ; ID 08
 # file opened: rooms/InsideTheMegaTrunk.asm
    1+ 8BF0              ;===========================================================================
    2+ 8BF0              ; InsideTheMegaTrunk.asm
@@ -8187,7 +8188,7 @@
  124+ 8D0A              InsideTheMegaTrunkEnemyColors5_8:
  125+ 8D0A 05 04 04 07      DEFB CYAN, GREEN, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/InsideTheMegaTrunk.asm
- 150  8D0E                  include "rooms/OnABranchOverTheDrive.asm"       ; ID 09
+ 151  8D0E                  include "rooms/OnABranchOverTheDrive.asm"       ; ID 09
 # file opened: rooms/OnABranchOverTheDrive.asm
    1+ 8D0E              ;===========================================================================
    2+ 8D0E              ; OnABranchOverTheDrive.asm
@@ -8358,7 +8359,7 @@
  123+ 8E28              OnABranchOverTheDriveEnemyColors5_8:
  124+ 8E28 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/OnABranchOverTheDrive.asm
- 151  8E2C                  include "rooms/TheFrontDoor.asm"                ; ID 10
+ 152  8E2C                  include "rooms/TheFrontDoor.asm"                ; ID 10
 # file opened: rooms/TheFrontDoor.asm
    1+ 8E2C              ;===========================================================================
    2+ 8E2C              ; TheFrontDoor.asm
@@ -8529,7 +8530,7 @@
  123+ 8F46              TheFrontDoorEnemyColors5_8:
  124+ 8F46 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheFrontDoor.asm
- 152  8F4A                  include "rooms/TheHall.asm"                     ; ID 11
+ 153  8F4A                  include "rooms/TheHall.asm"                     ; ID 11
 # file opened: rooms/TheHall.asm
    1+ 8F4A              ;===========================================================================
    2+ 8F4A              ; TheHall.asm
@@ -8661,10 +8662,10 @@
   92+ 9035
   93+ 9035              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   94+ 9035              TheHallDirection:
-  95+ 9035 0B           	DEFB 11									;Room to the left (The Hall)
-  96+ 9036 09           	DEFB 9									;Room to the right (On a Branch Over the Drive)
-  97+ 9037 00           	DEFB 0									;Room above (The Off Licence)
-  98+ 9038 05           	DEFB 5									;Room below (The Security Guard)
+  95+ 9035 14               DEFB 20	                        ;Room to the left (Ballroom East)
+  96+ 9036 0A               DEFB 10	                        ;Room to the right (The Front Door)
+  97+ 9037 00               DEFB 0	                        ;Room above (The Off Licence)
+  98+ 9038 00               DEFB 0	                        ;Room below (The Off Licence)
   99+ 9039
  100+ 9039              TheHallUnused:
  101+ 9039 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
@@ -8697,10 +8698,11 @@
  120+ 9062
  121+ 9062              TheHallPosWilly:
  122+ 9062 32 14            db 50, 20                   ; Posizione di Willy
- 123+ 9064              TheHallEnemyColors5_8:
- 124+ 9064 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 123+ 9064
+ 124+ 9064              TheHallEnemyColors5_8:
+ 125+ 9064 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheHall.asm
- 153  9068                  include "rooms/TreeTop.asm"                     ; ID 12
+ 154  9068                  include "rooms/TreeTop.asm"                     ; ID 12
 # file opened: rooms/TreeTop.asm
    1+ 9068              ;===========================================================================
    2+ 9068              ; TreeTop.asm
@@ -8871,8 +8873,8 @@
  123+ 9182              TreeTopEnemyColors5_8:
  124+ 9182 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TreeTop.asm
- 154  9186
- 155  9186                  include "rooms/TheBathroom.asm"                 ; ID 33
+ 155  9186
+ 156  9186                  include "rooms/TheBathroom.asm"                 ; ID 33
 # file opened: rooms/TheBathroom.asm
    1+ 9186              ;===========================================================================
    2+ 9186              ; TheBathroom.asm
@@ -9043,7 +9045,7 @@
  123+ 92A0              TheBathroomEnemyColors5_8:
  124+ 92A0 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheBathroom.asm
- 156  92A4                  include "rooms/MasterBedRoom.asm"               ; ID 35s
+ 157  92A4                  include "rooms/MasterBedRoom.asm"               ; ID 35s
 # file opened: rooms/MasterBedRoom.asm
    1+ 92A4              ;===========================================================================
    2+ 92A4              ; MasterBedroom.asm
@@ -9216,7 +9218,7 @@
  125+ 93BE              MastreBedRoomEnemyColors5_8:
  126+ 93BE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/MasterBedRoom.asm
- 157  93C2                  include "data/datasprite.asm"
+ 158  93C2                  include "data/datasprite.asm"
 # file opened: data/datasprite.asm
    1+ 93C2
    2+ 93C2
@@ -10281,6 +10283,6 @@
  322+ A33A 3F 00 76 00
  322+ A33E 0E 00 04 00
 # file closed: data/datasprite.asm
- 158  A342
- 159  A342                  SAVESNA "jet set willy.sna", start
+ 159  A342
+ 160  A342                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm

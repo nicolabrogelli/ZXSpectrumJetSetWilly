@@ -19,6 +19,7 @@
     include "data/datavariable.asm"
     
 start:
+    ld   sp, $ffff
     call SetupIM2
     jp   Main
 

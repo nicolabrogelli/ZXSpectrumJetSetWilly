@@ -46,7 +46,7 @@ EntranceToHadesTile:
     DEFM "       Entrance to Hades        "
 
 EntranceToHadesBackground:                    ; Background
-    DEFB 52,0,0,0,0,0,0,0,0
+    DEFB 55,0,0,0,0,0,0,0,0
 
 EntranceToHadesFloor:
     DEFB 163,160,20,130,80,10,65,40,5      ; Floor Solid
@@ -70,7 +70,7 @@ EntranceToHadesConveyorData:
 
 EntranceToHadesRampData:
     DEFB 0
-    DEFW 0
+    DEFW 24519
     DEFB 0
 
 EntranceToHadesBorderColor:
