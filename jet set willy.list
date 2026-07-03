@@ -8301,7 +8301,7 @@
   75+ 8DE8              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
   76+ 8DE8              OnABranchOverTheDriveRampData:
   77+ 8DE8 01               DEFB 1	                                ;Direction (up to the right)
-  78+ 8DE9 45 5F            DEFW 24389	                            ;Location in the attribute buffer at 24064: (14,7)
+  78+ 8DE9 4E 5F            DEFW 24398	                            ;Location in the attribute buffer at 24064: (14,7)
   79+ 8DEB 04               DEFB 4	                                ;Length
   80+ 8DEC
   81+ 8DEC              ;The next byte is copied to 32990 and specifies the border colour.

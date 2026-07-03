@@ -75,7 +75,7 @@ OnABranchOverTheDriveConveyorData:
 ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
 OnABranchOverTheDriveRampData:
     DEFB 1	                                ;Direction (up to the right)
-    DEFW 24389	                            ;Location in the attribute buffer at 24064: (14,7)
+    DEFW 24398	                            ;Location in the attribute buffer at 24064: (14,7)
     DEFB 4	                                ;Length
 
 ;The next byte is copied to 32990 and specifies the border colour.
