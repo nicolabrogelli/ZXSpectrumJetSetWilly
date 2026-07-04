@@ -87,7 +87,7 @@ UnderTheDriveDirection:
 	DEFB 6						;Room to the left (Entrance to Hades)
 	DEFB 46						;Room to the right (Tree Root)
 	DEFB 4						;Room above (The Drive)
-	DEFB 0						;Room below (The Off Licence)
+	DEFB $FF					;Room below (The Off Licence)
 
 UnderTheDriveUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

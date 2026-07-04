@@ -8841,7 +8841,7 @@
   49+ 9108
   50+ 9108              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
   51+ 9108              TreeTopBackground:
-  52+ 9108 2F 00 00 00      DEFB 47,0,0,0,0,0,0,0,0	            		;Background
+  52+ 9108 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0	            		;Background
   52+ 910C 00 00 00 00
   52+ 9110 00
   53+ 9111
@@ -8932,7 +8932,7 @@
  119+ 917F 00
  120+ 9180
  121+ 9180              TreeTopPosWilly:
- 122+ 9180 32 78            db 50, 120                 ; Posizione di Willy
+ 122+ 9180 0A 1E            db 10, 30                 ; Posizione di Willy
  123+ 9182              TreeTopEnemyColors5_8:
  124+ 9182 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TreeTop.asm
@@ -9570,7 +9570,7 @@
   87+ 95CB 06           	DEFB 6						;Room to the left (Entrance to Hades)
   88+ 95CC 2E           	DEFB 46						;Room to the right (Tree Root)
   89+ 95CD 04           	DEFB 4						;Room above (The Drive)
-  90+ 95CE 00           	DEFB 0						;Room below (The Off Licence)
+  90+ 95CE FF           	DEFB $FF					;Room below (The Off Licence)
   91+ 95CF
   92+ 95CF              UnderTheDriveUnused:
   93+ 95CF 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

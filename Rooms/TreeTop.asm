@@ -49,7 +49,7 @@ TreeTopTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 TreeTopBackground:
-    DEFB 47,0,0,0,0,0,0,0,0	            		;Background
+    DEFB 0,0,0,0,0,0,0,0,0	            		;Background
 
 TreeTopFloor:
     DEFB 4,170,85,170,88,48,16,16,8	    ;Floor Solid
@@ -119,6 +119,6 @@ TreeTopEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TreeTopPosWilly:
-    db 50, 120                 ; Posizione di Willy    
+    db 10, 30                 ; Posizione di Willy    
 TreeTopEnemyColors5_8:
     DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
