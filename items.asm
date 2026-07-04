@@ -278,6 +278,20 @@ DetermineCurrentRoomID:
 .not_treetop:
 
     ; ---------------------------------------------------------------
+    ; Confronto con TreeTop
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, OutALimbLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_outalimb
+
+    ld   a, 13               ; Room ID = 13
+    jp   .set_room
+
+.not_outalimb:
+
+    ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
@@ -297,9 +311,22 @@ DetermineCurrentRoomID:
     ld   de, MastreBedRoomLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_masterbed
 
     ld   a, 35               ; Room ID = 35
+    jp   .set_room
+
+.not_masterbed
+    ; ---------------------------------------------------------------
+    ; Confronto con UnderTheDrive
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, UnderTheDriveLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+
+    ld   a, 45               ; Room ID = 45
     jp   .set_room
 
 .unknown:

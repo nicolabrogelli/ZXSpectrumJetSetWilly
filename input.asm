@@ -178,7 +178,7 @@ checkCtrl_jump:
 ; Esegue il cambio di stanza ciclico alla stanza successiva
 ; -------------------------------------------------------------------
 PerformRoomChange:
-    ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..14)
+    ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..45)
     ld   hl, RoomsListTable
     ld   bc, (room_ptr)            ; BC = layout corrente
     ld   e, 0                      ; E = contatore indice
@@ -194,33 +194,40 @@ PerformRoomChange:
     inc  hl
     inc  e
     ld   a, e
-    cp   15                        ; 15 stanze in totale
+    cp   46                        ; 46 stanze totali (indice 0..45)
     jr   c, .loop
     
     ld   e, 0                      ; Se non trovato, riparte da 0
 
 .found:
-    ; 2. Incrementa e calcola il prossimo indice (E = (E + 1) % 15)
-    ld   a, e
+    ; 2. Trova il prossimo indice non nullo (ciclando)
+    ld   c, e                      ; C = indice di partenza
+.next_index_loop:
+    ld   a, c
     inc  a
-    cp   15
+    cp   46
     jr   c, .no_wrap
     xor  a
 .no_wrap:
-    ; A = nuovo indice in RoomsListTable (0..14)
+    ld   c, a                      ; C = nuovo indice candidato
     
-    ; 3. Trova l'indirizzo del layout corrispondente da RoomsListTable
+    ; Leggi RoomsListTable[C]
+    push hl
     ld   hl, RoomsListTable
-    ld   c, a
-    ld   b, 0
-    add  hl, bc
-    add  hl, bc                    ; HL = RoomsListTable + A * 2
-    
+    ld   e, c
+    ld   d, 0
+    add  hl, de
+    add  hl, de                    ; HL = RoomsListTable + C * 2
     ld   e, (hl)
     inc  hl
-    ld   d, (hl)                   ; DE = puntatore al layout della nuova stanza
+    ld   d, (hl)                   ; DE = RoomsListTable[C]
+    ld   a, d
+    or   e                         ; DE == 0?
+    pop  hl
+    jr   z, .next_index_loop       ; Se è zero, riprova col prossimo
     
-    ld   (room_ptr), de            ; Aggiorna room_ptr
+    ; Trovato! DE = layout
+    ld   (room_ptr), de
     
     ; 4. Pulisci lo schermo e ricarica la stanza
     ld   hl, ATTR_P
@@ -278,5 +285,12 @@ RoomsListTable:
     dw TheFrontDoorLayout           ; 10
     dw TheHallLayout                ; 11
     dw TreeTopLayout                ; 12
+    dw OutALimbLayout               ; 13
+    ; 14-32: padding
+    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     dw TheBathroomLayout            ; 33
+    dw 0                            ; 34
     dw MastreBedRoomLayout          ; 35
+    ; 36-44: padding
+    dw 0,0,0,0,0,0,0,0,0
+    dw UnderTheDriveLayout          ; 45

@@ -85,8 +85,8 @@ EntranceToHadesItem:
 EntranceToHadesDirection:
     DEFB 14                        ;Room to the left (Rescue Esmerelda)
     DEFB 5	                       ;Room to the right (The Security Guard)
-    DEFB 0	                       ;Room above (The Off Licence)
-    DEFB 0	                       ;Room below (The Off Licence)
+    DEFB $FF                       ;Room above (The Off Licence)
+    DEFB $FF                       ;Room below (The Off Licence)
 
 EntranceToHadesUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

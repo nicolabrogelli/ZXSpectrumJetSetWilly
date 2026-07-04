@@ -152,9 +152,12 @@ RoomsStart:
     include "rooms/TheFrontDoor.asm"                ; ID 10
     include "rooms/TheHall.asm"                     ; ID 11
     include "rooms/TreeTop.asm"                     ; ID 12
+    include "rooms/OutALimb.asm"                    ; ID 13
 
     include "rooms/TheBathroom.asm"                 ; ID 33
-    include "rooms/MasterBedRoom.asm"               ; ID 35s
+    include "rooms/MasterBedRoom.asm"               ; ID 35
+    include "rooms/UnderTheDrive.asm"               ; ID 45
+
     include "data/datasprite.asm"
     
     SAVESNA "jet set willy.sna", start
