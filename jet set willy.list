@@ -8841,7 +8841,7 @@
   49+ 9108
   50+ 9108              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
   51+ 9108              TreeTopBackground:
-  52+ 9108 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0	            		;Background
+  52+ 9108 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            		;Background
   52+ 910C 00 00 00 00
   52+ 9110 00
   53+ 9111
