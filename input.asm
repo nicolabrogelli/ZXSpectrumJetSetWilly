@@ -272,31 +272,29 @@ TriggerRoomChange:
     jp   LoadRoomAndRestart
 
 RoomsListTable:
-    dw TheOffLicenceLayout          ; 0
-    dw TheBridgeLayout              ; 1
-    dw UnderTheMegaTreeLayout       ; 2
-    dw AtTheFootTheMegaTreeLayout   ; 3
-    dw TheDriveLayout               ; 4
-    dw TheSecurityGuardLayout       ; 5
-    dw EntranceToHadesLayout        ; 6
-    dw CuckoosNestLayout            ; 7
-    dw InsideTheMegaTrunkLayout     ; 8
-    dw OnABranchOverTheDriveLayout  ; 9
-    dw TheFrontDoorLayout           ; 10
-    dw TheHallLayout                ; 11
-    dw TreeTopLayout                ; 12
-    dw OutALimbLayout               ; 13
-    dw RescueEsmereldaLayout        ; 14
-    dw IAmSureIHaveSeenThiBeforeLayout ; 15
-    dw WeMustPerformQuirkafleegLayout  ; 16
-    dw UpOnTheBattlementsLayout ; 17
-    ; 18-32: padding
-    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-    dw TheBathroomLayout            ; 33
-    dw 0                            ; 34
-    dw MastreBedRoomLayout          ; 35
-    ; 36-44: padding
-    dw 0,0,0,0,0,0,0,0,0
-    dw UnderTheDriveLayout          ; 45
-    ; 46 - 60
-    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    dw TheOffLicenceLayout              ; 0
+    dw TheBridgeLayout                  ; 1
+    dw UnderTheMegaTreeLayout           ; 2
+    dw AtTheFootTheMegaTreeLayout       ; 3
+    dw TheDriveLayout                   ; 4
+    dw TheSecurityGuardLayout           ; 5
+    dw EntranceToHadesLayout            ; 6
+    dw CuckoosNestLayout                ; 7
+    dw InsideTheMegaTrunkLayout         ; 8
+    dw OnABranchOverTheDriveLayout      ; 9
+    dw TheFrontDoorLayout               ; 10
+    dw TheHallLayout                    ; 11
+    dw TreeTopLayout                    ; 12
+    dw OutALimbLayout                   ; 13
+    dw RescueEsmereldaLayout            ; 14
+    dw IAmSureIHaveSeenThiBeforeLayout  ; 15
+    dw WeMustPerformQuirkafleegLayout   ; 16
+    dw UpOnTheBattlementsLayout         ; 17
+    dw OntheRoofLayout                  ; 18
+    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 19-32: padding
+    dw TheBathroomLayout                ; 33
+    dw 0                                ; 34
+    dw MastreBedRoomLayout              ; 35
+    dw 0,0,0,0,0,0,0,0,0                ; 36-44: padding
+    dw UnderTheDriveLayout              ; 45
+    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60

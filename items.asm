@@ -348,6 +348,20 @@ DetermineCurrentRoomID:
 .not_uponthebattlements
 
     ; ---------------------------------------------------------------
+    ; Confronto con ResecueEsmeralda
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, OntheRoofLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_ontehroof
+
+    ld   a, 18               ; Room ID = 18
+    jp   .set_room
+
+.not_ontehroof
+
+    ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
