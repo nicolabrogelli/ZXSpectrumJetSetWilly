@@ -289,7 +289,8 @@ RoomsListTable:
     dw RescueEsmereldaLayout        ; 14
     dw IAmSureIHaveSeenThiBeforeLayout ; 15
     dw WeMustPerformQuirkafleegLayout  ; 16
-    ; 17-32: padding
+    dw UpOnTheBattlementsLayout ; 17
+    ; 18-32: padding
     dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     dw TheBathroomLayout            ; 33
     dw 0                            ; 34

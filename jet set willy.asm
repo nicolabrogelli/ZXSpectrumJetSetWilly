@@ -155,7 +155,8 @@ RoomsStart:
     include "rooms/OutALimb.asm"                    ; ID 13
     include "rooms/RescueEsmerelda.asm"             ; ID 14
     include "rooms/IAmSureIHaveSeenThiBefore.asm"   ; ID 15
-    include "rooms/WeMustPerformQuirkafleeg.asm"     ; ID 16
+    include "rooms/WeMustPerformQuirkafleeg.asm"    ; ID 16
+    include "rooms/UpOnTheBattlements.asm"          ; ID 17
 
     include "rooms/TheBathroom.asm"                 ; ID 33
     include "rooms/MasterBedRoom.asm"               ; ID 35

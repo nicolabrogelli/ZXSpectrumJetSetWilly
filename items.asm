@@ -334,6 +334,20 @@ DetermineCurrentRoomID:
 .not_wemustperformquirkafleeg
 
     ; ---------------------------------------------------------------
+    ; Confronto con ResecueEsmeralda
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, UpOnTheBattlementsLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_uponthebattlements
+
+    ld   a, 17               ; Room ID = 17
+    jp   .set_room
+
+.not_uponthebattlements
+
+    ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
