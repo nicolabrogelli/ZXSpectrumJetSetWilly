@@ -286,8 +286,9 @@ RoomsListTable:
     dw TheHallLayout                ; 11
     dw TreeTopLayout                ; 12
     dw OutALimbLayout               ; 13
-    ; 14-32: padding
-    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    dw RescueEsmereldaLayout        ; 14
+    ; 15-32: padding
+    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     dw TheBathroomLayout            ; 33
     dw 0                            ; 34
     dw MastreBedRoomLayout          ; 35

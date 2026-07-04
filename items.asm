@@ -292,6 +292,20 @@ DetermineCurrentRoomID:
 .not_outalimb:
 
     ; ---------------------------------------------------------------
+    ; Confronto con ResecueEsmeralda
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, RescueEsmereldaLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_rescueesmeralda
+
+    ld   a, 14               ; Room ID = 14
+    jp   .set_room
+
+.not_rescueesmeralda
+
+    ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
