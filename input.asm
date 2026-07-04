@@ -294,3 +294,5 @@ RoomsListTable:
     ; 36-44: padding
     dw 0,0,0,0,0,0,0,0,0
     dw UnderTheDriveLayout          ; 45
+    ; 46 - 60
+    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

@@ -47,7 +47,7 @@ UnderTheDriveTile:
 	DEFM "          Under the Drive       "
 
 UnderTheDriveBackground:                    ; Background
-    DEFB 0,0,0,0,0,0,0,0,0
+    DEFB $07,0,0,0,0,0,0,0,0
 
 UnderTheDriveFloor:
     DEFB 6,255,255,165,88,36,66,32,0       ; Floor Solid

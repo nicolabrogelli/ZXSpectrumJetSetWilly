@@ -47,7 +47,7 @@ OutALimbTile:
     DEFM "        Out on a limb           "
 
 OutALimbBackground:                    ; Background
-    DEFB 0,0,0,0,0,0,0,0,0
+    DEFB $07,0,0,0,0,0,0,0,0
 
 OutALimbFloor:
     DEFB 4,1,30,6,122,26,232,104,160       ; Floor Solid
