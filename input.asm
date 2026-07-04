@@ -288,8 +288,9 @@ RoomsListTable:
     dw OutALimbLayout               ; 13
     dw RescueEsmereldaLayout        ; 14
     dw IAmSureIHaveSeenThiBeforeLayout ; 15
-    ; 16-32: padding
-    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    dw WeMustPerformQuirkafleegLayout  ; 16
+    ; 17-32: padding
+    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     dw TheBathroomLayout            ; 33
     dw 0                            ; 34
     dw MastreBedRoomLayout          ; 35

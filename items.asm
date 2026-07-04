@@ -320,6 +320,20 @@ DetermineCurrentRoomID:
 .not_immsureihaveseenthibefore
 
     ; ---------------------------------------------------------------
+    ; Confronto con ResecueEsmeralda
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WeMustPerformQuirkafleegLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_wemustperformquirkafleeg
+
+    ld   a, 16               ; Room ID = 16
+    jp   .set_room
+
+.not_wemustperformquirkafleeg
+
+    ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
