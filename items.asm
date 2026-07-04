@@ -362,6 +362,20 @@ DetermineCurrentRoomID:
 .not_ontehroof
 
     ; ---------------------------------------------------------------
+    ; Confronto con ResecueEsmeralda
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheForgottenAbbeyLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_theforgottenabbey
+
+    ld   a, 189              ; Room ID = 19
+    jp   .set_room
+
+.not_theforgottenabbey
+
+    ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)

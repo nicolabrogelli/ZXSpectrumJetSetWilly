@@ -291,7 +291,8 @@ RoomsListTable:
     dw WeMustPerformQuirkafleegLayout   ; 16
     dw UpOnTheBattlementsLayout         ; 17
     dw OntheRoofLayout                  ; 18
-    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 19-32: padding
+    dw TheForgottenAbbeyLayout          ; 19
+    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 20-32: padding
     dw TheBathroomLayout                ; 33
     dw 0                                ; 34
     dw MastreBedRoomLayout              ; 35
