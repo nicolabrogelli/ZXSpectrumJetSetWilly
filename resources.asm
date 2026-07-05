@@ -1,3 +1,12 @@
+;===========================================================================
+; resources.asm
+;
+; Gestione delle risorse statiche non modificabili del gioco.
+; Contiene le stanze (livelli) e le sprite dei personaggi.
+;===========================================================================
+
+    org $8300
+RoomsStart:
     include "rooms/TheOffLicence.asm"               ; ID 00
     include "rooms/TheBridge.asm"                   ; ID 01
     include "rooms/UnderTheMegaTree.asm"            ; ID 02
@@ -22,3 +31,5 @@
     include "rooms/TheBathroom.asm"                 ; ID 33
     include "rooms/MasterBedRoom.asm"               ; ID 35
     include "rooms/UnderTheDrive.asm"               ; ID 45
+
+    include "data/datasprite.asm"

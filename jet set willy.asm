@@ -141,11 +141,6 @@ Main_loop:
 
   
 
-    org $8300
-RoomsStart:
-    include "rooms/rooms.asm"
-
-
-    include "data/datasprite.asm"
+    include "resources.asm"
     
     SAVESNA "jet set willy.sna", start

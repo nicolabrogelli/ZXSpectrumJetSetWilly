@@ -4116,8 +4116,8 @@ jet set willy.asm|137||0|1|31030|T|
 jet set willy.asm|139||0|1|31032|F|Main_loop.no_collision_change
 jet set willy.asm|139||0|1|31032|L|,Main_loop,no_collision_change,+used
 jet set willy.asm|140||0|1|31032|T|
-jet set willy.asm|145||0|2|33536|F|RoomsStart
-jet set willy.asm|145||0|2|33536|L|,RoomsStart,
+resources.asm|9||0|2|33536|F|RoomsStart
+resources.asm|9||0|2|33536|L|,RoomsStart,
 rooms/TheOffLicence.asm|28||0|2|33536|F|TheOffLicenceLayout
 rooms/TheOffLicence.asm|28||0|2|33536|L|,TheOffLicenceLayout,,+used
 rooms/TheOffLicence.asm|46||0|2|33664|F|TheOffLicenceTile
