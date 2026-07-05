@@ -257,9 +257,18 @@ ApplyGravity:
     jp   .in_air
 
 .in_air:
-    ; Applica gravità
-    ld  a, (velocity_y)
-    sub GRAVITY           ; gravity = 2
+    ; Applica gravità frazionaria (0.75 in media)
+    ld   a, (counter)
+    and  3
+    cp   3
+    jr   z, .skip_gravity
+    
+    ld   a, (velocity_y)
+    sub  1
+    jr   .store_vel
+    
+.skip_gravity:
+    ld   a, (velocity_y)
     
     ; Controlla se positivo per evitare bug con cp signed
     bit 7, a

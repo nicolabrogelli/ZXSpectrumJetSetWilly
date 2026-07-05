@@ -35,7 +35,7 @@ SCREEN_LINE = $4860
 
 ; Fisica (Derivata dai parametri geometrici)
 MAX_FALL_SPEED: EQU 12
-JUMP_STRENGTH:  EQU 8
+JUMP_STRENGTH:  EQU 7
 GRAVITY:        EQU 1
 
 ; Limiti schermo del Player
