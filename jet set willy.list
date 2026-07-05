@@ -116,9 +116,9 @@
   38+ 5DCD DB FE            in a, (0xFE)
   39+ 5DCF
   40+ 5DCF                  ; Incrementa il contatore (usato per animazioni/raster bars)
-  41+ 5DCF 2A 68 74         ld hl, (counter)
+  41+ 5DCF 2A 18 75         ld hl, (counter)
   42+ 5DD2 23               inc hl
-  43+ 5DD3 22 68 74         ld (counter), hl
+  43+ 5DD3 22 18 75         ld (counter), hl
   44+ 5DD6
   45+ 5DD6                  ; Ripristina registri
   46+ 5DD6 E1               pop hl
@@ -334,7 +334,7 @@
  204+ 5E8E C5               push bc
  205+ 5E8F 41               ld   b, c              ; B = Col
  206+ 5E90 4B               ld   c, e              ; C = Row
- 207+ 5E91 CD 35 74         call CheckActiveItemAtCell
+ 207+ 5E91 CD E5 74         call CheckActiveItemAtCell
  208+ 5E94 30 17            jr   nc, .no_item
  209+ 5E96
  210+ 5E96 C1               pop  bc
@@ -344,7 +344,7 @@
  214+ 5E99 E6 07            and  7                 ; A = scanline (0..7)
  215+ 5E9B 5F               ld   e, a
  216+ 5E9C 16 00            ld   d, 0              ; DE = scanline offset
- 217+ 5E9E 2A C4 77         ld   hl, (room_ptr)
+ 217+ 5E9E 2A 74 78         ld   hl, (room_ptr)
  218+ 5EA1 C5               push bc
  219+ 5EA2 01 E3 00         ld   bc, OFFSET_ITEM_GRAPHIC
  220+ 5EA5 09               add  hl, bc
@@ -362,21 +362,21 @@
  232+ 5EAE D1               pop  de
  233+ 5EAF
  234+ 5EAF                  ; --- Controlla Conveyor ---
- 235+ 5EAF 3A 6C 77         ld   a, (conveyor_len)
+ 235+ 5EAF 3A 1C 78         ld   a, (conveyor_len)
  236+ 5EB2 B7               or   a
  237+ 5EB3 CA DB 5E         jp   z, .check_ramp
  238+ 5EB6
- 239+ 5EB6 3A 6D 77         ld   a, (conveyor_row)
+ 239+ 5EB6 3A 1D 78         ld   a, (conveyor_row)
  240+ 5EB9 BB               cp   e
  241+ 5EBA C2 DB 5E         jp   nz, .check_ramp
  242+ 5EBD
- 243+ 5EBD 3A 6E 77         ld   a, (conveyor_col)
+ 243+ 5EBD 3A 1E 78         ld   a, (conveyor_col)
  244+ 5EC0 B9               cp   c
  245+ 5EC1 CA D5 5E         jp   z, .is_conveyor
  246+ 5EC4 DA CA 5E         jp   c, .c_greater
  247+ 5EC7 C3 DB 5E         jp   .check_ramp
  248+ 5ECA              .c_greater:
- 249+ 5ECA 21 6C 77         ld   hl, conveyor_len
+ 249+ 5ECA 21 1C 78         ld   hl, conveyor_len
  250+ 5ECD 86               add  a, (hl)
  251+ 5ECE B9               cp   c
  252+ 5ECF CA DB 5E         jp   z, .check_ramp
@@ -386,31 +386,31 @@
  256+ 5ED8 C3 2E 5F         jp   .load_tile
  257+ 5EDB
  258+ 5EDB              .check_ramp:
- 259+ 5EDB 3A 70 77         ld   a, (ramp_len)
+ 259+ 5EDB 3A 20 78         ld   a, (ramp_len)
  260+ 5EDE B7               or   a
  261+ 5EDF CA 0F 5F         jp   z, .normal_grid
  262+ 5EE2
- 263+ 5EE2 3A 71 77         ld   a, (ramp_row)     ; A = RampRowStart
+ 263+ 5EE2 3A 21 78         ld   a, (ramp_row)     ; A = RampRowStart
  264+ 5EE5 BB               cp   e                 ; compare with player row E
  265+ 5EE6 DA 0F 5F         jp   c, .normal_grid   ; if RampRowStart < E, skip!
  266+ 5EE9
  267+ 5EE9 93               sub  e                 ; A = RampRowStart - E
  268+ 5EEA 47               ld   b, a              ; B = distance from start row (0..ramp_len-1)
- 269+ 5EEB 3A 70 77         ld   a, (ramp_len)
+ 269+ 5EEB 3A 20 78         ld   a, (ramp_len)
  270+ 5EEE B8               cp   b
  271+ 5EEF CA 0F 5F         jp   z, .normal_grid   ; if B == ramp_len, too high!
  272+ 5EF2 DA 0F 5F         jp   c, .normal_grid   ; if B > ramp_len, too high!
  273+ 5EF5
  274+ 5EF5                  ; Calcola ExpectedCol:
- 275+ 5EF5 3A 6F 77         ld   a, (ramp_dir)
+ 275+ 5EF5 3A 1F 78         ld   a, (ramp_dir)
  276+ 5EF8 B7               or   a
  277+ 5EF9 28 06            jr   z, .r_left
  278+ 5EFB              .r_right:
- 279+ 5EFB 3A 72 77         ld   a, (ramp_col)
+ 279+ 5EFB 3A 22 78         ld   a, (ramp_col)
  280+ 5EFE 80               add  a, b              ; A = ramp_col + B
  281+ 5EFF 18 04            jr   .compare_col
  282+ 5F01              .r_left:
- 283+ 5F01 3A 72 77         ld   a, (ramp_col)
+ 283+ 5F01 3A 22 78         ld   a, (ramp_col)
  284+ 5F04 90               sub  b                 ; A = ramp_col - B
  285+ 5F05              .compare_col:
  286+ 5F05 B9               cp   c                 ; Compare with player col C
@@ -444,7 +444,7 @@
  314+ 5F2B 21 BB 00         ld   hl, OFFSET_NASTY
  315+ 5F2E              .load_tile:
  316+ 5F2E D5               push de
- 317+ 5F2F ED 5B C4 77      ld   de, (room_ptr)
+ 317+ 5F2F ED 5B 74 78      ld   de, (room_ptr)
  318+ 5F33 19               add  hl, de            ; HL = tile pointer
  319+ 5F34 D1               pop  de
  320+ 5F35
@@ -524,7 +524,7 @@
  394+ 5F75                  ; 1. Salva la coordinata X per calcolare lo shift
  395+ 5F75 79               ld   a, c
  396+ 5F76 E6 07            and  7
- 397+ 5F78 32 5E 74         ld   (sprite_shift), a
+ 397+ 5F78 32 0E 75         ld   (sprite_shift), a
  398+ 5F7B
  399+ 5F7B                  ; 2. Calcola indirizzo schermo
  400+ 5F7B 60               ld   h, b
@@ -537,7 +537,7 @@
  407+ 5F85 DD 5E 01         ld   e, (ix+1)     ; E = secondo byte dello sprite
  408+ 5F88
  409+ 5F88                  ; Esegui lo shift a destra se necessario
- 410+ 5F88 3A 5E 74         ld   a, (sprite_shift)
+ 410+ 5F88 3A 0E 75         ld   a, (sprite_shift)
  411+ 5F8B B7               or   a
  412+ 5F8C 28 1C            jr   z, .no_shift
  413+ 5F8E
@@ -647,7 +647,7 @@
  517+ 5FF3 DD E5            push ix
  518+ 5FF5
  519+ 5FF5                  ; 1. Determina sprite per la testa (sinistra o destra)
- 520+ 5FF5 3A 5A 74         ld   a, (direction)
+ 520+ 5FF5 3A 0A 75         ld   a, (direction)
  521+ 5FF8 FE 01            cp   1                 ; Sinistra?
  522+ 5FFA 20 06            jr   nz, .right_head
  523+ 5FFC
@@ -658,16 +658,16 @@
  528+ 6002 DD 21 B2 9C      ld   ix, Willy + (0 * 8) ; 1° tile (HEAD_GRAPH_RIGHT)
  529+ 6006
  530+ 6006              .draw_head:
- 531+ 6006 ED 4B 53 74      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
+ 531+ 6006 ED 4B 03 75      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
  532+ 600A CD 3D 5E         call DrawPixelSprite8x8 ; Disegna testa
  533+ 600D
  534+ 600D                  ; 2. Determina sprite per il corpo (sinistra o destra con frame animazione)
- 535+ 600D 3A 5A 74         ld   a, (direction)
+ 535+ 600D 3A 0A 75         ld   a, (direction)
  536+ 6010 FE 01            cp   1                 ; Sinistra?
  537+ 6012 20 13            jr   nz, .right_body
  538+ 6014
  539+ 6014                  ; Corpo a sinistra
- 540+ 6014 3A 59 74         ld   a, (body_state)   ; 0, 1, 2
+ 540+ 6014 3A 09 75         ld   a, (body_state)   ; 0, 1, 2
  541+ 6017 C6 05            add  a, 5              ; offset del tile per il corpo sinistro (5, 6, 7)
  542+ 6019 87               add  a, a              ; *2
  543+ 601A 87               add  a, a              ; *4
@@ -680,7 +680,7 @@
  550+ 6027
  551+ 6027              .right_body:
  552+ 6027                  ; Corpo a destra
- 553+ 6027 3A 59 74         ld   a, (body_state)   ; 0, 1, 2
+ 553+ 6027 3A 09 75         ld   a, (body_state)   ; 0, 1, 2
  554+ 602A C6 01            add  a, 1              ; offset del tile per il corpo destro (1, 2, 3)
  555+ 602C 87               add  a, a              ; *2
  556+ 602D 87               add  a, a              ; *4
@@ -691,7 +691,7 @@
  561+ 6036 DD 19            add  ix, de
  562+ 6038
  563+ 6038              .draw_body:
- 564+ 6038 ED 4B 53 74      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
+ 564+ 6038 ED 4B 03 75      ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
  565+ 603C 78               ld   a, b
  566+ 603D C6 08            add  a, 8
  567+ 603F 47               ld   b, a              ; B = PlayerY + 8
@@ -704,10 +704,10 @@
  574+ 6046              ; Cancella il player alle vecchie coordinate pixel
  575+ 6046              ; -------------------------------------------------------------------
  576+ 6046              DeleteCharAtOldPos:
- 577+ 6046 ED 4B 55 74      ld   bc, (PlayerPosOld) ; C = PlayerXOld, B = PlayerYOld
+ 577+ 6046 ED 4B 05 75      ld   bc, (PlayerPosOld) ; C = PlayerXOld, B = PlayerYOld
  578+ 604A CD 48 5F         call ErasePixelSprite8x8 ; Cancella testa
  579+ 604D
- 580+ 604D ED 4B 55 74      ld   bc, (PlayerPosOld)
+ 580+ 604D ED 4B 05 75      ld   bc, (PlayerPosOld)
  581+ 6051 78               ld   a, b
  582+ 6052 C6 08            add  a, 8
  583+ 6054 47               ld   b, a
@@ -740,7 +740,7 @@
  610+ 6068 3E 06            ld   a, YELLOW         ; Inchiostro Giallo
  611+ 606A CD 01 5E         call Ink
  612+ 606D
- 613+ 606D 2A C4 77         ld   hl, (room_ptr)    ; HL = indirizzo stanza
+ 613+ 606D 2A 74 78         ld   hl, (room_ptr)    ; HL = indirizzo stanza
  614+ 6070 11 80 00         ld   de, 128           ; Offset del nome stanza (32 byte)
  615+ 6073 19               add  hl, de            ; HL = indirizzo nome stanza
  616+ 6074 06 20            ld   b, 32             ; B = 32 caratteri
@@ -798,7 +798,7 @@
  668+ 60CD D5               push de
  669+ 60CE E5               push hl
  670+ 60CF
- 671+ 60CF 3A 5D 74         ld   a, (items_collected)
+ 671+ 60CF 3A 0D 75         ld   a, (items_collected)
  672+ 60D2 0E 00            ld   c, 0              ; C = centinaia
  673+ 60D4              .loop100:
  674+ 60D4 FE 64            cp   100
@@ -1008,7 +1008,7 @@
  864+ 61DB 16 00            ld   d, 0
  865+ 61DD 59               ld   e, c              ; DE = C
  866+ 61DE 19               add  hl, de            ; HL = B * 8 + C
- 867+ 61DF ED 5B C4 77      ld   de, (room_ptr)
+ 867+ 61DF ED 5B 74 78      ld   de, (room_ptr)
  868+ 61E3 19               add  hl, de            ; HL = layout byte address
  869+ 61E4 7E               ld   a, (hl)           ; A = layout byte
  870+ 61E5 57               ld   d, a              ; D = salva il byte di layout
@@ -1024,7 +1024,7 @@
  880+ 61EE D5               push de
  881+ 61EF C5               push bc
  882+ 61F0
- 883+ 61F0 ED 5B C4 77      ld   de, (room_ptr)
+ 883+ 61F0 ED 5B 74 78      ld   de, (room_ptr)
  884+ 61F4 B7               or   a
  885+ 61F5 20 06            jr   nz, .not_bg
  886+ 61F7 21 A0 00         ld   hl, OFFSET_BG
@@ -1107,7 +1107,7 @@
  963+ 6247 D5               push de
  964+ 6248 C5               push bc
  965+ 6249 4C               ld   c, h              ; C = Row
- 966+ 624A CD 35 74         call CheckActiveItemAtCell
+ 966+ 624A CD E5 74         call CheckActiveItemAtCell
  967+ 624D 30 06            jr   nc, .no_item_attr
  968+ 624F
  969+ 624F C1               pop  bc
@@ -1143,7 +1143,7 @@
  999+ 626B 85               add  a, l
 1000+ 626C 6F               ld   l, a              ; HL = r * 8 + c / 4
 1001+ 626D
-1002+ 626D ED 5B C4 77      ld   de, (room_ptr)
+1002+ 626D ED 5B 74 78      ld   de, (room_ptr)
 1003+ 6271 19               add  hl, de            ; HL = layout byte address
 1004+ 6272 7E               ld   a, (hl)           ; A = layout byte
 1005+ 6273
@@ -1197,7 +1197,7 @@
 1053+ 62AB 21 BB 00         ld   hl, OFFSET_NASTY
 1054+ 62AE
 1055+ 62AE              .load_attr:
-1056+ 62AE ED 5B C4 77      ld   de, (room_ptr)
+1056+ 62AE ED 5B 74 78      ld   de, (room_ptr)
 1057+ 62B2 19               add  hl, de            ; HL = tile pointer
 1058+ 62B3 7E               ld   a, (hl)           ; A = primo byte del tile (l'attributo colore)
 1059+ 62B4
@@ -1431,19 +1431,19 @@
 1287+ 6382 DD E5            push ix
 1288+ 6384
 1289+ 6384                  ; --- 1. Disegna Conveyor ---
-1290+ 6384 2A C4 77         ld   hl, (room_ptr)
+1290+ 6384 2A 74 78         ld   hl, (room_ptr)
 1291+ 6387 11 D6 00         ld   de, OFFSET_CONVEYOR_DATA
 1292+ 638A 19               add  hl, de            ; HL = ConveyorData pointer
 1293+ 638B
 1294+ 638B 7E               ld   a, (hl)           ; A = Direction
-1295+ 638C 32 6B 77         ld   (conveyor_dir), a
+1295+ 638C 32 1B 78         ld   (conveyor_dir), a
 1296+ 638F 23               inc  hl
 1297+ 6390 5E               ld   e, (hl)
 1298+ 6391 23               inc  hl
 1299+ 6392 56               ld   d, (hl)           ; DE = Location
 1300+ 6393 23               inc  hl
 1301+ 6394 7E               ld   a, (hl)           ; A = Length
-1302+ 6395 32 6C 77         ld   (conveyor_len), a
+1302+ 6395 32 1C 78         ld   (conveyor_len), a
 1303+ 6398
 1304+ 6398                  ; Controlla se DE (Location) è 0
 1305+ 6398 7A               ld   a, d
@@ -1479,17 +1479,17 @@
 1335+ 63BD E1               pop  hl                ; HL = original pointer (Length)
 1336+ 63BE
 1337+ 63BE 78               ld   a, b
-1338+ 63BF 32 6D 77         ld   (conveyor_row), a
+1338+ 63BF 32 1D 78         ld   (conveyor_row), a
 1339+ 63C2 79               ld   a, c
-1340+ 63C3 32 6E 77         ld   (conveyor_col), a
+1340+ 63C3 32 1E 78         ld   (conveyor_col), a
 1341+ 63C6
-1342+ 63C6 3A 6C 77         ld   a, (conveyor_len) ; A = Length
+1342+ 63C6 3A 1C 78         ld   a, (conveyor_len) ; A = Length
 1343+ 63C9 B7               or   a
 1344+ 63CA 28 14            jr   z, .draw_ramp
 1345+ 63CC 57               ld   d, a              ; D = contatore lunghezza
 1346+ 63CD
 1347+ 63CD                  ; IX = room_ptr + OFFSET_CONVEYOR
-1348+ 63CD 2A C4 77         ld   hl, (room_ptr)
+1348+ 63CD 2A 74 78         ld   hl, (room_ptr)
 1349+ 63D0 C5               push bc
 1350+ 63D1 01 CD 00         ld   bc, OFFSET_CONVEYOR
 1351+ 63D4 09               add  hl, bc
@@ -1505,19 +1505,19 @@
 1361+ 63E0
 1362+ 63E0              .draw_ramp:
 1363+ 63E0                  ; --- 2. Disegna Ramp ---
-1364+ 63E0 2A C4 77         ld   hl, (room_ptr)
+1364+ 63E0 2A 74 78         ld   hl, (room_ptr)
 1365+ 63E3 11 DA 00         ld   de, OFFSET_RAMP_DATA
 1366+ 63E6 19               add  hl, de            ; HL = RampData pointer
 1367+ 63E7
 1368+ 63E7 7E               ld   a, (hl)           ; A = Direction (0 = up-left, 1 = up-right)
-1369+ 63E8 32 6F 77         ld   (ramp_dir), a
+1369+ 63E8 32 1F 78         ld   (ramp_dir), a
 1370+ 63EB 23               inc  hl
 1371+ 63EC 5E               ld   e, (hl)
 1372+ 63ED 23               inc  hl
 1373+ 63EE 56               ld   d, (hl)           ; DE = Location
 1374+ 63EF 23               inc  hl
 1375+ 63F0 7E               ld   a, (hl)           ; A = Length
-1376+ 63F1 32 70 77         ld   (ramp_len), a
+1376+ 63F1 32 20 78         ld   (ramp_len), a
 1377+ 63F4
 1378+ 63F4                  ; Controlla se DE (Location) è 0
 1379+ 63F4 7A               ld   a, d
@@ -1552,17 +1552,17 @@
 1408+ 6419 E1               pop  hl                ; HL = original pointer (Length)
 1409+ 641A
 1410+ 641A 78               ld   a, b
-1411+ 641B 32 71 77         ld   (ramp_row), a
+1411+ 641B 32 21 78         ld   (ramp_row), a
 1412+ 641E 79               ld   a, c
-1413+ 641F 32 72 77         ld   (ramp_col), a
+1413+ 641F 32 22 78         ld   (ramp_col), a
 1414+ 6422
-1415+ 6422 3A 70 77         ld   a, (ramp_len)     ; A = Length
+1415+ 6422 3A 20 78         ld   a, (ramp_len)     ; A = Length
 1416+ 6425 B7               or   a
 1417+ 6426 28 1E            jr   z, .done_ramp
 1418+ 6428 57               ld   d, a              ; D = contatore lunghezza
 1419+ 6429
 1420+ 6429                  ; IX = room_ptr + OFFSET_RAMP
-1421+ 6429 2A C4 77         ld   hl, (room_ptr)
+1421+ 6429 2A 74 78         ld   hl, (room_ptr)
 1422+ 642C C5               push bc
 1423+ 642D 01 C4 00         ld   bc, OFFSET_RAMP
 1424+ 6430 09               add  hl, bc
@@ -1573,7 +1573,7 @@
 1429+ 6435              .ramp_loop:
 1430+ 6435 CD 8C 61         call DrawTile
 1431+ 6438
-1432+ 6438 3A 6F 77         ld   a, (ramp_dir)
+1432+ 6438 3A 1F 78         ld   a, (ramp_dir)
 1433+ 643B B7               or   a
 1434+ 643C 28 03            jr   z, .up_left
 1435+ 643E              .up_right:
@@ -1633,19 +1633,19 @@
   35+ 644C                  ; Il movimento orizzontale in aria continua anche se non ci sono
   36+ 644C                  ; tasti di direzione premuti (jump_dir decide).
   37+ 644C                  ; ---------------------------------------------------------------
-  38+ 644C 3A 61 74         ld   a, (on_ground)
+  38+ 644C 3A 11 75         ld   a, (on_ground)
   39+ 644F B7               or   a
   40+ 6450 20 1A            jr   nz, .on_ground_check
   41+ 6452
-  42+ 6452 3A 65 74         ld   a, (jump_dir)
+  42+ 6452 3A 15 75         ld   a, (jump_dir)
   43+ 6455 B7               or   a
   44+ 6456 C8               ret  z                  ; Se jump_dir è 0, salto verticale -> nessun movimento orizzontale
   45+ 6457
   46+ 6457                  ; In volo: resetta comunque il flag di aggiornamento movimento se era impostato
-  47+ 6457 DD 21 5B 74      ld   ix, flags
+  47+ 6457 DD 21 0B 75      ld   ix, flags
   48+ 645B DD CB 00 86      res  $00, (ix)
   49+ 645F
-  50+ 645F ED 4B 53 74      ld   bc, (PlayerPos)
+  50+ 645F ED 4B 03 75      ld   bc, (PlayerPos)
   51+ 6463 FE 01            cp   1
   52+ 6465 28 1D            jr   z, movePlayer_left
   53+ 6467 FE 02            cp   2
@@ -1656,13 +1656,13 @@
   58+ 646C                  ; ---------------------------------------------------------------
   59+ 646C                  ; Se siamo a terra, muoviti solo se c'è input (bit 0 di flags impostato)
   60+ 646C                  ; ---------------------------------------------------------------
-  61+ 646C DD 21 5B 74      ld   ix, flags
+  61+ 646C DD 21 0B 75      ld   ix, flags
   62+ 6470 DD CB 00 46      bit  $00, (ix)
   63+ 6474 C8               ret  z
   64+ 6475
   65+ 6475 DD CB 00 86      res  $00, (ix)
   66+ 6479
-  67+ 6479 ED 4B 53 74      ld   bc, (PlayerPos)
+  67+ 6479 ED 4B 03 75      ld   bc, (PlayerPos)
   68+ 647D
   69+ 647D              .ground_input:
   70+ 647D                  ; ---------------------------------------------------------------
@@ -1683,7 +1683,7 @@
   85+ 6484              movePlayer_left:
   86+ 6484
   87+ 6484                  ; Calcola nuova posizione: X - speed
-  88+ 6484 3A C8 77         ld   a, (player_speed)
+  88+ 6484 3A 78 78         ld   a, (player_speed)
   89+ 6487 5F               ld   e, a
   90+ 6488
   91+ 6488 79               ld   a, c
@@ -1705,7 +1705,7 @@
  107+ 6494 38 6F            jr   c, save_x
  108+ 6496
  109+ 6496                  ; Applica movimento
- 110+ 6496 3A C8 77         ld   a, (player_speed)
+ 110+ 6496 3A 78 78         ld   a, (player_speed)
  111+ 6499 5F               ld   e, a
  112+ 649A
  113+ 649A 79               ld   a, c
@@ -1719,7 +1719,7 @@
  121+ 649F              ; ---------------------------------------------------------------
  122+ 649F              .clamp_left:
  123+ 649F                  ; Controlla se c'è una stanza a sinistra
- 124+ 649F 2A C4 77         ld   hl, (room_ptr)
+ 124+ 649F 2A 74 78         ld   hl, (room_ptr)
  125+ 64A2 11 EB 00         ld   de, 235           ; Offset per stanza a sinistra
  126+ 64A5 19               add  hl, de
  127+ 64A6 7E               ld   a, (hl)           ; A = ID stanza a sinistra
@@ -1745,7 +1745,7 @@
  147+ 64BD              ; ===============================================================
  148+ 64BD              movePlayer_right:
  149+ 64BD                  ; Impedisci lo spostamento a destra se Willy è sul conveyor nella stanza The Off Licence (room 0).
- 150+ 64BD 3A 6A 77         ld   a, (current_room)
+ 150+ 64BD 3A 1A 78         ld   a, (current_room)
  151+ 64C0 B7               or   a                      ; Room 0 = The Off Licence
  152+ 64C1 20 04            jr   nz, .continue_right
  153+ 64C3 CD 32 6A         call CheckWillyOnConveyor
@@ -1753,7 +1753,7 @@
  155+ 64C7
  156+ 64C7              .continue_right:
  157+ 64C7                  ; Prova movimento X + speed
- 158+ 64C7 3A C8 77         ld   a, (player_speed)
+ 158+ 64C7 3A 78 78         ld   a, (player_speed)
  159+ 64CA 5F               ld   e, a
  160+ 64CB
  161+ 64CB 79               ld   a, c
@@ -1779,7 +1779,7 @@
  181+ 64DB 38 28            jr   c, save_x
  182+ 64DD
  183+ 64DD                  ; Applica movimento
- 184+ 64DD 3A C8 77         ld   a, (player_speed)
+ 184+ 64DD 3A 78 78         ld   a, (player_speed)
  185+ 64E0 5F               ld   e, a
  186+ 64E1
  187+ 64E1 79               ld   a, c
@@ -1793,7 +1793,7 @@
  195+ 64E6              ; ---------------------------------------------------------------
  196+ 64E6              .clamp_right:
  197+ 64E6                  ; Controlla se c'è una stanza a destra
- 198+ 64E6 2A C4 77         ld   hl, (room_ptr)
+ 198+ 64E6 2A 74 78         ld   hl, (room_ptr)
  199+ 64E9 11 EC 00         ld   de, 236           ; Offset per stanza a destra
  200+ 64EC 19               add  hl, de
  201+ 64ED 7E               ld   a, (hl)           ; A = ID stanza a destra
@@ -1820,7 +1820,7 @@
  222+ 6505              ; ===============================================================
  223+ 6505              save_x:
  224+ 6505
- 225+ 6505 ED 43 53 74      ld   (PlayerPos), bc
+ 225+ 6505 ED 43 03 75      ld   (PlayerPos), bc
  226+ 6509
  227+ 6509              ; ===============================================================
  228+ 6509              ; Animazione corpo (gambe)
@@ -1828,7 +1828,7 @@
  230+ 6509              ; ===============================================================
  231+ 6509              movePlayer_print:
  232+ 6509
- 233+ 6509 3A 59 74         ld   a, (body_state)
+ 233+ 6509 3A 09 75         ld   a, (body_state)
  234+ 650C 3C               inc  a
  235+ 650D
  236+ 650D FE 03            cp   3
@@ -1838,7 +1838,7 @@
  240+ 6513
  241+ 6513              .save_state:
  242+ 6513
- 243+ 6513 32 59 74         ld   (body_state), a
+ 243+ 6513 32 09 75         ld   (body_state), a
  244+ 6516
  245+ 6516 C9               ret
  246+ 6517
@@ -1865,7 +1865,7 @@
  267+ 6517                  ; ---------------------------------------------------------------
  268+ 6517                  ; Accede alla struttura dati della stanza corrente
  269+ 6517                  ; ---------------------------------------------------------------
- 270+ 6517 2A C4 77         ld   hl, (room_ptr)
+ 270+ 6517 2A 74 78         ld   hl, (room_ptr)
  271+ 651A
  272+ 651A                  ; ---------------------------------------------------------------
  273+ 651A                  ; Salta all’offset dove è memorizzata la posizione iniziale
@@ -1885,8 +1885,8 @@
  287+ 6521                  ; ---------------------------------------------------------------
  288+ 6521                  ; Salva posizione corrente e posizione precedente
  289+ 6521                  ; ---------------------------------------------------------------
- 290+ 6521 ED 43 53 74      ld   (PlayerPos), bc
- 291+ 6525 ED 43 55 74      ld   (PlayerPosOld), bc
+ 290+ 6521 ED 43 03 75      ld   (PlayerPos), bc
+ 291+ 6525 ED 43 05 75      ld   (PlayerPosOld), bc
  292+ 6529
  293+ 6529 C9               ret
  294+ 652A
@@ -1918,7 +1918,7 @@
   23+ 652A
   24+ 652A              CheckCtrl:
   25+ 652A AF               xor  a
-  26+ 652B 32 66 74         ld   (current_input_dir), a
+  26+ 652B 32 16 75         ld   (current_input_dir), a
   27+ 652E
   28+ 652E                  ; ── Sezione 1: tasto Q (cambio stanza) ──────────────────────────
   29+ 652E                  ;
@@ -1932,13 +1932,13 @@
   37+ 6536
   38+ 6536                  ; Q è premuto: debounce tramite (q_prev).
   39+ 6536                  ; Se (q_prev) ≠ 0 il tasto era già giù nel frame precedente → ignora.
-  40+ 6536 3A 67 74         ld   a, (q_prev)
+  40+ 6536 3A 17 75         ld   a, (q_prev)
   41+ 6539 B7               or   a
   42+ 653A 20 0D            jr   nz, .q_handled         ; era già premuto, niente da fare
   43+ 653C
   44+ 653C                  ; ── Primo frame di pressione di Q ──
   45+ 653C 3E 01            ld   a, 1
-  46+ 653E 32 67 74         ld   (q_prev), a            ; marca "Q era premuto"
+  46+ 653E 32 17 75         ld   (q_prev), a            ; marca "Q era premuto"
   47+ 6541
   48+ 6541                  ; NOTA sullo stack:
   49+ 6541                  ; CheckCtrl è stata invocata con CALL, quindi l'indirizzo di ritorno
@@ -1950,7 +1950,7 @@
   55+ 6545
   56+ 6545              .q_not_pressed:
   57+ 6545 AF               xor  a
-  58+ 6546 32 67 74         ld   (q_prev), a            ; Q rilasciato → azzera debounce
+  58+ 6546 32 17 75         ld   (q_prev), a            ; Q rilasciato → azzera debounce
   59+ 6549
   60+ 6549              .q_handled:
   61+ 6549
@@ -1966,7 +1966,7 @@
   71+ 654F                  ; Se Willy è sul conveyor nella stanza The Off Licence (room 0),
   72+ 654F                  ; impedisci lo spostamento da sinistra a destra (disabilita tasto destra P / bit 0).
   73+ 654F F5               push af
-  74+ 6550 3A 6A 77         ld   a, (current_room)
+  74+ 6550 3A 1A 78         ld   a, (current_room)
   75+ 6553 B7               or   a                      ; Room 0 = The Off Licence
   76+ 6554 20 09            jr   nz, .no_block_conveyor
   77+ 6556 CD 32 6A         call CheckWillyOnConveyor
@@ -1977,7 +1977,7 @@
   82+ 655F              .no_block_conveyor:
   83+ 655F F1               pop  af
   84+ 6560
-  85+ 6560 DD 21 5B 74      ld  ix, flags               ; IX punta alla variabile flags
+  85+ 6560 DD 21 0B 75      ld  ix, flags               ; IX punta alla variabile flags
   86+ 6564
   87+ 6564              checkCtrl_left:
   88+ 6564 CB 4F            bit $01, a                  ; bit 1 = O → sinistra?
@@ -1986,12 +1986,12 @@
   91+ 656A DD CB 00 C6      set 0, (ix)                 ; flags bit 0 = "movimento in corso"
   92+ 656E 5F               ld  e, a                    ; salva A
   93+ 656F 3E 01            ld  a, 1
-  94+ 6571 32 66 74         ld  (current_input_dir), a
-  95+ 6574 3A 61 74         ld  a, (on_ground)
+  94+ 6571 32 16 75         ld  (current_input_dir), a
+  95+ 6574 3A 11 75         ld  a, (on_ground)
   96+ 6577 B7               or  a
   97+ 6578 28 05            jr  z, .skip_dir_left
   98+ 657A 3E 01            ld  a, 1
-  99+ 657C 32 5A 74         ld  (direction), a          ; direction = 1 → sinistra
+  99+ 657C 32 0A 75         ld  (direction), a          ; direction = 1 → sinistra
  100+ 657F              .skip_dir_left:
  101+ 657F 7B               ld  a, e                    ; ripristina A
  102+ 6580
@@ -2002,12 +2002,12 @@
  107+ 6586 DD CB 00 C6      set 0, (ix)                 ; flags bit 0 = "movimento in corso"
  108+ 658A 5F               ld  e, a
  109+ 658B 3E 02            ld  a, 2
- 110+ 658D 32 66 74         ld  (current_input_dir), a
- 111+ 6590 3A 61 74         ld  a, (on_ground)
+ 110+ 658D 32 16 75         ld  (current_input_dir), a
+ 111+ 6590 3A 11 75         ld  a, (on_ground)
  112+ 6593 B7               or  a
  113+ 6594 28 05            jr  z, .skip_dir_right
  114+ 6596 3E 02            ld  a, 2
- 115+ 6598 32 5A 74         ld  (direction), a          ; direction = 2 → destra
+ 115+ 6598 32 0A 75         ld  (direction), a          ; direction = 2 → destra
  116+ 659B              .skip_dir_right:
  117+ 659B 7B               ld  a, e
  118+ 659C
@@ -2027,19 +2027,19 @@
  132+ 65A4              .released:
  133+ 65A4                  ; Nessun tasto di salto premuto: azzera debounce.
  134+ 65A4 AF               xor a
- 135+ 65A5 32 63 74         ld  (jump_prev), a
+ 135+ 65A5 32 13 75         ld  (jump_prev), a
  136+ 65A8 18 10            jr  .end
  137+ 65AA
  138+ 65AA              .pressed:
  139+ 65AA                  ; Tasto salto premuto: edge detection.
  140+ 65AA                  ; Se (jump_prev) ≠ 0 era già premuto nel frame precedente → ignora.
- 141+ 65AA 3A 63 74         ld  a, (jump_prev)
+ 141+ 65AA 3A 13 75         ld  a, (jump_prev)
  142+ 65AD B7               or  a
  143+ 65AE 20 0A            jr  nz, .end
  144+ 65B0                  ; Primo frame di pressione:
  145+ 65B0 3E 01            ld  a, 1
- 146+ 65B2 32 62 74         ld  (jump_pressed), a       ; segnala "salto appena scattato"
- 147+ 65B5 32 63 74         ld  (jump_prev), a          ; marca come già premuto (debounce)
+ 146+ 65B2 32 12 75         ld  (jump_pressed), a       ; segnala "salto appena scattato"
+ 147+ 65B5 32 13 75         ld  (jump_prev), a          ; marca come già premuto (debounce)
  148+ 65B8 CB D2            set 2, d                    ; imposta bit 2 di D = "salto attivo"
  149+ 65BA
  150+ 65BA              .end:
@@ -2066,7 +2066,7 @@
  171+ 65C1 E6 04            and  $04                    ; tieni solo il bit 2 (salto)
  172+ 65C3 57               ld   d, a                   ; D = solo salto, direzioni azzerate
  173+ 65C4 AF               xor  a
- 174+ 65C5 32 66 74         ld   (current_input_dir), a
+ 174+ 65C5 32 16 75         ld   (current_input_dir), a
  175+ 65C8 C9               ret
  176+ 65C9
  177+ 65C9              ; -------------------------------------------------------------------
@@ -2075,7 +2075,7 @@
  180+ 65C9              PerformRoomChange:
  181+ 65C9                  ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..45)
  182+ 65C9 21 3A 66         ld   hl, RoomsListTable
- 183+ 65CC ED 4B C4 77      ld   bc, (room_ptr)            ; BC = layout corrente
+ 183+ 65CC ED 4B 74 78      ld   bc, (room_ptr)            ; BC = layout corrente
  184+ 65D0 1E 00            ld   e, 0                      ; E = contatore indice
  185+ 65D2              .loop:
  186+ 65D2 7E               ld   a, (hl)
@@ -2122,22 +2122,22 @@
  227+ 65FC 28 E7            jr   z, .next_index_loop       ; Se è zero, riprova col prossimo
  228+ 65FE
  229+ 65FE                  ; Trovato! DE = layout
- 230+ 65FE ED 53 C4 77      ld   (room_ptr), de
+ 230+ 65FE ED 53 74 78      ld   (room_ptr), de
  231+ 6602
  232+ 6602                  ; 4. Pulisci lo schermo e ricarica la stanza
  233+ 6602 21 8D 5C         ld   hl, ATTR_P
  234+ 6605 36 07            ld   (hl), $07
  235+ 6607 CD AF 0D         call CLS
  236+ 660A
- 237+ 660A C3 F5 77         jp   LoadRoomAndRestart
+ 237+ 660A C3 A7 78         jp   LoadRoomAndRestart
  238+ 660D
  239+ 660D              TriggerRoomChange:
  240+ 660D                  ; Input: A = nuovo room ID, C = Willy X, B = Willy Y
- 241+ 660D ED 43 53 74      ld   (PlayerPos), bc
- 242+ 6611 ED 43 55 74      ld   (PlayerPosOld), bc
+ 241+ 660D ED 43 03 75      ld   (PlayerPos), bc
+ 242+ 6611 ED 43 05 75      ld   (PlayerPosOld), bc
  243+ 6615
  244+ 6615                  ; Reset velocity_y
- 245+ 6615 21 60 74         ld   hl, velocity_y
+ 245+ 6615 21 10 75         ld   hl, velocity_y
  246+ 6618 36 00            ld   (hl), 0
  247+ 661A
  248+ 661A                  ; Trova l'indirizzo del layout corrispondente da RoomsListTable
@@ -2151,11 +2151,11 @@
  256+ 6623 23               inc  hl
  257+ 6624 56               ld   d, (hl)                   ; DE = puntatore al layout della nuova stanza
  258+ 6625
- 259+ 6625 ED 53 C4 77      ld   (room_ptr), de            ; Aggiorna room_ptr
+ 259+ 6625 ED 53 74 78      ld   (room_ptr), de            ; Aggiorna room_ptr
  260+ 6629
  261+ 6629                  ; Imposta il flag di transizione per non caricare la posizione di default
  262+ 6629 3E 01            ld   a, 1
- 263+ 662B 32 C9 77         ld   (transition_active), a
+ 263+ 662B 32 79 78         ld   (transition_active), a
  264+ 662E
  265+ 662E                  ; Pulisci lo schermo
  266+ 662E 21 8D 5C         ld   hl, ATTR_P
@@ -2164,7 +2164,7 @@
  269+ 6636
  270+ 6636                  ; Pulisci lo stack (rimuove il ritorno alla routine chiamante dal Main_loop)
  271+ 6636 E1               pop  hl
- 272+ 6637 C3 F5 77         jp   LoadRoomAndRestart
+ 272+ 6637 C3 A7 78         jp   LoadRoomAndRestart
  273+ 663A
  274+ 663A              RoomsListTable:
  275+ 663A 00 83            dw TheOffLicenceLayout              ; 0
@@ -2282,11 +2282,11 @@
   65+ 66EB              ; Applica gravità e gestisce salto
   66+ 66EB              ; -------------------------------------------------------------------
   67+ 66EB              ApplyGravity:
-  68+ 66EB ED 4B 53 74      ld  bc, (PlayerPos)
+  68+ 66EB ED 4B 03 75      ld  bc, (PlayerPos)
   69+ 66EF 78               ld  a, b              ; B = PlayerY (pixel)
   70+ 66F0
   71+ 66F0                  ; --- CONTROLLO RAMPA PER IL MOVIMENTO ---
-  72+ 66F0 3A 61 74         ld   a, (on_ground)
+  72+ 66F0 3A 11 75         ld   a, (on_ground)
   73+ 66F3 B7               or   a
   74+ 66F4 28 3E            jr   z, .not_on_ramp_walk ; Se siamo in volo, non fare il snap della camminata sulla rampa
   75+ 66F6
@@ -2307,41 +2307,41 @@
   90+ 6708
   91+ 6708                  ; Aggancia sulla rampa!
   92+ 6708 43               ld   b, e               ; B = ramp_Y
-  93+ 6709 ED 43 53 74      ld   (PlayerPos), bc    ; Salva la posizione Y allineata alla rampa
+  93+ 6709 ED 43 03 75      ld   (PlayerPos), bc    ; Salva la posizione Y allineata alla rampa
   94+ 670D
   95+ 670D                  ; Gestisci il salto mentre siamo sulla rampa
-  96+ 670D 3A 62 74         ld   a, (jump_pressed)
+  96+ 670D 3A 12 75         ld   a, (jump_pressed)
   97+ 6710 B7               or   a
   98+ 6711 CA 1F 69         jp   z, .end            ; Se non salta, abbiamo finito per questo frame
   99+ 6714
  100+ 6714 AF               xor  a
- 101+ 6715 32 CA 77         ld   (jump_sound_note), a
- 102+ 6718 32 CB 77         ld   (jump_sound_timer), a
+ 101+ 6715 32 7A 78         ld   (jump_sound_note), a
+ 102+ 6718 32 7B 78         ld   (jump_sound_timer), a
  103+ 671B
  104+ 671B 3E 07            ld   a, JUMP_STRENGTH
- 105+ 671D 32 60 74         ld   (velocity_y), a
+ 105+ 671D 32 10 75         ld   (velocity_y), a
  106+ 6720 AF               xor  a
- 107+ 6721 32 61 74         ld   (on_ground), a
- 108+ 6724 32 62 74         ld   (jump_pressed), a
+ 107+ 6721 32 11 75         ld   (on_ground), a
+ 108+ 6724 32 12 75         ld   (jump_pressed), a
  109+ 6727 78               ld   a, b              ; B = PlayerY (ramp_Y)
- 110+ 6728 32 64 74         ld   (jump_start_y), a
- 111+ 672B 3A 66 74         ld   a, (current_input_dir)
- 112+ 672E 32 65 74         ld   (jump_dir), a
+ 110+ 6728 32 14 75         ld   (jump_start_y), a
+ 111+ 672B 3A 16 75         ld   a, (current_input_dir)
+ 112+ 672E 32 15 75         ld   (jump_dir), a
  113+ 6731 C3 ED 67         jp   .in_air
  114+ 6734
  115+ 6734              .not_on_ramp_walk:
- 116+ 6734 ED 4B 53 74      ld  bc, (PlayerPos)
+ 116+ 6734 ED 4B 03 75      ld  bc, (PlayerPos)
  117+ 6738 78               ld  a, b              ; B = PlayerY (pixel)
  118+ 6739
  119+ 6739                  ; Controlla se siamo a mezz'aria (on_ground == 0)
- 120+ 6739 3A 61 74         ld  a, (on_ground)
+ 120+ 6739 3A 11 75         ld  a, (on_ground)
  121+ 673C B7               or  a
  122+ 673D CA ED 67         jp  z, .in_air        ; Se siamo in volo, continua a volare
  123+ 6740
  124+ 6740                  ; --- CONTROLLO STEP DOWN DI 1 TILE (8 pixel) ---
  125+ 6740                  ; Se stiamo scendendo da una rampa o gradino di 1 tile,
  126+ 6740                  ; facciamo scendere Willy immediatamente per evitare che fluttui in aria.
- 127+ 6740 3A 5A 74         ld   a, (direction)
+ 127+ 6740 3A 0A 75         ld   a, (direction)
  128+ 6743 FE 01            cp   1
  129+ 6745 28 2F            jr   z, .stepping_left
  130+ 6747
@@ -2420,7 +2420,7 @@
  203+ 679F 78               ld   a, b
  204+ 67A0 C6 08            add  a, 8
  205+ 67A2 47               ld   b, a              ; B = Y + 8
- 206+ 67A3 32 54 74         ld   (PlayerPos+1), a  ; Aggiorna Y
+ 206+ 67A3 32 04 75         ld   (PlayerPos+1), a  ; Aggiorna Y
  207+ 67A6
  208+ 67A6              .no_step_down:
  209+ 67A6
@@ -2444,48 +2444,48 @@
  227+ 67B8
  228+ 67B8                  ; Se nessuna delle due è solida, iniziamo a cadere!
  229+ 67B8 AF               xor  a
- 230+ 67B9 32 61 74         ld   (on_ground), a
- 231+ 67BC 32 60 74         ld   (velocity_y), a   ; Inizia la caduta con velocità 0
+ 230+ 67B9 32 11 75         ld   (on_ground), a
+ 231+ 67BC 32 10 75         ld   (velocity_y), a   ; Inizia la caduta con velocità 0
  232+ 67BF C3 ED 67         jp   .in_air
  233+ 67C2
  234+ 67C2              .still_on_ground:
  235+ 67C2                  ; Siamo ancora sulla piattaforma o sul pavimento
  236+ 67C2                  ; Ripristina bc originale (PlayerPos)
- 237+ 67C2 ED 4B 53 74      ld   bc, (PlayerPos)
+ 237+ 67C2 ED 4B 03 75      ld   bc, (PlayerPos)
  238+ 67C6
  239+ 67C6                  ; Gestisci il salto
- 240+ 67C6 3A 62 74         ld   a, (jump_pressed)
+ 240+ 67C6 3A 12 75         ld   a, (jump_pressed)
  241+ 67C9 B7               or   a
  242+ 67CA CA 1F 69         jp   z, .end
  243+ 67CD
  244+ 67CD AF               xor  a
- 245+ 67CE 32 CA 77         ld   (jump_sound_note), a
- 246+ 67D1 32 CB 77         ld   (jump_sound_timer), a
+ 245+ 67CE 32 7A 78         ld   (jump_sound_note), a
+ 246+ 67D1 32 7B 78         ld   (jump_sound_timer), a
  247+ 67D4
  248+ 67D4 3E 07            ld   a, JUMP_STRENGTH
- 249+ 67D6 32 60 74         ld   (velocity_y), a
+ 249+ 67D6 32 10 75         ld   (velocity_y), a
  250+ 67D9 AF               xor  a
- 251+ 67DA 32 61 74         ld   (on_ground), a
- 252+ 67DD 32 62 74         ld   (jump_pressed), a
+ 251+ 67DA 32 11 75         ld   (on_ground), a
+ 252+ 67DD 32 12 75         ld   (jump_pressed), a
  253+ 67E0 78               ld   a, b              ; B = PlayerY
- 254+ 67E1 32 64 74         ld   (jump_start_y), a
- 255+ 67E4 3A 66 74         ld   a, (current_input_dir)
- 256+ 67E7 32 65 74         ld   (jump_dir), a
+ 254+ 67E1 32 14 75         ld   (jump_start_y), a
+ 255+ 67E4 3A 16 75         ld   a, (current_input_dir)
+ 256+ 67E7 32 15 75         ld   (jump_dir), a
  257+ 67EA C3 ED 67         jp   .in_air
  258+ 67ED
  259+ 67ED              .in_air:
  260+ 67ED                  ; Applica gravità frazionaria (0.75 in media)
- 261+ 67ED 3A 68 74         ld   a, (counter)
+ 261+ 67ED 3A 18 75         ld   a, (counter)
  262+ 67F0 E6 03            and  3
  263+ 67F2 FE 03            cp   3
  264+ 67F4 28 07            jr   z, .skip_gravity
  265+ 67F6
- 266+ 67F6 3A 60 74         ld   a, (velocity_y)
+ 266+ 67F6 3A 10 75         ld   a, (velocity_y)
  267+ 67F9 D6 01            sub  1
  268+ 67FB 18 0D            jr   .store_vel
  269+ 67FD
  270+ 67FD              .skip_gravity:
- 271+ 67FD 3A 60 74         ld   a, (velocity_y)
+ 271+ 67FD 3A 10 75         ld   a, (velocity_y)
  272+ 6800
  273+ 6800                  ; Controlla se positivo per evitare bug con cp signed
  274+ 6800 CB 7F            bit 7, a
@@ -2496,17 +2496,17 @@
  279+ 6808 3E F4            ld  a, -MAX_FALL_SPEED
  280+ 680A
  281+ 680A              .store_vel:
- 282+ 680A 32 60 74         ld  (velocity_y), a
+ 282+ 680A 32 10 75         ld  (velocity_y), a
  283+ 680D
  284+ 680D                  ; Applica movimento verticale: PlayerY = PlayerY - velocity_y
- 285+ 680D ED 4B 53 74      ld  bc, (PlayerPos)
+ 285+ 680D ED 4B 03 75      ld  bc, (PlayerPos)
  286+ 6811 57               ld  d, a              ; D = velocity_y (signed)
  287+ 6812 78               ld  a, b              ; A = PlayerY
  288+ 6813 92               sub d                 ; A = PlayerY - velocity_y
  289+ 6814 47               ld  b, a              ; B = new PlayerY
  290+ 6815
  291+ 6815                  ; Controlla se stiamo cadendo (velocity_y <= 0)
- 292+ 6815 3A 60 74         ld  a, (velocity_y)
+ 292+ 6815 3A 10 75         ld  a, (velocity_y)
  293+ 6818 CB 7F            bit 7, a              ; Se negativo, bit 7 = 1
  294+ 681A 20 06            jr  nz, .falling_checks
  295+ 681C B7               or  a                 ; Se zero
@@ -2517,7 +2517,7 @@
  300+ 6822                  ; --- CONTROLLO ATTERRAGGIO SU RAMPA ---
  301+ 6822 C5               push bc
  302+ 6823                  ; BC ha C = PlayerX, B = new_Y
- 303+ 6823 3A 54 74         ld   a, (PlayerPos+1)   ; A = old_Y
+ 303+ 6823 3A 04 75         ld   a, (PlayerPos+1)   ; A = old_Y
  304+ 6826 57               ld   d, a               ; D = old_Y
  305+ 6827
  306+ 6827 CD 95 6B         call GetRampY           ; Calcola ramp_Y per PlayerX (in C)
@@ -2526,7 +2526,7 @@
  309+ 682D 67               ld   h, a               ; H = ramp_Y
  310+ 682E
  311+ 682E                  ; Controlla se il salto è iniziato da sotto la rampa
- 312+ 682E 3A 64 74         ld   a, (jump_start_y)
+ 312+ 682E 3A 14 75         ld   a, (jump_start_y)
  313+ 6831 B7               or   a
  314+ 6832 28 06            jr   z, .jump_start_ok  ; Se 0, non siamo in salto (è una caduta normale), permetti atterraggio
  315+ 6834
@@ -2548,13 +2548,13 @@
  331+ 6846                  ; Atterrato sulla rampa!
  332+ 6846 C1               pop  bc                 ; BC ha C = PlayerX, B = new_Y
  333+ 6847 44               ld   b, h               ; B = ramp_Y
- 334+ 6848 ED 43 53 74      ld   (PlayerPos), bc
+ 334+ 6848 ED 43 03 75      ld   (PlayerPos), bc
  335+ 684C 3E 01            ld   a, 1
- 336+ 684E 32 61 74         ld   (on_ground), a
+ 336+ 684E 32 11 75         ld   (on_ground), a
  337+ 6851 AF               xor  a
- 338+ 6852 32 60 74         ld   (velocity_y), a
- 339+ 6855 32 64 74         ld   (jump_start_y), a  ; Reset jump Y
- 340+ 6858 32 65 74         ld   (jump_dir), a
+ 338+ 6852 32 10 75         ld   (velocity_y), a
+ 339+ 6855 32 14 75         ld   (jump_start_y), a  ; Reset jump Y
+ 340+ 6858 32 15 75         ld   (jump_dir), a
  341+ 685B C3 1F 69         jp   .end
  342+ 685E
  343+ 685E              .no_ramp_landing:
@@ -2621,7 +2621,7 @@
  404+ 689C 57               ld   d, a              ; D = (r + 1) * 8 = limite superiore + 8
  405+ 689D
  406+ 689D                  ; Vecchio Y + 16
- 407+ 689D 3A 54 74         ld   a, (PlayerPos+1)  ; A = Vecchio Y
+ 407+ 689D 3A 04 75         ld   a, (PlayerPos+1)  ; A = Vecchio Y
  408+ 68A0 C6 10            add  a, 16             ; A = Vecchio Y + 16
  409+ 68A2
  410+ 68A2 BA               cp   d                 ; Confronta Vecchio Y + 16 con (r + 1) * 8
@@ -2638,22 +2638,22 @@
  421+ 68AC 87               add  a, a              ; *8
  422+ 68AD D6 10            sub  16             ; A = PlayerY di atterraggio
  423+ 68AF
- 424+ 68AF ED 4B 53 74      ld   bc, (PlayerPos)   ; Ripristina C = PlayerX
+ 424+ 68AF ED 4B 03 75      ld   bc, (PlayerPos)   ; Ripristina C = PlayerX
  425+ 68B3 47               ld   b, a              ; B = Nuovo PlayerY
  426+ 68B4
- 427+ 68B4 ED 43 53 74      ld   (PlayerPos), bc
+ 427+ 68B4 ED 43 03 75      ld   (PlayerPos), bc
  428+ 68B8 3E 01            ld   a, 1
- 429+ 68BA 32 61 74         ld   (on_ground), a
+ 429+ 68BA 32 11 75         ld   (on_ground), a
  430+ 68BD AF               xor  a
- 431+ 68BE 32 60 74         ld   (velocity_y), a
- 432+ 68C1 32 64 74         ld   (jump_start_y), a  ; Reset jump Y
- 433+ 68C4 32 65 74         ld   (jump_dir), a
+ 431+ 68BE 32 10 75         ld   (velocity_y), a
+ 432+ 68C1 32 14 75         ld   (jump_start_y), a  ; Reset jump Y
+ 433+ 68C4 32 15 75         ld   (jump_dir), a
  434+ 68C7 C3 1F 69         jp   .end
  435+ 68CA
  436+ 68CA              .no_collision_checks:
- 437+ 68CA 3A 60 74         ld   a, (velocity_y)
+ 437+ 68CA 3A 10 75         ld   a, (velocity_y)
  438+ 68CD 57               ld   d, a                  ; Ripristina D = velocity_y (evita corruzione se proveniamo da .check_landing)
- 439+ 68CE ED 4B 53 74      ld   bc, (PlayerPos)
+ 439+ 68CE ED 4B 03 75      ld   bc, (PlayerPos)
  440+ 68D2 78               ld   a, b
  441+ 68D3 92               sub  d                 ; A = Nuovo Y (calcolato in .store_vel)
  442+ 68D4 47               ld   b, a              ; B = Nuovo Y
@@ -2665,7 +2665,7 @@
  448+ 68DA
  449+ 68DA                  ; Willy sta andando sopra il bordo superiore (Y < 0)
  450+ 68DA                  ; Controlla se c'è una stanza sopra
- 451+ 68DA 2A C4 77         ld   hl, (room_ptr)
+ 451+ 68DA 2A 74 78         ld   hl, (room_ptr)
  452+ 68DD 11 ED 00         ld   de, 237           ; Offset per stanza sopra
  453+ 68E0 19               add  hl, de
  454+ 68E1 7E               ld   a, (hl)           ; A = ID stanza sopra
@@ -2679,9 +2679,9 @@
  462+ 68EB              .no_up_transition:
  463+ 68EB 06 00            ld   b, 0
  464+ 68ED AF               xor  a
- 465+ 68EE 32 60 74         ld   (velocity_y), a
- 466+ 68F1 32 64 74         ld   (jump_start_y), a
- 467+ 68F4 32 65 74         ld   (jump_dir), a
+ 465+ 68EE 32 10 75         ld   (velocity_y), a
+ 466+ 68F1 32 14 75         ld   (jump_start_y), a
+ 467+ 68F4 32 15 75         ld   (jump_dir), a
  468+ 68F7 18 22            jr   .save_ok
  469+ 68F9
  470+ 68F9              .check_max:
@@ -2691,7 +2691,7 @@
  474+ 68FE
  475+ 68FE                  ; Willy sta andando sotto il bordo inferiore (Y >= 113)
  476+ 68FE                  ; Controlla se c'è una stanza sotto
- 477+ 68FE 2A C4 77         ld   hl, (room_ptr)
+ 477+ 68FE 2A 74 78         ld   hl, (room_ptr)
  478+ 6901 11 EE 00         ld   de, 238           ; Offset per stanza sotto
  479+ 6904 19               add  hl, de
  480+ 6905 7E               ld   a, (hl)           ; A = ID stanza sotto
@@ -2705,16 +2705,16 @@
  488+ 690F              .no_down_transition:
  489+ 690F 06 70            ld   b, 112
  490+ 6911 AF               xor  a
- 491+ 6912 32 60 74         ld   (velocity_y), a
- 492+ 6915 32 64 74         ld   (jump_start_y), a
- 493+ 6918 32 65 74         ld   (jump_dir), a
+ 491+ 6912 32 10 75         ld   (velocity_y), a
+ 492+ 6915 32 14 75         ld   (jump_start_y), a
+ 493+ 6918 32 15 75         ld   (jump_dir), a
  494+ 691B
  495+ 691B              .save_ok:
- 496+ 691B ED 43 53 74      ld   (PlayerPos), bc
+ 496+ 691B ED 43 03 75      ld   (PlayerPos), bc
  497+ 691F
  498+ 691F              .end:
  499+ 691F AF               xor  a
- 500+ 6920 32 62 74         ld   (jump_pressed), a
+ 500+ 6920 32 12 75         ld   (jump_pressed), a
  501+ 6923 C9               ret
  502+ 6924
  503+ 6924              ; -------------------------------------------------------------------
@@ -2735,14 +2735,14 @@
  518+ 6934 28 1F            jr   z, .next
  519+ 6936
  520+ 6936                  ; 1. Controllo orizzontale: PlayerX - EnemyX + 7 in [0, 22]
- 521+ 6936 3A 53 74         ld   a, (PlayerPos)    ; A = PlayerX
+ 521+ 6936 3A 03 75         ld   a, (PlayerPos)    ; A = PlayerX
  522+ 6939 DD 96 02         sub  (ix+2)            ; A = PlayerX - EnemyX (Offset 2: Current X)
  523+ 693C C6 07            add  a, 7              ; A = PlayerX - EnemyX + 7
  524+ 693E FE 17            cp   23                ; Se >= 23, nessuna collisione con questo
  525+ 6940 30 13            jr   nc, .next
  526+ 6942
  527+ 6942                  ; 2. Controllo verticale: PlayerY - EnemyY + 15 in [0, 30]
- 528+ 6942 3A 54 74         ld   a, (PlayerPos+1)  ; A = PlayerY
+ 528+ 6942 3A 04 75         ld   a, (PlayerPos+1)  ; A = PlayerY
  529+ 6945 DD 96 03         sub  (ix+3)            ; A = PlayerY - EnemyY (Offset 3: Current Y)
  530+ 6948 C6 0F            add  a, 15             ; A = PlayerY - EnemyY + 15
  531+ 694A FE 1F            cp   31                ; Se >= 31, nessuna collisione con questo
@@ -2796,24 +2796,24 @@
  579+ 697A 5F               ld   e, a              ; E = c (column)
  580+ 697B
  581+ 697B                  ; --- CONTROLLO CONVEYOR ---
- 582+ 697B 3A 6C 77         ld   a, (conveyor_len)
+ 582+ 697B 3A 1C 78         ld   a, (conveyor_len)
  583+ 697E B7               or   a
  584+ 697F 28 1C            jr   z, .check_ramp    ; Se non c'è conveyor, controlla rampa
  585+ 6981
  586+ 6981                  ; Controlla se Row corrisponde
- 587+ 6981 3A 6D 77         ld   a, (conveyor_row)
+ 587+ 6981 3A 1D 78         ld   a, (conveyor_row)
  588+ 6984 BA               cp   d
  589+ 6985 20 16            jr   nz, .check_ramp   ; Row diversa, controlla rampa
  590+ 6987
  591+ 6987                  ; Controlla se Col è compresa: c >= conveyor_col e c < conveyor_col + conveyor_len
- 592+ 6987 3A 6E 77         ld   a, (conveyor_col)
+ 592+ 6987 3A 1E 78         ld   a, (conveyor_col)
  593+ 698A BB               cp   e
  594+ 698B 28 0E            jr   z, .is_conveyor   ; c == conveyor_col -> solido!
  595+ 698D 38 02            jr   c, .c_greater     ; c > conveyor_col -> controlla limite superiore
  596+ 698F 18 0C            jr   .check_ramp       ; c < conveyor_col
  597+ 6991              .c_greater:
  598+ 6991 47               ld   b, a              ; B = conveyor_col
- 599+ 6992 3A 6C 77         ld   a, (conveyor_len)
+ 599+ 6992 3A 1C 78         ld   a, (conveyor_len)
  600+ 6995 80               add  a, b              ; A = conveyor_col + conveyor_len
  601+ 6996 BB               cp   e
  602+ 6997 28 04            jr   z, .check_ramp    ; c == len (fuori)
@@ -2823,31 +2823,31 @@
  606+ 699D
  607+ 699D              .check_ramp:
  608+ 699D                  ; --- CONTROLLO RAMP ---
- 609+ 699D 3A 70 77         ld   a, (ramp_len)
+ 609+ 699D 3A 20 78         ld   a, (ramp_len)
  610+ 69A0 B7               or   a
  611+ 69A1 28 25            jr   z, .not_solid     ; Se non c'è rampa, fine
  612+ 69A3
- 613+ 69A3 3A 71 77         ld   a, (ramp_row)     ; A = RampRowStart
+ 613+ 69A3 3A 21 78         ld   a, (ramp_row)     ; A = RampRowStart
  614+ 69A6 BA               cp   d                 ; compare with player row D
  615+ 69A7 38 1F            jr   c, .not_solid     ; if RampRowStart < D, skip!
  616+ 69A9
  617+ 69A9 92               sub  d                 ; A = RampRowStart - D
  618+ 69AA 47               ld   b, a              ; B = distance from start row (0..ramp_len-1)
- 619+ 69AB 3A 70 77         ld   a, (ramp_len)
+ 619+ 69AB 3A 20 78         ld   a, (ramp_len)
  620+ 69AE B8               cp   b
  621+ 69AF 28 17            jr   z, .not_solid     ; if B == ramp_len, too high!
  622+ 69B1 38 15            jr   c, .not_solid     ; if B > ramp_len, too high!
  623+ 69B3
  624+ 69B3                  ; Calcola ExpectedCol:
- 625+ 69B3 3A 6F 77         ld   a, (ramp_dir)
+ 625+ 69B3 3A 1F 78         ld   a, (ramp_dir)
  626+ 69B6 B7               or   a
  627+ 69B7 28 06            jr   z, .r_left
  628+ 69B9              .r_right:
- 629+ 69B9 3A 72 77         ld   a, (ramp_col)
+ 629+ 69B9 3A 22 78         ld   a, (ramp_col)
  630+ 69BC 80               add  a, b              ; A = ramp_col + B
  631+ 69BD 18 04            jr   .compare_col
  632+ 69BF              .r_left:
- 633+ 69BF 3A 72 77         ld   a, (ramp_col)
+ 633+ 69BF 3A 22 78         ld   a, (ramp_col)
  634+ 69C2 90               sub  b                 ; A = ramp_col - B
  635+ 69C3              .compare_col:
  636+ 69C3 BB               cp   e                 ; Compare with player col E
@@ -2872,15 +2872,15 @@
  655+ 69D2              ; Applica la forza di trascinamento del conveyor se Willy vi è sopra
  656+ 69D2              ; -------------------------------------------------------------------
  657+ 69D2              ApplyConveyorForce:
- 658+ 69D2 3A 61 74         ld   a, (on_ground)
+ 658+ 69D2 3A 11 75         ld   a, (on_ground)
  659+ 69D5 B7               or   a
  660+ 69D6 C8               ret  z                 ; Se non è a terra, nessuna forza
  661+ 69D7
- 662+ 69D7 3A 6C 77         ld   a, (conveyor_len)
+ 662+ 69D7 3A 1C 78         ld   a, (conveyor_len)
  663+ 69DA B7               or   a
  664+ 69DB C8               ret  z                 ; Se non c'è conveyor in questa stanza, fine
  665+ 69DC
- 666+ 69DC ED 4B 53 74      ld   bc, (PlayerPos)   ; C = WillyX, B = WillyY
+ 666+ 69DC ED 4B 03 75      ld   bc, (PlayerPos)   ; C = WillyX, B = WillyY
  667+ 69E0
  668+ 69E0                  ; Calcola screenRow dei piedi del player: RowPiedi = Y / 8
  669+ 69E0 78               ld   a, b
@@ -2891,7 +2891,7 @@
  674+ 69E9
  675+ 69E9                  ; Confronta con conveyor_row
  676+ 69E9 57               ld   d, a              ; D = RowPiedi
- 677+ 69EA 3A 6D 77         ld   a, (conveyor_row)
+ 677+ 69EA 3A 1D 78         ld   a, (conveyor_row)
  678+ 69ED BA               cp   d
  679+ 69EE C0               ret  nz                ; Se non siamo sulla riga del conveyor, fine
  680+ 69EF
@@ -2911,8 +2911,8 @@
  694+ 6A00 57               ld   d, a              ; D = ColEnd
  695+ 6A01
  696+ 6A01                  ; conveyor_col_end = conveyor_col + conveyor_len - 1
- 697+ 6A01 3A 6E 77         ld   a, (conveyor_col)
- 698+ 6A04 21 6C 77         ld   hl, conveyor_len
+ 697+ 6A01 3A 1E 78         ld   a, (conveyor_col)
+ 698+ 6A04 21 1C 78         ld   hl, conveyor_len
  699+ 6A07 86               add  a, (hl)
  700+ 6A08 3D               dec  a                 ; A = conveyor_col_end
  701+ 6A09
@@ -2921,14 +2921,14 @@
  704+ 6A0A D8               ret  c                 ; Se conveyor_col_end < E, fine
  705+ 6A0B
  706+ 6A0B                  ; D >= conveyor_col
- 707+ 6A0B 3A 6E 77         ld   a, (conveyor_col)
+ 707+ 6A0B 3A 1E 78         ld   a, (conveyor_col)
  708+ 6A0E 5F               ld   e, a
  709+ 6A0F 7A               ld   a, d
  710+ 6A10 BB               cp   e
  711+ 6A11 D8               ret  c                 ; Se D < conveyor_col, fine
  712+ 6A12
  713+ 6A12                  ; Willy è sul conveyor! Muovilo nella direzione del conveyor!
- 714+ 6A12 3A 6B 77         ld   a, (conveyor_dir)
+ 714+ 6A12 3A 1B 78         ld   a, (conveyor_dir)
  715+ 6A15 B7               or   a
  716+ 6A16 28 0B            jr   z, .move_left
  717+ 6A18
@@ -2949,7 +2949,7 @@
  732+ 6A2C
  733+ 6A2C              .store_x:
  734+ 6A2C 4F               ld   c, a
- 735+ 6A2D ED 43 53 74      ld   (PlayerPos), bc   ; salva la nuova posizione
+ 735+ 6A2D ED 43 03 75      ld   (PlayerPos), bc   ; salva la nuova posizione
  736+ 6A31 C9               ret
  737+ 6A32
  738+ 6A32              ; -------------------------------------------------------------------
@@ -2961,15 +2961,15 @@
  744+ 6A33 D5               push de
  745+ 6A34 E5               push hl
  746+ 6A35
- 747+ 6A35 3A 61 74         ld   a, (on_ground)
+ 747+ 6A35 3A 11 75         ld   a, (on_ground)
  748+ 6A38 B7               or   a
  749+ 6A39 28 44            jr   z, .not_on_conveyor
  750+ 6A3B
- 751+ 6A3B 3A 6C 77         ld   a, (conveyor_len)
+ 751+ 6A3B 3A 1C 78         ld   a, (conveyor_len)
  752+ 6A3E B7               or   a
  753+ 6A3F 28 3E            jr   z, .not_on_conveyor
  754+ 6A41
- 755+ 6A41 ED 4B 53 74      ld   bc, (PlayerPos)   ; C = WillyX, B = WillyY
+ 755+ 6A41 ED 4B 03 75      ld   bc, (PlayerPos)   ; C = WillyX, B = WillyY
  756+ 6A45
  757+ 6A45                  ; Calcola screenRow dei piedi del player: RowPiedi = (Y + 16) / 8
  758+ 6A45 78               ld   a, b
@@ -2980,7 +2980,7 @@
  763+ 6A4E
  764+ 6A4E                  ; Confronta con conveyor_row
  765+ 6A4E 57               ld   d, a              ; D = RowPiedi
- 766+ 6A4F 3A 6D 77         ld   a, (conveyor_row)
+ 766+ 6A4F 3A 1D 78         ld   a, (conveyor_row)
  767+ 6A52 BA               cp   d
  768+ 6A53 20 2A            jr   nz, .not_on_conveyor
  769+ 6A55
@@ -3000,8 +3000,8 @@
  783+ 6A66 57               ld   d, a              ; D = ColEnd
  784+ 6A67
  785+ 6A67                  ; conveyor_col_end = conveyor_col + conveyor_len - 1
- 786+ 6A67 3A 6E 77         ld   a, (conveyor_col)
- 787+ 6A6A 21 6C 77         ld   hl, conveyor_len
+ 786+ 6A67 3A 1E 78         ld   a, (conveyor_col)
+ 787+ 6A6A 21 1C 78         ld   hl, conveyor_len
  788+ 6A6D 86               add  a, (hl)
  789+ 6A6E 3D               dec  a                 ; A = conveyor_col_end
  790+ 6A6F
@@ -3010,7 +3010,7 @@
  793+ 6A70 38 0D            jr   c, .not_on_conveyor
  794+ 6A72
  795+ 6A72                  ; D >= conveyor_col
- 796+ 6A72 3A 6E 77         ld   a, (conveyor_col)
+ 796+ 6A72 3A 1E 78         ld   a, (conveyor_col)
  797+ 6A75 5F               ld   e, a
  798+ 6A76 7A               ld   a, d
  799+ 6A77 BB               cp   e
@@ -3039,18 +3039,18 @@
  822+ 6A84 C5               push bc
  823+ 6A85 E5               push hl
  824+ 6A86
- 825+ 6A86 3A 70 77         ld   a, (ramp_len)
+ 825+ 6A86 3A 20 78         ld   a, (ramp_len)
  826+ 6A89 B7               or   a
  827+ 6A8A 28 6B            jr   z, .no
  828+ 6A8C
  829+ 6A8C                  ; 1. Verifica se Col (in E) è nel range orizzontale della rampa
- 830+ 6A8C 3A 6F 77         ld   a, (ramp_dir)
+ 830+ 6A8C 3A 1F 78         ld   a, (ramp_dir)
  831+ 6A8F B7               or   a
  832+ 6A90 28 1A            jr   z, .range_left
  833+ 6A92              .range_right:
- 834+ 6A92 3A 72 77         ld   a, (ramp_col)
+ 834+ 6A92 3A 22 78         ld   a, (ramp_col)
  835+ 6A95 47               ld   b, a              ; B = ramp_col
- 836+ 6A96 3A 70 77         ld   a, (ramp_len)
+ 836+ 6A96 3A 20 78         ld   a, (ramp_len)
  837+ 6A99 80               add  a, b              ; A = ramp_col + ramp_len
  838+ 6A9A 4F               ld   c, a              ; C = limit_right (exclusive)
  839+ 6A9B
@@ -3066,20 +3066,20 @@
  849+ 6AA4 47               ld   b, a              ; B = offset (0..ramp_len-1)
  850+ 6AA5
  851+ 6AA5                  ; SlopeRow = ramp_row - B
- 852+ 6AA5 3A 71 77         ld   a, (ramp_row)
+ 852+ 6AA5 3A 21 78         ld   a, (ramp_row)
  853+ 6AA8 90               sub  b
  854+ 6AA9 47               ld   b, a              ; B = SlopeRow
  855+ 6AAA 18 1F            jr   .check_row_match
  856+ 6AAC
  857+ 6AAC              .range_left:
  858+ 6AAC                  ; Per rampa a sinistra, range è [ramp_col - ramp_len + 1, ramp_col]
- 859+ 6AAC 21 70 77         ld   hl, ramp_len
- 860+ 6AAF 3A 72 77         ld   a, (ramp_col)
+ 859+ 6AAC 21 20 78         ld   hl, ramp_len
+ 860+ 6AAF 3A 22 78         ld   a, (ramp_col)
  861+ 6AB2 96               sub  (hl)
  862+ 6AB3 3C               inc  a                 ; A = ramp_col - ramp_len + 1
  863+ 6AB4 47               ld   b, a              ; B = limit_left
  864+ 6AB5
- 865+ 6AB5 3A 72 77         ld   a, (ramp_col)
+ 865+ 6AB5 3A 22 78         ld   a, (ramp_col)
  866+ 6AB8 3C               inc  a
  867+ 6AB9 4F               ld   c, a              ; C = limit_right (exclusive)
  868+ 6ABA
@@ -3090,12 +3090,12 @@
  873+ 6ABF 30 12            jr   nc, .check_platform_case
  874+ 6AC1
  875+ 6AC1                  ; Calcola B = ramp_col - Col
- 876+ 6AC1 3A 72 77         ld   a, (ramp_col)
+ 876+ 6AC1 3A 22 78         ld   a, (ramp_col)
  877+ 6AC4 93               sub  e
  878+ 6AC5 47               ld   b, a              ; B = offset
  879+ 6AC6
  880+ 6AC6                  ; SlopeRow = ramp_row - B
- 881+ 6AC6 3A 71 77         ld   a, (ramp_row)
+ 881+ 6AC6 3A 21 78         ld   a, (ramp_row)
  882+ 6AC9 90               sub  b
  883+ 6ACA 47               ld   b, a              ; B = SlopeRow
  884+ 6ACB
@@ -3110,24 +3110,24 @@
  893+ 6AD3
  894+ 6AD3              .check_platform_case:
  895+ 6AD3                  ; 2. Controlla se è sulla piattaforma adiacente in cima
- 896+ 6AD3 3A 6F 77         ld   a, (ramp_dir)
+ 896+ 6AD3 3A 1F 78         ld   a, (ramp_dir)
  897+ 6AD6 B7               or   a
  898+ 6AD7 28 09            jr   z, .plat_left
  899+ 6AD9              .plat_right:
- 900+ 6AD9 3A 72 77         ld   a, (ramp_col)
- 901+ 6ADC 21 70 77         ld   hl, ramp_len
+ 900+ 6AD9 3A 22 78         ld   a, (ramp_col)
+ 901+ 6ADC 21 20 78         ld   hl, ramp_len
  902+ 6ADF 86               add  a, (hl)           ; A = ramp_col + ramp_len
  903+ 6AE0 18 07            jr   .compare_plat
  904+ 6AE2              .plat_left:
- 905+ 6AE2 3A 72 77         ld   a, (ramp_col)
- 906+ 6AE5 21 70 77         ld   hl, ramp_len
+ 905+ 6AE2 3A 22 78         ld   a, (ramp_col)
+ 906+ 6AE5 21 20 78         ld   hl, ramp_len
  907+ 6AE8 96               sub  (hl)              ; A = ramp_col - ramp_len
  908+ 6AE9              .compare_plat:
  909+ 6AE9 BB               cp   e                 ; Compare with Col
  910+ 6AEA 20 0B            jr   nz, .no
  911+ 6AEC
- 912+ 6AEC 3A 71 77         ld   a, (ramp_row)
- 913+ 6AEF 21 70 77         ld   hl, ramp_len
+ 912+ 6AEC 3A 21 78         ld   a, (ramp_row)
+ 913+ 6AEF 21 20 78         ld   hl, ramp_len
  914+ 6AF2 96               sub  (hl)
  915+ 6AF3 3C               inc  a                 ; A = ramp_row - ramp_len + 1
  916+ 6AF4 BA               cp   d                 ; Compare with Row
@@ -3248,8 +3248,8 @@
 1031+ 6B51 D5               push de
 1032+ 6B52 C5               push bc
 1033+ 6B53
-1034+ 6B53 2A C4 77         ld   hl, (room_ptr)     ; HL = inizio layout stanza (128 byte)
-1035+ 6B56 11 6A 75         ld   de, unpacked_layout ; DE = buffer RAM
+1034+ 6B53 2A 74 78         ld   hl, (room_ptr)     ; HL = inizio layout stanza (128 byte)
+1035+ 6B56 11 1A 76         ld   de, unpacked_layout ; DE = buffer RAM
 1036+ 6B59 06 80            ld   b, 128             ; 128 byte
 1037+ 6B5B              .byte_loop:
 1038+ 6B5B 7E               ld   a, (hl)            ; Leggi byte compresso
@@ -3315,7 +3315,7 @@
 1098+ 6B89 59               ld   e, c
 1099+ 6B8A 16 00            ld   d, 0
 1100+ 6B8C 19               add  hl, de            ; HL = Row * 32 + Col
-1101+ 6B8D 11 6A 75         ld   de, unpacked_layout
+1101+ 6B8D 11 1A 76         ld   de, unpacked_layout
 1102+ 6B90 19               add  hl, de
 1103+ 6B91 7E               ld   a, (hl)           ; A = cell type
 1104+ 6B92
@@ -3331,23 +3331,23 @@
 1114+ 6B95              ;         in tal caso A = PlayerY (Y teorico del player sulla rampa)
 1115+ 6B95              ; -------------------------------------------------------------------
 1116+ 6B95              GetRampY:
-1117+ 6B95 3A 70 77         ld   a, (ramp_len)
+1117+ 6B95 3A 20 78         ld   a, (ramp_len)
 1118+ 6B98 B7               or   a
 1119+ 6B99 C8               ret  z                 ; Se non c'è rampa (len=0), return carry clear
 1120+ 6B9A
-1121+ 6B9A 3A 6F 77         ld   a, (ramp_dir)
+1121+ 6B9A 3A 1F 78         ld   a, (ramp_dir)
 1122+ 6B9D B7               or   a
 1123+ 6B9E 28 4C            jr   z, .dir_left
 1124+ 6BA0
 1125+ 6BA0              .dir_right:
 1126+ 6BA0                  ; Rampa sale a destra (up-right)
-1127+ 6BA0 3A 72 77         ld   a, (ramp_col)
+1127+ 6BA0 3A 22 78         ld   a, (ramp_col)
 1128+ 6BA3 87               add  a, a              ; *2
 1129+ 6BA4 87               add  a, a              ; *4
 1130+ 6BA5 87               add  a, a              ; *8 (X start in pixel)
 1131+ 6BA6 5F               ld   e, a              ; E = X_left
 1132+ 6BA7
-1133+ 6BA7 3A 70 77         ld   a, (ramp_len)
+1133+ 6BA7 3A 20 78         ld   a, (ramp_len)
 1134+ 6BAA 87               add  a, a              ; *2
 1135+ 6BAB 87               add  a, a              ; *4
 1136+ 6BAC 87               add  a, a              ; *8
@@ -3367,8 +3367,8 @@
 1150+ 6BBA D2 46 6C         jp   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary + 8, fuori
 1151+ 6BBD
 1152+ 6BBD                  ; Piattaforma adiacente! Restituisci PlayerY = (ramp_row - ramp_len + 1) * 8 - 16
-1153+ 6BBD 3A 71 77         ld   a, (ramp_row)
-1154+ 6BC0 21 70 77         ld   hl, ramp_len
+1153+ 6BBD 3A 21 78         ld   a, (ramp_row)
+1154+ 6BC0 21 20 78         ld   hl, ramp_len
 1155+ 6BC3 96               sub  (hl)
 1156+ 6BC4 3C               inc  a                 ; A = Row
 1157+ 6BC5 87               add  a, a              ; *2
@@ -3379,7 +3379,7 @@
 1162+ 6BCB C9               ret
 1163+ 6BCC
 1164+ 6BCC              .on_ramp_slope:
-1165+ 6BCC 3A 71 77         ld   a, (ramp_row)
+1165+ 6BCC 3A 21 78         ld   a, (ramp_row)
 1166+ 6BCF 87               add  a, a              ; *2
 1167+ 6BD0 87               add  a, a              ; *4
 1168+ 6BD1 87               add  a, a              ; *8
@@ -3391,8 +3391,8 @@
 1174+ 6BD6                  ; platform_Y = (ramp_row - ramp_len + 1) * 8 - 16
 1175+ 6BD6 57               ld   d, a              ; D = calculated Y
 1176+ 6BD7
-1177+ 6BD7 3A 71 77         ld   a, (ramp_row)
-1178+ 6BDA 21 70 77         ld   hl, ramp_len
+1177+ 6BD7 3A 21 78         ld   a, (ramp_row)
+1178+ 6BDA 21 20 78         ld   hl, ramp_len
 1179+ 6BDD 96               sub  (hl)
 1180+ 6BDE 3C               inc  a                 ; A = Row
 1181+ 6BDF 87               add  a, a              ; *2
@@ -3414,8 +3414,8 @@
 1197+ 6BEC
 1198+ 6BEC              .dir_left:
 1199+ 6BEC                  ; Rampa sale a sinistra (up-left)
-1200+ 6BEC 21 70 77         ld   hl, ramp_len
-1201+ 6BEF 3A 72 77         ld   a, (ramp_col)
+1200+ 6BEC 21 20 78         ld   hl, ramp_len
+1201+ 6BEF 3A 22 78         ld   a, (ramp_col)
 1202+ 6BF2 96               sub  (hl)
 1203+ 6BF3 3C               inc  a                 ; A = ramp_col - ramp_len + 1
 1204+ 6BF4 87               add  a, a              ; *2
@@ -3423,7 +3423,7 @@
 1206+ 6BF6 87               add  a, a              ; *8
 1207+ 6BF7 5F               ld   e, a              ; E = X_left
 1208+ 6BF8
-1209+ 6BF8 3A 72 77         ld   a, (ramp_col)
+1209+ 6BF8 3A 22 78         ld   a, (ramp_col)
 1210+ 6BFB 87               add  a, a              ; *2
 1211+ 6BFC 87               add  a, a              ; *4
 1212+ 6BFD 87               add  a, a              ; *8
@@ -3444,8 +3444,8 @@
 1227+ 6C0D D2 46 6C         jp   nc, .out_of_ramp  ; Se PlayerX <= X_left - 9, fuori
 1228+ 6C10
 1229+ 6C10                  ; Piattaforma adiacente a sinistra! Restituisci PlayerY = (ramp_row - ramp_len + 1) * 8 - 16
-1230+ 6C10 3A 71 77         ld   a, (ramp_row)
-1231+ 6C13 21 70 77         ld   hl, ramp_len
+1230+ 6C10 3A 21 78         ld   a, (ramp_row)
+1231+ 6C13 21 20 78         ld   hl, ramp_len
 1232+ 6C16 96               sub  (hl)
 1233+ 6C17 3C               inc  a                 ; A = Row
 1234+ 6C18 87               add  a, a              ; *2
@@ -3456,13 +3456,13 @@
 1239+ 6C1E C9               ret
 1240+ 6C1F
 1241+ 6C1F              .on_ramp_slope_left:
-1242+ 6C1F 3A 72 77         ld   a, (ramp_col)
+1242+ 6C1F 3A 22 78         ld   a, (ramp_col)
 1243+ 6C22 87               add  a, a              ; *2
 1244+ 6C23 87               add  a, a              ; *4
 1245+ 6C24 87               add  a, a              ; *8
 1246+ 6C25 57               ld   d, a              ; D = X_start
 1247+ 6C26
-1248+ 6C26 3A 71 77         ld   a, (ramp_row)
+1248+ 6C26 3A 21 78         ld   a, (ramp_row)
 1249+ 6C29 87               add  a, a              ; *2
 1250+ 6C2A 87               add  a, a              ; *4
 1251+ 6C2B 87               add  a, a              ; *8
@@ -3474,8 +3474,8 @@
 1257+ 6C30                  ; platform_Y = (ramp_row - ramp_len + 1) * 8 - 16
 1258+ 6C30 57               ld   d, a              ; D = calculated Y
 1259+ 6C31
-1260+ 6C31 3A 71 77         ld   a, (ramp_row)
-1261+ 6C34 21 70 77         ld   hl, ramp_len
+1260+ 6C31 3A 21 78         ld   a, (ramp_row)
+1261+ 6C34 21 20 78         ld   hl, ramp_len
 1262+ 6C37 96               sub  (hl)
 1263+ 6C38 3C               inc  a                 ; A = Row
 1264+ 6C39 87               add  a, a              ; *2
@@ -3621,14 +3621,14 @@
   31+ 6CA3 DD E5            push ix
   32+ 6CA5
   33+ 6CA5                  ; 1. Imposta IX all'indirizzo dell'array dei colori in ROM (room_ptr + 223)
-  34+ 6CA5 2A C4 77         ld   hl, (room_ptr)
+  34+ 6CA5 2A 74 78         ld   hl, (room_ptr)
   35+ 6CA8 11 DF 00         ld   de, 223
   36+ 6CAB 19               add  hl, de
   37+ 6CAC E5               push hl
   38+ 6CAD DD E1            pop  ix                ; IX = color pointer
   39+ 6CAF
   40+ 6CAF                  ; 2. Imposta HL all'indirizzo dei dati dei nemici (room_ptr + 240)
-  41+ 6CAF 2A C4 77         ld   hl, (room_ptr)
+  41+ 6CAF 2A 74 78         ld   hl, (room_ptr)
   42+ 6CB2 11 F0 00         ld   de, 240           ; Offset degli enemy nella stanza
   43+ 6CB5 19               add  hl, de            ; HL = indirizzo di RoomXEnemy1
   44+ 6CB6
@@ -3641,7 +3641,7 @@
   51+ 6CC0
   52+ 6CC0 E5               push hl
   53+ 6CC1 D5               push de
-  54+ 6CC2 2A C4 77         ld   hl, (room_ptr)
+  54+ 6CC2 2A 74 78         ld   hl, (room_ptr)
   55+ 6CC5 11 1A 01         ld   de, OFFSET_COLORS_5_8
   56+ 6CC8 19               add  hl, de
   57+ 6CC9 E5               push hl
@@ -4121,21 +4121,21 @@
  531+ 6F3F DD E5            push ix
  532+ 6F41
  533+ 6F41                  ; Controlla il tasso di aggiornamento dei nemici (speed divider)
- 534+ 6F41 3A C6 77         ld   a, (enemy_update_rate)
+ 534+ 6F41 3A 76 78         ld   a, (enemy_update_rate)
  535+ 6F44 FE 01            cp   1
  536+ 6F46 28 1D            jr   z, .do_update             ; Se 1, aggiorna ad ogni frame (velocità normale)
  537+ 6F48
- 538+ 6F48 3A C7 77         ld   a, (enemy_update_timer)
+ 538+ 6F48 3A 77 78         ld   a, (enemy_update_timer)
  539+ 6F4B 3C               inc  a
  540+ 6F4C 47               ld   b, a                      ; B = timer + 1
- 541+ 6F4D 3A C6 77         ld   a, (enemy_update_rate)
+ 541+ 6F4D 3A 76 78         ld   a, (enemy_update_rate)
  542+ 6F50 B8               cp   b
  543+ 6F51 28 0C            jr   z, .reset_timer
  544+ 6F53 38 0A            jr   c, .reset_timer
  545+ 6F55
  546+ 6F55                  ; Salva contatore incrementato e salta l'aggiornamento
  547+ 6F55 78               ld   a, b
- 548+ 6F56 32 C7 77         ld   (enemy_update_timer), a
+ 548+ 6F56 32 77 78         ld   (enemy_update_timer), a
  549+ 6F59
  550+ 6F59              .skip_update:
  551+ 6F59 DD E1            pop  ix
@@ -4146,7 +4146,7 @@
  556+ 6F5F
  557+ 6F5F              .reset_timer:
  558+ 6F5F AF               xor  a
- 559+ 6F60 32 C7 77         ld   (enemy_update_timer), a
+ 559+ 6F60 32 77 78         ld   (enemy_update_timer), a
  560+ 6F63 18 00            jr   .do_update
  561+ 6F65
  562+ 6F65              .do_update:
@@ -4408,7 +4408,7 @@
   98+ 70AB                  ; ---------------------------------------------------------------
   99+ 70AB                  ; Confronto con TheOffLicenceLayout
  100+ 70AB                  ; ---------------------------------------------------------------
- 101+ 70AB 2A C4 77         ld   hl, (room_ptr)
+ 101+ 70AB 2A 74 78         ld   hl, (room_ptr)
  102+ 70AE 11 00 83         ld   de, TheOffLicenceLayout
  103+ 70B1 B7               or   a
  104+ 70B2 ED 52            sbc  hl, de
@@ -4422,7 +4422,7 @@
  112+ 70BB                  ; -------------------------------------------------q--------------
  113+ 70BB                  ; Confronto con TheBridgeLayout
  114+ 70BB                  ; ---------------------------------------------------------------
- 115+ 70BB 2A C4 77         ld   hl, (room_ptr)
+ 115+ 70BB 2A 74 78         ld   hl, (room_ptr)
  116+ 70BE 11 1E 84         ld   de, TheBridgeLayout
  117+ 70C1 B7               or   a
  118+ 70C2 ED 52            sbc  hl, de
@@ -4436,7 +4436,7 @@
  126+ 70CB                  ; ---------------------------------------------------------------
  127+ 70CB                  ; Confronto con UnderTheMegaTreeLayout
  128+ 70CB                  ; ---------------------------------------------------------------
- 129+ 70CB 2A C4 77         ld   hl, (room_ptr)
+ 129+ 70CB 2A 74 78         ld   hl, (room_ptr)
  130+ 70CE 11 3C 85         ld   de, UnderTheMegaTreeLayout
  131+ 70D1 B7               or   a
  132+ 70D2 ED 52            sbc  hl, de
@@ -4450,7 +4450,7 @@
  140+ 70DB                  ; ---------------------------------------------------------------
  141+ 70DB                  ; Confronto con AtTheFootTheMegaTreeLayout
  142+ 70DB                  ; ---------------------------------------------------------------
- 143+ 70DB 2A C4 77         ld   hl, (room_ptr)
+ 143+ 70DB 2A 74 78         ld   hl, (room_ptr)
  144+ 70DE 11 5A 86         ld   de, AtTheFootTheMegaTreeLayout
  145+ 70E1 B7               or   a
  146+ 70E2 ED 52            sbc  hl, de
@@ -4464,7 +4464,7 @@
  154+ 70EB                  ; ---------------------------------------------------------------
  155+ 70EB                  ; Confronto con TheDriveLayout
  156+ 70EB                  ; ---------------------------------------------------------------
- 157+ 70EB 2A C4 77         ld   hl, (room_ptr)
+ 157+ 70EB 2A 74 78         ld   hl, (room_ptr)
  158+ 70EE 11 78 87         ld   de, TheDriveLayout
  159+ 70F1 B7               or   a
  160+ 70F2 ED 52            sbc  hl, de
@@ -4478,7 +4478,7 @@
  168+ 70FB                  ; ---------------------------------------------------------------
  169+ 70FB                  ; Confronto con TheSecurityGuardLayout
  170+ 70FB                  ; ---------------------------------------------------------------
- 171+ 70FB 2A C4 77         ld   hl, (room_ptr)
+ 171+ 70FB 2A 74 78         ld   hl, (room_ptr)
  172+ 70FE 11 96 88         ld   de, TheSecurityGuardLayout
  173+ 7101 B7               or   a
  174+ 7102 ED 52            sbc  hl, de
@@ -4492,7 +4492,7 @@
  182+ 710B                  ; ---------------------------------------------------------------
  183+ 710B                  ; Confronto con EntranceToHadesLayout
  184+ 710B                  ; ---------------------------------------------------------------
- 185+ 710B 2A C4 77         ld   hl, (room_ptr)
+ 185+ 710B 2A 74 78         ld   hl, (room_ptr)
  186+ 710E 11 B4 89         ld   de, EntranceToHadesLayout
  187+ 7111 B7               or   a
  188+ 7112 ED 52            sbc  hl, de
@@ -4506,7 +4506,7 @@
  196+ 711B                  ; ---------------------------------------------------------------
  197+ 711B                  ; Confronto con CuckoosNestLayout
  198+ 711B                  ; ---------------------------------------------------------------
- 199+ 711B 2A C4 77         ld   hl, (room_ptr)
+ 199+ 711B 2A 74 78         ld   hl, (room_ptr)
  200+ 711E 11 D2 8A         ld   de, CuckoosNestLayout
  201+ 7121 B7               or   a
  202+ 7122 ED 52            sbc  hl, de
@@ -4520,7 +4520,7 @@
  210+ 712B                  ; ---------------------------------------------------------------
  211+ 712B                  ; Confronto con InsideTheMegaTrunkLayout
  212+ 712B                  ; ---------------------------------------------------------------
- 213+ 712B 2A C4 77         ld   hl, (room_ptr)
+ 213+ 712B 2A 74 78         ld   hl, (room_ptr)
  214+ 712E 11 F0 8B         ld   de, InsideTheMegaTrunkLayout
  215+ 7131 B7               or   a
  216+ 7132 ED 52            sbc  hl, de
@@ -4534,7 +4534,7 @@
  224+ 713B                  ; ---------------------------------------------------------------
  225+ 713B                  ; Confronto con OnABranchOverTheDriveLayout
  226+ 713B                  ; ---------------------------------------------------------------
- 227+ 713B 2A C4 77         ld   hl, (room_ptr)
+ 227+ 713B 2A 74 78         ld   hl, (room_ptr)
  228+ 713E 11 0E 8D         ld   de, OnABranchOverTheDriveLayout
  229+ 7141 B7               or   a
  230+ 7142 ED 52            sbc  hl, de
@@ -4548,7 +4548,7 @@
  238+ 714B                  ; ---------------------------------------------------------------
  239+ 714B                  ; Confronto con TheFrontDoor
  240+ 714B                  ; ---------------------------------------------------------------
- 241+ 714B 2A C4 77         ld   hl, (room_ptr)
+ 241+ 714B 2A 74 78         ld   hl, (room_ptr)
  242+ 714E 11 2C 8E         ld   de, TheFrontDoorLayout
  243+ 7151 B7               or   a
  244+ 7152 ED 52            sbc  hl, de
@@ -4562,7 +4562,7 @@
  252+ 715B                  ; ---------------------------------------------------------------
  253+ 715B                  ; Confronto con TheHall
  254+ 715B                  ; ---------------------------------------------------------------
- 255+ 715B 2A C4 77         ld   hl, (room_ptr)
+ 255+ 715B 2A 74 78         ld   hl, (room_ptr)
  256+ 715E 11 4A 8F         ld   de, TheHallLayout
  257+ 7161 B7               or   a
  258+ 7162 ED 52            sbc  hl, de
@@ -4576,7 +4576,7 @@
  266+ 716B                  ; ---------------------------------------------------------------
  267+ 716B                  ; Confronto con TreeTop
  268+ 716B                  ; ---------------------------------------------------------------
- 269+ 716B 2A C4 77         ld   hl, (room_ptr)
+ 269+ 716B 2A 74 78         ld   hl, (room_ptr)
  270+ 716E 11 68 90         ld   de, TreeTopLayout
  271+ 7171 B7               or   a
  272+ 7172 ED 52            sbc  hl, de
@@ -4590,7 +4590,7 @@
  280+ 717B                  ; ---------------------------------------------------------------
  281+ 717B                  ; Confronto con TreeTop
  282+ 717B                  ; ---------------------------------------------------------------
- 283+ 717B 2A C4 77         ld   hl, (room_ptr)
+ 283+ 717B 2A 74 78         ld   hl, (room_ptr)
  284+ 717E 11 86 91         ld   de, OutALimbLayout
  285+ 7181 B7               or   a
  286+ 7182 ED 52            sbc  hl, de
@@ -4604,7 +4604,7 @@
  294+ 718B                  ; ---------------------------------------------------------------
  295+ 718B                  ; Confronto con ResecueEsmeralda
  296+ 718B                  ; ---------------------------------------------------------------
- 297+ 718B 2A C4 77         ld   hl, (room_ptr)
+ 297+ 718B 2A 74 78         ld   hl, (room_ptr)
  298+ 718E 11 A4 92         ld   de, RescueEsmereldaLayout
  299+ 7191 B7               or   a
  300+ 7192 ED 52            sbc  hl, de
@@ -4618,7 +4618,7 @@
  308+ 719B                  ; ---------------------------------------------------------------
  309+ 719B                  ; Confronto con ResecueEsmeralda
  310+ 719B                  ; ---------------------------------------------------------------
- 311+ 719B 2A C4 77         ld   hl, (room_ptr)
+ 311+ 719B 2A 74 78         ld   hl, (room_ptr)
  312+ 719E 11 C2 93         ld   de, IAmSureIHaveSeenThiBeforeLayout
  313+ 71A1 B7               or   a
  314+ 71A2 ED 52            sbc  hl, de
@@ -4632,7 +4632,7 @@
  322+ 71AB                  ; ---------------------------------------------------------------
  323+ 71AB                  ; Confronto con ResecueEsmeralda
  324+ 71AB                  ; ---------------------------------------------------------------
- 325+ 71AB 2A C4 77         ld   hl, (room_ptr)
+ 325+ 71AB 2A 74 78         ld   hl, (room_ptr)
  326+ 71AE 11 E0 94         ld   de, WeMustPerformQuirkafleegLayout
  327+ 71B1 B7               or   a
  328+ 71B2 ED 52            sbc  hl, de
@@ -4646,7 +4646,7 @@
  336+ 71BB                  ; ---------------------------------------------------------------
  337+ 71BB                  ; Confronto con ResecueEsmeralda
  338+ 71BB                  ; ---------------------------------------------------------------
- 339+ 71BB 2A C4 77         ld   hl, (room_ptr)
+ 339+ 71BB 2A 74 78         ld   hl, (room_ptr)
  340+ 71BE 11 FE 95         ld   de, UpOnTheBattlementsLayout
  341+ 71C1 B7               or   a
  342+ 71C2 ED 52            sbc  hl, de
@@ -4660,7 +4660,7 @@
  350+ 71CB                  ; ---------------------------------------------------------------
  351+ 71CB                  ; Confronto con ResecueEsmeralda
  352+ 71CB                  ; ---------------------------------------------------------------
- 353+ 71CB 2A C4 77         ld   hl, (room_ptr)
+ 353+ 71CB 2A 74 78         ld   hl, (room_ptr)
  354+ 71CE 11 1C 97         ld   de, OntheRoofLayout
  355+ 71D1 B7               or   a
  356+ 71D2 ED 52            sbc  hl, de
@@ -4674,7 +4674,7 @@
  364+ 71DB                  ; ---------------------------------------------------------------
  365+ 71DB                  ; Confronto con ResecueEsmeralda
  366+ 71DB                  ; ---------------------------------------------------------------
- 367+ 71DB 2A C4 77         ld   hl, (room_ptr)
+ 367+ 71DB 2A 74 78         ld   hl, (room_ptr)
  368+ 71DE 11 3A 98         ld   de, TheForgottenAbbeyLayout
  369+ 71E1 B7               or   a
  370+ 71E2 ED 52            sbc  hl, de
@@ -4688,7 +4688,7 @@
  378+ 71EB                  ; ---------------------------------------------------------------
  379+ 71EB                  ; Confronto con TheBathroomLayout
  380+ 71EB                  ; ---------------------------------------------------------------
- 381+ 71EB 2A C4 77         ld   hl, (room_ptr)
+ 381+ 71EB 2A 74 78         ld   hl, (room_ptr)
  382+ 71EE 11 58 99         ld   de, TheBathroomLayout
  383+ 71F1 B7               or   a
  384+ 71F2 ED 52            sbc  hl, de
@@ -4701,7 +4701,7 @@
  391+ 71FB                  ; ---------------------------------------------------------------
  392+ 71FB                  ; Confronto con MastreBedRoomLayout
  393+ 71FB                  ; ---------------------------------------------------------------
- 394+ 71FB 2A C4 77         ld   hl, (room_ptr)
+ 394+ 71FB 2A 74 78         ld   hl, (room_ptr)
  395+ 71FE 11 76 9A         ld   de, MastreBedRoomLayout
  396+ 7201 B7               or   a
  397+ 7202 ED 52            sbc  hl, de
@@ -4714,7 +4714,7 @@
  404+ 720B                  ; ---------------------------------------------------------------
  405+ 720B                  ; Confronto con UnderTheDrive
  406+ 720B                  ; ---------------------------------------------------------------
- 407+ 720B 2A C4 77         ld   hl, (room_ptr)
+ 407+ 720B 2A 74 78         ld   hl, (room_ptr)
  408+ 720E 11 94 9B         ld   de, UnderTheDriveLayout
  409+ 7211 B7               or   a
  410+ 7212 ED 52            sbc  hl, de
@@ -4732,7 +4732,7 @@
  422+ 721D              .set_room:
  423+ 721D
  424+ 721D                  ; Salva l'ID della stanza corrente
- 425+ 721D 32 6A 77         ld   (current_room), a
+ 425+ 721D 32 1A 78         ld   (current_room), a
  426+ 7220
  427+ 7220                  ; Ripristina i registri
  428+ 7220 D1               pop  de
@@ -4794,10 +4794,10 @@
  484+ 7237                  ; Nessun item attivo nella stanza
  485+ 7237                  ; ---------------------------------------------------------------
  486+ 7237 AF               xor  a
- 487+ 7238 32 C3 77         ld   (num_room_items), a
+ 487+ 7238 32 73 78         ld   (num_room_items), a
  488+ 723B
  489+ 723B                  ; IY punta alla cache degli item attivi
- 490+ 723B FD 21 73 77      ld   iy, current_room_items
+ 490+ 723B FD 21 23 78      ld   iy, current_room_items
  491+ 723F
  492+ 723F                  ; ---------------------------------------------------------------
  493+ 723F                  ; Recupera il puntatore alla bitmap dell'oggetto associato
@@ -4805,7 +4805,7 @@
  495+ 723F                  ;
  496+ 723F                  ; room_ptr + OFFSET_ITEM_GRAPHIC
  497+ 723F                  ; ---------------------------------------------------------------
- 498+ 723F 2A C4 77         ld   hl, (room_ptr)
+ 498+ 723F 2A 74 78         ld   hl, (room_ptr)
  499+ 7242 11 E3 00         ld   de, OFFSET_ITEM_GRAPHIC
  500+ 7245 19               add  hl, de
  501+ 7246
@@ -4833,7 +4833,7 @@
  523+ 7251                  ; ---------------------------------------------------------------
  524+ 7251 57               ld   d, a
  525+ 7252
- 526+ 7252 3A 6A 77         ld   a, (current_room)
+ 526+ 7252 3A 1A 78         ld   a, (current_room)
  527+ 7255 BA               cp   d
  528+ 7256 20 45            jr   nz, .next_item
  529+ 7258
@@ -4926,9 +4926,9 @@
  616+ 7292 FD 09            add  iy, bc
  617+ 7294
  618+ 7294                  ; Incrementa il numero di item attivi
- 619+ 7294 3A C3 77         ld   a, (num_room_items)
+ 619+ 7294 3A 73 78         ld   a, (num_room_items)
  620+ 7297 3C               inc  a
- 621+ 7298 32 C3 77         ld   (num_room_items), a
+ 621+ 7298 32 73 78         ld   (num_room_items), a
  622+ 729B
  623+ 729B 18 04            jr   .next_no_inc
  624+ 729D
@@ -5170,7 +5170,7 @@
  860+ 72F2                  ;
  861+ 72F2                  ; DE = base della struttura stanza
  862+ 72F2                  ; ---------------------------------------------------------------
- 863+ 72F2 ED 5B C4 77      ld   de, (room_ptr)
+ 863+ 72F2 ED 5B 74 78      ld   de, (room_ptr)
  864+ 72F6
  865+ 72F6                  ; ---------------------------------------------------------------
  866+ 72F6                  ; Seleziona il tile corretto in base al tipo di cella.
@@ -5303,7 +5303,7 @@
  993+ 7332                  ; B = WillyY
  994+ 7332                  ; C = WillyX
  995+ 7332                  ; ---------------------------------------------------------------
- 996+ 7332 ED 4B 53 74      ld   bc, (PlayerPos)
+ 996+ 7332 ED 4B 03 75      ld   bc, (PlayerPos)
  997+ 7336
  998+ 7336                  ; ---------------------------------------------------------------
  999+ 7336                  ; Primo test:
@@ -5483,7 +5483,7 @@
 1173+ 7377                  ; ---------------------------------------------------------------
 1174+ 7377 57               ld   d, a              ; D = RoomID item
 1175+ 7378
-1176+ 7378 3A 6A 77         ld   a, (current_room)
+1176+ 7378 3A 1A 78         ld   a, (current_room)
 1177+ 737B BA               cp   d
 1178+ 737C
 1179+ 737C                  ; Se appartiene a un'altra stanza salta il record
@@ -5581,11 +5581,11 @@
 1271+ 73AA                  ; ---------------------------------------------------------------
 1272+ 73AA                  ; Aggiorna il numero di oggetti raccolti
 1273+ 73AA                  ; ---------------------------------------------------------------
-1274+ 73AA 3A 5D 74         ld   a, (items_collected)
+1274+ 73AA 3A 0D 75         ld   a, (items_collected)
 1275+ 73AD
 1276+ 73AD 3C               inc  a
 1277+ 73AE
-1278+ 73AE 32 5D 74         ld   (items_collected), a
+1278+ 73AE 32 0D 75         ld   (items_collected), a
 1279+ 73B1
 1280+ 73B1                  ; ---------------------------------------------------------------
 1281+ 73B1                  ; Aggiorna il contatore visualizzato a schermo
@@ -5678,7 +5678,7 @@
 1368+ 73CC                  ; Legge il colore del bordo corrente e attiva il bit 4
 1369+ 73CC                  ; per pilotare lo speaker.
 1370+ 73CC                  ; ---------------------------------------------------------------
-1371+ 73CC 3A 5F 74         ld   a, (room_border_color)
+1371+ 73CC 3A 0F 75         ld   a, (room_border_color)
 1372+ 73CF F6 10            or   $10               ; bit 4 = 1 → speaker ON
 1373+ 73D1
 1374+ 73D1 D3 FE            out  ($fe), a         ; scrive sul port ULA
@@ -5698,7 +5698,7 @@
 1388+ 73D8                  ;
 1389+ 73D8                  ; Mantiene il colore del bordo ma disattiva lo speaker
 1390+ 73D8                  ; ---------------------------------------------------------------
-1391+ 73D8 3A 5F 74         ld   a, (room_border_color)
+1391+ 73D8 3A 0F 75         ld   a, (room_border_color)
 1392+ 73DB E6 EF            and  $ef              ; bit 4 = 0 → speaker OFF
 1393+ 73DD
 1394+ 73DD D3 FE            out  ($fe), a
@@ -5737,7 +5737,7 @@
 1427+ 73EC E5               push hl
 1428+ 73ED
 1429+ 73ED                  ; Controlla se il suono è attivo (note < 18)
-1430+ 73ED 3A CA 77         ld   a, (jump_sound_note)
+1430+ 73ED 3A 7A 78         ld   a, (jump_sound_note)
 1431+ 73F0 FE 12            cp   18                        ; Ci sono 18 note (0..17)
 1432+ 73F2 30 2A            jr   nc, .done                 ; Se >= 18, non stiamo riproducendo
 1433+ 73F4
@@ -5753,7 +5753,7 @@
 1443+ 73FD 06 0F            ld   b, 15
 1444+ 73FF              .note_loop:
 1445+ 73FF                  ; Speaker ON
-1446+ 73FF 3A 5F 74         ld   a, (room_border_color)
+1446+ 73FF 3A 0F 75         ld   a, (room_border_color)
 1447+ 7402 F6 10            or   $10
 1448+ 7404 D3 FE            out  ($fe), a
 1449+ 7406 4A               ld   c, d
@@ -5762,7 +5762,7 @@
 1452+ 7408 20 FD            jr   nz, .d1
 1453+ 740A
 1454+ 740A                  ; Speaker OFF
-1455+ 740A 3A 5F 74         ld   a, (room_border_color)
+1455+ 740A 3A 0F 75         ld   a, (room_border_color)
 1456+ 740D E6 EF            and  $ef
 1457+ 740F D3 FE            out  ($fe), a
 1458+ 7411 4A               ld   c, d
@@ -5773,9 +5773,9 @@
 1463+ 7415 10 E8            djnz .note_loop
 1464+ 7417
 1465+ 7417                  ; Passa alla nota successiva
-1466+ 7417 3A CA 77         ld   a, (jump_sound_note)
+1466+ 7417 3A 7A 78         ld   a, (jump_sound_note)
 1467+ 741A 3C               inc  a
-1468+ 741B 32 CA 77         ld   (jump_sound_note), a
+1468+ 741B 32 7A 78         ld   (jump_sound_note), a
 1469+ 741E
 1470+ 741E              .done:
 1471+ 741E E1               pop  hl
@@ -5792,297 +5792,240 @@
 1478+ 7433 40 47
 1479+ 7435
 1480+ 7435              ; -------------------------------------------------------------------
-1481+ 7435              ; CheckActiveItemAtCell
+1481+ 7435              ; UpdateMusic
 1482+ 7435              ;
-1483+ 7435              ; Verifica in modo rapido se esiste un item attivo (non raccolto)
-1484+ 7435              ; nella cella specificata della griglia items_grid.
-1485+ 7435              ;
-1486+ 7435              ; Questa routine usa una lookup diretta su una mappa 32x16,
-1487+ 7435              ; evitando la scansione della ItemsTable.
-1488+ 7435              ;
-1489+ 7435              ; Input:
-1490+ 7435              ;   B = Colonna (0..31)
-1491+ 7435              ;   C = Riga (0..15)
-1492+ 7435              ;
-1493+ 7435              ; Output:
-1494+ 7435              ;   Carry Set   = item presente nella cella
-1495+ 7435              ;   Carry Clear = nessun item
-1496+ 7435              ;
-1497+ 7435              ; Nota:
-1498+ 7435              ;   HL NON è restituito valido (commento originale non corretto:
-1499+ 7435              ;   la routine non punta a ItemsTable).
-1500+ 7435              ; -------------------------------------------------------------------
-1501+ 7435              CheckActiveItemAtCell:
-1502+ 7435
-1503+ 7435                  ; Salva registri usati
-1504+ 7435 D5               push de
-1505+ 7436 E5               push hl
-1506+ 7437
-1507+ 7437                  ; ---------------------------------------------------------------
-1508+ 7437                  ; Calcolo indice lineare nella griglia 32x16:
-1509+ 7437                  ;
-1510+ 7437                  ; offset = Row * 32 + Col
-1511+ 7437                  ; ---------------------------------------------------------------
-1512+ 7437 26 00            ld   h, 0
-1513+ 7439 69               ld   l, c              ; HL = Row
-1514+ 743A
-1515+ 743A 29               add  hl, hl            ; *2
-1516+ 743B 29               add  hl, hl            ; *4
-1517+ 743C 29               add  hl, hl            ; *8
-1518+ 743D 29               add  hl, hl            ; *16
-1519+ 743E 29               add  hl, hl            ; *32
-1520+ 743F
-1521+ 743F                  ; Aggiunge la colonna
-1522+ 743F 58               ld   e, b
-1523+ 7440 16 00            ld   d, 0
-1524+ 7442 19               add  hl, de            ; HL = Row*32 + Col
-1525+ 7443
-1526+ 7443                  ; ---------------------------------------------------------------
-1527+ 7443                  ; Accesso alla griglia degli item attivi
-1528+ 7443                  ; ---------------------------------------------------------------
-1529+ 7443 11 00 B0         ld   de, items_grid
-1530+ 7446 19               add  hl, de            ; HL = address cella
-1531+ 7447
-1532+ 7447                  ; ---------------------------------------------------------------
-1533+ 7447                  ; Controllo presenza item
-1534+ 7447                  ;
-1535+ 7447                  ; items_grid contiene:
-1536+ 7447                  ;   0 = nessun item
-1537+ 7447                  ;   >0 = item attivo (colore o flag)
-1538+ 7447                  ; ---------------------------------------------------------------
-1539+ 7447 7E               ld   a, (hl)
-1540+ 7448 B7               or   a
-1541+ 7449 28 04            jr   z, .not_active
-1542+ 744B
-1543+ 744B                  ; ---------------------------------------------------------------
-1544+ 744B                  ; Item trovato
-1545+ 744B                  ; ---------------------------------------------------------------
-1546+ 744B E1               pop  hl
-1547+ 744C D1               pop  de
-1548+ 744D
-1549+ 744D 37               scf                    ; Carry = 1
-1550+ 744E C9               ret
-1551+ 744F
-1552+ 744F              .not_active:
-1553+ 744F
-1554+ 744F                  ; ---------------------------------------------------------------
-1555+ 744F                  ; Nessun item nella cella
-1556+ 744F                  ; ---------------------------------------------------------------
-1557+ 744F E1               pop  hl
-1558+ 7450 D1               pop  de
-1559+ 7451
-1560+ 7451 B7               or   a                 ; Carry = 0
-1561+ 7452 C9               ret
-1562+ 7453
+1483+ 7435              ; Gestisce la riproduzione della musica di sottofondo frame-by-frame.
+1484+ 7435              ; Viene chiamata a ogni frame.
+1485+ 7435              ; -------------------------------------------------------------------
+1486+ 7435              UpdateMusic:
+1487+ 7435 F5               push af
+1488+ 7436 C5               push bc
+1489+ 7437 D5               push de
+1490+ 7438 E5               push hl
+1491+ 7439
+1492+ 7439                  ; Se il salto sta riproducendo un effetto sonoro, non suonare la musica
+1493+ 7439 3A 7A 78         ld   a, (jump_sound_note)
+1494+ 743C FE 12            cp   18
+1495+ 743E 38 5A            jr   c, .done                 ; Salto attivo -> niente musica
+1496+ 7440
+1497+ 7440                  ; Decrementa il contatore dei frame della nota corrente
+1498+ 7440 3A 7D 78         ld   a, (music_frame_counter)
+1499+ 7443 3D               dec  a
+1500+ 7444 32 7D 78         ld   (music_frame_counter), a
+1501+ 7447 20 23            jr   nz, .play_current_note   ; Se non è zero, continua a suonare
+1502+ 7449
+1503+ 7449                  ; Altrimenti carica la nota successiva
+1504+ 7449 3A 7C 78         ld   a, (music_note_idx)
+1505+ 744C 3C               inc  a
+1506+ 744D FE 23            cp   35                       ; Abbiamo 35 note in totale
+1507+ 744F 38 01            jr   c, .no_wrap
+1508+ 7451 AF               xor  a                        ; Torna a 0 se raggiunge la fine (loop)
+1509+ 7452              .no_wrap:
+1510+ 7452 32 7C 78         ld   (music_note_idx), a
+1511+ 7455
+1512+ 7455                  ; Carica la durata e impostala come nuovo contatore di frame
+1513+ 7455 5F               ld   e, a
+1514+ 7456 16 00            ld   d, 0
+1515+ 7458 21 9F 74         ld   hl, MusicSheet
+1516+ 745B 19               add  hl, de
+1517+ 745C 19               add  hl, de                   ; Ogni nota prende 2 byte (delay, duration)
+1518+ 745D
+1519+ 745D                  ; Leggi durata (secondo byte)
+1520+ 745D 23               inc  hl
+1521+ 745E 7E               ld   a, (hl)
+1522+ 745F CB 3F            srl  a                        ; Divide per 8 (velocizza 8x)
+1523+ 7461 CB 3F            srl  a
+1524+ 7463 CB 3F            srl  a
+1525+ 7465
+1526+ 7465 20 02            jr   nz, .dur_ok
+1527+ 7467 3E 01            ld   a, 1
+1528+ 7469              .dur_ok:
+1529+ 7469 32 7D 78         ld   (music_frame_counter), a
+1530+ 746C
+1531+ 746C              .play_current_note:
+1532+ 746C                  ; Ottieni il delay della nota corrente (primo byte)
+1533+ 746C 3A 7C 78         ld   a, (music_note_idx)
+1534+ 746F 5F               ld   e, a
+1535+ 7470 16 00            ld   d, 0
+1536+ 7472 21 9F 74         ld   hl, MusicSheet
+1537+ 7475 19               add  hl, de
+1538+ 7476 19               add  hl, de                   ; hl punta al primo byte della nota
+1539+ 7477 7E               ld   a, (hl)                  ; A = delay
+1540+ 7478 B7               or   a
+1541+ 7479 28 1F            jr   z, .done                 ; Se delay è 0, è una pausa (Rest)
+1542+ 747B
+1543+ 747B                  ; Suona la nota: 2 cicli
+1544+ 747B 57               ld   d, a                     ; D = delay
+1545+ 747C 06 02            ld   b, 2                     ; 2 cicli per frame
+1546+ 747E              .note_loop:
+1547+ 747E                  ; Speaker ON
+1548+ 747E 3A 0F 75         ld   a, (room_border_color)
+1549+ 7481 F6 10            or   $10
+1550+ 7483 D3 FE            out  ($fe), a
+1551+ 7485 4A               ld   c, d
+1552+ 7486              .d1:
+1553+ 7486 F5               push af
+1554+ 7487 F1               pop  af
+1555+ 7488 0D               dec  c
+1556+ 7489 20 FB            jr   nz, .d1
+1557+ 748B
+1558+ 748B                  ; Speaker OFF
+1559+ 748B 3A 0F 75         ld   a, (room_border_color)
+1560+ 748E E6 EF            and  $ef
+1561+ 7490 D3 FE            out  ($fe), a
+1562+ 7492 4A               ld   c, d
+1563+ 7493              .d2:
+1564+ 7493 F5               push af
+1565+ 7494 F1               pop  af
+1566+ 7495 0D               dec  c
+1567+ 7496 20 FB            jr   nz, .d2
+1568+ 7498
+1569+ 7498 10 E4            djnz .note_loop
+1570+ 749A
+1571+ 749A              .done:
+1572+ 749A E1               pop  hl
+1573+ 749B D1               pop  de
+1574+ 749C C1               pop  bc
+1575+ 749D F1               pop  af
+1576+ 749E C9               ret
+1577+ 749F
+1578+ 749F              MusicSheet:
+1579+ 749F                  ; Formato: db delay, durata (in frame a 50Hz)
+1580+ 749F 60 05 65 0F      db 96, 5, 101, 15, 96, 5, 107, 25, 152, 5, 143, 35, 107, 15, 96, 10
+1580+ 74A3 60 05 6B 19
+1580+ 74A7 98 05 8F 23
+1580+ 74AB 6B 0F 60 0A
+1581+ 74AF 6B 0A 60 0A      db 107, 10, 96, 10, 107, 25, 96, 10, 85, 10, 81, 10, 85, 5, 81, 10
+1581+ 74B3 6B 19 60 0A
+1581+ 74B7 55 0A 51 0A
+1581+ 74BB 55 05 51 0A
+1582+ 74BF 55 0A 60 46      db 85, 10, 96, 70, 72, 40, 81, 10, 76, 5, 85, 20, 96, 10, 107, 25
+1582+ 74C3 48 28 51 0A
+1582+ 74C7 4C 05 55 14
+1582+ 74CB 60 0A 6B 19
+1583+ 74CF 5A 14 72 05      db 90, 20, 114, 5, 107, 10, 90, 10, 96, 10, 107, 10, 96, 10, 85, 5
+1583+ 74D3 6B 0A 5A 0A
+1583+ 74D7 60 0A 6B 0A
+1583+ 74DB 60 0A 55 05
+1584+ 74DF 5A 0A 6B 14      db 90, 10, 107, 20, 68, 65
+1584+ 74E3 44 41
+1585+ 74E5
+1586+ 74E5              ; -------------------------------------------------------------------
+1587+ 74E5              ; CheckActiveItemAtCell
+1588+ 74E5              ;
+1589+ 74E5              ; Verifica in modo rapido se esiste un item attivo (non raccolto)
+1590+ 74E5              ; nella cella specificata della griglia items_grid.
+1591+ 74E5              ;
+1592+ 74E5              ; Questa routine usa una lookup diretta su una mappa 32x16,
+1593+ 74E5              ; evitando la scansione della ItemsTable.
+1594+ 74E5              ;
+1595+ 74E5              ; Input:
+1596+ 74E5              ;   B = Colonna (0..31)
+1597+ 74E5              ;   C = Riga (0..15)
+1598+ 74E5              ;
+1599+ 74E5              ; Output:
+1600+ 74E5              ;   Carry Set   = item presente nella cella
+1601+ 74E5              ;   Carry Clear = nessun item
+1602+ 74E5              ;
+1603+ 74E5              ; Nota:
+1604+ 74E5              ;   HL NON è restituito valido (commento originale non corretto:
+1605+ 74E5              ;   la routine non punta a ItemsTable).
+1606+ 74E5              ; -------------------------------------------------------------------
+1607+ 74E5              CheckActiveItemAtCell:
+1608+ 74E5
+1609+ 74E5                  ; Salva registri usati
+1610+ 74E5 D5               push de
+1611+ 74E6 E5               push hl
+1612+ 74E7
+1613+ 74E7                  ; ---------------------------------------------------------------
+1614+ 74E7                  ; Calcolo indice lineare nella griglia 32x16:
+1615+ 74E7                  ;
+1616+ 74E7                  ; offset = Row * 32 + Col
+1617+ 74E7                  ; ---------------------------------------------------------------
+1618+ 74E7 26 00            ld   h, 0
+1619+ 74E9 69               ld   l, c              ; HL = Row
+1620+ 74EA
+1621+ 74EA 29               add  hl, hl            ; *2
+1622+ 74EB 29               add  hl, hl            ; *4
+1623+ 74EC 29               add  hl, hl            ; *8
+1624+ 74ED 29               add  hl, hl            ; *16
+1625+ 74EE 29               add  hl, hl            ; *32
+1626+ 74EF
+1627+ 74EF                  ; Aggiunge la colonna
+1628+ 74EF 58               ld   e, b
+1629+ 74F0 16 00            ld   d, 0
+1630+ 74F2 19               add  hl, de            ; HL = Row*32 + Col
+1631+ 74F3
+1632+ 74F3                  ; ---------------------------------------------------------------
+1633+ 74F3                  ; Accesso alla griglia degli item attivi
+1634+ 74F3                  ; ---------------------------------------------------------------
+1635+ 74F3 11 00 B0         ld   de, items_grid
+1636+ 74F6 19               add  hl, de            ; HL = address cella
+1637+ 74F7
+1638+ 74F7                  ; ---------------------------------------------------------------
+1639+ 74F7                  ; Controllo presenza item
+1640+ 74F7                  ;
+1641+ 74F7                  ; items_grid contiene:
+1642+ 74F7                  ;   0 = nessun item
+1643+ 74F7                  ;   >0 = item attivo (colore o flag)
+1644+ 74F7                  ; ---------------------------------------------------------------
+1645+ 74F7 7E               ld   a, (hl)
+1646+ 74F8 B7               or   a
+1647+ 74F9 28 04            jr   z, .not_active
+1648+ 74FB
+1649+ 74FB                  ; ---------------------------------------------------------------
+1650+ 74FB                  ; Item trovato
+1651+ 74FB                  ; ---------------------------------------------------------------
+1652+ 74FB E1               pop  hl
+1653+ 74FC D1               pop  de
+1654+ 74FD
+1655+ 74FD 37               scf                    ; Carry = 1
+1656+ 74FE C9               ret
+1657+ 74FF
+1658+ 74FF              .not_active:
+1659+ 74FF
+1660+ 74FF                  ; ---------------------------------------------------------------
+1661+ 74FF                  ; Nessun item nella cella
+1662+ 74FF                  ; ---------------------------------------------------------------
+1663+ 74FF E1               pop  hl
+1664+ 7500 D1               pop  de
+1665+ 7501
+1666+ 7501 B7               or   a                 ; Carry = 0
+1667+ 7502 C9               ret
+1668+ 7503
 # file closed: items.asm
-  19  7453                  include "data/datavariable.asm"
+  19  7503                  include "data/datavariable.asm"
 # file opened: data/datavariable.asm
-   1+ 7453              ; -------------------------------------------------------------------
-   2+ 7453              ; Variabili
-   3+ 7453              ; -------------------------------------------------------------------
-   4+ 7453              ; Posizioni
-   5+ 7453 88 80        PlayerPos:      db 136, 128 ;136, 100
-   6+ 7455 88 80        PlayerPosOld:   db 136, 128 ;136, 100
-   7+ 7457 11 11        bodyPos:        dw $1111
-   8+ 7459
-   9+ 7459              ; Stato player
-  10+ 7459 00           body_state:     db $00
-  11+ 745A 00           direction:      db $00
-  12+ 745B 00           flags:          db $00
-  13+ 745C
-  14+ 745C 00           collision_active: db $00
-  15+ 745D 00           items_collected:  db $00
-  16+ 745E 00           sprite_shift:     db $00
-  17+ 745F 00           room_border_color: db $00
-  18+ 7460
-  19+ 7460              ; Fisica
-  20+ 7460 00           velocity_y:     db $00
-  21+ 7461 01           on_ground:      db $01
-  22+ 7462 00           jump_pressed:   db $00
-  23+ 7463 00           jump_prev:      db $00
-  24+ 7464 00           jump_start_y:   db $00
-  25+ 7465 00           jump_dir:       db $00
-  26+ 7466 00           current_input_dir: db $00
-  27+ 7467 00           q_prev:         db $00
-  28+ 7468
-  29+ 7468              ; Buffer e contatori
-  30+ 7468 00 00        counter:        dw 0
-  31+ 746A 00          > db 0
-  31+ 746B 00          > db 0
-  31+ 746C 00          > db 0
-  31+ 746D 00          > db 0
-  31+ 746E 00          > db 0
-  31+ 746F 00          > db 0
-  31+ 7470 00          > db 0
-  31+ 7471 00          > db 0
-  31+ 7472 00          > db 0
-  31+ 7473 00          > db 0
-  31+ 7474 00          > db 0
-  31+ 7475 00          > db 0
-  31+ 7476 00          > db 0
-  31+ 7477 00          > db 0
-  31+ 7478 00          > db 0
-  31+ 7479 00          > db 0
-  31+ 747A 00          > db 0
-  31+ 747B 00          > db 0
-  31+ 747C 00          > db 0
-  31+ 747D 00          > db 0
-  31+ 747E 00          > db 0
-  31+ 747F 00          > db 0
-  31+ 7480 00          > db 0
-  31+ 7481 00          > db 0
-  31+ 7482 00          > db 0
-  31+ 7483 00          > db 0
-  31+ 7484 00          > db 0
-  31+ 7485 00          > db 0
-  31+ 7486 00          > db 0
-  31+ 7487 00          > db 0
-  31+ 7488 00          > db 0
-  31+ 7489 00          > db 0
-  31+ 748A 00          > db 0
-  31+ 748B 00          > db 0
-  31+ 748C 00          > db 0
-  31+ 748D 00          > db 0
-  31+ 748E 00          > db 0
-  31+ 748F 00          > db 0
-  31+ 7490 00          > db 0
-  31+ 7491 00          > db 0
-  31+ 7492 00          > db 0
-  31+ 7493 00          > db 0
-  31+ 7494 00          > db 0
-  31+ 7495 00          > db 0
-  31+ 7496 00          > db 0
-  31+ 7497 00          > db 0
-  31+ 7498 00          > db 0
-  31+ 7499 00          > db 0
-  31+ 749A 00          > db 0
-  31+ 749B 00          > db 0
-  31+ 749C 00          > db 0
-  31+ 749D 00          > db 0
-  31+ 749E 00          > db 0
-  31+ 749F 00          > db 0
-  31+ 74A0 00          > db 0
-  31+ 74A1 00          > db 0
-  31+ 74A2 00          > db 0
-  31+ 74A3 00          > db 0
-  31+ 74A4 00          > db 0
-  31+ 74A5 00          > db 0
-  31+ 74A6 00          > db 0
-  31+ 74A7 00          > db 0
-  31+ 74A8 00          > db 0
-  31+ 74A9 00          > db 0
-  31+ 74AA 00          > db 0
-  31+ 74AB 00          > db 0
-  31+ 74AC 00          > db 0
-  31+ 74AD 00          > db 0
-  31+ 74AE 00          > db 0
-  31+ 74AF 00          > db 0
-  31+ 74B0 00          > db 0
-  31+ 74B1 00          > db 0
-  31+ 74B2 00          > db 0
-  31+ 74B3 00          > db 0
-  31+ 74B4 00          > db 0
-  31+ 74B5 00          > db 0
-  31+ 74B6 00          > db 0
-  31+ 74B7 00          > db 0
-  31+ 74B8 00          > db 0
-  31+ 74B9 00          > db 0
-  31+ 74BA 00          > db 0
-  31+ 74BB 00          > db 0
-  31+ 74BC 00          > db 0
-  31+ 74BD 00          > db 0
-  31+ 74BE 00          > db 0
-  31+ 74BF 00          > db 0
-  31+ 74C0 00          > db 0
-  31+ 74C1 00          > db 0
-  31+ 74C2 00          > db 0
-  31+ 74C3 00          > db 0
-  31+ 74C4 00          > db 0
-  31+ 74C5 00          > db 0
-  31+ 74C6 00          > db 0
-  31+ 74C7 00          > db 0
-  31+ 74C8 00          > db 0
-  31+ 74C9 00          > db 0
-  31+ 74CA 00          > db 0
-  31+ 74CB 00          > db 0
-  31+ 74CC 00          > db 0
-  31+ 74CD 00          > db 0
-  31+ 74CE 00          > db 0
-  31+ 74CF 00          > db 0
-  31+ 74D0 00          > db 0
-  31+ 74D1 00          > db 0
-  31+ 74D2 00          > db 0
-  31+ 74D3 00          > db 0
-  31+ 74D4 00          > db 0
-  31+ 74D5 00          > db 0
-  31+ 74D6 00          > db 0
-  31+ 74D7 00          > db 0
-  31+ 74D8 00          > db 0
-  31+ 74D9 00          > db 0
-  31+ 74DA 00          > db 0
-  31+ 74DB 00          > db 0
-  31+ 74DC 00          > db 0
-  31+ 74DD 00          > db 0
-  31+ 74DE 00          > db 0
-  31+ 74DF 00          > db 0
-  31+ 74E0 00          > db 0
-  31+ 74E1 00          > db 0
-  31+ 74E2 00          > db 0
-  31+ 74E3 00          > db 0
-  31+ 74E4 00          > db 0
-  31+ 74E5 00          > db 0
-  31+ 74E6 00          > db 0
-  31+ 74E7 00          > db 0
-  31+ 74E8 00          > db 0
-  31+ 74E9 00          > db 0
-  31+ 74EA 00          > db 0
-  31+ 74EB 00          > db 0
-  31+ 74EC 00          > db 0
-  31+ 74ED 00          > db 0
-  31+ 74EE 00          > db 0
-  31+ 74EF 00          > db 0
-  31+ 74F0 00          > db 0
-  31+ 74F1 00          > db 0
-  31+ 74F2 00          > db 0
-  31+ 74F3 00          > db 0
-  31+ 74F4 00          > db 0
-  31+ 74F5 00          > db 0
-  31+ 74F6 00          > db 0
-  31+ 74F7 00          > db 0
-  31+ 74F8 00          > db 0
-  31+ 74F9 00          > db 0
-  31+ 74FA 00          > db 0
-  31+ 74FB 00          > db 0
-  31+ 74FC 00          > db 0
-  31+ 74FD 00          > db 0
-  31+ 74FE 00          > db 0
-  31+ 74FF 00          > db 0
-  31+ 7500 00          > db 0
-  31+ 7501 00          > db 0
-  31+ 7502 00          > db 0
-  31+ 7503 00          > db 0
-  31+ 7504 00          > db 0
-  31+ 7505 00          > db 0
-  31+ 7506 00          > db 0
-  31+ 7507 00          > db 0
-  31+ 7508 00          > db 0
-  31+ 7509 00          > db 0
-  31+ 750A 00          > db 0
-  31+ 750B 00          > db 0
-  31+ 750C 00          > db 0
-  31+ 750D 00          > db 0
-  31+ 750E 00          > db 0
-  31+ 750F 00          > db 0
-  31+ 7510 00          > db 0
-  31+ 7511 00          > db 0
-  31+ 7512 00          > db 0
-  31+ 7513 00          > db 0
-  31+ 7514 00          > db 0
-  31+ 7515 00          > db 0
-  31+ 7516 00          > db 0
-  31+ 7517 00          > db 0
-  31+ 7518 00          > db 0
-  31+ 7519 00          > db 0
+   1+ 7503              ; -------------------------------------------------------------------
+   2+ 7503              ; Variabili
+   3+ 7503              ; -------------------------------------------------------------------
+   4+ 7503              ; Posizioni
+   5+ 7503 88 80        PlayerPos:      db 136, 128 ;136, 100
+   6+ 7505 88 80        PlayerPosOld:   db 136, 128 ;136, 100
+   7+ 7507 11 11        bodyPos:        dw $1111
+   8+ 7509
+   9+ 7509              ; Stato player
+  10+ 7509 00           body_state:     db $00
+  11+ 750A 00           direction:      db $00
+  12+ 750B 00           flags:          db $00
+  13+ 750C
+  14+ 750C 00           collision_active: db $00
+  15+ 750D 00           items_collected:  db $00
+  16+ 750E 00           sprite_shift:     db $00
+  17+ 750F 00           room_border_color: db $00
+  18+ 7510
+  19+ 7510              ; Fisica
+  20+ 7510 00           velocity_y:     db $00
+  21+ 7511 01           on_ground:      db $01
+  22+ 7512 00           jump_pressed:   db $00
+  23+ 7513 00           jump_prev:      db $00
+  24+ 7514 00           jump_start_y:   db $00
+  25+ 7515 00           jump_dir:       db $00
+  26+ 7516 00           current_input_dir: db $00
+  27+ 7517 00           q_prev:         db $00
+  28+ 7518
+  29+ 7518              ; Buffer e contatori
+  30+ 7518 00 00        counter:        dw 0
   31+ 751A 00          > db 0
   31+ 751B 00          > db 0
   31+ 751C 00          > db 0
@@ -6163,182 +6106,182 @@
   31+ 7567 00          > db 0
   31+ 7568 00          > db 0
   31+ 7569 00          > db 0
-  32+ 756A 00          > db 0
-  32+ 756B 00          > db 0
-  32+ 756C 00          > db 0
-  32+ 756D 00          > db 0
-  32+ 756E 00          > db 0
-  32+ 756F 00          > db 0
-  32+ 7570 00          > db 0
-  32+ 7571 00          > db 0
-  32+ 7572 00          > db 0
-  32+ 7573 00          > db 0
-  32+ 7574 00          > db 0
-  32+ 7575 00          > db 0
-  32+ 7576 00          > db 0
-  32+ 7577 00          > db 0
-  32+ 7578 00          > db 0
-  32+ 7579 00          > db 0
-  32+ 757A 00          > db 0
-  32+ 757B 00          > db 0
-  32+ 757C 00          > db 0
-  32+ 757D 00          > db 0
-  32+ 757E 00          > db 0
-  32+ 757F 00          > db 0
-  32+ 7580 00          > db 0
-  32+ 7581 00          > db 0
-  32+ 7582 00          > db 0
-  32+ 7583 00          > db 0
-  32+ 7584 00          > db 0
-  32+ 7585 00          > db 0
-  32+ 7586 00          > db 0
-  32+ 7587 00          > db 0
-  32+ 7588 00          > db 0
-  32+ 7589 00          > db 0
-  32+ 758A 00          > db 0
-  32+ 758B 00          > db 0
-  32+ 758C 00          > db 0
-  32+ 758D 00          > db 0
-  32+ 758E 00          > db 0
-  32+ 758F 00          > db 0
-  32+ 7590 00          > db 0
-  32+ 7591 00          > db 0
-  32+ 7592 00          > db 0
-  32+ 7593 00          > db 0
-  32+ 7594 00          > db 0
-  32+ 7595 00          > db 0
-  32+ 7596 00          > db 0
-  32+ 7597 00          > db 0
-  32+ 7598 00          > db 0
-  32+ 7599 00          > db 0
-  32+ 759A 00          > db 0
-  32+ 759B 00          > db 0
-  32+ 759C 00          > db 0
-  32+ 759D 00          > db 0
-  32+ 759E 00          > db 0
-  32+ 759F 00          > db 0
-  32+ 75A0 00          > db 0
-  32+ 75A1 00          > db 0
-  32+ 75A2 00          > db 0
-  32+ 75A3 00          > db 0
-  32+ 75A4 00          > db 0
-  32+ 75A5 00          > db 0
-  32+ 75A6 00          > db 0
-  32+ 75A7 00          > db 0
-  32+ 75A8 00          > db 0
-  32+ 75A9 00          > db 0
-  32+ 75AA 00          > db 0
-  32+ 75AB 00          > db 0
-  32+ 75AC 00          > db 0
-  32+ 75AD 00          > db 0
-  32+ 75AE 00          > db 0
-  32+ 75AF 00          > db 0
-  32+ 75B0 00          > db 0
-  32+ 75B1 00          > db 0
-  32+ 75B2 00          > db 0
-  32+ 75B3 00          > db 0
-  32+ 75B4 00          > db 0
-  32+ 75B5 00          > db 0
-  32+ 75B6 00          > db 0
-  32+ 75B7 00          > db 0
-  32+ 75B8 00          > db 0
-  32+ 75B9 00          > db 0
-  32+ 75BA 00          > db 0
-  32+ 75BB 00          > db 0
-  32+ 75BC 00          > db 0
-  32+ 75BD 00          > db 0
-  32+ 75BE 00          > db 0
-  32+ 75BF 00          > db 0
-  32+ 75C0 00          > db 0
-  32+ 75C1 00          > db 0
-  32+ 75C2 00          > db 0
-  32+ 75C3 00          > db 0
-  32+ 75C4 00          > db 0
-  32+ 75C5 00          > db 0
-  32+ 75C6 00          > db 0
-  32+ 75C7 00          > db 0
-  32+ 75C8 00          > db 0
-  32+ 75C9 00          > db 0
-  32+ 75CA 00          > db 0
-  32+ 75CB 00          > db 0
-  32+ 75CC 00          > db 0
-  32+ 75CD 00          > db 0
-  32+ 75CE 00          > db 0
-  32+ 75CF 00          > db 0
-  32+ 75D0 00          > db 0
-  32+ 75D1 00          > db 0
-  32+ 75D2 00          > db 0
-  32+ 75D3 00          > db 0
-  32+ 75D4 00          > db 0
-  32+ 75D5 00          > db 0
-  32+ 75D6 00          > db 0
-  32+ 75D7 00          > db 0
-  32+ 75D8 00          > db 0
-  32+ 75D9 00          > db 0
-  32+ 75DA 00          > db 0
-  32+ 75DB 00          > db 0
-  32+ 75DC 00          > db 0
-  32+ 75DD 00          > db 0
-  32+ 75DE 00          > db 0
-  32+ 75DF 00          > db 0
-  32+ 75E0 00          > db 0
-  32+ 75E1 00          > db 0
-  32+ 75E2 00          > db 0
-  32+ 75E3 00          > db 0
-  32+ 75E4 00          > db 0
-  32+ 75E5 00          > db 0
-  32+ 75E6 00          > db 0
-  32+ 75E7 00          > db 0
-  32+ 75E8 00          > db 0
-  32+ 75E9 00          > db 0
-  32+ 75EA 00          > db 0
-  32+ 75EB 00          > db 0
-  32+ 75EC 00          > db 0
-  32+ 75ED 00          > db 0
-  32+ 75EE 00          > db 0
-  32+ 75EF 00          > db 0
-  32+ 75F0 00          > db 0
-  32+ 75F1 00          > db 0
-  32+ 75F2 00          > db 0
-  32+ 75F3 00          > db 0
-  32+ 75F4 00          > db 0
-  32+ 75F5 00          > db 0
-  32+ 75F6 00          > db 0
-  32+ 75F7 00          > db 0
-  32+ 75F8 00          > db 0
-  32+ 75F9 00          > db 0
-  32+ 75FA 00          > db 0
-  32+ 75FB 00          > db 0
-  32+ 75FC 00          > db 0
-  32+ 75FD 00          > db 0
-  32+ 75FE 00          > db 0
-  32+ 75FF 00          > db 0
-  32+ 7600 00          > db 0
-  32+ 7601 00          > db 0
-  32+ 7602 00          > db 0
-  32+ 7603 00          > db 0
-  32+ 7604 00          > db 0
-  32+ 7605 00          > db 0
-  32+ 7606 00          > db 0
-  32+ 7607 00          > db 0
-  32+ 7608 00          > db 0
-  32+ 7609 00          > db 0
-  32+ 760A 00          > db 0
-  32+ 760B 00          > db 0
-  32+ 760C 00          > db 0
-  32+ 760D 00          > db 0
-  32+ 760E 00          > db 0
-  32+ 760F 00          > db 0
-  32+ 7610 00          > db 0
-  32+ 7611 00          > db 0
-  32+ 7612 00          > db 0
-  32+ 7613 00          > db 0
-  32+ 7614 00          > db 0
-  32+ 7615 00          > db 0
-  32+ 7616 00          > db 0
-  32+ 7617 00          > db 0
-  32+ 7618 00          > db 0
-  32+ 7619 00          > db 0
+  31+ 756A 00          > db 0
+  31+ 756B 00          > db 0
+  31+ 756C 00          > db 0
+  31+ 756D 00          > db 0
+  31+ 756E 00          > db 0
+  31+ 756F 00          > db 0
+  31+ 7570 00          > db 0
+  31+ 7571 00          > db 0
+  31+ 7572 00          > db 0
+  31+ 7573 00          > db 0
+  31+ 7574 00          > db 0
+  31+ 7575 00          > db 0
+  31+ 7576 00          > db 0
+  31+ 7577 00          > db 0
+  31+ 7578 00          > db 0
+  31+ 7579 00          > db 0
+  31+ 757A 00          > db 0
+  31+ 757B 00          > db 0
+  31+ 757C 00          > db 0
+  31+ 757D 00          > db 0
+  31+ 757E 00          > db 0
+  31+ 757F 00          > db 0
+  31+ 7580 00          > db 0
+  31+ 7581 00          > db 0
+  31+ 7582 00          > db 0
+  31+ 7583 00          > db 0
+  31+ 7584 00          > db 0
+  31+ 7585 00          > db 0
+  31+ 7586 00          > db 0
+  31+ 7587 00          > db 0
+  31+ 7588 00          > db 0
+  31+ 7589 00          > db 0
+  31+ 758A 00          > db 0
+  31+ 758B 00          > db 0
+  31+ 758C 00          > db 0
+  31+ 758D 00          > db 0
+  31+ 758E 00          > db 0
+  31+ 758F 00          > db 0
+  31+ 7590 00          > db 0
+  31+ 7591 00          > db 0
+  31+ 7592 00          > db 0
+  31+ 7593 00          > db 0
+  31+ 7594 00          > db 0
+  31+ 7595 00          > db 0
+  31+ 7596 00          > db 0
+  31+ 7597 00          > db 0
+  31+ 7598 00          > db 0
+  31+ 7599 00          > db 0
+  31+ 759A 00          > db 0
+  31+ 759B 00          > db 0
+  31+ 759C 00          > db 0
+  31+ 759D 00          > db 0
+  31+ 759E 00          > db 0
+  31+ 759F 00          > db 0
+  31+ 75A0 00          > db 0
+  31+ 75A1 00          > db 0
+  31+ 75A2 00          > db 0
+  31+ 75A3 00          > db 0
+  31+ 75A4 00          > db 0
+  31+ 75A5 00          > db 0
+  31+ 75A6 00          > db 0
+  31+ 75A7 00          > db 0
+  31+ 75A8 00          > db 0
+  31+ 75A9 00          > db 0
+  31+ 75AA 00          > db 0
+  31+ 75AB 00          > db 0
+  31+ 75AC 00          > db 0
+  31+ 75AD 00          > db 0
+  31+ 75AE 00          > db 0
+  31+ 75AF 00          > db 0
+  31+ 75B0 00          > db 0
+  31+ 75B1 00          > db 0
+  31+ 75B2 00          > db 0
+  31+ 75B3 00          > db 0
+  31+ 75B4 00          > db 0
+  31+ 75B5 00          > db 0
+  31+ 75B6 00          > db 0
+  31+ 75B7 00          > db 0
+  31+ 75B8 00          > db 0
+  31+ 75B9 00          > db 0
+  31+ 75BA 00          > db 0
+  31+ 75BB 00          > db 0
+  31+ 75BC 00          > db 0
+  31+ 75BD 00          > db 0
+  31+ 75BE 00          > db 0
+  31+ 75BF 00          > db 0
+  31+ 75C0 00          > db 0
+  31+ 75C1 00          > db 0
+  31+ 75C2 00          > db 0
+  31+ 75C3 00          > db 0
+  31+ 75C4 00          > db 0
+  31+ 75C5 00          > db 0
+  31+ 75C6 00          > db 0
+  31+ 75C7 00          > db 0
+  31+ 75C8 00          > db 0
+  31+ 75C9 00          > db 0
+  31+ 75CA 00          > db 0
+  31+ 75CB 00          > db 0
+  31+ 75CC 00          > db 0
+  31+ 75CD 00          > db 0
+  31+ 75CE 00          > db 0
+  31+ 75CF 00          > db 0
+  31+ 75D0 00          > db 0
+  31+ 75D1 00          > db 0
+  31+ 75D2 00          > db 0
+  31+ 75D3 00          > db 0
+  31+ 75D4 00          > db 0
+  31+ 75D5 00          > db 0
+  31+ 75D6 00          > db 0
+  31+ 75D7 00          > db 0
+  31+ 75D8 00          > db 0
+  31+ 75D9 00          > db 0
+  31+ 75DA 00          > db 0
+  31+ 75DB 00          > db 0
+  31+ 75DC 00          > db 0
+  31+ 75DD 00          > db 0
+  31+ 75DE 00          > db 0
+  31+ 75DF 00          > db 0
+  31+ 75E0 00          > db 0
+  31+ 75E1 00          > db 0
+  31+ 75E2 00          > db 0
+  31+ 75E3 00          > db 0
+  31+ 75E4 00          > db 0
+  31+ 75E5 00          > db 0
+  31+ 75E6 00          > db 0
+  31+ 75E7 00          > db 0
+  31+ 75E8 00          > db 0
+  31+ 75E9 00          > db 0
+  31+ 75EA 00          > db 0
+  31+ 75EB 00          > db 0
+  31+ 75EC 00          > db 0
+  31+ 75ED 00          > db 0
+  31+ 75EE 00          > db 0
+  31+ 75EF 00          > db 0
+  31+ 75F0 00          > db 0
+  31+ 75F1 00          > db 0
+  31+ 75F2 00          > db 0
+  31+ 75F3 00          > db 0
+  31+ 75F4 00          > db 0
+  31+ 75F5 00          > db 0
+  31+ 75F6 00          > db 0
+  31+ 75F7 00          > db 0
+  31+ 75F8 00          > db 0
+  31+ 75F9 00          > db 0
+  31+ 75FA 00          > db 0
+  31+ 75FB 00          > db 0
+  31+ 75FC 00          > db 0
+  31+ 75FD 00          > db 0
+  31+ 75FE 00          > db 0
+  31+ 75FF 00          > db 0
+  31+ 7600 00          > db 0
+  31+ 7601 00          > db 0
+  31+ 7602 00          > db 0
+  31+ 7603 00          > db 0
+  31+ 7604 00          > db 0
+  31+ 7605 00          > db 0
+  31+ 7606 00          > db 0
+  31+ 7607 00          > db 0
+  31+ 7608 00          > db 0
+  31+ 7609 00          > db 0
+  31+ 760A 00          > db 0
+  31+ 760B 00          > db 0
+  31+ 760C 00          > db 0
+  31+ 760D 00          > db 0
+  31+ 760E 00          > db 0
+  31+ 760F 00          > db 0
+  31+ 7610 00          > db 0
+  31+ 7611 00          > db 0
+  31+ 7612 00          > db 0
+  31+ 7613 00          > db 0
+  31+ 7614 00          > db 0
+  31+ 7615 00          > db 0
+  31+ 7616 00          > db 0
+  31+ 7617 00          > db 0
+  31+ 7618 00          > db 0
+  31+ 7619 00          > db 0
   32+ 761A 00          > db 0
   32+ 761B 00          > db 0
   32+ 761C 00          > db 0
@@ -6675,232 +6618,411 @@
   32+ 7767 00          > db 0
   32+ 7768 00          > db 0
   32+ 7769 00          > db 0
-  33+ 776A
-  34+ 776A              ; Gestione Stanze
-  35+ 776A 00           current_room:   db 0
-  36+ 776B 00           conveyor_dir:   db 0
-  37+ 776C 00           conveyor_len:   db 0
-  38+ 776D 00           conveyor_row:   db 0
-  39+ 776E 00           conveyor_col:   db 0
-  40+ 776F 00           ramp_dir:       db 0
-  41+ 7770 00           ramp_len:       db 0
-  42+ 7771 00           ramp_row:       db 0
-  43+ 7772 00           ramp_col:       db 0
-  44+ 7773 00          > db 0
-  44+ 7774 00          > db 0
-  44+ 7775 00          > db 0
-  44+ 7776 00          > db 0
-  44+ 7777 00          > db 0
-  44+ 7778 00          > db 0
-  44+ 7779 00          > db 0
-  44+ 777A 00          > db 0
-  44+ 777B 00          > db 0
-  44+ 777C 00          > db 0
-  44+ 777D 00          > db 0
-  44+ 777E 00          > db 0
-  44+ 777F 00          > db 0
-  44+ 7780 00          > db 0
-  44+ 7781 00          > db 0
-  44+ 7782 00          > db 0
-  44+ 7783 00          > db 0
-  44+ 7784 00          > db 0
-  44+ 7785 00          > db 0
-  44+ 7786 00          > db 0
-  44+ 7787 00          > db 0
-  44+ 7788 00          > db 0
-  44+ 7789 00          > db 0
-  44+ 778A 00          > db 0
-  44+ 778B 00          > db 0
-  44+ 778C 00          > db 0
-  44+ 778D 00          > db 0
-  44+ 778E 00          > db 0
-  44+ 778F 00          > db 0
-  44+ 7790 00          > db 0
-  44+ 7791 00          > db 0
-  44+ 7792 00          > db 0
-  44+ 7793 00          > db 0
-  44+ 7794 00          > db 0
-  44+ 7795 00          > db 0
-  44+ 7796 00          > db 0
-  44+ 7797 00          > db 0
-  44+ 7798 00          > db 0
-  44+ 7799 00          > db 0
-  44+ 779A 00          > db 0
-  44+ 779B 00          > db 0
-  44+ 779C 00          > db 0
-  44+ 779D 00          > db 0
-  44+ 779E 00          > db 0
-  44+ 779F 00          > db 0
-  44+ 77A0 00          > db 0
-  44+ 77A1 00          > db 0
-  44+ 77A2 00          > db 0
-  44+ 77A3 00          > db 0
-  44+ 77A4 00          > db 0
-  44+ 77A5 00          > db 0
-  44+ 77A6 00          > db 0
-  44+ 77A7 00          > db 0
-  44+ 77A8 00          > db 0
-  44+ 77A9 00          > db 0
-  44+ 77AA 00          > db 0
-  44+ 77AB 00          > db 0
-  44+ 77AC 00          > db 0
-  44+ 77AD 00          > db 0
-  44+ 77AE 00          > db 0
-  44+ 77AF 00          > db 0
-  44+ 77B0 00          > db 0
-  44+ 77B1 00          > db 0
-  44+ 77B2 00          > db 0
-  44+ 77B3 00          > db 0
-  44+ 77B4 00          > db 0
-  44+ 77B5 00          > db 0
-  44+ 77B6 00          > db 0
-  44+ 77B7 00          > db 0
-  44+ 77B8 00          > db 0
-  44+ 77B9 00          > db 0
-  44+ 77BA 00          > db 0
-  44+ 77BB 00          > db 0
-  44+ 77BC 00          > db 0
-  44+ 77BD 00          > db 0
-  44+ 77BE 00          > db 0
-  44+ 77BF 00          > db 0
-  44+ 77C0 00          > db 0
-  44+ 77C1 00          > db 0
-  44+ 77C2 00          > db 0
-  45+ 77C3 00           num_room_items:     db 0
-  46+ 77C4 00 83        room_ptr:           dw TheOffLicenceLayout;
-  47+ 77C6 01           enemy_update_rate:  db 1
-  48+ 77C7 00           enemy_update_timer: db 0
-  49+ 77C8 03           player_speed:       db 3
-  50+ 77C9 00           transition_active:  db 0
-  51+ 77CA 12           jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
-  52+ 77CB 00           jump_sound_timer:   db 0
-  53+ 77CC
+  32+ 776A 00          > db 0
+  32+ 776B 00          > db 0
+  32+ 776C 00          > db 0
+  32+ 776D 00          > db 0
+  32+ 776E 00          > db 0
+  32+ 776F 00          > db 0
+  32+ 7770 00          > db 0
+  32+ 7771 00          > db 0
+  32+ 7772 00          > db 0
+  32+ 7773 00          > db 0
+  32+ 7774 00          > db 0
+  32+ 7775 00          > db 0
+  32+ 7776 00          > db 0
+  32+ 7777 00          > db 0
+  32+ 7778 00          > db 0
+  32+ 7779 00          > db 0
+  32+ 777A 00          > db 0
+  32+ 777B 00          > db 0
+  32+ 777C 00          > db 0
+  32+ 777D 00          > db 0
+  32+ 777E 00          > db 0
+  32+ 777F 00          > db 0
+  32+ 7780 00          > db 0
+  32+ 7781 00          > db 0
+  32+ 7782 00          > db 0
+  32+ 7783 00          > db 0
+  32+ 7784 00          > db 0
+  32+ 7785 00          > db 0
+  32+ 7786 00          > db 0
+  32+ 7787 00          > db 0
+  32+ 7788 00          > db 0
+  32+ 7789 00          > db 0
+  32+ 778A 00          > db 0
+  32+ 778B 00          > db 0
+  32+ 778C 00          > db 0
+  32+ 778D 00          > db 0
+  32+ 778E 00          > db 0
+  32+ 778F 00          > db 0
+  32+ 7790 00          > db 0
+  32+ 7791 00          > db 0
+  32+ 7792 00          > db 0
+  32+ 7793 00          > db 0
+  32+ 7794 00          > db 0
+  32+ 7795 00          > db 0
+  32+ 7796 00          > db 0
+  32+ 7797 00          > db 0
+  32+ 7798 00          > db 0
+  32+ 7799 00          > db 0
+  32+ 779A 00          > db 0
+  32+ 779B 00          > db 0
+  32+ 779C 00          > db 0
+  32+ 779D 00          > db 0
+  32+ 779E 00          > db 0
+  32+ 779F 00          > db 0
+  32+ 77A0 00          > db 0
+  32+ 77A1 00          > db 0
+  32+ 77A2 00          > db 0
+  32+ 77A3 00          > db 0
+  32+ 77A4 00          > db 0
+  32+ 77A5 00          > db 0
+  32+ 77A6 00          > db 0
+  32+ 77A7 00          > db 0
+  32+ 77A8 00          > db 0
+  32+ 77A9 00          > db 0
+  32+ 77AA 00          > db 0
+  32+ 77AB 00          > db 0
+  32+ 77AC 00          > db 0
+  32+ 77AD 00          > db 0
+  32+ 77AE 00          > db 0
+  32+ 77AF 00          > db 0
+  32+ 77B0 00          > db 0
+  32+ 77B1 00          > db 0
+  32+ 77B2 00          > db 0
+  32+ 77B3 00          > db 0
+  32+ 77B4 00          > db 0
+  32+ 77B5 00          > db 0
+  32+ 77B6 00          > db 0
+  32+ 77B7 00          > db 0
+  32+ 77B8 00          > db 0
+  32+ 77B9 00          > db 0
+  32+ 77BA 00          > db 0
+  32+ 77BB 00          > db 0
+  32+ 77BC 00          > db 0
+  32+ 77BD 00          > db 0
+  32+ 77BE 00          > db 0
+  32+ 77BF 00          > db 0
+  32+ 77C0 00          > db 0
+  32+ 77C1 00          > db 0
+  32+ 77C2 00          > db 0
+  32+ 77C3 00          > db 0
+  32+ 77C4 00          > db 0
+  32+ 77C5 00          > db 0
+  32+ 77C6 00          > db 0
+  32+ 77C7 00          > db 0
+  32+ 77C8 00          > db 0
+  32+ 77C9 00          > db 0
+  32+ 77CA 00          > db 0
+  32+ 77CB 00          > db 0
+  32+ 77CC 00          > db 0
+  32+ 77CD 00          > db 0
+  32+ 77CE 00          > db 0
+  32+ 77CF 00          > db 0
+  32+ 77D0 00          > db 0
+  32+ 77D1 00          > db 0
+  32+ 77D2 00          > db 0
+  32+ 77D3 00          > db 0
+  32+ 77D4 00          > db 0
+  32+ 77D5 00          > db 0
+  32+ 77D6 00          > db 0
+  32+ 77D7 00          > db 0
+  32+ 77D8 00          > db 0
+  32+ 77D9 00          > db 0
+  32+ 77DA 00          > db 0
+  32+ 77DB 00          > db 0
+  32+ 77DC 00          > db 0
+  32+ 77DD 00          > db 0
+  32+ 77DE 00          > db 0
+  32+ 77DF 00          > db 0
+  32+ 77E0 00          > db 0
+  32+ 77E1 00          > db 0
+  32+ 77E2 00          > db 0
+  32+ 77E3 00          > db 0
+  32+ 77E4 00          > db 0
+  32+ 77E5 00          > db 0
+  32+ 77E6 00          > db 0
+  32+ 77E7 00          > db 0
+  32+ 77E8 00          > db 0
+  32+ 77E9 00          > db 0
+  32+ 77EA 00          > db 0
+  32+ 77EB 00          > db 0
+  32+ 77EC 00          > db 0
+  32+ 77ED 00          > db 0
+  32+ 77EE 00          > db 0
+  32+ 77EF 00          > db 0
+  32+ 77F0 00          > db 0
+  32+ 77F1 00          > db 0
+  32+ 77F2 00          > db 0
+  32+ 77F3 00          > db 0
+  32+ 77F4 00          > db 0
+  32+ 77F5 00          > db 0
+  32+ 77F6 00          > db 0
+  32+ 77F7 00          > db 0
+  32+ 77F8 00          > db 0
+  32+ 77F9 00          > db 0
+  32+ 77FA 00          > db 0
+  32+ 77FB 00          > db 0
+  32+ 77FC 00          > db 0
+  32+ 77FD 00          > db 0
+  32+ 77FE 00          > db 0
+  32+ 77FF 00          > db 0
+  32+ 7800 00          > db 0
+  32+ 7801 00          > db 0
+  32+ 7802 00          > db 0
+  32+ 7803 00          > db 0
+  32+ 7804 00          > db 0
+  32+ 7805 00          > db 0
+  32+ 7806 00          > db 0
+  32+ 7807 00          > db 0
+  32+ 7808 00          > db 0
+  32+ 7809 00          > db 0
+  32+ 780A 00          > db 0
+  32+ 780B 00          > db 0
+  32+ 780C 00          > db 0
+  32+ 780D 00          > db 0
+  32+ 780E 00          > db 0
+  32+ 780F 00          > db 0
+  32+ 7810 00          > db 0
+  32+ 7811 00          > db 0
+  32+ 7812 00          > db 0
+  32+ 7813 00          > db 0
+  32+ 7814 00          > db 0
+  32+ 7815 00          > db 0
+  32+ 7816 00          > db 0
+  32+ 7817 00          > db 0
+  32+ 7818 00          > db 0
+  32+ 7819 00          > db 0
+  33+ 781A
+  34+ 781A              ; Gestione Stanze
+  35+ 781A 00           current_room:   db 0
+  36+ 781B 00           conveyor_dir:   db 0
+  37+ 781C 00           conveyor_len:   db 0
+  38+ 781D 00           conveyor_row:   db 0
+  39+ 781E 00           conveyor_col:   db 0
+  40+ 781F 00           ramp_dir:       db 0
+  41+ 7820 00           ramp_len:       db 0
+  42+ 7821 00           ramp_row:       db 0
+  43+ 7822 00           ramp_col:       db 0
+  44+ 7823 00          > db 0
+  44+ 7824 00          > db 0
+  44+ 7825 00          > db 0
+  44+ 7826 00          > db 0
+  44+ 7827 00          > db 0
+  44+ 7828 00          > db 0
+  44+ 7829 00          > db 0
+  44+ 782A 00          > db 0
+  44+ 782B 00          > db 0
+  44+ 782C 00          > db 0
+  44+ 782D 00          > db 0
+  44+ 782E 00          > db 0
+  44+ 782F 00          > db 0
+  44+ 7830 00          > db 0
+  44+ 7831 00          > db 0
+  44+ 7832 00          > db 0
+  44+ 7833 00          > db 0
+  44+ 7834 00          > db 0
+  44+ 7835 00          > db 0
+  44+ 7836 00          > db 0
+  44+ 7837 00          > db 0
+  44+ 7838 00          > db 0
+  44+ 7839 00          > db 0
+  44+ 783A 00          > db 0
+  44+ 783B 00          > db 0
+  44+ 783C 00          > db 0
+  44+ 783D 00          > db 0
+  44+ 783E 00          > db 0
+  44+ 783F 00          > db 0
+  44+ 7840 00          > db 0
+  44+ 7841 00          > db 0
+  44+ 7842 00          > db 0
+  44+ 7843 00          > db 0
+  44+ 7844 00          > db 0
+  44+ 7845 00          > db 0
+  44+ 7846 00          > db 0
+  44+ 7847 00          > db 0
+  44+ 7848 00          > db 0
+  44+ 7849 00          > db 0
+  44+ 784A 00          > db 0
+  44+ 784B 00          > db 0
+  44+ 784C 00          > db 0
+  44+ 784D 00          > db 0
+  44+ 784E 00          > db 0
+  44+ 784F 00          > db 0
+  44+ 7850 00          > db 0
+  44+ 7851 00          > db 0
+  44+ 7852 00          > db 0
+  44+ 7853 00          > db 0
+  44+ 7854 00          > db 0
+  44+ 7855 00          > db 0
+  44+ 7856 00          > db 0
+  44+ 7857 00          > db 0
+  44+ 7858 00          > db 0
+  44+ 7859 00          > db 0
+  44+ 785A 00          > db 0
+  44+ 785B 00          > db 0
+  44+ 785C 00          > db 0
+  44+ 785D 00          > db 0
+  44+ 785E 00          > db 0
+  44+ 785F 00          > db 0
+  44+ 7860 00          > db 0
+  44+ 7861 00          > db 0
+  44+ 7862 00          > db 0
+  44+ 7863 00          > db 0
+  44+ 7864 00          > db 0
+  44+ 7865 00          > db 0
+  44+ 7866 00          > db 0
+  44+ 7867 00          > db 0
+  44+ 7868 00          > db 0
+  44+ 7869 00          > db 0
+  44+ 786A 00          > db 0
+  44+ 786B 00          > db 0
+  44+ 786C 00          > db 0
+  44+ 786D 00          > db 0
+  44+ 786E 00          > db 0
+  44+ 786F 00          > db 0
+  44+ 7870 00          > db 0
+  44+ 7871 00          > db 0
+  44+ 7872 00          > db 0
+  45+ 7873 00           num_room_items:     db 0
+  46+ 7874 00 83        room_ptr:           dw TheOffLicenceLayout;
+  47+ 7876 01           enemy_update_rate:  db 1
+  48+ 7877 00           enemy_update_timer: db 0
+  49+ 7878 03           player_speed:       db 3
+  50+ 7879 00           transition_active:  db 0
+  51+ 787A 12           jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
+  52+ 787B 00           jump_sound_timer:   db 0
+  53+ 787C 00           music_note_idx:      db 0
+  54+ 787D 01           music_frame_counter: db 1
+  55+ 787E
 # file closed: data/datavariable.asm
-  20  77CC
-  21  77CC              start:
-  22  77CC 31 FF FF         ld   sp, $ffff
-  23  77CF CD AD 5D         call SetupIM2
-  24  77D2 C3 D5 77         jp   Main
-  25  77D5
-  26  77D5
-  27  77D5
-  28  77D5              ;    org $7F50
-  29  77D5              Main:
-  30  77D5                  ; Inizializza
-  31  77D5 AF               xor  a
-  32  77D6 32 59 74         ld  (body_state), a
-  33  77D9 32 5D 74         ld  (items_collected), a
-  34  77DC
-  35  77DC CD DB 5D         call CopyChars
-  36  77DF CD E7 5D         call DefineChars
-  37  77E2
-  38  77E2 3E 02            ld   a, $02
-  39  77E4 CD 01 16         call OPENCHAN
-  40  77E7 21 00 80         ld   hl, $8000
-  41  77EA 22 7B 5C         ld   (UDG), hl
-  42  77ED
-  43  77ED 21 8D 5C         ld   hl, ATTR_P
-  44  77F0 36 07            ld   (hl), $07
-  45  77F2 CD AF 0D         call CLS
-  46  77F5              LoadRoomAndRestart:
-  47  77F5 CD A9 70         call DetermineCurrentRoomID
-  48  77F8 CD C9 61         call DrawRoom
-  49  77FB CD 7F 63         call DrawConveyorsAndRamps
-  50  77FE CD 5F 60         call PrintRoomName
-  51  7801 CD 23 72         call DrawRoomItems
-  52  7804 CD A0 6C         call LoadRoomEnemies
-  53  7807
-  54  7807 3A C9 77         ld   a, (transition_active)
-  55  780A B7               or   a
-  56  780B 20 05            jr   nz, .skip_player_pos
-  57  780D CD 17 65         call LoadPositionPlayeinRoom
-  58  7810 18 04            jr   .after_player_pos
-  59  7812              .skip_player_pos:
-  60  7812 AF               xor  a
-  61  7813 32 C9 77         ld   (transition_active), a
-  62  7816              .after_player_pos:
-  63  7816
-  64  7816                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
-  65  7816 2A C4 77         ld   hl, (room_ptr)
-  66  7819 11 DE 00         ld   de, OFFSET_BORDER_COLOR
-  67  781C 19               add  hl, de
-  68  781D 7E               ld   a, (hl)
-  69  781E 32 5F 74         ld   (room_border_color), a
-  70  7821 D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
-  71  7823
-  72  7823                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
-  73  7823 87               add  a, a
-  74  7824 87               add  a, a
-  75  7825 87               add  a, a              ; Sposta nei bit 3-5
-  76  7826 47               ld   b, a
-  77  7827 3A 48 5C         ld   a, (BORDCR)
-  78  782A E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
-  79  782C B0               or   b                 ; Imposta nuovo colore bordo
-  80  782D F6 07            or   $07               ; Imposta ink a bianco
-  81  782F 32 48 5C         ld   (BORDCR), a
-  82  7832
-  83  7832 CD F3 5F         call PrintPlayer
-  84  7835
-  85  7835              Main_loop:
-  86  7835 76               halt
-  87  7836
-  88  7836 CD E9 73         call UpdateJumpSound
-  89  7839
-  90  7839                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
-  91  7839 CD 46 60         call DeleteCharAtOldPos
-  92  783C CD F3 5F         call PrintPlayer
-  93  783F
-  94  783F CD CA 6D         call EraseRoomEnemies
-  95  7842 CD FE 6D         call DrawRoomEnemies
-  96  7845
-  97  7845                  ; 3. Salva le posizioni correnti del player per il prossimo frame
-  98  7845 ED 4B 53 74      ld   bc, (PlayerPos)
-  99  7849 ED 43 55 74      ld   (PlayerPosOld), bc
- 100  784D
- 101  784D                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
- 102  784D CD 2A 65         call CheckCtrl
- 103  7850 CD 4C 64         call MovePlayer
- 104  7853 CD EB 66         call ApplyGravity
- 105  7856 CD D2 69         call ApplyConveyorForce
- 106  7859 CD 3C 6F         call UpdateRoomEnemies
- 107  785C CD 6C 73         call CheckRoomItemsCollision
- 108  785F
- 109  785F                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
- 110  785F CD 24 69         call CheckCollision
- 111  7862 30 1A            jr   nc, .no_collision
- 112  7864
- 113  7864                  ; Collisione attiva: disegna le raster bar nel bordo
- 114  7864 3A 68 74         ld   a, (counter)
- 115  7867 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
- 116  7869 06 1E            ld   b, 30             ; Numero di righe della barra raster
- 117  786B              .raster_loop:
- 118  786B D3 FE            out  ($fe), a
- 119  786D 3C               inc  a
- 120  786E E6 07            and  7
- 121  7870 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
- 122  7872              .delay:
- 123  7872 0D               dec  c
- 124  7873 20 FD            jr   nz, .delay
- 125  7875 10 F4            djnz .raster_loop
- 126  7877
- 127  7877                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
- 128  7877 3A 5F 74         ld   a, (room_border_color)
- 129  787A D3 FE            out  ($fe), a
- 130  787C 18 05            jr   .no_collision_change
- 131  787E
- 132  787E              .no_collision:
- 133  787E                  ; Nessuna collisione: mantieni il bordo al colore della stanza
- 134  787E 3A 5F 74         ld   a, (room_border_color)
- 135  7881 D3 FE            out  ($fe), a
- 136  7883
- 137  7883              .no_collision_change:
- 138  7883 C3 35 78         jp   Main_loop
- 139  7886
- 140  7886
- 141  7886
- 142  7886                  org $8300
- 143  8300              RoomsStart:
- 144  8300                  include "rooms/TheOffLicence.asm"               ; ID 00
+  20  787E
+  21  787E              start:
+  22  787E 31 FF FF         ld   sp, $ffff
+  23  7881 CD AD 5D         call SetupIM2
+  24  7884 C3 87 78         jp   Main
+  25  7887
+  26  7887
+  27  7887
+  28  7887              ;    org $7F50
+  29  7887              Main:
+  30  7887                  ; Inizializza
+  31  7887 AF               xor  a
+  32  7888 32 09 75         ld  (body_state), a
+  33  788B 32 0D 75         ld  (items_collected), a
+  34  788E
+  35  788E CD DB 5D         call CopyChars
+  36  7891 CD E7 5D         call DefineChars
+  37  7894
+  38  7894 3E 02            ld   a, $02
+  39  7896 CD 01 16         call OPENCHAN
+  40  7899 21 00 80         ld   hl, $8000
+  41  789C 22 7B 5C         ld   (UDG), hl
+  42  789F
+  43  789F 21 8D 5C         ld   hl, ATTR_P
+  44  78A2 36 07            ld   (hl), $07
+  45  78A4 CD AF 0D         call CLS
+  46  78A7              LoadRoomAndRestart:
+  47  78A7 CD A9 70         call DetermineCurrentRoomID
+  48  78AA CD C9 61         call DrawRoom
+  49  78AD CD 7F 63         call DrawConveyorsAndRamps
+  50  78B0 CD 5F 60         call PrintRoomName
+  51  78B3 CD 23 72         call DrawRoomItems
+  52  78B6 CD A0 6C         call LoadRoomEnemies
+  53  78B9
+  54  78B9 3A 79 78         ld   a, (transition_active)
+  55  78BC B7               or   a
+  56  78BD 20 05            jr   nz, .skip_player_pos
+  57  78BF CD 17 65         call LoadPositionPlayeinRoom
+  58  78C2 18 04            jr   .after_player_pos
+  59  78C4              .skip_player_pos:
+  60  78C4 AF               xor  a
+  61  78C5 32 79 78         ld   (transition_active), a
+  62  78C8              .after_player_pos:
+  63  78C8
+  64  78C8                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
+  65  78C8 2A 74 78         ld   hl, (room_ptr)
+  66  78CB 11 DE 00         ld   de, OFFSET_BORDER_COLOR
+  67  78CE 19               add  hl, de
+  68  78CF 7E               ld   a, (hl)
+  69  78D0 32 0F 75         ld   (room_border_color), a
+  70  78D3 D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
+  71  78D5
+  72  78D5                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
+  73  78D5 87               add  a, a
+  74  78D6 87               add  a, a
+  75  78D7 87               add  a, a              ; Sposta nei bit 3-5
+  76  78D8 47               ld   b, a
+  77  78D9 3A 48 5C         ld   a, (BORDCR)
+  78  78DC E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
+  79  78DE B0               or   b                 ; Imposta nuovo colore bordo
+  80  78DF F6 07            or   $07               ; Imposta ink a bianco
+  81  78E1 32 48 5C         ld   (BORDCR), a
+  82  78E4
+  83  78E4 CD F3 5F         call PrintPlayer
+  84  78E7
+  85  78E7              Main_loop:
+  86  78E7 76               halt
+  87  78E8
+  88  78E8 CD E9 73         call UpdateJumpSound
+  89  78EB CD 35 74         call UpdateMusic
+  90  78EE
+  91  78EE                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
+  92  78EE CD 46 60         call DeleteCharAtOldPos
+  93  78F1 CD F3 5F         call PrintPlayer
+  94  78F4
+  95  78F4 CD CA 6D         call EraseRoomEnemies
+  96  78F7 CD FE 6D         call DrawRoomEnemies
+  97  78FA
+  98  78FA                  ; 3. Salva le posizioni correnti del player per il prossimo frame
+  99  78FA ED 4B 03 75      ld   bc, (PlayerPos)
+ 100  78FE ED 43 05 75      ld   (PlayerPosOld), bc
+ 101  7902
+ 102  7902                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
+ 103  7902 CD 2A 65         call CheckCtrl
+ 104  7905 CD 4C 64         call MovePlayer
+ 105  7908 CD EB 66         call ApplyGravity
+ 106  790B CD D2 69         call ApplyConveyorForce
+ 107  790E CD 3C 6F         call UpdateRoomEnemies
+ 108  7911 CD 6C 73         call CheckRoomItemsCollision
+ 109  7914
+ 110  7914                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
+ 111  7914 CD 24 69         call CheckCollision
+ 112  7917 30 1A            jr   nc, .no_collision
+ 113  7919
+ 114  7919                  ; Collisione attiva: disegna le raster bar nel bordo
+ 115  7919 3A 18 75         ld   a, (counter)
+ 116  791C E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+ 117  791E 06 1E            ld   b, 30             ; Numero di righe della barra raster
+ 118  7920              .raster_loop:
+ 119  7920 D3 FE            out  ($fe), a
+ 120  7922 3C               inc  a
+ 121  7923 E6 07            and  7
+ 122  7925 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+ 123  7927              .delay:
+ 124  7927 0D               dec  c
+ 125  7928 20 FD            jr   nz, .delay
+ 126  792A 10 F4            djnz .raster_loop
+ 127  792C
+ 128  792C                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+ 129  792C 3A 0F 75         ld   a, (room_border_color)
+ 130  792F D3 FE            out  ($fe), a
+ 131  7931 18 05            jr   .no_collision_change
+ 132  7933
+ 133  7933              .no_collision:
+ 134  7933                  ; Nessuna collisione: mantieni il bordo al colore della stanza
+ 135  7933 3A 0F 75         ld   a, (room_border_color)
+ 136  7936 D3 FE            out  ($fe), a
+ 137  7938
+ 138  7938              .no_collision_change:
+ 139  7938 C3 E7 78         jp   Main_loop
+ 140  793B
+ 141  793B
+ 142  793B
+ 143  793B                  org $8300
+ 144  8300              RoomsStart:
+ 145  8300                  include "rooms/TheOffLicence.asm"               ; ID 00
 # file opened: rooms/TheOffLicence.asm
    1+ 8300              ;===========================================================================
    2+ 8300              ; TheOffLicence.asm
@@ -7062,7 +7184,7 @@
  114+ 841A              TheOffLicenceEnemyColors5_8:
  115+ 841A 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheOffLicence.asm
- 145  841E                  include "rooms/TheBridge.asm"                   ; ID 01
+ 146  841E                  include "rooms/TheBridge.asm"                   ; ID 01
 # file opened: rooms/TheBridge.asm
    1+ 841E              ;===========================================================================
    2+ 841E              ; TheBridge.asm
@@ -7234,7 +7356,7 @@
  124+ 8538 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
  125+ 853C
 # file closed: rooms/TheBridge.asm
- 146  853C                  include "rooms/UnderTheMegaTree.asm"            ; ID 02
+ 147  853C                  include "rooms/UnderTheMegaTree.asm"            ; ID 02
 # file opened: rooms/UnderTheMegaTree.asm
    1+ 853C              ;===========================================================================
    2+ 853C              ; UnderTheMegaTree.asm
@@ -7406,7 +7528,7 @@
  124+ 8656              UnderTheMegaTreeEnemyColors5_8:
  125+ 8656 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/UnderTheMegaTree.asm
- 147  865A                  include "rooms/AtTheFootTheMegaTree.asm"        ; ID 03
+ 148  865A                  include "rooms/AtTheFootTheMegaTree.asm"        ; ID 03
 # file opened: rooms/AtTheFootTheMegaTree.asm
    1+ 865A              ;===========================================================================
    2+ 865A              ; AtTheFootTheMegaTree.asm
@@ -7577,7 +7699,7 @@
  123+ 8774              AtTheFootTheMegaTreeEnemyColors5_8:
  124+ 8774 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/AtTheFootTheMegaTree.asm
- 148  8778                  include "rooms/TheDrive.asm"                    ; ID 04
+ 149  8778                  include "rooms/TheDrive.asm"                    ; ID 04
 # file opened: rooms/TheDrive.asm
    1+ 8778              ;===========================================================================
    2+ 8778              ; TheDrive.asm
@@ -7748,7 +7870,7 @@
  123+ 8892              TheDriveEnemyColors5_8:
  124+ 8892 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheDrive.asm
- 149  8896                  include "rooms/TheSecurityGuard.asm"            ; ID 05
+ 150  8896                  include "rooms/TheSecurityGuard.asm"            ; ID 05
 # file opened: rooms/TheSecurityGuard.asm
    1+ 8896              ;===========================================================================
    2+ 8896              ; TheSecurityGuard.asm
@@ -7919,7 +8041,7 @@
  123+ 89B0              TheSecurityGuardEnemyColors5_8:
  124+ 89B0 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheSecurityGuard.asm
- 150  89B4                  include "rooms/EntranceToHades.asm"             ; ID 06
+ 151  89B4                  include "rooms/EntranceToHades.asm"             ; ID 06
 # file opened: rooms/EntranceToHades.asm
    1+ 89B4              ;===========================================================================
    2+ 89B4              ; EntranceToHades.asm
@@ -8080,7 +8202,7 @@
  113+ 8ACE              EntranceToHadesEnemyColors5_8:
  114+ 8ACE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/EntranceToHades.asm
- 151  8AD2                  include "rooms/CuckoosNest.asm"                 ; ID 07
+ 152  8AD2                  include "rooms/CuckoosNest.asm"                 ; ID 07
 # file opened: rooms/CuckoosNest.asm
    1+ 8AD2              ;===========================================================================
    2+ 8AD2              ; CuckoosNest.asm
@@ -8251,7 +8373,7 @@
  123+ 8BEC              CuckoosNestEnemyColors5_8:
  124+ 8BEC 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/CuckoosNest.asm
- 152  8BF0                  include "rooms/InsideTheMegaTrunk.asm"          ; ID 08
+ 153  8BF0                  include "rooms/InsideTheMegaTrunk.asm"          ; ID 08
 # file opened: rooms/InsideTheMegaTrunk.asm
    1+ 8BF0              ;===========================================================================
    2+ 8BF0              ; InsideTheMegaTrunk.asm
@@ -8423,7 +8545,7 @@
  124+ 8D0A              InsideTheMegaTrunkEnemyColors5_8:
  125+ 8D0A 05 04 04 07      DEFB CYAN, GREEN, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/InsideTheMegaTrunk.asm
- 153  8D0E                  include "rooms/OnABranchOverTheDrive.asm"       ; ID 09
+ 154  8D0E                  include "rooms/OnABranchOverTheDrive.asm"       ; ID 09
 # file opened: rooms/OnABranchOverTheDrive.asm
    1+ 8D0E              ;===========================================================================
    2+ 8D0E              ; OnABranchOverTheDrive.asm
@@ -8594,7 +8716,7 @@
  123+ 8E28              OnABranchOverTheDriveEnemyColors5_8:
  124+ 8E28 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/OnABranchOverTheDrive.asm
- 154  8E2C                  include "rooms/TheFrontDoor.asm"                ; ID 10
+ 155  8E2C                  include "rooms/TheFrontDoor.asm"                ; ID 10
 # file opened: rooms/TheFrontDoor.asm
    1+ 8E2C              ;===========================================================================
    2+ 8E2C              ; TheFrontDoor.asm
@@ -8765,7 +8887,7 @@
  123+ 8F46              TheFrontDoorEnemyColors5_8:
  124+ 8F46 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheFrontDoor.asm
- 155  8F4A                  include "rooms/TheHall.asm"                     ; ID 11
+ 156  8F4A                  include "rooms/TheHall.asm"                     ; ID 11
 # file opened: rooms/TheHall.asm
    1+ 8F4A              ;===========================================================================
    2+ 8F4A              ; TheHall.asm
@@ -8937,7 +9059,7 @@
  124+ 9064              TheHallEnemyColors5_8:
  125+ 9064 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheHall.asm
- 156  9068                  include "rooms/TreeTop.asm"                     ; ID 12
+ 157  9068                  include "rooms/TreeTop.asm"                     ; ID 12
 # file opened: rooms/TreeTop.asm
    1+ 9068              ;===========================================================================
    2+ 9068              ; TreeTop.asm
@@ -9108,7 +9230,7 @@
  123+ 9182              TreeTopEnemyColors5_8:
  124+ 9182 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TreeTop.asm
- 157  9186                  include "rooms/OutALimb.asm"                    ; ID 13
+ 158  9186                  include "rooms/OutALimb.asm"                    ; ID 13
 # file opened: rooms/OutALimb.asm
    1+ 9186              ;===========================================================================
    2+ 9186              ; OutALimb.asm
@@ -9270,7 +9392,7 @@
  114+ 92A0              OutALimbEnemyColors5_8:
  115+ 92A0 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/OutALimb.asm
- 158  92A4                  include "rooms/RescueEsmerelda.asm"             ; ID 14
+ 159  92A4                  include "rooms/RescueEsmerelda.asm"             ; ID 14
 # file opened: rooms/RescueEsmerelda.asm
    1+ 92A4              ;===========================================================================
    2+ 92A4              ; RescueEsmerelda.asm
@@ -9432,7 +9554,7 @@
  114+ 93BE              RescueEsmereldaEnemyColors5_8:
  115+ 93BE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/RescueEsmerelda.asm
- 159  93C2                  include "rooms/IAmSureIHaveSeenThiBefore.asm"   ; ID 15
+ 160  93C2                  include "rooms/IAmSureIHaveSeenThiBefore.asm"   ; ID 15
 # file opened: rooms/IAmSureIHaveSeenThiBefore.asm
    1+ 93C2              ;===========================================================================
    2+ 93C2              ; IAmSureIHaveSeenThiBefore.asm
@@ -9594,7 +9716,7 @@
  114+ 94DC              IAmSureIHaveSeenThiBeforeEnemyColors5_8:
  115+ 94DC 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/IAmSureIHaveSeenThiBefore.asm
- 160  94E0                  include "rooms/WeMustPerformQuirkafleeg.asm"    ; ID 16
+ 161  94E0                  include "rooms/WeMustPerformQuirkafleeg.asm"    ; ID 16
 # file opened: rooms/WeMustPerformQuirkafleeg.asm
    1+ 94E0              ;===========================================================================
    2+ 94E0              ; WeMustPerformQuirkafleeg.asm
@@ -9756,7 +9878,7 @@
  114+ 95FA              WeMustPerformQuirkafleegEnemyColors5_8:
  115+ 95FA 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/WeMustPerformQuirkafleeg.asm
- 161  95FE                  include "rooms/UpOnTheBattlements.asm"          ; ID 17
+ 162  95FE                  include "rooms/UpOnTheBattlements.asm"          ; ID 17
 # file opened: rooms/UpOnTheBattlements.asm
    1+ 95FE              ;===========================================================================
    2+ 95FE              ; UpOnTheBattlements.asm
@@ -9918,7 +10040,7 @@
  114+ 9718              UpOnTheBattlementsEnemyColors5_8:
  115+ 9718 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/UpOnTheBattlements.asm
- 162  971C                  include "rooms/OntheRoof.asm"                   ; ID 18
+ 163  971C                  include "rooms/OntheRoof.asm"                   ; ID 18
 # file opened: rooms/OntheRoof.asm
    1+ 971C              ;===========================================================================
    2+ 971C              ; OntheRoof.asm
@@ -10080,7 +10202,7 @@
  114+ 9836              OntheRoofEnemyColors5_8:
  115+ 9836 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/OntheRoof.asm
- 163  983A                  include "rooms/TheForgottenAbbey.asm"           ; ID 19
+ 164  983A                  include "rooms/TheForgottenAbbey.asm"           ; ID 19
 # file opened: rooms/TheForgottenAbbey.asm
    1+ 983A              ;===========================================================================
    2+ 983A              ; TheForgottenAbbey.asm
@@ -10243,8 +10365,8 @@
  115+ 9954              TheForgottenAbbeyEnemyColors5_8:
  116+ 9954 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheForgottenAbbey.asm
- 164  9958
- 165  9958                  include "rooms/TheBathroom.asm"                 ; ID 33
+ 165  9958
+ 166  9958                  include "rooms/TheBathroom.asm"                 ; ID 33
 # file opened: rooms/TheBathroom.asm
    1+ 9958              ;===========================================================================
    2+ 9958              ; TheBathroom.asm
@@ -10415,7 +10537,7 @@
  123+ 9A72              TheBathroomEnemyColors5_8:
  124+ 9A72 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheBathroom.asm
- 166  9A76                  include "rooms/MasterBedRoom.asm"               ; ID 35
+ 167  9A76                  include "rooms/MasterBedRoom.asm"               ; ID 35
 # file opened: rooms/MasterBedRoom.asm
    1+ 9A76              ;===========================================================================
    2+ 9A76              ; MasterBedroom.asm
@@ -10588,7 +10710,7 @@
  125+ 9B90              MastreBedRoomEnemyColors5_8:
  126+ 9B90 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/MasterBedRoom.asm
- 167  9B94                  include "rooms/UnderTheDrive.asm"               ; ID 45
+ 168  9B94                  include "rooms/UnderTheDrive.asm"               ; ID 45
 # file opened: rooms/UnderTheDrive.asm
    1+ 9B94              ;===========================================================================
    2+ 9B94              ; UnderTheDrive.asm
@@ -10750,8 +10872,8 @@
  114+ 9CAE              UnderTheDriveEnemyColors5_8:
  115+ 9CAE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/UnderTheDrive.asm
- 168  9CB2
- 169  9CB2                  include "data/datasprite.asm"
+ 169  9CB2
+ 170  9CB2                  include "data/datasprite.asm"
 # file opened: data/datasprite.asm
    1+ 9CB2
    2+ 9CB2
@@ -11816,6 +11938,6 @@
  322+ AC2A 3F 00 76 00
  322+ AC2E 0E 00 04 00
 # file closed: data/datasprite.asm
- 170  AC32
- 171  AC32                  SAVESNA "jet set willy.sna", start
+ 171  AC32
+ 172  AC32                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm

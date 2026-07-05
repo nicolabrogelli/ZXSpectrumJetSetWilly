@@ -86,6 +86,7 @@ Main_loop:
     halt
     
     call UpdateJumpSound
+    call UpdateMusic
     
     ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
     call DeleteCharAtOldPos

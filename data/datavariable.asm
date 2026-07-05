@@ -50,3 +50,5 @@ player_speed:       db 3
 transition_active:  db 0
 jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
 jump_sound_timer:   db 0
+music_note_idx:      db 0
+music_frame_counter: db 1
