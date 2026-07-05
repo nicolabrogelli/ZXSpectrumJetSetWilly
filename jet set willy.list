@@ -334,7 +334,7 @@
  204+ 5E8E C5               push bc
  205+ 5E8F 41               ld   b, c              ; B = Col
  206+ 5E90 4B               ld   c, e              ; C = Row
- 207+ 5E91 CD E5 74         call CheckActiveItemAtCell
+ 207+ 5E91 CD E9 73         call CheckActiveItemAtCell
  208+ 5E94 30 17            jr   nc, .no_item
  209+ 5E96
  210+ 5E96 C1               pop  bc
@@ -1107,7 +1107,7 @@
  963+ 6247 D5               push de
  964+ 6248 C5               push bc
  965+ 6249 4C               ld   c, h              ; C = Row
- 966+ 624A CD E5 74         call CheckActiveItemAtCell
+ 966+ 624A CD E9 73         call CheckActiveItemAtCell
  967+ 624D 30 06            jr   nc, .no_item_attr
  968+ 624F
  969+ 624F C1               pop  bc
@@ -5725,276 +5725,284 @@
 1415+ 73E8 C9               ret
 1416+ 73E9
 1417+ 73E9              ; -------------------------------------------------------------------
-1418+ 73E9              ; UpdateJumpSound
+1418+ 73E9              ; CheckActiveItemAtCell
 1419+ 73E9              ;
-1420+ 73E9              ; Gestisce la riproduzione dell'effetto sonoro del salto frame-by-frame.
-1421+ 73E9              ; Viene chiamata una volta per frame nel ciclo principale.
-1422+ 73E9              ; -------------------------------------------------------------------
-1423+ 73E9              UpdateJumpSound:
-1424+ 73E9 F5               push af
-1425+ 73EA C5               push bc
-1426+ 73EB D5               push de
-1427+ 73EC E5               push hl
-1428+ 73ED
-1429+ 73ED                  ; Controlla se il suono è attivo (note < 18)
-1430+ 73ED 3A 7A 78         ld   a, (jump_sound_note)
-1431+ 73F0 FE 12            cp   18                        ; Ci sono 18 note (0..17)
-1432+ 73F2 30 2A            jr   nc, .done                 ; Se >= 18, non stiamo riproducendo
-1433+ 73F4
-1434+ 73F4                  ; Carica la nota corrente da suonare
-1435+ 73F4 5F               ld   e, a
-1436+ 73F5 16 00            ld   d, 0
-1437+ 73F7 21 23 74         ld   hl, JumpSoundDelays
-1438+ 73FA 19               add  hl, de
-1439+ 73FB 7E               ld   a, (hl)                   ; A = delay della nota corrente
-1440+ 73FC 57               ld   d, a                      ; D = delay della nota
-1441+ 73FD
-1442+ 73FD                  ; Suona la nota: 15 cicli
-1443+ 73FD 06 0F            ld   b, 15
-1444+ 73FF              .note_loop:
-1445+ 73FF                  ; Speaker ON
-1446+ 73FF 3A 0F 75         ld   a, (room_border_color)
-1447+ 7402 F6 10            or   $10
-1448+ 7404 D3 FE            out  ($fe), a
-1449+ 7406 4A               ld   c, d
-1450+ 7407              .d1:
-1451+ 7407 0D               dec  c
-1452+ 7408 20 FD            jr   nz, .d1
-1453+ 740A
-1454+ 740A                  ; Speaker OFF
-1455+ 740A 3A 0F 75         ld   a, (room_border_color)
-1456+ 740D E6 EF            and  $ef
-1457+ 740F D3 FE            out  ($fe), a
-1458+ 7411 4A               ld   c, d
-1459+ 7412              .d2:
-1460+ 7412 0D               dec  c
-1461+ 7413 20 FD            jr   nz, .d2
-1462+ 7415
-1463+ 7415 10 E8            djnz .note_loop
-1464+ 7417
-1465+ 7417                  ; Passa alla nota successiva
-1466+ 7417 3A 7A 78         ld   a, (jump_sound_note)
-1467+ 741A 3C               inc  a
-1468+ 741B 32 7A 78         ld   (jump_sound_note), a
-1469+ 741E
-1470+ 741E              .done:
-1471+ 741E E1               pop  hl
-1472+ 741F D1               pop  de
-1473+ 7420 C1               pop  bc
-1474+ 7421 F1               pop  af
-1475+ 7422 C9               ret
-1476+ 7423
-1477+ 7423              JumpSoundDelays:
-1478+ 7423 33 2D 26 20      db 51, 45, 38, 32, 25, 19, 12, 6, 12, 19, 25, 32, 38, 45, 51, 58, 64, 71
-1478+ 7427 19 13 0C 06
-1478+ 742B 0C 13 19 20
-1478+ 742F 26 2D 33 3A
-1478+ 7433 40 47
-1479+ 7435
-1480+ 7435              ; -------------------------------------------------------------------
-1481+ 7435              ; UpdateMusic
-1482+ 7435              ;
-1483+ 7435              ; Gestisce la riproduzione della musica di sottofondo frame-by-frame.
-1484+ 7435              ; Viene chiamata a ogni frame.
-1485+ 7435              ; -------------------------------------------------------------------
-1486+ 7435              UpdateMusic:
-1487+ 7435 F5               push af
-1488+ 7436 C5               push bc
-1489+ 7437 D5               push de
-1490+ 7438 E5               push hl
-1491+ 7439
-1492+ 7439                  ; Se il salto sta riproducendo un effetto sonoro, non suonare la musica
-1493+ 7439 3A 7A 78         ld   a, (jump_sound_note)
-1494+ 743C FE 12            cp   18
-1495+ 743E 38 5A            jr   c, .done                 ; Salto attivo -> niente musica
-1496+ 7440
-1497+ 7440                  ; Decrementa il contatore dei frame della nota corrente
-1498+ 7440 3A 7D 78         ld   a, (music_frame_counter)
-1499+ 7443 3D               dec  a
-1500+ 7444 32 7D 78         ld   (music_frame_counter), a
-1501+ 7447 20 23            jr   nz, .play_current_note   ; Se non è zero, continua a suonare
-1502+ 7449
-1503+ 7449                  ; Altrimenti carica la nota successiva
-1504+ 7449 3A 7C 78         ld   a, (music_note_idx)
-1505+ 744C 3C               inc  a
-1506+ 744D FE 23            cp   35                       ; Abbiamo 35 note in totale
-1507+ 744F 38 01            jr   c, .no_wrap
-1508+ 7451 AF               xor  a                        ; Torna a 0 se raggiunge la fine (loop)
-1509+ 7452              .no_wrap:
-1510+ 7452 32 7C 78         ld   (music_note_idx), a
-1511+ 7455
-1512+ 7455                  ; Carica la durata e impostala come nuovo contatore di frame
-1513+ 7455 5F               ld   e, a
-1514+ 7456 16 00            ld   d, 0
-1515+ 7458 21 9F 74         ld   hl, MusicSheet
-1516+ 745B 19               add  hl, de
-1517+ 745C 19               add  hl, de                   ; Ogni nota prende 2 byte (delay, duration)
-1518+ 745D
-1519+ 745D                  ; Leggi durata (secondo byte)
-1520+ 745D 23               inc  hl
-1521+ 745E 7E               ld   a, (hl)
-1522+ 745F CB 3F            srl  a                        ; Divide per 8 (velocizza 8x)
-1523+ 7461 CB 3F            srl  a
-1524+ 7463 CB 3F            srl  a
-1525+ 7465
-1526+ 7465 20 02            jr   nz, .dur_ok
-1527+ 7467 3E 01            ld   a, 1
-1528+ 7469              .dur_ok:
-1529+ 7469 32 7D 78         ld   (music_frame_counter), a
-1530+ 746C
-1531+ 746C              .play_current_note:
-1532+ 746C                  ; Ottieni il delay della nota corrente (primo byte)
-1533+ 746C 3A 7C 78         ld   a, (music_note_idx)
-1534+ 746F 5F               ld   e, a
-1535+ 7470 16 00            ld   d, 0
-1536+ 7472 21 9F 74         ld   hl, MusicSheet
-1537+ 7475 19               add  hl, de
-1538+ 7476 19               add  hl, de                   ; hl punta al primo byte della nota
-1539+ 7477 7E               ld   a, (hl)                  ; A = delay
-1540+ 7478 B7               or   a
-1541+ 7479 28 1F            jr   z, .done                 ; Se delay è 0, è una pausa (Rest)
-1542+ 747B
-1543+ 747B                  ; Suona la nota: 2 cicli
-1544+ 747B 57               ld   d, a                     ; D = delay
-1545+ 747C 06 02            ld   b, 2                     ; 2 cicli per frame
-1546+ 747E              .note_loop:
-1547+ 747E                  ; Speaker ON
-1548+ 747E 3A 0F 75         ld   a, (room_border_color)
-1549+ 7481 F6 10            or   $10
-1550+ 7483 D3 FE            out  ($fe), a
-1551+ 7485 4A               ld   c, d
-1552+ 7486              .d1:
-1553+ 7486 F5               push af
-1554+ 7487 F1               pop  af
-1555+ 7488 0D               dec  c
-1556+ 7489 20 FB            jr   nz, .d1
-1557+ 748B
-1558+ 748B                  ; Speaker OFF
-1559+ 748B 3A 0F 75         ld   a, (room_border_color)
-1560+ 748E E6 EF            and  $ef
-1561+ 7490 D3 FE            out  ($fe), a
-1562+ 7492 4A               ld   c, d
-1563+ 7493              .d2:
-1564+ 7493 F5               push af
-1565+ 7494 F1               pop  af
-1566+ 7495 0D               dec  c
-1567+ 7496 20 FB            jr   nz, .d2
-1568+ 7498
-1569+ 7498 10 E4            djnz .note_loop
-1570+ 749A
-1571+ 749A              .done:
-1572+ 749A E1               pop  hl
-1573+ 749B D1               pop  de
-1574+ 749C C1               pop  bc
-1575+ 749D F1               pop  af
-1576+ 749E C9               ret
-1577+ 749F
-1578+ 749F              MusicSheet:
-1579+ 749F                  ; Formato: db delay, durata (in frame a 50Hz)
-1580+ 749F 60 05 65 0F      db 96, 5, 101, 15, 96, 5, 107, 25, 152, 5, 143, 35, 107, 15, 96, 10
-1580+ 74A3 60 05 6B 19
-1580+ 74A7 98 05 8F 23
-1580+ 74AB 6B 0F 60 0A
-1581+ 74AF 6B 0A 60 0A      db 107, 10, 96, 10, 107, 25, 96, 10, 85, 10, 81, 10, 85, 5, 81, 10
-1581+ 74B3 6B 19 60 0A
-1581+ 74B7 55 0A 51 0A
-1581+ 74BB 55 05 51 0A
-1582+ 74BF 55 0A 60 46      db 85, 10, 96, 70, 72, 40, 81, 10, 76, 5, 85, 20, 96, 10, 107, 25
-1582+ 74C3 48 28 51 0A
-1582+ 74C7 4C 05 55 14
-1582+ 74CB 60 0A 6B 19
-1583+ 74CF 5A 14 72 05      db 90, 20, 114, 5, 107, 10, 90, 10, 96, 10, 107, 10, 96, 10, 85, 5
-1583+ 74D3 6B 0A 5A 0A
-1583+ 74D7 60 0A 6B 0A
-1583+ 74DB 60 0A 55 05
-1584+ 74DF 5A 0A 6B 14      db 90, 10, 107, 20, 68, 65
-1584+ 74E3 44 41
-1585+ 74E5
-1586+ 74E5              ; -------------------------------------------------------------------
-1587+ 74E5              ; CheckActiveItemAtCell
-1588+ 74E5              ;
-1589+ 74E5              ; Verifica in modo rapido se esiste un item attivo (non raccolto)
-1590+ 74E5              ; nella cella specificata della griglia items_grid.
-1591+ 74E5              ;
-1592+ 74E5              ; Questa routine usa una lookup diretta su una mappa 32x16,
-1593+ 74E5              ; evitando la scansione della ItemsTable.
-1594+ 74E5              ;
-1595+ 74E5              ; Input:
-1596+ 74E5              ;   B = Colonna (0..31)
-1597+ 74E5              ;   C = Riga (0..15)
-1598+ 74E5              ;
-1599+ 74E5              ; Output:
-1600+ 74E5              ;   Carry Set   = item presente nella cella
-1601+ 74E5              ;   Carry Clear = nessun item
-1602+ 74E5              ;
-1603+ 74E5              ; Nota:
-1604+ 74E5              ;   HL NON è restituito valido (commento originale non corretto:
-1605+ 74E5              ;   la routine non punta a ItemsTable).
-1606+ 74E5              ; -------------------------------------------------------------------
-1607+ 74E5              CheckActiveItemAtCell:
-1608+ 74E5
-1609+ 74E5                  ; Salva registri usati
-1610+ 74E5 D5               push de
-1611+ 74E6 E5               push hl
-1612+ 74E7
-1613+ 74E7                  ; ---------------------------------------------------------------
-1614+ 74E7                  ; Calcolo indice lineare nella griglia 32x16:
-1615+ 74E7                  ;
-1616+ 74E7                  ; offset = Row * 32 + Col
-1617+ 74E7                  ; ---------------------------------------------------------------
-1618+ 74E7 26 00            ld   h, 0
-1619+ 74E9 69               ld   l, c              ; HL = Row
-1620+ 74EA
-1621+ 74EA 29               add  hl, hl            ; *2
-1622+ 74EB 29               add  hl, hl            ; *4
-1623+ 74EC 29               add  hl, hl            ; *8
-1624+ 74ED 29               add  hl, hl            ; *16
-1625+ 74EE 29               add  hl, hl            ; *32
-1626+ 74EF
-1627+ 74EF                  ; Aggiunge la colonna
-1628+ 74EF 58               ld   e, b
-1629+ 74F0 16 00            ld   d, 0
-1630+ 74F2 19               add  hl, de            ; HL = Row*32 + Col
-1631+ 74F3
-1632+ 74F3                  ; ---------------------------------------------------------------
-1633+ 74F3                  ; Accesso alla griglia degli item attivi
-1634+ 74F3                  ; ---------------------------------------------------------------
-1635+ 74F3 11 00 B0         ld   de, items_grid
-1636+ 74F6 19               add  hl, de            ; HL = address cella
-1637+ 74F7
-1638+ 74F7                  ; ---------------------------------------------------------------
-1639+ 74F7                  ; Controllo presenza item
-1640+ 74F7                  ;
-1641+ 74F7                  ; items_grid contiene:
-1642+ 74F7                  ;   0 = nessun item
-1643+ 74F7                  ;   >0 = item attivo (colore o flag)
-1644+ 74F7                  ; ---------------------------------------------------------------
-1645+ 74F7 7E               ld   a, (hl)
-1646+ 74F8 B7               or   a
-1647+ 74F9 28 04            jr   z, .not_active
-1648+ 74FB
-1649+ 74FB                  ; ---------------------------------------------------------------
-1650+ 74FB                  ; Item trovato
-1651+ 74FB                  ; ---------------------------------------------------------------
-1652+ 74FB E1               pop  hl
-1653+ 74FC D1               pop  de
-1654+ 74FD
-1655+ 74FD 37               scf                    ; Carry = 1
-1656+ 74FE C9               ret
-1657+ 74FF
-1658+ 74FF              .not_active:
-1659+ 74FF
-1660+ 74FF                  ; ---------------------------------------------------------------
-1661+ 74FF                  ; Nessun item nella cella
-1662+ 74FF                  ; ---------------------------------------------------------------
-1663+ 74FF E1               pop  hl
-1664+ 7500 D1               pop  de
-1665+ 7501
-1666+ 7501 B7               or   a                 ; Carry = 0
-1667+ 7502 C9               ret
-1668+ 7503
+1420+ 73E9              ; Verifica in modo rapido se esiste un item attivo (non raccolto)
+1421+ 73E9              ; nella cella specificata della griglia items_grid.
+1422+ 73E9              ;
+1423+ 73E9              ; Questa routine usa una lookup diretta su una mappa 32x16,
+1424+ 73E9              ; evitando la scansione della ItemsTable.
+1425+ 73E9              ;
+1426+ 73E9              ; Input:
+1427+ 73E9              ;   B = Colonna (0..31)
+1428+ 73E9              ;   C = Riga (0..15)
+1429+ 73E9              ;
+1430+ 73E9              ; Output:
+1431+ 73E9              ;   Carry Set   = item presente nella cella
+1432+ 73E9              ;   Carry Clear = nessun item
+1433+ 73E9              ;
+1434+ 73E9              ; Nota:
+1435+ 73E9              ;   HL NON è restituito valido (commento originale non corretto:
+1436+ 73E9              ;   la routine non punta a ItemsTable).
+1437+ 73E9              ; -------------------------------------------------------------------
+1438+ 73E9              CheckActiveItemAtCell:
+1439+ 73E9
+1440+ 73E9                  ; Salva registri usati
+1441+ 73E9 D5               push de
+1442+ 73EA E5               push hl
+1443+ 73EB
+1444+ 73EB                  ; ---------------------------------------------------------------
+1445+ 73EB                  ; Calcolo indice lineare nella griglia 32x16:
+1446+ 73EB                  ;
+1447+ 73EB                  ; offset = Row * 32 + Col
+1448+ 73EB                  ; ---------------------------------------------------------------
+1449+ 73EB 26 00            ld   h, 0
+1450+ 73ED 69               ld   l, c              ; HL = Row
+1451+ 73EE
+1452+ 73EE 29               add  hl, hl            ; *2
+1453+ 73EF 29               add  hl, hl            ; *4
+1454+ 73F0 29               add  hl, hl            ; *8
+1455+ 73F1 29               add  hl, hl            ; *16
+1456+ 73F2 29               add  hl, hl            ; *32
+1457+ 73F3
+1458+ 73F3                  ; Aggiunge la colonna
+1459+ 73F3 58               ld   e, b
+1460+ 73F4 16 00            ld   d, 0
+1461+ 73F6 19               add  hl, de            ; HL = Row*32 + Col
+1462+ 73F7
+1463+ 73F7                  ; ---------------------------------------------------------------
+1464+ 73F7                  ; Accesso alla griglia degli item attivi
+1465+ 73F7                  ; ---------------------------------------------------------------
+1466+ 73F7 11 00 B0         ld   de, items_grid
+1467+ 73FA 19               add  hl, de            ; HL = address cella
+1468+ 73FB
+1469+ 73FB                  ; ---------------------------------------------------------------
+1470+ 73FB                  ; Controllo presenza item
+1471+ 73FB                  ;
+1472+ 73FB                  ; items_grid contiene:
+1473+ 73FB                  ;   0 = nessun item
+1474+ 73FB                  ;   >0 = item attivo (colore o flag)
+1475+ 73FB                  ; ---------------------------------------------------------------
+1476+ 73FB 7E               ld   a, (hl)
+1477+ 73FC B7               or   a
+1478+ 73FD 28 04            jr   z, .not_active
+1479+ 73FF
+1480+ 73FF                  ; ---------------------------------------------------------------
+1481+ 73FF                  ; Item trovato
+1482+ 73FF                  ; ---------------------------------------------------------------
+1483+ 73FF E1               pop  hl
+1484+ 7400 D1               pop  de
+1485+ 7401
+1486+ 7401 37               scf                    ; Carry = 1
+1487+ 7402 C9               ret
+1488+ 7403
+1489+ 7403              .not_active:
+1490+ 7403
+1491+ 7403                  ; ---------------------------------------------------------------
+1492+ 7403                  ; Nessun item nella cella
+1493+ 7403                  ; ---------------------------------------------------------------
+1494+ 7403 E1               pop  hl
+1495+ 7404 D1               pop  de
+1496+ 7405
+1497+ 7405 B7               or   a                 ; Carry = 0
+1498+ 7406 C9               ret
+1499+ 7407
 # file closed: items.asm
-  19  7503                  include "data/datavariable.asm"
+  19  7407                  include "audio.asm"
+# file opened: audio.asm
+   1+ 7407              ;===========================================================================
+   2+ 7407              ; audio.asm
+   3+ 7407              ;
+   4+ 7407              ; Gestione degli effetti sonori e della musica di sottofondo per il beeper.
+   5+ 7407              ;===========================================================================
+   6+ 7407
+   7+ 7407              ; -------------------------------------------------------------------
+   8+ 7407              ; UpdateJumpSound
+   9+ 7407              ;
+  10+ 7407              ; Gestisce la riproduzione dell'effetto sonoro del salto frame-by-frame.
+  11+ 7407              ; Viene chiamata una volta per frame nel ciclo principale.
+  12+ 7407              ; -------------------------------------------------------------------
+  13+ 7407              UpdateJumpSound:
+  14+ 7407 F5               push af
+  15+ 7408 C5               push bc
+  16+ 7409 D5               push de
+  17+ 740A E5               push hl
+  18+ 740B
+  19+ 740B                  ; Controlla se il suono è attivo (note < 18)
+  20+ 740B 3A 7A 78         ld   a, (jump_sound_note)
+  21+ 740E FE 12            cp   18                        ; Ci sono 18 note (0..17)
+  22+ 7410 30 2A            jr   nc, .done                 ; Se >= 18, non stiamo riproducendo
+  23+ 7412
+  24+ 7412                  ; Carica la nota corrente da suonare
+  25+ 7412 5F               ld   e, a
+  26+ 7413 16 00            ld   d, 0
+  27+ 7415 21 41 74         ld   hl, JumpSoundDelays
+  28+ 7418 19               add  hl, de
+  29+ 7419 7E               ld   a, (hl)                   ; A = delay della nota corrente
+  30+ 741A 57               ld   d, a                      ; D = delay della nota
+  31+ 741B
+  32+ 741B                  ; Suona la nota: 15 cicli
+  33+ 741B 06 0F            ld   b, 15
+  34+ 741D              .note_loop:
+  35+ 741D                  ; Speaker ON
+  36+ 741D 3A 0F 75         ld   a, (room_border_color)
+  37+ 7420 F6 10            or   $10
+  38+ 7422 D3 FE            out  ($fe), a
+  39+ 7424 4A               ld   c, d
+  40+ 7425              .d1:
+  41+ 7425 0D               dec  c
+  42+ 7426 20 FD            jr   nz, .d1
+  43+ 7428
+  44+ 7428                  ; Speaker OFF
+  45+ 7428 3A 0F 75         ld   a, (room_border_color)
+  46+ 742B E6 EF            and  $ef
+  47+ 742D D3 FE            out  ($fe), a
+  48+ 742F 4A               ld   c, d
+  49+ 7430              .d2:
+  50+ 7430 0D               dec  c
+  51+ 7431 20 FD            jr   nz, .d2
+  52+ 7433
+  53+ 7433 10 E8            djnz .note_loop
+  54+ 7435
+  55+ 7435                  ; Passa alla nota successiva
+  56+ 7435 3A 7A 78         ld   a, (jump_sound_note)
+  57+ 7438 3C               inc  a
+  58+ 7439 32 7A 78         ld   (jump_sound_note), a
+  59+ 743C
+  60+ 743C              .done:
+  61+ 743C E1               pop  hl
+  62+ 743D D1               pop  de
+  63+ 743E C1               pop  bc
+  64+ 743F F1               pop  af
+  65+ 7440 C9               ret
+  66+ 7441
+  67+ 7441              JumpSoundDelays:
+  68+ 7441 33 2D 26 20      db 51, 45, 38, 32, 25, 19, 12, 6, 12, 19, 25, 32, 38, 45, 51, 58, 64, 71
+  68+ 7445 19 13 0C 06
+  68+ 7449 0C 13 19 20
+  68+ 744D 26 2D 33 3A
+  68+ 7451 40 47
+  69+ 7453
+  70+ 7453              ; -------------------------------------------------------------------
+  71+ 7453              ; UpdateMusic
+  72+ 7453              ;
+  73+ 7453              ; Gestisce la riproduzione della musica di sottofondo frame-by-frame.
+  74+ 7453              ; Viene chiamata a ogni frame.
+  75+ 7453              ; -------------------------------------------------------------------
+  76+ 7453              UpdateMusic:
+  77+ 7453 F5               push af
+  78+ 7454 C5               push bc
+  79+ 7455 D5               push de
+  80+ 7456 E5               push hl
+  81+ 7457
+  82+ 7457                  ; Se il salto sta riproducendo un effetto sonoro, non suonare la musica
+  83+ 7457 3A 7A 78         ld   a, (jump_sound_note)
+  84+ 745A FE 12            cp   18
+  85+ 745C 38 5A            jr   c, .done                 ; Salto attivo -> niente musica
+  86+ 745E
+  87+ 745E                  ; Decrementa il contatore dei frame della nota corrente
+  88+ 745E 3A 7D 78         ld   a, (music_frame_counter)
+  89+ 7461 3D               dec  a
+  90+ 7462 32 7D 78         ld   (music_frame_counter), a
+  91+ 7465 20 23            jr   nz, .play_current_note   ; Se non è zero, continua a suonare
+  92+ 7467
+  93+ 7467                  ; Altrimenti carica la nota successiva
+  94+ 7467 3A 7C 78         ld   a, (music_note_idx)
+  95+ 746A 3C               inc  a
+  96+ 746B FE 23            cp   35                       ; Abbiamo 35 note in totale
+  97+ 746D 38 01            jr   c, .no_wrap
+  98+ 746F AF               xor  a                        ; Torna a 0 se raggiunge la fine (loop)
+  99+ 7470              .no_wrap:
+ 100+ 7470 32 7C 78         ld   (music_note_idx), a
+ 101+ 7473
+ 102+ 7473                  ; Carica la durata e impostala come nuovo contatore di frame
+ 103+ 7473 5F               ld   e, a
+ 104+ 7474 16 00            ld   d, 0
+ 105+ 7476 21 BD 74         ld   hl, MusicSheet
+ 106+ 7479 19               add  hl, de
+ 107+ 747A 19               add  hl, de                   ; Ogni nota prende 2 byte (delay, duration)
+ 108+ 747B
+ 109+ 747B                  ; Leggi durata (secondo byte)
+ 110+ 747B 23               inc  hl
+ 111+ 747C 7E               ld   a, (hl)
+ 112+ 747D CB 3F            srl  a                        ; Divide per 8 (velocizza 8x)
+ 113+ 747F CB 3F            srl  a
+ 114+ 7481 CB 3F            srl  a
+ 115+ 7483 20 02            jr   nz, .dur_ok
+ 116+ 7485 3E 01            ld   a, 1
+ 117+ 7487              .dur_ok:
+ 118+ 7487 32 7D 78         ld   (music_frame_counter), a
+ 119+ 748A
+ 120+ 748A              .play_current_note:
+ 121+ 748A                  ; Ottieni il delay della nota corrente (primo byte)
+ 122+ 748A 3A 7C 78         ld   a, (music_note_idx)
+ 123+ 748D 5F               ld   e, a
+ 124+ 748E 16 00            ld   d, 0
+ 125+ 7490 21 BD 74         ld   hl, MusicSheet
+ 126+ 7493 19               add  hl, de
+ 127+ 7494 19               add  hl, de                   ; hl punta al primo byte della nota
+ 128+ 7495 7E               ld   a, (hl)                  ; A = delay
+ 129+ 7496 B7               or   a
+ 130+ 7497 28 1F            jr   z, .done                 ; Se delay è 0, è una pausa (Rest)
+ 131+ 7499
+ 132+ 7499                  ; Suona la nota: 2 cicli
+ 133+ 7499 57               ld   d, a                     ; D = delay
+ 134+ 749A 06 02            ld   b, 2                     ; 2 cicli per frame
+ 135+ 749C              .note_loop:
+ 136+ 749C                  ; Speaker ON
+ 137+ 749C 3A 0F 75         ld   a, (room_border_color)
+ 138+ 749F F6 10            or   $10
+ 139+ 74A1 D3 FE            out  ($fe), a
+ 140+ 74A3 4A               ld   c, d
+ 141+ 74A4              .d1:
+ 142+ 74A4 F5               push af
+ 143+ 74A5 F1               pop  af
+ 144+ 74A6 0D               dec  c
+ 145+ 74A7 20 FB            jr   nz, .d1
+ 146+ 74A9
+ 147+ 74A9                  ; Speaker OFF
+ 148+ 74A9 3A 0F 75         ld   a, (room_border_color)
+ 149+ 74AC E6 EF            and  $ef
+ 150+ 74AE D3 FE            out  ($fe), a
+ 151+ 74B0 4A               ld   c, d
+ 152+ 74B1              .d2:
+ 153+ 74B1 F5               push af
+ 154+ 74B2 F1               pop  af
+ 155+ 74B3 0D               dec  c
+ 156+ 74B4 20 FB            jr   nz, .d2
+ 157+ 74B6
+ 158+ 74B6 10 E4            djnz .note_loop
+ 159+ 74B8
+ 160+ 74B8              .done:
+ 161+ 74B8 E1               pop  hl
+ 162+ 74B9 D1               pop  de
+ 163+ 74BA C1               pop  bc
+ 164+ 74BB F1               pop  af
+ 165+ 74BC C9               ret
+ 166+ 74BD
+ 167+ 74BD              MusicSheet:
+ 168+ 74BD                  ; Formato: db delay, durata (in frame a 50Hz)
+ 169+ 74BD 60 05 65 0F      db 96, 5, 101, 15, 96, 5, 107, 25, 152, 5, 143, 35, 107, 15, 96, 10
+ 169+ 74C1 60 05 6B 19
+ 169+ 74C5 98 05 8F 23
+ 169+ 74C9 6B 0F 60 0A
+ 170+ 74CD 6B 0A 60 0A      db 107, 10, 96, 10, 107, 25, 96, 10, 85, 10, 81, 10, 85, 5, 81, 10
+ 170+ 74D1 6B 19 60 0A
+ 170+ 74D5 55 0A 51 0A
+ 170+ 74D9 55 05 51 0A
+ 171+ 74DD 55 0A 60 46      db 85, 10, 96, 70, 72, 40, 81, 10, 76, 5, 85, 20, 96, 10, 107, 25
+ 171+ 74E1 48 28 51 0A
+ 171+ 74E5 4C 05 55 14
+ 171+ 74E9 60 0A 6B 19
+ 172+ 74ED 5A 14 72 05      db 90, 20, 114, 5, 107, 10, 90, 10, 96, 10, 107, 10, 96, 10, 85, 5
+ 172+ 74F1 6B 0A 5A 0A
+ 172+ 74F5 60 0A 6B 0A
+ 172+ 74F9 60 0A 55 05
+ 173+ 74FD 5A 0A 6B 14      db 90, 10, 107, 20, 68, 65
+ 173+ 7501 44 41
+ 174+ 7503
+# file closed: audio.asm
+  20  7503                  include "data/datavariable.asm"
 # file opened: data/datavariable.asm
    1+ 7503              ; -------------------------------------------------------------------
    2+ 7503              ; Variabili
@@ -6897,132 +6905,132 @@
   54+ 787D 01           music_frame_counter: db 1
   55+ 787E
 # file closed: data/datavariable.asm
-  20  787E
-  21  787E              start:
-  22  787E 31 FF FF         ld   sp, $ffff
-  23  7881 CD AD 5D         call SetupIM2
-  24  7884 C3 87 78         jp   Main
-  25  7887
+  21  787E
+  22  787E              start:
+  23  787E 31 FF FF         ld   sp, $ffff
+  24  7881 CD AD 5D         call SetupIM2
+  25  7884 C3 87 78         jp   Main
   26  7887
   27  7887
-  28  7887              ;    org $7F50
-  29  7887              Main:
-  30  7887                  ; Inizializza
-  31  7887 AF               xor  a
-  32  7888 32 09 75         ld  (body_state), a
-  33  788B 32 0D 75         ld  (items_collected), a
-  34  788E
-  35  788E CD DB 5D         call CopyChars
-  36  7891 CD E7 5D         call DefineChars
-  37  7894
-  38  7894 3E 02            ld   a, $02
-  39  7896 CD 01 16         call OPENCHAN
-  40  7899 21 00 80         ld   hl, $8000
-  41  789C 22 7B 5C         ld   (UDG), hl
-  42  789F
-  43  789F 21 8D 5C         ld   hl, ATTR_P
-  44  78A2 36 07            ld   (hl), $07
-  45  78A4 CD AF 0D         call CLS
-  46  78A7              LoadRoomAndRestart:
-  47  78A7 CD A9 70         call DetermineCurrentRoomID
-  48  78AA CD C9 61         call DrawRoom
-  49  78AD CD 7F 63         call DrawConveyorsAndRamps
-  50  78B0 CD 5F 60         call PrintRoomName
-  51  78B3 CD 23 72         call DrawRoomItems
-  52  78B6 CD A0 6C         call LoadRoomEnemies
-  53  78B9
-  54  78B9 3A 79 78         ld   a, (transition_active)
-  55  78BC B7               or   a
-  56  78BD 20 05            jr   nz, .skip_player_pos
-  57  78BF CD 17 65         call LoadPositionPlayeinRoom
-  58  78C2 18 04            jr   .after_player_pos
-  59  78C4              .skip_player_pos:
-  60  78C4 AF               xor  a
-  61  78C5 32 79 78         ld   (transition_active), a
-  62  78C8              .after_player_pos:
-  63  78C8
-  64  78C8                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
-  65  78C8 2A 74 78         ld   hl, (room_ptr)
-  66  78CB 11 DE 00         ld   de, OFFSET_BORDER_COLOR
-  67  78CE 19               add  hl, de
-  68  78CF 7E               ld   a, (hl)
-  69  78D0 32 0F 75         ld   (room_border_color), a
-  70  78D3 D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
-  71  78D5
-  72  78D5                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
-  73  78D5 87               add  a, a
-  74  78D6 87               add  a, a
-  75  78D7 87               add  a, a              ; Sposta nei bit 3-5
-  76  78D8 47               ld   b, a
-  77  78D9 3A 48 5C         ld   a, (BORDCR)
-  78  78DC E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
-  79  78DE B0               or   b                 ; Imposta nuovo colore bordo
-  80  78DF F6 07            or   $07               ; Imposta ink a bianco
-  81  78E1 32 48 5C         ld   (BORDCR), a
-  82  78E4
-  83  78E4 CD F3 5F         call PrintPlayer
-  84  78E7
-  85  78E7              Main_loop:
-  86  78E7 76               halt
-  87  78E8
-  88  78E8 CD E9 73         call UpdateJumpSound
-  89  78EB CD 35 74         call UpdateMusic
-  90  78EE
-  91  78EE                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
-  92  78EE CD 46 60         call DeleteCharAtOldPos
-  93  78F1 CD F3 5F         call PrintPlayer
-  94  78F4
-  95  78F4 CD CA 6D         call EraseRoomEnemies
-  96  78F7 CD FE 6D         call DrawRoomEnemies
-  97  78FA
-  98  78FA                  ; 3. Salva le posizioni correnti del player per il prossimo frame
-  99  78FA ED 4B 03 75      ld   bc, (PlayerPos)
- 100  78FE ED 43 05 75      ld   (PlayerPosOld), bc
- 101  7902
- 102  7902                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
- 103  7902 CD 2A 65         call CheckCtrl
- 104  7905 CD 4C 64         call MovePlayer
- 105  7908 CD EB 66         call ApplyGravity
- 106  790B CD D2 69         call ApplyConveyorForce
- 107  790E CD 3C 6F         call UpdateRoomEnemies
- 108  7911 CD 6C 73         call CheckRoomItemsCollision
- 109  7914
- 110  7914                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
- 111  7914 CD 24 69         call CheckCollision
- 112  7917 30 1A            jr   nc, .no_collision
- 113  7919
- 114  7919                  ; Collisione attiva: disegna le raster bar nel bordo
- 115  7919 3A 18 75         ld   a, (counter)
- 116  791C E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
- 117  791E 06 1E            ld   b, 30             ; Numero di righe della barra raster
- 118  7920              .raster_loop:
- 119  7920 D3 FE            out  ($fe), a
- 120  7922 3C               inc  a
- 121  7923 E6 07            and  7
- 122  7925 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
- 123  7927              .delay:
- 124  7927 0D               dec  c
- 125  7928 20 FD            jr   nz, .delay
- 126  792A 10 F4            djnz .raster_loop
- 127  792C
- 128  792C                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
- 129  792C 3A 0F 75         ld   a, (room_border_color)
- 130  792F D3 FE            out  ($fe), a
- 131  7931 18 05            jr   .no_collision_change
- 132  7933
- 133  7933              .no_collision:
- 134  7933                  ; Nessuna collisione: mantieni il bordo al colore della stanza
- 135  7933 3A 0F 75         ld   a, (room_border_color)
- 136  7936 D3 FE            out  ($fe), a
- 137  7938
- 138  7938              .no_collision_change:
- 139  7938 C3 E7 78         jp   Main_loop
- 140  793B
+  28  7887
+  29  7887              ;    org $7F50
+  30  7887              Main:
+  31  7887                  ; Inizializza
+  32  7887 AF               xor  a
+  33  7888 32 09 75         ld  (body_state), a
+  34  788B 32 0D 75         ld  (items_collected), a
+  35  788E
+  36  788E CD DB 5D         call CopyChars
+  37  7891 CD E7 5D         call DefineChars
+  38  7894
+  39  7894 3E 02            ld   a, $02
+  40  7896 CD 01 16         call OPENCHAN
+  41  7899 21 00 80         ld   hl, $8000
+  42  789C 22 7B 5C         ld   (UDG), hl
+  43  789F
+  44  789F 21 8D 5C         ld   hl, ATTR_P
+  45  78A2 36 07            ld   (hl), $07
+  46  78A4 CD AF 0D         call CLS
+  47  78A7              LoadRoomAndRestart:
+  48  78A7 CD A9 70         call DetermineCurrentRoomID
+  49  78AA CD C9 61         call DrawRoom
+  50  78AD CD 7F 63         call DrawConveyorsAndRamps
+  51  78B0 CD 5F 60         call PrintRoomName
+  52  78B3 CD 23 72         call DrawRoomItems
+  53  78B6 CD A0 6C         call LoadRoomEnemies
+  54  78B9
+  55  78B9 3A 79 78         ld   a, (transition_active)
+  56  78BC B7               or   a
+  57  78BD 20 05            jr   nz, .skip_player_pos
+  58  78BF CD 17 65         call LoadPositionPlayeinRoom
+  59  78C2 18 04            jr   .after_player_pos
+  60  78C4              .skip_player_pos:
+  61  78C4 AF               xor  a
+  62  78C5 32 79 78         ld   (transition_active), a
+  63  78C8              .after_player_pos:
+  64  78C8
+  65  78C8                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
+  66  78C8 2A 74 78         ld   hl, (room_ptr)
+  67  78CB 11 DE 00         ld   de, OFFSET_BORDER_COLOR
+  68  78CE 19               add  hl, de
+  69  78CF 7E               ld   a, (hl)
+  70  78D0 32 0F 75         ld   (room_border_color), a
+  71  78D3 D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
+  72  78D5
+  73  78D5                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
+  74  78D5 87               add  a, a
+  75  78D6 87               add  a, a
+  76  78D7 87               add  a, a              ; Sposta nei bit 3-5
+  77  78D8 47               ld   b, a
+  78  78D9 3A 48 5C         ld   a, (BORDCR)
+  79  78DC E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
+  80  78DE B0               or   b                 ; Imposta nuovo colore bordo
+  81  78DF F6 07            or   $07               ; Imposta ink a bianco
+  82  78E1 32 48 5C         ld   (BORDCR), a
+  83  78E4
+  84  78E4 CD F3 5F         call PrintPlayer
+  85  78E7
+  86  78E7              Main_loop:
+  87  78E7 76               halt
+  88  78E8
+  89  78E8 CD 07 74         call UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
+  90  78EB CD 53 74         call UpdateMusic        ; Aggiorna la musica
+  91  78EE
+  92  78EE                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
+  93  78EE CD 46 60         call DeleteCharAtOldPos
+  94  78F1 CD F3 5F         call PrintPlayer
+  95  78F4
+  96  78F4 CD CA 6D         call EraseRoomEnemies
+  97  78F7 CD FE 6D         call DrawRoomEnemies
+  98  78FA
+  99  78FA                  ; 3. Salva le posizioni correnti del player per il prossimo frame
+ 100  78FA ED 4B 03 75      ld   bc, (PlayerPos)
+ 101  78FE ED 43 05 75      ld   (PlayerPosOld), bc
+ 102  7902
+ 103  7902                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
+ 104  7902 CD 2A 65         call CheckCtrl
+ 105  7905 CD 4C 64         call MovePlayer
+ 106  7908 CD EB 66         call ApplyGravity
+ 107  790B CD D2 69         call ApplyConveyorForce
+ 108  790E CD 3C 6F         call UpdateRoomEnemies
+ 109  7911 CD 6C 73         call CheckRoomItemsCollision
+ 110  7914
+ 111  7914                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
+ 112  7914 CD 24 69         call CheckCollision
+ 113  7917 30 1A            jr   nc, .no_collision
+ 114  7919
+ 115  7919                  ; Collisione attiva: disegna le raster bar nel bordo
+ 116  7919 3A 18 75         ld   a, (counter)
+ 117  791C E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+ 118  791E 06 1E            ld   b, 30             ; Numero di righe della barra raster
+ 119  7920              .raster_loop:
+ 120  7920 D3 FE            out  ($fe), a
+ 121  7922 3C               inc  a
+ 122  7923 E6 07            and  7
+ 123  7925 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+ 124  7927              .delay:
+ 125  7927 0D               dec  c
+ 126  7928 20 FD            jr   nz, .delay
+ 127  792A 10 F4            djnz .raster_loop
+ 128  792C
+ 129  792C                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+ 130  792C 3A 0F 75         ld   a, (room_border_color)
+ 131  792F D3 FE            out  ($fe), a
+ 132  7931 18 05            jr   .no_collision_change
+ 133  7933
+ 134  7933              .no_collision:
+ 135  7933                  ; Nessuna collisione: mantieni il bordo al colore della stanza
+ 136  7933 3A 0F 75         ld   a, (room_border_color)
+ 137  7936 D3 FE            out  ($fe), a
+ 138  7938
+ 139  7938              .no_collision_change:
+ 140  7938 C3 E7 78         jp   Main_loop
  141  793B
  142  793B
- 143  793B                  org $8300
- 144  8300              RoomsStart:
- 145  8300                  include "rooms/TheOffLicence.asm"               ; ID 00
+ 143  793B
+ 144  793B                  org $8300
+ 145  8300              RoomsStart:
+ 146  8300                  include "rooms/TheOffLicence.asm"               ; ID 00
 # file opened: rooms/TheOffLicence.asm
    1+ 8300              ;===========================================================================
    2+ 8300              ; TheOffLicence.asm
@@ -7184,7 +7192,7 @@
  114+ 841A              TheOffLicenceEnemyColors5_8:
  115+ 841A 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheOffLicence.asm
- 146  841E                  include "rooms/TheBridge.asm"                   ; ID 01
+ 147  841E                  include "rooms/TheBridge.asm"                   ; ID 01
 # file opened: rooms/TheBridge.asm
    1+ 841E              ;===========================================================================
    2+ 841E              ; TheBridge.asm
@@ -7356,7 +7364,7 @@
  124+ 8538 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
  125+ 853C
 # file closed: rooms/TheBridge.asm
- 147  853C                  include "rooms/UnderTheMegaTree.asm"            ; ID 02
+ 148  853C                  include "rooms/UnderTheMegaTree.asm"            ; ID 02
 # file opened: rooms/UnderTheMegaTree.asm
    1+ 853C              ;===========================================================================
    2+ 853C              ; UnderTheMegaTree.asm
@@ -7528,7 +7536,7 @@
  124+ 8656              UnderTheMegaTreeEnemyColors5_8:
  125+ 8656 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/UnderTheMegaTree.asm
- 148  865A                  include "rooms/AtTheFootTheMegaTree.asm"        ; ID 03
+ 149  865A                  include "rooms/AtTheFootTheMegaTree.asm"        ; ID 03
 # file opened: rooms/AtTheFootTheMegaTree.asm
    1+ 865A              ;===========================================================================
    2+ 865A              ; AtTheFootTheMegaTree.asm
@@ -7699,7 +7707,7 @@
  123+ 8774              AtTheFootTheMegaTreeEnemyColors5_8:
  124+ 8774 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/AtTheFootTheMegaTree.asm
- 149  8778                  include "rooms/TheDrive.asm"                    ; ID 04
+ 150  8778                  include "rooms/TheDrive.asm"                    ; ID 04
 # file opened: rooms/TheDrive.asm
    1+ 8778              ;===========================================================================
    2+ 8778              ; TheDrive.asm
@@ -7870,7 +7878,7 @@
  123+ 8892              TheDriveEnemyColors5_8:
  124+ 8892 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheDrive.asm
- 150  8896                  include "rooms/TheSecurityGuard.asm"            ; ID 05
+ 151  8896                  include "rooms/TheSecurityGuard.asm"            ; ID 05
 # file opened: rooms/TheSecurityGuard.asm
    1+ 8896              ;===========================================================================
    2+ 8896              ; TheSecurityGuard.asm
@@ -8041,7 +8049,7 @@
  123+ 89B0              TheSecurityGuardEnemyColors5_8:
  124+ 89B0 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheSecurityGuard.asm
- 151  89B4                  include "rooms/EntranceToHades.asm"             ; ID 06
+ 152  89B4                  include "rooms/EntranceToHades.asm"             ; ID 06
 # file opened: rooms/EntranceToHades.asm
    1+ 89B4              ;===========================================================================
    2+ 89B4              ; EntranceToHades.asm
@@ -8202,7 +8210,7 @@
  113+ 8ACE              EntranceToHadesEnemyColors5_8:
  114+ 8ACE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/EntranceToHades.asm
- 152  8AD2                  include "rooms/CuckoosNest.asm"                 ; ID 07
+ 153  8AD2                  include "rooms/CuckoosNest.asm"                 ; ID 07
 # file opened: rooms/CuckoosNest.asm
    1+ 8AD2              ;===========================================================================
    2+ 8AD2              ; CuckoosNest.asm
@@ -8373,7 +8381,7 @@
  123+ 8BEC              CuckoosNestEnemyColors5_8:
  124+ 8BEC 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/CuckoosNest.asm
- 153  8BF0                  include "rooms/InsideTheMegaTrunk.asm"          ; ID 08
+ 154  8BF0                  include "rooms/InsideTheMegaTrunk.asm"          ; ID 08
 # file opened: rooms/InsideTheMegaTrunk.asm
    1+ 8BF0              ;===========================================================================
    2+ 8BF0              ; InsideTheMegaTrunk.asm
@@ -8545,7 +8553,7 @@
  124+ 8D0A              InsideTheMegaTrunkEnemyColors5_8:
  125+ 8D0A 05 04 04 07      DEFB CYAN, GREEN, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/InsideTheMegaTrunk.asm
- 154  8D0E                  include "rooms/OnABranchOverTheDrive.asm"       ; ID 09
+ 155  8D0E                  include "rooms/OnABranchOverTheDrive.asm"       ; ID 09
 # file opened: rooms/OnABranchOverTheDrive.asm
    1+ 8D0E              ;===========================================================================
    2+ 8D0E              ; OnABranchOverTheDrive.asm
@@ -8716,7 +8724,7 @@
  123+ 8E28              OnABranchOverTheDriveEnemyColors5_8:
  124+ 8E28 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/OnABranchOverTheDrive.asm
- 155  8E2C                  include "rooms/TheFrontDoor.asm"                ; ID 10
+ 156  8E2C                  include "rooms/TheFrontDoor.asm"                ; ID 10
 # file opened: rooms/TheFrontDoor.asm
    1+ 8E2C              ;===========================================================================
    2+ 8E2C              ; TheFrontDoor.asm
@@ -8887,7 +8895,7 @@
  123+ 8F46              TheFrontDoorEnemyColors5_8:
  124+ 8F46 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheFrontDoor.asm
- 156  8F4A                  include "rooms/TheHall.asm"                     ; ID 11
+ 157  8F4A                  include "rooms/TheHall.asm"                     ; ID 11
 # file opened: rooms/TheHall.asm
    1+ 8F4A              ;===========================================================================
    2+ 8F4A              ; TheHall.asm
@@ -9059,7 +9067,7 @@
  124+ 9064              TheHallEnemyColors5_8:
  125+ 9064 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheHall.asm
- 157  9068                  include "rooms/TreeTop.asm"                     ; ID 12
+ 158  9068                  include "rooms/TreeTop.asm"                     ; ID 12
 # file opened: rooms/TreeTop.asm
    1+ 9068              ;===========================================================================
    2+ 9068              ; TreeTop.asm
@@ -9230,7 +9238,7 @@
  123+ 9182              TreeTopEnemyColors5_8:
  124+ 9182 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TreeTop.asm
- 158  9186                  include "rooms/OutALimb.asm"                    ; ID 13
+ 159  9186                  include "rooms/OutALimb.asm"                    ; ID 13
 # file opened: rooms/OutALimb.asm
    1+ 9186              ;===========================================================================
    2+ 9186              ; OutALimb.asm
@@ -9392,7 +9400,7 @@
  114+ 92A0              OutALimbEnemyColors5_8:
  115+ 92A0 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/OutALimb.asm
- 159  92A4                  include "rooms/RescueEsmerelda.asm"             ; ID 14
+ 160  92A4                  include "rooms/RescueEsmerelda.asm"             ; ID 14
 # file opened: rooms/RescueEsmerelda.asm
    1+ 92A4              ;===========================================================================
    2+ 92A4              ; RescueEsmerelda.asm
@@ -9554,7 +9562,7 @@
  114+ 93BE              RescueEsmereldaEnemyColors5_8:
  115+ 93BE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/RescueEsmerelda.asm
- 160  93C2                  include "rooms/IAmSureIHaveSeenThiBefore.asm"   ; ID 15
+ 161  93C2                  include "rooms/IAmSureIHaveSeenThiBefore.asm"   ; ID 15
 # file opened: rooms/IAmSureIHaveSeenThiBefore.asm
    1+ 93C2              ;===========================================================================
    2+ 93C2              ; IAmSureIHaveSeenThiBefore.asm
@@ -9716,7 +9724,7 @@
  114+ 94DC              IAmSureIHaveSeenThiBeforeEnemyColors5_8:
  115+ 94DC 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/IAmSureIHaveSeenThiBefore.asm
- 161  94E0                  include "rooms/WeMustPerformQuirkafleeg.asm"    ; ID 16
+ 162  94E0                  include "rooms/WeMustPerformQuirkafleeg.asm"    ; ID 16
 # file opened: rooms/WeMustPerformQuirkafleeg.asm
    1+ 94E0              ;===========================================================================
    2+ 94E0              ; WeMustPerformQuirkafleeg.asm
@@ -9878,7 +9886,7 @@
  114+ 95FA              WeMustPerformQuirkafleegEnemyColors5_8:
  115+ 95FA 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/WeMustPerformQuirkafleeg.asm
- 162  95FE                  include "rooms/UpOnTheBattlements.asm"          ; ID 17
+ 163  95FE                  include "rooms/UpOnTheBattlements.asm"          ; ID 17
 # file opened: rooms/UpOnTheBattlements.asm
    1+ 95FE              ;===========================================================================
    2+ 95FE              ; UpOnTheBattlements.asm
@@ -10040,7 +10048,7 @@
  114+ 9718              UpOnTheBattlementsEnemyColors5_8:
  115+ 9718 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/UpOnTheBattlements.asm
- 163  971C                  include "rooms/OntheRoof.asm"                   ; ID 18
+ 164  971C                  include "rooms/OntheRoof.asm"                   ; ID 18
 # file opened: rooms/OntheRoof.asm
    1+ 971C              ;===========================================================================
    2+ 971C              ; OntheRoof.asm
@@ -10202,7 +10210,7 @@
  114+ 9836              OntheRoofEnemyColors5_8:
  115+ 9836 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/OntheRoof.asm
- 164  983A                  include "rooms/TheForgottenAbbey.asm"           ; ID 19
+ 165  983A                  include "rooms/TheForgottenAbbey.asm"           ; ID 19
 # file opened: rooms/TheForgottenAbbey.asm
    1+ 983A              ;===========================================================================
    2+ 983A              ; TheForgottenAbbey.asm
@@ -10365,8 +10373,8 @@
  115+ 9954              TheForgottenAbbeyEnemyColors5_8:
  116+ 9954 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheForgottenAbbey.asm
- 165  9958
- 166  9958                  include "rooms/TheBathroom.asm"                 ; ID 33
+ 166  9958
+ 167  9958                  include "rooms/TheBathroom.asm"                 ; ID 33
 # file opened: rooms/TheBathroom.asm
    1+ 9958              ;===========================================================================
    2+ 9958              ; TheBathroom.asm
@@ -10537,7 +10545,7 @@
  123+ 9A72              TheBathroomEnemyColors5_8:
  124+ 9A72 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheBathroom.asm
- 167  9A76                  include "rooms/MasterBedRoom.asm"               ; ID 35
+ 168  9A76                  include "rooms/MasterBedRoom.asm"               ; ID 35
 # file opened: rooms/MasterBedRoom.asm
    1+ 9A76              ;===========================================================================
    2+ 9A76              ; MasterBedroom.asm
@@ -10710,7 +10718,7 @@
  125+ 9B90              MastreBedRoomEnemyColors5_8:
  126+ 9B90 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/MasterBedRoom.asm
- 168  9B94                  include "rooms/UnderTheDrive.asm"               ; ID 45
+ 169  9B94                  include "rooms/UnderTheDrive.asm"               ; ID 45
 # file opened: rooms/UnderTheDrive.asm
    1+ 9B94              ;===========================================================================
    2+ 9B94              ; UnderTheDrive.asm
@@ -10872,8 +10880,8 @@
  114+ 9CAE              UnderTheDriveEnemyColors5_8:
  115+ 9CAE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/UnderTheDrive.asm
- 169  9CB2
- 170  9CB2                  include "data/datasprite.asm"
+ 170  9CB2
+ 171  9CB2                  include "data/datasprite.asm"
 # file opened: data/datasprite.asm
    1+ 9CB2
    2+ 9CB2
@@ -11938,6 +11946,6 @@
  322+ AC2A 3F 00 76 00
  322+ AC2E 0E 00 04 00
 # file closed: data/datasprite.asm
- 171  AC32
- 172  AC32                  SAVESNA "jet set willy.sna", start
+ 172  AC32
+ 173  AC32                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm

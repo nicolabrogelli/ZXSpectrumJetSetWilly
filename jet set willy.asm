@@ -16,6 +16,7 @@
     include "physics.asm"
     include "enemy.asm"
     include "items.asm"
+    include "audio.asm"
     include "data/datavariable.asm"
     
 start:
