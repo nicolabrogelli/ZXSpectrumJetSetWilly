@@ -171,3 +171,39 @@ Audio_MusicSheet:
     db 85, 10, 96, 70, 72, 40, 81, 10, 76, 5, 85, 20, 96, 10, 107, 25
     db 90, 20, 114, 5, 107, 10, 90, 10, 96, 10, 107, 10, 96, 10, 85, 5
     db 90, 10, 107, 20, 68, 65
+
+; -------------------------------------------------------------------
+; Audio_PlayCollectSound
+;
+; Genera un breve effetto sonoro (beep) tramite il buzzer
+; dello ZX Spectrum utilizzando il port $FE quando viene raccolto un oggetto.
+; -------------------------------------------------------------------
+Audio_PlayCollectSound:
+    push bc
+    push de
+
+    ld   b, 120
+.sound_loop:
+    ld   a, (room_border_color)
+    or   $10               ; speaker ON
+    out  ($fe), a
+
+    ld   c, 60
+.d1:
+    dec  c
+    jr   nz, .d1
+
+    ld   a, (room_border_color)
+    and  $ef              ; speaker OFF
+    out  ($fe), a
+
+    ld   c, 60
+.d2:
+    dec  c
+    jr   nz, .d2
+
+    djnz .sound_loop
+
+    pop  de
+    pop  bc
+    ret

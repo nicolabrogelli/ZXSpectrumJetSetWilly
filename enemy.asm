@@ -24,7 +24,7 @@ ActiveEnemies:
 ; Carica i nemici della stanza corrente in ActiveEnemies.
 ; Chiamato quando si entra in una stanza.
 ; -------------------------------------------------------------------
-LoadRoomEnemies:
+Enemy_LoadRoom:
     push hl
     push de
     push bc
@@ -321,10 +321,10 @@ EraseRoomEnemies:
     push bc                ; Salva contatore ciclo
     ld   c, (ix+8)         ; C = Old X (Offset 8)
     ld   b, (ix+9)         ; B = Old Y (Offset 9)
-    call ErasePixelSprite16x16
+    call Gfx_ErasePixelSprite16x16
     ld   c, (ix+8)         ; C = Old X
     ld   b, (ix+9)         ; B = Old Y
-    call RestoreEnemyColorAttributes
+    call Gfx_RestoreEnemyColorAttributes
     pop  bc
     
 .next:
@@ -498,14 +498,14 @@ DrawRoomEnemies:
     push ix                ; Salva slot pointer
     push hl
     pop  ix                ; IX = sprite data pointer
-    call DrawPixelSprite16x16
+    call Gfx_DrawPixelSprite16x16
     pop  ix                ; Ripristina slot pointer
     
     ; Applica gli attributi colore per la posizione corrente
     ld   c, (ix+2)         ; C = Current X
     ld   b, (ix+3)         ; B = Current Y
     ld   a, (ix+10)        ; A = Color (Offset 10)
-    call SetEnemyColorAttributes
+    call Gfx_SetEnemyColorAttributes
     
     pop  bc                ; Ripristina contatore ciclo
     
@@ -524,7 +524,7 @@ DrawRoomEnemies:
 ; -------------------------------------------------------------------
 ; Aggiorna le posizioni dei nemici attivi per il prossimo frame
 ; -------------------------------------------------------------------
-UpdateRoomEnemies:
+Enemy_Update:
     push hl
     push de
     push bc

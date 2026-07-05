@@ -8,7 +8,7 @@
 ; Input: C = X, B = Y
 ; Output: Carry flag impostato se solida, altrimenti resettato
 ; -------------------------------------------------------------------
-CheckSolidCell:
+Phys_CheckSolid:
     push hl
     push de
     push bc
@@ -64,7 +64,7 @@ CheckSolidCell:
 ; -------------------------------------------------------------------
 ; Applica gravità e gestisce salto
 ; -------------------------------------------------------------------
-ApplyGravity:
+Phys_ApplyGravity:
     ld  bc, (PlayerPos)
     ld  a, b              ; B = PlayerY (pixel)
     
@@ -134,7 +134,7 @@ ApplyGravity:
     add  a, 16
     push bc
     ld   b, a              ; B = Y + 16
-    call CheckSolidCell    ; C = X
+    call Phys_CheckSolid    ; C = X
     pop  bc
     jr   nc, .no_step_down
     
@@ -146,7 +146,7 @@ ApplyGravity:
     ld   a, c
     add  a, 7
     ld   c, a              ; C = X + 7
-    call CheckSolidCell
+    call Phys_CheckSolid
     pop  bc
     jr   c, .no_step_down
     
@@ -160,7 +160,7 @@ ApplyGravity:
     ld   a, c
     add  a, 7
     ld   c, a              ; C = X + 7
-    call CheckSolidCell
+    call Phys_CheckSolid
     pop  bc
     jr   nc, .no_step_down
     
@@ -175,7 +175,7 @@ ApplyGravity:
     ld   a, c
     add  a, 7
     ld   c, a              ; C = X + 7
-    call CheckSolidCell
+    call Phys_CheckSolid
     pop  bc
     jr   nc, .no_step_down
     
@@ -184,7 +184,7 @@ ApplyGravity:
     add  a, 16
     push bc
     ld   b, a              ; B = Y + 16
-    call CheckSolidCell    ; C = X
+    call Phys_CheckSolid    ; C = X
     pop  bc
     jr   c, .no_step_down
     
@@ -195,7 +195,7 @@ ApplyGravity:
     jr   nc, .no_step_down
     push bc
     ld   b, a              ; B = Y + 24
-    call CheckSolidCell    ; C = X
+    call Phys_CheckSolid    ; C = X
     pop  bc
     jr   nc, .no_step_down
     
@@ -215,14 +215,14 @@ ApplyGravity:
     ld  b, a              ; B = PlayerY + 16
     
     ; Controlla se la cella sotto il piede sinistro (PlayerX, PlayerY + 16) è solida
-    call CheckSolidCell
+    call Phys_CheckSolid
     jr   c, .still_on_ground
     
     ; Controlla se la cella sotto il piede destro (PlayerX + 7, PlayerY + 16) è solida
     ld   a, c
     add  a, 7
     ld   c, a              ; C = PlayerX + 7
-    call CheckSolidCell
+    call Phys_CheckSolid
     jr   c, .still_on_ground
     
     ; Se nessuna delle due è solida, iniziamo a cadere!
@@ -351,14 +351,14 @@ ApplyGravity:
     push bc                ; Salva BC per il controllo successivo a Y + 16
     
     ; Controlla se il piede sinistro tocca solido a Y + 8
-    call CheckSolidCell
+    call Phys_CheckSolid
     jr   c, .land_at_y8
     
     ; Controlla se il piede destro tocca solido a Y + 8
     ld   a, c
     add  a, 7
     ld   c, a              ; C = PlayerX + 7
-    call CheckSolidCell
+    call Phys_CheckSolid
     jr   c, .land_at_y8
     
     ; 2. Se a Y + 8 non c'è collisione, controlliamo al piede effettivo (Y + 16)
@@ -372,14 +372,14 @@ ApplyGravity:
     ld   b, a              ; B = Nuovo Y + 16 (clampato)
     
     ; Controlla se il piede sinistro tocca solido a Y + 16
-    call CheckSolidCell
+    call Phys_CheckSolid
     jr   c, .check_landing
     
     ; Controlla se il piede destro tocca solido a Y + 16
     ld   a, c
     add  a, 7
     ld   c, a              ; C = PlayerX + 7
-    call CheckSolidCell
+    call Phys_CheckSolid
     jr   c, .check_landing
     
     ; Nessun atterraggio
@@ -654,7 +654,7 @@ CheckConveyorOrRampCell:
 ; -------------------------------------------------------------------
 ; Applica la forza di trascinamento del conveyor se Willy vi è sopra
 ; -------------------------------------------------------------------
-ApplyConveyorForce:
+Phys_ApplyConveyor:
     ld   a, (on_ground)
     or   a
     ret  z                 ; Se non è a terra, nessuna forza

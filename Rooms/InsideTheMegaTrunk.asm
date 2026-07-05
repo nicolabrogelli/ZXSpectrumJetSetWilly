@@ -95,7 +95,7 @@ InsideTheMegaTrunkDirection:
 	DEFB 9									;Room to the left (On a Branch Over the Drive)
 	DEFB 7									;Room to the right (Cuckoo's Nest)
 	DEFB 12									;Room above (Tree Top)
-	DEFB 3									;Room below (At the Foot of the MegaTree)
+	DEFB 3									;Room below (Gfx_At the Foot of the MegaTree)
 
 InsideTheMegaTrunkUnused:
     DEFB 0                                  ; Padding byte to keep Enemy1 offset at 240

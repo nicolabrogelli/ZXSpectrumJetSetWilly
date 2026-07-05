@@ -5,7 +5,7 @@
 ; -------------------------------------------------------------------
 ; Copia il set dei caratteri dalla ROM alla RAM
 ; -------------------------------------------------------------------
-CopyChars:
+Gfx_CopyChars:
     ld hl, $3D00  ; Indirizzo del set di caratteri originale in ROM
     ld de, $8000  ; Indirizzo nella RAM in cui copiare il set di caratteri
     ld bc, 768    ; Numero di byte da copiare (96 caratteri * 8 byte ciascuno)
@@ -15,7 +15,7 @@ CopyChars:
 ; -------------------------------------------------------------------
 ; Ridefinisci i caratteri (incluso quello per i bordi)
 ; -------------------------------------------------------------------
-DefineChars:
+Gfx_DefineChars:
     ld hl, Willy             ; Indirizzo dei dati del nuovo carattere
     ld de, $7F00 + (1 * 8)      ; Indirizzo di ASCII 1 nel nuovo set di caratteri
     ld bc, 72                   ; Numero di byte da copiare (9 caratteri * 8 byte)
@@ -28,7 +28,7 @@ DefineChars:
 ; Posiziona il cursore
 ; Input: B = Y, C = X
 ; -------------------------------------------------------------------
-At:
+Gfx_At:
     push bc
     exx
     pop bc
@@ -40,7 +40,7 @@ At:
 ; Cambia colore inchiostro
 ; Input: A = colore
 ; -------------------------------------------------------------------
-Ink:
+Gfx_Ink:
     exx
     ld   b, a
     ld   a, (ATTR_T)
@@ -60,7 +60,7 @@ Ink:
 ; Input: H = Y (0..191), L = X (0..255)
 ; Output: HL = indirizzo schermo
 ; -------------------------------------------------------------------
-GetScreenAddr:
+Gfx_GetScreenAddr:
     ld a, h
     and %00000111     ; A = y2 y1 y0 (scanline offset)
     or  %01000000     ; Base dello schermo ($40)
@@ -95,7 +95,7 @@ GetScreenAddr:
 ; Incrementa indirizzo schermo alla riga (scanline) successiva
 ; Input/Output: HL = indirizzo schermo
 ; -------------------------------------------------------------------
-IncScreenLine:
+Gfx_IncScreenLine:
     inc h             ; Vai alla riga successiva
     ld  a, h
     and 7             ; Controlla se la scanline è tornata a 0 (wrap)
@@ -116,7 +116,7 @@ IncScreenLine:
 ; Disegna uno sprite 8x8 a coordinate pixel (X, Y)
 ; Input: C = X, B = Y, IX = puntatore dati sprite (8 byte)
 ; -------------------------------------------------------------------
-DrawPixelSprite8x8:
+Gfx_DrawPixelSprite8x8:
     push bc
     push de
     push hl
@@ -125,7 +125,7 @@ DrawPixelSprite8x8:
     ; 1. Calcola indirizzo schermo
     ld   h, b
     ld   l, c
-    call GetScreenAddr ; HL = indirizzo schermo
+    call Gfx_GetScreenAddr ; HL = indirizzo schermo
     
     ; 2. Calcola offset shift = X & 7
     ld   a, c
@@ -159,7 +159,7 @@ DrawPixelSprite8x8:
     ld   (hl), a
     dec  hl            ; Ritorna alla colonna iniziale
     
-    call IncScreenLine ; Prossima scanline sullo schermo
+    call Gfx_IncScreenLine ; Prossima scanline sullo schermo
     inc  ix            ; Prossimo byte dello sprite
     dec  c
     jr   nz, .line_loop
@@ -175,7 +175,7 @@ DrawPixelSprite8x8:
 ; Input: A = X del byte schermo in pixel (0, 8, 16...), D = Y pixel
 ; Output: A = byte di sfondo
 ; ---------------------------------------------------------------
-GetBackgroundByte:
+Gfx_GetBackgroundByte:
     push hl
     push de
     push bc
@@ -290,8 +290,8 @@ GetBackgroundByte:
     jp   .load_tile
 
 .normal_grid:
-    ld   a, e              ; A = r (Row, calculated at the start of GetBackgroundByte)
-    ; C already contains c (Col, calculated at the start of GetBackgroundByte)
+    ld   a, e              ; A = r (Row, calculated at the start of Gfx_GetBackgroundByte)
+    ; C already contains c (Col, calculated at the start of Gfx_GetBackgroundByte)
     call GetCellFromUnpacked ; A = cell type (0..3)
 
     
@@ -345,14 +345,14 @@ GetBackgroundByte:
 ; Cancella uno sprite 8x8 a coordinate pixel (X, Y) ripristinando lo sfondo
 ; Input: C = X, B = Y
 ; -------------------------------------------------------------------
-ErasePixelSprite8x8:
+Gfx_ErasePixelSprite8x8:
     push bc
     push de
     push hl
     
     ld   h, b
     ld   l, c
-    call GetScreenAddr ; HL = indirizzo schermo (modifica D ed E)
+    call Gfx_GetScreenAddr ; HL = indirizzo schermo (modifica D ed E)
     
     ld   d, b          ; D = Y corrente
     ld   a, c
@@ -362,16 +362,16 @@ ErasePixelSprite8x8:
     ld   c, 8          ; 8 linee
 .erase_loop:
     ld   a, e
-    call GetBackgroundByte
+    call Gfx_GetBackgroundByte
     ld   (hl), a
     inc  hl
     ld   a, e
     add  a, 8
-    call GetBackgroundByte
+    call Gfx_GetBackgroundByte
     ld   (hl), a
     dec  hl
     
-    call IncScreenLine
+    call Gfx_IncScreenLine
     inc  d
     dec  c
     jr   nz, .erase_loop
@@ -385,7 +385,7 @@ ErasePixelSprite8x8:
 ; Disegna uno sprite 16x16 a coordinate pixel (X, Y)
 ; Input: C = X, B = Y, IX = puntatore dati sprite (32 byte)
 ; -------------------------------------------------------------------
-DrawPixelSprite16x16:
+Gfx_DrawPixelSprite16x16:
     push bc
     push de
     push hl
@@ -399,7 +399,7 @@ DrawPixelSprite16x16:
     ; 2. Calcola indirizzo schermo
     ld   h, b
     ld   l, c
-    call GetScreenAddr ; HL = indirizzo schermo
+    call Gfx_GetScreenAddr ; HL = indirizzo schermo
     
     ld   c, 16          ; 16 linee/scanline
 .line_loop:
@@ -452,7 +452,7 @@ DrawPixelSprite16x16:
     dec  hl            ; Ripristina HL alla colonna iniziale
     
 .next_line:
-    call IncScreenLine ; Vai alla prossima riga dello schermo
+    call Gfx_IncScreenLine ; Vai alla prossima riga dello schermo
     inc  ix
     inc  ix            ; Avanza di 2 byte nei dati dello sprite
     dec  c
@@ -468,14 +468,14 @@ DrawPixelSprite16x16:
 ; Cancella uno sprite 16x16 ripristinando lo sfondo statico su 3 colonne
 ; Input: C = X, B = Y
 ; -------------------------------------------------------------------
-ErasePixelSprite16x16:
+Gfx_ErasePixelSprite16x16:
     push bc
     push de
     push hl
     
     ld   h, b
     ld   l, c
-    call GetScreenAddr ; HL = indirizzo schermo (modifica D ed E)
+    call Gfx_GetScreenAddr ; HL = indirizzo schermo (modifica D ed E)
     
     ld   d, b          ; D = Y corrente
     ld   a, c
@@ -485,22 +485,22 @@ ErasePixelSprite16x16:
     ld   c, 16          ; 16 linee
 .erase_loop:
     ld   a, e
-    call GetBackgroundByte
+    call Gfx_GetBackgroundByte
     ld   (hl), a
     inc  hl
     ld   a, e
     add  a, 8
-    call GetBackgroundByte
+    call Gfx_GetBackgroundByte
     ld   (hl), a
     inc  hl
     ld   a, e
     add  a, 16
-    call GetBackgroundByte
+    call Gfx_GetBackgroundByte
     ld   (hl), a
     dec  hl
     dec  hl
     
-    call IncScreenLine
+    call Gfx_IncScreenLine
     inc  d
     dec  c
     jr   nz, .erase_loop
@@ -513,7 +513,7 @@ ErasePixelSprite16x16:
 ; -------------------------------------------------------------------
 ; Disegna il player (testa e corpo) a coordinate pixel
 ; -------------------------------------------------------------------
-PrintPlayer:
+Gfx_PrintPlayer:
     push ix
     
     ; 1. Determina sprite per la testa (sinistra o destra)
@@ -529,7 +529,7 @@ PrintPlayer:
     
 .draw_head:
     ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
-    call DrawPixelSprite8x8 ; Disegna testa
+    call Gfx_DrawPixelSprite8x8 ; Disegna testa
     
     ; 2. Determina sprite per il corpo (sinistra o destra con frame animazione)
     ld   a, (direction)
@@ -565,7 +565,7 @@ PrintPlayer:
     ld   a, b
     add  a, 8
     ld   b, a              ; B = PlayerY + 8
-    call DrawPixelSprite8x8 ; Disegna corpo
+    call Gfx_DrawPixelSprite8x8 ; Disegna corpo
     
     pop  ix
     ret
@@ -573,32 +573,32 @@ PrintPlayer:
 ; -------------------------------------------------------------------
 ; Cancella il player alle vecchie coordinate pixel
 ; -------------------------------------------------------------------
-DeleteCharAtOldPos:
+Gfx_DeleteCharAtOldPos:
     ld   bc, (PlayerPosOld) ; C = PlayerXOld, B = PlayerYOld
-    call ErasePixelSprite8x8 ; Cancella testa
+    call Gfx_ErasePixelSprite8x8 ; Cancella testa
     
     ld   bc, (PlayerPosOld)
     ld   a, b
     add  a, 8
     ld   b, a
-    call ErasePixelSprite8x8 ; Cancella corpo
+    call Gfx_ErasePixelSprite8x8 ; Cancella corpo
     ret
 
 ; -------------------------------------------------------------------
 ; Disegna stringa
 ; Input: HL = stringa, B = lunghezza
 ; -------------------------------------------------------------------
-PrintString:
+Gfx_PrintString:
     ld   a, (hl)
     rst  $10
     inc  hl
-    djnz PrintString
+    djnz Gfx_PrintString
     ret
 
 ; -------------------------------------------------------------------
 ; Disegna il nome della stanza sotto la piattaforma di base (Riga 16)
 ; -------------------------------------------------------------------
-PrintRoomName:
+Gfx_PrintRoomName:
     ; Posiziona il cursore a Y = 16, X = 0 usando i codici di controllo rst $10
     ld   a, 22             ; Codice di controllo AT (22)
     rst  $10
@@ -608,13 +608,13 @@ PrintRoomName:
     rst  $10
     
     ld   a, YELLOW         ; Inchiostro Giallo
-    call Ink
+    call Gfx_Ink
     
     ld   hl, (room_ptr)    ; HL = indirizzo stanza
     ld   de, 128           ; Offset del nome stanza (32 byte)
     add  hl, de            ; HL = indirizzo nome stanza
     ld   b, 32             ; B = 32 caratteri
-    call PrintString
+    call Gfx_PrintString
 
     ; Posiziona il cursore a Y = 18, X = 0 usando i codici di controllo rst $10
     ld   a, 22             ; Codice di controllo AT (22)
@@ -626,7 +626,7 @@ PrintRoomName:
     
     ld   hl, status_line   ; HL = indirizzo stringa di stato
     ld   b, 32             ; B = 32 caratteri
-    call PrintString
+    call Gfx_PrintString
 
     ; Applica i colori agli attributi di Riga 18 ($5A40)
     ld   hl, status_line_attrs
@@ -635,34 +635,34 @@ PrintRoomName:
     ldir
 
     ; Disegna i 7 Willy in basso a sinistra (Row 19, 20)
-    call PrintWillyLives
+    call Gfx_PrintWillyLives
     ret
 
-PrintWillyLives:
+Gfx_PrintWillyLives:
     ld   c, 0              ; Colonna 0
     ld   a, $40 | YELLOW
-    call DrawWillyLifeIcon
+    call Gfx_DrawWillyLifeIcon
     ld   c, 2              ; Colonna 2
     ld   a, $40 | CYAN
-    call DrawWillyLifeIcon
+    call Gfx_DrawWillyLifeIcon
     ld   c, 4              ; Colonna 4
     ld   a, $40 | GREEN
-    call DrawWillyLifeIcon
+    call Gfx_DrawWillyLifeIcon
     ld   c, 6              ; Colonna 6
     ld   a, $40 | MAGENTA
-    call DrawWillyLifeIcon
+    call Gfx_DrawWillyLifeIcon
     ld   c, 8              ; Colonna 8
     ld   a, $40 | RED
-    call DrawWillyLifeIcon
+    call Gfx_DrawWillyLifeIcon
     ld   c, 10             ; Colonna 10
     ld   a, $40 | BLUE
-    call DrawWillyLifeIcon
+    call Gfx_DrawWillyLifeIcon
     ld   c, 12             ; Colonna 12
     ld   a, $40 | WHITE
-    call DrawWillyLifeIcon
+    call Gfx_DrawWillyLifeIcon
     ret
 
-UpdateItemsCollectedDisplay:
+Gfx_UpdateItemsCollectedDisplay:
     push af
     push bc
     push de
@@ -710,7 +710,7 @@ UpdateItemsCollectedDisplay:
     
     ld   hl, status_line   ; HL = indirizzo stringa di stato
     ld   b, 32             ; B = 32 caratteri
-    call PrintString
+    call Gfx_PrintString
 
     ; Ripristina i colori degli attributi di Riga 18 ($5A40)
     ld   hl, status_line_attrs
@@ -733,8 +733,8 @@ status_line_attrs:
 ; -------------------------------------------------------------------
 ; Disegna riga/pavimento sotto i piedi degli sprite (Riga 18, Y = 144)
 ; -------------------------------------------------------------------
-DrawWillyLifeIcon:
-    ; Input: C = Colonna (0..31), A = Colore Ink (1..7 / bright color)
+Gfx_DrawWillyLifeIcon:
+    ; Input: C = Colonna (0..31), A = Colore Gfx_Ink (1..7 / bright color)
     ; D = Colore, E = Colonna
     ld   d, a              ; D = Colore
     ld   e, c              ; E = Colonna
@@ -748,12 +748,12 @@ DrawWillyLifeIcon:
     ld   c, a              ; C = X pixel
     ld   b, 160            ; B = Y pixel (Row 19)
     ld   ix, Willy + 0*8   ; IX = head facing right
-    call DrawPixelSprite8x8
+    call Gfx_DrawPixelSprite8x8
     
     ; 2. Disegna il corpo a Row 20, Colonna E
     ld   b, 168            ; B = Y pixel (Row 20)
     ld   ix, Willy + 1*8   ; IX = body frame 1
-    call DrawPixelSprite8x8
+    call Gfx_DrawPixelSprite8x8
     
     ; 3. Imposta l'attributo colore per la testa (Row 19, Colonna E)
     ; AttrAddr = $5A60 + E
@@ -782,7 +782,7 @@ DrawWillyLifeIcon:
 ; Disegna un tile 8x8 sullo schermo
 ; Input: B = Row (0..23), C = Col (0..31), IX = Puntatore al Tile (9 byte: 1 attr + 8 bitmap)
 ; -------------------------------------------------------------------
-DrawTile:
+Gfx_DrawTile:
     push bc
     push de
     push hl
@@ -844,7 +844,7 @@ DrawTile:
 ; -------------------------------------------------------------------
 ; Disegna la stanza corrente leggendola dalla struttura dati
 ; -------------------------------------------------------------------
-DrawRoom:
+Gfx_DrawRoom:
     push bc
     push de
     push hl
@@ -926,7 +926,7 @@ DrawRoom:
     
     ld   b, h
     ld   c, l
-    call DrawTile
+    call Gfx_DrawTile
     
     pop  bc
     pop  de
@@ -955,7 +955,7 @@ DrawRoom:
 ; Input: H = Row (0..23), B = Col (0..31)
 ; Output: A = Attributo colore
 ; -------------------------------------------------------------------
-GetCellAttribute:
+Gfx_GetCellAttribute:
     push hl
     push de
     push bc
@@ -1071,14 +1071,14 @@ GetCellAttribute:
 
 ; -------------------------------------------------------------------
 ; Imposta gli attributi colore per la cella occupata da un nemico 16x16
-; Input: C = X pixel, B = Y pixel, A = Colore Ink (0..7)
+; Input: C = X pixel, B = Y pixel, A = Colore Gfx_Ink (0..7)
 ; -------------------------------------------------------------------
-SetEnemyColorAttributes:
+Gfx_SetEnemyColorAttributes:
     push hl
     push de
     push bc
     
-    ld   d, a              ; D = Colore Ink (salvato)
+    ld   d, a              ; D = Colore Gfx_Ink (salvato)
     
     ; Se Y è fuori dai limiti della griglia di gioco, non fare nulla
     ld   a, b
@@ -1178,7 +1178,7 @@ SetEnemyColorAttributes:
 ; Ripristina gli attributi colore originali dello sfondo per la cella occupata da un nemico
 ; Input: C = X pixel, B = Y pixel
 ; -------------------------------------------------------------------
-RestoreEnemyColorAttributes:
+Gfx_RestoreEnemyColorAttributes:
     push hl
     push de
     push bc
@@ -1237,7 +1237,7 @@ RestoreEnemyColorAttributes:
     jr   nc, .col_done
 .ok_col:
     ; Ottieni attributo originale dello sfondo per cella H (Row), B (Col)
-    call GetCellAttribute  ; A = attributo originale
+    call Gfx_GetCellAttribute  ; A = attributo originale
     ld   d, a              ; D = attributo originale
     
     push hl                ; Salva Row pointer
@@ -1280,7 +1280,7 @@ RestoreEnemyColorAttributes:
 ; -------------------------------------------------------------------
 ; Disegna rampa e conveyor leggendo i dati della stanza corrente
 ; -------------------------------------------------------------------
-DrawConveyorsAndRamps:
+Gfx_DrawConveyorsAndRamps:
     push hl
     push de
     push bc
@@ -1354,7 +1354,7 @@ DrawConveyorsAndRamps:
     pop  ix                ; IX = conveyor tile pointer
     
 .conveyor_loop:
-    call DrawTile
+    call Gfx_DrawTile
     inc  c                 ; Prossima colonna
     dec  d
     jr   nz, .conveyor_loop
@@ -1427,7 +1427,7 @@ DrawConveyorsAndRamps:
     pop  ix                ; IX = ramp tile pointer
     
 .ramp_loop:
-    call DrawTile
+    call Gfx_DrawTile
     
     ld   a, (ramp_dir)
     or   a

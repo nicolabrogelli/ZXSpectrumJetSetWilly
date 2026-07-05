@@ -4,7 +4,7 @@
 
 
 ; -------------------------------------------------------------------
-; CheckCtrl
+; Input_CheckCtrl
 ; Legge la tastiera e popola il registro D con i flag di input.
 ;
 ; Output:
@@ -21,7 +21,7 @@
 ;   (flags)         → bit 0 impostato se movimento rilevato
 ; -------------------------------------------------------------------
 
-CheckCtrl:
+Input_CheckCtrl:
     xor  a
     ld   (current_input_dir), a
 
@@ -46,11 +46,11 @@ CheckCtrl:
     ld   (q_prev), a            ; marca "Q era premuto"
 
     ; NOTA sullo stack:
-    ; CheckCtrl è stata invocata con CALL, quindi l'indirizzo di ritorno
+    ; Input_CheckCtrl è stata invocata con CALL, quindi l'indirizzo di ritorno
     ; è in cima allo stack. Vogliamo saltare a PerformRoomChange senza
     ; tornare al chiamante, quindi POP HL scarta quell'indirizzo,
     ; poi JP salta direttamente.
-    pop  hl                     ; rimuove indirizzo di ritorno di CheckCtrl
+    pop  hl                     ; rimuove indirizzo di ritorno di Input_CheckCtrl
     jp   PerformRoomChange      ; salta al cambio stanza (non torna qui)
 
 .q_not_pressed:

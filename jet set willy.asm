@@ -33,8 +33,8 @@ Main:
     ld  (body_state), a
     ld  (items_collected), a
 
-    call CopyChars
-    call DefineChars
+    call Gfx_CopyChars
+    call Gfx_DefineChars
     
     ld   a, $02
     call OPENCHAN
@@ -46,11 +46,11 @@ Main:
     call CLS
 LoadRoomAndRestart:
     call DetermineCurrentRoomID
-    call DrawRoom
-    call DrawConveyorsAndRamps
-    call PrintRoomName
-    call DrawRoomItems
-    call LoadRoomEnemies
+    call Gfx_DrawRoom
+    call Gfx_DrawConveyorsAndRamps
+    call Gfx_PrintRoomName
+    call Items_DrawRoom
+    call Enemy_LoadRoom
     
     ld   a, (transition_active)
     or   a
@@ -81,7 +81,7 @@ LoadRoomAndRestart:
     or   $07               ; Imposta ink a bianco
     ld   (BORDCR), a
 
-    call PrintPlayer
+    call Gfx_PrintPlayer
 
 Main_loop:
     halt
@@ -90,8 +90,8 @@ Main_loop:
     call Audio_UpdateMusic        ; Aggiorna la musica
     
     ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
-    call DeleteCharAtOldPos
-    call PrintPlayer
+    call Gfx_DeleteCharAtOldPos
+    call Gfx_PrintPlayer
 
     call EraseRoomEnemies
     call DrawRoomEnemies
@@ -101,12 +101,12 @@ Main_loop:
     ld   (PlayerPosOld), bc
     
     ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
-    call CheckCtrl
+    call Input_CheckCtrl
     call MovePlayer
-    call ApplyGravity
-    call ApplyConveyorForce
-    call UpdateRoomEnemies
-    call CheckRoomItemsCollision
+    call Phys_ApplyGravity
+    call Phys_ApplyConveyor
+    call Enemy_Update
+    call Items_CheckCollision
     
     ; 5. Gestisci la collisione (disegna le raster bar se collide)
     call CheckCollision

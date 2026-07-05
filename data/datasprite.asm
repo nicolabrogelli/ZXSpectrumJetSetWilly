@@ -229,7 +229,7 @@ DoubleBallSpriteLeft:
     db 0,0,0,0,0,240,1,216,2,124,2,12,0,68,3,252
     db 45,72,98,176,163,0,119,0,165,0,167,0,110,0,60,0
 
-ScimmiaSprite: ; This guardian (page 191, sprites 0-3) appears in At the Foot of the MegaTree, Inside the MegaTrunk, On a Branch Over the Drive, Dr Jones will never believe this and Nomen Luni.
+ScimmiaSprite: ; This guardian (page 191, sprites 0-3) appears in Gfx_At the Foot of the MegaTree, Inside the MegaTrunk, On a Branch Over the Drive, Dr Jones will never believe this and Nomen Luni.
     db 128,0,64,0,163,96,83,96,41,192,22,160,11,224,7,112	
     db 2,168,5,212,2,42,3,229,3,226,3,97,3,98,7,112	
     db 0,0,0,0,6,48,86,48,169,192,86,160,11,224,6,48	
@@ -240,7 +240,7 @@ ScimmiaSprite: ; This guardian (page 191, sprites 0-3) appears in At the Foot of
     db 2,42,5,213,2,34,3,225,3,224,3,116,3,56,7,16
 
 
-SegaSprite: ; This guardian (page 181, sprites 0-7) appears in At the Foot of the MegaTree, Cuckoo's Nest, Out on a limb, The Banyan Tree, The Wine Cellar, Tool  Shed, West Wing Roof and The Yacht.
+SegaSprite: ; This guardian (page 181, sprites 0-7) appears in Gfx_At the Foot of the MegaTree, Cuckoo's Nest, Out on a limb, The Banyan Tree, The Wine Cellar, Tool  Shed, West Wing Roof and The Yacht.
     db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	
     db 0,0,0,0,0,0,0,0,6,0,63,0,31,0,13,0	
     db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,128	

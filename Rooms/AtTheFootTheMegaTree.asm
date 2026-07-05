@@ -45,7 +45,7 @@ AtTheFootTheMegaTreeLayout:
 
 AtTheFootTheMegaTreeTile:
 ;The next 32 bytes are copied to 32896 and specify the room name.
-    DEFM "  At the Foot of the MegaTree   "	    ;Room name
+    DEFM "  Gfx_At the Foot of the MegaTree   "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 AtTheFootTheMegaTreeBackground:
