@@ -48,7 +48,7 @@
   35+ 5DAD
   36+ 5DAD              ; Fisica (Derivata dai parametri geometrici)
   37+ 5DAD              MAX_FALL_SPEED: EQU 12
-  38+ 5DAD              JUMP_STRENGTH:  EQU 7
+  38+ 5DAD              JUMP_STRENGTH:  EQU 6
   39+ 5DAD              GRAVITY:        EQU 1
   40+ 5DAD
   41+ 5DAD              ; Limiti schermo del Player
@@ -2315,10 +2315,10 @@
   98+ 6711 CA 1F 69         jp   z, .end            ; Se non salta, abbiamo finito per questo frame
   99+ 6714
  100+ 6714 AF               xor  a
- 101+ 6715 32 7A 78         ld   (jump_sound_note), a
- 102+ 6718 32 7B 78         ld   (jump_sound_timer), a
+ 101+ 6715 32 7A 78         ld   (Audio_jump_sound_note), a
+ 102+ 6718 32 7B 78         ld   (Audio_jump_sound_timer), a
  103+ 671B
- 104+ 671B 3E 07            ld   a, JUMP_STRENGTH
+ 104+ 671B 3E 06            ld   a, JUMP_STRENGTH
  105+ 671D 32 10 75         ld   (velocity_y), a
  106+ 6720 AF               xor  a
  107+ 6721 32 11 75         ld   (on_ground), a
@@ -2459,10 +2459,10 @@
  242+ 67CA CA 1F 69         jp   z, .end
  243+ 67CD
  244+ 67CD AF               xor  a
- 245+ 67CE 32 7A 78         ld   (jump_sound_note), a
- 246+ 67D1 32 7B 78         ld   (jump_sound_timer), a
+ 245+ 67CE 32 7A 78         ld   (Audio_jump_sound_note), a
+ 246+ 67D1 32 7B 78         ld   (Audio_jump_sound_timer), a
  247+ 67D4
- 248+ 67D4 3E 07            ld   a, JUMP_STRENGTH
+ 248+ 67D4 3E 06            ld   a, JUMP_STRENGTH
  249+ 67D6 32 10 75         ld   (velocity_y), a
  250+ 67D9 AF               xor  a
  251+ 67DA 32 11 75         ld   (on_ground), a
@@ -5817,26 +5817,26 @@
    5+ 7407              ;===========================================================================
    6+ 7407
    7+ 7407              ; -------------------------------------------------------------------
-   8+ 7407              ; UpdateJumpSound
+   8+ 7407              ; Audio_UpdateJumpSound
    9+ 7407              ;
   10+ 7407              ; Gestisce la riproduzione dell'effetto sonoro del salto frame-by-frame.
   11+ 7407              ; Viene chiamata una volta per frame nel ciclo principale.
   12+ 7407              ; -------------------------------------------------------------------
-  13+ 7407              UpdateJumpSound:
+  13+ 7407              Audio_UpdateJumpSound:
   14+ 7407 F5               push af
   15+ 7408 C5               push bc
   16+ 7409 D5               push de
   17+ 740A E5               push hl
   18+ 740B
   19+ 740B                  ; Controlla se il suono è attivo (note < 18)
-  20+ 740B 3A 7A 78         ld   a, (jump_sound_note)
+  20+ 740B 3A 7A 78         ld   a, (Audio_jump_sound_note)
   21+ 740E FE 12            cp   18                        ; Ci sono 18 note (0..17)
   22+ 7410 30 2A            jr   nc, .done                 ; Se >= 18, non stiamo riproducendo
   23+ 7412
   24+ 7412                  ; Carica la nota corrente da suonare
   25+ 7412 5F               ld   e, a
   26+ 7413 16 00            ld   d, 0
-  27+ 7415 21 41 74         ld   hl, JumpSoundDelays
+  27+ 7415 21 41 74         ld   hl, Audio_JumpSoundDelays
   28+ 7418 19               add  hl, de
   29+ 7419 7E               ld   a, (hl)                   ; A = delay della nota corrente
   30+ 741A 57               ld   d, a                      ; D = delay della nota
@@ -5865,9 +5865,9 @@
   53+ 7433 10 E8            djnz .note_loop
   54+ 7435
   55+ 7435                  ; Passa alla nota successiva
-  56+ 7435 3A 7A 78         ld   a, (jump_sound_note)
+  56+ 7435 3A 7A 78         ld   a, (Audio_jump_sound_note)
   57+ 7438 3C               inc  a
-  58+ 7439 32 7A 78         ld   (jump_sound_note), a
+  58+ 7439 32 7A 78         ld   (Audio_jump_sound_note), a
   59+ 743C
   60+ 743C              .done:
   61+ 743C E1               pop  hl
@@ -5876,7 +5876,7 @@
   64+ 743F F1               pop  af
   65+ 7440 C9               ret
   66+ 7441
-  67+ 7441              JumpSoundDelays:
+  67+ 7441              Audio_JumpSoundDelays:
   68+ 7441 33 2D 26 20      db 51, 45, 38, 32, 25, 19, 12, 6, 12, 19, 25, 32, 38, 45, 51, 58, 64, 71
   68+ 7445 19 13 0C 06
   68+ 7449 0C 13 19 20
@@ -5884,41 +5884,41 @@
   68+ 7451 40 47
   69+ 7453
   70+ 7453              ; -------------------------------------------------------------------
-  71+ 7453              ; UpdateMusic
+  71+ 7453              ; Audio_UpdateMusic
   72+ 7453              ;
   73+ 7453              ; Gestisce la riproduzione della musica di sottofondo frame-by-frame.
   74+ 7453              ; Viene chiamata a ogni frame.
   75+ 7453              ; -------------------------------------------------------------------
-  76+ 7453              UpdateMusic:
+  76+ 7453              Audio_UpdateMusic:
   77+ 7453 F5               push af
   78+ 7454 C5               push bc
   79+ 7455 D5               push de
   80+ 7456 E5               push hl
   81+ 7457
   82+ 7457                  ; Se il salto sta riproducendo un effetto sonoro, non suonare la musica
-  83+ 7457 3A 7A 78         ld   a, (jump_sound_note)
+  83+ 7457 3A 7A 78         ld   a, (Audio_jump_sound_note)
   84+ 745A FE 12            cp   18
   85+ 745C 38 5A            jr   c, .done                 ; Salto attivo -> niente musica
   86+ 745E
   87+ 745E                  ; Decrementa il contatore dei frame della nota corrente
-  88+ 745E 3A 7D 78         ld   a, (music_frame_counter)
+  88+ 745E 3A 7D 78         ld   a, (Audio_music_frame_counter)
   89+ 7461 3D               dec  a
-  90+ 7462 32 7D 78         ld   (music_frame_counter), a
+  90+ 7462 32 7D 78         ld   (Audio_music_frame_counter), a
   91+ 7465 20 23            jr   nz, .play_current_note   ; Se non è zero, continua a suonare
   92+ 7467
   93+ 7467                  ; Altrimenti carica la nota successiva
-  94+ 7467 3A 7C 78         ld   a, (music_note_idx)
+  94+ 7467 3A 7C 78         ld   a, (Audio_music_note_idx)
   95+ 746A 3C               inc  a
   96+ 746B FE 23            cp   35                       ; Abbiamo 35 note in totale
   97+ 746D 38 01            jr   c, .no_wrap
   98+ 746F AF               xor  a                        ; Torna a 0 se raggiunge la fine (loop)
   99+ 7470              .no_wrap:
- 100+ 7470 32 7C 78         ld   (music_note_idx), a
+ 100+ 7470 32 7C 78         ld   (Audio_music_note_idx), a
  101+ 7473
  102+ 7473                  ; Carica la durata e impostala come nuovo contatore di frame
  103+ 7473 5F               ld   e, a
  104+ 7474 16 00            ld   d, 0
- 105+ 7476 21 BD 74         ld   hl, MusicSheet
+ 105+ 7476 21 BD 74         ld   hl, Audio_MusicSheet
  106+ 7479 19               add  hl, de
  107+ 747A 19               add  hl, de                   ; Ogni nota prende 2 byte (delay, duration)
  108+ 747B
@@ -5931,14 +5931,14 @@
  115+ 7483 20 02            jr   nz, .dur_ok
  116+ 7485 3E 01            ld   a, 1
  117+ 7487              .dur_ok:
- 118+ 7487 32 7D 78         ld   (music_frame_counter), a
+ 118+ 7487 32 7D 78         ld   (Audio_music_frame_counter), a
  119+ 748A
  120+ 748A              .play_current_note:
  121+ 748A                  ; Ottieni il delay della nota corrente (primo byte)
- 122+ 748A 3A 7C 78         ld   a, (music_note_idx)
+ 122+ 748A 3A 7C 78         ld   a, (Audio_music_note_idx)
  123+ 748D 5F               ld   e, a
  124+ 748E 16 00            ld   d, 0
- 125+ 7490 21 BD 74         ld   hl, MusicSheet
+ 125+ 7490 21 BD 74         ld   hl, Audio_MusicSheet
  126+ 7493 19               add  hl, de
  127+ 7494 19               add  hl, de                   ; hl punta al primo byte della nota
  128+ 7495 7E               ld   a, (hl)                  ; A = delay
@@ -5980,7 +5980,7 @@
  164+ 74BB F1               pop  af
  165+ 74BC C9               ret
  166+ 74BD
- 167+ 74BD              MusicSheet:
+ 167+ 74BD              Audio_MusicSheet:
  168+ 74BD                  ; Formato: db delay, durata (in frame a 50Hz)
  169+ 74BD 60 05 65 0F      db 96, 5, 101, 15, 96, 5, 107, 25, 152, 5, 143, 35, 107, 15, 96, 10
  169+ 74C1 60 05 6B 19
@@ -6899,10 +6899,10 @@
   48+ 7877 00           enemy_update_timer: db 0
   49+ 7878 03           player_speed:       db 3
   50+ 7879 00           transition_active:  db 0
-  51+ 787A 12           jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
-  52+ 787B 00           jump_sound_timer:   db 0
-  53+ 787C 00           music_note_idx:      db 0
-  54+ 787D 01           music_frame_counter: db 1
+  51+ 787A 12           Audio_jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
+  52+ 787B 00           Audio_jump_sound_timer:   db 0
+  53+ 787C 00           Audio_music_note_idx:      db 0
+  54+ 787D 01           Audio_music_frame_counter: db 1
   55+ 787E
 # file closed: data/datavariable.asm
   21  787E
@@ -6973,8 +6973,8 @@
   86  78E7              Main_loop:
   87  78E7 76               halt
   88  78E8
-  89  78E8 CD 07 74         call UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
-  90  78EB CD 53 74         call UpdateMusic        ; Aggiorna la musica
+  89  78E8 CD 07 74         call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
+  90  78EB CD 53 74         call Audio_UpdateMusic        ; Aggiorna la musica
   91  78EE
   92  78EE                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
   93  78EE CD 46 60         call DeleteCharAtOldPos

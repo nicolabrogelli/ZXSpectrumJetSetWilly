@@ -86,8 +86,8 @@ LoadRoomAndRestart:
 Main_loop:
     halt
     
-    call UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
-    call UpdateMusic        ; Aggiorna la musica
+    call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
+    call Audio_UpdateMusic        ; Aggiorna la musica
     
     ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
     call DeleteCharAtOldPos

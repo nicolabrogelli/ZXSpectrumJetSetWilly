@@ -5,26 +5,26 @@
 ;===========================================================================
 
 ; -------------------------------------------------------------------
-; UpdateJumpSound
+; Audio_UpdateJumpSound
 ;
 ; Gestisce la riproduzione dell'effetto sonoro del salto frame-by-frame.
 ; Viene chiamata una volta per frame nel ciclo principale.
 ; -------------------------------------------------------------------
-UpdateJumpSound:
+Audio_UpdateJumpSound:
     push af
     push bc
     push de
     push hl
 
     ; Controlla se il suono è attivo (note < 18)
-    ld   a, (jump_sound_note)
+    ld   a, (Audio_jump_sound_note)
     cp   18                        ; Ci sono 18 note (0..17)
     jr   nc, .done                 ; Se >= 18, non stiamo riproducendo
 
     ; Carica la nota corrente da suonare
     ld   e, a
     ld   d, 0
-    ld   hl, JumpSoundDelays
+    ld   hl, Audio_JumpSoundDelays
     add  hl, de
     ld   a, (hl)                   ; A = delay della nota corrente
     ld   d, a                      ; D = delay della nota
@@ -53,9 +53,9 @@ UpdateJumpSound:
     djnz .note_loop
 
     ; Passa alla nota successiva
-    ld   a, (jump_sound_note)
+    ld   a, (Audio_jump_sound_note)
     inc  a
-    ld   (jump_sound_note), a
+    ld   (Audio_jump_sound_note), a
 
 .done:
     pop  hl
@@ -64,45 +64,45 @@ UpdateJumpSound:
     pop  af
     ret
 
-JumpSoundDelays:
+Audio_JumpSoundDelays:
     db 51, 45, 38, 32, 25, 19, 12, 6, 12, 19, 25, 32, 38, 45, 51, 58, 64, 71
 
 ; -------------------------------------------------------------------
-; UpdateMusic
+; Audio_UpdateMusic
 ;
 ; Gestisce la riproduzione della musica di sottofondo frame-by-frame.
 ; Viene chiamata a ogni frame.
 ; -------------------------------------------------------------------
-UpdateMusic:
+Audio_UpdateMusic:
     push af
     push bc
     push de
     push hl
 
     ; Se il salto sta riproducendo un effetto sonoro, non suonare la musica
-    ld   a, (jump_sound_note)
+    ld   a, (Audio_jump_sound_note)
     cp   18
     jr   c, .done                 ; Salto attivo -> niente musica
 
     ; Decrementa il contatore dei frame della nota corrente
-    ld   a, (music_frame_counter)
+    ld   a, (Audio_music_frame_counter)
     dec  a
-    ld   (music_frame_counter), a
+    ld   (Audio_music_frame_counter), a
     jr   nz, .play_current_note   ; Se non è zero, continua a suonare
 
     ; Altrimenti carica la nota successiva
-    ld   a, (music_note_idx)
+    ld   a, (Audio_music_note_idx)
     inc  a
     cp   35                       ; Abbiamo 35 note in totale
     jr   c, .no_wrap
     xor  a                        ; Torna a 0 se raggiunge la fine (loop)
 .no_wrap:
-    ld   (music_note_idx), a
+    ld   (Audio_music_note_idx), a
 
     ; Carica la durata e impostala come nuovo contatore di frame
     ld   e, a
     ld   d, 0
-    ld   hl, MusicSheet
+    ld   hl, Audio_MusicSheet
     add  hl, de
     add  hl, de                   ; Ogni nota prende 2 byte (delay, duration)
     
@@ -115,14 +115,14 @@ UpdateMusic:
     jr   nz, .dur_ok
     ld   a, 1
 .dur_ok:
-    ld   (music_frame_counter), a
+    ld   (Audio_music_frame_counter), a
 
 .play_current_note:
     ; Ottieni il delay della nota corrente (primo byte)
-    ld   a, (music_note_idx)
+    ld   a, (Audio_music_note_idx)
     ld   e, a
     ld   d, 0
-    ld   hl, MusicSheet
+    ld   hl, Audio_MusicSheet
     add  hl, de
     add  hl, de                   ; hl punta al primo byte della nota
     ld   a, (hl)                  ; A = delay
@@ -164,7 +164,7 @@ UpdateMusic:
     pop  af
     ret
 
-MusicSheet:
+Audio_MusicSheet:
     ; Formato: db delay, durata (in frame a 50Hz)
     db 96, 5, 101, 15, 96, 5, 107, 25, 152, 5, 143, 35, 107, 15, 96, 10
     db 107, 10, 96, 10, 107, 25, 96, 10, 85, 10, 81, 10, 85, 5, 81, 10
