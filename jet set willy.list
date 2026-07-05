@@ -47,9 +47,9 @@
   34+ 5DAD              SCREEN_LINE = $4860
   35+ 5DAD
   36+ 5DAD              ; Fisica (Derivata dai parametri geometrici)
-  37+ 5DAD              MAX_FALL_SPEED: EQU 12
-  38+ 5DAD              JUMP_STRENGTH:  EQU 11
-  39+ 5DAD              GRAVITY:        EQU 2
+  37+ 5DAD              MAX_FALL_SPEED: EQU 20
+  38+ 5DAD              JUMP_STRENGTH:  EQU 8
+  39+ 5DAD              GRAVITY:        EQU 1
   40+ 5DAD
   41+ 5DAD              ; Limiti schermo del Player
   42+ 5DAD              PLAYER_MIN_X:    EQU 5
@@ -2318,7 +2318,7 @@
  101+ 6715 32 BC 77         ld   (jump_sound_note), a
  102+ 6718 32 BD 77         ld   (jump_sound_timer), a
  103+ 671B
- 104+ 671B 3E 0B            ld   a, JUMP_STRENGTH
+ 104+ 671B 3E 08            ld   a, JUMP_STRENGTH
  105+ 671D 32 52 74         ld   (velocity_y), a
  106+ 6720 AF               xor  a
  107+ 6721 32 53 74         ld   (on_ground), a
@@ -2462,7 +2462,7 @@
  245+ 67CE 32 BC 77         ld   (jump_sound_note), a
  246+ 67D1 32 BD 77         ld   (jump_sound_timer), a
  247+ 67D4
- 248+ 67D4 3E 0B            ld   a, JUMP_STRENGTH
+ 248+ 67D4 3E 08            ld   a, JUMP_STRENGTH
  249+ 67D6 32 52 74         ld   (velocity_y), a
  250+ 67D9 AF               xor  a
  251+ 67DA 32 53 74         ld   (on_ground), a
@@ -2476,15 +2476,15 @@
  259+ 67ED              .in_air:
  260+ 67ED                  ; Applica gravità
  261+ 67ED 3A 52 74         ld  a, (velocity_y)
- 262+ 67F0 D6 02            sub GRAVITY           ; gravity = 2
+ 262+ 67F0 D6 01            sub GRAVITY           ; gravity = 2
  263+ 67F2
  264+ 67F2                  ; Controlla se positivo per evitare bug con cp signed
  265+ 67F2 CB 7F            bit 7, a
  266+ 67F4 28 06            jr  z, .store_vel
  267+ 67F6
- 268+ 67F6 FE F4            cp  -MAX_FALL_SPEED   ; -12
+ 268+ 67F6 FE EC            cp  -MAX_FALL_SPEED   ; -12
  269+ 67F8 30 02            jr  nc, .store_vel
- 270+ 67FA 3E F4            ld  a, -MAX_FALL_SPEED
+ 270+ 67FA 3E EC            ld  a, -MAX_FALL_SPEED
  271+ 67FC
  272+ 67FC              .store_vel:
  273+ 67FC 32 52 74         ld  (velocity_y), a
