@@ -25,7 +25,7 @@ start:
 
     
 
-    org $7F50
+;    org $7F50
 Main:
     ; Inizializza
     xor  a
@@ -84,6 +84,8 @@ LoadRoomAndRestart:
 
 Main_loop:
     halt
+    
+    call UpdateJumpSound
     
     ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
     call DeleteCharAtOldPos

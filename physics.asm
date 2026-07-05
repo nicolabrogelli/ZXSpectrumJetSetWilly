@@ -97,6 +97,10 @@ ApplyGravity:
     or   a
     jp   z, .end            ; Se non salta, abbiamo finito per questo frame
     
+    xor  a
+    ld   (jump_sound_note), a
+    ld   (jump_sound_timer), a
+    
     ld   a, JUMP_STRENGTH
     ld   (velocity_y), a
     xor  a
@@ -236,6 +240,10 @@ ApplyGravity:
     ld   a, (jump_pressed)
     or   a
     jp   z, .end
+    
+    xor  a
+    ld   (jump_sound_note), a
+    ld   (jump_sound_timer), a
     
     ld   a, JUMP_STRENGTH
     ld   (velocity_y), a

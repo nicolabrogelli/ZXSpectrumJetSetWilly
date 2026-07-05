@@ -1415,6 +1415,69 @@ PlayCollectSound:
     ret
 
 ; -------------------------------------------------------------------
+; UpdateJumpSound
+;
+; Gestisce la riproduzione dell'effetto sonoro del salto frame-by-frame.
+; Viene chiamata una volta per frame nel ciclo principale.
+; -------------------------------------------------------------------
+UpdateJumpSound:
+    push af
+    push bc
+    push de
+    push hl
+
+    ; Controlla se il suono è attivo (note < 18)
+    ld   a, (jump_sound_note)
+    cp   18                        ; Ci sono 18 note (0..17)
+    jr   nc, .done                 ; Se >= 18, non stiamo riproducendo
+
+    ; Carica la nota corrente da suonare
+    ld   e, a
+    ld   d, 0
+    ld   hl, JumpSoundDelays
+    add  hl, de
+    ld   a, (hl)                   ; A = delay della nota corrente
+    ld   d, a                      ; D = delay della nota
+
+    ; Suona la nota: 15 cicli
+    ld   b, 15
+.note_loop:
+    ; Speaker ON
+    ld   a, (room_border_color)
+    or   $10
+    out  ($fe), a
+    ld   c, d
+.d1:
+    dec  c
+    jr   nz, .d1
+
+    ; Speaker OFF
+    ld   a, (room_border_color)
+    and  $ef
+    out  ($fe), a
+    ld   c, d
+.d2:
+    dec  c
+    jr   nz, .d2
+
+    djnz .note_loop
+
+    ; Passa alla nota successiva
+    ld   a, (jump_sound_note)
+    inc  a
+    ld   (jump_sound_note), a
+
+.done:
+    pop  hl
+    pop  de
+    pop  bc
+    pop  af
+    ret
+
+JumpSoundDelays:
+    db 51, 45, 38, 32, 25, 19, 12, 6, 12, 19, 25, 32, 38, 45, 51, 58, 64, 71
+
+; -------------------------------------------------------------------
 ; CheckActiveItemAtCell
 ;
 ; Verifica in modo rapido se esiste un item attivo (non raccolto)
