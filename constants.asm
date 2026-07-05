@@ -42,7 +42,7 @@ GRAVITY:        EQU 2
 PLAYER_MIN_X:    EQU 5
 PLAYER_MAX_X:    EQU 245
 
-items_grid:      EQU $A500
+items_grid:      EQU $B000
 
 ; Offsets all'interno della struttura dati della Stanza (256 byte)
 OFFSET_BG:       EQU 160

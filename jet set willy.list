@@ -55,7 +55,7 @@
   42+ 5DAD              PLAYER_MIN_X:    EQU 5
   43+ 5DAD              PLAYER_MAX_X:    EQU 245
   44+ 5DAD
-  45+ 5DAD              items_grid:      EQU $A500
+  45+ 5DAD              items_grid:      EQU $B000
   46+ 5DAD
   47+ 5DAD              ; Offsets all'interno della struttura dati della Stanza (256 byte)
   48+ 5DAD              OFFSET_BG:       EQU 160
@@ -4767,8 +4767,8 @@
  474+ 720E                  ; ---------------------------------------------------------------
  475+ 720E                  ; Azzera items_grid (32 x 16 = 512 byte)
  476+ 720E                  ; ---------------------------------------------------------------
- 477+ 720E 21 00 A5         ld   hl, items_grid
- 478+ 7211 11 01 A5         ld   de, items_grid + 1
+ 477+ 720E 21 00 B0         ld   hl, items_grid
+ 478+ 7211 11 01 B0         ld   de, items_grid + 1
  479+ 7214 36 00            ld   (hl), 0
  480+ 7216 01 FF 01         ld   bc, 511
  481+ 7219 ED B0            ldir
@@ -4880,7 +4880,7 @@
  587+ 725C
  588+ 725C 19               add  hl, de            ; Row*32 + Col
  589+ 725D
- 590+ 725D 11 00 A5         ld   de, items_grid
+ 590+ 725D 11 00 B0         ld   de, items_grid
  591+ 7260 19               add  hl, de            ; puntatore nella griglia
  592+ 7261
  593+ 7261 D1               pop  de                ; ripristina colore
@@ -5546,7 +5546,7 @@
 1253+ 7384
 1254+ 7384 19               add  hl, de            ; Row*32 + Col
 1255+ 7385
-1256+ 7385 11 00 A5         ld   de, items_grid
+1256+ 7385 11 00 B0         ld   de, items_grid
 1257+ 7388 19               add  hl, de
 1258+ 7389
 1259+ 7389                  ; La cella non contiene più un item
@@ -5756,7 +5756,7 @@
 1463+ 73DB                  ; ---------------------------------------------------------------
 1464+ 73DB                  ; Accesso alla griglia degli item attivi
 1465+ 73DB                  ; ---------------------------------------------------------------
-1466+ 73DB 11 00 A5         ld   de, items_grid
+1466+ 73DB 11 00 B0         ld   de, items_grid
 1467+ 73DE 19               add  hl, de            ; HL = address cella
 1468+ 73DF
 1469+ 73DF                  ; ---------------------------------------------------------------

@@ -51,8 +51,8 @@ constants.asm|42||0|-1|5|D|PLAYER_MIN_X
 constants.asm|42||0|-1|5|L|,PLAYER_MIN_X,,+equ,+used
 constants.asm|43||0|-1|245|D|PLAYER_MAX_X
 constants.asm|43||0|-1|245|L|,PLAYER_MAX_X,,+equ,+used
-constants.asm|45||0|-1|42240|D|items_grid
-constants.asm|45||0|-1|42240|L|,items_grid,,+equ,+used
+constants.asm|45||0|-1|45056|D|items_grid
+constants.asm|45||0|-1|45056|L|,items_grid,,+equ,+used
 constants.asm|48||0|-1|160|D|OFFSET_BG
 constants.asm|48||0|-1|160|L|,OFFSET_BG,,+equ,+used
 constants.asm|49||0|-1|169|D|OFFSET_FLOOR
