@@ -1,26 +1,31 @@
 ;===========================================================================
 ; TheOffLicence.asm
 ;
-; TheOffLicenceLayout       Size 128 Byte, Start Byte   0
-; TheOffLicenceTile         Size  32 Byte, Start Byte 128
-; TheOffLicenceBackground   Size   9 Byte, Start Byte 160
-; TheOffLicenceFloor        Size   9 Byte, Start Byte 169
-; TheOffLicenceWall         Size   9 Byte, Start Byte 178
-; TheOffLicenceNasty        Size   9 Byte, Start Byte 187
-; TheOffLicenceRamp         Size   9 Byte, Start Byte 196
-; TheOffLicenceConveyor     Size   9 Byte, Start Byte 205
-; TheOffLicenceConveyorData Size   4 Byte, Start Byte 214
-; TheOffLicenceRampData     Size   4 Byte, Start Byte 218
-; TheOffLicenceBorderColor  Size   1 Byte, Start Byte 222
-; TheOffLicenceReserved     Size   4 Byte, Start Byte 223
-; TheOffLicenceItem         Size   8 Byte, Start Byte 227
-; TheOffLicenceDirection    Size   4 Byte, Start Byte 235
-; TheOffLicenceUnused       Size   1 Byte, Start Byte 239
-; TheOffLicenceEnemy1       Size   5 Byte, Start Byte 240
-; TheOffLicenceEnemy2       Size   5 Byte, Start Byte 245
-; TheOffLicenceEnemy3       Size   5 Byte, Start Byte 250
-; TheOffLicenceEnemy4       Size   5 Byte, Start Byte 255
-; TheOffLicencePosWilly     Size   2 Byte, Start Byte 280
+; TheOffLicenceLayout           Size 128 Byte, Start Byte   0
+; TheOffLicenceTile             Size  32 Byte, Start Byte 128
+; TheOffLicenceBackground       Size   9 Byte, Start Byte 160
+; TheOffLicenceFloor            Size   9 Byte, Start Byte 169
+; TheOffLicenceWall             Size   9 Byte, Start Byte 178
+; TheOffLicenceNasty            Size   9 Byte, Start Byte 187
+; TheOffLicenceRamp             Size   9 Byte, Start Byte 196
+; TheOffLicenceConveyor         Size   9 Byte, Start Byte 205
+; TheOffLicenceConveyorData     Size   4 Byte, Start Byte 214
+; TheOffLicenceRampData         Size   4 Byte, Start Byte 218
+; TheOffLicenceBorderColor      Size   1 Byte, Start Byte 222
+; TheOffLicenceReserved         Size   4 Byte, Start Byte 223
+; TheOffLicenceItem             Size   8 Byte, Start Byte 227
+; TheOffLicenceDirection        Size   4 Byte, Start Byte 235
+; TheOffLicenceUnused           Size   1 Byte, Start Byte 239
+; TheOffLicenceEnemy1           Size   5 Byte, Start Byte 240
+; TheOffLicenceEnemy2           Size   5 Byte, Start Byte 245
+; TheOffLicenceEnemy3           Size   5 Byte, Start Byte 250
+; TheOffLicenceEnemy4           Size   5 Byte, Start Byte 255
+; TheOffLicenceEnemy5           Size   5 Byte, Start Byte 260
+; TheOffLicenceEnemy6           Size   5 Byte, Start Byte 265
+; TheOffLicenceEnemy7           Size   5 Byte, Start Byte 270
+; TheOffLicenceEnemy8           Size   5 Byte, Start Byte 275
+; TheOffLicencePosWilly         Size   2 Byte, Start Byte 280
+; TheOffLicenceEnemyColors5_8   Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
@@ -78,28 +83,28 @@ TheOffLicenceBorderColor:
     DEFB 5
 
 TheOffLicenceReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB GREEN, RED, CYAN, NONE     ; Enemy colors
 
 TheOffLicenceItem:
     DEFB 24,24,60,126,98,98,98,126
 
 TheOffLicenceDirection:
-    DEFB 1	;Room to the left (The Bridge)
-    DEFB $FF	;Room to the right (None)
-    DEFB $FF	;Room above (None)
-    DEFB $FF	;Room below (None)
+    DEFB 1	                        ; Room to the left (The Bridge)
+    DEFB BLOCK	                    ; Room to the right (None)
+    DEFB BLOCK	                    ; Room above (None)
+    DEFB BLOCK	                    ; Room below (None)
 
 TheOffLicenceUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 TheOffLicenceEnemy1:
-    DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, 3, 140, 56, 230       ; [Radar - horizontal], Guardinan = 12, Starts X=140, Y=56, Limit X=230
 TheOffLicenceEnemy2:
-    DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $C0, 6, 60, 0, 104         ; [Face - vertical], Guardinan = 44, Starts X=60, Y=56, Limit Y=106
 TheOffLicenceEnemy3:
-    DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $C0, 9, 80, 8, 104         ; [Ball - vertical], Guardinan = 10, Starts X=80, Y=16, Limit Y=106
 TheOffLicenceEnemy4:
-    DEFB 0, 0, 0, 0, 0               ; Empty slot
+    DEFB 0, 0, 0, 0, 0              
 TheOffLicenceEnemy5:
     DEFB 0, 0, 0, 0, 0
 TheOffLicenceEnemy6:
@@ -110,6 +115,7 @@ TheOffLicenceEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheOffLicencePosWilly:
-    db 136, 104                   ; Posizione di Willy
+    db 136, 104                     ; Posizione di Willy
+
 TheOffLicenceEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

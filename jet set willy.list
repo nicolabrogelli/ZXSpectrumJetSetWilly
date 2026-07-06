@@ -24,55 +24,57 @@
   11+ 5DAD              UDG:        EQU $5c7b
   12+ 5DAD
   13+ 5DAD              ; Colori
-  14+ 5DAD              BLUE:   EQU $01
-  15+ 5DAD              RED:    EQU $02
-  16+ 5DAD              MAGENTA: EQU $03
-  17+ 5DAD              GREEN:  EQU $04
-  18+ 5DAD              CYAN:   EQU $05
-  19+ 5DAD              YELLOW: EQU $06
-  20+ 5DAD              WHITE:  EQU $07
-  21+ 5DAD
-  22+ 5DAD              ; Colori
-  23+ 5DAD              BLUE_FLASH:   EQU $C1
-  24+ 5DAD              RED_FLASH:    EQU $C2
-  25+ 5DAD              MAGENTA_FLASH: EQU $C3
-  26+ 5DAD              GREEN_FLASH:  EQU $C4
-  27+ 5DAD              CYAN_FLASH:   EQU $C5
-  28+ 5DAD              YELLOW_FLASH: EQU $C6
-  29+ 5DAD              WHITE_FLASH:  EQU $C7
-  30+ 5DAD
-  31+ 5DAD              ; Interrupt
-  32+ 5DAD              IM2_TABLE   = $FE00
-  33+ 5DAD              IM2_VECTOR  = $FDFD
-  34+ 5DAD              SCREEN_LINE = $4860
-  35+ 5DAD
-  36+ 5DAD              ; Fisica (Derivata dai parametri geometrici)
-  37+ 5DAD              MAX_FALL_SPEED: EQU 12
-  38+ 5DAD              JUMP_STRENGTH:  EQU 6
-  39+ 5DAD              GRAVITY:        EQU 1
-  40+ 5DAD
-  41+ 5DAD              ; Limiti schermo del Player
-  42+ 5DAD              PLAYER_MIN_X:    EQU 5
-  43+ 5DAD              PLAYER_MAX_X:    EQU 245
-  44+ 5DAD
-  45+ 5DAD              items_grid:      EQU $B000
-  46+ 5DAD
-  47+ 5DAD              ; Offsets all'interno della struttura dati della Stanza (256 byte)
-  48+ 5DAD              OFFSET_BG:       EQU 160
-  49+ 5DAD              OFFSET_FLOOR:    EQU 169
-  50+ 5DAD              OFFSET_WALL:     EQU 178
-  51+ 5DAD              OFFSET_NASTY:    EQU 187
-  52+ 5DAD              OFFSET_BORDER_COLOR: EQU 222
-  53+ 5DAD              OFFSET_ITEM_GRAPHIC: EQU 227
-  54+ 5DAD              OFFSET_RAMP:         EQU 196
-  55+ 5DAD              OFFSET_CONVEYOR:     EQU 205
-  56+ 5DAD              OFFSET_CONVEYOR_DATA: EQU 214
-  57+ 5DAD              OFFSET_RAMP_DATA:    EQU 218
-  58+ 5DAD              OFFSET_POS_WILLY:    EQU 280
-  59+ 5DAD              OFFSET_COLORS_5_8:   EQU 282
-  60+ 5DAD
+  14+ 5DAD              NONE:   EQU $00
+  15+ 5DAD              BLUE:   EQU $01
+  16+ 5DAD              RED:    EQU $02
+  17+ 5DAD              MAGENTA: EQU $03
+  18+ 5DAD              GREEN:  EQU $04
+  19+ 5DAD              CYAN:   EQU $05
+  20+ 5DAD              YELLOW: EQU $06
+  21+ 5DAD              WHITE:  EQU $07
+  22+ 5DAD
+  23+ 5DAD              ; Colori
+  24+ 5DAD              BLUE_FLASH:   EQU $C1
+  25+ 5DAD              RED_FLASH:    EQU $C2
+  26+ 5DAD              MAGENTA_FLASH: EQU $C3
+  27+ 5DAD              GREEN_FLASH:  EQU $C4
+  28+ 5DAD              CYAN_FLASH:   EQU $C5
+  29+ 5DAD              YELLOW_FLASH: EQU $C6
+  30+ 5DAD              WHITE_FLASH:  EQU $C7
+  31+ 5DAD
+  32+ 5DAD              ; Interrupt
+  33+ 5DAD              IM2_TABLE   = $FE00
+  34+ 5DAD              IM2_VECTOR  = $FDFD
+  35+ 5DAD              SCREEN_LINE = $4860
+  36+ 5DAD
+  37+ 5DAD              ; Fisica (Derivata dai parametri geometrici)
+  38+ 5DAD              MAX_FALL_SPEED: EQU 12
+  39+ 5DAD              JUMP_STRENGTH:  EQU 6
+  40+ 5DAD              GRAVITY:        EQU 1
+  41+ 5DAD
+  42+ 5DAD              ; Limiti schermo del Player
+  43+ 5DAD              PLAYER_MIN_X:    EQU 5
+  44+ 5DAD              PLAYER_MAX_X:    EQU 245
+  45+ 5DAD
+  46+ 5DAD              items_grid:      EQU $B000
+  47+ 5DAD
+  48+ 5DAD              ; Offsets all'interno della struttura dati della Stanza (256 byte)
+  49+ 5DAD              OFFSET_BG:       EQU 160
+  50+ 5DAD              OFFSET_FLOOR:    EQU 169
+  51+ 5DAD              OFFSET_WALL:     EQU 178
+  52+ 5DAD              OFFSET_NASTY:    EQU 187
+  53+ 5DAD              OFFSET_BORDER_COLOR: EQU 222
+  54+ 5DAD              OFFSET_ITEM_GRAPHIC: EQU 227
+  55+ 5DAD              OFFSET_RAMP:         EQU 196
+  56+ 5DAD              OFFSET_CONVEYOR:     EQU 205
+  57+ 5DAD              OFFSET_CONVEYOR_DATA: EQU 214
+  58+ 5DAD              OFFSET_RAMP_DATA:    EQU 218
+  59+ 5DAD              OFFSET_POS_WILLY:    EQU 280
+  60+ 5DAD              OFFSET_COLORS_5_8:   EQU 282
   61+ 5DAD
-  62+ 5DAD
+  62+ 5DAD              BLOCK:          EQU $FF
+  63+ 5DAD
+  64+ 5DAD
 # file closed: constants.asm
   12  5DAD                  include "interrupts.asm"
 # file opened: interrupts.asm
@@ -7005,334 +7007,345 @@
    1++8300              ;===========================================================================
    2++8300              ; TheOffLicence.asm
    3++8300              ;
-   4++8300              ; TheOffLicenceLayout       Size 128 Byte, Start Byte   0
-   5++8300              ; TheOffLicenceTile         Size  32 Byte, Start Byte 128
-   6++8300              ; TheOffLicenceBackground   Size   9 Byte, Start Byte 160
-   7++8300              ; TheOffLicenceFloor        Size   9 Byte, Start Byte 169
-   8++8300              ; TheOffLicenceWall         Size   9 Byte, Start Byte 178
-   9++8300              ; TheOffLicenceNasty        Size   9 Byte, Start Byte 187
-  10++8300              ; TheOffLicenceRamp         Size   9 Byte, Start Byte 196
-  11++8300              ; TheOffLicenceConveyor     Size   9 Byte, Start Byte 205
-  12++8300              ; TheOffLicenceConveyorData Size   4 Byte, Start Byte 214
-  13++8300              ; TheOffLicenceRampData     Size   4 Byte, Start Byte 218
-  14++8300              ; TheOffLicenceBorderColor  Size   1 Byte, Start Byte 222
-  15++8300              ; TheOffLicenceReserved     Size   4 Byte, Start Byte 223
-  16++8300              ; TheOffLicenceItem         Size   8 Byte, Start Byte 227
-  17++8300              ; TheOffLicenceDirection    Size   4 Byte, Start Byte 235
-  18++8300              ; TheOffLicenceUnused       Size   1 Byte, Start Byte 239
-  19++8300              ; TheOffLicenceEnemy1       Size   5 Byte, Start Byte 240
-  20++8300              ; TheOffLicenceEnemy2       Size   5 Byte, Start Byte 245
-  21++8300              ; TheOffLicenceEnemy3       Size   5 Byte, Start Byte 250
-  22++8300              ; TheOffLicenceEnemy4       Size   5 Byte, Start Byte 255
-  23++8300              ; TheOffLicencePosWilly     Size   2 Byte, Start Byte 280
-  24++8300              ;
-  25++8300              ;===========================================================================
-  26++8300
-  27++8300              ; Room layout for Room 2 (The Off Licence)
-  28++8300              TheOffLicenceLayout:
-  29++8300 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
-  29++8304 00 00 00 00
-  30++8308 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
-  30++830C 00 00 00 00
-  31++8310 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
-  31++8314 00 00 00 00
-  32++8318 00 00 00 AA      DEFB  0,0,0,170,170,170,170,170
-  32++831C AA AA AA AA
-  33++8320 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  33++8324 00 00 00 02
-  34++8328 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  34++832C 00 00 00 02
-  35++8330 00 00 00 8C      DEFB  0,0,0,140,0,0,0,2
-  35++8334 00 00 00 02
-  36++8338 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  36++833C 00 00 00 02
-  37++8340 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  37++8344 00 00 00 02
-  38++8348 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  38++834C 00 00 00 02
-  39++8350 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
-  39++8354 00 00 00 02
-  40++8358 00 00 00 AA      DEFB  0,0,0,170,0,0,2,170
-  40++835C 00 00 02 AA
-  41++8360 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
-  41++8364 00 00 00 02
-  42++8368 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
-  42++836C 00 00 00 02
-  43++8370 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
-  43++8374 00 00 00 02
-  44++8378 55 55 55 55      DEFB  85,85,85,85,85,85,85,85
-  44++837C 55 55 55 55
-  45++8380
-  46++8380              TheOffLicenceTile:
-  47++8380 20 20 20 20      DEFM "         The Off Licence        "
-  47++8384 20 20 20 20
-  47++8388 20 54 68 65
-  47++838C 20 4F 66 66
-  47++8390 20 4C 69 63
-  47++8394 65 6E 63 65
-  47++8398 20 20 20 20
-  47++839C 20 20 20 20
-  48++83A0
-  49++83A0              TheOffLicenceBackground:                    ; Background
-  50++83A0 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0
-  50++83A4 00 00 00 00
-  50++83A8 00
-  51++83A9
-  52++83A9              TheOffLicenceFloor:
-  53++83A9 44 FF DE 6C      DEFB 68,255,222,108,136,18,64,4,0       ; Floor Solid
-  53++83AD 88 12 40 04
-  53++83B1 00
-  54++83B2
-  55++83B2              TheOffLicenceWall:
-  56++83B2 16 22 FF 88      DEFB 22,34,255,136,255,34,255,136,255   ; Wall Solid
-  56++83B6 FF 22 FF 88
-  56++83BA FF
-  57++83BB
-  58++83BB              TheOffLicenceNasty:
-  59++83BB 05 F8 88 9E      DEFB 5,248,136,158,189,189,158,136,248  ; Nastry
-  59++83BF BD BD 9E 88
-  59++83C3 F8
-  60++83C4
-  61++83C4              TheOffLicenceRamp:                          ; Ramp Solid
-  62++83C4 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0
-  62++83C8 00 30 00 C0
-  62++83CC 00
-  63++83CD
-  64++83CD              TheOffLicenceConveyor:                      ; Conveyor Solid
-  65++83CD 43 33 FF 33      DEFB 67,51,255,51,0,255,0,170,0
-  65++83D1 00 FF 00 AA
-  65++83D5 00
-  66++83D6
-  67++83D6              TheOffLicenceConveyorData:
-  68++83D6 00               DEFB 0
-  69++83D7 33 5F            DEFW 24371
-  70++83D9 0C               DEFB 12
-  71++83DA
-  72++83DA              TheOffLicenceRampData:
-  73++83DA 01               DEFB 1
-  74++83DB D7 5F            DEFW 24535
-  75++83DD 04               DEFB 4
-  76++83DE
-  77++83DE              TheOffLicenceBorderColor:
-  78++83DE 05               DEFB 5
-  79++83DF
-  80++83DF              TheOffLicenceReserved:
-  81++83DF 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
-  82++83E3
-  83++83E3              TheOffLicenceItem:
-  84++83E3 18 18 3C 7E      DEFB 24,24,60,126,98,98,98,126
-  84++83E7 62 62 62 7E
-  85++83EB
-  86++83EB              TheOffLicenceDirection:
-  87++83EB 01               DEFB 1	;Room to the left (The Bridge)
-  88++83EC FF               DEFB $FF	;Room to the right (None)
-  89++83ED FF               DEFB $FF	;Room above (None)
-  90++83EE FF               DEFB $FF	;Room below (None)
-  91++83EF
-  92++83EF              TheOffLicenceUnused:
-  93++83EF 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
-  94++83F0
-  95++83F0              TheOffLicenceEnemy1:
-  96++83F0 80 03 8C 38      DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
-  96++83F4 E6
-  97++83F5              TheOffLicenceEnemy2:
-  98++83F5 C0 06 3C 38      DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
-  98++83F9 6A
-  99++83FA              TheOffLicenceEnemy3:
- 100++83FA C0 09 50 10      DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
- 100++83FE 6A
- 101++83FF              TheOffLicenceEnemy4:
- 102++83FF 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
- 102++8403 00
- 103++8404              TheOffLicenceEnemy5:
- 104++8404 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 104++8408 00
- 105++8409              TheOffLicenceEnemy6:
- 106++8409 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 106++840D 00
- 107++840E              TheOffLicenceEnemy7:
- 108++840E 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 108++8412 00
- 109++8413              TheOffLicenceEnemy8:
- 110++8413 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 110++8417 00
- 111++8418
- 112++8418              TheOffLicencePosWilly:
- 113++8418 88 68            db 136, 104                   ; Posizione di Willy
- 114++841A              TheOffLicenceEnemyColors5_8:
- 115++841A 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+   4++8300              ; TheOffLicenceLayout           Size 128 Byte, Start Byte   0
+   5++8300              ; TheOffLicenceTile             Size  32 Byte, Start Byte 128
+   6++8300              ; TheOffLicenceBackground       Size   9 Byte, Start Byte 160
+   7++8300              ; TheOffLicenceFloor            Size   9 Byte, Start Byte 169
+   8++8300              ; TheOffLicenceWall             Size   9 Byte, Start Byte 178
+   9++8300              ; TheOffLicenceNasty            Size   9 Byte, Start Byte 187
+  10++8300              ; TheOffLicenceRamp             Size   9 Byte, Start Byte 196
+  11++8300              ; TheOffLicenceConveyor         Size   9 Byte, Start Byte 205
+  12++8300              ; TheOffLicenceConveyorData     Size   4 Byte, Start Byte 214
+  13++8300              ; TheOffLicenceRampData         Size   4 Byte, Start Byte 218
+  14++8300              ; TheOffLicenceBorderColor      Size   1 Byte, Start Byte 222
+  15++8300              ; TheOffLicenceReserved         Size   4 Byte, Start Byte 223
+  16++8300              ; TheOffLicenceItem             Size   8 Byte, Start Byte 227
+  17++8300              ; TheOffLicenceDirection        Size   4 Byte, Start Byte 235
+  18++8300              ; TheOffLicenceUnused           Size   1 Byte, Start Byte 239
+  19++8300              ; TheOffLicenceEnemy1           Size   5 Byte, Start Byte 240
+  20++8300              ; TheOffLicenceEnemy2           Size   5 Byte, Start Byte 245
+  21++8300              ; TheOffLicenceEnemy3           Size   5 Byte, Start Byte 250
+  22++8300              ; TheOffLicenceEnemy4           Size   5 Byte, Start Byte 255
+  23++8300              ; TheOffLicenceEnemy5           Size   5 Byte, Start Byte 260
+  24++8300              ; TheOffLicenceEnemy6           Size   5 Byte, Start Byte 265
+  25++8300              ; TheOffLicenceEnemy7           Size   5 Byte, Start Byte 270
+  26++8300              ; TheOffLicenceEnemy8           Size   5 Byte, Start Byte 275
+  27++8300              ; TheOffLicencePosWilly         Size   2 Byte, Start Byte 280
+  28++8300              ; TheOffLicenceEnemyColors5_8   Size   4 Byte, Start Byte 282
+  29++8300              ;
+  30++8300              ;===========================================================================
+  31++8300
+  32++8300              ; Room layout for Room 2 (The Off Licence)
+  33++8300              TheOffLicenceLayout:
+  34++8300 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
+  34++8304 00 00 00 00
+  35++8308 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
+  35++830C 00 00 00 00
+  36++8310 00 00 00 00      DEFB  0,0,0,0,0,0,0,0
+  36++8314 00 00 00 00
+  37++8318 00 00 00 AA      DEFB  0,0,0,170,170,170,170,170
+  37++831C AA AA AA AA
+  38++8320 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  38++8324 00 00 00 02
+  39++8328 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  39++832C 00 00 00 02
+  40++8330 00 00 00 8C      DEFB  0,0,0,140,0,0,0,2
+  40++8334 00 00 00 02
+  41++8338 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  41++833C 00 00 00 02
+  42++8340 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  42++8344 00 00 00 02
+  43++8348 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  43++834C 00 00 00 02
+  44++8350 00 00 00 80      DEFB  0,0,0,128,0,0,0,2
+  44++8354 00 00 00 02
+  45++8358 00 00 00 AA      DEFB  0,0,0,170,0,0,2,170
+  45++835C 00 00 02 AA
+  46++8360 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
+  46++8364 00 00 00 02
+  47++8368 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
+  47++836C 00 00 00 02
+  48++8370 00 00 00 00      DEFB  0,0,0,0,0,0,0,2
+  48++8374 00 00 00 02
+  49++8378 55 55 55 55      DEFB  85,85,85,85,85,85,85,85
+  49++837C 55 55 55 55
+  50++8380
+  51++8380              TheOffLicenceTile:
+  52++8380 20 20 20 20      DEFM "         The Off Licence        "
+  52++8384 20 20 20 20
+  52++8388 20 54 68 65
+  52++838C 20 4F 66 66
+  52++8390 20 4C 69 63
+  52++8394 65 6E 63 65
+  52++8398 20 20 20 20
+  52++839C 20 20 20 20
+  53++83A0
+  54++83A0              TheOffLicenceBackground:                    ; Background
+  55++83A0 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0
+  55++83A4 00 00 00 00
+  55++83A8 00
+  56++83A9
+  57++83A9              TheOffLicenceFloor:
+  58++83A9 44 FF DE 6C      DEFB 68,255,222,108,136,18,64,4,0       ; Floor Solid
+  58++83AD 88 12 40 04
+  58++83B1 00
+  59++83B2
+  60++83B2              TheOffLicenceWall:
+  61++83B2 16 22 FF 88      DEFB 22,34,255,136,255,34,255,136,255   ; Wall Solid
+  61++83B6 FF 22 FF 88
+  61++83BA FF
+  62++83BB
+  63++83BB              TheOffLicenceNasty:
+  64++83BB 05 F8 88 9E      DEFB 5,248,136,158,189,189,158,136,248  ; Nastry
+  64++83BF BD BD 9E 88
+  64++83C3 F8
+  65++83C4
+  66++83C4              TheOffLicenceRamp:                          ; Ramp Solid
+  67++83C4 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0
+  67++83C8 00 30 00 C0
+  67++83CC 00
+  68++83CD
+  69++83CD              TheOffLicenceConveyor:                      ; Conveyor Solid
+  70++83CD 43 33 FF 33      DEFB 67,51,255,51,0,255,0,170,0
+  70++83D1 00 FF 00 AA
+  70++83D5 00
+  71++83D6
+  72++83D6              TheOffLicenceConveyorData:
+  73++83D6 00               DEFB 0
+  74++83D7 33 5F            DEFW 24371
+  75++83D9 0C               DEFB 12
+  76++83DA
+  77++83DA              TheOffLicenceRampData:
+  78++83DA 01               DEFB 1
+  79++83DB D7 5F            DEFW 24535
+  80++83DD 04               DEFB 4
+  81++83DE
+  82++83DE              TheOffLicenceBorderColor:
+  83++83DE 05               DEFB 5
+  84++83DF
+  85++83DF              TheOffLicenceReserved:
+  86++83DF 04 02 05 00      DEFB GREEN, RED, CYAN, NONE     ; Enemy colors
+  87++83E3
+  88++83E3              TheOffLicenceItem:
+  89++83E3 18 18 3C 7E      DEFB 24,24,60,126,98,98,98,126
+  89++83E7 62 62 62 7E
+  90++83EB
+  91++83EB              TheOffLicenceDirection:
+  92++83EB FF               DEFB BLOCK	                        ; Room to the left (The Bridge)
+  93++83EC FF               DEFB BLOCK	                    ; Room to the right (None)
+  94++83ED FF               DEFB BLOCK	                    ; Room above (None)
+  95++83EE FF               DEFB BLOCK	                    ; Room below (None)
+  96++83EF
+  97++83EF              TheOffLicenceUnused:
+  98++83EF 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
+  99++83F0
+ 100++83F0              TheOffLicenceEnemy1:
+ 101++83F0 80 03 8C 38      DEFB $80, 3, 140, 56, 230       ; [Radar - horizontal], Guardinan = 12, Starts X=140, Y=56, Limit X=230
+ 101++83F4 E6
+ 102++83F5              TheOffLicenceEnemy2:
+ 103++83F5 C0 06 3C 00      DEFB $C0, 6, 60, 0, 104         ; [Face - vertical], Guardinan = 44, Starts X=60, Y=56, Limit Y=106
+ 103++83F9 68
+ 104++83FA              TheOffLicenceEnemy3:
+ 105++83FA C0 09 50 08      DEFB $C0, 9, 80, 8, 104         ; [Ball - vertical], Guardinan = 10, Starts X=80, Y=16, Limit Y=106
+ 105++83FE 68
+ 106++83FF              TheOffLicenceEnemy4:
+ 107++83FF 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 107++8403 00
+ 108++8404              TheOffLicenceEnemy5:
+ 109++8404 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 109++8408 00
+ 110++8409              TheOffLicenceEnemy6:
+ 111++8409 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 111++840D 00
+ 112++840E              TheOffLicenceEnemy7:
+ 113++840E 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 113++8412 00
+ 114++8413              TheOffLicenceEnemy8:
+ 115++8413 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 115++8417 00
+ 116++8418
+ 117++8418              TheOffLicencePosWilly:
+ 118++8418 88 68            db 136, 104                     ; Posizione di Willy
+ 119++841A
+ 120++841A              TheOffLicenceEnemyColors5_8:
+ 121++841A 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/TheOffLicence.asm
   11+ 841E                  include "rooms/TheBridge.asm"                   ; ID 01
 # file opened: rooms/TheBridge.asm
    1++841E              ;===========================================================================
    2++841E              ; TheBridge.asm
    3++841E              ;
-   4++841E              ; TheBridgeLayout       Size 128 Byte, Start Byte   0
-   5++841E              ; TheBridgeTile         Size  32 Byte, Start Byte 128
-   6++841E              ; TheBridgeBackground   Size   9 Byte, Start Byte 160
-   7++841E              ; TheBridgeFloor        Size   9 Byte, Start Byte 169
-   8++841E              ; TheBridgeWall         Size   9 Byte, Start Byte 178
-   9++841E              ; TheBridgeNasty        Size   9 Byte, Start Byte 187
-  10++841E              ; TheBridgeRamp         Size   9 Byte, Start Byte 196
-  11++841E              ; TheBridgeConveyor     Size   9 Byte, Start Byte 205
-  12++841E              ; TheBridgeConveyorData Size   4 Byte, Start Byte 214
-  13++841E              ; TheBridgeRampData     Size   4 Byte, Start Byte 218
-  14++841E              ; TheBridgeBorderColor  Size   1 Byte, Start Byte 222
-  15++841E              ; TheBridgeReserved     Size   4 Byte, Start Byte 223
-  16++841E              ; TheBridgeItem		    Size   8 Byte, Start Byte 227
-  17++841E              ; TheBridgeDirection    Size   4 Byte, Start Byte 235
-  18++841E              ; TheBridgeUnused       Size   1 Byte, Start Byte 239
-  19++841E              ; TheBridgeEnemy1		Size   5 Byte, Start Byte 240
-  20++841E              ; TheBridgeEnemy2		Size   5 Byte, Start Byte 245
-  21++841E              ; TheBridgeEnemy3		Size   5 Byte, Start Byte 250
-  22++841E              ; TheBridgeEnemy4		Size   5 Byte, Start Byte 255
-  23++841E              ; TheBridgePosWilly     Size   2 Byte, Start Byte 280
-  24++841E              ;
-  25++841E              ;===========================================================================
-  26++841E
-  27++841E              ; Room layout for Room  (The Bridge)
-  28++841E              TheBridgeLayout:
-  29++841E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  29++8422 00 00 00 00
-  30++8426 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  30++842A 00 00 00 00
-  31++842E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  31++8432 00 00 00 00
-  32++8436 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  32++843A 00 00 00 00
-  33++843E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  33++8442 00 00 00 00
-  34++8446 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  34++844A 00 00 00 00
-  35++844E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  35++8452 00 00 00 00
-  36++8456 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  36++845A 00 00 00 00
-  37++845E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  37++8462 00 00 00 00
-  38++8466 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  38++846A 00 00 00 00
-  39++846E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  39++8472 00 00 00 00
-  40++8476 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  40++847A 00 00 00 00
-  41++847E 00 00 0A 00      DEFB 0,0,10,0,42,0,0,0
-  41++8482 2A 00 00 00
-  42++8486 00 00 2A 00      DEFB 0,0,42,0,42,128,0,0
-  42++848A 2A 80 00 00
-  43++848E 00 00 AA FF      DEFB 0,0,170,255,234,160,0,0
-  43++8492 EA A0 00 00
-  44++8496 55 55 AA FF      DEFB 85,85,170,255,234,165,85,85
-  44++849A EA A5 55 55
-  45++849E
-  46++849E              TheBridgeTile:
-  47++849E              ;The next 32 bytes are copied to 32896 and specify the room name.
-  48++849E 20 20 20 20      DEFM "         The Bridge             "	    ;Room name
-  48++84A2 20 20 20 20
-  48++84A6 20 54 68 65
-  48++84AA 20 42 72 69
-  48++84AE 64 67 65 20
-  48++84B2 20 20 20 20
-  48++84B6 20 20 20 20
-  48++84BA 20 20 20 20
-  49++84BE
-  50++84BE              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  51++84BE              TheBridgeBackground:
-  52++84BE 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
-  52++84C2 00 00 00 00
-  52++84C6 00
-  53++84C7
-  54++84C7              TheBridgeFloor:
-  55++84C7 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64	;Floor Solid
-  55++84CB BB D6 72 60
-  55++84CF 40
-  56++84D0
-  57++84D0              TheBridgeWall:
-  58++84D0 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136	    ;Wall Solid
-  58++84D4 88 22 77 22
-  58++84D8 88
-  59++84D9
-  60++84D9              TheBridgeNasty:
-  61++84D9 2F 03 84 48      DEFB 47,3,132,72,48,3,132,72,48	        ;Nasty
-  61++84DD 30 03 84 48
-  61++84E1 30
-  62++84E2
-  63++84E2              TheBridgeRamp:
-  64++84E2 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200	        ;Ramp Solid
-  64++84E6 0D 32 37 C2
-  64++84EA C8
-  65++84EB
-  66++84EB              TheBridgeConveyor:
-  67++84EB 2C 01 40 04      DEFB 44,1,64,4,70,79,121,240,249	    ;Conveyor
-  67++84EF 46 4F 79 F0
-  67++84F3 F9
-  68++84F4
-  69++84F4              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  70++84F4              TheBridgeConveyorData:
-  71++84F4 01               DEFB 1	                                ;Direction (right)
-  72++84F5 EC 5F            DEFW 24556	                            ;Location in the attribute buffer at 24064: (15,12)
-  73++84F7 05               DEFB 5	                                ;Length
-  74++84F8
-  75++84F8              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  76++84F8              TheBridgeRampData:
-  77++84F8 01               DEFB 1	                                ;Direction (up to the right)
-  78++84F9 C7 5F            DEFW 24519	                            ;Location in the attribute buffer at 24064: (14,7)
-  79++84FB 03               DEFB 3	                                ;Length
-  80++84FC
-  81++84FC              ;The next byte is copied to 32990 and specifies the border colour.
-  82++84FC              TheBridgeBorderColor:
-  83++84FC 04               DEFB 4	                                ;Border colour
-  84++84FD
-  85++84FD              ;The next two bytes are copied to 32991, but are not used.
-  86++84FD              TheBridgeReserved:
-  87++84FD 02 03 04 07      DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
-  88++8501
-  89++8501              ;The next eight bytes are copied to 32993 and define the item graphic.
-  90++8501              TheBridgeItem:
-  91++8501 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
-  91++8505 00 00 00 00
-  92++8509
-  93++8509              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  94++8509              TheBridgeDirection:
-  95++8509 02               DEFB 2	                                ;Room to the left (Under the MegaTree)
-  96++850A 00               DEFB 0	                                ;Room to the right (The Off Licence)
-  97++850B FF               DEFB $FF                                ;Room above (None)
-  98++850C FF               DEFB $FF                                ;Room below (None)
-  99++850D
- 100++850D              TheBridgeUnused:
- 101++850D 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
- 102++850E
- 103++850E              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 104++850E              TheBridgeEnemy1:
- 105++850E 80 02 08 4C      DEFB $80, 2, 8, 76, 200           ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
- 105++8512 C8
- 106++8513              TheBridgeEnemy2:
- 107++8513 80 02 50 4C      DEFB $80, 2, 80, 76, 180          ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
- 107++8517 B4
- 108++8518              TheBridgeEnemy3:
- 109++8518 C0 05 78 10      DEFB $C0, 5, 120, 16, 106         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
- 109++851C 6A
- 110++851D              TheBridgeEnemy4:
- 111++851D 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
- 111++8521 00
- 112++8522              TheBridgeEnemy5:
- 113++8522 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 113++8526 00
- 114++8527              TheBridgeEnemy6:
- 115++8527 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 115++852B 00
- 116++852C              TheBridgeEnemy7:
- 117++852C 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 117++8530 00
- 118++8531              TheBridgeEnemy8:
- 119++8531 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 119++8535 00
- 120++8536
- 121++8536              TheBridgePosWilly:
- 122++8536 88 4C            db 136, 76                   ; Posizione di Willy
- 123++8538              TheBridgeEnemyColors5_8:
- 124++8538 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
- 125++853C
+   4++841E              ; TheBridgeLayout           Size 128 Byte, Start Byte   0
+   5++841E              ; TheBridgeTile             Size  32 Byte, Start Byte 128
+   6++841E              ; TheBridgeBackground       Size   9 Byte, Start Byte 160
+   7++841E              ; TheBridgeFloor            Size   9 Byte, Start Byte 169
+   8++841E              ; TheBridgeWall             Size   9 Byte, Start Byte 178
+   9++841E              ; TheBridgeNasty            Size   9 Byte, Start Byte 187
+  10++841E              ; TheBridgeRamp             Size   9 Byte, Start Byte 196
+  11++841E              ; TheBridgeConveyor         Size   9 Byte, Start Byte 205
+  12++841E              ; TheBridgeConveyorData     Size   4 Byte, Start Byte 214
+  13++841E              ; TheBridgeRampData         Size   4 Byte, Start Byte 218
+  14++841E              ; TheBridgeBorderColor      Size   1 Byte, Start Byte 222
+  15++841E              ; TheBridgeReserved         Size   4 Byte, Start Byte 223
+  16++841E              ; TheBridgeItem		        Size   8 Byte, Start Byte 227
+  17++841E              ; TheBridgeDirection        Size   4 Byte, Start Byte 235
+  18++841E              ; TheBridgeUnused           Size   1 Byte, Start Byte 239
+  19++841E              ; TheBridgeEnemy1		    Size   5 Byte, Start Byte 240
+  20++841E              ; TheBridgeEnemy2		    Size   5 Byte, Start Byte 245
+  21++841E              ; TheBridgeEnemy3		    Size   5 Byte, Start Byte 250
+  22++841E              ; TheBridgeEnemy4		    Size   5 Byte, Start Byte 255
+  23++841E              ; TheBridgeEnemy5		    Size   5 Byte, Start Byte 260
+  24++841E              ; TheBridgeEnemy6		    Size   5 Byte, Start Byte 265
+  25++841E              ; TheBridgeEnemy7		    Size   5 Byte, Start Byte 270
+  26++841E              ; TheBridgeEnemy8		    Size   5 Byte, Start Byte 275
+  27++841E              ; TheBridgePosWilly         Size   2 Byte, Start Byte 280
+  28++841E              ; TheBridgeEnemyColors5_8   Size   4 Byte, Start Byte 282
+  29++841E              ;===========================================================================
+  30++841E
+  31++841E              ; Room layout for Room  (The Bridge)
+  32++841E              TheBridgeLayout:
+  33++841E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  33++8422 00 00 00 00
+  34++8426 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  34++842A 00 00 00 00
+  35++842E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  35++8432 00 00 00 00
+  36++8436 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  36++843A 00 00 00 00
+  37++843E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  37++8442 00 00 00 00
+  38++8446 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  38++844A 00 00 00 00
+  39++844E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  39++8452 00 00 00 00
+  40++8456 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  40++845A 00 00 00 00
+  41++845E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  41++8462 00 00 00 00
+  42++8466 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  42++846A 00 00 00 00
+  43++846E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  43++8472 00 00 00 00
+  44++8476 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  44++847A 00 00 00 00
+  45++847E 00 00 0A 00      DEFB 0,0,10,0,42,0,0,0
+  45++8482 2A 00 00 00
+  46++8486 00 00 2A 00      DEFB 0,0,42,0,42,128,0,0
+  46++848A 2A 80 00 00
+  47++848E 00 00 AA FF      DEFB 0,0,170,255,234,160,0,0
+  47++8492 EA A0 00 00
+  48++8496 55 55 AA FF      DEFB 85,85,170,255,234,165,85,85
+  48++849A EA A5 55 55
+  49++849E
+  50++849E              TheBridgeTile:
+  51++849E              ;The next 32 bytes are copied to 32896 and specify the room name.
+  52++849E 20 20 20 20      DEFM "         The Bridge             "	    ;Room name
+  52++84A2 20 20 20 20
+  52++84A6 20 54 68 65
+  52++84AA 20 42 72 69
+  52++84AE 64 67 65 20
+  52++84B2 20 20 20 20
+  52++84B6 20 20 20 20
+  52++84BA 20 20 20 20
+  53++84BE
+  54++84BE              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  55++84BE              TheBridgeBackground:
+  56++84BE 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
+  56++84C2 00 00 00 00
+  56++84C6 00
+  57++84C7
+  58++84C7              TheBridgeFloor:
+  59++84C7 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64	    ;Floor Solid
+  59++84CB BB D6 72 60
+  59++84CF 40
+  60++84D0
+  61++84D0              TheBridgeWall:
+  62++84D0 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136	        ;Wall Solid
+  62++84D4 88 22 77 22
+  62++84D8 88
+  63++84D9
+  64++84D9              TheBridgeNasty:
+  65++84D9 2F 03 84 48      DEFB 47,3,132,72,48,3,132,72,48	            ;Nasty
+  65++84DD 30 03 84 48
+  65++84E1 30
+  66++84E2
+  67++84E2              TheBridgeRamp:
+  68++84E2 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200	            ;Ramp Solid
+  68++84E6 0D 32 37 C2
+  68++84EA C8
+  69++84EB
+  70++84EB              TheBridgeConveyor:
+  71++84EB 2C 01 40 04      DEFB 44,1,64,4,70,79,121,240,249	        ;Conveyor
+  71++84EF 46 4F 79 F0
+  71++84F3 F9
+  72++84F4
+  73++84F4              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  74++84F4              TheBridgeConveyorData:
+  75++84F4 01               DEFB 1	                                    ;Direction (right)
+  76++84F5 EC 5F            DEFW 24556	                                ;Location in the attribute buffer at 24064: (15,12)
+  77++84F7 05               DEFB 5	                                    ;Length
+  78++84F8
+  79++84F8              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  80++84F8              TheBridgeRampData:
+  81++84F8 01               DEFB 1	                                    ;Direction (up to the right)
+  82++84F9 C7 5F            DEFW 24519	                                ;Location in the attribute buffer at 24064: (14,7)
+  83++84FB 03               DEFB 3	                                    ;Length
+  84++84FC
+  85++84FC              ;The next byte is copied to 32990 and specifies the border colour.
+  86++84FC              TheBridgeBorderColor:
+  87++84FC 04               DEFB 4	                                    ;Border colour
+  88++84FD
+  89++84FD              ;The next two bytes are copied to 32991, but are not used.
+  90++84FD              TheBridgeReserved:
+  91++84FD 02 03 04 00      DEFB RED, MAGENTA, GREEN, NONE           ; Enemy colors
+  92++8501
+  93++8501              ;The next eight bytes are copied to 32993 and define the item graphic.
+  94++8501              TheBridgeItem:
+  95++8501 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
+  95++8505 00 00 00 00
+  96++8509
+  97++8509              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  98++8509              TheBridgeDirection:
+  99++8509 02               DEFB 2	                                ; Room to the left (Under the MegaTree)
+ 100++850A 00               DEFB 0	                                ; Room to the right (The Off Licence)
+ 101++850B FF               DEFB $FF                                ; Room above (None)
+ 102++850C FF               DEFB $FF                                ; Room below (None)
+ 103++850D
+ 104++850D              TheBridgeUnused:
+ 105++850D 00               DEFB 0                                  ; Padding byte to keep Enemy1 offset at 240
+ 106++850E
+ 107++850E              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 108++850E              TheBridgeEnemy1:
+ 109++850E 80 02 08 50      DEFB $80, 2, 8, 80, 200           ; [Uccello - horizontal], Guardian = 20, Starts X=8, Y=80, Limit X=200
+ 109++8512 C8
+ 110++8513              TheBridgeEnemy2:
+ 111++8513 80 02 50 50      DEFB $80, 2, 80, 80, 180          ; [Uccello - horizontal], Guardian = 21, Starts X=80, Y=80, Limit X=180
+ 111++8517 B4
+ 112++8518              TheBridgeEnemy3:
+ 113++8518 C0 05 60 00      DEFB $C0, 5, 96, 0, 96            ; [Ufo - vertical], Guardinan = 14, Starts X=80, Y=0, Limit Y=96
+ 113++851C 60
+ 114++851D              TheBridgeEnemy4:
+ 115++851D 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 115++8521 00
+ 116++8522              TheBridgeEnemy5:
+ 117++8522 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 117++8526 00
+ 118++8527              TheBridgeEnemy6:
+ 119++8527 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 119++852B 00
+ 120++852C              TheBridgeEnemy7:
+ 121++852C 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 121++8530 00
+ 122++8531              TheBridgeEnemy8:
+ 123++8531 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 123++8535 00
+ 124++8536
+ 125++8536              TheBridgePosWilly:
+ 126++8536 88 4C            db 136, 76                   ; Posizione di Willy
+ 127++8538
+ 128++8538              TheBridgeEnemyColors5_8:
+ 129++8538 00 00 00 00      DEFB NONE, NONE, NONE, NONE  ; Colori per nemici 5-8
+ 130++853C
 # file closed: rooms/TheBridge.asm
   12+ 853C                  include "rooms/UnderTheMegaTree.asm"            ; ID 02
 # file opened: rooms/UnderTheMegaTree.asm

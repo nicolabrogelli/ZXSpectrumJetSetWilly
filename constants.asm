@@ -11,6 +11,7 @@ BORDCR:     EQU $5c48
 UDG:        EQU $5c7b
 
 ; Colori
+NONE:   EQU $00
 BLUE:   EQU $01
 RED:    EQU $02
 MAGENTA: EQU $03
@@ -58,5 +59,6 @@ OFFSET_RAMP_DATA:    EQU 218
 OFFSET_POS_WILLY:    EQU 280
 OFFSET_COLORS_5_8:   EQU 282
 
+BLOCK:          EQU $FF
 
 
