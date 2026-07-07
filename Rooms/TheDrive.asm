@@ -1,30 +1,35 @@
 ;===========================================================================
 ; TheDrive.asm  
 ;
-; TheDriveLayout       Size 128 Byte, Start Byte   0
-; TheDriveTile         Size  32 Byte, Start Byte 128
-; TheDriveBackground   Size   9 Byte, Start Byte 160
-; TheDriveFloor        Size   9 Byte, Start Byte 169
-; TheDriveWall         Size   9 Byte, Start Byte 178
-; TheDriveNasty        Size   9 Byte, Start Byte 187
-; TheDriveRamp         Size   9 Byte, Start Byte 196
-; TheDriveConveyor     Size   9 Byte, Start Byte 205
-; TheDriveConveyorData Size   4 Byte, Start Byte 214
-; TheDriveRampData     Size   4 Byte, Start Byte 218
-; TheDriveBorderColor  Size   1 Byte, Start Byte 222
-; TheDriveReserved     Size   4 Byte, Start Byte 223
-; TheDriveItem		   Size   8 Byte, Start Byte 227
-; TheDriveDirection    Size   4 Byte, Start Byte 235
-; TheDriveUnused       Size   1 Byte, Start Byte 239
-; TheDriveEnemy1		Size   5 Byte, Start Byte 240
-; TheDriveEnemy2		Size   5 Byte, Start Byte 245
-; TheDriveEnemy3		Size   5 Byte, Start Byte 250
-; TheDriveEnemy4		Size   5 Byte, Start Byte 255
-; TheDrivePosWilly     Size   2 Byte, Start Byte 280
+; TheDriveLayout            Size 128 Byte, Start Byte   0
+; TheDriveTile              Size  32 Byte, Start Byte 128
+; TheDriveBackground        Size   9 Byte, Start Byte 160
+; TheDriveFloor             Size   9 Byte, Start Byte 169
+; TheDriveWall              Size   9 Byte, Start Byte 178
+; TheDriveNasty             Size   9 Byte, Start Byte 187
+; TheDriveRamp              Size   9 Byte, Start Byte 196
+; TheDriveConveyor          Size   9 Byte, Start Byte 205
+; TheDriveConveyorData      Size   4 Byte, Start Byte 214
+; TheDriveRampData          Size   4 Byte, Start Byte 218
+; TheDriveBorderColor       Size   1 Byte, Start Byte 222
+; TheDriveReserved          Size   4 Byte, Start Byte 223
+; TheDriveItem		        Size   8 Byte, Start Byte 227
+; TheDriveDirection         Size   4 Byte, Start Byte 235
+; TheDriveUnused            Size   1 Byte, Start Byte 239
+; TheDriveEnemy1		    Size   5 Byte, Start Byte 240
+; TheDriveEnemy2		    Size   5 Byte, Start Byte 245
+; TheDriveEnemy3		    Size   5 Byte, Start Byte 250
+; TheDriveEnemy4		    Size   5 Byte, Start Byte 255
+; TheDriveEnemy5		    Size   5 Byte, Start Byte 260
+; TheDriveEnemy6		    Size   5 Byte, Start Byte 265
+; TheDriveEnemy7		    Size   5 Byte, Start Byte 270
+; TheDriveEnemy8		    Size   5 Byte, Start Byte 275
+; TheDrivePosWilly          Size   2 Byte, Start Byte 280
+; TheDriveEnemyColors5_8    Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
-; Room layout for Room  (Master Bedroom)
+; Room layout for Room  (The Drive)
 TheDriveLayout:           
     DEFB 0,0,0,0,0,0,0,0	
     DEFB 0,0,0,0,0,0,0,0

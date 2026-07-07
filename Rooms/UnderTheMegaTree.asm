@@ -1,26 +1,31 @@
 ;===========================================================================
 ; UnderTheMegaTree.asm  
 ;
-; UnderTheMegaTreeLayout       Size 128 Byte, Start Byte   0
-; UnderTheMegaTreeTile         Size  32 Byte, Start Byte 128
-; UnderTheMegaTreeBackground   Size   9 Byte, Start Byte 160
-; UnderTheMegaTreeFloor        Size   9 Byte, Start Byte 169
-; UnderTheMegaTreeWall         Size   9 Byte, Start Byte 178
-; UnderTheMegaTreeNasty        Size   9 Byte, Start Byte 187
-; UnderTheMegaTreeRamp         Size   9 Byte, Start Byte 196
-; UnderTheMegaTreeConveyor     Size   9 Byte, Start Byte 205
-; UnderTheMegaTreeConveyorData Size   4 Byte, Start Byte 214
-; UnderTheMegaTreeRampData     Size   4 Byte, Start Byte 218
-; UnderTheMegaTreeBorderColor  Size   1 Byte, Start Byte 222
-; UnderTheMegaTreeReserved     Size   4 Byte, Start Byte 223
-; UnderTheMegaTreeItem		    Size   8 Byte, Start Byte 227
-; UnderTheMegaTreeDirection    Size   4 Byte, Start Byte 235
-; UnderTheMegaTreeUnused       Size   1 Byte, Start Byte 239
-; UnderTheMegaTreeEnemy1		Size   5 Byte, Start Byte 240
-; UnderTheMegaTreeEnemy2		Size   5 Byte, Start Byte 245
-; UnderTheMegaTreeEnemy3		Size   5 Byte, Start Byte 250
-; UnderTheMegaTreeEnemy4		Size   5 Byte, Start Byte 255
-; UnderTheMegaTreePosWilly     Size   2 Byte, Start Byte 280
+; UnderTheMegaTreeLayout            Size 128 Byte, Start Byte   0
+; UnderTheMegaTreeTile              Size  32 Byte, Start Byte 128
+; UnderTheMegaTreeBackground        Size   9 Byte, Start Byte 160
+; UnderTheMegaTreeFloor             Size   9 Byte, Start Byte 169
+; UnderTheMegaTreeWall              Size   9 Byte, Start Byte 178
+; UnderTheMegaTreeNasty             Size   9 Byte, Start Byte 187
+; UnderTheMegaTreeRamp              Size   9 Byte, Start Byte 196
+; UnderTheMegaTreeConveyor          Size   9 Byte, Start Byte 205
+; UnderTheMegaTreeConveyorData      Size   4 Byte, Start Byte 214
+; UnderTheMegaTreeRampData          Size   4 Byte, Start Byte 218
+; UnderTheMegaTreeBorderColor       Size   1 Byte, Start Byte 222
+; UnderTheMegaTreeReserved          Size   4 Byte, Start Byte 223
+; UnderTheMegaTreeItem		        Size   8 Byte, Start Byte 227
+; UnderTheMegaTreeDirection         Size   4 Byte, Start Byte 235
+; UnderTheMegaTreeUnused            Size   1 Byte, Start Byte 239
+; UnderTheMegaTreeEnemy1	        Size   5 Byte, Start Byte 240
+; UnderTheMegaTreeEnemy2	        Size   5 Byte, Start Byte 245
+; UnderTheMegaTreeEnemy3	        Size   5 Byte, Start Byte 250
+; UnderTheMegaTreeEnemy4		    Size   5 Byte, Start Byte 255
+; UnderTheMegaTreeEnemy5		    Size   5 Byte, Start Byte 260
+; UnderTheMegaTreeEnemy6		    Size   5 Byte, Start Byte 265
+; UnderTheMegaTreeEnemy7		    Size   5 Byte, Start Byte 270
+; UnderTheMegaTreeEnemy8		    Size   5 Byte, Start Byte 275
+; UnderTheMegaTreePosWilly          Size   2 Byte, Start Byte 280
+; UnderTheMegaTreeEnemyColors5_8    Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
