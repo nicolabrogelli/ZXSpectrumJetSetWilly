@@ -98,11 +98,11 @@ TheOffLicenceUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 TheOffLicenceEnemy1:
-    DEFB $80, 3, 140, 56, 230       ; [Radar - horizontal], Guardinan = 12, Starts X=140, Y=56, Limit X=230
+    DEFB $80, 3, 140, 56, 230       ; [Radar (41056) - horizontal], Guardinan = 12, Starts X=140, Y=56, Limit X=230
 TheOffLicenceEnemy2:
-    DEFB $C0, 6, 60, 0, 104         ; [Face - vertical], Guardinan = 44, Starts X=60, Y=56, Limit Y=106
+    DEFB $C0, 6, 60, 0, 104         ; [Face (41132) - vertical], Guardinan = 44, Starts X=60, Y=56, Limit Y=106
 TheOffLicenceEnemy3:
-    DEFB $C0, 9, 80, 8, 104         ; [Ball - vertical], Guardinan = 10, Starts X=80, Y=16, Limit Y=106
+    DEFB $C0, 9, 80, 8, 104         ; [Ball (41040) - vertical], Guardinan = 10, Starts X=80, Y=8, Limit Y=104
 TheOffLicenceEnemy4:
     DEFB 0, 0, 0, 0, 0              
 TheOffLicenceEnemy5:

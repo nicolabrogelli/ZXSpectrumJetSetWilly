@@ -7131,7 +7131,7 @@
   89++83E7 62 62 62 7E
   90++83EB
   91++83EB              TheOffLicenceDirection:
-  92++83EB FF               DEFB BLOCK	                        ; Room to the left (The Bridge)
+  92++83EB 01               DEFB 1	                        ; Room to the left (The Bridge)
   93++83EC FF               DEFB BLOCK	                    ; Room to the right (None)
   94++83ED FF               DEFB BLOCK	                    ; Room above (None)
   95++83EE FF               DEFB BLOCK	                    ; Room below (None)
@@ -7140,13 +7140,13 @@
   98++83EF 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   99++83F0
  100++83F0              TheOffLicenceEnemy1:
- 101++83F0 80 03 8C 38      DEFB $80, 3, 140, 56, 230       ; [Radar - horizontal], Guardinan = 12, Starts X=140, Y=56, Limit X=230
+ 101++83F0 80 03 8C 38      DEFB $80, 3, 140, 56, 230       ; [Radar (41056) - horizontal], Guardinan = 12, Starts X=140, Y=56, Limit X=230
  101++83F4 E6
  102++83F5              TheOffLicenceEnemy2:
- 103++83F5 C0 06 3C 00      DEFB $C0, 6, 60, 0, 104         ; [Face - vertical], Guardinan = 44, Starts X=60, Y=56, Limit Y=106
+ 103++83F5 C0 06 3C 00      DEFB $C0, 6, 60, 0, 104         ; [Face (41132) - vertical], Guardinan = 44, Starts X=60, Y=56, Limit Y=106
  103++83F9 68
  104++83FA              TheOffLicenceEnemy3:
- 105++83FA C0 09 50 08      DEFB $C0, 9, 80, 8, 104         ; [Ball - vertical], Guardinan = 10, Starts X=80, Y=16, Limit Y=106
+ 105++83FA C0 09 50 08      DEFB $C0, 9, 80, 8, 104         ; [Ball (41040) - vertical], Guardinan = 10, Starts X=80, Y=8, Limit Y=104
  105++83FE 68
  106++83FF              TheOffLicenceEnemy4:
  107++83FF 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -7308,21 +7308,21 @@
   98++8509              TheBridgeDirection:
   99++8509 02               DEFB 2	                                ; Room to the left (Under the MegaTree)
  100++850A 00               DEFB 0	                                ; Room to the right (The Off Licence)
- 101++850B FF               DEFB $FF                                ; Room above (None)
- 102++850C FF               DEFB $FF                                ; Room below (None)
+ 101++850B FF               DEFB BLOCK                              ; Room above (None)
+ 102++850C FF               DEFB BLOCK                              ; Room below (None)
  103++850D
  104++850D              TheBridgeUnused:
  105++850D 00               DEFB 0                                  ; Padding byte to keep Enemy1 offset at 240
  106++850E
  107++850E              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  108++850E              TheBridgeEnemy1:
- 109++850E 80 02 08 50      DEFB $80, 2, 8, 80, 200           ; [Uccello - horizontal], Guardian = 20, Starts X=8, Y=80, Limit X=200
- 109++8512 C8
+ 109++850E 80 02 00 50      DEFB $80, 2, 0, 80, 80             ; [Uccello (41120) - horizontal], Guardian = 20, Starts X=0, Y=80, Limit X=80
+ 109++8512 50
  110++8513              TheBridgeEnemy2:
- 111++8513 80 02 50 50      DEFB $80, 2, 80, 80, 180          ; [Uccello - horizontal], Guardian = 21, Starts X=80, Y=80, Limit X=180
- 111++8517 B4
+ 111++8513 80 02 70 50      DEFB $80, 2, 112, 80, 232           ; [Uccello (41128) - horizontal], Guardian = 21, Starts X=80, Y=80, Limit X=232
+ 111++8517 E8
  112++8518              TheBridgeEnemy3:
- 113++8518 C0 05 60 00      DEFB $C0, 5, 96, 0, 96            ; [Ufo - vertical], Guardinan = 14, Starts X=80, Y=0, Limit Y=96
+ 113++8518 C0 05 60 00      DEFB $C0, 5, 96, 0, 96              ; [Ufo (41072) - vertical], Guardinan = 14, Starts X=96, Y=0, Limit Y=96
  113++851C 60
  114++851D              TheBridgeEnemy4:
  115++851D 00 00 00 00      DEFB 0, 0, 0, 0, 0

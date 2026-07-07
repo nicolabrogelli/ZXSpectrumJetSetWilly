@@ -106,11 +106,11 @@ TheBridgeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBridgeEnemy1:
-    DEFB $80, 2, 8, 80, 200           ; [Uccello - horizontal], Guardian = 20, Starts X=8, Y=80, Limit X=200
+    DEFB $80, 2, 0, 80, 80              ; [Uccello (41120) - horizontal], Guardian = 20, Starts X=0, Y=80, Limit X=80
 TheBridgeEnemy2:
-    DEFB $80, 2, 80, 80, 180          ; [Uccello - horizontal], Guardian = 21, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 2, 112, 80, 232           ; [Uccello (41128) - horizontal], Guardian = 21, Starts X=80, Y=80, Limit X=232
 TheBridgeEnemy3:
-    DEFB $C0, 5, 96, 0, 96            ; [Ufo - vertical], Guardinan = 14, Starts X=80, Y=0, Limit Y=96
+    DEFB $C0, 5, 96, 0, 96              ; [Ufo (41072) - vertical], Guardinan = 14, Starts X=96, Y=0, Limit Y=96
 TheBridgeEnemy4:
     DEFB 0, 0, 0, 0, 0         
 TheBridgeEnemy5:
