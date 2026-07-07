@@ -95,7 +95,7 @@ UnderTheMegaTreeDirection:
     DEFB 3	                                ;Room to the left (Gfx_At the Foot of the MegaTree)
     DEFB 1	                                ;Room to the right (The Bridge)
     DEFB 7                                  ;Room above (CuckoosNest)
-    DEFB $FF                                ;Room below (None)
+    DEFB BLOCK                                ;Room below (None)
 
 UnderTheMegaTreeUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

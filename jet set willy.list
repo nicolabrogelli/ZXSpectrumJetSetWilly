@@ -7482,7 +7482,7 @@
   95++8627 03               DEFB 3	                                ;Room to the left (Gfx_At the Foot of the MegaTree)
   96++8628 01               DEFB 1	                                ;Room to the right (The Bridge)
   97++8629 07               DEFB 7                                  ;Room above (CuckoosNest)
-  98++862A FF               DEFB $FF                                ;Room below (None)
+  98++862A FF               DEFB BLOCK                                ;Room below (None)
   99++862B
  100++862B              UnderTheMegaTreeUnused:
  101++862B 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
@@ -7547,7 +7547,7 @@
   24++865A              ;
   25++865A              ;===========================================================================
   26++865A
-  27++865A              ; Room layout for Room  (Master Bedroom)
+  27++865A              ; Room layout for Room  (At The Foot The MegaTree)
   28++865A              AtTheFootTheMegaTreeLayout:
   29++865A 30 C3 08 00      DEFB 48,195,8,0,8,0,0,0
   29++865E 08 00 00 00
@@ -7654,7 +7654,7 @@
   95++8745 04               DEFB 4	                                ;Room to the left (The Drive)
   96++8746 02               DEFB 2	                                ;Room to the right (Under the MegaTree)
   97++8747 08               DEFB 8	                                ;Room above (Inside the MegaTrunk)
-  98++8748 FF               DEFB $FF                                ;Room below (None)
+  98++8748 FF               DEFB BLOCK                                ;Room below (None)
   99++8749
  100++8749              AtTheFootTheMegaTreeUnused:
  101++8749 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
@@ -7670,7 +7670,7 @@
  109++8754 C0 07 40 13      DEFB $C0, 7, 64, 19, 88         ; [Scimmia (41024) - vertical], Guardian = 8, Starts X=64, Y=19, Limit X=88
  109++8758 58
  110++8759              AtTheFootTheMegaTreeEnemy4:
- 111++8759 80 01 20 68      DEFB $80, 1, 32, 104, 112       ; [Sega (41384) - vertical], Guardian = 53, Starts X=28, Y=104, Limit X=220
+ 111++8759 80 01 20 68      DEFB $80, 1, 32, 104, 112       ; [Sega (41384) - vertical], Guardian = 53, Starts X=32, Y=104, Limit X=112
  111++875D 70
  112++875E              AtTheFootTheMegaTreeEnemy5:
  113++875E 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -7687,8 +7687,9 @@
  120++8772
  121++8772              AtTheFootTheMegaTreePosWilly:
  122++8772 C8 65            db 200, 101                   ; Posizione di Willy
- 123++8774              AtTheFootTheMegaTreeEnemyColors5_8:
- 124++8774 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 123++8774
+ 124++8774              AtTheFootTheMegaTreeEnemyColors5_8:
+ 125++8774 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/AtTheFootTheMegaTree.asm
   14+ 8778                  include "rooms/TheDrive.asm"                    ; ID 04
 # file opened: rooms/TheDrive.asm
@@ -7813,7 +7814,7 @@
   84++8857
   85++8857              ;The next two bytes are copied to 32991, but are not used.
   86++8857              TheDriveReserved:
-  87++8857 02 03 04 07      DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+  87++8857 03 04 06 05      DEFB MAGENTA, GREEN, YELLOW, CYAN                         ; Enemy colors
   88++885B
   89++885B              ;The next eight bytes are copied to 32993 and define the item graphic.
   90++885B              TheDriveItem:
@@ -7832,20 +7833,20 @@
  102++8868
  103++8868              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  104++8868              TheDriveEnemy1:
- 105++8868 80 04 50 68      DEFB $80, 4, 80, 104, 220         ; Enemy 1 (Uovo), horizontal, Starts X=80, Y=80, Limit X=180
- 105++886C DC
+ 105++8868 80 02 70 50      DEFB $80, 2, 112, 80, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
+ 105++886C E8
  106++886D              TheDriveEnemy2:
- 107++886D B0 02 50 50      DEFB $B0, 2, 80, 80, 180         ; Enemy 2 (Uccello), horizontal, Starts X=8, Y=104, Limit X=120
- 107++8871 B4
+ 107++886D 80 02 80 58      DEFB $80, 2, 128, 88, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
+ 107++8871 E8
  108++8872              TheDriveEnemy3:
- 109++8872 80 02 28 30      DEFB $80, 2, 40, 48, 160         ; Enemy 3 (Uccello), horizontal, Starts X=40, Y=48, Limit X=160
- 109++8876 A0
+ 109++8872 80 02 28 40      DEFB $80, 2, 40, 64, 232          ; [Uccello (41144) - horizontal], Guardian = 23, Starts X=40, Y=64, Limit X=232
+ 109++8876 E8
  110++8877              TheDriveEnemy4:
- 111++8877 80 02 78 10      DEFB $80, 2, 120, 16, 200         ; Enemy 4 (Uccello), horizontal, Starts X=120, Y=16, Limit X=76
- 111++887B C8
+ 111++8877 80 02 00 28      DEFB $80, 2, 0, 40, 80            ; [Uccello (41152) - horizontal], Guardian = 24, Starts X=0, Y=40, Limit X=80
+ 111++887B 50
  112++887C              TheDriveEnemy5:
- 113++887C 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 113++8880 00
+ 113++887C 80 04 50 68      DEFB $80, 4, 80, 104, 240         ; [Uovo (41248) - horizontal], Guardian = 36, Starts X=80, Y=104, Limit X=240
+ 113++8880 F0
  114++8881              TheDriveEnemy6:
  115++8881 00 00 00 00      DEFB 0, 0, 0, 0, 0
  115++8885 00
@@ -7857,9 +7858,10 @@
  119++888F 00
  120++8890
  121++8890              TheDrivePosWilly:
- 122++8890 C8 65            db 200, 101                   ; Posizione di Willy
- 123++8892              TheDriveEnemyColors5_8:
- 124++8892 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 122++8890 C8 65            db 200, 101                      ; Posizione di Willy
+ 123++8892
+ 124++8892              TheDriveEnemyColors5_8:
+ 125++8892 05 03 04 07      DEFB CYAN, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheDrive.asm
   15+ 8896                  include "rooms/TheSecurityGuard.asm"            ; ID 05
 # file opened: rooms/TheSecurityGuard.asm

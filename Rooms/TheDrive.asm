@@ -84,7 +84,7 @@ TheDriveBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheDriveReserved:
-    DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+    DEFB MAGENTA, GREEN, YELLOW, CYAN                         ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheDriveItem:
@@ -102,15 +102,15 @@ TheDriveUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheDriveEnemy1:
-    DEFB $80, 4, 80, 104, 220         ; Enemy 1 (Uovo), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 2, 112, 80, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
 TheDriveEnemy2:
-    DEFB $B0, 2, 80, 80, 180         ; Enemy 2 (Uccello), horizontal, Starts X=8, Y=104, Limit X=120
+    DEFB $80, 2, 128, 88, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
 TheDriveEnemy3:
-    DEFB $80, 2, 40, 48, 160         ; Enemy 3 (Uccello), horizontal, Starts X=40, Y=48, Limit X=160
+    DEFB $80, 2, 40, 64, 232          ; [Uccello (41144) - horizontal], Guardian = 23, Starts X=40, Y=64, Limit X=232
 TheDriveEnemy4:
-    DEFB $80, 2, 120, 16, 200         ; Enemy 4 (Uccello), horizontal, Starts X=120, Y=16, Limit X=76
+    DEFB $80, 2, 0, 40, 80            ; [Uccello (41152) - horizontal], Guardian = 24, Starts X=0, Y=40, Limit X=80
 TheDriveEnemy5:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 4, 80, 104, 240         ; [Uovo (41248) - horizontal], Guardian = 36, Starts X=80, Y=104, Limit X=240
 TheDriveEnemy6:
     DEFB 0, 0, 0, 0, 0
 TheDriveEnemy7:
@@ -119,6 +119,7 @@ TheDriveEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheDrivePosWilly:
-    db 200, 101                   ; Posizione di Willy
+    db 200, 101                      ; Posizione di Willy
+
 TheDriveEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB CYAN, 3, 4, 7               ; Colori per nemici 5-8

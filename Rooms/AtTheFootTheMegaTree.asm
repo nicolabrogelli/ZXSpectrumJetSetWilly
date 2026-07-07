@@ -24,7 +24,7 @@
 ;
 ;===========================================================================
 
-; Room layout for Room  (Master Bedroom)
+; Room layout for Room  (At The Foot The MegaTree)
 AtTheFootTheMegaTreeLayout:           
     DEFB 48,195,8,0,8,0,0,0	
     DEFB 48,195,8,0,10,170,170,170
@@ -95,7 +95,7 @@ AtTheFootTheMegaTreeDirection:
     DEFB 4	                                ;Room to the left (The Drive)
     DEFB 2	                                ;Room to the right (Under the MegaTree)
     DEFB 8	                                ;Room above (Inside the MegaTrunk)
-    DEFB $FF                                ;Room below (None)
+    DEFB BLOCK                                ;Room below (None)
 
 AtTheFootTheMegaTreeUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
@@ -120,5 +120,6 @@ AtTheFootTheMegaTreeEnemy8:
 
 AtTheFootTheMegaTreePosWilly:
     db 200, 101                   ; Posizione di Willy
+    
 AtTheFootTheMegaTreeEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8

@@ -4320,8 +4320,8 @@ rooms/AtTheFootTheMegaTree.asm|118||0|2|34669|F|AtTheFootTheMegaTreeEnemy8
 rooms/AtTheFootTheMegaTree.asm|118||0|2|34669|L|,AtTheFootTheMegaTreeEnemy8,
 rooms/AtTheFootTheMegaTree.asm|121||0|2|34674|F|AtTheFootTheMegaTreePosWilly
 rooms/AtTheFootTheMegaTree.asm|121||0|2|34674|L|,AtTheFootTheMegaTreePosWilly,
-rooms/AtTheFootTheMegaTree.asm|123||0|2|34676|F|AtTheFootTheMegaTreeEnemyColors5_8
-rooms/AtTheFootTheMegaTree.asm|123||0|2|34676|L|,AtTheFootTheMegaTreeEnemyColors5_8,
+rooms/AtTheFootTheMegaTree.asm|124||0|2|34676|F|AtTheFootTheMegaTreeEnemyColors5_8
+rooms/AtTheFootTheMegaTree.asm|124||0|2|34676|L|,AtTheFootTheMegaTreeEnemyColors5_8,
 rooms/TheDrive.asm|28||0|2|34680|F|TheDriveLayout
 rooms/TheDrive.asm|28||0|2|34680|L|,TheDriveLayout,,+used
 rooms/TheDrive.asm|46||0|2|34808|F|TheDriveTile
@@ -4370,8 +4370,8 @@ rooms/TheDrive.asm|118||0|2|34955|F|TheDriveEnemy8
 rooms/TheDrive.asm|118||0|2|34955|L|,TheDriveEnemy8,
 rooms/TheDrive.asm|121||0|2|34960|F|TheDrivePosWilly
 rooms/TheDrive.asm|121||0|2|34960|L|,TheDrivePosWilly,
-rooms/TheDrive.asm|123||0|2|34962|F|TheDriveEnemyColors5_8
-rooms/TheDrive.asm|123||0|2|34962|L|,TheDriveEnemyColors5_8,
+rooms/TheDrive.asm|124||0|2|34962|F|TheDriveEnemyColors5_8
+rooms/TheDrive.asm|124||0|2|34962|L|,TheDriveEnemyColors5_8,
 rooms/TheSecurityGuard.asm|28||0|2|34966|F|TheSecurityGuardLayout
 rooms/TheSecurityGuard.asm|28||0|2|34966|L|,TheSecurityGuardLayout,,+used
 rooms/TheSecurityGuard.asm|46||0|2|35094|F|TheSecurityGuardTile
