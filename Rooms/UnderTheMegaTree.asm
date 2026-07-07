@@ -24,7 +24,7 @@
 ;
 ;===========================================================================
 
-; Room layout for Room  (Master Bedroom)
+; Room layout for Room  (Under The MegaTree)
 UnderTheMegaTreeLayout:           
     DEFB 0,3,255,207,252,0,0,0	
     DEFB 170,170,175,255,63,0,0,0
@@ -84,7 +84,7 @@ UnderTheMegaTreeBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 UnderTheMegaTreeReserved:
-    DEFB CYAN, RED, MAGENTA, 7                         ; Enemy colors: all WHITE (7)
+    DEFB CYAN, MAGENTA, RED, NONE                         ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 UnderTheMegaTreeItem:
@@ -102,13 +102,13 @@ UnderTheMegaTreeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 UnderTheMegaTreeEnemy1:
-    DEFB $80, 13, 8, 104, 200         ; Enemy 1 (Canguro), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 13, 8, 104, 200         ; [Canguro (41216) - horizontal], Guardian = 32, Starts X=8, Y=104, Limit X=200
 UnderTheMegaTreeEnemy2:
-    DEFB $80, 12, 80, 30, 180         ; Enemy 2 (Maiale), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $C0, 6, 112, 48, 87          ; [face (41296) - vertical, Guardian = 42, Starts X=120, Y=16, Limit Y=76
 UnderTheMegaTreeEnemy3:
-    DEFB $C0, 6, 120, 16, 76          ; Enemy 3 (face), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $80, 12, 80, 30, 180         ; [Maiale (41168) - horizontal, Guardian = 26, Starts X=80, Y=80, Limit X=180
 UnderTheMegaTreeEnemy4:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB 0, 0, 0, 0, 0        
 UnderTheMegaTreeEnemy5:
     DEFB 0, 0, 0, 0, 0
 UnderTheMegaTreeEnemy6:
@@ -122,4 +122,4 @@ UnderTheMegaTreePosWilly:
     db 200, 101                   ; Posizione di Willy
     
 UnderTheMegaTreeEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8

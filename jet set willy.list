@@ -7316,7 +7316,7 @@
  106++850E
  107++850E              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  108++850E              TheBridgeEnemy1:
- 109++850E 80 02 00 50      DEFB $80, 2, 0, 80, 80             ; [Uccello (41120) - horizontal], Guardian = 20, Starts X=0, Y=80, Limit X=80
+ 109++850E 80 02 00 50      DEFB $80, 2, 0, 80, 80              ; [Uccello (41120) - horizontal], Guardian = 20, Starts X=0, Y=80, Limit X=80
  109++8512 50
  110++8513              TheBridgeEnemy2:
  111++8513 80 02 70 50      DEFB $80, 2, 112, 80, 232           ; [Uccello (41128) - horizontal], Guardian = 21, Starts X=80, Y=80, Limit X=232
@@ -7375,7 +7375,7 @@
   24++853C              ;
   25++853C              ;===========================================================================
   26++853C
-  27++853C              ; Room layout for Room  (Master Bedroom)
+  27++853C              ; Room layout for Room  (Under The MegaTree)
   28++853C              UnderTheMegaTreeLayout:
   29++853C 00 03 FF CF      DEFB 0,3,255,207,252,0,0,0
   29++8540 FC 00 00 00
@@ -7470,7 +7470,7 @@
   84++861B
   85++861B              ;The next two bytes are copied to 32991, but are not used.
   86++861B              UnderTheMegaTreeReserved:
-  87++861B 05 02 03 07      DEFB CYAN, RED, MAGENTA, 7                         ; Enemy colors: all WHITE (7)
+  87++861B 05 03 02 00      DEFB CYAN, MAGENTA, RED, NONE                         ; Enemy colors
   88++861F
   89++861F              ;The next eight bytes are copied to 32993 and define the item graphic.
   90++861F              UnderTheMegaTreeItem:
@@ -7489,16 +7489,16 @@
  102++862C
  103++862C              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  104++862C              UnderTheMegaTreeEnemy1:
- 105++862C 80 0D 08 68      DEFB $80, 13, 8, 104, 200         ; Enemy 1 (Canguro), horizontal, Starts X=8, Y=120, Limit X=200
+ 105++862C 80 0D 08 68      DEFB $80, 13, 8, 104, 200         ; [Canguro (41216) - horizontal], Guardian = 32, Starts X=8, Y=104, Limit X=200
  105++8630 C8
  106++8631              UnderTheMegaTreeEnemy2:
- 107++8631 80 0C 50 1E      DEFB $80, 12, 80, 30, 180         ; Enemy 2 (Maiale), horizontal, Starts X=80, Y=80, Limit X=180
- 107++8635 B4
+ 107++8631 C0 06 70 30      DEFB $C0, 6, 112, 48, 87          ; [face (41296) - vertical, Guardian = 42, Starts X=120, Y=16, Limit Y=76
+ 107++8635 57
  108++8636              UnderTheMegaTreeEnemy3:
- 109++8636 C0 06 78 10      DEFB $C0, 6, 120, 16, 76          ; Enemy 3 (face), vertical, Starts X=120, Y=40, Limit Y=130
- 109++863A 4C
+ 109++8636 80 0C 50 1E      DEFB $80, 12, 80, 30, 180         ; [Maiale (41168) - horizontal, Guardian = 26, Starts X=80, Y=80, Limit X=180
+ 109++863A B4
  110++863B              UnderTheMegaTreeEnemy4:
- 111++863B 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 111++863B 00 00 00 00      DEFB 0, 0, 0, 0, 0
  111++863F 00
  112++8640              UnderTheMegaTreeEnemy5:
  113++8640 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -7517,7 +7517,7 @@
  122++8654 C8 65            db 200, 101                   ; Posizione di Willy
  123++8656
  124++8656              UnderTheMegaTreeEnemyColors5_8:
- 125++8656 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 125++8656 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/UnderTheMegaTree.asm
   13+ 865A                  include "rooms/AtTheFootTheMegaTree.asm"        ; ID 03
 # file opened: rooms/AtTheFootTheMegaTree.asm
