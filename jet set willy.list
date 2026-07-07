@@ -7661,17 +7661,17 @@
  102++874A
  103++874A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  104++874A              AtTheFootTheMegaTreeEnemy1:
- 105++874A C0 07 10 10      DEFB $C0, 7, 16, 16, 96         ; Enemy 1 (Scimmia), horizontal, Starts X, Y, Limit X
- 105++874E 60
+ 105++874A C0 07 10 20      DEFB $C0, 7, 16, 32, 88         ; [Scimmia (41008) - vertical], Guardian = 6, Starts X=16, Y=32, Limit X=88
+ 105++874E 58
  106++874F              AtTheFootTheMegaTreeEnemy2:
- 107++874F C0 07 28 10      DEFB $C0, 7, 40, 16, 76         ; Enemy 2 (Scimmia), horizontal, Starts X, Y, Limit X
- 107++8753 4C
+ 107++874F C0 07 28 10      DEFB $C0, 7, 40, 16, 80         ; [Scimmia (41016) - vertical], Guardian = 7, Starts X=40, Y=16, Limit X=80
+ 107++8753 50
  108++8754              AtTheFootTheMegaTreeEnemy3:
- 109++8754 C0 07 40 10      DEFB $C0, 7, 64, 16, 86         ; Enemy 3 (Scimmia), horizontal, Starts X, Y, Limit X
- 109++8758 56
+ 109++8754 C0 07 40 13      DEFB $C0, 7, 64, 19, 88         ; [Scimmia (41024) - vertical], Guardian = 8, Starts X=64, Y=19, Limit X=88
+ 109++8758 58
  110++8759              AtTheFootTheMegaTreeEnemy4:
- 111++8759 80 01 1C 68      DEFB $80, 1, 28, 104, 220       ; Enemy 3 (Sega), horizontal, Starts X, Y, Limit X
- 111++875D DC
+ 111++8759 80 01 20 68      DEFB $80, 1, 32, 104, 112       ; [Sega (41384) - vertical], Guardian = 53, Starts X=28, Y=104, Limit X=220
+ 111++875D 70
  112++875E              AtTheFootTheMegaTreeEnemy5:
  113++875E 00 00 00 00      DEFB 0, 0, 0, 0, 0
  113++8762 00
