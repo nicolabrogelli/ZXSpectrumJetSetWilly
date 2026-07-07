@@ -8025,17 +8025,17 @@
  107++8986
  108++8986              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8986              TheSecurityGuardEnemy1:
- 110++8986 C0 0B 58 28      DEFB $C0, 11, 88, 40, 104          ; [Soldato (41056) - horizontal], Guardinan = 2, Starts X=140, Y=56, Limit X=230
+ 110++8986 C0 0B 58 28      DEFB $C0, 11, 88, 40, 104          ; [Soldato (40976) - horizontal], Guardian = 2, Starts X=88, Y=40, Limit X=104
  110++898A 68
  111++898B              TheSecurityGuardEnemy2:
- 112++898B 00 00 00 00      DEFB 0, 0, 0, 0, 0;DEFB $D0, 11, 113, 16, 105         ; Enemy 2 (Soldato), Phase 1 (Y=38, Down)
- 112++898F 00
+ 112++898B D0 0B 71 2C      DEFB $D0, 11, 113, 44, 104         ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=113, Y=44, Limit X=104
+ 112++898F 68
  113++8990              TheSecurityGuardEnemy3:
- 114++8990 00 00 00 00      DEFB 0, 0, 0, 0, 0;DEFB $E0, 11, 136, 16, 105         ; Enemy 3 (Soldato), Phase 2 (Y=60, Up)
- 114++8994 00
+ 114++8990 E0 0B 88 2C      DEFB $E0, 11, 136, 44, 104         ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=136, Y=44, Limit X=104
+ 114++8994 68
  115++8995              TheSecurityGuardEnemy4:
- 116++8995 00 00 00 00      DEFB 0, 0, 0, 0, 0;DEFB $F0, 11, 184, 16, 105         ; Enemy 4 (Soldato), Phase 3 (Y=105, Up)
- 116++8999 00
+ 116++8995 F0 0B B8 30      DEFB $F0, 11, 184, 48, 96          ; [Soldato (40992) - horizontal], Guardina = 3, Starts X=184, Y=48, Limit X=96
+ 116++8999 60
  117++899A              TheSecurityGuardEnemy5:
  118++899A 00 00 00 00      DEFB 0, 0, 0, 0, 0
  118++899E 00
