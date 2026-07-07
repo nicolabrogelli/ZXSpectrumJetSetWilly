@@ -7352,687 +7352,708 @@
    1++853C              ;===========================================================================
    2++853C              ; UnderTheMegaTree.asm
    3++853C              ;
-   4++853C              ; UnderTheMegaTreeLayout       Size 128 Byte, Start Byte   0
-   5++853C              ; UnderTheMegaTreeTile         Size  32 Byte, Start Byte 128
-   6++853C              ; UnderTheMegaTreeBackground   Size   9 Byte, Start Byte 160
-   7++853C              ; UnderTheMegaTreeFloor        Size   9 Byte, Start Byte 169
-   8++853C              ; UnderTheMegaTreeWall         Size   9 Byte, Start Byte 178
-   9++853C              ; UnderTheMegaTreeNasty        Size   9 Byte, Start Byte 187
-  10++853C              ; UnderTheMegaTreeRamp         Size   9 Byte, Start Byte 196
-  11++853C              ; UnderTheMegaTreeConveyor     Size   9 Byte, Start Byte 205
-  12++853C              ; UnderTheMegaTreeConveyorData Size   4 Byte, Start Byte 214
-  13++853C              ; UnderTheMegaTreeRampData     Size   4 Byte, Start Byte 218
-  14++853C              ; UnderTheMegaTreeBorderColor  Size   1 Byte, Start Byte 222
-  15++853C              ; UnderTheMegaTreeReserved     Size   4 Byte, Start Byte 223
-  16++853C              ; UnderTheMegaTreeItem		    Size   8 Byte, Start Byte 227
-  17++853C              ; UnderTheMegaTreeDirection    Size   4 Byte, Start Byte 235
-  18++853C              ; UnderTheMegaTreeUnused       Size   1 Byte, Start Byte 239
-  19++853C              ; UnderTheMegaTreeEnemy1		Size   5 Byte, Start Byte 240
-  20++853C              ; UnderTheMegaTreeEnemy2		Size   5 Byte, Start Byte 245
-  21++853C              ; UnderTheMegaTreeEnemy3		Size   5 Byte, Start Byte 250
-  22++853C              ; UnderTheMegaTreeEnemy4		Size   5 Byte, Start Byte 255
-  23++853C              ; UnderTheMegaTreePosWilly     Size   2 Byte, Start Byte 280
-  24++853C              ;
-  25++853C              ;===========================================================================
-  26++853C
-  27++853C              ; Room layout for Room  (Under The MegaTree)
-  28++853C              UnderTheMegaTreeLayout:
-  29++853C 00 03 FF CF      DEFB 0,3,255,207,252,0,0,0
-  29++8540 FC 00 00 00
-  30++8544 AA AA AF FF      DEFB 170,170,175,255,63,0,0,0
-  30++8548 3F 00 00 00
-  31++854C 00 00 3F D0      DEFB 0,0,63,208,92,0,0,0
-  31++8550 5C 00 00 00
-  32++8554 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  32++8558 00 00 00 00
-  33++855C AA 80 00 00      DEFB 170,128,0,0,0,0,0,0
-  33++8560 00 00 00 00
-  34++8564 00 01 40 04      DEFB 0,1,64,4,0,4,0,0
-  34++8568 00 04 00 00
-  35++856C 00 00 01 00      DEFB 0,0,1,0,4,0,0,0
-  35++8570 04 00 00 00
-  36++8574 AA A8 00 00      DEFB 170,168,0,0,0,1,0,0
-  36++8578 00 01 00 00
-  37++857C 00 00 14 10      DEFB 0,0,20,16,16,0,0,0
-  37++8580 10 00 00 00
-  38++8584 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  38++8588 00 00 00 00
-  39++858C 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  39++8590 00 00 00 00
-  40++8594 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  40++8598 00 00 00 00
-  41++859C 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  41++85A0 00 00 00 00
-  42++85A4 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  42++85A8 00 00 00 00
-  43++85AC 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  43++85B0 00 00 00 00
-  44++85B4 55 55 55 55      DEFB 85,85,85,85,85,85,85,85
-  44++85B8 55 55 55 55
-  45++85BC
-  46++85BC              UnderTheMegaTreeTile:
-  47++85BC              ;The next 32 bytes are copied to 32896 and specify the room name.
-  48++85BC 20 20 20 20      DEFM "       Under the MegaTree       "	    ;Room name
-  48++85C0 20 20 20 55
-  48++85C4 6E 64 65 72
-  48++85C8 20 74 68 65
-  48++85CC 20 4D 65 67
-  48++85D0 61 54 72 65
-  48++85D4 65 20 20 20
-  48++85D8 20 20 20 20
-  49++85DC
-  50++85DC              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  51++85DC              UnderTheMegaTreeBackground:
-  52++85DC 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
-  52++85E0 00 00 00 00
-  52++85E4 00
-  53++85E5
-  54++85E5              UnderTheMegaTreeFloor:
-  55++85E5 44 D7 B3 75      DEFB 68,215,179,117,109,92,24,8,4	    ;Floor Solid
-  55++85E9 6D 5C 18 08
-  55++85ED 04
-  56++85EE
-  57++85EE              UnderTheMegaTreeWall:
-  58++85EE 42 BD AA 5D      DEFB 66,189,170,93,162,243,10,6,1	    ;Wall Solid
-  58++85F2 A2 F3 0A 06
-  58++85F6 01
-  59++85F7
-  60++85F7              UnderTheMegaTreeNasty:
-  61++85F7 46 49 6A 3B      DEFB 70,73,106,59,58,252,30,107,232	    ;Nasty
-  61++85FB 3A FC 1E 6B
-  61++85FF E8
-  62++8600
-  63++8600              UnderTheMegaTreeRamp:
-  64++8600 FF 00 00 00      DEFB 255,0,0,0,255,0,0,0,0	            ;Ramp Solid
-  64++8604 FF 00 00 00
-  64++8608 00
-  65++8609
-  66++8609              UnderTheMegaTreeConveyor:
-  67++8609 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
-  67++860D 00 00 00 00
-  67++8611 00
-  68++8612
-  69++8612              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  70++8612              UnderTheMegaTreeConveyorData:
-  71++8612 00               DEFB 0	                                ;Direction (right)
-  72++8613 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
-  73++8615 00               DEFB 0	                                ;Length
-  74++8616
-  75++8616              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  76++8616              UnderTheMegaTreeRampData:
-  77++8616 00               DEFB 0	                                ;Direction (up to the right)
-  78++8617 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (14,7)
-  79++8619 00               DEFB 0	                                ;Length
-  80++861A
-  81++861A              ;The next byte is copied to 32990 and specifies the border colour.
-  82++861A              UnderTheMegaTreeBorderColor:
-  83++861A 04               DEFB 4	                                ;Border colour
-  84++861B
-  85++861B              ;The next two bytes are copied to 32991, but are not used.
-  86++861B              UnderTheMegaTreeReserved:
-  87++861B 05 03 02 00      DEFB CYAN, MAGENTA, RED, NONE                         ; Enemy colors
-  88++861F
-  89++861F              ;The next eight bytes are copied to 32993 and define the item graphic.
-  90++861F              UnderTheMegaTreeItem:
-  91++861F 81 42 24 18      DEFB 129,66,36,24,60,24,60,195	                ;Item graphic (unused)
-  91++8623 3C 18 3C C3
-  92++8627
-  93++8627              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  94++8627              UnderTheMegaTreeDirection:
-  95++8627 03               DEFB 3	                                ;Room to the left (Gfx_At the Foot of the MegaTree)
-  96++8628 01               DEFB 1	                                ;Room to the right (The Bridge)
-  97++8629 07               DEFB 7                                  ;Room above (CuckoosNest)
-  98++862A FF               DEFB BLOCK                                ;Room below (None)
-  99++862B
- 100++862B              UnderTheMegaTreeUnused:
- 101++862B 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
- 102++862C
- 103++862C              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 104++862C              UnderTheMegaTreeEnemy1:
- 105++862C 80 0D 08 68      DEFB $80, 13, 8, 104, 200         ; [Canguro (41216) - horizontal], Guardian = 32, Starts X=8, Y=104, Limit X=200
- 105++8630 C8
- 106++8631              UnderTheMegaTreeEnemy2:
- 107++8631 C0 06 70 30      DEFB $C0, 6, 112, 48, 87          ; [face (41296) - vertical, Guardian = 42, Starts X=120, Y=16, Limit Y=76
- 107++8635 57
- 108++8636              UnderTheMegaTreeEnemy3:
- 109++8636 80 0C 50 1E      DEFB $80, 12, 80, 30, 180         ; [Maiale (41168) - horizontal, Guardian = 26, Starts X=80, Y=80, Limit X=180
- 109++863A B4
- 110++863B              UnderTheMegaTreeEnemy4:
- 111++863B 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 111++863F 00
- 112++8640              UnderTheMegaTreeEnemy5:
- 113++8640 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 113++8644 00
- 114++8645              UnderTheMegaTreeEnemy6:
- 115++8645 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 115++8649 00
- 116++864A              UnderTheMegaTreeEnemy7:
- 117++864A 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 117++864E 00
- 118++864F              UnderTheMegaTreeEnemy8:
- 119++864F 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 119++8653 00
- 120++8654
- 121++8654              UnderTheMegaTreePosWilly:
- 122++8654 C8 65            db 200, 101                   ; Posizione di Willy
- 123++8656
- 124++8656              UnderTheMegaTreeEnemyColors5_8:
- 125++8656 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+   4++853C              ; UnderTheMegaTreeLayout            Size 128 Byte, Start Byte   0
+   5++853C              ; UnderTheMegaTreeTile              Size  32 Byte, Start Byte 128
+   6++853C              ; UnderTheMegaTreeBackground        Size   9 Byte, Start Byte 160
+   7++853C              ; UnderTheMegaTreeFloor             Size   9 Byte, Start Byte 169
+   8++853C              ; UnderTheMegaTreeWall              Size   9 Byte, Start Byte 178
+   9++853C              ; UnderTheMegaTreeNasty             Size   9 Byte, Start Byte 187
+  10++853C              ; UnderTheMegaTreeRamp              Size   9 Byte, Start Byte 196
+  11++853C              ; UnderTheMegaTreeConveyor          Size   9 Byte, Start Byte 205
+  12++853C              ; UnderTheMegaTreeConveyorData      Size   4 Byte, Start Byte 214
+  13++853C              ; UnderTheMegaTreeRampData          Size   4 Byte, Start Byte 218
+  14++853C              ; UnderTheMegaTreeBorderColor       Size   1 Byte, Start Byte 222
+  15++853C              ; UnderTheMegaTreeReserved          Size   4 Byte, Start Byte 223
+  16++853C              ; UnderTheMegaTreeItem		        Size   8 Byte, Start Byte 227
+  17++853C              ; UnderTheMegaTreeDirection         Size   4 Byte, Start Byte 235
+  18++853C              ; UnderTheMegaTreeUnused            Size   1 Byte, Start Byte 239
+  19++853C              ; UnderTheMegaTreeEnemy1	        Size   5 Byte, Start Byte 240
+  20++853C              ; UnderTheMegaTreeEnemy2	        Size   5 Byte, Start Byte 245
+  21++853C              ; UnderTheMegaTreeEnemy3	        Size   5 Byte, Start Byte 250
+  22++853C              ; UnderTheMegaTreeEnemy4		    Size   5 Byte, Start Byte 255
+  23++853C              ; UnderTheMegaTreeEnemy5		    Size   5 Byte, Start Byte 260
+  24++853C              ; UnderTheMegaTreeEnemy6		    Size   5 Byte, Start Byte 265
+  25++853C              ; UnderTheMegaTreeEnemy7		    Size   5 Byte, Start Byte 270
+  26++853C              ; UnderTheMegaTreeEnemy8		    Size   5 Byte, Start Byte 275
+  27++853C              ; UnderTheMegaTreePosWilly          Size   2 Byte, Start Byte 280
+  28++853C              ; UnderTheMegaTreeEnemyColors5_8    Size   4 Byte, Start Byte 282
+  29++853C              ;
+  30++853C              ;===========================================================================
+  31++853C
+  32++853C              ; Room layout for Room  (Under The MegaTree)
+  33++853C              UnderTheMegaTreeLayout:
+  34++853C 00 03 FF CF      DEFB 0,3,255,207,252,0,0,0
+  34++8540 FC 00 00 00
+  35++8544 AA AA AF FF      DEFB 170,170,175,255,63,0,0,0
+  35++8548 3F 00 00 00
+  36++854C 00 00 3F D0      DEFB 0,0,63,208,92,0,0,0
+  36++8550 5C 00 00 00
+  37++8554 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  37++8558 00 00 00 00
+  38++855C AA 80 00 00      DEFB 170,128,0,0,0,0,0,0
+  38++8560 00 00 00 00
+  39++8564 00 01 40 04      DEFB 0,1,64,4,0,4,0,0
+  39++8568 00 04 00 00
+  40++856C 00 00 01 00      DEFB 0,0,1,0,4,0,0,0
+  40++8570 04 00 00 00
+  41++8574 AA A8 00 00      DEFB 170,168,0,0,0,1,0,0
+  41++8578 00 01 00 00
+  42++857C 00 00 14 10      DEFB 0,0,20,16,16,0,0,0
+  42++8580 10 00 00 00
+  43++8584 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  43++8588 00 00 00 00
+  44++858C 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  44++8590 00 00 00 00
+  45++8594 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  45++8598 00 00 00 00
+  46++859C 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  46++85A0 00 00 00 00
+  47++85A4 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  47++85A8 00 00 00 00
+  48++85AC 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  48++85B0 00 00 00 00
+  49++85B4 55 55 55 55      DEFB 85,85,85,85,85,85,85,85
+  49++85B8 55 55 55 55
+  50++85BC
+  51++85BC              UnderTheMegaTreeTile:
+  52++85BC              ;The next 32 bytes are copied to 32896 and specify the room name.
+  53++85BC 20 20 20 20      DEFM "       Under the MegaTree       "	    ;Room name
+  53++85C0 20 20 20 55
+  53++85C4 6E 64 65 72
+  53++85C8 20 74 68 65
+  53++85CC 20 4D 65 67
+  53++85D0 61 54 72 65
+  53++85D4 65 20 20 20
+  53++85D8 20 20 20 20
+  54++85DC
+  55++85DC              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  56++85DC              UnderTheMegaTreeBackground:
+  57++85DC 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+  57++85E0 00 00 00 00
+  57++85E4 00
+  58++85E5
+  59++85E5              UnderTheMegaTreeFloor:
+  60++85E5 44 D7 B3 75      DEFB 68,215,179,117,109,92,24,8,4	    ;Floor Solid
+  60++85E9 6D 5C 18 08
+  60++85ED 04
+  61++85EE
+  62++85EE              UnderTheMegaTreeWall:
+  63++85EE 42 BD AA 5D      DEFB 66,189,170,93,162,243,10,6,1	    ;Wall Solid
+  63++85F2 A2 F3 0A 06
+  63++85F6 01
+  64++85F7
+  65++85F7              UnderTheMegaTreeNasty:
+  66++85F7 46 49 6A 3B      DEFB 70,73,106,59,58,252,30,107,232	    ;Nasty
+  66++85FB 3A FC 1E 6B
+  66++85FF E8
+  67++8600
+  68++8600              UnderTheMegaTreeRamp:
+  69++8600 FF 00 00 00      DEFB 255,0,0,0,255,0,0,0,0	            ;Ramp Solid
+  69++8604 FF 00 00 00
+  69++8608 00
+  70++8609
+  71++8609              UnderTheMegaTreeConveyor:
+  72++8609 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++860D 00 00 00 00
+  72++8611 00
+  73++8612
+  74++8612              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  75++8612              UnderTheMegaTreeConveyorData:
+  76++8612 00               DEFB 0	                                ;Direction (right)
+  77++8613 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
+  78++8615 00               DEFB 0	                                ;Length
+  79++8616
+  80++8616              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  81++8616              UnderTheMegaTreeRampData:
+  82++8616 00               DEFB 0	                                ;Direction (up to the right)
+  83++8617 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (14,7)
+  84++8619 00               DEFB 0	                                ;Length
+  85++861A
+  86++861A              ;The next byte is copied to 32990 and specifies the border colour.
+  87++861A              UnderTheMegaTreeBorderColor:
+  88++861A 04               DEFB 4	                                ;Border colour
+  89++861B
+  90++861B              ;The next two bytes are copied to 32991, but are not used.
+  91++861B              UnderTheMegaTreeReserved:
+  92++861B 05 03 02 00      DEFB CYAN, MAGENTA, RED, NONE                         ; Enemy colors
+  93++861F
+  94++861F              ;The next eight bytes are copied to 32993 and define the item graphic.
+  95++861F              UnderTheMegaTreeItem:
+  96++861F 81 42 24 18      DEFB 129,66,36,24,60,24,60,195	                ;Item graphic (unused)
+  96++8623 3C 18 3C C3
+  97++8627
+  98++8627              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  99++8627              UnderTheMegaTreeDirection:
+ 100++8627 03               DEFB 3	                                ;Room to the left (Gfx_At the Foot of the MegaTree)
+ 101++8628 01               DEFB 1	                                ;Room to the right (The Bridge)
+ 102++8629 07               DEFB 7                                  ;Room above (CuckoosNest)
+ 103++862A FF               DEFB BLOCK                                ;Room below (None)
+ 104++862B
+ 105++862B              UnderTheMegaTreeUnused:
+ 106++862B 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 107++862C
+ 108++862C              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 109++862C              UnderTheMegaTreeEnemy1:
+ 110++862C 80 0D 08 68      DEFB $80, 13, 8, 104, 200         ; [Canguro (41216) - horizontal], Guardian = 32, Starts X=8, Y=104, Limit X=200
+ 110++8630 C8
+ 111++8631              UnderTheMegaTreeEnemy2:
+ 112++8631 C0 06 70 30      DEFB $C0, 6, 112, 48, 87          ; [face (41296) - vertical, Guardian = 42, Starts X=120, Y=16, Limit Y=76
+ 112++8635 57
+ 113++8636              UnderTheMegaTreeEnemy3:
+ 114++8636 80 0C 50 1E      DEFB $80, 12, 80, 30, 180         ; [Maiale (41168) - horizontal, Guardian = 26, Starts X=80, Y=80, Limit X=180
+ 114++863A B4
+ 115++863B              UnderTheMegaTreeEnemy4:
+ 116++863B 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 116++863F 00
+ 117++8640              UnderTheMegaTreeEnemy5:
+ 118++8640 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 118++8644 00
+ 119++8645              UnderTheMegaTreeEnemy6:
+ 120++8645 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 120++8649 00
+ 121++864A              UnderTheMegaTreeEnemy7:
+ 122++864A 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 122++864E 00
+ 123++864F              UnderTheMegaTreeEnemy8:
+ 124++864F 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 124++8653 00
+ 125++8654
+ 126++8654              UnderTheMegaTreePosWilly:
+ 127++8654 C8 65            db 200, 101                   ; Posizione di Willy
+ 128++8656
+ 129++8656              UnderTheMegaTreeEnemyColors5_8:
+ 130++8656 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/UnderTheMegaTree.asm
   13+ 865A                  include "rooms/AtTheFootTheMegaTree.asm"        ; ID 03
 # file opened: rooms/AtTheFootTheMegaTree.asm
    1++865A              ;===========================================================================
    2++865A              ; AtTheFootTheMegaTree.asm
    3++865A              ;
-   4++865A              ; AtTheFootTheMegaTreeLayout       Size 128 Byte, Start Byte   0
-   5++865A              ; AtTheFootTheMegaTreeTile         Size  32 Byte, Start Byte 128
-   6++865A              ; AtTheFootTheMegaTreeBackground   Size   9 Byte, Start Byte 160
-   7++865A              ; AtTheFootTheMegaTreeFloor        Size   9 Byte, Start Byte 169
-   8++865A              ; AtTheFootTheMegaTreeWall         Size   9 Byte, Start Byte 178
-   9++865A              ; AtTheFootTheMegaTreeNasty        Size   9 Byte, Start Byte 187
-  10++865A              ; AtTheFootTheMegaTreeRamp         Size   9 Byte, Start Byte 196
-  11++865A              ; AtTheFootTheMegaTreeConveyor     Size   9 Byte, Start Byte 205
-  12++865A              ; AtTheFootTheMegaTreeConveyorData Size   4 Byte, Start Byte 214
-  13++865A              ; AtTheFootTheMegaTreeRampData     Size   4 Byte, Start Byte 218
-  14++865A              ; AtTheFootTheMegaTreeBorderColor  Size   1 Byte, Start Byte 222
-  15++865A              ; AtTheFootTheMegaTreeReserved     Size   4 Byte, Start Byte 223
-  16++865A              ; AtTheFootTheMegaTreeItem		   Size   8 Byte, Start Byte 227
-  17++865A              ; AtTheFootTheMegaTreeDirection    Size   4 Byte, Start Byte 235
-  18++865A              ; AtTheFootTheMegaTreeUnused       Size   1 Byte, Start Byte 239
-  19++865A              ; AtTheFootTheMegaTreeEnemy1		Size   5 Byte, Start Byte 240
-  20++865A              ; AtTheFootTheMegaTreeEnemy2		Size   5 Byte, Start Byte 245
-  21++865A              ; AtTheFootTheMegaTreeEnemy3		Size   5 Byte, Start Byte 250
-  22++865A              ; AtTheFootTheMegaTreeEnemy4		Size   5 Byte, Start Byte 255
-  23++865A              ; AtTheFootTheMegaTreePosWilly     Size   2 Byte, Start Byte 280
-  24++865A              ;
-  25++865A              ;===========================================================================
-  26++865A
-  27++865A              ; Room layout for Room  (At The Foot The MegaTree)
-  28++865A              AtTheFootTheMegaTreeLayout:
-  29++865A 30 C3 08 00      DEFB 48,195,8,0,8,0,0,0
-  29++865E 08 00 00 00
-  30++8662 30 C3 08 00      DEFB 48,195,8,0,10,170,170,170
-  30++8666 0A AA AA AA
-  31++866A 30 C3 08 00      DEFB 48,195,8,0,8,0,0,0
-  31++866E 08 00 00 00
-  32++8672 30 C3 08 01      DEFB 48,195,8,1,88,0,0,0
-  32++8676 58 00 00 00
-  33++867A 30 C3 09 00      DEFB 48,195,9,0,10,170,170,170
-  33++867E 0A AA AA AA
-  34++8682 30 C3 08 14      DEFB 48,195,8,20,0,0,0,0
-  34++8686 00 00 00 00
-  35++868A 30 C3 08 00      DEFB 48,195,8,0,0,0,0,0
-  35++868E 00 00 00 00
-  36++8692 30 C3 09 00      DEFB 48,195,9,0,26,170,170,170
-  36++8696 1A AA AA AA
-  37++869A 30 C3 08 00      DEFB 48,195,8,0,8,0,0,0
-  37++869E 08 00 00 00
-  38++86A2 30 C3 08 00      DEFB 48,195,8,0,88,0,0,0
-  38++86A6 58 00 00 00
-  39++86AA 30 03 09 40      DEFB 48,3,9,64,8,0,0,0
-  39++86AE 08 00 00 00
-  40++86B2 00 00 08 00      DEFB 0,0,8,0,8,0,0,0
-  40++86B6 08 00 00 00
-  41++86BA 00 00 08 00      DEFB 0,0,8,0,8,0,0,0
-  41++86BE 08 00 00 00
-  42++86C2 00 00 00 00      DEFB 0,0,0,0,80,0,0,0
-  42++86C6 50 00 00 00
-  43++86CA 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  43++86CE 00 00 00 00
-  44++86D2 55 55 55 55      DEFB 85,85,85,85,85,85,85,85
-  44++86D6 55 55 55 55
-  45++86DA
-  46++86DA              AtTheFootTheMegaTreeTile:
-  47++86DA              ;The next 32 bytes are copied to 32896 and specify the room name.
-  48++86DA 20 20 41 74      DEFM "  At the Foot of the MegaTree   "	    ;Room name
-  48++86DE 20 74 68 65
-  48++86E2 20 46 6F 6F
-  48++86E6 74 20 6F 66
-  48++86EA 20 74 68 65
-  48++86EE 20 4D 65 67
-  48++86F2 61 54 72 65
-  48++86F6 65 20 20 20
-  49++86FA
-  50++86FA              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  51++86FA              AtTheFootTheMegaTreeBackground:
-  52++86FA 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
-  52++86FE 00 00 00 00
-  52++8702 00
-  53++8703
-  54++8703              AtTheFootTheMegaTreeFloor:
-  55++8703 04 F0 F9 BF      DEFB 4,240,249,191,31,12,16,40,68	    ;Floor Solid
-  55++8707 1F 0C 10 28
-  55++870B 44
-  56++870C
-  57++870C              AtTheFootTheMegaTreeWall:
-  58++870C 16 AB AB AD      DEFB 22,171,171,173,170,170,174,85,85	    ;Wall Solid
-  58++8710 AA AA AE 55
-  58++8714 55
-  59++8715
-  60++8715              AtTheFootTheMegaTreeNasty:
-  61++8715 06 6E 74 38      DEFB 6,110,116,56,30,110,116,56,30	    ;Nasty
-  61++8719 1E 6E 74 38
-  61++871D 1E
-  62++871E
-  63++871E              AtTheFootTheMegaTreeRamp:
-  64++871E 07 C0 00 30      DEFB 7,192,0,48,0,12,0,3,0	            ;Ramp Solid
-  64++8722 00 0C 00 03
-  64++8726 00
-  65++8727
-  66++8727              AtTheFootTheMegaTreeConveyor:
-  67++8727 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
-  67++872B 00 00 00 00
-  67++872F 00
-  68++8730
-  69++8730              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  70++8730              AtTheFootTheMegaTreeConveyorData:
-  71++8730 00               DEFB 0	                                ;Direction (right)
-  72++8731 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
-  73++8733 00               DEFB 0	                                ;Length
-  74++8734
-  75++8734              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  76++8734              AtTheFootTheMegaTreeRampData:
-  77++8734 00               DEFB 0	                                ;Direction (up to the right)
-  78++8735 8F 5F            DEFW 24463                              ;Location in the attribute buffer at 24064: (14,7)
-  79++8737 03               DEFB 3	                                ;Length
-  80++8738
-  81++8738              ;The next byte is copied to 32990 and specifies the border colour.
-  82++8738              AtTheFootTheMegaTreeBorderColor:
-  83++8738 04               DEFB 4	                                ;Border colour
-  84++8739
-  85++8739              ;The next two bytes are copied to 32991, but are not used.
-  86++8739              AtTheFootTheMegaTreeReserved:
-  87++8739 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA                         ; Enemy colors
-  88++873D
-  89++873D              ;The next eight bytes are copied to 32993 and define the item graphic.
-  90++873D              AtTheFootTheMegaTreeItem:
-  91++873D 40 A0 5C 22      DEFB 64,160,92,34,33,34,20,8	                ;Item graphic (unused)
-  91++8741 21 22 14 08
-  92++8745
-  93++8745              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  94++8745              AtTheFootTheMegaTreeDirection:
-  95++8745 04               DEFB 4	                                ;Room to the left (The Drive)
-  96++8746 02               DEFB 2	                                ;Room to the right (Under the MegaTree)
-  97++8747 08               DEFB 8	                                ;Room above (Inside the MegaTrunk)
-  98++8748 FF               DEFB BLOCK                                ;Room below (None)
-  99++8749
- 100++8749              AtTheFootTheMegaTreeUnused:
- 101++8749 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
- 102++874A
- 103++874A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 104++874A              AtTheFootTheMegaTreeEnemy1:
- 105++874A C0 07 10 20      DEFB $C0, 7, 16, 32, 88         ; [Scimmia (41008) - vertical], Guardian = 6, Starts X=16, Y=32, Limit X=88
- 105++874E 58
- 106++874F              AtTheFootTheMegaTreeEnemy2:
- 107++874F C0 07 28 10      DEFB $C0, 7, 40, 16, 80         ; [Scimmia (41016) - vertical], Guardian = 7, Starts X=40, Y=16, Limit X=80
- 107++8753 50
- 108++8754              AtTheFootTheMegaTreeEnemy3:
- 109++8754 C0 07 40 13      DEFB $C0, 7, 64, 19, 88         ; [Scimmia (41024) - vertical], Guardian = 8, Starts X=64, Y=19, Limit X=88
- 109++8758 58
- 110++8759              AtTheFootTheMegaTreeEnemy4:
- 111++8759 80 01 20 68      DEFB $80, 1, 32, 104, 112       ; [Sega (41384) - vertical], Guardian = 53, Starts X=32, Y=104, Limit X=112
- 111++875D 70
- 112++875E              AtTheFootTheMegaTreeEnemy5:
- 113++875E 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 113++8762 00
- 114++8763              AtTheFootTheMegaTreeEnemy6:
- 115++8763 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 115++8767 00
- 116++8768              AtTheFootTheMegaTreeEnemy7:
- 117++8768 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 117++876C 00
- 118++876D              AtTheFootTheMegaTreeEnemy8:
- 119++876D 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 119++8771 00
- 120++8772
- 121++8772              AtTheFootTheMegaTreePosWilly:
- 122++8772 C8 65            db 200, 101                   ; Posizione di Willy
- 123++8774
- 124++8774              AtTheFootTheMegaTreeEnemyColors5_8:
- 125++8774 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+   4++865A              ; AtTheFootTheMegaTreeLayout            Size 128 Byte, Start Byte   0
+   5++865A              ; AtTheFootTheMegaTreeTile              Size  32 Byte, Start Byte 128
+   6++865A              ; AtTheFootTheMegaTreeBackground        Size   9 Byte, Start Byte 160
+   7++865A              ; AtTheFootTheMegaTreeFloor             Size   9 Byte, Start Byte 169
+   8++865A              ; AtTheFootTheMegaTreeWall              Size   9 Byte, Start Byte 178
+   9++865A              ; AtTheFootTheMegaTreeNasty             Size   9 Byte, Start Byte 187
+  10++865A              ; AtTheFootTheMegaTreeRamp              Size   9 Byte, Start Byte 196
+  11++865A              ; AtTheFootTheMegaTreeConveyor          Size   9 Byte, Start Byte 205
+  12++865A              ; AtTheFootTheMegaTreeConveyorData      Size   4 Byte, Start Byte 214
+  13++865A              ; AtTheFootTheMegaTreeRampData          Size   4 Byte, Start Byte 218
+  14++865A              ; AtTheFootTheMegaTreeBorderColor       Size   1 Byte, Start Byte 222
+  15++865A              ; AtTheFootTheMegaTreeReserved          Size   4 Byte, Start Byte 223
+  16++865A              ; AtTheFootTheMegaTreeItem		        Size   8 Byte, Start Byte 227
+  17++865A              ; AtTheFootTheMegaTreeDirection         Size   4 Byte, Start Byte 235
+  18++865A              ; AtTheFootTheMegaTreeUnused            Size   1 Byte, Start Byte 239
+  19++865A              ; AtTheFootTheMegaTreeEnemy1		    Size   5 Byte, Start Byte 240
+  20++865A              ; AtTheFootTheMegaTreeEnemy2		    Size   5 Byte, Start Byte 245
+  21++865A              ; AtTheFootTheMegaTreeEnemy3		    Size   5 Byte, Start Byte 250
+  22++865A              ; AtTheFootTheMegaTreeEnemy4		    Size   5 Byte, Start Byte 255
+  23++865A              ; AtTheFootTheMegaTreeEnemy5		    Size   5 Byte, Start Byte 260
+  24++865A              ; AtTheFootTheMegaTreeEnemy6		    Size   5 Byte, Start Byte 265
+  25++865A              ; AtTheFootTheMegaTreeEnemy7		    Size   5 Byte, Start Byte 270
+  26++865A              ; AtTheFootTheMegaTreeEnemy8		    Size   5 Byte, Start Byte 275
+  27++865A              ; AtTheFootTheMegaTreePosWilly          Size   2 Byte, Start Byte 280
+  28++865A              ; AtTheFootTheMegaTreeEnemyColors5_8    Size   4 Byte, Start Byte 282
+  29++865A              ;
+  30++865A              ;===========================================================================
+  31++865A
+  32++865A              ; Room layout for Room  (At The Foot The MegaTree)
+  33++865A              AtTheFootTheMegaTreeLayout:
+  34++865A 30 C3 08 00      DEFB 48,195,8,0,8,0,0,0
+  34++865E 08 00 00 00
+  35++8662 30 C3 08 00      DEFB 48,195,8,0,10,170,170,170
+  35++8666 0A AA AA AA
+  36++866A 30 C3 08 00      DEFB 48,195,8,0,8,0,0,0
+  36++866E 08 00 00 00
+  37++8672 30 C3 08 01      DEFB 48,195,8,1,88,0,0,0
+  37++8676 58 00 00 00
+  38++867A 30 C3 09 00      DEFB 48,195,9,0,10,170,170,170
+  38++867E 0A AA AA AA
+  39++8682 30 C3 08 14      DEFB 48,195,8,20,0,0,0,0
+  39++8686 00 00 00 00
+  40++868A 30 C3 08 00      DEFB 48,195,8,0,0,0,0,0
+  40++868E 00 00 00 00
+  41++8692 30 C3 09 00      DEFB 48,195,9,0,26,170,170,170
+  41++8696 1A AA AA AA
+  42++869A 30 C3 08 00      DEFB 48,195,8,0,8,0,0,0
+  42++869E 08 00 00 00
+  43++86A2 30 C3 08 00      DEFB 48,195,8,0,88,0,0,0
+  43++86A6 58 00 00 00
+  44++86AA 30 03 09 40      DEFB 48,3,9,64,8,0,0,0
+  44++86AE 08 00 00 00
+  45++86B2 00 00 08 00      DEFB 0,0,8,0,8,0,0,0
+  45++86B6 08 00 00 00
+  46++86BA 00 00 08 00      DEFB 0,0,8,0,8,0,0,0
+  46++86BE 08 00 00 00
+  47++86C2 00 00 00 00      DEFB 0,0,0,0,80,0,0,0
+  47++86C6 50 00 00 00
+  48++86CA 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  48++86CE 00 00 00 00
+  49++86D2 55 55 55 55      DEFB 85,85,85,85,85,85,85,85
+  49++86D6 55 55 55 55
+  50++86DA
+  51++86DA              AtTheFootTheMegaTreeTile:
+  52++86DA              ;The next 32 bytes are copied to 32896 and specify the room name.
+  53++86DA 20 20 41 74      DEFM "  At the Foot of the MegaTree   "	    ;Room name
+  53++86DE 20 74 68 65
+  53++86E2 20 46 6F 6F
+  53++86E6 74 20 6F 66
+  53++86EA 20 74 68 65
+  53++86EE 20 4D 65 67
+  53++86F2 61 54 72 65
+  53++86F6 65 20 20 20
+  54++86FA
+  55++86FA              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  56++86FA              AtTheFootTheMegaTreeBackground:
+  57++86FA 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+  57++86FE 00 00 00 00
+  57++8702 00
+  58++8703
+  59++8703              AtTheFootTheMegaTreeFloor:
+  60++8703 04 F0 F9 BF      DEFB 4,240,249,191,31,12,16,40,68	    ;Floor Solid
+  60++8707 1F 0C 10 28
+  60++870B 44
+  61++870C
+  62++870C              AtTheFootTheMegaTreeWall:
+  63++870C 16 AB AB AD      DEFB 22,171,171,173,170,170,174,85,85	    ;Wall Solid
+  63++8710 AA AA AE 55
+  63++8714 55
+  64++8715
+  65++8715              AtTheFootTheMegaTreeNasty:
+  66++8715 06 6E 74 38      DEFB 6,110,116,56,30,110,116,56,30	    ;Nasty
+  66++8719 1E 6E 74 38
+  66++871D 1E
+  67++871E
+  68++871E              AtTheFootTheMegaTreeRamp:
+  69++871E 07 C0 00 30      DEFB 7,192,0,48,0,12,0,3,0	            ;Ramp Solid
+  69++8722 00 0C 00 03
+  69++8726 00
+  70++8727
+  71++8727              AtTheFootTheMegaTreeConveyor:
+  72++8727 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++872B 00 00 00 00
+  72++872F 00
+  73++8730
+  74++8730              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  75++8730              AtTheFootTheMegaTreeConveyorData:
+  76++8730 00               DEFB 0	                                ;Direction (right)
+  77++8731 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
+  78++8733 00               DEFB 0	                                ;Length
+  79++8734
+  80++8734              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  81++8734              AtTheFootTheMegaTreeRampData:
+  82++8734 00               DEFB 0	                                ;Direction (up to the right)
+  83++8735 8F 5F            DEFW 24463                              ;Location in the attribute buffer at 24064: (14,7)
+  84++8737 03               DEFB 3	                                ;Length
+  85++8738
+  86++8738              ;The next byte is copied to 32990 and specifies the border colour.
+  87++8738              AtTheFootTheMegaTreeBorderColor:
+  88++8738 04               DEFB 4	                                ;Border colour
+  89++8739
+  90++8739              ;The next two bytes are copied to 32991, but are not used.
+  91++8739              AtTheFootTheMegaTreeReserved:
+  92++8739 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA                         ; Enemy colors
+  93++873D
+  94++873D              ;The next eight bytes are copied to 32993 and define the item graphic.
+  95++873D              AtTheFootTheMegaTreeItem:
+  96++873D 40 A0 5C 22      DEFB 64,160,92,34,33,34,20,8	                ;Item graphic (unused)
+  96++8741 21 22 14 08
+  97++8745
+  98++8745              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  99++8745              AtTheFootTheMegaTreeDirection:
+ 100++8745 04               DEFB 4	                                ;Room to the left (The Drive)
+ 101++8746 02               DEFB 2	                                ;Room to the right (Under the MegaTree)
+ 102++8747 08               DEFB 8	                                ;Room above (Inside the MegaTrunk)
+ 103++8748 FF               DEFB BLOCK                                ;Room below (None)
+ 104++8749
+ 105++8749              AtTheFootTheMegaTreeUnused:
+ 106++8749 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 107++874A
+ 108++874A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 109++874A              AtTheFootTheMegaTreeEnemy1:
+ 110++874A C0 07 10 20      DEFB $C0, 7, 16, 32, 88         ; [Scimmia (41008) - vertical], Guardian = 6, Starts X=16, Y=32, Limit X=88
+ 110++874E 58
+ 111++874F              AtTheFootTheMegaTreeEnemy2:
+ 112++874F C0 07 28 10      DEFB $C0, 7, 40, 16, 80         ; [Scimmia (41016) - vertical], Guardian = 7, Starts X=40, Y=16, Limit X=80
+ 112++8753 50
+ 113++8754              AtTheFootTheMegaTreeEnemy3:
+ 114++8754 C0 07 40 13      DEFB $C0, 7, 64, 19, 88         ; [Scimmia (41024) - vertical], Guardian = 8, Starts X=64, Y=19, Limit X=88
+ 114++8758 58
+ 115++8759              AtTheFootTheMegaTreeEnemy4:
+ 116++8759 80 01 20 68      DEFB $80, 1, 32, 104, 112       ; [Sega (41384) - vertical], Guardian = 53, Starts X=32, Y=104, Limit X=112
+ 116++875D 70
+ 117++875E              AtTheFootTheMegaTreeEnemy5:
+ 118++875E 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 118++8762 00
+ 119++8763              AtTheFootTheMegaTreeEnemy6:
+ 120++8763 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 120++8767 00
+ 121++8768              AtTheFootTheMegaTreeEnemy7:
+ 122++8768 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 122++876C 00
+ 123++876D              AtTheFootTheMegaTreeEnemy8:
+ 124++876D 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 124++8771 00
+ 125++8772
+ 126++8772              AtTheFootTheMegaTreePosWilly:
+ 127++8772 C8 65            db 200, 101                   ; Posizione di Willy
+ 128++8774
+ 129++8774              AtTheFootTheMegaTreeEnemyColors5_8:
+ 130++8774 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/AtTheFootTheMegaTree.asm
   14+ 8778                  include "rooms/TheDrive.asm"                    ; ID 04
 # file opened: rooms/TheDrive.asm
    1++8778              ;===========================================================================
    2++8778              ; TheDrive.asm
    3++8778              ;
-   4++8778              ; TheDriveLayout       Size 128 Byte, Start Byte   0
-   5++8778              ; TheDriveTile         Size  32 Byte, Start Byte 128
-   6++8778              ; TheDriveBackground   Size   9 Byte, Start Byte 160
-   7++8778              ; TheDriveFloor        Size   9 Byte, Start Byte 169
-   8++8778              ; TheDriveWall         Size   9 Byte, Start Byte 178
-   9++8778              ; TheDriveNasty        Size   9 Byte, Start Byte 187
-  10++8778              ; TheDriveRamp         Size   9 Byte, Start Byte 196
-  11++8778              ; TheDriveConveyor     Size   9 Byte, Start Byte 205
-  12++8778              ; TheDriveConveyorData Size   4 Byte, Start Byte 214
-  13++8778              ; TheDriveRampData     Size   4 Byte, Start Byte 218
-  14++8778              ; TheDriveBorderColor  Size   1 Byte, Start Byte 222
-  15++8778              ; TheDriveReserved     Size   4 Byte, Start Byte 223
-  16++8778              ; TheDriveItem		   Size   8 Byte, Start Byte 227
-  17++8778              ; TheDriveDirection    Size   4 Byte, Start Byte 235
-  18++8778              ; TheDriveUnused       Size   1 Byte, Start Byte 239
-  19++8778              ; TheDriveEnemy1		Size   5 Byte, Start Byte 240
-  20++8778              ; TheDriveEnemy2		Size   5 Byte, Start Byte 245
-  21++8778              ; TheDriveEnemy3		Size   5 Byte, Start Byte 250
-  22++8778              ; TheDriveEnemy4		Size   5 Byte, Start Byte 255
-  23++8778              ; TheDrivePosWilly     Size   2 Byte, Start Byte 280
-  24++8778              ;
-  25++8778              ;===========================================================================
-  26++8778
-  27++8778              ; Room layout for Room  (Master Bedroom)
-  28++8778              TheDriveLayout:
-  29++8778 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  29++877C 00 00 00 00
-  30++8780 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  30++8784 00 00 00 00
-  31++8788 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  31++878C 00 00 00 00
-  32++8790 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  32++8794 00 00 00 00
-  33++8798 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  33++879C 00 00 00 00
-  34++87A0 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  34++87A4 00 00 00 00
-  35++87A8 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  35++87AC 00 00 00 00
-  36++87B0 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  36++87B4 00 00 00 00
-  37++87B8 54 00 00 00      DEFB 84,0,0,0,0,0,0,0
-  37++87BC 00 00 00 00
-  38++87C0 AA 00 00 00      DEFB 170,0,0,0,0,0,0,0
-  38++87C4 00 00 00 00
-  39++87C8 AA 80 00 00      DEFB 170,128,0,0,0,0,0,0
-  39++87CC 00 00 00 00
-  40++87D0 00 A0 00 00      DEFB 0,160,0,0,0,0,0,0
-  40++87D4 00 00 00 00
-  41++87D8 00 A8 00 00      DEFB 0,168,0,0,0,0,0,0
-  41++87DC 00 00 00 00
-  42++87E0 00 AA 00 00      DEFB 0,170,0,0,0,0,0,0
-  42++87E4 00 00 00 00
-  43++87E8 A0 AA 80 00      DEFB 160,170,128,0,0,0,0,0
-  43++87EC 00 00 00 00
-  44++87F0 A0 AA A5 55      DEFB 160,170,165,85,85,90,85,85
-  44++87F4 55 5A 55 55
-  45++87F8
-  46++87F8              TheDriveTile:
-  47++87F8              ;The next 32 bytes are copied to 32896 and specify the room name.
-  48++87F8 20 20 20 20      DEFM "            The Drive           "	    ;Room name
-  48++87FC 20 20 20 20
-  48++8800 20 20 20 20
-  48++8804 54 68 65 20
-  48++8808 44 72 69 76
-  48++880C 65 20 20 20
-  48++8810 20 20 20 20
-  48++8814 20 20 20 20
-  49++8818
-  50++8818              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  51++8818              TheDriveBackground:
-  52++8818 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
-  52++881C 00 00 00 00
-  52++8820 00
-  53++8821
-  54++8821              TheDriveFloor:
-  55++8821 06 AA 55 AA      DEFB 6,170,85,170,255,255,85,170,85	    ;Floor Solid
-  55++8825 FF FF 55 AA
-  55++8829 55
-  56++882A
-  57++882A              TheDriveWall:
-  58++882A 0D 70 07 77      DEFB 13,112,7,119,119,0,59,11,125	    ;Wall Solid
-  58++882E 77 00 3B 0B
-  58++8832 7D
-  59++8833
-  60++8833              TheDriveNasty:
-  61++8833 44 14 2A 14      DEFB 68,20,42,20,9,106,156,8,8	        ;Nasty
-  61++8837 09 6A 9C 08
-  61++883B 08
-  62++883C
-  63++883C              TheDriveRamp:
-  64++883C 05 C0 40 70      DEFB 5,192,64,112,112,12,116,119,5	            ;Ramp Solid
-  64++8840 70 0C 74 77
-  64++8844 05
-  65++8845
-  66++8845              TheDriveConveyor:
-  67++8845 42 7B 00 ED      DEFB 66,123,0,237,0,170,85,170,85	            ;Conveyor
-  67++8849 00 AA 55 AA
-  67++884D 55
-  68++884E
-  69++884E              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  70++884E              TheDriveConveyorData:
-  71++884E 01               DEFB 1	                                ;Direction (right)
-  72++884F A0 5F            DEFW 24480	                            ;Location in the attribute buffer at 24064: (15,12)
-  73++8851 02               DEFB 2	                                ;Length
-  74++8852
-  75++8852              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  76++8852              TheDriveRampData:
-  77++8852 00               DEFB 0	                                ;Direction (up to the right)
-  78++8853 C9 5F            DEFW 24521                              ;Location in the attribute buffer at 24064: (14,7)
-  79++8855 07               DEFB 7	                                ;Length
-  80++8856
-  81++8856              ;The next byte is copied to 32990 and specifies the border colour.
-  82++8856              TheDriveBorderColor:
-  83++8856 04               DEFB 4	                                ;Border colour
-  84++8857
-  85++8857              ;The next two bytes are copied to 32991, but are not used.
-  86++8857              TheDriveReserved:
-  87++8857 03 04 06 05      DEFB MAGENTA, GREEN, YELLOW, CYAN                         ; Enemy colors
-  88++885B
-  89++885B              ;The next eight bytes are copied to 32993 and define the item graphic.
-  90++885B              TheDriveItem:
-  91++885B 40 A0 5C 22      DEFB 64,160,92,34,33,34,20,8	                ;Item graphic (unused)
-  91++885F 21 22 14 08
-  92++8863
-  93++8863              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  94++8863              TheDriveDirection:
-  95++8863 05               DEFB 5	                                ;Room to the left (The Security Guard)
-  96++8864 03               DEFB 3	                                ;Room to the right  (Gfx_At the Foot of the MegaTree)
-  97++8865 06               DEFB 6	                                ;Room above (Entrance to Hades)
-  98++8866 2D               DEFB 45                                 ;Room below (Under the Drive)
-  99++8867
- 100++8867              TheDriveUnused:
- 101++8867 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
- 102++8868
- 103++8868              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 104++8868              TheDriveEnemy1:
- 105++8868 80 02 70 50      DEFB $80, 2, 112, 80, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
- 105++886C E8
- 106++886D              TheDriveEnemy2:
- 107++886D 80 02 80 58      DEFB $80, 2, 128, 88, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
- 107++8871 E8
- 108++8872              TheDriveEnemy3:
- 109++8872 80 02 28 40      DEFB $80, 2, 40, 64, 232          ; [Uccello (41144) - horizontal], Guardian = 23, Starts X=40, Y=64, Limit X=232
- 109++8876 E8
- 110++8877              TheDriveEnemy4:
- 111++8877 80 02 00 28      DEFB $80, 2, 0, 40, 80            ; [Uccello (41152) - horizontal], Guardian = 24, Starts X=0, Y=40, Limit X=80
- 111++887B 50
- 112++887C              TheDriveEnemy5:
- 113++887C 80 04 50 68      DEFB $80, 4, 80, 104, 240         ; [Uovo (41248) - horizontal], Guardian = 36, Starts X=80, Y=104, Limit X=240
- 113++8880 F0
- 114++8881              TheDriveEnemy6:
- 115++8881 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 115++8885 00
- 116++8886              TheDriveEnemy7:
- 117++8886 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 117++888A 00
- 118++888B              TheDriveEnemy8:
- 119++888B 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 119++888F 00
- 120++8890
- 121++8890              TheDrivePosWilly:
- 122++8890 C8 65            db 200, 101                      ; Posizione di Willy
- 123++8892
- 124++8892              TheDriveEnemyColors5_8:
- 125++8892 05 03 04 07      DEFB CYAN, 3, 4, 7               ; Colori per nemici 5-8
+   4++8778              ; TheDriveLayout            Size 128 Byte, Start Byte   0
+   5++8778              ; TheDriveTile              Size  32 Byte, Start Byte 128
+   6++8778              ; TheDriveBackground        Size   9 Byte, Start Byte 160
+   7++8778              ; TheDriveFloor             Size   9 Byte, Start Byte 169
+   8++8778              ; TheDriveWall              Size   9 Byte, Start Byte 178
+   9++8778              ; TheDriveNasty             Size   9 Byte, Start Byte 187
+  10++8778              ; TheDriveRamp              Size   9 Byte, Start Byte 196
+  11++8778              ; TheDriveConveyor          Size   9 Byte, Start Byte 205
+  12++8778              ; TheDriveConveyorData      Size   4 Byte, Start Byte 214
+  13++8778              ; TheDriveRampData          Size   4 Byte, Start Byte 218
+  14++8778              ; TheDriveBorderColor       Size   1 Byte, Start Byte 222
+  15++8778              ; TheDriveReserved          Size   4 Byte, Start Byte 223
+  16++8778              ; TheDriveItem		        Size   8 Byte, Start Byte 227
+  17++8778              ; TheDriveDirection         Size   4 Byte, Start Byte 235
+  18++8778              ; TheDriveUnused            Size   1 Byte, Start Byte 239
+  19++8778              ; TheDriveEnemy1		    Size   5 Byte, Start Byte 240
+  20++8778              ; TheDriveEnemy2		    Size   5 Byte, Start Byte 245
+  21++8778              ; TheDriveEnemy3		    Size   5 Byte, Start Byte 250
+  22++8778              ; TheDriveEnemy4		    Size   5 Byte, Start Byte 255
+  23++8778              ; TheDriveEnemy5		    Size   5 Byte, Start Byte 260
+  24++8778              ; TheDriveEnemy6		    Size   5 Byte, Start Byte 265
+  25++8778              ; TheDriveEnemy7		    Size   5 Byte, Start Byte 270
+  26++8778              ; TheDriveEnemy8		    Size   5 Byte, Start Byte 275
+  27++8778              ; TheDrivePosWilly          Size   2 Byte, Start Byte 280
+  28++8778              ; TheDriveEnemyColors5_8    Size   4 Byte, Start Byte 282
+  29++8778              ;
+  30++8778              ;===========================================================================
+  31++8778
+  32++8778              ; Room layout for Room  (The Drive)
+  33++8778              TheDriveLayout:
+  34++8778 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  34++877C 00 00 00 00
+  35++8780 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  35++8784 00 00 00 00
+  36++8788 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  36++878C 00 00 00 00
+  37++8790 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  37++8794 00 00 00 00
+  38++8798 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  38++879C 00 00 00 00
+  39++87A0 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  39++87A4 00 00 00 00
+  40++87A8 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  40++87AC 00 00 00 00
+  41++87B0 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  41++87B4 00 00 00 00
+  42++87B8 54 00 00 00      DEFB 84,0,0,0,0,0,0,0
+  42++87BC 00 00 00 00
+  43++87C0 AA 00 00 00      DEFB 170,0,0,0,0,0,0,0
+  43++87C4 00 00 00 00
+  44++87C8 AA 80 00 00      DEFB 170,128,0,0,0,0,0,0
+  44++87CC 00 00 00 00
+  45++87D0 00 A0 00 00      DEFB 0,160,0,0,0,0,0,0
+  45++87D4 00 00 00 00
+  46++87D8 00 A8 00 00      DEFB 0,168,0,0,0,0,0,0
+  46++87DC 00 00 00 00
+  47++87E0 00 AA 00 00      DEFB 0,170,0,0,0,0,0,0
+  47++87E4 00 00 00 00
+  48++87E8 A0 AA 80 00      DEFB 160,170,128,0,0,0,0,0
+  48++87EC 00 00 00 00
+  49++87F0 A0 AA A5 55      DEFB 160,170,165,85,85,90,85,85
+  49++87F4 55 5A 55 55
+  50++87F8
+  51++87F8              TheDriveTile:
+  52++87F8              ;The next 32 bytes are copied to 32896 and specify the room name.
+  53++87F8 20 20 20 20      DEFM "            The Drive           "	    ;Room name
+  53++87FC 20 20 20 20
+  53++8800 20 20 20 20
+  53++8804 54 68 65 20
+  53++8808 44 72 69 76
+  53++880C 65 20 20 20
+  53++8810 20 20 20 20
+  53++8814 20 20 20 20
+  54++8818
+  55++8818              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  56++8818              TheDriveBackground:
+  57++8818 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+  57++881C 00 00 00 00
+  57++8820 00
+  58++8821
+  59++8821              TheDriveFloor:
+  60++8821 06 AA 55 AA      DEFB 6,170,85,170,255,255,85,170,85	    ;Floor Solid
+  60++8825 FF FF 55 AA
+  60++8829 55
+  61++882A
+  62++882A              TheDriveWall:
+  63++882A 0D 70 07 77      DEFB 13,112,7,119,119,0,59,11,125	    ;Wall Solid
+  63++882E 77 00 3B 0B
+  63++8832 7D
+  64++8833
+  65++8833              TheDriveNasty:
+  66++8833 44 14 2A 14      DEFB 68,20,42,20,9,106,156,8,8	        ;Nasty
+  66++8837 09 6A 9C 08
+  66++883B 08
+  67++883C
+  68++883C              TheDriveRamp:
+  69++883C 05 C0 40 70      DEFB 5,192,64,112,112,12,116,119,5	            ;Ramp Solid
+  69++8840 70 0C 74 77
+  69++8844 05
+  70++8845
+  71++8845              TheDriveConveyor:
+  72++8845 42 7B 00 ED      DEFB 66,123,0,237,0,170,85,170,85	            ;Conveyor
+  72++8849 00 AA 55 AA
+  72++884D 55
+  73++884E
+  74++884E              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  75++884E              TheDriveConveyorData:
+  76++884E 01               DEFB 1	                                ;Direction (right)
+  77++884F A0 5F            DEFW 24480	                            ;Location in the attribute buffer at 24064: (15,12)
+  78++8851 02               DEFB 2	                                ;Length
+  79++8852
+  80++8852              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  81++8852              TheDriveRampData:
+  82++8852 00               DEFB 0	                                ;Direction (up to the right)
+  83++8853 C9 5F            DEFW 24521                              ;Location in the attribute buffer at 24064: (14,7)
+  84++8855 07               DEFB 7	                                ;Length
+  85++8856
+  86++8856              ;The next byte is copied to 32990 and specifies the border colour.
+  87++8856              TheDriveBorderColor:
+  88++8856 04               DEFB 4	                                ;Border colour
+  89++8857
+  90++8857              ;The next two bytes are copied to 32991, but are not used.
+  91++8857              TheDriveReserved:
+  92++8857 03 04 06 05      DEFB MAGENTA, GREEN, YELLOW, CYAN                         ; Enemy colors
+  93++885B
+  94++885B              ;The next eight bytes are copied to 32993 and define the item graphic.
+  95++885B              TheDriveItem:
+  96++885B 40 A0 5C 22      DEFB 64,160,92,34,33,34,20,8	                ;Item graphic (unused)
+  96++885F 21 22 14 08
+  97++8863
+  98++8863              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  99++8863              TheDriveDirection:
+ 100++8863 05               DEFB 5	                                ;Room to the left (The Security Guard)
+ 101++8864 03               DEFB 3	                                ;Room to the right  (Gfx_At the Foot of the MegaTree)
+ 102++8865 06               DEFB 6	                                ;Room above (Entrance to Hades)
+ 103++8866 2D               DEFB 45                                 ;Room below (Under the Drive)
+ 104++8867
+ 105++8867              TheDriveUnused:
+ 106++8867 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 107++8868
+ 108++8868              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 109++8868              TheDriveEnemy1:
+ 110++8868 80 02 70 50      DEFB $80, 2, 112, 80, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
+ 110++886C E8
+ 111++886D              TheDriveEnemy2:
+ 112++886D 80 02 80 58      DEFB $80, 2, 128, 88, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
+ 112++8871 E8
+ 113++8872              TheDriveEnemy3:
+ 114++8872 80 02 28 40      DEFB $80, 2, 40, 64, 232          ; [Uccello (41144) - horizontal], Guardian = 23, Starts X=40, Y=64, Limit X=232
+ 114++8876 E8
+ 115++8877              TheDriveEnemy4:
+ 116++8877 80 02 00 28      DEFB $80, 2, 0, 40, 80            ; [Uccello (41152) - horizontal], Guardian = 24, Starts X=0, Y=40, Limit X=80
+ 116++887B 50
+ 117++887C              TheDriveEnemy5:
+ 118++887C 80 04 50 68      DEFB $80, 4, 80, 104, 240         ; [Uovo (41248) - horizontal], Guardian = 36, Starts X=80, Y=104, Limit X=240
+ 118++8880 F0
+ 119++8881              TheDriveEnemy6:
+ 120++8881 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 120++8885 00
+ 121++8886              TheDriveEnemy7:
+ 122++8886 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 122++888A 00
+ 123++888B              TheDriveEnemy8:
+ 124++888B 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 124++888F 00
+ 125++8890
+ 126++8890              TheDrivePosWilly:
+ 127++8890 C8 65            db 200, 101                      ; Posizione di Willy
+ 128++8892
+ 129++8892              TheDriveEnemyColors5_8:
+ 130++8892 05 03 04 07      DEFB CYAN, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/TheDrive.asm
   15+ 8896                  include "rooms/TheSecurityGuard.asm"            ; ID 05
 # file opened: rooms/TheSecurityGuard.asm
    1++8896              ;===========================================================================
    2++8896              ; TheSecurityGuard.asm
    3++8896              ;
-   4++8896              ; TheSecurityGuardLayout       Size 128 Byte, Start Byte   0
-   5++8896              ; TheSecurityGuardTile         Size  32 Byte, Start Byte 128
-   6++8896              ; TheSecurityGuardBackground   Size   9 Byte, Start Byte 160
-   7++8896              ; TheSecurityGuardFloor        Size   9 Byte, Start Byte 169
-   8++8896              ; TheSecurityGuardWall         Size   9 Byte, Start Byte 178
-   9++8896              ; TheSecurityGuardNasty        Size   9 Byte, Start Byte 187
-  10++8896              ; TheSecurityGuardRamp         Size   9 Byte, Start Byte 196
-  11++8896              ; TheSecurityGuardConveyor     Size   9 Byte, Start Byte 205
-  12++8896              ; TheSecurityGuardConveyorData Size   4 Byte, Start Byte 214
-  13++8896              ; TheSecurityGuardRampData     Size   4 Byte, Start Byte 218
-  14++8896              ; TheSecurityGuardBorderColor  Size   1 Byte, Start Byte 222
-  15++8896              ; TheSecurityGuardReserved     Size   4 Byte, Start Byte 223
-  16++8896              ; TheSecurityGuardItem		   Size   8 Byte, Start Byte 227
-  17++8896              ; TheSecurityGuardDirection    Size   4 Byte, Start Byte 235
-  18++8896              ; TheSecurityGuardUnused       Size   1 Byte, Start Byte 239
-  19++8896              ; TheSecurityGuardEnemy1		Size   5 Byte, Start Byte 240
-  20++8896              ; TheSecurityGuardEnemy2		Size   5 Byte, Start Byte 245
-  21++8896              ; TheSecurityGuardEnemy3		Size   5 Byte, Start Byte 250
-  22++8896              ; TheSecurityGuardEnemy4		Size   5 Byte, Start Byte 255
-  23++8896              ; TheSecurityGuardPosWilly     Size   2 Byte, Start Byte 280
-  24++8896              ;
-  25++8896              ;===========================================================================
-  26++8896
-  27++8896              ; Room layout for Room  (Master Bedroom)
-  28++8896              TheSecurityGuardLayout:
-  29++8896 80 00 00 00      DEFB 128,0,0,0,0,0,0,0
-  29++889A 00 00 00 00
-  30++889E A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
-  30++88A2 00 00 00 00
-  31++88A6 A8 00 00 00      DEFB 168,0,0,0,0,0,0,0
-  31++88AA 00 00 00 00
-  32++88AE AA 00 00 00      DEFB 170,0,0,0,0,0,0,0
-  32++88B2 00 00 00 00
-  33++88B6 AA 80 00 00      DEFB 170,128,0,0,0,0,0,0
-  33++88BA 00 00 00 00
-  34++88BE AA A0 00 00      DEFB 170,160,0,0,0,0,0,0
-  34++88C2 00 00 00 00
-  35++88C6 A8 00 00 00      DEFB 168,0,0,0,0,0,0,0
-  35++88CA 00 00 00 00
-  36++88CE A8 00 00 00      DEFB 168,0,0,0,0,0,0,0
-  36++88D2 00 00 00 00
-  37++88D6 A8 15 54 10      DEFB 168,21,84,16,65,84,21,85
-  37++88DA 41 54 15 55
-  38++88DE A8 2A A8 20      DEFB 168,42,168,32,130,168,42,170
-  38++88E2 82 A8 2A AA
-  39++88E6 00 00 A8 20      DEFB 0,0,168,32,130,168,42,170
-  39++88EA 82 A8 2A AA
-  40++88EE 00 00 A8 20      DEFB 0,0,168,32,130,168,40,0
-  40++88F2 82 A8 28 00
-  41++88F6 00 00 A8 20      DEFB 0,0,168,32,130,168,40,0
-  41++88FA 82 A8 28 00
-  42++88FE 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  42++8902 00 00 00 00
-  43++8906 00 00 00 00      DEFB 0,0,0,0,0,0,0,42
-  43++890A 00 00 00 2A
-  44++890E A0 0A AA AA      DEFB 160,10,170,170,170,170,170,170
-  44++8912 AA AA AA AA
-  45++8916
-  46++8916              TheSecurityGuardTile:
-  47++8916              ;The next 32 bytes are copied to 32896 and specify the room name.
-  48++8916 20 20 20 20      DEFM "       The Security Guard       "	    ;Room name
-  48++891A 20 20 20 54
-  48++891E 68 65 20 53
-  48++8922 65 63 75 72
-  48++8926 69 74 79 20
-  48++892A 47 75 61 72
-  48++892E 64 20 20 20
-  48++8932 20 20 20 20
-  49++8936
-  50++8936              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  51++8936              TheSecurityGuardBackground:
-  52++8936 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
-  52++893A 00 00 00 00
-  52++893E 00
-  53++893F
-  54++893F              TheSecurityGuardFloor:
-  55++893F 04 FF FF AA      DEFB 4,255,255,170,85,170,85,170,85	    ;Floor Solid
-  55++8943 55 AA 55 AA
-  55++8947 55
-  56++8948
-  57++8948              TheSecurityGuardWall:
-  58++8948 0D 0E C6 95      DEFB 13,14,198,149,176,54,134,192,237	;Wall Solid
-  58++894C B0 36 86 C0
-  58++8950 ED
-  59++8951
-  60++8951              TheSecurityGuardNasty:
-  61++8951 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Nasty
-  61++8955 00 00 00 00
-  61++8959 00
-  62++895A
-  63++895A              TheSecurityGuardRamp:
-  64++895A 07 E0 40 20      DEFB 7,224,64,32,16,14,4,2,1	        ;Ramp Solid
-  64++895E 10 0E 04 02
-  64++8962 01
-  65++8963
-  66++8963              TheSecurityGuardConveyor:
-  67++8963 42 6F 00 B7      DEFB 66,111,0,183,0,170,85,170,85	    ;Conveyor
-  67++8967 00 AA 55 AA
-  67++896B 55
-  68++896C
-  69++896C              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  70++896C              TheSecurityGuardConveyorData:
-  71++896C 01               DEFB 1	                                ;Direction (right)
-  72++896D BD 5F            DEFW 24509	                            ;Location in the attribute buffer at 24064: (15,12)
-  73++896F 03               DEFB 3	                                ;Length
-  74++8970
-  75++8970              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  76++8970              TheSecurityGuardRampData:
-  77++8970 00               DEFB 0	                                ;Direction (up to the right)
-  78++8971 E8 5E            DEFW 24296                              ;Location in the attribute buffer at 24064: (14,7)
-  79++8973 08               DEFB 8	                                ;Length
-  80++8974
-  81++8974              ;The next byte is copied to 32990 and specifies the border colour.
-  82++8974              TheSecurityGuardBorderColor:
-  83++8974 04               DEFB 4	                                ;Border colour
-  84++8975
-  85++8975              ;The next two bytes are copied to 32991, but are not used.
-  86++8975              TheSecurityGuardReserved:
-  87++8975 02 04 06 02      DEFB RED, GREEN, YELLOW, RED                         ; Enemy colors: all WHITE (7)
-  88++8979
-  89++8979              ;The next eight bytes are copied to 32993 and define the item graphic.
-  90++8979              TheSecurityGuardItem:
-  91++8979 40 A0 5C 22      DEFB 64,160,92,34,33,34,20,8	                ;Item graphic (unused)
-  91++897D 21 22 14 08
-  92++8981
-  93++8981              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  94++8981              TheSecurityGuardDirection:
-  95++8981 13               DEFB 19	                                ;Room to the left (The Forgotten Abbey)
-  96++8982 04               DEFB 4	                                ;Room to the right (The Drive)
-  97++8983 0A               DEFB 10	                                ;Room above (The Front Door)
-  98++8984 06               DEFB 6	                                ;Room below (Entrance to Hades)
-  99++8985
- 100++8985              TheSecurityGuardUnused:
- 101++8985 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
- 102++8986
- 103++8986              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 104++8986              TheSecurityGuardEnemy1:
- 105++8986 C0 0B 58 10      DEFB $C0, 11, 88, 16, 105          ; Enemy 1 (Soldato), Phase 0 (Y=16, Down)
- 105++898A 69
- 106++898B              TheSecurityGuardEnemy2:
- 107++898B D0 0B 71 10      DEFB $D0, 11, 113, 16, 105         ; Enemy 2 (Soldato), Phase 1 (Y=38, Down)
- 107++898F 69
- 108++8990              TheSecurityGuardEnemy3:
- 109++8990 E0 0B 88 10      DEFB $E0, 11, 136, 16, 105         ; Enemy 3 (Soldato), Phase 2 (Y=60, Up)
- 109++8994 69
- 110++8995              TheSecurityGuardEnemy4:
- 111++8995 F0 0B B8 10      DEFB $F0, 11, 184, 16, 105         ; Enemy 4 (Soldato), Phase 3 (Y=105, Up)
- 111++8999 69
- 112++899A              TheSecurityGuardEnemy5:
- 113++899A 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 113++899E 00
- 114++899F              TheSecurityGuardEnemy6:
- 115++899F 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 115++89A3 00
- 116++89A4              TheSecurityGuardEnemy7:
- 117++89A4 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 117++89A8 00
- 118++89A9              TheSecurityGuardEnemy8:
- 119++89A9 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 119++89AD 00
- 120++89AE
- 121++89AE              TheSecurityGuardPosWilly:
- 122++89AE C8 65            db 200, 101                   ; Posizione di Willy
- 123++89B0              TheSecurityGuardEnemyColors5_8:
- 124++89B0 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+   4++8896              ; TheSecurityGuardLayout            Size 128 Byte, Start Byte   0
+   5++8896              ; TheSecurityGuardTile              Size  32 Byte, Start Byte 128
+   6++8896              ; TheSecurityGuardBackground        Size   9 Byte, Start Byte 160
+   7++8896              ; TheSecurityGuardFloor             Size   9 Byte, Start Byte 169
+   8++8896              ; TheSecurityGuardWall              Size   9 Byte, Start Byte 178
+   9++8896              ; TheSecurityGuardNasty             Size   9 Byte, Start Byte 187
+  10++8896              ; TheSecurityGuardRamp              Size   9 Byte, Start Byte 196
+  11++8896              ; TheSecurityGuardConveyor          Size   9 Byte, Start Byte 205
+  12++8896              ; TheSecurityGuardConveyorData      Size   4 Byte, Start Byte 214
+  13++8896              ; TheSecurityGuardRampData          Size   4 Byte, Start Byte 218
+  14++8896              ; TheSecurityGuardBorderColor       Size   1 Byte, Start Byte 222
+  15++8896              ; TheSecurityGuardReserved          Size   4 Byte, Start Byte 223
+  16++8896              ; TheSecurityGuardItem		        Size   8 Byte, Start Byte 227
+  17++8896              ; TheSecurityGuardDirection         Size   4 Byte, Start Byte 235
+  18++8896              ; TheSecurityGuardUnused            Size   1 Byte, Start Byte 239
+  19++8896              ; TheSecurityGuardEnemy1		    Size   5 Byte, Start Byte 240
+  20++8896              ; TheSecurityGuardEnemy2		    Size   5 Byte, Start Byte 245
+  21++8896              ; TheSecurityGuardEnemy3		    Size   5 Byte, Start Byte 250
+  22++8896              ; TheSecurityGuardEnemy4		    Size   5 Byte, Start Byte 255
+  23++8896              ; TheSecurityGuardEnemy5		    Size   5 Byte, Start Byte 260
+  24++8896              ; TheSecurityGuardEnemy6		    Size   5 Byte, Start Byte 265
+  25++8896              ; TheSecurityGuardEnemy7		    Size   5 Byte, Start Byte 270
+  26++8896              ; TheSecurityGuardEnemy8		    Size   5 Byte, Start Byte 275
+  27++8896              ; TheSecurityGuardPosWilly          Size   2 Byte, Start Byte 280
+  28++8896              ; TheSecurityGuardEnemyColors5_8    Size   4 Byte, Start Byte 282
+  29++8896              ;
+  30++8896              ;===========================================================================
+  31++8896
+  32++8896              ; Room layout for Room  (The Security Guard)
+  33++8896              TheSecurityGuardLayout:
+  34++8896 80 00 00 00      DEFB 128,0,0,0,0,0,0,0
+  34++889A 00 00 00 00
+  35++889E A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
+  35++88A2 00 00 00 00
+  36++88A6 A8 00 00 00      DEFB 168,0,0,0,0,0,0,0
+  36++88AA 00 00 00 00
+  37++88AE AA 00 00 00      DEFB 170,0,0,0,0,0,0,0
+  37++88B2 00 00 00 00
+  38++88B6 AA 80 00 00      DEFB 170,128,0,0,0,0,0,0
+  38++88BA 00 00 00 00
+  39++88BE AA A0 00 00      DEFB 170,160,0,0,0,0,0,0
+  39++88C2 00 00 00 00
+  40++88C6 A8 00 00 00      DEFB 168,0,0,0,0,0,0,0
+  40++88CA 00 00 00 00
+  41++88CE A8 00 00 00      DEFB 168,0,0,0,0,0,0,0
+  41++88D2 00 00 00 00
+  42++88D6 A8 15 54 10      DEFB 168,21,84,16,65,84,21,85
+  42++88DA 41 54 15 55
+  43++88DE A8 2A A8 20      DEFB 168,42,168,32,130,168,42,170
+  43++88E2 82 A8 2A AA
+  44++88E6 00 00 A8 20      DEFB 0,0,168,32,130,168,42,170
+  44++88EA 82 A8 2A AA
+  45++88EE 00 00 A8 20      DEFB 0,0,168,32,130,168,40,0
+  45++88F2 82 A8 28 00
+  46++88F6 00 00 A8 20      DEFB 0,0,168,32,130,168,40,0
+  46++88FA 82 A8 28 00
+  47++88FE 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  47++8902 00 00 00 00
+  48++8906 00 00 00 00      DEFB 0,0,0,0,0,0,0,42
+  48++890A 00 00 00 2A
+  49++890E A0 0A AA AA      DEFB 160,10,170,170,170,170,170,170
+  49++8912 AA AA AA AA
+  50++8916
+  51++8916              TheSecurityGuardTile:
+  52++8916              ;The next 32 bytes are copied to 32896 and specify the room name.
+  53++8916 20 20 20 20      DEFM "       The Security Guard       "	    ;Room name
+  53++891A 20 20 20 54
+  53++891E 68 65 20 53
+  53++8922 65 63 75 72
+  53++8926 69 74 79 20
+  53++892A 47 75 61 72
+  53++892E 64 20 20 20
+  53++8932 20 20 20 20
+  54++8936
+  55++8936              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  56++8936              TheSecurityGuardBackground:
+  57++8936 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+  57++893A 00 00 00 00
+  57++893E 00
+  58++893F
+  59++893F              TheSecurityGuardFloor:
+  60++893F 04 FF FF AA      DEFB 4,255,255,170,85,170,85,170,85	    ;Floor Solid
+  60++8943 55 AA 55 AA
+  60++8947 55
+  61++8948
+  62++8948              TheSecurityGuardWall:
+  63++8948 0D 0E C6 95      DEFB 13,14,198,149,176,54,134,192,237	;Wall Solid
+  63++894C B0 36 86 C0
+  63++8950 ED
+  64++8951
+  65++8951              TheSecurityGuardNasty:
+  66++8951 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Nasty
+  66++8955 00 00 00 00
+  66++8959 00
+  67++895A
+  68++895A              TheSecurityGuardRamp:
+  69++895A 07 E0 40 20      DEFB 7,224,64,32,16,14,4,2,1	        ;Ramp Solid
+  69++895E 10 0E 04 02
+  69++8962 01
+  70++8963
+  71++8963              TheSecurityGuardConveyor:
+  72++8963 42 6F 00 B7      DEFB 66,111,0,183,0,170,85,170,85	    ;Conveyor
+  72++8967 00 AA 55 AA
+  72++896B 55
+  73++896C
+  74++896C              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  75++896C              TheSecurityGuardConveyorData:
+  76++896C 01               DEFB 1	                                ;Direction (right)
+  77++896D BD 5F            DEFW 24509	                            ;Location in the attribute buffer at 24064: (15,12)
+  78++896F 03               DEFB 3	                                ;Length
+  79++8970
+  80++8970              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  81++8970              TheSecurityGuardRampData:
+  82++8970 00               DEFB 0	                                ;Direction (up to the right)
+  83++8971 E8 5E            DEFW 24296                              ;Location in the attribute buffer at 24064: (14,7)
+  84++8973 08               DEFB 8	                                ;Length
+  85++8974
+  86++8974              ;The next byte is copied to 32990 and specifies the border colour.
+  87++8974              TheSecurityGuardBorderColor:
+  88++8974 04               DEFB 4	                                ;Border colour
+  89++8975
+  90++8975              ;The next two bytes are copied to 32991, but are not used.
+  91++8975              TheSecurityGuardReserved:
+  92++8975 02 04 06 02      DEFB RED, GREEN, YELLOW, RED                         ; Enemy colors: all WHITE (7)
+  93++8979
+  94++8979              ;The next eight bytes are copied to 32993 and define the item graphic.
+  95++8979              TheSecurityGuardItem:
+  96++8979 40 A0 5C 22      DEFB 64,160,92,34,33,34,20,8	                ;Item graphic (unused)
+  96++897D 21 22 14 08
+  97++8981
+  98++8981              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  99++8981              TheSecurityGuardDirection:
+ 100++8981 13               DEFB 19	                                ;Room to the left (The Forgotten Abbey)
+ 101++8982 04               DEFB 4	                                ;Room to the right (The Drive)
+ 102++8983 0A               DEFB 10	                                ;Room above (The Front Door)
+ 103++8984 06               DEFB 6	                                ;Room below (Entrance to Hades)
+ 104++8985
+ 105++8985              TheSecurityGuardUnused:
+ 106++8985 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 107++8986
+ 108++8986              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 109++8986              TheSecurityGuardEnemy1:
+ 110++8986 C0 0B 58 28      DEFB $C0, 11, 88, 40, 104          ; [Soldato (41056) - horizontal], Guardinan = 2, Starts X=140, Y=56, Limit X=230
+ 110++898A 68
+ 111++898B              TheSecurityGuardEnemy2:
+ 112++898B 00 00 00 00      DEFB 0, 0, 0, 0, 0;DEFB $D0, 11, 113, 16, 105         ; Enemy 2 (Soldato), Phase 1 (Y=38, Down)
+ 112++898F 00
+ 113++8990              TheSecurityGuardEnemy3:
+ 114++8990 00 00 00 00      DEFB 0, 0, 0, 0, 0;DEFB $E0, 11, 136, 16, 105         ; Enemy 3 (Soldato), Phase 2 (Y=60, Up)
+ 114++8994 00
+ 115++8995              TheSecurityGuardEnemy4:
+ 116++8995 00 00 00 00      DEFB 0, 0, 0, 0, 0;DEFB $F0, 11, 184, 16, 105         ; Enemy 4 (Soldato), Phase 3 (Y=105, Up)
+ 116++8999 00
+ 117++899A              TheSecurityGuardEnemy5:
+ 118++899A 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 118++899E 00
+ 119++899F              TheSecurityGuardEnemy6:
+ 120++899F 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 120++89A3 00
+ 121++89A4              TheSecurityGuardEnemy7:
+ 122++89A4 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 122++89A8 00
+ 123++89A9              TheSecurityGuardEnemy8:
+ 124++89A9 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 124++89AD 00
+ 125++89AE
+ 126++89AE              TheSecurityGuardPosWilly:
+ 127++89AE C8 65            db 200, 101                         ; Posizione di Willy
+ 128++89B0
+ 129++89B0              TheSecurityGuardEnemyColors5_8:
+ 130++89B0 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/TheSecurityGuard.asm
   16+ 89B4                  include "rooms/EntranceToHades.asm"             ; ID 06
 # file opened: rooms/EntranceToHades.asm
