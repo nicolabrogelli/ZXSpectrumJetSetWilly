@@ -107,13 +107,13 @@ OnABranchOverTheDriveUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 OnABranchOverTheDriveEnemy1:
-    DEFB $C0, 7, 240, 64, 112         ; [Scimmia (41032) - vertical], Guardian = 9, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, 7, 240, 64, 112         ; [Scimmia (41032) - vertical], Guardian = 9, Starts X=240, Y=64, Limit X=112
 OnABranchOverTheDriveEnemy2:
-    DEFB $C0, 15, 56, 64, 104         ; [FacciaPalla (41176) - vertical], Guardian = 27, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, 15, 56, 64, 104         ; [FacciaPalla (41176) - vertical], Guardian = 27, Starts X=56, Y=64, Limit X=104
 OnABranchOverTheDriveEnemy3:
-    DEFB $C0, 10, 112, 0, 56          ; [DoubleBall (41456) - vertical], Guardian = 62, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, 10, 112, 0, 56          ; [DoubleBall (41456) - vertical], Guardian = 62, Starts X=112, Y=0, Limit X=56
 OnABranchOverTheDriveEnemy4:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB 0, 0, 0, 0, 0                ; Empty slot
 OnABranchOverTheDriveEnemy5:
     DEFB 0, 0, 0, 0, 0
 OnABranchOverTheDriveEnemy6:
