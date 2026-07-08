@@ -119,7 +119,7 @@ InsideTheMegaTrunkEnemy5:
 InsideTheMegaTrunkEnemy6:           
     DEFB $80, 2, 128, 88, 232        ; Uccello (41136) - horizzontal], Guardian = 44, Starts X=96, Y=0, Limit X=104 
 InsideTheMegaTrunkEnemy7:
-    DEFB 0, 0, 0, 0, 0         ; Enemy 7 (Fiore)
+    DEFB $80, 14, 136, 24, 240         ; Enemy 7 (Fiore)
 InsideTheMegaTrunkEnemy8:
     DEFB 0, 0, 0, 0, 0
 
@@ -127,4 +127,4 @@ InsideTheMegaTrunkPosWilly:
     db 200, 85                             ; Posizione di Willy
 
 InsideTheMegaTrunkEnemyColors5_8:
-    DEFB CYAN, GREEN, NONE, NONE               ; Colori per nemici 5-8
+    DEFB CYAN, GREEN, YELLOW, NONE               ; Colori per nemici 5-8
