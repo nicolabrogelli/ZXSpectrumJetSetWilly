@@ -49,7 +49,7 @@ TheHallTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 TheHallBackground:
-    DEFB 47,0,0,0,0,0,0,0,0	            		;Background
+    DEFB 0,0,0,0,0,0,0,0,0	            		;Background
 
 TheHallFloor:
     DEFB 71,255,170,119,170,119,170,85,170	    ;Floor Solid
@@ -94,8 +94,8 @@ TheHallItem:
 TheHallDirection:
     DEFB 20	                        ;Room to the left (Ballroom East)
     DEFB 10	                        ;Room to the right (The Front Door)
-    DEFB 0	                        ;Room above (The Off Licence)
-    DEFB 0	                        ;Room below (The Off Licence)
+    DEFB BLOCK	                        ;Room above (The Off Licence)
+    DEFB BLOCK	                        ;Room below (The Off Licence)
 
 TheHallUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

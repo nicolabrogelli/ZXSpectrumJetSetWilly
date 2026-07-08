@@ -35,7 +35,7 @@ Secondo Byte
     • %001101  (13): Tipo 13 (Canguro)
     • %001110  (14): Tipo 14 (Fiore)
     • %001111  (15): Tipo 15 (Faccia Palla)
-	  • %010000  (16): Tipo 16 (Disponibile)
+	  • %010000  (16): Tipo 16 (Candelabro)
 	  • %010001  (17): Tipo 17 (Disponibile)
 	  • %010010  (18): Tipo 18 (Disponibile)
 	  • %010011  (19): Tipo 19 (Disponibile)
