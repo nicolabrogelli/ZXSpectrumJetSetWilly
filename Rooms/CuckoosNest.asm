@@ -85,7 +85,7 @@ CuckoosNestRampData:
 
 ;The next byte is copied to 32990 and specifies the border colour.
 CuckoosNestBorderColor:
-    DEFB 4	                                ;Border colour
+    DEFB 1	                                ;Border colour
 
 ;The next two bytes are copied to 32991, but are not used.
 CuckoosNestReserved:
