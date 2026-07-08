@@ -106,6 +106,7 @@ Phys_ApplyGravity:
     xor  a
     ld   (on_ground), a
     ld   (jump_pressed), a
+    ld   (jump_frame), a
     ld   a, b              ; B = PlayerY (ramp_Y)
     ld   (jump_start_y), a
     ld   a, (current_input_dir)
@@ -250,6 +251,7 @@ Phys_ApplyGravity:
     xor  a
     ld   (on_ground), a
     ld   (jump_pressed), a
+    ld   (jump_frame), a
     ld   a, b              ; B = PlayerY
     ld   (jump_start_y), a
     ld   a, (current_input_dir)
@@ -257,19 +259,24 @@ Phys_ApplyGravity:
     jp   .in_air
 
 .in_air:
+    ; Incrementa jump_frame per mantenere coerente la gravità frazionaria del salto
+    ld   a, (jump_frame)
+    inc  a
+    ld   (jump_frame), a
+    
     ; Applica gravità frazionaria (0.75 in media)
-    ld   a, (counter)
     and  3
     cp   3
     jr   z, .skip_gravity
     
     ld   a, (velocity_y)
     sub  1
-    jr   .store_vel
+    jr   .clamp_fall_speed
     
 .skip_gravity:
     ld   a, (velocity_y)
     
+.clamp_fall_speed:
     ; Controlla se positivo per evitare bug con cp signed
     bit 7, a
     jr  z, .store_vel
@@ -338,33 +345,15 @@ Phys_ApplyGravity:
     ld   (velocity_y), a
     ld   (jump_start_y), a  ; Reset jump Y
     ld   (jump_dir), a
+    ld   (jump_frame), a
     jp   .end
     
 .no_ramp_landing:
     pop  bc
     ; --- CONTROLLO COLLISIONE CON IL TERRENO DURANTE LA CADUTA ---
-    ; 1. Controlliamo prima a Y + 8 (riga superiore) per evitare di penetrare nei muri/blocchi spessi
+    ; Controlliamo solo al piede effettivo (Y + 16) per evitare che Willy atterri su blocchi orizzontali di lato
     ld   a, b
-    add  a, 8
-    ld   b, a              ; B = Nuovo Y + 8
-    
-    push bc                ; Salva BC per il controllo successivo a Y + 16
-    
-    ; Controlla se il piede sinistro tocca solido a Y + 8
-    call Phys_CheckSolid
-    jr   c, .land_at_y8
-    
-    ; Controlla se il piede destro tocca solido a Y + 8
-    ld   a, c
-    add  a, 7
-    ld   c, a              ; C = PlayerX + 7
-    call Phys_CheckSolid
-    jr   c, .land_at_y8
-    
-    ; 2. Se a Y + 8 non c'è collisione, controlliamo al piede effettivo (Y + 16)
-    pop  bc                ; Ripristina BC (B = Nuovo Y + 8, C = PlayerX)
-    ld   a, b
-    add  a, 8              ; A = Nuovo Y + 16
+    add  a, 16
     cp   128
     jr   c, .y_ok_fall
     ld   a, 127
@@ -384,10 +373,6 @@ Phys_ApplyGravity:
     
     ; Nessun atterraggio
     jr   .no_collision_checks
-
-.land_at_y8:
-    pop  bc                ; BC ha B = Nuovo Y + 8, C = PlayerX
-    jr   .check_landing
 
 .check_landing:
     ; Abbiamo toccato una cella solida!
@@ -431,6 +416,7 @@ Phys_ApplyGravity:
     ld   (velocity_y), a
     ld   (jump_start_y), a  ; Reset jump Y
     ld   (jump_dir), a
+    ld   (jump_frame), a
     jp   .end
     
 .no_collision_checks:

@@ -30,8 +30,8 @@ Input_CheckCtrl:
     ; Porta $FB → riga Q, W, E, R, T. Bit 0 = Q.
     ; Se bit 0 = 0, Q è premuto.
 
-    ld   a, $fb
-    in   a, ($fe)
+    ld   bc, $fbfe
+    in   a, (c)
     bit  0, a
     jr   nz, .q_not_pressed     ; bit 0 = 1 → Q non premuto, salta
 
@@ -65,8 +65,8 @@ Input_CheckCtrl:
     ; Bit 0 = P (destra), Bit 1 = O (sinistra).
 
     ld  d, $00                  ; azzera output
-    ld  a, $df
-    in  a, ($fe)                ; legge riga $FE
+    ld  bc, $dffe
+    in  a, (c)                  ; legge riga $FE
 
     ; Se Willy è sul conveyor nella stanza The Off Licence (room 0),
     ; impedisci lo spostamento da sinistra a destra (disabilita tasto destra P / bit 0).
@@ -124,8 +124,8 @@ checkCtrl_jump:
     ;
     ; Z → porta $FE, bit 1  (riga CAPS, Z, X, C, V)
 
-    ld  a, $fe
-    in  a, ($fe)
+    ld  bc, $fefe
+    in  a, (c)
     bit 1, a
     jr  z, .pressed             ; bit 1 = 0 → Z premuto
 
