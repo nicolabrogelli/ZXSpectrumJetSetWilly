@@ -359,7 +359,7 @@ DrawRoomEnemies:
     
     ; Determina quale sprite usare basato sul tipo (Offset 1, Bit 5-0)
     ld   a, (ix+1)         ; Tipo
-    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore)
+    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla)
     
     cp   0
     jp   z, .got_lametta
@@ -391,6 +391,8 @@ DrawRoomEnemies:
     jp   z, .got_canguro
     cp   14
     jp   z, .got_fiore
+    cp   15
+    jp   z, .got_facciapalla
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -482,6 +484,10 @@ DrawRoomEnemies:
 
 .got_fiore:
     ld   hl, FioreSprite
+    jp   .got_sprite
+
+.got_facciapalla:
+    ld   hl, FacciaPallaSprite
     jp   .got_sprite
 
 
