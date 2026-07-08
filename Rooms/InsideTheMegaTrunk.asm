@@ -1,26 +1,31 @@
 ;===========================================================================
 ; InsideTheMegaTrunk.asm  
-;
-; InsideTheMegaTrunkLayout       Size 128 Byte, Start Byte   0
-; InsideTheMegaTrunkTile         Size  32 Byte, Start Byte 128
-; InsideTheMegaTrunkBackground   Size   9 Byte, Start Byte 160
-; InsideTheMegaTrunkFloor        Size   9 Byte, Start Byte 169
-; InsideTheMegaTrunkWall         Size   9 Byte, Start Byte 178
-; InsideTheMegaTrunkNasty        Size   9 Byte, Start Byte 187
-; InsideTheMegaTrunkRamp         Size   9 Byte, Start Byte 196
-; InsideTheMegaTrunkConveyor     Size   9 Byte, Start Byte 205
-; InsideTheMegaTrunkConveyorData Size   4 Byte, Start Byte 214
-; InsideTheMegaTrunkRampData     Size   4 Byte, Start Byte 218
-; InsideTheMegaTrunkBorderColor  Size   1 Byte, Start Byte 222
-; InsideTheMegaTrunkReserved     Size   4 Byte, Start Byte 223
-; InsideTheMegaTrunkItem		 Size   8 Byte, Start Byte 227
-; InsideTheMegaTrunkDirection    Size   4 Byte, Start Byte 235
-; InsideTheMegaTrunkUnused       Size   1 Byte, Start Byte 239
-; InsideTheMegaTrunkEnemy1		 Size   5 Byte, Start Byte 240
-; InsideTheMegaTrunkEnemy2		 Size   5 Byte, Start Byte 245
-; InsideTheMegaTrunkEnemy3		 Size   5 Byte, Start Byte 250
-; InsideTheMegaTrunkEnemy4		 Size   5 Byte, Start Byte 255
-; InsideTheMegaTrunkPosWilly     Size   2 Byte, Start Byte 280
+;   
+; InsideTheMegaTrunkLayout          Size 128 Byte, Start Byte   0
+; InsideTheMegaTrunkTile            Size  32 Byte, Start Byte 128
+; InsideTheMegaTrunkBackground      Size   9 Byte, Start Byte 160
+; InsideTheMegaTrunkFloor           Size   9 Byte, Start Byte 169
+; InsideTheMegaTrunkWall            Size   9 Byte, Start Byte 178
+; InsideTheMegaTrunkNasty           Size   9 Byte, Start Byte 187
+; InsideTheMegaTrunkRamp            Size   9 Byte, Start Byte 196
+; InsideTheMegaTrunkConveyor        Size   9 Byte, Start Byte 205
+; InsideTheMegaTrunkConveyorData    Size   4 Byte, Start Byte 214
+; InsideTheMegaTrunkRampData        Size   4 Byte, Start Byte 218
+; InsideTheMegaTrunkBorderColor     Size   1 Byte, Start Byte 222
+; InsideTheMegaTrunkReserved        Size   4 Byte, Start Byte 223
+; InsideTheMegaTrunkItem		    Size   8 Byte, Start Byte 227
+; InsideTheMegaTrunkDirection       Size   4 Byte, Start Byte 235
+; InsideTheMegaTrunkUnused          Size   1 Byte, Start Byte 239
+; InsideTheMegaTrunkEnemy1		    Size   5 Byte, Start Byte 240
+; InsideTheMegaTrunkEnemy2		    Size   5 Byte, Start Byte 245
+; InsideTheMegaTrunkEnemy3		    Size   5 Byte, Start Byte 250
+; InsideTheMegaTrunkEnemy4		    Size   5 Byte, Start Byte 255
+; InsideTheMegaTrunkEnemy5		    Size   5 Byte, Start Byte 260
+; InsideTheMegaTrunkEnemy6		    Size   5 Byte, Start Byte 265
+; InsideTheMegaTrunkEnemy7		    Size   5 Byte, Start Byte 270
+; InsideTheMegaTrunkEnemy8		    Size   5 Byte, Start Byte 275
+; InsideTheMegaTrunkPosWilly        Size   2 Byte, Start Byte 280
+; InsideTheMegaTrunkEnemyColors5_8  Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
@@ -102,17 +107,17 @@ InsideTheMegaTrunkUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 InsideTheMegaTrunkEnemy1:
-    DEFB $C0, 7, 16, 110, 65         ; Enemy 1 (Scimmia), vertical, Starts X=8, Y=120, Limit X=200
+    DEFB $C0, 7, 16, 64, 112         ; Scimmia (41136) - verical], Guardian = 9, Starts X=16, Y=64, Limit X=112
 InsideTheMegaTrunkEnemy2:
-    DEFB $C0, 7, 40, 110, 65         ; Enemy 2 (Scimmia), vertical, Starts X=80, Y=80, Limit X=180
+    DEFB $D0, 7, 40, 64, 112         ; Scimmia (41136) - verical], Guardian = 9, Starts X=40, Y=64, Limit X=112
 InsideTheMegaTrunkEnemy3:
-    DEFB $C0, 7, 64, 110, 65         ; Enemy 3 (Scimmia), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C0, 7, 64, 64, 112         ; Scimmia (41136) - verical], Guardian = 9, Starts X=64, Y=64, Limit X=112
 InsideTheMegaTrunkEnemy4:
-    DEFB $C0, 6, 94, 10, 100         ; Enemy 4 (Faccia)
+    DEFB $C0, 6, 96, 0, 104          ; Faccia (41312) - verical], Guardian = 44, Starts X=96, Y=0, Limit X=104
 InsideTheMegaTrunkEnemy5:
-    DEFB $80, 2, 1, 40, 100         ; Enemy 5 (Uccello) 
+    DEFB $80, 2, 0, 40, 80           ; Uccello (41152) - horizzontal], Guardian = 24, Starts X=96, Y=0, Limit X=104 
 InsideTheMegaTrunkEnemy6:           
-    DEFB $80, 2, 230, 87, 150         ; Enemy 6 (Uccello)
+    DEFB $80, 2, 128, 88, 232        ; Uccello (41136) - horizzontal], Guardian = 44, Starts X=96, Y=0, Limit X=104 
 InsideTheMegaTrunkEnemy7:
     DEFB 0, 0, 0, 0, 0         ; Enemy 7 (Fiore)
 InsideTheMegaTrunkEnemy8:
@@ -122,4 +127,4 @@ InsideTheMegaTrunkPosWilly:
     db 200, 85                             ; Posizione di Willy
 
 InsideTheMegaTrunkEnemyColors5_8:
-    DEFB CYAN, GREEN, 4, 7               ; Colori per nemici 5-8
+    DEFB CYAN, GREEN, NONE, NONE               ; Colori per nemici 5-8
