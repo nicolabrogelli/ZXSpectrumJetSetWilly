@@ -1,26 +1,31 @@
 ;===========================================================================
 ; TheFrontDoor.asm  
 ;
-; TheFrontDoorLayout       Size 128 Byte, Start Byte   0
-; TheFrontDoorTile         Size  32 Byte, Start Byte 128
-; TheFrontDoorBackground   Size   9 Byte, Start Byte 160
-; TheFrontDoorFloor        Size   9 Byte, Start Byte 169
-; TheFrontDoorWall         Size   9 Byte, Start Byte 178
-; TheFrontDoorNasty        Size   9 Byte, Start Byte 187
-; TheFrontDoorRamp         Size   9 Byte, Start Byte 196
-; TheFrontDoorConveyor     Size   9 Byte, Start Byte 205
-; TheFrontDoorConveyorData Size   4 Byte, Start Byte 214
-; TheFrontDoorRampData     Size   4 Byte, Start Byte 218
-; TheFrontDoorBorderColor  Size   1 Byte, Start Byte 222
-; TheFrontDoorReserved     Size   4 Byte, Start Byte 223
-; TheFrontDoorItem		    Size   8 Byte, Start Byte 227
-; TheFrontDoorDirection    Size   4 Byte, Start Byte 235
-; TheFrontDoorUnused       Size   1 Byte, Start Byte 239
-; TheFrontDoorEnemy1		Size   5 Byte, Start Byte 240
-; TheFrontDoorEnemy2		Size   5 Byte, Start Byte 245
-; TheFrontDoorEnemy3		Size   5 Byte, Start Byte 250
-; TheFrontDoorEnemy4		Size   5 Byte, Start Byte 255
-; TheFrontDoorPosWilly     Size   2 Byte, Start Byte 280
+; TheFrontDoorLayout            Size 128 Byte, Start Byte   0
+; TheFrontDoorTile              Size  32 Byte, Start Byte 128
+; TheFrontDoorBackground        Size   9 Byte, Start Byte 160
+; TheFrontDoorFloor             Size   9 Byte, Start Byte 169
+; TheFrontDoorWall              Size   9 Byte, Start Byte 178
+; TheFrontDoorNasty             Size   9 Byte, Start Byte 187
+; TheFrontDoorRamp              Size   9 Byte, Start Byte 196
+; TheFrontDoorConveyor          Size   9 Byte, Start Byte 205
+; TheFrontDoorConveyorData      Size   4 Byte, Start Byte 214
+; TheFrontDoorRampData          Size   4 Byte, Start Byte 218
+; TheFrontDoorBorderColor       Size   1 Byte, Start Byte 222
+; TheFrontDoorReserved          Size   4 Byte, Start Byte 223
+; TheFrontDoorItem		        Size   8 Byte, Start Byte 227
+; TheFrontDoorDirection         Size   4 Byte, Start Byte 235
+; TheFrontDoorUnused            Size   1 Byte, Start Byte 239
+; TheFrontDoorEnemy1		    Size   5 Byte, Start Byte 240
+; TheFrontDoorEnemy2		    Size   5 Byte, Start Byte 245
+; TheFrontDoorEnemy3		    Size   5 Byte, Start Byte 250
+; TheFrontDoorEnemy4		    Size   5 Byte, Start Byte 255
+; TheFrontDoorEnemy5		    Size   5 Byte, Start Byte 260
+; TheFrontDoorEnemy6		    Size   5 Byte, Start Byte 265
+; TheFrontDoorEnemy7		    Size   5 Byte, Start Byte 270
+; TheFrontDoorEnemy8		    Size   5 Byte, Start Byte 275
+; TheFrontDoorPosWilly          Size   2 Byte, Start Byte 280
+; TheFrontDoorEnemyColors5_8    Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
@@ -80,15 +85,15 @@ TheFrontDoorRampData:
 
 ;The next byte is copied to 32990 and specifies the border colour.
 TheFrontDoorBorderColor:
-    DEFB 4	                                ;Border colour
+    DEFB 2	                                ;Border colour
 
 ;The next two bytes are copied to 32991, but are not used.
 TheFrontDoorReserved:
-    DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+    DEFB NONE, NONE, NONE, NONE                         ; Enemy colors: all WHITE (7)
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheFrontDoorItem:
-    DEFB 48,60,79,67,130,134,228,252	         ;Item graphic (unused)
+    DEFB 12,28,28,30,27,63,120,255	         ;Item graphic (unused)
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheFrontDoorDirection:
@@ -98,17 +103,17 @@ TheFrontDoorDirection:
 	DEFB 5									;Room below (The Security Guard)
 
 TheFrontDoorUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                                  ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheFrontDoorEnemy1:
-    DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB 0, 0, 0, 0, 0              ; Empty slot
 TheFrontDoorEnemy2:
-    DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB 0, 0, 0, 0, 0              ; Empty slot
 TheFrontDoorEnemy3:
-    DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB 0, 0, 0, 0, 0              ; Empty slot
 TheFrontDoorEnemy4:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB 0, 0, 0, 0, 0              ; Empty slot
 TheFrontDoorEnemy5:
     DEFB 0, 0, 0, 0, 0
 TheFrontDoorEnemy6:
@@ -121,4 +126,4 @@ TheFrontDoorEnemy8:
 TheFrontDoorPosWilly:
     db 50, 20                   ; Posizione di Willy
 TheFrontDoorEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
