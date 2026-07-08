@@ -100,7 +100,7 @@ AtTheFootTheMegaTreeDirection:
     DEFB 4	                                ;Room to the left (The Drive)
     DEFB 2	                                ;Room to the right (Under the MegaTree)
     DEFB 8	                                ;Room above (Inside the MegaTrunk)
-    DEFB BLOCK                              ;Room below (None)
+    DEFB BLOCK                                ;Room below (None)
 
 AtTheFootTheMegaTreeUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
