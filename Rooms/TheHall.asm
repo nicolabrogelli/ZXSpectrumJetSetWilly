@@ -49,7 +49,7 @@ TheHallTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 TheHallBackground:
-    DEFB 0,0,0,0,0,0,0,0,0	            		;Background
+    DEFB 7,0,0,0,0,0,0,0,0	            		;Background
 
 TheHallFloor:
     DEFB 71,255,170,119,170,119,170,85,170	    ;Floor Solid

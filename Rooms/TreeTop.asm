@@ -1,26 +1,31 @@
 ;===========================================================================
 ; TreeTop.asm  
 ;
-; TreeTopLayout       Size 128 Byte, Start Byte   0
-; TreeTopTile         Size  32 Byte, Start Byte 128
-; TreeTopBackground   Size   9 Byte, Start Byte 160
-; TreeTopFloor        Size   9 Byte, Start Byte 169
-; TreeTopWall         Size   9 Byte, Start Byte 178
-; TreeTopNasty        Size   9 Byte, Start Byte 187
-; TreeTopRamp         Size   9 Byte, Start Byte 196
-; TreeTopConveyor     Size   9 Byte, Start Byte 205
-; TreeTopConveyorData Size   4 Byte, Start Byte 214
-; TreeTopRampData     Size   4 Byte, Start Byte 218
-; TreeTopBorderColor  Size   1 Byte, Start Byte 222
-; TreeTopReserved     Size   4 Byte, Start Byte 223
+; TreeTopLayout         Size 128 Byte, Start Byte   0
+; TreeTopTile           Size  32 Byte, Start Byte 128
+; TreeTopBackground     Size   9 Byte, Start Byte 160
+; TreeTopFloor          Size   9 Byte, Start Byte 169
+; TreeTopWall           Size   9 Byte, Start Byte 178
+; TreeTopNasty          Size   9 Byte, Start Byte 187
+; TreeTopRamp           Size   9 Byte, Start Byte 196
+; TreeTopConveyor       Size   9 Byte, Start Byte 205
+; TreeTopConveyorData   Size   4 Byte, Start Byte 214
+; TreeTopRampData       Size   4 Byte, Start Byte 218
+; TreeTopBorderColor    Size   1 Byte, Start Byte 222
+; TreeTopReserved       Size   4 Byte, Start Byte 223
 ; TreeTopItem		    Size   8 Byte, Start Byte 227
-; TreeTopDirection    Size   4 Byte, Start Byte 235
-; TreeTopUnused       Size   1 Byte, Start Byte 239
-; TreeTopEnemy1		Size   5 Byte, Start Byte 240
-; TreeTopEnemy2		Size   5 Byte, Start Byte 245
-; TreeTopEnemy3		Size   5 Byte, Start Byte 250
-; TreeTopEnemy4		Size   5 Byte, Start Byte 255
-; TreeTopPosWilly     Size   2 Byte, Start Byte 280
+; TreeTopDirection      Size   4 Byte, Start Byte 235
+; TreeTopUnused         Size   1 Byte, Start Byte 239
+; TreeTopEnemy1		    Size   5 Byte, Start Byte 240
+; TreeTopEnemy2		    Size   5 Byte, Start Byte 245
+; TreeTopEnemy3		    Size   5 Byte, Start Byte 250
+; TreeTopEnemy4		    Size   5 Byte, Start Byte 255
+; TreeTopEnemy5		    Size   5 Byte, Start Byte 260
+; TreeTopEnemy6		    Size   5 Byte, Start Byte 265
+; TreeTopEnemy7		    Size   5 Byte, Start Byte 270
+; TreeTopEnemy8		    Size   5 Byte, Start Byte 275
+; TreeTopPosWilly       Size   2 Byte, Start Byte 280
+; TreeTopEnemyColors5_8 Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
@@ -92,10 +97,10 @@ TreeTopItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TreeTopDirection:
-	DEFB 13									;Room to the left (Out on a limb)
-	DEFB 0									;Room to the right (The Off Licence)
-	DEFB 0									;Room above (The Off Licence)
-	DEFB 8									;Room below (Inside the MegaTrunk)
+	DEFB 13	    								;Room to the left (Out on a limb)
+	DEFB BLOCK									;Room to the right (The Off Licence)
+	DEFB BLOCK									;Room above (The Off Licence)
+	DEFB 8		    							;Room below (Inside the MegaTrunk)
 
 TreeTopUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

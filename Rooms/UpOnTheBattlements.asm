@@ -47,7 +47,7 @@ UpOnTheBattlementsTile:
     DEFM "      Up on the Battlements     "
 
 UpOnTheBattlementsBackground:                    ; Background
-    DEFB 0,0,0,0,0,0,0,0,0
+    DEFB 7,0,0,0,0,0,0,0,0
 
 UpOnTheBattlementsFloor:
     DEFB 4,128,192,224,176,144,148,214,119       ; Floor Solid

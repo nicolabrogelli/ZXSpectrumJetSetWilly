@@ -9013,7 +9013,7 @@
   49++8FEA
   50++8FEA              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
   51++8FEA              TheHallBackground:
-  52++8FEA 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0	            		;Background
+  52++8FEA 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0	            		;Background
   52++8FEE 00 00 00 00
   52++8FF2 00
   53++8FF3
@@ -10002,7 +10002,7 @@
   47++969A 20 20 20 20
   48++969E
   49++969E              UpOnTheBattlementsBackground:                    ; Background
-  50++969E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0
+  50++969E 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0
   50++96A2 00 00 00 00
   50++96A6 00
   51++96A7
@@ -10326,7 +10326,7 @@
   47++98D6 20 20 20 20
   48++98DA
   49++98DA              TheForgottenAbbeyBackground:                    ; Background
-  50++98DA 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0
+  50++98DA 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0
   50++98DE 00 00 00 00
   50++98E2 00
   51++98E3

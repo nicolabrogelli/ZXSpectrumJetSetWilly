@@ -47,7 +47,7 @@ TheForgottenAbbeyTile:
     DEFM "      The Forgotten Abbey       "
 
 TheForgottenAbbeyBackground:                    ; Background
-    DEFB 0,0,0,0,0,0,0,0,0
+    DEFB 7,0,0,0,0,0,0,0,0
 
 TheForgottenAbbeyFloor:
     DEFB 4,255,255,242,36,64,2,0,136       ; Floor Solid

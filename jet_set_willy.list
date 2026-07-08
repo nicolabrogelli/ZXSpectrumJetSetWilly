@@ -7679,7 +7679,7 @@
  100++8745 04               DEFB 4	                                ;Room to the left (The Drive)
  101++8746 02               DEFB 2	                                ;Room to the right (Under the MegaTree)
  102++8747 08               DEFB 8	                                ;Room above (Inside the MegaTrunk)
- 103++8748 FF               DEFB BLOCK                              ;Room below (None)
+ 103++8748 FF               DEFB BLOCK                                ;Room below (None)
  104++8749
  105++8749              AtTheFootTheMegaTreeUnused:
  106++8749 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
@@ -9013,7 +9013,7 @@
   49++8FEA
   50++8FEA              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
   51++8FEA              TheHallBackground:
-  52++8FEA 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0	            		;Background
+  52++8FEA 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0	            		;Background
   52++8FEE 00 00 00 00
   52++8FF2 00
   53++8FF3
@@ -9060,7 +9060,7 @@
   84++9029
   85++9029              ;The next two bytes are copied to 32991, but are not used.
   86++9029              TheHallReserved:
-  87++9029 02 03 04 07      DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+  87++9029 02 06 06 07      DEFB RED, YELLOW, YELLOW, 7                         ; Enemy colors: all WHITE (7)
   88++902D
   89++902D              ;The next eight bytes are copied to 32993 and define the item graphic.
   90++902D              TheHallItem:
@@ -9079,14 +9079,14 @@
  102++903A
  103++903A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  104++903A              TheHallEnemy1:
- 105++903A 80 00 08 4C      DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
- 105++903E C8
+ 105++903A 80 0C 28 18      DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 26, Starts X=40, Y=24, Limit X=240
+ 105++903E F0
  106++903F              TheHallEnemy2:
- 107++903F 80 00 50 4C      DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
- 107++9043 B4
+ 107++903F C0 10 50 30      DEFB $C0, 16, 80, 48, 60          ; [Candelabro (41672) - horizzontal], Guardian = 89, Starts X=40, Y=24, Limit X=240
+ 107++9043 3C
  108++9044              TheHallEnemy3:
- 109++9044 C0 04 78 10      DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
- 109++9048 4C
+ 109++9044 80 02 48 50      DEFB $80, 2, 72, 80, 136         ; [Ucello (41720) - horizzontal], Guardian = 26, Starts X=40, Y=24, Limit X=240
+ 109++9048 88
  110++9049              TheHallEnemy4:
  111++9049 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
  111++904D 00
@@ -10002,7 +10002,7 @@
   47++969A 20 20 20 20
   48++969E
   49++969E              UpOnTheBattlementsBackground:                    ; Background
-  50++969E 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0
+  50++969E 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0
   50++96A2 00 00 00 00
   50++96A6 00
   51++96A7
@@ -10326,7 +10326,7 @@
   47++98D6 20 20 20 20
   48++98DA
   49++98DA              TheForgottenAbbeyBackground:                    ; Background
-  50++98DA 00 00 00 00      DEFB 0,0,0,0,0,0,0,0,0
+  50++98DA 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0
   50++98DE 00 00 00 00
   50++98E2 00
   51++98E3
