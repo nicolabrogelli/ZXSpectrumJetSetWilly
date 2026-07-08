@@ -1,37 +1,53 @@
 Gestione dei nemici, questa è la tabelle da seguire per la loro confgiurazione all'interno della singola stanza
 
+  Primo Byte
   • Bit 7 (Attivo/Inattivo):
-    •  1  (≥$80): Il nemico è attivo e viene renderizzato/aggiornato.
-    •  0  (<$80): Il nemico è disattivato.
+    • 1  (≥$80): Il nemico è attivo e viene renderizzato/aggiornato.
+    • 0  (<$80): Il nemico è disattivato.
   • Bit 6 (Movimento Orizzontale o Verticale):
-    •  1  (aggiunge +$40): Movimento Verticale.
-    •  0 : Movimento Orizzontale.
+    • 1  (aggiunge +$40): Movimento Verticale.
+    • 0 : Movimento Orizzontale.
   • Bit 5-4
     • Fase 0 ( %00 ): Il nemico parte dal limite minimo ( Min Limit ) e si muove verso il basso/destra (Direzione = 2).
     • Fase 1 ( %01 ): Il nemico parte a 1/4 del percorso ( Min Limit + Delta/4 ) e si muove verso il basso/destra (Direzione = 2).
     • Fase 2 ( %10 ): Il nemico parte a metà percorso ( Min Limit + Delta/2 ) e si muove verso l'alto/sinistra (Direzione = 1).
     • Fase 3 ( %11 ): Il nemico parte dal limite massimo ( Max Limit ) e si muove verso l'alto/sinistra (Direzione = 1).
   • Bit 3-0
-    •  %0000  (00): Tipo 00 (Lametta)
-    •  %0001  (01): Tipo 01 (Sega)
-    •  %0010  (02): Tipo 02 (Uccello)
-    •  %0011  (03): Tipo 03 (Radar)
-    •  %0100  (04): Tipo 04 (Uovo)
-    •  %0101  (05): Tipo 05 (Ufo)
-    •  %0110  (06): Tipo 06 (Faccia)
-    •  %0111  (07): Tipo 07 (Scimmia)
-    •  %1000  (08): Tipo 08 (Robot)
-    •  %1001  (09): Tipo 09 (Palla)
-    •  %1010  (10): Tipo 10 (Double Ball)
-    •  %1011  (11): Tipo 11 (Soldato)
-    •  %1100  (12): Tipo 12 (Maiale)
-    •  %1101  (13): Tipo 13 (Canguro)
-    •  %1110  (14): Tipo 14 (Vecchia) - Da implementare
-    •  %1111  (15): Tipo 15 (Prete)   - Da implementare
-
-
-
-+---+---+---+---+---+---+---+---+
-| 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
-+---+---+---+---+---+---+---+---+
-		  
+	• Disponibili
+  
+Secondo Byte 	
+  • Bit 7-6
+    • Disponibili
+  • Bit 5-0
+    • %000000  (00): Tipo 00 (Lametta)
+    • %000001  (01): Tipo 01 (Sega)
+    • %000010  (02): Tipo 02 (Uccello)
+    • %000011  (03): Tipo 03 (Radar)
+    • %000100  (04): Tipo 04 (Uovo)
+    • %000101  (05): Tipo 05 (Ufo)
+    • %000110  (06): Tipo 06 (Faccia)
+    • %000111  (07): Tipo 07 (Scimmia)
+    • %001000  (08): Tipo 08 (Robot)
+    • %001001  (09): Tipo 09 (Palla)
+    • %001010  (10): Tipo 10 (Double Ball)
+    • %001011  (11): Tipo 11 (Soldato)
+    • %001100  (12): Tipo 12 (Maiale)
+    • %001101  (13): Tipo 13 (Canguro)
+    • %001110  (14): Tipo 14 (Fiore)
+    • %001111  (15): Tipo 15 (Disponibile)
+	  • %010000  (16): Tipo 16 (Disponibile)
+	  • %010001  (17): Tipo 17 (Disponibile)
+	  • %010010  (18): Tipo 18 (Disponibile)
+	  • %010011  (19): Tipo 19 (Disponibile)
+	  • %010100  (20): Tipo 20 (Disponibile)
+	  • %010101  (21): Tipo 21 (Disponibile)
+	  • %010110  (22): Tipo 22 (Disponibile)
+	  • %010111  (23): Tipo 23 (Disponibile)
+	  • %011000  (24): Tipo 24 (Disponibile)
+	  • %011001  (25): Tipo 25 (Disponibile)
+	  • %011010  (26): Tipo 26 (Disponibile)
+	  • %011011  (27): Tipo 27 (Disponibile)
+	  • %011100  (28): Tipo 28 (Disponibile)
+	  • %011101  (29): Tipo 29 (Disponibile)
+	  • %011110  (30): Tipo 30 (Disponibile)
+	  • %011111  (31): Tipo 31 (Disponibile)

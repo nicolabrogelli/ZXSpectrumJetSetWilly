@@ -16,11 +16,11 @@
 ; OnABranchOverTheDriveItem		    Size   8 Byte, Start Byte 227
 ; OnABranchOverTheDriveDirection    Size   4 Byte, Start Byte 235
 ; OnABranchOverTheDriveUnused       Size   1 Byte, Start Byte 239
-; OnABranchOverTheDriveEnemy1		Size   4 Byte, Start Byte 240
-; OnABranchOverTheDriveEnemy2		Size   4 Byte, Start Byte 244
-; OnABranchOverTheDriveEnemy3		Size   4 Byte, Start Byte 248
-; OnABranchOverTheDriveEnemy4		Size   4 Byte, Start Byte 252
-; OnABranchOverTheDrivePosWilly     Size   2 Byte, Start Byte 256
+; OnABranchOverTheDriveEnemy1		Size   5 Byte, Start Byte 240
+; OnABranchOverTheDriveEnemy2		Size   5 Byte, Start Byte 245
+; OnABranchOverTheDriveEnemy3		Size   5 Byte, Start Byte 250
+; OnABranchOverTheDriveEnemy4		Size   5 Byte, Start Byte 255
+; OnABranchOverTheDrivePosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -49,7 +49,7 @@ OnABranchOverTheDriveTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 OnABranchOverTheDriveBackground:
-    DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+    DEFB $0F,0,0,0,0,0,0,0,0	            ;Background
 
 OnABranchOverTheDriveFloor:
     DEFB 10,31,243,225,96,48,44,64,128	    ;Floor Solid
@@ -75,12 +75,12 @@ OnABranchOverTheDriveConveyorData:
 ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
 OnABranchOverTheDriveRampData:
     DEFB 1	                                ;Direction (up to the right)
-    DEFW 24389	                            ;Location in the attribute buffer at 24064: (14,7)
+    DEFW 24398	                            ;Location in the attribute buffer at 24064: (14,7)
     DEFB 4	                                ;Length
 
 ;The next byte is copied to 32990 and specifies the border colour.
 OnABranchOverTheDriveBorderColor:
-    DEFB 4	                                ;Border colour
+    DEFB 2	                                ;Border colour
 
 ;The next two bytes are copied to 32991, but are not used.
 OnABranchOverTheDriveReserved:
@@ -102,21 +102,21 @@ OnABranchOverTheDriveUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 OnABranchOverTheDriveEnemy1:
-    DEFB $80, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
 OnABranchOverTheDriveEnemy2:
-    DEFB $80, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
 OnABranchOverTheDriveEnemy3:
-    DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 OnABranchOverTheDriveEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 OnABranchOverTheDriveEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 OnABranchOverTheDriveEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 OnABranchOverTheDriveEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 OnABranchOverTheDriveEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 OnABranchOverTheDrivePosWilly:
     db 200, 30                   ; Posizione di Willy

@@ -11,6 +11,7 @@ BORDCR:     EQU $5c48
 UDG:        EQU $5c7b
 
 ; Colori
+NONE:   EQU $00
 BLUE:   EQU $01
 RED:    EQU $02
 MAGENTA: EQU $03
@@ -35,14 +36,14 @@ SCREEN_LINE = $4860
 
 ; Fisica (Derivata dai parametri geometrici)
 MAX_FALL_SPEED: EQU 12
-JUMP_STRENGTH:  EQU 11
-GRAVITY:        EQU 2
+JUMP_STRENGTH:  EQU 6
+GRAVITY:        EQU 1
 
 ; Limiti schermo del Player
 PLAYER_MIN_X:    EQU 5
 PLAYER_MAX_X:    EQU 245
 
-items_grid:      EQU $9000
+items_grid:      EQU $B000
 
 ; Offsets all'interno della struttura dati della Stanza (256 byte)
 OFFSET_BG:       EQU 160
@@ -55,7 +56,9 @@ OFFSET_RAMP:         EQU 196
 OFFSET_CONVEYOR:     EQU 205
 OFFSET_CONVEYOR_DATA: EQU 214
 OFFSET_RAMP_DATA:    EQU 218
-OFFSET_POS_WILLY:    EQU 272
+OFFSET_POS_WILLY:    EQU 280
+OFFSET_COLORS_5_8:   EQU 282
 
+BLOCK:          EQU $FF
 
 

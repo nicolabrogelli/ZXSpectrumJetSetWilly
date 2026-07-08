@@ -1,30 +1,35 @@
 ;===========================================================================
 ; AtTheFootTheMegaTree.asm  
 ;
-; AtTheFootTheMegaTreeLayout       Size 128 Byte, Start Byte   0
-; AtTheFootTheMegaTreeTile         Size  32 Byte, Start Byte 128
-; AtTheFootTheMegaTreeBackground   Size   9 Byte, Start Byte 160
-; AtTheFootTheMegaTreeFloor        Size   9 Byte, Start Byte 169
-; AtTheFootTheMegaTreeWall         Size   9 Byte, Start Byte 178
-; AtTheFootTheMegaTreeNasty        Size   9 Byte, Start Byte 187
-; AtTheFootTheMegaTreeRamp         Size   9 Byte, Start Byte 196
-; AtTheFootTheMegaTreeConveyor     Size   9 Byte, Start Byte 205
-; AtTheFootTheMegaTreeConveyorData Size   4 Byte, Start Byte 214
-; AtTheFootTheMegaTreeRampData     Size   4 Byte, Start Byte 218
-; AtTheFootTheMegaTreeBorderColor  Size   1 Byte, Start Byte 222
-; AtTheFootTheMegaTreeReserved     Size   4 Byte, Start Byte 223
-; AtTheFootTheMegaTreeItem		   Size   8 Byte, Start Byte 227
-; AtTheFootTheMegaTreeDirection    Size   4 Byte, Start Byte 235
-; AtTheFootTheMegaTreeUnused       Size   1 Byte, Start Byte 239
-; AtTheFootTheMegaTreeEnemy1		Size   4 Byte, Start Byte 240
-; AtTheFootTheMegaTreeEnemy2		Size   4 Byte, Start Byte 244
-; AtTheFootTheMegaTreeEnemy3		Size   4 Byte, Start Byte 248
-; AtTheFootTheMegaTreeEnemy4		Size   4 Byte, Start Byte 252
-; AtTheFootTheMegaTreePosWilly     Size   2 Byte, Start Byte 256
+; AtTheFootTheMegaTreeLayout            Size 128 Byte, Start Byte   0
+; AtTheFootTheMegaTreeTile              Size  32 Byte, Start Byte 128
+; AtTheFootTheMegaTreeBackground        Size   9 Byte, Start Byte 160
+; AtTheFootTheMegaTreeFloor             Size   9 Byte, Start Byte 169
+; AtTheFootTheMegaTreeWall              Size   9 Byte, Start Byte 178
+; AtTheFootTheMegaTreeNasty             Size   9 Byte, Start Byte 187
+; AtTheFootTheMegaTreeRamp              Size   9 Byte, Start Byte 196
+; AtTheFootTheMegaTreeConveyor          Size   9 Byte, Start Byte 205
+; AtTheFootTheMegaTreeConveyorData      Size   4 Byte, Start Byte 214
+; AtTheFootTheMegaTreeRampData          Size   4 Byte, Start Byte 218
+; AtTheFootTheMegaTreeBorderColor       Size   1 Byte, Start Byte 222
+; AtTheFootTheMegaTreeReserved          Size   4 Byte, Start Byte 223
+; AtTheFootTheMegaTreeItem		        Size   8 Byte, Start Byte 227
+; AtTheFootTheMegaTreeDirection         Size   4 Byte, Start Byte 235
+; AtTheFootTheMegaTreeUnused            Size   1 Byte, Start Byte 239
+; AtTheFootTheMegaTreeEnemy1		    Size   5 Byte, Start Byte 240
+; AtTheFootTheMegaTreeEnemy2		    Size   5 Byte, Start Byte 245
+; AtTheFootTheMegaTreeEnemy3		    Size   5 Byte, Start Byte 250
+; AtTheFootTheMegaTreeEnemy4		    Size   5 Byte, Start Byte 255
+; AtTheFootTheMegaTreeEnemy5		    Size   5 Byte, Start Byte 260
+; AtTheFootTheMegaTreeEnemy6		    Size   5 Byte, Start Byte 265
+; AtTheFootTheMegaTreeEnemy7		    Size   5 Byte, Start Byte 270
+; AtTheFootTheMegaTreeEnemy8		    Size   5 Byte, Start Byte 275
+; AtTheFootTheMegaTreePosWilly          Size   2 Byte, Start Byte 280
+; AtTheFootTheMegaTreeEnemyColors5_8    Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
-; Room layout for Room  (Master Bedroom)
+; Room layout for Room  (At The Foot The MegaTree)
 AtTheFootTheMegaTreeLayout:           
     DEFB 48,195,8,0,8,0,0,0	
     DEFB 48,195,8,0,10,170,170,170
@@ -95,30 +100,31 @@ AtTheFootTheMegaTreeDirection:
     DEFB 4	                                ;Room to the left (The Drive)
     DEFB 2	                                ;Room to the right (Under the MegaTree)
     DEFB 8	                                ;Room above (Inside the MegaTrunk)
-    DEFB $FF                                ;Room below (None)
+    DEFB BLOCK                                ;Room below (None)
 
 AtTheFootTheMegaTreeUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 AtTheFootTheMegaTreeEnemy1:
-    DEFB $C7, 16, 16, 96        ; Enemy 1 (Scimmia), horizontal, Starts X, Y, Limit X
+    DEFB $C0, 7, 16, 32, 88         ; [Scimmia (41008) - vertical], Guardian = 6, Starts X=16, Y=32, Limit X=88
 AtTheFootTheMegaTreeEnemy2:
-    DEFB $C7, 40, 16, 76        ; Enemy 2 (Scimmia), horizontal, Starts X, Y, Limit X
+    DEFB $C0, 7, 40, 16, 80         ; [Scimmia (41016) - vertical], Guardian = 7, Starts X=40, Y=16, Limit X=80
 AtTheFootTheMegaTreeEnemy3:
-    DEFB $C7, 64, 16, 86        ; Enemy 3 (Scimmia), horizontal, Starts X, Y, Limit X
+    DEFB $C0, 7, 64, 19, 88         ; [Scimmia (41024) - vertical], Guardian = 8, Starts X=64, Y=19, Limit X=88
 AtTheFootTheMegaTreeEnemy4:
-    DEFB $81, 28, 104, 220      ; Enemy 3 (Sega), horizontal, Starts X, Y, Limit X
+    DEFB $80, 1, 32, 104, 112       ; [Sega (41384) - vertical], Guardian = 53, Starts X=32, Y=104, Limit X=112
 AtTheFootTheMegaTreeEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 AtTheFootTheMegaTreeEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 AtTheFootTheMegaTreeEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 AtTheFootTheMegaTreeEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 AtTheFootTheMegaTreePosWilly:
     db 200, 101                   ; Posizione di Willy
+    
 AtTheFootTheMegaTreeEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8

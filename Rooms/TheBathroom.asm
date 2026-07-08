@@ -16,11 +16,11 @@
 ; TheBathroomItem		   Size   8 Byte, Start Byte 227
 ; TheBathroomDirection    Size   4 Byte, Start Byte 235
 ; TheBathroomUnused       Size   1 Byte, Start Byte 239
-; TheBathroomEnemy1		Size   4 Byte, Start Byte 240
-; TheBathroomEnemy2		Size   4 Byte, Start Byte 244
-; TheBathroomEnemy3		Size   4 Byte, Start Byte 248
-; TheBathroomEnemy4		Size   4 Byte, Start Byte 252
-; TheBathroomPosWilly     Size   2 Byte, Start Byte 256
+; TheBathroomEnemy1		Size   5 Byte, Start Byte 240
+; TheBathroomEnemy2		Size   5 Byte, Start Byte 245
+; TheBathroomEnemy3		Size   5 Byte, Start Byte 250
+; TheBathroomEnemy4		Size   5 Byte, Start Byte 255
+; TheBathroomPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -102,21 +102,21 @@ TheBathroomUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBathroomEnemy1:
-    DEFB $8A, 8, 23, 200          ; DoubleBall 1 (Uccello), horizontal, Starts X=8, Y=96, Limit X=200
+    DEFB $80, 10, 8, 23, 200         ; DoubleBall 1 (Uccello), horizontal, Starts X=8, Y=96, Limit X=200
 TheBathroomEnemy2:
-    DEFB 0,0,0,0                  ; Empty
+    DEFB 0, 0, 0, 0, 0         ; Empty
 TheBathroomEnemy3:
-    DEFB 0,0,0,0                  ; Empty
+    DEFB 0, 0, 0, 0, 0         ; Empty
 TheBathroomEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 TheBathroomEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheBathroomEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheBathroomEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheBathroomEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 TheBathroomPosWilly:
     db 200, 90                  ; Posizione di Willy

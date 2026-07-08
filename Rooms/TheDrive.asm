@@ -1,30 +1,35 @@
 ;===========================================================================
 ; TheDrive.asm  
 ;
-; TheDriveLayout       Size 128 Byte, Start Byte   0
-; TheDriveTile         Size  32 Byte, Start Byte 128
-; TheDriveBackground   Size   9 Byte, Start Byte 160
-; TheDriveFloor        Size   9 Byte, Start Byte 169
-; TheDriveWall         Size   9 Byte, Start Byte 178
-; TheDriveNasty        Size   9 Byte, Start Byte 187
-; TheDriveRamp         Size   9 Byte, Start Byte 196
-; TheDriveConveyor     Size   9 Byte, Start Byte 205
-; TheDriveConveyorData Size   4 Byte, Start Byte 214
-; TheDriveRampData     Size   4 Byte, Start Byte 218
-; TheDriveBorderColor  Size   1 Byte, Start Byte 222
-; TheDriveReserved     Size   4 Byte, Start Byte 223
-; TheDriveItem		   Size   8 Byte, Start Byte 227
-; TheDriveDirection    Size   4 Byte, Start Byte 235
-; TheDriveUnused       Size   1 Byte, Start Byte 239
-; TheDriveEnemy1		Size   4 Byte, Start Byte 240
-; TheDriveEnemy2		Size   4 Byte, Start Byte 244
-; TheDriveEnemy3		Size   4 Byte, Start Byte 248
-; TheDriveEnemy4		Size   4 Byte, Start Byte 252
-; TheDrivePosWilly     Size   2 Byte, Start Byte 256
+; TheDriveLayout            Size 128 Byte, Start Byte   0
+; TheDriveTile              Size  32 Byte, Start Byte 128
+; TheDriveBackground        Size   9 Byte, Start Byte 160
+; TheDriveFloor             Size   9 Byte, Start Byte 169
+; TheDriveWall              Size   9 Byte, Start Byte 178
+; TheDriveNasty             Size   9 Byte, Start Byte 187
+; TheDriveRamp              Size   9 Byte, Start Byte 196
+; TheDriveConveyor          Size   9 Byte, Start Byte 205
+; TheDriveConveyorData      Size   4 Byte, Start Byte 214
+; TheDriveRampData          Size   4 Byte, Start Byte 218
+; TheDriveBorderColor       Size   1 Byte, Start Byte 222
+; TheDriveReserved          Size   4 Byte, Start Byte 223
+; TheDriveItem		        Size   8 Byte, Start Byte 227
+; TheDriveDirection         Size   4 Byte, Start Byte 235
+; TheDriveUnused            Size   1 Byte, Start Byte 239
+; TheDriveEnemy1		    Size   5 Byte, Start Byte 240
+; TheDriveEnemy2		    Size   5 Byte, Start Byte 245
+; TheDriveEnemy3		    Size   5 Byte, Start Byte 250
+; TheDriveEnemy4		    Size   5 Byte, Start Byte 255
+; TheDriveEnemy5		    Size   5 Byte, Start Byte 260
+; TheDriveEnemy6		    Size   5 Byte, Start Byte 265
+; TheDriveEnemy7		    Size   5 Byte, Start Byte 270
+; TheDriveEnemy8		    Size   5 Byte, Start Byte 275
+; TheDrivePosWilly          Size   2 Byte, Start Byte 280
+; TheDriveEnemyColors5_8    Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
-; Room layout for Room  (Master Bedroom)
+; Room layout for Room  (The Drive)
 TheDriveLayout:           
     DEFB 0,0,0,0,0,0,0,0	
     DEFB 0,0,0,0,0,0,0,0
@@ -84,7 +89,7 @@ TheDriveBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheDriveReserved:
-    DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+    DEFB MAGENTA, GREEN, YELLOW, CYAN                         ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheDriveItem:
@@ -93,7 +98,7 @@ TheDriveItem:
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheDriveDirection:
     DEFB 5	                                ;Room to the left (The Security Guard)
-    DEFB 3	                                ;Room to the right  (At the Foot of the MegaTree)
+    DEFB 3	                                ;Room to the right  (Gfx_At the Foot of the MegaTree)
     DEFB 6	                                ;Room above (Entrance to Hades)
     DEFB 45                                 ;Room below (Under the Drive)
 
@@ -102,23 +107,24 @@ TheDriveUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheDriveEnemy1:
-    DEFB $84, 80, 104, 220           ; Enemy 1 (Uovo), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 2, 112, 80, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
 TheDriveEnemy2:
-    DEFB $B2, 80, 80, 180           ; Enemy 2 (Uccello), horizontal, Starts X=8, Y=104, Limit X=120
+    DEFB $80, 2, 128, 88, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
 TheDriveEnemy3:
-    DEFB $82, 40, 48, 160           ; Enemy 3 (Uccello), horizontal, Starts X=40, Y=48, Limit X=160
+    DEFB $80, 2, 40, 64, 232          ; [Uccello (41144) - horizontal], Guardian = 23, Starts X=40, Y=64, Limit X=232
 TheDriveEnemy4:
-    DEFB $82, 120, 16, 200           ; Enemy 4 (Uccello), horizontal, Starts X=120, Y=16, Limit X=76
+    DEFB $80, 2, 0, 40, 80            ; [Uccello (41152) - horizontal], Guardian = 24, Starts X=0, Y=40, Limit X=80
 TheDriveEnemy5:
-    DEFB 0,0,0,0
+    DEFB $80, 4, 80, 104, 240         ; [Uovo (41248) - horizontal], Guardian = 36, Starts X=80, Y=104, Limit X=240
 TheDriveEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheDriveEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheDriveEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 TheDrivePosWilly:
-    db 200, 101                   ; Posizione di Willy
+    db 200, 101                      ; Posizione di Willy
+
 TheDriveEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB CYAN, 3, 4, 7               ; Colori per nemici 5-8

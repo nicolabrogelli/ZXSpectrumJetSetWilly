@@ -16,11 +16,11 @@
 ; TheHallItem		    Size   8 Byte, Start Byte 227
 ; TheHallDirection    Size   4 Byte, Start Byte 235
 ; TheHallUnused       Size   1 Byte, Start Byte 239
-; TheHallEnemy1		Size   4 Byte, Start Byte 240
-; TheHallEnemy2		Size   4 Byte, Start Byte 244
-; TheHallEnemy3		Size   4 Byte, Start Byte 248
-; TheHallEnemy4		Size   4 Byte, Start Byte 252
-; TheHallPosWilly     Size   2 Byte, Start Byte 256
+; TheHallEnemy1		Size   5 Byte, Start Byte 240
+; TheHallEnemy2		Size   5 Byte, Start Byte 245
+; TheHallEnemy3		Size   5 Byte, Start Byte 250
+; TheHallEnemy4		Size   5 Byte, Start Byte 255
+; TheHallPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -49,7 +49,7 @@ TheHallTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 TheHallBackground:
-    DEFB 40,0,0,0,0,0,0,0,0	            		;Background
+    DEFB 47,0,0,0,0,0,0,0,0	            		;Background
 
 TheHallFloor:
     DEFB 71,255,170,119,170,119,170,85,170	    ;Floor Solid
@@ -92,33 +92,34 @@ TheHallItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheHallDirection:
-	DEFB 11									;Room to the left (The Hall)
-	DEFB 9									;Room to the right (On a Branch Over the Drive)
-	DEFB 0									;Room above (The Off Licence)
-	DEFB 5									;Room below (The Security Guard)
+    DEFB 20	                        ;Room to the left (Ballroom East)
+    DEFB 10	                        ;Room to the right (The Front Door)
+    DEFB 0	                        ;Room above (The Off Licence)
+    DEFB 0	                        ;Room below (The Off Licence)
 
 TheHallUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheHallEnemy1:
-    DEFB $80, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
 TheHallEnemy2:
-    DEFB $80, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
 TheHallEnemy3:
-    DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 TheHallEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 TheHallEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheHallEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheHallEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheHallEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 TheHallPosWilly:
     db 50, 20                   ; Posizione di Willy
+    
 TheHallEnemyColors5_8:
     DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

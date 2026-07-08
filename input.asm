@@ -4,7 +4,7 @@
 
 
 ; -------------------------------------------------------------------
-; CheckCtrl
+; Input_CheckCtrl
 ; Legge la tastiera e popola il registro D con i flag di input.
 ;
 ; Output:
@@ -21,15 +21,17 @@
 ;   (flags)         → bit 0 impostato se movimento rilevato
 ; -------------------------------------------------------------------
 
-CheckCtrl:
+Input_CheckCtrl:
+    xor  a
+    ld   (current_input_dir), a
 
     ; ── Sezione 1: tasto Q (cambio stanza) ──────────────────────────
     ;
     ; Porta $FB → riga Q, W, E, R, T. Bit 0 = Q.
     ; Se bit 0 = 0, Q è premuto.
 
-    ld   a, $fb
-    in   a, ($fe)
+    ld   bc, $fbfe
+    in   a, (c)
     bit  0, a
     jr   nz, .q_not_pressed     ; bit 0 = 1 → Q non premuto, salta
 
@@ -44,11 +46,11 @@ CheckCtrl:
     ld   (q_prev), a            ; marca "Q era premuto"
 
     ; NOTA sullo stack:
-    ; CheckCtrl è stata invocata con CALL, quindi l'indirizzo di ritorno
+    ; Input_CheckCtrl è stata invocata con CALL, quindi l'indirizzo di ritorno
     ; è in cima allo stack. Vogliamo saltare a PerformRoomChange senza
     ; tornare al chiamante, quindi POP HL scarta quell'indirizzo,
     ; poi JP salta direttamente.
-    pop  hl                     ; rimuove indirizzo di ritorno di CheckCtrl
+    pop  hl                     ; rimuove indirizzo di ritorno di Input_CheckCtrl
     jp   PerformRoomChange      ; salta al cambio stanza (non torna qui)
 
 .q_not_pressed:
@@ -63,8 +65,8 @@ CheckCtrl:
     ; Bit 0 = P (destra), Bit 1 = O (sinistra).
 
     ld  d, $00                  ; azzera output
-    ld  a, $df
-    in  a, ($fe)                ; legge riga $FE
+    ld  bc, $dffe
+    in  a, (c)                  ; legge riga $FE
 
     ; Se Willy è sul conveyor nella stanza The Off Licence (room 0),
     ; impedisci lo spostamento da sinistra a destra (disabilita tasto destra P / bit 0).
@@ -88,6 +90,8 @@ checkCtrl_left:
     set $00, d                  ; imposta bit 0 di D = "sinistra attiva"
     set 0, (ix)                 ; flags bit 0 = "movimento in corso"
     ld  e, a                    ; salva A
+    ld  a, 1
+    ld  (current_input_dir), a
     ld  a, (on_ground)
     or  a
     jr  z, .skip_dir_left
@@ -102,6 +106,8 @@ checkCtrl_right:
     set $01, d                  ; imposta bit 1 di D = "destra attiva"
     set 0, (ix)                 ; flags bit 0 = "movimento in corso"
     ld  e, a
+    ld  a, 2
+    ld  (current_input_dir), a
     ld  a, (on_ground)
     or  a
     jr  z, .skip_dir_right
@@ -118,8 +124,8 @@ checkCtrl_jump:
     ;
     ; Z → porta $FE, bit 1  (riga CAPS, Z, X, C, V)
 
-    ld  a, $fe
-    in  a, ($fe)
+    ld  bc, $fefe
+    in  a, (c)
     bit 1, a
     jr  z, .pressed             ; bit 1 = 0 → Z premuto
 
@@ -164,13 +170,15 @@ checkCtrl_jump:
     ld   a, d
     and  $04                    ; tieni solo il bit 2 (salto)
     ld   d, a                   ; D = solo salto, direzioni azzerate
+    xor  a
+    ld   (current_input_dir), a
     ret
 
 ; -------------------------------------------------------------------
 ; Esegue il cambio di stanza ciclico alla stanza successiva
 ; -------------------------------------------------------------------
 PerformRoomChange:
-    ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..14)
+    ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..45)
     ld   hl, RoomsListTable
     ld   bc, (room_ptr)            ; BC = layout corrente
     ld   e, 0                      ; E = contatore indice
@@ -186,33 +194,40 @@ PerformRoomChange:
     inc  hl
     inc  e
     ld   a, e
-    cp   15                        ; 15 stanze in totale
+    cp   46                        ; 46 stanze totali (indice 0..45)
     jr   c, .loop
     
     ld   e, 0                      ; Se non trovato, riparte da 0
 
 .found:
-    ; 2. Incrementa e calcola il prossimo indice (E = (E + 1) % 15)
-    ld   a, e
+    ; 2. Trova il prossimo indice non nullo (ciclando)
+    ld   c, e                      ; C = indice di partenza
+.next_index_loop:
+    ld   a, c
     inc  a
-    cp   15
+    cp   46
     jr   c, .no_wrap
     xor  a
 .no_wrap:
-    ; A = nuovo indice in RoomsListTable (0..14)
+    ld   c, a                      ; C = nuovo indice candidato
     
-    ; 3. Trova l'indirizzo del layout corrispondente da RoomsListTable
+    ; Leggi RoomsListTable[C]
+    push hl
     ld   hl, RoomsListTable
-    ld   c, a
-    ld   b, 0
-    add  hl, bc
-    add  hl, bc                    ; HL = RoomsListTable + A * 2
-    
+    ld   e, c
+    ld   d, 0
+    add  hl, de
+    add  hl, de                    ; HL = RoomsListTable + C * 2
     ld   e, (hl)
     inc  hl
-    ld   d, (hl)                   ; DE = puntatore al layout della nuova stanza
+    ld   d, (hl)                   ; DE = RoomsListTable[C]
+    ld   a, d
+    or   e                         ; DE == 0?
+    pop  hl
+    jr   z, .next_index_loop       ; Se è zero, riprova col prossimo
     
-    ld   (room_ptr), de            ; Aggiorna room_ptr
+    ; Trovato! DE = layout
+    ld   (room_ptr), de
     
     ; 4. Pulisci lo schermo e ricarica la stanza
     ld   hl, ATTR_P
@@ -257,18 +272,30 @@ TriggerRoomChange:
     jp   LoadRoomAndRestart
 
 RoomsListTable:
-    dw TheOffLicenceLayout          ; 0
-    dw TheBridgeLayout              ; 1
-    dw UnderTheMegaTreeLayout       ; 2
-    dw AtTheFootTheMegaTreeLayout   ; 3
-    dw TheDriveLayout               ; 4
-    dw TheSecurityGuardLayout       ; 5
-    dw EntranceToHadesLayout        ; 6
-    dw CuckoosNestLayout            ; 7
-    dw InsideTheMegaTrunkLayout     ; 8
-    dw OnABranchOverTheDriveLayout  ; 9
-    dw TheFrontDoorLayout           ; 10
-    dw TheHallLayout                ; 11
-    dw TreeTopLayout                ; 12
-    dw TheBathroomLayout            ; 33
-    dw MastreBedRoomLayout          ; 35
+    dw TheOffLicenceLayout              ; 0
+    dw TheBridgeLayout                  ; 1
+    dw UnderTheMegaTreeLayout           ; 2
+    dw AtTheFootTheMegaTreeLayout       ; 3
+    dw TheDriveLayout                   ; 4
+    dw TheSecurityGuardLayout           ; 5
+    dw EntranceToHadesLayout            ; 6
+    dw CuckoosNestLayout                ; 7
+    dw InsideTheMegaTrunkLayout         ; 8
+    dw OnABranchOverTheDriveLayout      ; 9
+    dw TheFrontDoorLayout               ; 10
+    dw TheHallLayout                    ; 11
+    dw TreeTopLayout                    ; 12
+    dw OutALimbLayout                   ; 13
+    dw RescueEsmereldaLayout            ; 14
+    dw IAmSureIHaveSeenThiBeforeLayout  ; 15
+    dw WeMustPerformQuirkafleegLayout   ; 16
+    dw UpOnTheBattlementsLayout         ; 17
+    dw OntheRoofLayout                  ; 18
+    dw TheForgottenAbbeyLayout          ; 19
+    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 20-32: padding
+    dw TheBathroomLayout                ; 33
+    dw 0                                ; 34
+    dw MastreBedRoomLayout              ; 35
+    dw 0,0,0,0,0,0,0,0,0                ; 36-44: padding
+    dw UnderTheDriveLayout              ; 45
+    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60

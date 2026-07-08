@@ -5,7 +5,7 @@
 ; -------------------------------------------------------------------
 ; Tabella Globale degli Oggetti (Items)
 ; Ciascun item occupa 5 byte:
-;   Byte 0: ID della stanza (0 = Test Room, 1 = The Bridge, 2 = The Off Licence, 3 = Master Bedroom, 4 = Under the MegaTree, 5 = At TheFoot The Mega Tree, 6 = The Drive, 7 = The Security Guard)
+;   Byte 0: ID della stanza (0 = Test Room, 1 = The Bridge, 2 = The Off Licence, 3 = Master Bedroom, 4 = Under the MegaTree, 5 = Gfx_At TheFoot The Mega Tree, 6 = The Drive, 7 = The Security Guard)
 ;   Byte 1: X colonna dello schermo (0..31)
 ;   Byte 2: Y riga dello schermo (3..18)
 ;   Byte 3: Attributo colore (es. $C6 per Giallo Flashing, $C5 per Cyan Flashing)
@@ -43,7 +43,7 @@ ItemsTable:
     ; Stanza 2 (Under the MegaTree)
     db 2, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)  
 
-    ; Stanza 3 (At The Foot TheMega Tree)
+    ; Stanza 3 (Gfx_At The Foot TheMega Tree)
     db 3, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)  
     db 3, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)  
     db 3, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)  
@@ -52,8 +52,11 @@ ItemsTable:
 
     ; Stanza 6 (The Security Guard)
 
-    ; Stanza 7 (The Bathroom)
-    db 33, 23, 13, CYAN, 0                ; Oggetto 1 alla colonna X=7, riga Y=13, CYAN, (Stato: 0=attivo)  
+    ; Stanza 7 (Cuckoo's Nest)
+    db 7, 15, 7, MAGENTA, 0              ; Oggetto 1 alla colonna X=7, riga Y=15, YELLOW, (Stato: 0=attivo)
+
+    ; Stanza 33 (The Bathroom)
+    db 33, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
 
     ; Stanza 35 (Master Bedroom)
 
@@ -73,7 +76,7 @@ ItemsTable:
 ;    0 = The Off Licence
 ;    1 = The Bridge
 ;    2 = Under The Mega Tree
-;    3 = At The Foot Of The Mega Tree
+;    3 = Gfx_At The Foot Of The Mega Tree
 ;    4 = The Drive
 ;    5 = The Security Guard
 ;    6 = Entrance To Hades
@@ -278,6 +281,104 @@ DetermineCurrentRoomID:
 .not_treetop:
 
     ; ---------------------------------------------------------------
+    ; Confronto con TreeTop
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, OutALimbLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_outalimb
+
+    ld   a, 13               ; Room ID = 13
+    jp   .set_room
+
+.not_outalimb:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con ResecueEsmeralda
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, RescueEsmereldaLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_rescueesmeralda
+
+    ld   a, 14               ; Room ID = 14
+    jp   .set_room
+
+.not_rescueesmeralda
+
+    ; ---------------------------------------------------------------
+    ; Confronto con ResecueEsmeralda
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, IAmSureIHaveSeenThiBeforeLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_immsureihaveseenthibefore
+
+    ld   a, 15               ; Room ID = 15
+    jp   .set_room
+
+.not_immsureihaveseenthibefore
+
+    ; ---------------------------------------------------------------
+    ; Confronto con ResecueEsmeralda
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WeMustPerformQuirkafleegLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_wemustperformquirkafleeg
+
+    ld   a, 16               ; Room ID = 16
+    jp   .set_room
+
+.not_wemustperformquirkafleeg
+
+    ; ---------------------------------------------------------------
+    ; Confronto con ResecueEsmeralda
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, UpOnTheBattlementsLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_uponthebattlements
+
+    ld   a, 17               ; Room ID = 17
+    jp   .set_room
+
+.not_uponthebattlements
+
+    ; ---------------------------------------------------------------
+    ; Confronto con ResecueEsmeralda
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, OntheRoofLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_ontehroof
+
+    ld   a, 18               ; Room ID = 18
+    jp   .set_room
+
+.not_ontehroof
+
+    ; ---------------------------------------------------------------
+    ; Confronto con ResecueEsmeralda
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheForgottenAbbeyLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_theforgottenabbey
+
+    ld   a, 189              ; Room ID = 19
+    jp   .set_room
+
+.not_theforgottenabbey
+
+    ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
@@ -297,9 +398,22 @@ DetermineCurrentRoomID:
     ld   de, MastreBedRoomLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_masterbed
 
     ld   a, 35               ; Room ID = 35
+    jp   .set_room
+
+.not_masterbed
+    ; ---------------------------------------------------------------
+    ; Confronto con UnderTheDrive
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, UnderTheDriveLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+
+    ld   a, 45               ; Room ID = 45
     jp   .set_room
 
 .unknown:
@@ -320,7 +434,7 @@ DetermineCurrentRoomID:
     ret
 
 ; -------------------------------------------------------------------
-; DrawRoomItems
+; Items_DrawRoom
 ;
 ; Disegna tutti gli oggetti attivi appartenenti alla stanza corrente.
 ;
@@ -351,7 +465,7 @@ DetermineCurrentRoomID:
 ;
 ; Ogni record cache occupa 5 byte.
 ; -------------------------------------------------------------------
-DrawRoomItems:
+Items_DrawRoom:
 
     ; Salva tutti i registri utilizzati
     push hl
@@ -703,7 +817,7 @@ DrawItemGraphic:
 ; Utilizza:
 ;   room_ptr -> struttura dati della stanza corrente
 ;   GetCellFromUnpacked -> restituisce il tipo di cella
-;   DrawTile -> ridisegna il tile selezionato
+;   Gfx_DrawTile -> ridisegna il tile selezionato
 ;
 ; Tipi di cella:
 ;   0 = Background
@@ -799,7 +913,7 @@ RestoreBackgroundCell:
     ; ---------------------------------------------------------------
     ; HL punta ora alla grafica del tile da ridisegnare.
     ;
-    ; DrawTile si aspetta:
+    ; Gfx_DrawTile si aspetta:
     ;   IX = puntatore tile
     ;   B  = Row
     ;   C  = Col
@@ -812,7 +926,7 @@ RestoreBackgroundCell:
     pop  bc
 
     ; Disegna il tile originale
-    call DrawTile
+    call Gfx_DrawTile
 
     ; ---------------------------------------------------------------
     ; Ripristina i registri salvati
@@ -1008,7 +1122,7 @@ CheckWillyItemCollision:
     ret
 
 ; -------------------------------------------------------------------
-; CheckRoomItemsCollision
+; Items_CheckCollision
 ;
 ; Controlla se Willy entra in collisione con uno degli item
 ; attivi presenti nella stanza corrente.
@@ -1036,7 +1150,7 @@ CheckWillyItemCollision:
 ; Fine tabella:
 ;   RoomID = $FF
 ; -------------------------------------------------------------------
-CheckRoomItemsCollision:
+Items_CheckCollision:
 
     ; Salva i registri utilizzati
     push hl
@@ -1169,7 +1283,7 @@ CheckRoomItemsCollision:
     ; ---------------------------------------------------------------
     ; Aggiorna il contatore visualizzato a schermo
     ; ---------------------------------------------------------------
-    call UpdateItemsCollectedDisplay
+    call Gfx_UpdateItemsCollectedDisplay
 
     ; ---------------------------------------------------------------
     ; Ripristina il tile originale della stanza
@@ -1184,7 +1298,7 @@ CheckRoomItemsCollision:
     ; ---------------------------------------------------------------
     ; Riproduce il suono di raccolta
     ; ---------------------------------------------------------------
-    call PlayCollectSound
+    call Audio_PlayCollectSound
 
     ; Ripristina il puntatore alla tabella
     pop  hl
@@ -1226,82 +1340,7 @@ CheckRoomItemsCollision:
 
     ret
 
-; -------------------------------------------------------------------
-; PlayCollectSound
-;
-; Genera un breve effetto sonoro (beep) tramite il buzzer
-; dello ZX Spectrum utilizzando il port $FE.
-;
-; Il suono viene prodotto alternando ON/OFF del bit 4
-; (speaker) con un semplice delay software.
-;
-; Effetto risultante:
-;   beep breve tipo "pickup item"
-; -------------------------------------------------------------------
-PlayCollectSound:
 
-    ; Salva registri utilizzati
-    push bc
-    push de
-
-    ; ---------------------------------------------------------------
-    ; Numero di cicli del beep (durata complessiva del suono)
-    ; ---------------------------------------------------------------
-    ld   b, 120
-
-.sound_loop:
-
-    ; ---------------------------------------------------------------
-    ; SPEAKER ON
-    ;
-    ; Legge il colore del bordo corrente e attiva il bit 4
-    ; per pilotare lo speaker.
-    ; ---------------------------------------------------------------
-    ld   a, (room_border_color)
-    or   $10               ; bit 4 = 1 → speaker ON
-
-    out  ($fe), a         ; scrive sul port ULA
-
-    ; ---------------------------------------------------------------
-    ; Delay (mezzo periodo)
-    ; Loop software a consumo CPU
-    ; ---------------------------------------------------------------
-    ld   c, 60
-
-.d1:
-    dec  c
-    jr   nz, .d1
-
-    ; ---------------------------------------------------------------
-    ; SPEAKER OFF
-    ;
-    ; Mantiene il colore del bordo ma disattiva lo speaker
-    ; ---------------------------------------------------------------
-    ld   a, (room_border_color)
-    and  $ef              ; bit 4 = 0 → speaker OFF
-
-    out  ($fe), a
-
-    ; ---------------------------------------------------------------
-    ; Secondo delay (mezzo periodo)
-    ; Completa l’onda quadra
-    ; ---------------------------------------------------------------
-    ld   c, 60
-
-.d2:
-    dec  c
-    jr   nz, .d2
-
-    ; ---------------------------------------------------------------
-    ; Ripete fino a completare il numero di cicli
-    ; ---------------------------------------------------------------
-    djnz .sound_loop
-
-    ; Ripristina registri salvati
-    pop  de
-    pop  bc
-
-    ret
 
 ; -------------------------------------------------------------------
 ; CheckActiveItemAtCell

@@ -18,11 +18,11 @@
 ; MasterBedroomItem		    Size   8 Byte, Start Byte 227
 ; MasterBedroomDirection    Size   4 Byte, Start Byte 235
 ; MasterBedroomUnused       Size   1 Byte, Start Byte 239
-; MasterBedroomEnemy1		Size   4 Byte, Start Byte 240
-; MasterBedroomEnemy2		Size   4 Byte, Start Byte 244
-; MasterBedroomEnemy3		Size   4 Byte, Start Byte 248
-; MasterBedroomEnemy4		Size   4 Byte, Start Byte 252
-; MasterBedroomPosWilly     Size   2 Byte, Start Byte 256
+; MasterBedroomEnemy1		Size   5 Byte, Start Byte 240
+; MasterBedroomEnemy2		Size   5 Byte, Start Byte 245
+; MasterBedroomEnemy3		Size   5 Byte, Start Byte 250
+; MasterBedroomEnemy4		Size   5 Byte, Start Byte 255
+; MasterBedroomPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -104,21 +104,21 @@ MastreBedRoomUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 MastreBedRoomEnemy1:
-    DEFB $80, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
 MastreBedRoomEnemy2:
-    DEFB $80, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
 MastreBedRoomEnemy3:
-    DEFB $C4, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 MastreBedRoomEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 MastreBedRoomEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 MastreBedRoomEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 MastreBedRoomEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 MastreBedRoomEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 MastreBedRoomPosWilly:
     db 200, 101                   ; Posizione di Willy

@@ -23,6 +23,8 @@ jump_pressed:   db $00
 jump_prev:      db $00
 jump_start_y:   db $00
 jump_dir:       db $00
+jump_frame:     db $00
+current_input_dir: db $00
 q_prev:         db $00
 
 ; Buffer e contatori
@@ -47,3 +49,7 @@ enemy_update_rate:  db 1
 enemy_update_timer: db 0
 player_speed:       db 3
 transition_active:  db 0
+Audio_jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
+Audio_jump_sound_timer:   db 0
+Audio_music_note_idx:      db 0
+Audio_music_frame_counter: db 1

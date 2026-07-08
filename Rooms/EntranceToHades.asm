@@ -16,11 +16,11 @@
 ; EntranceToHadesItem         Size   8 Byte, Start Byte 227
 ; EntranceToHadesDirection    Size   4 Byte, Start Byte 235
 ; EntranceToHadesUnused       Size   1 Byte, Start Byte 239
-; EntranceToHadesEnemy1       Size   4 Byte, Start Byte 240
-; EntranceToHadesEnemy2       Size   4 Byte, Start Byte 244
-; EntranceToHadesEnemy3       Size   4 Byte, Start Byte 248
-; EntranceToHadesEnemy4       Size   4 Byte, Start Byte 252
-; EntranceToHadesPosWilly     Size   2 Byte, Start Byte 256
+; EntranceToHadesEnemy1       Size   5 Byte, Start Byte 240
+; EntranceToHadesEnemy2       Size   5 Byte, Start Byte 245
+; EntranceToHadesEnemy3       Size   5 Byte, Start Byte 250
+; EntranceToHadesEnemy4       Size   5 Byte, Start Byte 255
+; EntranceToHadesPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
@@ -46,7 +46,7 @@ EntranceToHadesTile:
     DEFM "       Entrance to Hades        "
 
 EntranceToHadesBackground:                    ; Background
-    DEFB 52,0,0,0,0,0,0,0,0
+    DEFB 55,0,0,0,0,0,0,0,0
 
 EntranceToHadesFloor:
     DEFB 163,160,20,130,80,10,65,40,5      ; Floor Solid
@@ -70,7 +70,7 @@ EntranceToHadesConveyorData:
 
 EntranceToHadesRampData:
     DEFB 0
-    DEFW 0
+    DEFW 24519
     DEFB 0
 
 EntranceToHadesBorderColor:
@@ -85,28 +85,28 @@ EntranceToHadesItem:
 EntranceToHadesDirection:
     DEFB 14                        ;Room to the left (Rescue Esmerelda)
     DEFB 5	                       ;Room to the right (The Security Guard)
-    DEFB 0	                       ;Room above (The Off Licence)
-    DEFB 0	                       ;Room below (The Off Licence)
+    DEFB $FF                       ;Room above (The Off Licence)
+    DEFB $FF                       ;Room below (The Off Licence)
 
 EntranceToHadesUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 EntranceToHadesEnemy1:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 EntranceToHadesEnemy2:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 EntranceToHadesEnemy3:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 EntranceToHadesEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0         ; Empty slot
 EntranceToHadesEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 EntranceToHadesEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 EntranceToHadesEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 EntranceToHadesEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 EntranceToHadesPosWilly:
     db 136, 30                   ; Willy starting position

@@ -1,0 +1,40 @@
+Ho individuato e risolto entrambi i problemi relativi al salto di Willy:
+
+  ### 1. Il bug del "Volo" (Wall-Climbing)
+
+  Nel file physics.asm, la routine di collisione durante la caduta effettuava un controllo
+  a  Y + 8  (livello del busto) per verificare l'atterraggio. Se Willy si trovava di fianco a
+  un muro o a un blocco solido, questa riga veniva considerata "solida", facendo scattare
+  l'atterraggio fittizio ( on_ground  impostato a 1 e riposizionamento di 8 pixel verso
+  l'alto).
+
+  • Conseguenza: Tenendo premuto Z, Willy saltava di nuovo istantaneamente agganciandosi ai
+  muri di fianco a lui, dando l'impressione di volare o scalare pareti verticali.
+  • Risoluzione: Ho rimosso il controllo a  Y + 8 , lasciando esclusivamente il controllo a 
+  Y + 16  (livello dei piedi) per stabilire l'atterraggio effettivo.
+
+  ### 2. Il bug dell'altezza del salto variabile
+
+  La gravità frazionaria (che decelera Willy in aria a frame alternati) veniva applicata
+  basandosi sul registro globale  counter  (il frame count dell'interrupt). A seconda di
+  quale frame la pressione di Z avveniva, la gravità veniva saltata in punti diversi della
+  traiettoria:
+
+  • Conseguenza: L'altezza del salto variava casualmente tra i 18 e i 24 pixel.
+  • Risoluzione:
+      1. Ho introdotto una nuova variabile  jump_frame  in datavariable.asm.
+      2. Resetto  jump_frame  a  0  quando inizia un salto (physics.asm e physics.asm).
+      3. Uso  jump_frame  incrementato a ogni frame a mezz'aria per calcolare lo skip della
+      gravità (physics.asm). In questo modo, la traiettoria di salto è deterministica ed
+      identica ogni singola volta.
+
+
+  ### 3. Ottimizzazione I/O Tastiera
+
+  Ho inoltre aggiornato la lettura della tastiera in input.asm sostituendo le istruzioni
+  ld a, mask; in a, ($fe)  con la notazione standard Z80  ld bc, port; in a, (c) . Questo
+  previene possibili anomalie hardware o nei motori di emulazione dei registri di I/O legati
+  all'uso dell'accumulatore come byte alto dell'indirizzo di porta.
+
+  La build è stata compilata con successo (0 errori, 0 warning) generandoti il file snapshot
+  aggiornato.

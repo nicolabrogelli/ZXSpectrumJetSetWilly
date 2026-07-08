@@ -1,30 +1,35 @@
 ;===========================================================================
 ; TheSecurityGuard.asm  
 ;
-; TheSecurityGuardLayout       Size 128 Byte, Start Byte   0
-; TheSecurityGuardTile         Size  32 Byte, Start Byte 128
-; TheSecurityGuardBackground   Size   9 Byte, Start Byte 160
-; TheSecurityGuardFloor        Size   9 Byte, Start Byte 169
-; TheSecurityGuardWall         Size   9 Byte, Start Byte 178
-; TheSecurityGuardNasty        Size   9 Byte, Start Byte 187
-; TheSecurityGuardRamp         Size   9 Byte, Start Byte 196
-; TheSecurityGuardConveyor     Size   9 Byte, Start Byte 205
-; TheSecurityGuardConveyorData Size   4 Byte, Start Byte 214
-; TheSecurityGuardRampData     Size   4 Byte, Start Byte 218
-; TheSecurityGuardBorderColor  Size   1 Byte, Start Byte 222
-; TheSecurityGuardReserved     Size   4 Byte, Start Byte 223
-; TheSecurityGuardItem		   Size   8 Byte, Start Byte 227
-; TheSecurityGuardDirection    Size   4 Byte, Start Byte 235
-; TheSecurityGuardUnused       Size   1 Byte, Start Byte 239
-; TheSecurityGuardEnemy1		Size   4 Byte, Start Byte 240
-; TheSecurityGuardEnemy2		Size   4 Byte, Start Byte 244
-; TheSecurityGuardEnemy3		Size   4 Byte, Start Byte 248
-; TheSecurityGuardEnemy4		Size   4 Byte, Start Byte 252
-; TheSecurityGuardPosWilly     Size   2 Byte, Start Byte 256
+; TheSecurityGuardLayout            Size 128 Byte, Start Byte   0
+; TheSecurityGuardTile              Size  32 Byte, Start Byte 128
+; TheSecurityGuardBackground        Size   9 Byte, Start Byte 160
+; TheSecurityGuardFloor             Size   9 Byte, Start Byte 169
+; TheSecurityGuardWall              Size   9 Byte, Start Byte 178
+; TheSecurityGuardNasty             Size   9 Byte, Start Byte 187
+; TheSecurityGuardRamp              Size   9 Byte, Start Byte 196
+; TheSecurityGuardConveyor          Size   9 Byte, Start Byte 205
+; TheSecurityGuardConveyorData      Size   4 Byte, Start Byte 214
+; TheSecurityGuardRampData          Size   4 Byte, Start Byte 218
+; TheSecurityGuardBorderColor       Size   1 Byte, Start Byte 222
+; TheSecurityGuardReserved          Size   4 Byte, Start Byte 223
+; TheSecurityGuardItem		        Size   8 Byte, Start Byte 227
+; TheSecurityGuardDirection         Size   4 Byte, Start Byte 235
+; TheSecurityGuardUnused            Size   1 Byte, Start Byte 239
+; TheSecurityGuardEnemy1		    Size   5 Byte, Start Byte 240
+; TheSecurityGuardEnemy2		    Size   5 Byte, Start Byte 245
+; TheSecurityGuardEnemy3		    Size   5 Byte, Start Byte 250
+; TheSecurityGuardEnemy4		    Size   5 Byte, Start Byte 255
+; TheSecurityGuardEnemy5		    Size   5 Byte, Start Byte 260
+; TheSecurityGuardEnemy6		    Size   5 Byte, Start Byte 265
+; TheSecurityGuardEnemy7		    Size   5 Byte, Start Byte 270
+; TheSecurityGuardEnemy8		    Size   5 Byte, Start Byte 275
+; TheSecurityGuardPosWilly          Size   2 Byte, Start Byte 280
+; TheSecurityGuardEnemyColors5_8    Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
-; Room layout for Room  (Master Bedroom)
+; Room layout for Room  (The Security Guard)
 TheSecurityGuardLayout:           
     DEFB 128,0,0,0,0,0,0,0
     DEFB 160,0,0,0,0,0,0,0
@@ -102,23 +107,24 @@ TheSecurityGuardUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheSecurityGuardEnemy1:
-    DEFB $CB,  88, 16, 105           ; Enemy 1, Phase 0 (Y=16, Down)
+    DEFB $C0, 11, 88, 40, 104          ; [Soldato (40976) - horizontal], Guardian = 2, Starts X=88, Y=40, Limit X=104
 TheSecurityGuardEnemy2:
-    DEFB $DB, 113, 16, 105           ; Enemy 2, Phase 1 (Y=38, Down)
+    DEFB $D0, 11, 113, 44, 104         ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=113, Y=44, Limit X=104
 TheSecurityGuardEnemy3:
-    DEFB $EB, 136, 16, 105           ; Enemy 3, Phase 2 (Y=60, Up)
+    DEFB $E0, 11, 136, 44, 104         ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=136, Y=44, Limit X=104
 TheSecurityGuardEnemy4:
-    DEFB $FB, 184, 16, 105           ; Enemy 4, Phase 3 (Y=105, Up)
+    DEFB $F0, 11, 184, 48, 96          ; [Soldato (40992) - horizontal], Guardina = 3, Starts X=184, Y=48, Limit X=96
 TheSecurityGuardEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheSecurityGuardEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheSecurityGuardEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 TheSecurityGuardEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 TheSecurityGuardPosWilly:
-    db 200, 101                   ; Posizione di Willy
+    db 200, 101                         ; Posizione di Willy
+
 TheSecurityGuardEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8

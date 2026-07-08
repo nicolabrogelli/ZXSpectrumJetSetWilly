@@ -1,0 +1,115 @@
+;===========================================================================
+; RescueEsmerelda.asm
+;
+; RescueEsmereldaLayout       Size 128 Byte, Start Byte   0
+; RescueEsmereldaTile         Size  32 Byte, Start Byte 128
+; RescueEsmereldaBackground   Size   9 Byte, Start Byte 160
+; RescueEsmereldaFloor        Size   9 Byte, Start Byte 169
+; RescueEsmereldaWall         Size   9 Byte, Start Byte 178
+; RescueEsmereldaNasty        Size   9 Byte, Start Byte 187
+; RescueEsmereldaRamp         Size   9 Byte, Start Byte 196
+; RescueEsmereldaConveyor     Size   9 Byte, Start Byte 205
+; RescueEsmereldaConveyorData Size   4 Byte, Start Byte 214
+; RescueEsmereldaRampData     Size   4 Byte, Start Byte 218
+; RescueEsmereldaBorderColor  Size   1 Byte, Start Byte 222
+; RescueEsmereldaReserved     Size   4 Byte, Start Byte 223
+; RescueEsmereldaItem         Size   8 Byte, Start Byte 227
+; RescueEsmereldaDirection    Size   4 Byte, Start Byte 235
+; RescueEsmereldaUnused       Size   1 Byte, Start Byte 239
+; RescueEsmereldaEnemy1       Size   5 Byte, Start Byte 240
+; RescueEsmereldaEnemy2       Size   5 Byte, Start Byte 245
+; RescueEsmereldaEnemy3       Size   5 Byte, Start Byte 250
+; RescueEsmereldaEnemy4       Size   5 Byte, Start Byte 255
+; RescueEsmereldaPosWilly     Size   2 Byte, Start Byte 280
+;
+;===========================================================================
+
+; Room layout for Room 2 (Rescue Esmerelda )
+RescueEsmereldaLayout:
+	DEFB 0,0,0,0,0,0,8,2	;Room layout
+	DEFB 0,0,0,0,0,0,8,2
+	DEFB 0,0,0,0,0,0,0,2
+	DEFB 0,0,0,0,0,0,0,0
+	DEFB 0,0,0,0,0,0,170,0
+	DEFB 0,0,0,0,0,0,8,6
+	DEFB 0,0,0,0,0,0,0,18
+	DEFB 0,0,0,0,0,0,0,66
+	DEFB 0,0,0,0,0,0,1,2
+	DEFB 170,6,170,6,170,10,170,6
+	DEFB 170,14,170,14,170,0,0,6
+	DEFB 170,14,170,14,170,0,0,6
+	DEFB 170,14,170,14,170,128,0,18
+	DEFB 170,14,170,14,170,160,0,64
+	DEFB 170,14,170,14,170,168,1,0
+	DEFB 170,170,170,170,170,170,4,10
+
+RescueEsmereldaTile:
+    DEFM "        Rescue Esmerelda        "
+
+RescueEsmereldaBackground:                    ; Background
+    DEFB 16,0,0,0,0,0,0,0,0
+
+RescueEsmereldaFloor:
+    DEFB 23,3,3,12,12,49,50,196,200       ; Floor Solid
+
+RescueEsmereldaWall:
+    DEFB 4,238,0,187,0,238,0,187,0   ; Wall Solid
+
+RescueEsmereldaNasty:
+    DEFB 85,209,226,196,200,209,226,196,200  ; Nastry
+
+RescueEsmereldaRamp:                          ; Ramp Solid
+    DEFB 23,0,0,0,0,0,0,0,0              
+
+RescueEsmereldaConveyor:                      ; Conveyor Solid
+    DEFB 22,241,170,248,170,0,238,0,187
+
+RescueEsmereldaConveyorData:
+    DEFB 1
+    DEFW 24216
+    DEFB 4
+
+RescueEsmereldaRampData:
+    DEFB 1
+    DEFW 0
+    DEFB 0
+
+RescueEsmereldaBorderColor:
+    DEFB 1
+
+RescueEsmereldaReserved:
+    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+
+RescueEsmereldaItem:
+    DEFB 255,73,73,73,73,73,73,255
+
+RescueEsmereldaDirection:
+	DEFB 15						;Room to the left (I'm sure I've seen this before..)
+	DEFB 44						;Room to the right (On top of the house)
+	DEFB 20						;Room above (Ballroom East)
+	DEFB 39						;Room below (Emergency Generator)
+
+RescueEsmereldaUnused:
+    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+
+RescueEsmereldaEnemy1:
+    DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+RescueEsmereldaEnemy2:
+    DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+RescueEsmereldaEnemy3:
+    DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+RescueEsmereldaEnemy4:
+    DEFB 0, 0, 0, 0, 0               ; Empty slot
+RescueEsmereldaEnemy5:
+    DEFB 0, 0, 0, 0, 0
+RescueEsmereldaEnemy6:
+    DEFB 0, 0, 0, 0, 0
+RescueEsmereldaEnemy7:
+    DEFB 0, 0, 0, 0, 0
+RescueEsmereldaEnemy8:
+    DEFB 0, 0, 0, 0, 0
+
+RescueEsmereldaPosWilly:
+    db 200, 50                   ; Posizione di Willy
+RescueEsmereldaEnemyColors5_8:
+    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

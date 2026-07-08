@@ -8,7 +8,7 @@
 ; Input: C = X, B = Y
 ; Output: Carry flag impostato se solida, altrimenti resettato
 ; -------------------------------------------------------------------
-CheckSolidCell:
+Phys_CheckSolid:
     push hl
     push de
     push bc
@@ -64,7 +64,7 @@ CheckSolidCell:
 ; -------------------------------------------------------------------
 ; Applica gravità e gestisce salto
 ; -------------------------------------------------------------------
-ApplyGravity:
+Phys_ApplyGravity:
     ld  bc, (PlayerPos)
     ld  a, b              ; B = PlayerY (pixel)
     
@@ -97,14 +97,19 @@ ApplyGravity:
     or   a
     jp   z, .end            ; Se non salta, abbiamo finito per questo frame
     
+    xor  a
+    ld   (Audio_jump_sound_note), a
+    ld   (Audio_jump_sound_timer), a
+    
     ld   a, JUMP_STRENGTH
     ld   (velocity_y), a
     xor  a
     ld   (on_ground), a
     ld   (jump_pressed), a
+    ld   (jump_frame), a
     ld   a, b              ; B = PlayerY (ramp_Y)
     ld   (jump_start_y), a
-    ld   a, (direction)
+    ld   a, (current_input_dir)
     ld   (jump_dir), a
     jp   .in_air
     
@@ -130,7 +135,7 @@ ApplyGravity:
     add  a, 16
     push bc
     ld   b, a              ; B = Y + 16
-    call CheckSolidCell    ; C = X
+    call Phys_CheckSolid    ; C = X
     pop  bc
     jr   nc, .no_step_down
     
@@ -142,7 +147,7 @@ ApplyGravity:
     ld   a, c
     add  a, 7
     ld   c, a              ; C = X + 7
-    call CheckSolidCell
+    call Phys_CheckSolid
     pop  bc
     jr   c, .no_step_down
     
@@ -156,7 +161,7 @@ ApplyGravity:
     ld   a, c
     add  a, 7
     ld   c, a              ; C = X + 7
-    call CheckSolidCell
+    call Phys_CheckSolid
     pop  bc
     jr   nc, .no_step_down
     
@@ -171,7 +176,7 @@ ApplyGravity:
     ld   a, c
     add  a, 7
     ld   c, a              ; C = X + 7
-    call CheckSolidCell
+    call Phys_CheckSolid
     pop  bc
     jr   nc, .no_step_down
     
@@ -180,7 +185,7 @@ ApplyGravity:
     add  a, 16
     push bc
     ld   b, a              ; B = Y + 16
-    call CheckSolidCell    ; C = X
+    call Phys_CheckSolid    ; C = X
     pop  bc
     jr   c, .no_step_down
     
@@ -191,7 +196,7 @@ ApplyGravity:
     jr   nc, .no_step_down
     push bc
     ld   b, a              ; B = Y + 24
-    call CheckSolidCell    ; C = X
+    call Phys_CheckSolid    ; C = X
     pop  bc
     jr   nc, .no_step_down
     
@@ -211,14 +216,14 @@ ApplyGravity:
     ld  b, a              ; B = PlayerY + 16
     
     ; Controlla se la cella sotto il piede sinistro (PlayerX, PlayerY + 16) è solida
-    call CheckSolidCell
+    call Phys_CheckSolid
     jr   c, .still_on_ground
     
     ; Controlla se la cella sotto il piede destro (PlayerX + 7, PlayerY + 16) è solida
     ld   a, c
     add  a, 7
     ld   c, a              ; C = PlayerX + 7
-    call CheckSolidCell
+    call Phys_CheckSolid
     jr   c, .still_on_ground
     
     ; Se nessuna delle due è solida, iniziamo a cadere!
@@ -237,22 +242,41 @@ ApplyGravity:
     or   a
     jp   z, .end
     
+    xor  a
+    ld   (Audio_jump_sound_note), a
+    ld   (Audio_jump_sound_timer), a
+    
     ld   a, JUMP_STRENGTH
     ld   (velocity_y), a
     xor  a
     ld   (on_ground), a
     ld   (jump_pressed), a
+    ld   (jump_frame), a
     ld   a, b              ; B = PlayerY
     ld   (jump_start_y), a
-    ld   a, (direction)
+    ld   a, (current_input_dir)
     ld   (jump_dir), a
     jp   .in_air
 
 .in_air:
-    ; Applica gravità
-    ld  a, (velocity_y)
-    sub GRAVITY           ; gravity = 2
+    ; Incrementa jump_frame per mantenere coerente la gravità frazionaria del salto
+    ld   a, (jump_frame)
+    inc  a
+    ld   (jump_frame), a
     
+    ; Applica gravità frazionaria (0.75 in media)
+    and  3
+    cp   3
+    jr   z, .skip_gravity
+    
+    ld   a, (velocity_y)
+    sub  1
+    jr   .clamp_fall_speed
+    
+.skip_gravity:
+    ld   a, (velocity_y)
+    
+.clamp_fall_speed:
     ; Controlla se positivo per evitare bug con cp signed
     bit 7, a
     jr  z, .store_vel
@@ -321,33 +345,15 @@ ApplyGravity:
     ld   (velocity_y), a
     ld   (jump_start_y), a  ; Reset jump Y
     ld   (jump_dir), a
+    ld   (jump_frame), a
     jp   .end
     
 .no_ramp_landing:
     pop  bc
     ; --- CONTROLLO COLLISIONE CON IL TERRENO DURANTE LA CADUTA ---
-    ; 1. Controlliamo prima a Y + 8 (riga superiore) per evitare di penetrare nei muri/blocchi spessi
+    ; Controlliamo solo al piede effettivo (Y + 16) per evitare che Willy atterri su blocchi orizzontali di lato
     ld   a, b
-    add  a, 8
-    ld   b, a              ; B = Nuovo Y + 8
-    
-    push bc                ; Salva BC per il controllo successivo a Y + 16
-    
-    ; Controlla se il piede sinistro tocca solido a Y + 8
-    call CheckSolidCell
-    jr   c, .land_at_y8
-    
-    ; Controlla se il piede destro tocca solido a Y + 8
-    ld   a, c
-    add  a, 7
-    ld   c, a              ; C = PlayerX + 7
-    call CheckSolidCell
-    jr   c, .land_at_y8
-    
-    ; 2. Se a Y + 8 non c'è collisione, controlliamo al piede effettivo (Y + 16)
-    pop  bc                ; Ripristina BC (B = Nuovo Y + 8, C = PlayerX)
-    ld   a, b
-    add  a, 8              ; A = Nuovo Y + 16
+    add  a, 16
     cp   128
     jr   c, .y_ok_fall
     ld   a, 127
@@ -355,22 +361,18 @@ ApplyGravity:
     ld   b, a              ; B = Nuovo Y + 16 (clampato)
     
     ; Controlla se il piede sinistro tocca solido a Y + 16
-    call CheckSolidCell
+    call Phys_CheckSolid
     jr   c, .check_landing
     
     ; Controlla se il piede destro tocca solido a Y + 16
     ld   a, c
     add  a, 7
     ld   c, a              ; C = PlayerX + 7
-    call CheckSolidCell
+    call Phys_CheckSolid
     jr   c, .check_landing
     
     ; Nessun atterraggio
     jr   .no_collision_checks
-
-.land_at_y8:
-    pop  bc                ; BC ha B = Nuovo Y + 8, C = PlayerX
-    jr   .check_landing
 
 .check_landing:
     ; Abbiamo toccato una cella solida!
@@ -414,6 +416,7 @@ ApplyGravity:
     ld   (velocity_y), a
     ld   (jump_start_y), a  ; Reset jump Y
     ld   (jump_dir), a
+    ld   (jump_frame), a
     jp   .end
     
 .no_collision_checks:
@@ -502,14 +505,14 @@ CheckCollision:
     
     ; 1. Controllo orizzontale: PlayerX - EnemyX + 7 in [0, 22]
     ld   a, (PlayerPos)    ; A = PlayerX
-    sub  (ix+1)            ; A = PlayerX - EnemyX
+    sub  (ix+2)            ; A = PlayerX - EnemyX (Offset 2: Current X)
     add  a, 7              ; A = PlayerX - EnemyX + 7
     cp   23                ; Se >= 23, nessuna collisione con questo
     jr   nc, .next
     
     ; 2. Controllo verticale: PlayerY - EnemyY + 15 in [0, 30]
     ld   a, (PlayerPos+1)  ; A = PlayerY
-    sub  (ix+2)            ; A = PlayerY - EnemyY
+    sub  (ix+3)            ; A = PlayerY - EnemyY (Offset 3: Current Y)
     add  a, 15             ; A = PlayerY - EnemyY + 15
     cp   31                ; Se >= 31, nessuna collisione con questo
     jr   nc, .next
@@ -523,8 +526,8 @@ CheckCollision:
     ret
     
 .next:
-    ld   de, 10
-    add  ix, de            ; Prossimo slot
+    ld   de, 11
+    add  ix, de            ; Prossimo slot (11 byte)
     dec  b
     jr   nz, .loop
     
@@ -637,7 +640,7 @@ CheckConveyorOrRampCell:
 ; -------------------------------------------------------------------
 ; Applica la forza di trascinamento del conveyor se Willy vi è sopra
 ; -------------------------------------------------------------------
-ApplyConveyorForce:
+Phys_ApplyConveyor:
     ld   a, (on_ground)
     or   a
     ret  z                 ; Se non è a terra, nessuna forza

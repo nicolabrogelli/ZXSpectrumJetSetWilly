@@ -1,30 +1,35 @@
 ;===========================================================================
 ; UnderTheMegaTree.asm  
 ;
-; UnderTheMegaTreeLayout       Size 128 Byte, Start Byte   0
-; UnderTheMegaTreeTile         Size  32 Byte, Start Byte 128
-; UnderTheMegaTreeBackground   Size   9 Byte, Start Byte 160
-; UnderTheMegaTreeFloor        Size   9 Byte, Start Byte 169
-; UnderTheMegaTreeWall         Size   9 Byte, Start Byte 178
-; UnderTheMegaTreeNasty        Size   9 Byte, Start Byte 187
-; UnderTheMegaTreeRamp         Size   9 Byte, Start Byte 196
-; UnderTheMegaTreeConveyor     Size   9 Byte, Start Byte 205
-; UnderTheMegaTreeConveyorData Size   4 Byte, Start Byte 214
-; UnderTheMegaTreeRampData     Size   4 Byte, Start Byte 218
-; UnderTheMegaTreeBorderColor  Size   1 Byte, Start Byte 222
-; UnderTheMegaTreeReserved     Size   4 Byte, Start Byte 223
-; UnderTheMegaTreeItem		    Size   8 Byte, Start Byte 227
-; UnderTheMegaTreeDirection    Size   4 Byte, Start Byte 235
-; UnderTheMegaTreeUnused       Size   1 Byte, Start Byte 239
-; UnderTheMegaTreeEnemy1		Size   4 Byte, Start Byte 240
-; UnderTheMegaTreeEnemy2		Size   4 Byte, Start Byte 244
-; UnderTheMegaTreeEnemy3		Size   4 Byte, Start Byte 248
-; UnderTheMegaTreeEnemy4		Size   4 Byte, Start Byte 252
-; UnderTheMegaTreePosWilly     Size   2 Byte, Start Byte 256
+; UnderTheMegaTreeLayout            Size 128 Byte, Start Byte   0
+; UnderTheMegaTreeTile              Size  32 Byte, Start Byte 128
+; UnderTheMegaTreeBackground        Size   9 Byte, Start Byte 160
+; UnderTheMegaTreeFloor             Size   9 Byte, Start Byte 169
+; UnderTheMegaTreeWall              Size   9 Byte, Start Byte 178
+; UnderTheMegaTreeNasty             Size   9 Byte, Start Byte 187
+; UnderTheMegaTreeRamp              Size   9 Byte, Start Byte 196
+; UnderTheMegaTreeConveyor          Size   9 Byte, Start Byte 205
+; UnderTheMegaTreeConveyorData      Size   4 Byte, Start Byte 214
+; UnderTheMegaTreeRampData          Size   4 Byte, Start Byte 218
+; UnderTheMegaTreeBorderColor       Size   1 Byte, Start Byte 222
+; UnderTheMegaTreeReserved          Size   4 Byte, Start Byte 223
+; UnderTheMegaTreeItem		        Size   8 Byte, Start Byte 227
+; UnderTheMegaTreeDirection         Size   4 Byte, Start Byte 235
+; UnderTheMegaTreeUnused            Size   1 Byte, Start Byte 239
+; UnderTheMegaTreeEnemy1	        Size   5 Byte, Start Byte 240
+; UnderTheMegaTreeEnemy2	        Size   5 Byte, Start Byte 245
+; UnderTheMegaTreeEnemy3	        Size   5 Byte, Start Byte 250
+; UnderTheMegaTreeEnemy4		    Size   5 Byte, Start Byte 255
+; UnderTheMegaTreeEnemy5		    Size   5 Byte, Start Byte 260
+; UnderTheMegaTreeEnemy6		    Size   5 Byte, Start Byte 265
+; UnderTheMegaTreeEnemy7		    Size   5 Byte, Start Byte 270
+; UnderTheMegaTreeEnemy8		    Size   5 Byte, Start Byte 275
+; UnderTheMegaTreePosWilly          Size   2 Byte, Start Byte 280
+; UnderTheMegaTreeEnemyColors5_8    Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
-; Room layout for Room  (Master Bedroom)
+; Room layout for Room  (Under The MegaTree)
 UnderTheMegaTreeLayout:           
     DEFB 0,3,255,207,252,0,0,0	
     DEFB 170,170,175,255,63,0,0,0
@@ -84,7 +89,7 @@ UnderTheMegaTreeBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 UnderTheMegaTreeReserved:
-    DEFB CYAN, RED, MAGENTA, 7                         ; Enemy colors: all WHITE (7)
+    DEFB CYAN, MAGENTA, RED, NONE                         ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 UnderTheMegaTreeItem:
@@ -92,34 +97,34 @@ UnderTheMegaTreeItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 UnderTheMegaTreeDirection:
-    DEFB 3	                                ;Room to the left (At the Foot of the MegaTree)
+    DEFB 3	                                ;Room to the left (Gfx_At the Foot of the MegaTree)
     DEFB 1	                                ;Room to the right (The Bridge)
     DEFB 7                                  ;Room above (CuckoosNest)
-    DEFB $FF                                ;Room below (None)
+    DEFB BLOCK                                ;Room below (None)
 
 UnderTheMegaTreeUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 UnderTheMegaTreeEnemy1:
-    DEFB $8D, 8, 104, 200         ; Enemy 1 (Canguro), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 13, 8, 104, 200         ; [Canguro (41216) - horizontal], Guardian = 32, Starts X=8, Y=104, Limit X=200
 UnderTheMegaTreeEnemy2:
-    DEFB $8C, 80, 30, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $C0, 6, 112, 48, 87          ; [face (41296) - vertical, Guardian = 42, Starts X=120, Y=16, Limit Y=76
 UnderTheMegaTreeEnemy3:
-    DEFB $C6, 120, 16, 76        ; Enemy 3 (face), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $80, 12, 80, 30, 180         ; [Maiale (41168) - horizontal, Guardian = 26, Starts X=80, Y=80, Limit X=180
 UnderTheMegaTreeEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0        
 UnderTheMegaTreeEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 UnderTheMegaTreeEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 UnderTheMegaTreeEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 UnderTheMegaTreeEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 UnderTheMegaTreePosWilly:
     db 200, 101                   ; Posizione di Willy
     
 UnderTheMegaTreeEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8

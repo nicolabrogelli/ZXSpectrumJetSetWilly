@@ -1,30 +1,35 @@
 ;===========================================================================
 ; CuckoosNest.asm  
 ;
-; CuckoosNestLayout       Size 128 Byte, Start Byte   0
-; CuckoosNestTile         Size  32 Byte, Start Byte 128
-; CuckoosNestBackground   Size   9 Byte, Start Byte 160
-; CuckoosNestFloor        Size   9 Byte, Start Byte 169
-; CuckoosNestWall         Size   9 Byte, Start Byte 178
-; CuckoosNestNasty        Size   9 Byte, Start Byte 187
-; CuckoosNestRamp         Size   9 Byte, Start Byte 196
-; CuckoosNestConveyor     Size   9 Byte, Start Byte 205
-; CuckoosNestConveyorData Size   4 Byte, Start Byte 214
-; CuckoosNestRampData     Size   4 Byte, Start Byte 218
-; CuckoosNestBorderColor  Size   1 Byte, Start Byte 222
-; CuckoosNestReserved     Size   4 Byte, Start Byte 223
+; CuckoosNestLayout         Size 128 Byte, Start Byte   0
+; CuckoosNestTile           Size  32 Byte, Start Byte 128
+; CuckoosNestBackground     Size   9 Byte, Start Byte 160
+; CuckoosNestFloor          Size   9 Byte, Start Byte 169
+; CuckoosNestWall           Size   9 Byte, Start Byte 178
+; CuckoosNestNasty          Size   9 Byte, Start Byte 187
+; CuckoosNestRamp           Size   9 Byte, Start Byte 196
+; CuckoosNestConveyor       Size   9 Byte, Start Byte 205
+; CuckoosNestConveyorData   Size   4 Byte, Start Byte 214
+; CuckoosNestRampData       Size   4 Byte, Start Byte 218
+; CuckoosNestBorderColor    Size   1 Byte, Start Byte 222
+; CuckoosNestReserved       Size   4 Byte, Start Byte 223
 ; CuckoosNestItem		    Size   8 Byte, Start Byte 227
-; CuckoosNestDirection    Size   4 Byte, Start Byte 235
-; CuckoosNestUnused       Size   1 Byte, Start Byte 239
-; CuckoosNestEnemy1		Size   4 Byte, Start Byte 240
-; CuckoosNestEnemy2		Size   4 Byte, Start Byte 244
-; CuckoosNestEnemy3		Size   4 Byte, Start Byte 248
-; CuckoosNestEnemy4		Size   4 Byte, Start Byte 252
-; CuckoosNestPosWilly     Size   2 Byte, Start Byte 256
+; CuckoosNestDirection      Size   4 Byte, Start Byte 235
+; CuckoosNestUnused         Size   1 Byte, Start Byte 239
+; CuckoosNestEnemy1		    Size   5 Byte, Start Byte 240
+; CuckoosNestEnemy2		    Size   5 Byte, Start Byte 245
+; CuckoosNestEnemy3		    Size   5 Byte, Start Byte 250
+; CuckoosNestEnemy4		    Size   5 Byte, Start Byte 255
+; CuckoosNestEnemy5		    Size   5 Byte, Start Byte 260
+; CuckoosNestEnemy6		    Size   5 Byte, Start Byte 265
+; CuckoosNestEnemy7		    Size   5 Byte, Start Byte 270
+; CuckoosNestEnemy8		    Size   5 Byte, Start Byte 275
+; CuckoosNestPosWilly       Size   2 Byte, Start Byte 280
+; CuckoosNestEnemyColors5_8 Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
-; Room layout for Room  (Master Bedroom)
+; Room layout for Room  (Cuckoo's Nest)
 CuckoosNestLayout:           
 	DEFB 0,0,0,0,0,0,0,0	; Room layout
 	DEFB 0,0,0,0,0,0,0,0
@@ -80,11 +85,11 @@ CuckoosNestRampData:
 
 ;The next byte is copied to 32990 and specifies the border colour.
 CuckoosNestBorderColor:
-    DEFB 4	                                ;Border colour
+    DEFB 1	                                ;Border colour
 
 ;The next two bytes are copied to 32991, but are not used.
 CuckoosNestReserved:
-    DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+    DEFB CYAN, MAGENTA, WHITE, NONE                         ; Enemy colors: all WHITE (7)
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 CuckoosNestItem:
@@ -93,8 +98,8 @@ CuckoosNestItem:
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 CuckoosNestDirection:
 	DEFB 8		;Room to the left (Inside the MegaTrunk)
-	DEFB $FF	;Room to the right (The Off Licence)
-	DEFB $FF	;Room above (The Off Licence)
+	DEFB BLOCK	;Room to the right (The Off Licence)
+	DEFB BLOCK	;Room above (The Off Licence)
 	DEFB 2		;Room below (Under the MegaTree)
 
 CuckoosNestUnused:
@@ -102,23 +107,24 @@ CuckoosNestUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 CuckoosNestEnemy1:
-    DEFB $82, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 4, 96, 64, 144         ; [Uovo (41272) - horizontal], Guardian = 39, Starts X=88, Y=40, Limit X=104
 CuckoosNestEnemy2:
-    DEFB $82, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 1, 0, 88, 88           ; [Sega (41384) - vertical], Guardian = 53, Starts X=32, Y=104, Limit X=112
 CuckoosNestEnemy3:
-    DEFB $C5, 120, 16, 76        ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB 0, 0, 0, 0, 0 ;DEFB $C0, 5, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
 CuckoosNestEnemy4:
-    DEFB 0,0,0,0                  ; Empty slot
+    DEFB 0, 0, 0, 0, 0               ; Empty slot
 CuckoosNestEnemy5:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 CuckoosNestEnemy6:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 CuckoosNestEnemy7:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 CuckoosNestEnemy8:
-    DEFB 0,0,0,0
+    DEFB 0, 0, 0, 0, 0
 
 CuckoosNestPosWilly:
     db 30, 80                   ; Posizione di Willy
+
 CuckoosNestEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8

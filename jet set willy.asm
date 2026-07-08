@@ -16,23 +16,25 @@
     include "physics.asm"
     include "enemy.asm"
     include "items.asm"
+    include "audio.asm"
     include "data/datavariable.asm"
     
 start:
+    ld   sp, $ffff
     call SetupIM2
     jp   Main
 
     
 
-    org $7F50
+;    org $7F50
 Main:
     ; Inizializza
     xor  a
     ld  (body_state), a
     ld  (items_collected), a
 
-    call CopyChars
-    call DefineChars
+    call Gfx_CopyChars
+    call Gfx_DefineChars
     
     ld   a, $02
     call OPENCHAN
@@ -44,11 +46,11 @@ Main:
     call CLS
 LoadRoomAndRestart:
     call DetermineCurrentRoomID
-    call DrawRoom
-    call DrawConveyorsAndRamps
-    call PrintRoomName
-    call DrawRoomItems
-    call LoadRoomEnemies
+    call Gfx_DrawRoom
+    call Gfx_DrawConveyorsAndRamps
+    call Gfx_PrintRoomName
+    call Items_DrawRoom
+    call Enemy_LoadRoom
     
     ld   a, (transition_active)
     or   a
@@ -79,14 +81,17 @@ LoadRoomAndRestart:
     or   $07               ; Imposta ink a bianco
     ld   (BORDCR), a
 
-    call PrintPlayer
+    call Gfx_PrintPlayer
 
 Main_loop:
     halt
     
+    call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
+    call Audio_UpdateMusic        ; Aggiorna la musica
+    
     ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
-    call DeleteCharAtOldPos
-    call PrintPlayer
+    call Gfx_DeleteCharAtOldPos
+    call Gfx_PrintPlayer
 
     call EraseRoomEnemies
     call DrawRoomEnemies
@@ -96,12 +101,12 @@ Main_loop:
     ld   (PlayerPosOld), bc
     
     ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
-    call CheckCtrl
+    call Input_CheckCtrl
     call MovePlayer
-    call ApplyGravity
-    call ApplyConveyorForce
-    call UpdateRoomEnemies
-    call CheckRoomItemsCollision
+    call Phys_ApplyGravity
+    call Phys_ApplyConveyor
+    call Enemy_Update
+    call Items_CheckCollision
     
     ; 5. Gestisci la collisione (disegna le raster bar se collide)
     call CheckCollision
@@ -136,24 +141,6 @@ Main_loop:
 
   
 
-    org $8300
-RoomsStart:
-    include "rooms/TheOffLicence.asm"               ; ID 00
-    include "rooms/TheBridge.asm"                   ; ID 01
-    include "rooms/UnderTheMegaTree.asm"            ; ID 02
-    include "rooms/AtTheFootTheMegaTree.asm"        ; ID 03
-    include "rooms/TheDrive.asm"                    ; ID 04
-    include "rooms/TheSecurityGuard.asm"            ; ID 05
-    include "rooms/EntranceToHades.asm"             ; ID 06
-    include "rooms/CuckoosNest.asm"                 ; ID 07
-    include "rooms/InsideTheMegaTrunk.asm"          ; ID 08
-    include "rooms/OnABranchOverTheDrive.asm"       ; ID 09
-    include "rooms/TheFrontDoor.asm"                ; ID 10
-    include "rooms/TheHall.asm"                     ; ID 11
-    include "rooms/TreeTop.asm"                     ; ID 12
-
-    include "rooms/TheBathroom.asm"                 ; ID 33
-    include "rooms/MasterBedRoom.asm"               ; ID 35s
-    include "data/datasprite.asm"
+    include "resources.asm"
     
     SAVESNA "jet set willy.sna", start
