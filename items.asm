@@ -58,6 +58,11 @@ ItemsTable:
     ; Stanza 10 (The Front Door)
     db 10, 11, 4, 43, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
 
+    ; Stanza 12 (The Front Door)
+    db 12, 16, 3, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    db 12, 19, 13, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    db 12, 22, 4, CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+
     ; Stanza 33 (The Bathroom)
     db 33, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
 
