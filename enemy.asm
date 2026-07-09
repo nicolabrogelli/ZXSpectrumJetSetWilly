@@ -305,7 +305,7 @@ Enemy_LoadRoom:
 ; -------------------------------------------------------------------
 ; Cancella tutti i nemici attivi ripristinando lo sfondo statico
 ; -------------------------------------------------------------------
-EraseRoomEnemies:
+Enemy_EraseRoom:
     push hl
     push de
     push bc
@@ -342,7 +342,7 @@ EraseRoomEnemies:
 ; -------------------------------------------------------------------
 ; Disegna tutti i nemici attivi
 ; -------------------------------------------------------------------
-DrawRoomEnemies:
+Enemy_DrawRoom:
     push hl
     push de
     push bc

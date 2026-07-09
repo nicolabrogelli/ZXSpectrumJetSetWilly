@@ -94,8 +94,9 @@ Main_loop:
     call Gfx_DeleteCharAtOldPos
     call Gfx_PrintPlayer
 
-    call EraseRoomEnemies
-    call DrawRoomEnemies
+    call Enemy_EraseRoom
+    call Enemy_DrawRoom
+
     
     ; 3. Salva le posizioni correnti del player per il prossimo frame
     ld   bc, (PlayerPos)

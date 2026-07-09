@@ -4073,7 +4073,7 @@
  305+ 6E90              ; -------------------------------------------------------------------
  306+ 6E90              ; Cancella tutti i nemici attivi ripristinando lo sfondo statico
  307+ 6E90              ; -------------------------------------------------------------------
- 308+ 6E90              EraseRoomEnemies:
+ 308+ 6E90              Enemy_EraseRoom:
  309+ 6E90 E5               push hl
  310+ 6E91 D5               push de
  311+ 6E92 C5               push bc
@@ -4110,7 +4110,7 @@
  342+ 6EC4              ; -------------------------------------------------------------------
  343+ 6EC4              ; Disegna tutti i nemici attivi
  344+ 6EC4              ; -------------------------------------------------------------------
- 345+ 6EC4              DrawRoomEnemies:
+ 345+ 6EC4              Enemy_DrawRoom:
  346+ 6EC4 E5               push hl
  347+ 6EC5 D5               push de
  348+ 6EC6 C5               push bc
@@ -7177,77 +7177,78 @@
   94  7A20 CD 46 60         call Gfx_DeleteCharAtOldPos
   95  7A23 CD F3 5F         call Gfx_PrintPlayer
   96  7A26
-  97  7A26 CD 90 6E         call EraseRoomEnemies
-  98  7A29 CD C4 6E         call DrawRoomEnemies
+  97  7A26 CD 90 6E         call Enemy_EraseRoom
+  98  7A29 CD C4 6E         call Enemy_DrawRoom
   99  7A2C
- 100  7A2C                  ; 3. Salva le posizioni correnti del player per il prossimo frame
- 101  7A2C ED 4B 2F 76      ld   bc, (PlayerPos)
- 102  7A30 ED 43 31 76      ld   (PlayerPosOld), bc
- 103  7A34
- 104  7A34                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
- 105  7A34 CD 2A 65         call Input_CheckCtrl
- 106  7A37 CD 4C 64         call MovePlayer
- 107  7A3A CD EE 66         call Phys_ApplyGravity
- 108  7A3D CD FA 69         call Phys_ApplyConveyor
- 109  7A40 CD 5A 70         call Enemy_Update
- 110  7A43 CD 98 74         call Items_CheckCollision
- 111  7A46
- 112  7A46                  ; Controlla collisione con Nasties (morte di Willy)
- 113  7A46 CD C9 6C         call Phys_CheckNastyCollision
- 114  7A49 30 18            jr   nc, .no_nasty_collision
- 115  7A4B
- 116  7A4B                  ; Gestisci la morte di Willy:
- 117  7A4B                  ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
- 118  7A4B CD 46 60         call Gfx_DeleteCharAtOldPos
- 119  7A4E
- 120  7A4E                  ; 2. Ripristina la posizione iniziale nella stanza
- 121  7A4E CD 17 65         call LoadPositionPlayeinRoom
- 122  7A51
- 123  7A51                  ; 3. Reimposta la fisica di Willy
- 124  7A51 AF               xor  a
- 125  7A52 32 3C 76         ld   (velocity_y), a
- 126  7A55 32 3E 76         ld   (jump_pressed), a
- 127  7A58 32 42 76         ld   (jump_frame), a
- 128  7A5B 32 41 76         ld   (jump_dir), a
- 129  7A5E 3E 01            ld   a, 1
- 130  7A60 32 3D 76         ld   (on_ground), a
- 131  7A63
- 132  7A63              .no_nasty_collision:
- 133  7A63
- 134  7A63                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
- 135  7A63 CD 4C 69         call CheckCollision
- 136  7A66 30 1A            jr   nc, .no_collision
- 137  7A68
- 138  7A68                  ; Collisione attiva: disegna le raster bar nel bordo
- 139  7A68 3A 47 76         ld   a, (counter)
- 140  7A6B E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
- 141  7A6D 06 1E            ld   b, 30             ; Numero di righe della barra raster
- 142  7A6F              .raster_loop:
- 143  7A6F D3 FE            out  ($fe), a
- 144  7A71 3C               inc  a
- 145  7A72 E6 07            and  7
- 146  7A74 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
- 147  7A76              .delay:
- 148  7A76 0D               dec  c
- 149  7A77 20 FD            jr   nz, .delay
- 150  7A79 10 F4            djnz .raster_loop
- 151  7A7B
- 152  7A7B                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
- 153  7A7B 3A 3B 76         ld   a, (room_border_color)
- 154  7A7E D3 FE            out  ($fe), a
- 155  7A80 18 05            jr   .no_collision_change
- 156  7A82
- 157  7A82              .no_collision:
- 158  7A82                  ; Nessuna collisione: mantieni il bordo al colore della stanza
- 159  7A82 3A 3B 76         ld   a, (room_border_color)
- 160  7A85 D3 FE            out  ($fe), a
- 161  7A87
- 162  7A87              .no_collision_change:
- 163  7A87 C3 19 7A         jp   Main_loop
- 164  7A8A
+ 100  7A2C
+ 101  7A2C                  ; 3. Salva le posizioni correnti del player per il prossimo frame
+ 102  7A2C ED 4B 2F 76      ld   bc, (PlayerPos)
+ 103  7A30 ED 43 31 76      ld   (PlayerPosOld), bc
+ 104  7A34
+ 105  7A34                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
+ 106  7A34 CD 2A 65         call Input_CheckCtrl
+ 107  7A37 CD 4C 64         call MovePlayer
+ 108  7A3A CD EE 66         call Phys_ApplyGravity
+ 109  7A3D CD FA 69         call Phys_ApplyConveyor
+ 110  7A40 CD 5A 70         call Enemy_Update
+ 111  7A43 CD 98 74         call Items_CheckCollision
+ 112  7A46
+ 113  7A46                  ; Controlla collisione con Nasties (morte di Willy)
+ 114  7A46 CD C9 6C         call Phys_CheckNastyCollision
+ 115  7A49 30 18            jr   nc, .no_nasty_collision
+ 116  7A4B
+ 117  7A4B                  ; Gestisci la morte di Willy:
+ 118  7A4B                  ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
+ 119  7A4B CD 46 60         call Gfx_DeleteCharAtOldPos
+ 120  7A4E
+ 121  7A4E                  ; 2. Ripristina la posizione iniziale nella stanza
+ 122  7A4E CD 17 65         call LoadPositionPlayeinRoom
+ 123  7A51
+ 124  7A51                  ; 3. Reimposta la fisica di Willy
+ 125  7A51 AF               xor  a
+ 126  7A52 32 3C 76         ld   (velocity_y), a
+ 127  7A55 32 3E 76         ld   (jump_pressed), a
+ 128  7A58 32 42 76         ld   (jump_frame), a
+ 129  7A5B 32 41 76         ld   (jump_dir), a
+ 130  7A5E 3E 01            ld   a, 1
+ 131  7A60 32 3D 76         ld   (on_ground), a
+ 132  7A63
+ 133  7A63              .no_nasty_collision:
+ 134  7A63
+ 135  7A63                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
+ 136  7A63 CD 4C 69         call CheckCollision
+ 137  7A66 30 1A            jr   nc, .no_collision
+ 138  7A68
+ 139  7A68                  ; Collisione attiva: disegna le raster bar nel bordo
+ 140  7A68 3A 47 76         ld   a, (counter)
+ 141  7A6B E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+ 142  7A6D 06 1E            ld   b, 30             ; Numero di righe della barra raster
+ 143  7A6F              .raster_loop:
+ 144  7A6F D3 FE            out  ($fe), a
+ 145  7A71 3C               inc  a
+ 146  7A72 E6 07            and  7
+ 147  7A74 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+ 148  7A76              .delay:
+ 149  7A76 0D               dec  c
+ 150  7A77 20 FD            jr   nz, .delay
+ 151  7A79 10 F4            djnz .raster_loop
+ 152  7A7B
+ 153  7A7B                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+ 154  7A7B 3A 3B 76         ld   a, (room_border_color)
+ 155  7A7E D3 FE            out  ($fe), a
+ 156  7A80 18 05            jr   .no_collision_change
+ 157  7A82
+ 158  7A82              .no_collision:
+ 159  7A82                  ; Nessuna collisione: mantieni il bordo al colore della stanza
+ 160  7A82 3A 3B 76         ld   a, (room_border_color)
+ 161  7A85 D3 FE            out  ($fe), a
+ 162  7A87
+ 163  7A87              .no_collision_change:
+ 164  7A87 C3 19 7A         jp   Main_loop
  165  7A8A
  166  7A8A
- 167  7A8A                  include "resources.asm"
+ 167  7A8A
+ 168  7A8A                  include "resources.asm"
 # file opened: resources.asm
    1+ 7A8A              ;===========================================================================
    2+ 7A8A              ; resources.asm
@@ -12510,6 +12511,6 @@
 # file closed: data/datasprite.asm
   36+ AFF2
 # file closed: resources.asm
- 168  AFF2
- 169  AFF2                  SAVESNA "jet set willy.sna", start
+ 169  AFF2
+ 170  AFF2                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm

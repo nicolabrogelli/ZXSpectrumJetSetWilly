@@ -2990,16 +2990,16 @@ enemy.asm|300||0|1|28300|T|
 enemy.asm|301||0|1|28301|T|
 enemy.asm|302||0|1|28302|T|
 enemy.asm|303||0|1|28303|T|
-enemy.asm|308||0|1|28304|F|EraseRoomEnemies
-enemy.asm|308||0|1|28304|L|,EraseRoomEnemies,,+used
+enemy.asm|308||0|1|28304|F|Enemy_EraseRoom
+enemy.asm|308||0|1|28304|L|,Enemy_EraseRoom,,+used
 enemy.asm|309||0|1|28304|T|
 enemy.asm|310||0|1|28305|T|
 enemy.asm|311||0|1|28306|T|
 enemy.asm|312||0|1|28307|T|
 enemy.asm|314||0|1|28309|T|
 enemy.asm|315||0|1|28313|T|
-enemy.asm|316||0|1|28315|F|EraseRoomEnemies.loop
-enemy.asm|316||0|1|28315|L|,EraseRoomEnemies,loop,+used
+enemy.asm|316||0|1|28315|F|Enemy_EraseRoom.loop
+enemy.asm|316||0|1|28315|L|,Enemy_EraseRoom,loop,+used
 enemy.asm|317||0|1|28315|T|
 enemy.asm|318||0|1|28318|T|
 enemy.asm|319||0|1|28320|T|
@@ -3011,8 +3011,8 @@ enemy.asm|325||0|1|28332|T|
 enemy.asm|326||0|1|28335|T|
 enemy.asm|327||0|1|28338|T|
 enemy.asm|328||0|1|28341|T|
-enemy.asm|330||0|1|28342|F|EraseRoomEnemies.next
-enemy.asm|330||0|1|28342|L|,EraseRoomEnemies,next,+used
+enemy.asm|330||0|1|28342|F|Enemy_EraseRoom.next
+enemy.asm|330||0|1|28342|L|,Enemy_EraseRoom,next,+used
 enemy.asm|331||0|1|28342|T|
 enemy.asm|332||0|1|28345|T|
 enemy.asm|333||0|1|28347|T|
@@ -3022,16 +3022,16 @@ enemy.asm|337||0|1|28352|T|
 enemy.asm|338||0|1|28353|T|
 enemy.asm|339||0|1|28354|T|
 enemy.asm|340||0|1|28355|T|
-enemy.asm|345||0|1|28356|F|DrawRoomEnemies
-enemy.asm|345||0|1|28356|L|,DrawRoomEnemies,,+used
+enemy.asm|345||0|1|28356|F|Enemy_DrawRoom
+enemy.asm|345||0|1|28356|L|,Enemy_DrawRoom,,+used
 enemy.asm|346||0|1|28356|T|
 enemy.asm|347||0|1|28357|T|
 enemy.asm|348||0|1|28358|T|
 enemy.asm|349||0|1|28359|T|
 enemy.asm|351||0|1|28361|T|
 enemy.asm|352||0|1|28365|T|
-enemy.asm|353||0|1|28367|F|DrawRoomEnemies.loop
-enemy.asm|353||0|1|28367|L|,DrawRoomEnemies,loop,+used
+enemy.asm|353||0|1|28367|F|Enemy_DrawRoom.loop
+enemy.asm|353||0|1|28367|L|,Enemy_DrawRoom,loop,+used
 enemy.asm|354||0|1|28367|T|
 enemy.asm|355||0|1|28370|T|
 enemy.asm|356||0|1|28372|T|
@@ -3080,124 +3080,124 @@ enemy.asm|402||0|1|28476|T|
 enemy.asm|403||0|1|28478|T|
 enemy.asm|406||0|1|28481|T|
 enemy.asm|407||0|1|28484|T|
-enemy.asm|409||0|1|28487|F|DrawRoomEnemies.got_lametta
-enemy.asm|409||0|1|28487|L|,DrawRoomEnemies,got_lametta,+used
+enemy.asm|409||0|1|28487|F|Enemy_DrawRoom.got_lametta
+enemy.asm|409||0|1|28487|L|,Enemy_DrawRoom,got_lametta,+used
 enemy.asm|410||0|1|28487|T|
 enemy.asm|411||0|1|28490|T|
 enemy.asm|412||0|1|28492|T|
 enemy.asm|413||0|1|28495|T|
 enemy.asm|414||0|1|28498|T|
 enemy.asm|415||0|1|28501|T|
-enemy.asm|417||0|1|28504|F|DrawRoomEnemies.got_sega
-enemy.asm|417||0|1|28504|L|,DrawRoomEnemies,got_sega,+used
+enemy.asm|417||0|1|28504|F|Enemy_DrawRoom.got_sega
+enemy.asm|417||0|1|28504|L|,Enemy_DrawRoom,got_sega,+used
 enemy.asm|418||0|1|28504|T|
 enemy.asm|419||0|1|28507|T|
 enemy.asm|420||0|1|28509|T|
 enemy.asm|421||0|1|28512|T|
 enemy.asm|422||0|1|28515|T|
 enemy.asm|423||0|1|28518|T|
-enemy.asm|425||0|1|28521|F|DrawRoomEnemies.got_uccello
-enemy.asm|425||0|1|28521|L|,DrawRoomEnemies,got_uccello,+used
+enemy.asm|425||0|1|28521|F|Enemy_DrawRoom.got_uccello
+enemy.asm|425||0|1|28521|L|,Enemy_DrawRoom,got_uccello,+used
 enemy.asm|426||0|1|28521|T|
 enemy.asm|427||0|1|28524|T|
 enemy.asm|428||0|1|28526|T|
 enemy.asm|429||0|1|28529|T|
 enemy.asm|430||0|1|28532|T|
 enemy.asm|431||0|1|28535|T|
-enemy.asm|433||0|1|28538|F|DrawRoomEnemies.got_radar
-enemy.asm|433||0|1|28538|L|,DrawRoomEnemies,got_radar,+used
+enemy.asm|433||0|1|28538|F|Enemy_DrawRoom.got_radar
+enemy.asm|433||0|1|28538|L|,Enemy_DrawRoom,got_radar,+used
 enemy.asm|434||0|1|28538|T|
 enemy.asm|435||0|1|28541|T|
-enemy.asm|437||0|1|28544|F|DrawRoomEnemies.got_uovo
-enemy.asm|437||0|1|28544|L|,DrawRoomEnemies,got_uovo,+used
+enemy.asm|437||0|1|28544|F|Enemy_DrawRoom.got_uovo
+enemy.asm|437||0|1|28544|L|,Enemy_DrawRoom,got_uovo,+used
 enemy.asm|438||0|1|28544|T|
 enemy.asm|439||0|1|28547|T|
 enemy.asm|440||0|1|28549|T|
 enemy.asm|441||0|1|28552|T|
 enemy.asm|442||0|1|28555|T|
 enemy.asm|443||0|1|28558|T|
-enemy.asm|445||0|1|28561|F|DrawRoomEnemies.got_ufo
-enemy.asm|445||0|1|28561|L|,DrawRoomEnemies,got_ufo,+used
+enemy.asm|445||0|1|28561|F|Enemy_DrawRoom.got_ufo
+enemy.asm|445||0|1|28561|L|,Enemy_DrawRoom,got_ufo,+used
 enemy.asm|446||0|1|28561|T|
 enemy.asm|447||0|1|28564|T|
-enemy.asm|449||0|1|28567|F|DrawRoomEnemies.got_faccia
-enemy.asm|449||0|1|28567|L|,DrawRoomEnemies,got_faccia,+used
+enemy.asm|449||0|1|28567|F|Enemy_DrawRoom.got_faccia
+enemy.asm|449||0|1|28567|L|,Enemy_DrawRoom,got_faccia,+used
 enemy.asm|450||0|1|28567|T|
 enemy.asm|451||0|1|28570|T|
-enemy.asm|453||0|1|28573|F|DrawRoomEnemies.got_scimmia
-enemy.asm|453||0|1|28573|L|,DrawRoomEnemies,got_scimmia,+used
+enemy.asm|453||0|1|28573|F|Enemy_DrawRoom.got_scimmia
+enemy.asm|453||0|1|28573|L|,Enemy_DrawRoom,got_scimmia,+used
 enemy.asm|454||0|1|28573|T|
 enemy.asm|455||0|1|28576|T|
-enemy.asm|457||0|1|28579|F|DrawRoomEnemies.got_robot
-enemy.asm|457||0|1|28579|L|,DrawRoomEnemies,got_robot,+used
+enemy.asm|457||0|1|28579|F|Enemy_DrawRoom.got_robot
+enemy.asm|457||0|1|28579|L|,Enemy_DrawRoom,got_robot,+used
 enemy.asm|458||0|1|28579|T|
 enemy.asm|459||0|1|28582|T|
-enemy.asm|461||0|1|28585|F|DrawRoomEnemies.got_palla
-enemy.asm|461||0|1|28585|L|,DrawRoomEnemies,got_palla,+used
+enemy.asm|461||0|1|28585|F|Enemy_DrawRoom.got_palla
+enemy.asm|461||0|1|28585|L|,Enemy_DrawRoom,got_palla,+used
 enemy.asm|462||0|1|28585|T|
 enemy.asm|463||0|1|28588|T|
-enemy.asm|465||0|1|28591|F|DrawRoomEnemies.got_doubleball
-enemy.asm|465||0|1|28591|L|,DrawRoomEnemies,got_doubleball,+used
+enemy.asm|465||0|1|28591|F|Enemy_DrawRoom.got_doubleball
+enemy.asm|465||0|1|28591|L|,Enemy_DrawRoom,got_doubleball,+used
 enemy.asm|466||0|1|28591|T|
 enemy.asm|467||0|1|28594|T|
 enemy.asm|468||0|1|28596|T|
 enemy.asm|469||0|1|28599|T|
 enemy.asm|470||0|1|28602|T|
 enemy.asm|471||0|1|28605|T|
-enemy.asm|473||0|1|28608|F|DrawRoomEnemies.got_soldato
-enemy.asm|473||0|1|28608|L|,DrawRoomEnemies,got_soldato,+used
+enemy.asm|473||0|1|28608|F|Enemy_DrawRoom.got_soldato
+enemy.asm|473||0|1|28608|L|,Enemy_DrawRoom,got_soldato,+used
 enemy.asm|474||0|1|28608|T|
 enemy.asm|475||0|1|28611|T|
-enemy.asm|477||0|1|28614|F|DrawRoomEnemies.got_maiale
-enemy.asm|477||0|1|28614|L|,DrawRoomEnemies,got_maiale,+used
+enemy.asm|477||0|1|28614|F|Enemy_DrawRoom.got_maiale
+enemy.asm|477||0|1|28614|L|,Enemy_DrawRoom,got_maiale,+used
 enemy.asm|478||0|1|28614|T|
 enemy.asm|479||0|1|28617|T|
 enemy.asm|480||0|1|28619|T|
 enemy.asm|481||0|1|28622|T|
 enemy.asm|482||0|1|28625|T|
 enemy.asm|483||0|1|28628|T|
-enemy.asm|485||0|1|28631|F|DrawRoomEnemies.got_canguro
-enemy.asm|485||0|1|28631|L|,DrawRoomEnemies,got_canguro,+used
+enemy.asm|485||0|1|28631|F|Enemy_DrawRoom.got_canguro
+enemy.asm|485||0|1|28631|L|,Enemy_DrawRoom,got_canguro,+used
 enemy.asm|486||0|1|28631|T|
 enemy.asm|487||0|1|28634|T|
 enemy.asm|488||0|1|28636|T|
 enemy.asm|489||0|1|28639|T|
 enemy.asm|490||0|1|28642|T|
 enemy.asm|491||0|1|28645|T|
-enemy.asm|493||0|1|28648|F|DrawRoomEnemies.got_fiore
-enemy.asm|493||0|1|28648|L|,DrawRoomEnemies,got_fiore,+used
+enemy.asm|493||0|1|28648|F|Enemy_DrawRoom.got_fiore
+enemy.asm|493||0|1|28648|L|,Enemy_DrawRoom,got_fiore,+used
 enemy.asm|494||0|1|28648|T|
 enemy.asm|495||0|1|28651|T|
-enemy.asm|497||0|1|28654|F|DrawRoomEnemies.got_facciapalla
-enemy.asm|497||0|1|28654|L|,DrawRoomEnemies,got_facciapalla,+used
+enemy.asm|497||0|1|28654|F|Enemy_DrawRoom.got_facciapalla
+enemy.asm|497||0|1|28654|L|,Enemy_DrawRoom,got_facciapalla,+used
 enemy.asm|498||0|1|28654|T|
 enemy.asm|499||0|1|28657|T|
-enemy.asm|501||0|1|28660|F|DrawRoomEnemies.got_candelabro
-enemy.asm|501||0|1|28660|L|,DrawRoomEnemies,got_candelabro,+used
+enemy.asm|501||0|1|28660|F|Enemy_DrawRoom.got_candelabro
+enemy.asm|501||0|1|28660|L|,Enemy_DrawRoom,got_candelabro,+used
 enemy.asm|502||0|1|28660|T|
 enemy.asm|503||0|1|28663|T|
-enemy.asm|505||0|1|28666|F|DrawRoomEnemies.got_freccia
-enemy.asm|505||0|1|28666|L|,DrawRoomEnemies,got_freccia,+used
+enemy.asm|505||0|1|28666|F|Enemy_DrawRoom.got_freccia
+enemy.asm|505||0|1|28666|L|,Enemy_DrawRoom,got_freccia,+used
 enemy.asm|506||0|1|28666|T|
 enemy.asm|507||0|1|28669|T|
 enemy.asm|508||0|1|28671|T|
 enemy.asm|509||0|1|28674|T|
 enemy.asm|510||0|1|28677|T|
 enemy.asm|511||0|1|28680|T|
-enemy.asm|513||0|1|28683|F|DrawRoomEnemies.got_tronchese
-enemy.asm|513||0|1|28683|L|,DrawRoomEnemies,got_tronchese,+used
+enemy.asm|513||0|1|28683|F|Enemy_DrawRoom.got_tronchese
+enemy.asm|513||0|1|28683|L|,Enemy_DrawRoom,got_tronchese,+used
 enemy.asm|514||0|1|28683|T|
 enemy.asm|515||0|1|28686|T|
-enemy.asm|517||0|1|28689|F|DrawRoomEnemies.got_periscopio
-enemy.asm|517||0|1|28689|L|,DrawRoomEnemies,got_periscopio,+used
+enemy.asm|517||0|1|28689|F|Enemy_DrawRoom.got_periscopio
+enemy.asm|517||0|1|28689|L|,Enemy_DrawRoom,got_periscopio,+used
 enemy.asm|518||0|1|28689|T|
 enemy.asm|519||0|1|28692|T|
 enemy.asm|520||0|1|28694|T|
 enemy.asm|521||0|1|28697|T|
 enemy.asm|522||0|1|28700|T|
 enemy.asm|523||0|1|28703|T|
-enemy.asm|526||0|1|28706|F|DrawRoomEnemies.got_sprite
-enemy.asm|526||0|1|28706|L|,DrawRoomEnemies,got_sprite,+used
+enemy.asm|526||0|1|28706|F|Enemy_DrawRoom.got_sprite
+enemy.asm|526||0|1|28706|L|,Enemy_DrawRoom,got_sprite,+used
 enemy.asm|528||0|1|28706|T|
 enemy.asm|529||0|1|28709|T|
 enemy.asm|530||0|1|28710|T|
@@ -3219,8 +3219,8 @@ enemy.asm|550||0|1|28737|T|
 enemy.asm|551||0|1|28740|T|
 enemy.asm|552||0|1|28743|T|
 enemy.asm|554||0|1|28746|T|
-enemy.asm|556||0|1|28747|F|DrawRoomEnemies.next
-enemy.asm|556||0|1|28747|L|,DrawRoomEnemies,next,+used
+enemy.asm|556||0|1|28747|F|Enemy_DrawRoom.next
+enemy.asm|556||0|1|28747|L|,Enemy_DrawRoom,next,+used
 enemy.asm|557||0|1|28747|T|
 enemy.asm|558||0|1|28750|T|
 enemy.asm|559||0|1|28752|T|
@@ -4277,53 +4277,53 @@ jet set willy.asm|94||0|1|31264|T|
 jet set willy.asm|95||0|1|31267|T|
 jet set willy.asm|97||0|1|31270|T|
 jet set willy.asm|98||0|1|31273|T|
-jet set willy.asm|101||0|1|31276|T|
-jet set willy.asm|102||0|1|31280|T|
-jet set willy.asm|105||0|1|31284|T|
-jet set willy.asm|106||0|1|31287|T|
-jet set willy.asm|107||0|1|31290|T|
-jet set willy.asm|108||0|1|31293|T|
-jet set willy.asm|109||0|1|31296|T|
-jet set willy.asm|110||0|1|31299|T|
-jet set willy.asm|113||0|1|31302|T|
-jet set willy.asm|114||0|1|31305|T|
-jet set willy.asm|118||0|1|31307|T|
-jet set willy.asm|121||0|1|31310|T|
-jet set willy.asm|124||0|1|31313|T|
-jet set willy.asm|125||0|1|31314|T|
-jet set willy.asm|126||0|1|31317|T|
-jet set willy.asm|127||0|1|31320|T|
-jet set willy.asm|128||0|1|31323|T|
-jet set willy.asm|129||0|1|31326|T|
-jet set willy.asm|130||0|1|31328|T|
-jet set willy.asm|132||0|1|31331|F|Main_loop.no_nasty_collision
-jet set willy.asm|132||0|1|31331|L|,Main_loop,no_nasty_collision,+used
-jet set willy.asm|135||0|1|31331|T|
-jet set willy.asm|136||0|1|31334|T|
-jet set willy.asm|139||0|1|31336|T|
-jet set willy.asm|140||0|1|31339|T|
-jet set willy.asm|141||0|1|31341|T|
-jet set willy.asm|142||0|1|31343|F|Main_loop.raster_loop
-jet set willy.asm|142||0|1|31343|L|,Main_loop,raster_loop,+used
-jet set willy.asm|143||0|1|31343|T|
-jet set willy.asm|144||0|1|31345|T|
-jet set willy.asm|145||0|1|31346|T|
-jet set willy.asm|146||0|1|31348|T|
-jet set willy.asm|147||0|1|31350|F|Main_loop.delay
-jet set willy.asm|147||0|1|31350|L|,Main_loop,delay,+used
-jet set willy.asm|148||0|1|31350|T|
-jet set willy.asm|149||0|1|31351|T|
-jet set willy.asm|150||0|1|31353|T|
-jet set willy.asm|153||0|1|31355|T|
-jet set willy.asm|154||0|1|31358|T|
-jet set willy.asm|155||0|1|31360|T|
-jet set willy.asm|157||0|1|31362|F|Main_loop.no_collision
-jet set willy.asm|157||0|1|31362|L|,Main_loop,no_collision,+used
-jet set willy.asm|159||0|1|31362|T|
-jet set willy.asm|160||0|1|31365|T|
-jet set willy.asm|162||0|1|31367|F|Main_loop.no_collision_change
-jet set willy.asm|162||0|1|31367|L|,Main_loop,no_collision_change,+used
-jet set willy.asm|163||0|1|31367|T|
+jet set willy.asm|102||0|1|31276|T|
+jet set willy.asm|103||0|1|31280|T|
+jet set willy.asm|106||0|1|31284|T|
+jet set willy.asm|107||0|1|31287|T|
+jet set willy.asm|108||0|1|31290|T|
+jet set willy.asm|109||0|1|31293|T|
+jet set willy.asm|110||0|1|31296|T|
+jet set willy.asm|111||0|1|31299|T|
+jet set willy.asm|114||0|1|31302|T|
+jet set willy.asm|115||0|1|31305|T|
+jet set willy.asm|119||0|1|31307|T|
+jet set willy.asm|122||0|1|31310|T|
+jet set willy.asm|125||0|1|31313|T|
+jet set willy.asm|126||0|1|31314|T|
+jet set willy.asm|127||0|1|31317|T|
+jet set willy.asm|128||0|1|31320|T|
+jet set willy.asm|129||0|1|31323|T|
+jet set willy.asm|130||0|1|31326|T|
+jet set willy.asm|131||0|1|31328|T|
+jet set willy.asm|133||0|1|31331|F|Main_loop.no_nasty_collision
+jet set willy.asm|133||0|1|31331|L|,Main_loop,no_nasty_collision,+used
+jet set willy.asm|136||0|1|31331|T|
+jet set willy.asm|137||0|1|31334|T|
+jet set willy.asm|140||0|1|31336|T|
+jet set willy.asm|141||0|1|31339|T|
+jet set willy.asm|142||0|1|31341|T|
+jet set willy.asm|143||0|1|31343|F|Main_loop.raster_loop
+jet set willy.asm|143||0|1|31343|L|,Main_loop,raster_loop,+used
+jet set willy.asm|144||0|1|31343|T|
+jet set willy.asm|145||0|1|31345|T|
+jet set willy.asm|146||0|1|31346|T|
+jet set willy.asm|147||0|1|31348|T|
+jet set willy.asm|148||0|1|31350|F|Main_loop.delay
+jet set willy.asm|148||0|1|31350|L|,Main_loop,delay,+used
+jet set willy.asm|149||0|1|31350|T|
+jet set willy.asm|150||0|1|31351|T|
+jet set willy.asm|151||0|1|31353|T|
+jet set willy.asm|154||0|1|31355|T|
+jet set willy.asm|155||0|1|31358|T|
+jet set willy.asm|156||0|1|31360|T|
+jet set willy.asm|158||0|1|31362|F|Main_loop.no_collision
+jet set willy.asm|158||0|1|31362|L|,Main_loop,no_collision,+used
+jet set willy.asm|160||0|1|31362|T|
+jet set willy.asm|161||0|1|31365|T|
+jet set willy.asm|163||0|1|31367|F|Main_loop.no_collision_change
+jet set willy.asm|163||0|1|31367|L|,Main_loop,no_collision_change,+used
+jet set willy.asm|164||0|1|31367|T|
 resources.asm|9||0|2|33536|F|RoomsStart
 resources.asm|9||0|2|33536|L|,RoomsStart,
 rooms/TheOffLicence.asm|33||0|2|33536|F|TheOffLicenceLayout
