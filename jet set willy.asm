@@ -109,6 +109,28 @@ Main_loop:
     call Enemy_Update
     call Items_CheckCollision
     
+    ; Controlla collisione con Nasties (morte di Willy)
+    call Phys_CheckNastyCollision
+    jr   nc, .no_nasty_collision
+    
+    ; Gestisci la morte di Willy:
+    ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
+    call Gfx_DeleteCharAtOldPos
+    
+    ; 2. Ripristina la posizione iniziale nella stanza
+    call LoadPositionPlayeinRoom
+    
+    ; 3. Reimposta la fisica di Willy
+    xor  a
+    ld   (velocity_y), a
+    ld   (jump_pressed), a
+    ld   (jump_frame), a
+    ld   (jump_dir), a
+    ld   a, 1
+    ld   (on_ground), a
+
+.no_nasty_collision:
+    
     ; 5. Gestisci la collisione (disegna le raster bar se collide)
     call CheckCollision
     jr   nc, .no_collision

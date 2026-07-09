@@ -1346,3 +1346,112 @@ Phys_LoadRoomSettings:
     pop  de
     pop  hl
     ret
+
+; -------------------------------------------------------------------
+; Verifica se c'è una cella Nasty (tipo 3) alle coordinate pixel (X, Y)
+; Input: C = X, B = Y
+; Output: Carry flag impostato se è Nasty, altrimenti resettato
+; -------------------------------------------------------------------
+CheckNastyCell:
+    push hl
+    push de
+    push bc
+    
+    ; 1. Controlla se Y (in B) è fuori dalla griglia di layout
+    ld   a, b
+    cp   128
+    jr   nc, .not_nasty
+    
+    ; 2. Calcola riga di layout: r = Y / 8
+    srl  a
+    srl  a
+    srl  a                 ; A = r (0..15)
+    
+    ; 3. Calcola colonna di layout: c = X / 8 (in C)
+    ld   e, a              ; E = r
+    ld   a, c
+    srl  a
+    srl  a
+    srl  a                 ; A = c (0..31)
+    ld   c, a              ; C = c
+    ld   a, e              ; A = r
+    
+    call GetCellFromUnpacked ; A = cell type
+    
+    ; Controlla se è Nasty (3)
+    cp   3
+    jr   z, .is_nasty
+    
+.not_nasty:
+    pop  bc
+    pop  de
+    pop  hl
+    or   a                 ; Clear carry
+    ret
+    
+.is_nasty:
+    pop  bc
+    pop  de
+    pop  hl
+    scf                    ; Set carry
+    ret
+
+; -------------------------------------------------------------------
+; Controlla la collisione di Willy con le celle Nasty (tipo 3)
+; Controlla 6 punti strategici della bounding box di Willy (16x8 pixel)
+; Output: Carry flag impostato se c'è collisione, altrimenti resettato
+; -------------------------------------------------------------------
+Phys_CheckNastyCollision:
+    push bc
+    
+    ld   bc, (PlayerPos)   ; B = Y, C = X
+    
+    ; Punto 1: Top-Left (X, Y)
+    call CheckNastyCell
+    jr   c, .collision
+    
+    ; Punto 2: Top-Right (X + 7, Y)
+    ld   a, c
+    add  a, 7
+    ld   c, a
+    call CheckNastyCell
+    jr   c, .collision
+    
+    ; Punto 3: Mid-Left (X, Y + 7)
+    ld   bc, (PlayerPos)
+    ld   a, b
+    add  a, 7
+    ld   b, a
+    call CheckNastyCell
+    jr   c, .collision
+    
+    ; Punto 4: Mid-Right (X + 7, Y + 7)
+    ld   a, c
+    add  a, 7
+    ld   c, a
+    call CheckNastyCell
+    jr   c, .collision
+    
+    ; Punto 5: Bottom-Left (X, Y + 15)
+    ld   bc, (PlayerPos)
+    ld   a, b
+    add  a, 15
+    ld   b, a
+    call CheckNastyCell
+    jr   c, .collision
+    
+    ; Punto 6: Bottom-Right (X + 7, Y + 15)
+    ld   a, c
+    add  a, 7
+    ld   c, a
+    call CheckNastyCell
+    jr   c, .collision
+    
+    pop  bc
+    or   a                 ; Clear carry
+    ret
+    
+.collision:
+    pop  bc
+    scf                    ; Set carry
+    ret
