@@ -395,6 +395,8 @@ DrawRoomEnemies:
     jp   z, .got_facciapalla
     cp   16
     jp   z, .got_candelabro
+    cp   17
+    jp   z, .got_freccia
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -494,6 +496,14 @@ DrawRoomEnemies:
 
 .got_candelabro:
     ld   hl, CandelabroSprite
+    jp   .got_sprite
+
+.got_freccia:
+    ld   a, (ix+6)         ; Direction (1=Left, 2=Right)
+    cp   1
+    ld   hl, FrecciaSpriteLeft
+    jp   z, .got_sprite
+    ld   hl, FrecciaSpriteRight
     jp   .got_sprite
 
 
