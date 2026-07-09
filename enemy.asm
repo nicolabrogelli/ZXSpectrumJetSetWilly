@@ -359,7 +359,7 @@ DrawRoomEnemies:
     
     ; Determina quale sprite usare basato sul tipo (Offset 1, Bit 5-0)
     ld   a, (ix+1)         ; Tipo
-    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro)
+    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio)
     
     cp   0
     jp   z, .got_lametta
@@ -397,6 +397,10 @@ DrawRoomEnemies:
     jp   z, .got_candelabro
     cp   17
     jp   z, .got_freccia
+    cp   18
+    jp   z, .got_tronchese
+    cp   19
+    jp   z, .got_periscopio
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -504,6 +508,18 @@ DrawRoomEnemies:
     ld   hl, FrecciaSpriteLeft
     jp   z, .got_sprite
     ld   hl, FrecciaSpriteRight
+    jp   .got_sprite
+
+.got_tronchese:
+    ld   hl, TroncheseSprite
+    jp   .got_sprite
+
+.got_periscopio:
+    ld   a, (ix+6)         ; Direction (1=Left, 2=Right)
+    cp   1
+    ld   hl, PeriscopioSprite
+    jp   z, .got_sprite
+    ld   hl, PeriscopioSprite + 128
     jp   .got_sprite
 
 
