@@ -101,7 +101,7 @@ Phys_ApplyGravity:
     ld   (Audio_jump_sound_note), a
     ld   (Audio_jump_sound_timer), a
     
-    ld   a, JUMP_STRENGTH
+    ld   a, (room_jump_strength)
     ld   (velocity_y), a
     xor  a
     ld   (on_ground), a
@@ -246,7 +246,7 @@ Phys_ApplyGravity:
     ld   (Audio_jump_sound_note), a
     ld   (Audio_jump_sound_timer), a
     
-    ld   a, JUMP_STRENGTH
+    ld   a, (room_jump_strength)
     ld   (velocity_y), a
     xor  a
     ld   (on_ground), a
@@ -264,11 +264,50 @@ Phys_ApplyGravity:
     inc  a
     ld   (jump_frame), a
     
-    ; Applica gravità frazionaria (0.75 in media)
-    and  3
-    cp   3
+    ; Leggi il preset della gravità
+    ld   b, a                  ; Salva jump_frame in B
+    ld   a, (room_gravity_preset)
+    
+    ; Controlla il preset
+    or   a                     ; cp 0 (Gravità 0.5)
+    jr   z, .grav_0_5
+    dec  a                     ; cp 1 (Gravità 0.75 - Standard)
+    jr   z, .grav_0_75
+    dec  a                     ; cp 2 (Gravità 1.0)
+    jr   z, .grav_1_0
+    dec  a                     ; cp 3 (Gravità 0.25)
+    jr   z, .grav_0_25
+    dec  a                     ; cp 4 (Gravità 0.0)
     jr   z, .skip_gravity
     
+    ; Default a 0.75 se valore sconosciuto
+    jr   .grav_0_75
+
+.grav_0_5:
+    ld   a, b                  ; Ripristina jump_frame
+    and  1
+    jr   nz, .skip_gravity     ; Salta se bit 0 è impostato (media 0.5)
+    jr   .apply_gravity
+
+.grav_0_75:
+    ld   a, b                  ; Ripristina jump_frame
+    and  3
+    cp   3
+    jr   z, .skip_gravity      ; Salta se frame è 3 (media 0.75)
+    jr   .apply_gravity
+
+.grav_0_25:
+    ld   a, b                  ; Ripristina jump_frame
+    and  3
+    cp   3
+    jr   nz, .skip_gravity     ; Salta se frame non è 3 (media 0.25)
+    jr   .apply_gravity
+
+.grav_1_0:
+    ; Non saltare mai la gravità
+    jr   .apply_gravity
+
+.apply_gravity:
     ld   a, (velocity_y)
     sub  1
     jr   .clamp_fall_speed
@@ -1265,4 +1304,45 @@ GetRampY:
 
 .out_of_ramp:
     or   a                 ; Clear carry
+    ret
+
+; -------------------------------------------------------------------
+; Carica le impostazioni di salto e gravità specifiche per la stanza corrente
+; Legge il byte di configurazione ad offset OFFSET_PHYSICS_SETTINGS (239).
+; Se è 0, applica le impostazioni di default (Jump = 6, Gravity = 1).
+; Altrimenti, decodifica il formato %GGGGJJJJ (Jump = JJJJ, Gravity Preset = GGGG).
+; -------------------------------------------------------------------
+Phys_LoadRoomSettings:
+    push hl
+    push de
+    push af
+
+    ld   hl, (room_ptr)
+    ld   de, OFFSET_PHYSICS_SETTINGS
+    add  hl, de
+    ld   a, (hl)
+    or   a
+    jr   nz, .custom_settings
+    
+    ld   a, 6
+    ld   (room_jump_strength), a
+    ld   a, 1
+    ld   (room_gravity_preset), a
+    jr   .done
+    
+.custom_settings:
+    push af
+    and  $0f                  ; Maschera i 4 bit inferiori (JJJJ)
+    ld   (room_jump_strength), a
+    pop  af
+    srl  a
+    srl  a
+    srl  a
+    srl  a                  ; Sposta i 4 bit superiori in quelli inferiori (GGGG)
+    ld   (room_gravity_preset), a
+
+.done:
+    pop  af
+    pop  de
+    pop  hl
     ret

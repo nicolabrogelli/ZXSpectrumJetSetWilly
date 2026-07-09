@@ -46,6 +46,7 @@ Main:
     call CLS
 LoadRoomAndRestart:
     call DetermineCurrentRoomID
+    call Phys_LoadRoomSettings
     call Gfx_DrawRoom
     call Gfx_DrawConveyorsAndRamps
     call Gfx_PrintRoomName

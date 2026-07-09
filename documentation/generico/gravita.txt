@@ -1,0 +1,35 @@
+### Esempi Pratici per le tue Stanze:
+
+  1. Salto a 5 (più corto) e gravità standard (0.75):
+      • Valore binario:  %00010101  (GGGG = 1, JJJJ = 5)
+      • In esadecimale:  $15  (o decimale  21 )
+      • Nel file  .asm  della stanza:
+        TheOffLicenceUnused:
+            DEFB $15
+        
+  2. Salto a 5 (corto) e gravità leggera (0.5):
+      • Valore binario:  %00000101  (GGGG = 0, JJJJ = 5)
+      • In esadecimale:  $05  (o decimale  5 )
+      • Nel file  .asm  della stanza:
+        TheOffLicenceUnused:
+            DEFB $05
+        
+  3. Salto a 7 (più lungo) e gravità pesante (1.0):
+      • Valore binario:  %00100111  (GGGG = 2, JJJJ = 7)
+      • In esadecimale:  $27  (o decimale  39 )
+      • Nel file  .asm  della stanza:
+        TheOffLicenceUnused:
+            DEFB $27
+
+
+
+  ### Riepilogo dei file modificati:
+
+  • constants.asm - Aggiunta la costante  OFFSET_PHYSICS_SETTINGS: EQU 239 .
+  • datavariable.asm - Dichiarate le due variabili a livello di RAM:  room_jump_strength  e
+  room_gravity_preset .
+  • physics.asm - Modificato l'impulso iniziale di salto e inserita la gestione dinamica
+  della gravità e dei preset. Aggiunta in coda la subroutine di caricamento
+  Phys_LoadRoomSettings .
+  • jet set willy.asm - Integrato il caricamento dinamico della fisica della stanza all'avvio o
+  transizione di livello.
