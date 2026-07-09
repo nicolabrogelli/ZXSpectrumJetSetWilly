@@ -89,7 +89,7 @@ TreeTopBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TreeTopReserved:
-    DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+    DEFB CYAN, YELLOW, RED, NONE                         ; Enemy colors: all WHITE (7)
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TreeTopItem:
@@ -107,11 +107,11 @@ TreeTopUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TreeTopEnemy1:
-    DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $80, 2, 0, 40, 80          ; [Uccello (41152) - horizzontal], Guardian = 6, Starts X=16, Y=32, Limit X=88
 TreeTopEnemy2:
-    DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 14, 0, 80, 152         ; [Fiore (41328) - horizzontal], Guardian = 6, Starts X=16, Y=32, Limit X=88
 TreeTopEnemy3:
-    DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 6, Starts X=16, Y=32, Limit X=88
 TreeTopEnemy4:
     DEFB 0, 0, 0, 0, 0         ; Empty slot
 TreeTopEnemy5:
