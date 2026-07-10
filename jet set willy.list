@@ -9652,7 +9652,7 @@
   78++9264 05               DEFB 5
   79++9265
   80++9265              OutALimbReserved:
-  81++9265 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+  81++9265 03 05 06 00      DEFB MAGENTA, CYAN, YELLOW, NONE               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
   82++9269
   83++9269              OutALimbItem:
   84++9269 18 18 3C 7E      DEFB 24,24,60,126,98,98,98,126
@@ -9661,21 +9661,21 @@
   86++9271              OutALimbDirection:
   87++9271 0A               DEFB 10		;Room to the left (The Bridge)
   88++9272 0C               DEFB 12		;Room to the right (None)
-  89++9273 FF               DEFB $FF	;Room above (None)
+  89++9273 FF               DEFB BLOCK	;Room above (None)
   90++9274 09               DEFB 9		;Room below (None)
   91++9275
   92++9275              OutALimbUnused:
   93++9275 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
   94++9276
   95++9276              OutALimbEnemy1:
-  96++9276 80 03 8C 38      DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
-  96++927A E6
+  96++9276 80 02 70 38      DEFB $80, 2, 112, 56, 184        ; Enemy 1 (Uccello), horizontal, Starts X=40, Y=128, Limit X=180
+  96++927A B8
   97++927B              OutALimbEnemy2:
-  98++927B C0 06 3C 38      DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
-  98++927F 6A
+  98++927B C0 06 60 00      DEFB $C0, 6, 96, 0, 104         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+  98++927F 68
   99++9280              OutALimbEnemy3:
- 100++9280 C0 09 50 10      DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
- 100++9284 6A
+ 100++9280 80 01 98 50      DEFB $80, 1, 152, 80, 240         ; Enemy 3 (Sega), vertical, Starts X=60, Y=40, Limit Y=130
+ 100++9284 F0
  101++9285              OutALimbEnemy4:
  102++9285 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
  102++9289 00
@@ -9695,7 +9695,7 @@
  112++929E              OutALimbPosWilly:
  113++929E C8 32            db 200, 50                   ; Posizione di Willy
  114++92A0              OutALimbEnemyColors5_8:
- 115++92A0 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 115++92A0 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/OutALimb.asm
   24+ 92A4                  include "rooms/RescueEsmerelda.asm"             ; ID 14
 # file opened: rooms/RescueEsmerelda.asm

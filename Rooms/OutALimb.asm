@@ -78,7 +78,7 @@ OutALimbBorderColor:
     DEFB 5
 
 OutALimbReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB MAGENTA, CYAN, YELLOW, NONE               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
 
 OutALimbItem:
     DEFB 24,24,60,126,98,98,98,126
@@ -86,18 +86,18 @@ OutALimbItem:
 OutALimbDirection:
     DEFB 10		;Room to the left (The Bridge)
     DEFB 12		;Room to the right (None)
-    DEFB $FF	;Room above (None)
+    DEFB BLOCK	;Room above (None)
     DEFB 9		;Room below (None)
 
 OutALimbUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 OutALimbEnemy1:
-    DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, 2, 112, 56, 184        ; Enemy 1 (Uccello), horizontal, Starts X=40, Y=128, Limit X=180
 OutALimbEnemy2:
-    DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $C0, 6, 96, 0, 104         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
 OutALimbEnemy3:
-    DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, 1, 152, 80, 240         ; Enemy 3 (Sega), vertical, Starts X=60, Y=40, Limit Y=130
 OutALimbEnemy4:
     DEFB 0, 0, 0, 0, 0               ; Empty slot
 OutALimbEnemy5:
@@ -112,4 +112,4 @@ OutALimbEnemy8:
 OutALimbPosWilly:
     db 200, 50                   ; Posizione di Willy
 OutALimbEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
