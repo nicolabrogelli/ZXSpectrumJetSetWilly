@@ -32,4 +32,5 @@ RoomsStart:
     include "rooms/MasterBedRoom.asm"               ; ID 35
     include "rooms/UnderTheDrive.asm"               ; ID 45
 
+    org $B200
     include "data/datasprite.asm"
