@@ -9559,143 +9559,147 @@
   20++9186              ; OutALimbEnemy2       Size   5 Byte, Start Byte 245
   21++9186              ; OutALimbEnemy3       Size   5 Byte, Start Byte 250
   22++9186              ; OutALimbEnemy4       Size   5 Byte, Start Byte 255
-  23++9186              ; OutALimbPosWilly     Size   2 Byte, Start Byte 280
-  24++9186              ;
-  25++9186              ;===========================================================================
-  26++9186
-  27++9186              ; Room layout for Room 2 (Out A Limb)
-  28++9186              OutALimbLayout:
-  29++9186 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0	;Room layout
-  29++918A 00 00 00 00
-  30++918E 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  30++9192 00 00 00 00
-  31++9196 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  31++919A 00 00 00 00
-  32++919E 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  32++91A2 00 00 00 00
-  33++91A6 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  33++91AA 00 00 00 00
-  34++91AE 00 00 00 04  	DEFB 0,0,0,4,0,0,0,0
-  34++91B2 00 00 00 00
-  35++91B6 00 10 00 00  	DEFB 0,16,0,0,4,1,0,0
-  35++91BA 04 01 00 00
-  36++91BE 00 00 04 00  	DEFB 0,0,4,0,0,0,0,0
-  36++91C2 00 00 00 00
-  37++91C6 00 00 00 00  	DEFB 0,0,0,0,0,0,16,0
-  37++91CA 00 00 10 00
-  38++91CE 00 00 00 01  	DEFB 0,0,0,1,0,64,0,0
-  38++91D2 00 40 00 00
-  39++91D6 04 00 00 04  	DEFB 4,0,0,4,64,0,0,0
-  39++91DA 40 00 00 00
-  40++91DE 00 04 00 01  	DEFB 0,4,0,1,16,0,0,0
-  40++91E2 10 00 00 00
-  41++91E6 00 00 01 00  	DEFB 0,0,1,0,74,170,170,170
-  41++91EA 4A AA AA AA
-  42++91EE 01 00 00 00  	DEFB 1,0,0,0,0,127,255,0
-  42++91F2 00 7F FF 00
-  43++91F6 00 00 40 00  	DEFB 0,0,64,0,64,31,252,0
-  43++91FA 40 1F FC 00
-  44++91FE 00 00 00 40  	DEFB 0,0,0,64,0,1,80,0
-  44++9202 00 01 50 00
-  45++9206
-  46++9206              OutALimbTile:
-  47++9206 20 20 20 20      DEFM "        Out on a limb           "
-  47++920A 20 20 20 20
-  47++920E 4F 75 74 20
-  47++9212 6F 6E 20 61
-  47++9216 20 6C 69 6D
-  47++921A 62 20 20 20
-  47++921E 20 20 20 20
-  47++9222 20 20 20 20
-  48++9226
-  49++9226              OutALimbBackground:                    ; Background
-  50++9226 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0
-  50++922A 00 00 00 00
-  50++922E 00
-  51++922F
-  52++922F              OutALimbFloor:
-  53++922F 04 01 1E 06      DEFB 4,1,30,6,122,26,232,104,160       ; Floor Solid
-  53++9233 7A 1A E8 68
-  53++9237 A0
-  54++9238
-  55++9238              OutALimbWall:
-  56++9238 42 07 FF FC      DEFB 66,7,255,252,56,24,16,32,0   ; Wall Solid
-  56++923C 38 18 10 20
-  56++9240 00
-  57++9241
-  58++9241              OutALimbNasty:
-  59++9241 02 01 81 06      DEFB 2,1,129,6,88,32,64,136,130  ; Nastry
-  59++9245 58 20 40 88
-  59++9249 82
-  60++924A
-  61++924A              OutALimbRamp:                          ; Ramp Solid
-  62++924A 04 00 00 00      DEFB 4,0,0,0,0,0,0,0,0
-  62++924E 00 00 00 00
-  62++9252 00
-  63++9253
-  64++9253              OutALimbConveyor:                      ; Conveyor Solid
-  65++9253 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0
-  65++9257 00 00 00 00
-  65++925B 00
-  66++925C
-  67++925C              OutALimbConveyorData:
-  68++925C 00               DEFB 0
-  69++925D 00 00            DEFW 0
-  70++925F 00               DEFB 0
-  71++9260
-  72++9260              OutALimbRampData:
-  73++9260 01               DEFB 1
-  74++9261 00 00            DEFW 0
-  75++9263 00               DEFB 0
-  76++9264
-  77++9264              OutALimbBorderColor:
-  78++9264 05               DEFB 5
-  79++9265
-  80++9265              OutALimbReserved:
-  81++9265 03 05 06 00      DEFB MAGENTA, CYAN, YELLOW, NONE               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
-  82++9269
-  83++9269              OutALimbItem:
-  84++9269 18 18 3C 7E      DEFB 24,24,60,126,98,98,98,126
-  84++926D 62 62 62 7E
-  85++9271
-  86++9271              OutALimbDirection:
-  87++9271 0A               DEFB 10		;Room to the left (The Bridge)
-  88++9272 0C               DEFB 12		;Room to the right (None)
-  89++9273 FF               DEFB BLOCK	;Room above (None)
-  90++9274 09               DEFB 9		;Room below (None)
-  91++9275
-  92++9275              OutALimbUnused:
-  93++9275 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
-  94++9276
-  95++9276              OutALimbEnemy1:
-  96++9276 80 02 70 38      DEFB $80, 2, 112, 56, 184        ; Enemy 1 (Uccello), horizontal, Starts X=40, Y=128, Limit X=180
-  96++927A B8
-  97++927B              OutALimbEnemy2:
-  98++927B C0 06 60 00      DEFB $C0, 6, 96, 0, 104         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
-  98++927F 68
-  99++9280              OutALimbEnemy3:
- 100++9280 80 01 98 50      DEFB $80, 1, 152, 80, 240         ; Enemy 3 (Sega), vertical, Starts X=60, Y=40, Limit Y=130
- 100++9284 F0
- 101++9285              OutALimbEnemy4:
- 102++9285 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
- 102++9289 00
- 103++928A              OutALimbEnemy5:
- 104++928A 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 104++928E 00
- 105++928F              OutALimbEnemy6:
- 106++928F 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 106++9293 00
- 107++9294              OutALimbEnemy7:
- 108++9294 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 108++9298 00
- 109++9299              OutALimbEnemy8:
- 110++9299 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 110++929D 00
- 111++929E
- 112++929E              OutALimbPosWilly:
- 113++929E C8 32            db 200, 50                   ; Posizione di Willy
- 114++92A0              OutALimbEnemyColors5_8:
- 115++92A0 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+  23++9186              ; OutALimbEnemy5       Size   5 Byte, Start Byte 260
+  24++9186              ; OutALimbEnemy6       Size   5 Byte, Start Byte 265
+  25++9186              ; OutALimbEnemy7       Size   5 Byte, Start Byte 270
+  26++9186              ; OutALimbEnemy8       Size   5 Byte, Start Byte 275
+  27++9186              ; OutALimbPosWilly     Size   2 Byte, Start Byte 280
+  28++9186              ;
+  29++9186              ;===========================================================================
+  30++9186
+  31++9186              ; Room layout for Room 2 (Out A Limb)
+  32++9186              OutALimbLayout:
+  33++9186 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0	;Room layout
+  33++918A 00 00 00 00
+  34++918E 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  34++9192 00 00 00 00
+  35++9196 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  35++919A 00 00 00 00
+  36++919E 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  36++91A2 00 00 00 00
+  37++91A6 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  37++91AA 00 00 00 00
+  38++91AE 00 00 00 04  	DEFB 0,0,0,4,0,0,0,0
+  38++91B2 00 00 00 00
+  39++91B6 00 10 00 00  	DEFB 0,16,0,0,4,1,0,0
+  39++91BA 04 01 00 00
+  40++91BE 00 00 04 00  	DEFB 0,0,4,0,0,0,0,0
+  40++91C2 00 00 00 00
+  41++91C6 00 00 00 00  	DEFB 0,0,0,0,0,0,16,0
+  41++91CA 00 00 10 00
+  42++91CE 00 00 00 01  	DEFB 0,0,0,1,0,64,0,0
+  42++91D2 00 40 00 00
+  43++91D6 04 00 00 04  	DEFB 4,0,0,4,64,0,0,0
+  43++91DA 40 00 00 00
+  44++91DE 00 04 00 01  	DEFB 0,4,0,1,16,0,0,0
+  44++91E2 10 00 00 00
+  45++91E6 00 00 01 00  	DEFB 0,0,1,0,74,170,170,170
+  45++91EA 4A AA AA AA
+  46++91EE 01 00 00 00  	DEFB 1,0,0,0,0,127,255,0
+  46++91F2 00 7F FF 00
+  47++91F6 00 00 40 00  	DEFB 0,0,64,0,64,31,252,0
+  47++91FA 40 1F FC 00
+  48++91FE 00 00 00 40  	DEFB 0,0,0,64,0,1,80,0
+  48++9202 00 01 50 00
+  49++9206
+  50++9206              OutALimbTile:
+  51++9206 20 20 20 20      DEFM "        Out on a limb           "
+  51++920A 20 20 20 20
+  51++920E 4F 75 74 20
+  51++9212 6F 6E 20 61
+  51++9216 20 6C 69 6D
+  51++921A 62 20 20 20
+  51++921E 20 20 20 20
+  51++9222 20 20 20 20
+  52++9226
+  53++9226              OutALimbBackground:                    ; Background
+  54++9226 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0
+  54++922A 00 00 00 00
+  54++922E 00
+  55++922F
+  56++922F              OutALimbFloor:
+  57++922F 04 01 1E 06      DEFB 4,1,30,6,122,26,232,104,160       ; Floor Solid
+  57++9233 7A 1A E8 68
+  57++9237 A0
+  58++9238
+  59++9238              OutALimbWall:
+  60++9238 42 07 FF FC      DEFB 66,7,255,252,56,24,16,32,0   ; Wall Solid
+  60++923C 38 18 10 20
+  60++9240 00
+  61++9241
+  62++9241              OutALimbNasty:
+  63++9241 02 01 81 06      DEFB 2,1,129,6,88,32,64,136,130  ; Nastry
+  63++9245 58 20 40 88
+  63++9249 82
+  64++924A
+  65++924A              OutALimbRamp:                          ; Ramp Solid
+  66++924A 04 00 00 00      DEFB 4,0,0,0,0,0,0,0,0
+  66++924E 00 00 00 00
+  66++9252 00
+  67++9253
+  68++9253              OutALimbConveyor:                      ; Conveyor Solid
+  69++9253 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0
+  69++9257 00 00 00 00
+  69++925B 00
+  70++925C
+  71++925C              OutALimbConveyorData:
+  72++925C 00               DEFB 0
+  73++925D 00 00            DEFW 0
+  74++925F 00               DEFB 0
+  75++9260
+  76++9260              OutALimbRampData:
+  77++9260 01               DEFB 1
+  78++9261 00 00            DEFW 0
+  79++9263 00               DEFB 0
+  80++9264
+  81++9264              OutALimbBorderColor:
+  82++9264 05               DEFB 5
+  83++9265
+  84++9265              OutALimbReserved:
+  85++9265 03 05 06 00      DEFB MAGENTA, CYAN, YELLOW, NONE               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+  86++9269
+  87++9269              OutALimbItem:
+  88++9269 18 18 3C 7E      DEFB 24,24,60,126,98,98,98,126
+  88++926D 62 62 62 7E
+  89++9271
+  90++9271              OutALimbDirection:
+  91++9271 0A               DEFB 10		;Room to the left (The Bridge)
+  92++9272 0C               DEFB 12		;Room to the right (None)
+  93++9273 FF               DEFB BLOCK	;Room above (None)
+  94++9274 09               DEFB 9		;Room below (None)
+  95++9275
+  96++9275              OutALimbUnused:
+  97++9275 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  98++9276
+  99++9276              OutALimbEnemy1:
+ 100++9276 80 02 70 38      DEFB $80, 2, 112, 56, 184        ; [Uccello (41160) - Horizzontal], Guardian = 45, Starts X=16, Y=32, Limit X=88
+ 100++927A B8
+ 101++927B              OutALimbEnemy2:
+ 102++927B C0 06 60 00      DEFB $C0, 6, 96, 0, 104          ; [Faccia (41320) - vertical], Guardian = 25, Starts X=16, Y=32, Limit X=88
+ 102++927F 68
+ 103++9280              OutALimbEnemy3:
+ 104++9280 80 01 98 50      DEFB $80, 1, 152, 80, 240         ; [Sega (41664) - vertical], Guardian = 88, Starts X=16, Y=32, Limit X=88
+ 104++9284 F0
+ 105++9285              OutALimbEnemy4:
+ 106++9285 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
+ 106++9289 00
+ 107++928A              OutALimbEnemy5:
+ 108++928A 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 108++928E 00
+ 109++928F              OutALimbEnemy6:
+ 110++928F 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 110++9293 00
+ 111++9294              OutALimbEnemy7:
+ 112++9294 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 112++9298 00
+ 113++9299              OutALimbEnemy8:
+ 114++9299 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 114++929D 00
+ 115++929E
+ 116++929E              OutALimbPosWilly:
+ 117++929E C8 32            db 200, 50                   ; Posizione di Willy
+ 118++92A0              OutALimbEnemyColors5_8:
+ 119++92A0 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/OutALimb.asm
   24+ 92A4                  include "rooms/RescueEsmerelda.asm"             ; ID 14
 # file opened: rooms/RescueEsmerelda.asm

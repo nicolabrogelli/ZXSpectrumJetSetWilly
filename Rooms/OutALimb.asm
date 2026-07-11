@@ -20,6 +20,10 @@
 ; OutALimbEnemy2       Size   5 Byte, Start Byte 245
 ; OutALimbEnemy3       Size   5 Byte, Start Byte 250
 ; OutALimbEnemy4       Size   5 Byte, Start Byte 255
+; OutALimbEnemy5       Size   5 Byte, Start Byte 260
+; OutALimbEnemy6       Size   5 Byte, Start Byte 265
+; OutALimbEnemy7       Size   5 Byte, Start Byte 270
+; OutALimbEnemy8       Size   5 Byte, Start Byte 275
 ; OutALimbPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
@@ -93,11 +97,11 @@ OutALimbUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 OutALimbEnemy1:
-    DEFB $80, 2, 112, 56, 184        ; Enemy 1 (Uccello), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, 2, 112, 56, 184        ; [Uccello (41160) - Horizzontal], Guardian = 45, Starts X=16, Y=32, Limit X=88
 OutALimbEnemy2:
-    DEFB $C0, 6, 96, 0, 104         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $C0, 6, 96, 0, 104          ; [Faccia (41320) - vertical], Guardian = 25, Starts X=16, Y=32, Limit X=88
 OutALimbEnemy3:
-    DEFB $80, 1, 152, 80, 240         ; Enemy 3 (Sega), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, 1, 152, 80, 240         ; [Sega (41664) - vertical], Guardian = 88, Starts X=16, Y=32, Limit X=88
 OutALimbEnemy4:
     DEFB 0, 0, 0, 0, 0               ; Empty slot
 OutALimbEnemy5:

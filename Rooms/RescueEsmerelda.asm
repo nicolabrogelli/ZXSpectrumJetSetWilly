@@ -20,6 +20,10 @@
 ; RescueEsmereldaEnemy2       Size   5 Byte, Start Byte 245
 ; RescueEsmereldaEnemy3       Size   5 Byte, Start Byte 250
 ; RescueEsmereldaEnemy4       Size   5 Byte, Start Byte 255
+; RescueEsmereldaEnemy5       Size   5 Byte, Start Byte 260
+; RescueEsmereldaEnemy6       Size   5 Byte, Start Byte 265
+; RescueEsmereldaEnemy7       Size   5 Byte, Start Byte 270
+; RescueEsmereldaEnemy8       Size   5 Byte, Start Byte 275
 ; RescueEsmereldaPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
@@ -46,22 +50,22 @@ RescueEsmereldaLayout:
 RescueEsmereldaTile:
     DEFM "        Rescue Esmerelda        "
 
-RescueEsmereldaBackground:                    ; Background
+RescueEsmereldaBackground:                      ; Background
     DEFB 16,0,0,0,0,0,0,0,0
 
 RescueEsmereldaFloor:
-    DEFB 23,3,3,12,12,49,50,196,200       ; Floor Solid
+    DEFB 23,3,3,12,12,49,50,196,200             ; Floor Solid
 
 RescueEsmereldaWall:
-    DEFB 4,238,0,187,0,238,0,187,0   ; Wall Solid
+    DEFB 4,238,0,187,0,238,0,187,0              ; Wall Solid
 
 RescueEsmereldaNasty:
-    DEFB 85,209,226,196,200,209,226,196,200  ; Nastry
+    DEFB 85,209,226,196,200,209,226,196,200     ; Nastry
 
-RescueEsmereldaRamp:                          ; Ramp Solid
+RescueEsmereldaRamp:                            ; Ramp Solid
     DEFB 23,0,0,0,0,0,0,0,0              
 
-RescueEsmereldaConveyor:                      ; Conveyor Solid
+RescueEsmereldaConveyor:                        ; Conveyor Solid
     DEFB 22,241,170,248,170,0,238,0,187
 
 RescueEsmereldaConveyorData:
@@ -84,13 +88,13 @@ RescueEsmereldaItem:
     DEFB 255,73,73,73,73,73,73,255
 
 RescueEsmereldaDirection:
-	DEFB 15						;Room to the left (I'm sure I've seen this before..)
-	DEFB 44						;Room to the right (On top of the house)
-	DEFB 20						;Room above (Ballroom East)
-	DEFB 39						;Room below (Emergency Generator)
+	DEFB 15						    ; Room to the left (I'm sure I've seen this before..)
+	DEFB 44						    ; Room to the right (On top of the house)
+	DEFB 20						    ; Room above (Ballroom East)
+	DEFB 39						    ; Room below (Emergency Generator)
 
 RescueEsmereldaUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 RescueEsmereldaEnemy1:
     DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
