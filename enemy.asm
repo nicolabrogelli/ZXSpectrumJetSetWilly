@@ -359,7 +359,7 @@ Enemy_DrawRoom:
     
     ; Determina quale sprite usare basato sul tipo (Offset 1, Bit 5-0)
     ld   a, (ix+1)         ; Tipo
-    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio)
+    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca)
     
     cp   0
     jp   z, .got_lametta
@@ -401,6 +401,10 @@ Enemy_DrawRoom:
     jp   z, .got_tronchese
     cp   19
     jp   z, .got_periscopio
+    cp   20
+    jp   z, .got_nonnino
+    cp   21
+    jp   z, .got_parrucca
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -522,6 +526,14 @@ Enemy_DrawRoom:
     ld   hl, PeriscopioSprite + 128
     jp   .got_sprite
 
+.got_nonnino:
+    ld   hl, NonninoSprite
+    jp   .got_sprite
+
+.got_parrucca:
+    ld   hl, ParruccaSprite
+    jp   .got_sprite
+
 
 .got_sprite:
     ; Calcola il frame dell'animazione: Anim State * 32
@@ -625,6 +637,10 @@ Enemy_Update:
     cp   11                ; Tipo 11 = Soldato?
     jr   z, .soldato_anim
     cp   16                ; Tipo 16 = Candelabro?
+    jr   z, .soldato_anim
+    cp   20                ; Tipo 20 = Nonnino?
+    jr   z, .soldato_anim
+    cp   21                ; Tipo 21 = Parrucca?
     jr   z, .soldato_anim
     
     ld   a, (ix+7)         ; Anim State (Offset 7)

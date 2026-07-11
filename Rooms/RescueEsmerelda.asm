@@ -51,7 +51,7 @@ RescueEsmereldaTile:
     DEFM "        Rescue Esmerelda        "
 
 RescueEsmereldaBackground:                      ; Background
-    DEFB 16,0,0,0,0,0,0,0,0
+    DEFB 23,0,0,0,0,0,0,0,0
 
 RescueEsmereldaFloor:
     DEFB 23,3,3,12,12,49,50,196,200             ; Floor Solid
@@ -97,7 +97,7 @@ RescueEsmereldaUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 RescueEsmereldaEnemy1:
-    DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $C0, 20, 32, 48, 96        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
 RescueEsmereldaEnemy2:
     DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
 RescueEsmereldaEnemy3:
