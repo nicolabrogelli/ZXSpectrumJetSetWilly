@@ -9838,7 +9838,7 @@
   82++9382 01               DEFB 1
   83++9383
   84++9383              RescueEsmereldaReserved:
-  85++9383 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+  85++9383 06 04 07 07      DEFB YELLOW, GREEN, WHITE, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
   86++9387
   87++9387              RescueEsmereldaItem:
   88++9387 FF 49 49 49      DEFB 255,73,73,73,73,73,73,255
@@ -9857,11 +9857,11 @@
  100++9394 C0 14 20 30      DEFB $C0, 20, 32, 48, 96        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
  100++9398 60
  101++9399              RescueEsmereldaEnemy2:
- 102++9399 C0 06 3C 38      DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
- 102++939D 6A
+ 102++9399 C0 14 60 28      DEFB $C0, 20, 96, 40, 104        ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+ 102++939D 68
  103++939E              RescueEsmereldaEnemy3:
- 104++939E C0 09 50 10      DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
- 104++93A2 6A
+ 104++939E C0 15 C0 00      DEFB $C0, 21, 192, 0, 16         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+ 104++93A2 10
  105++93A3              RescueEsmereldaEnemy4:
  106++93A3 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
  106++93A7 00

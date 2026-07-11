@@ -82,7 +82,7 @@ RescueEsmereldaBorderColor:
     DEFB 1
 
 RescueEsmereldaReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB YELLOW, GREEN, WHITE, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
 
 RescueEsmereldaItem:
     DEFB 255,73,73,73,73,73,73,255
@@ -99,9 +99,9 @@ RescueEsmereldaUnused:
 RescueEsmereldaEnemy1:
     DEFB $C0, 20, 32, 48, 96        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
 RescueEsmereldaEnemy2:
-    DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $C0, 20, 96, 40, 104        ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
 RescueEsmereldaEnemy3:
-    DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $C0, 21, 192, 0, 16         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 RescueEsmereldaEnemy4:
     DEFB 0, 0, 0, 0, 0               ; Empty slot
 RescueEsmereldaEnemy5:
