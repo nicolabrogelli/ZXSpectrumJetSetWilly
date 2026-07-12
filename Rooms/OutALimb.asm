@@ -85,7 +85,7 @@ OutALimbReserved:
     DEFB MAGENTA, CYAN, YELLOW, NONE               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
 
 OutALimbItem:
-    DEFB 24,24,60,126,98,98,98,126
+    DEFB 96,184,190,93,90,53,42,21
 
 OutALimbDirection:
     DEFB 10		;Room to the left (The Bridge)
