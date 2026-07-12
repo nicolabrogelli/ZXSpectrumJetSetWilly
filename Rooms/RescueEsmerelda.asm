@@ -97,13 +97,13 @@ RescueEsmereldaUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 RescueEsmereldaEnemy1:
-    DEFB $C0, 20, 32, 48, 96        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $C0, 20, 32, 48, 96        ; Enemy 1 (Nonnino), horizontal, Starts X=40, Y=128, Limit X=180
 RescueEsmereldaEnemy2:
-    DEFB $C0, 20, 96, 40, 104        ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $C0, 20, 96, 40, 104        ; Enemy 2 (Nonnino), vertical, Starts X=100, Y=80, Limit Y=130
 RescueEsmereldaEnemy3:
-    DEFB $C0, 21, 192, 0, 16         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $C0, 21, 192, 0, 16         ; Enemy 3 (Parrucca), vertical, Starts X=60, Y=40, Limit Y=130
 RescueEsmereldaEnemy4:
-    DEFB 0, 0, 0, 0, 0               ; Empty slot
+    DEFB $80, 2, 40, 32, 72               ; Empty 4 (Uccello)
 RescueEsmereldaEnemy5:
     DEFB 0, 0, 0, 0, 0
 RescueEsmereldaEnemy6:
