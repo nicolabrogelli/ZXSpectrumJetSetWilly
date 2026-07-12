@@ -10419,143 +10419,147 @@
   20++971C              ; OntheRoofEnemy2       Size   5 Byte, Start Byte 245
   21++971C              ; OntheRoofEnemy3       Size   5 Byte, Start Byte 250
   22++971C              ; OntheRoofEnemy4       Size   5 Byte, Start Byte 255
-  23++971C              ; OntheRoofPosWilly     Size   2 Byte, Start Byte 280
-  24++971C              ;
-  25++971C              ;===========================================================================
-  26++971C
-  27++971C              ; Room layout for Room  (Up On The Battlements)
-  28++971C              OntheRoofLayout:
-  29++971C 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0	;Room layout
-  29++9720 00 00 00 00
-  30++9724 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  30++9728 00 00 00 00
-  31++972C 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  31++9730 00 00 00 00
-  32++9734 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  32++9738 00 00 00 00
-  33++973C 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  33++9740 00 00 00 00
-  34++9744 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  34++9748 00 00 00 00
-  35++974C 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  35++9750 00 00 00 00
-  36++9754 00 00 00 00  	DEFB 0,0,0,0,0,0,10,64
-  36++9758 00 00 0A 40
-  37++975C 00 00 00 00  	DEFB 0,0,0,0,0,0,10,208
-  37++9760 00 00 0A D0
-  38++9764 AA 40 00 00  	DEFB 170,64,0,0,0,0,10,170
-  38++9768 00 00 0A AA
-  39++976C AA C0 00 00  	DEFB 170,192,0,0,0,0,10,170
-  39++9770 00 00 0A AA
-  40++9774 AA C0 00 00  	DEFB 170,192,0,0,0,0,10,170
-  40++9778 00 00 0A AA
-  41++977C AA 90 00 00  	DEFB 170,144,0,0,0,0,10,170
-  41++9780 00 00 0A AA
-  42++9784 AA B0 00 00  	DEFB 170,176,0,0,0,0,10,170
-  42++9788 00 00 0A AA
-  43++978C AA B0 0A 40  	DEFB 170,176,10,64,0,0,10,170
-  43++9790 00 00 0A AA
-  44++9794 AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
-  44++9798 AA AA AA AA
-  45++979C
-  46++979C              OntheRoofTile:
-  47++979C 20 20 20 20      DEFM "          On the Roof           "
-  47++97A0 20 20 20 20
-  47++97A4 20 20 4F 6E
-  47++97A8 20 74 68 65
-  47++97AC 20 52 6F 6F
-  47++97B0 66 20 20 20
-  47++97B4 20 20 20 20
-  47++97B8 20 20 20 20
-  48++97BC
-  49++97BC              OntheRoofBackground:                    ; Background
-  50++97BC 44 00 00 00      DEFB 68,0,0,0,0,0,0,0,0
-  50++97C0 00 00 00 00
-  50++97C4 00
-  51++97C5
-  52++97C5              OntheRoofFloor:
-  53++97C5 07 80 C0 E0      DEFB 7,128,192,224,208,88,156,222,205       ; Floor Solid
-  53++97C9 D0 58 9C DE
-  53++97CD CD
-  54++97CE
-  55++97CE              OntheRoofWall:
-  56++97CE 26 11 F8 07      DEFB 38,17,248,7,8,240,15,208,63   ; Wall Solid
-  56++97D2 08 F0 0F D0
-  56++97D6 3F
-  57++97D7
-  58++97D7              OntheRoofNasty:
-  59++97D7 46 55 99 DD      DEFB 70,85,153,221,204,85,153,221,204  ; Nastry
-  59++97DB CC 55 99 DD
-  59++97DF CC
-  60++97E0
-  61++97E0              OntheRoofRamp:                          ; Ramp Solid
-  62++97E0 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0
-  62++97E4 00 00 00 00
-  62++97E8 00
-  63++97E9
-  64++97E9              OntheRoofConveyor:                      ; Conveyor Solid
-  65++97E9 0A F0 F0 F0      DEFB 10,240,240,240,255,255,0,0,255
-  65++97ED FF FF 00 00
-  65++97F1 FF
-  66++97F2
-  67++97F2              OntheRoofConveyorData:
-  68++97F2 01               DEFB 1
-  69++97F3 EE 5F            DEFW 24558
-  70++97F5 08               DEFB 8
-  71++97F6
-  72++97F6              OntheRoofRampData:
-  73++97F6 00               DEFB 0
-  74++97F7 00 00            DEFW 0
-  75++97F9 00               DEFB 0
-  76++97FA
-  77++97FA              OntheRoofBorderColor:
-  78++97FA 02               DEFB 2
-  79++97FB
-  80++97FB              OntheRoofReserved:
-  81++97FB 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
-  82++97FF
-  83++97FF              OntheRoofItem:
-  84++97FF 01 02 05 0A      DEFB 1,2,5,10,84,40,48,72
-  84++9803 54 28 30 48
-  85++9807
-  86++9807              OntheRoofDirection:
-  87++9807 30           	DEFB 48						;Room to the left (Nomen Luni)
-  88++9808 11           	DEFB 17						;Room to the right (Up on the Battlements)
-  89++9809 12           	DEFB 18						;Room above (On the Roof)
-  90++980A FF           	DEFB $FF					;Room below (The Off Licence)
-  91++980B
-  92++980B              OntheRoofUnused:
-  93++980B 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
-  94++980C
-  95++980C              OntheRoofEnemy1:
-  96++980C 80 03 8C 38      DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
-  96++9810 E6
-  97++9811              OntheRoofEnemy2:
-  98++9811 C0 06 3C 38      DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
-  98++9815 6A
-  99++9816              OntheRoofEnemy3:
- 100++9816 C0 09 50 10      DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
- 100++981A 6A
- 101++981B              OntheRoofEnemy4:
- 102++981B 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
- 102++981F 00
- 103++9820              OntheRoofEnemy5:
- 104++9820 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 104++9824 00
- 105++9825              OntheRoofEnemy6:
- 106++9825 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 106++9829 00
- 107++982A              OntheRoofEnemy7:
- 108++982A 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 108++982E 00
- 109++982F              OntheRoofEnemy8:
- 110++982F 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 110++9833 00
- 111++9834
- 112++9834              OntheRoofPosWilly:
- 113++9834 C8 32            db 200, 50                   ; Posizione di Willy
- 114++9836              OntheRoofEnemyColors5_8:
- 115++9836 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+  23++971C              ; OntheRoofEnemy5       Size   5 Byte, Start Byte 260
+  24++971C              ; OntheRoofEnemy6       Size   5 Byte, Start Byte 265
+  25++971C              ; OntheRoofEnemy7       Size   5 Byte, Start Byte 270
+  26++971C              ; OntheRoofEnemy8       Size   5 Byte, Start Byte 275
+  27++971C              ; OntheRoofPosWilly     Size   2 Byte, Start Byte 280
+  28++971C              ;
+  29++971C              ;===========================================================================
+  30++971C
+  31++971C              ; Room layout for Room  (On the Roof )
+  32++971C              OntheRoofLayout:
+  33++971C 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0	;Room layout
+  33++9720 00 00 00 00
+  34++9724 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  34++9728 00 00 00 00
+  35++972C 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  35++9730 00 00 00 00
+  36++9734 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  36++9738 00 00 00 00
+  37++973C 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  37++9740 00 00 00 00
+  38++9744 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  38++9748 00 00 00 00
+  39++974C 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  39++9750 00 00 00 00
+  40++9754 00 00 00 00  	DEFB 0,0,0,0,0,0,10,64
+  40++9758 00 00 0A 40
+  41++975C 00 00 00 00  	DEFB 0,0,0,0,0,0,10,208
+  41++9760 00 00 0A D0
+  42++9764 AA 40 00 00  	DEFB 170,64,0,0,0,0,10,170
+  42++9768 00 00 0A AA
+  43++976C AA C0 00 00  	DEFB 170,192,0,0,0,0,10,170
+  43++9770 00 00 0A AA
+  44++9774 AA C0 00 00  	DEFB 170,192,0,0,0,0,10,170
+  44++9778 00 00 0A AA
+  45++977C AA 90 00 00  	DEFB 170,144,0,0,0,0,10,170
+  45++9780 00 00 0A AA
+  46++9784 AA B0 00 00  	DEFB 170,176,0,0,0,0,10,170
+  46++9788 00 00 0A AA
+  47++978C AA B0 0A 40  	DEFB 170,176,10,64,0,0,10,170
+  47++9790 00 00 0A AA
+  48++9794 AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
+  48++9798 AA AA AA AA
+  49++979C
+  50++979C              OntheRoofTile:
+  51++979C 20 20 20 20      DEFM "          On the Roof           "
+  51++97A0 20 20 20 20
+  51++97A4 20 20 4F 6E
+  51++97A8 20 74 68 65
+  51++97AC 20 52 6F 6F
+  51++97B0 66 20 20 20
+  51++97B4 20 20 20 20
+  51++97B8 20 20 20 20
+  52++97BC
+  53++97BC              OntheRoofBackground:                    ; Background
+  54++97BC 44 00 00 00      DEFB 68,0,0,0,0,0,0,0,0
+  54++97C0 00 00 00 00
+  54++97C4 00
+  55++97C5
+  56++97C5              OntheRoofFloor:
+  57++97C5 07 80 C0 E0      DEFB 7,128,192,224,208,88,156,222,205       ; Floor Solid
+  57++97C9 D0 58 9C DE
+  57++97CD CD
+  58++97CE
+  59++97CE              OntheRoofWall:
+  60++97CE 26 11 F8 07      DEFB 38,17,248,7,8,240,15,208,63   ; Wall Solid
+  60++97D2 08 F0 0F D0
+  60++97D6 3F
+  61++97D7
+  62++97D7              OntheRoofNasty:
+  63++97D7 46 55 99 DD      DEFB 70,85,153,221,204,85,153,221,204  ; Nastry
+  63++97DB CC 55 99 DD
+  63++97DF CC
+  64++97E0
+  65++97E0              OntheRoofRamp:                          ; Ramp Solid
+  66++97E0 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0
+  66++97E4 00 00 00 00
+  66++97E8 00
+  67++97E9
+  68++97E9              OntheRoofConveyor:                      ; Conveyor Solid
+  69++97E9 0A F0 F0 F0      DEFB 10,240,240,240,255,255,0,0,255
+  69++97ED FF FF 00 00
+  69++97F1 FF
+  70++97F2
+  71++97F2              OntheRoofConveyorData:
+  72++97F2 01               DEFB 1
+  73++97F3 EE 5F            DEFW 24558
+  74++97F5 08               DEFB 8
+  75++97F6
+  76++97F6              OntheRoofRampData:
+  77++97F6 00               DEFB 0
+  78++97F7 00 00            DEFW 0
+  79++97F9 00               DEFB 0
+  80++97FA
+  81++97FA              OntheRoofBorderColor:
+  82++97FA 02               DEFB 2
+  83++97FB
+  84++97FB              OntheRoofReserved:
+  85++97FB 05 00 00 00      DEFB CYAN, NONE, NONE, NONE               ; Enemy colors
+  86++97FF
+  87++97FF              OntheRoofItem:
+  88++97FF 01 02 05 0A      DEFB 1,2,5,10,84,40,48,72
+  88++9803 54 28 30 48
+  89++9807
+  90++9807              OntheRoofDirection:
+  91++9807 30           	DEFB 48						;Room to the left (Nomen Luni)
+  92++9808 11           	DEFB 17						;Room to the right (Up on the Battlements)
+  93++9809 12           	DEFB 18						;Room above (On the Roof)
+  94++980A FF           	DEFB $FF					;Room below (The Off Licence)
+  95++980B
+  96++980B              OntheRoofUnused:
+  97++980B 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  98++980C
+  99++980C              OntheRoofEnemy1:
+ 100++980C 80 0D 70 68      DEFB $80, 13, 112, 104, 192        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+ 100++9810 C0
+ 101++9811              OntheRoofEnemy2:
+ 102++9811 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 102++9815 00
+ 103++9816              OntheRoofEnemy3:
+ 104++9816 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 104++981A 00
+ 105++981B              OntheRoofEnemy4:
+ 106++981B 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
+ 106++981F 00
+ 107++9820              OntheRoofEnemy5:
+ 108++9820 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 108++9824 00
+ 109++9825              OntheRoofEnemy6:
+ 110++9825 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 110++9829 00
+ 111++982A              OntheRoofEnemy7:
+ 112++982A 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 112++982E 00
+ 113++982F              OntheRoofEnemy8:
+ 114++982F 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 114++9833 00
+ 115++9834
+ 116++9834              OntheRoofPosWilly:
+ 117++9834 C8 32            db 200, 50                   ; Posizione di Willy
+ 118++9836              OntheRoofEnemyColors5_8:
+ 119++9836 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/OntheRoof.asm
   29+ 983A                  include "rooms/TheForgottenAbbey.asm"           ; ID 19
 # file opened: rooms/TheForgottenAbbey.asm

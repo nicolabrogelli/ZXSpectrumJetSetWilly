@@ -20,11 +20,15 @@
 ; OntheRoofEnemy2       Size   5 Byte, Start Byte 245
 ; OntheRoofEnemy3       Size   5 Byte, Start Byte 250
 ; OntheRoofEnemy4       Size   5 Byte, Start Byte 255
+; OntheRoofEnemy5       Size   5 Byte, Start Byte 260
+; OntheRoofEnemy6       Size   5 Byte, Start Byte 265
+; OntheRoofEnemy7       Size   5 Byte, Start Byte 270
+; OntheRoofEnemy8       Size   5 Byte, Start Byte 275
 ; OntheRoofPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
-; Room layout for Room  (Up On The Battlements)
+; Room layout for Room  (On the Roof )
 OntheRoofLayout:
 	DEFB 0,0,0,0,0,0,0,0	;Room layout
 	DEFB 0,0,0,0,0,0,0,0
@@ -78,7 +82,7 @@ OntheRoofBorderColor:
     DEFB 2
 
 OntheRoofReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB CYAN, NONE, NONE, NONE               ; Enemy colors
 
 OntheRoofItem:
     DEFB 1,2,5,10,84,40,48,72
@@ -93,11 +97,11 @@ OntheRoofUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 OntheRoofEnemy1:
-    DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, 13, 112, 104, 192        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
 OntheRoofEnemy2:
-    DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB 0, 0, 0, 0, 0  
 OntheRoofEnemy3:
-    DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB 0, 0, 0, 0, 0  
 OntheRoofEnemy4:
     DEFB 0, 0, 0, 0, 0               ; Empty slot
 OntheRoofEnemy5:
@@ -112,4 +116,4 @@ OntheRoofEnemy8:
 OntheRoofPosWilly:
     db 200, 50                   ; Posizione di Willy
 OntheRoofEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
