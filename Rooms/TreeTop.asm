@@ -107,11 +107,11 @@ TreeTopUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TreeTopEnemy1:
-    DEFB $80, 2, 0, 40, 80          ; [Uccello (41152) - horizzontal], Guardian = 6, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 2, 0, 40, 80          ; [Uccello (41152) - horizzontal], Guardian = 6, Starts X=0, Y=40, Limit X=80
 TreeTopEnemy2:
-    DEFB $80, 14, 0, 80, 152         ; [Fiore (41328) - horizzontal], Guardian = 6, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 14, 0, 80, 152         ; [Fiore (41328) - horizzontal], Guardian = 6, Starts X=0, Y=80, Limit X=152
 TreeTopEnemy3:
-    DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 6, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 6, Starts X=40, Y=24, Limit X=240
 TreeTopEnemy4:
     DEFB 0, 0, 0, 0, 0         ; Empty slot
 TreeTopEnemy5:
@@ -126,4 +126,4 @@ TreeTopEnemy8:
 TreeTopPosWilly:
     db 10, 30                 ; Posizione di Willy    
 TreeTopEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8

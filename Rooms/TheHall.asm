@@ -1,26 +1,31 @@
 ;===========================================================================
 ; TheHall.asm  
 ;
-; TheHallLayout       Size 128 Byte, Start Byte   0
-; TheHallTile         Size  32 Byte, Start Byte 128
-; TheHallBackground   Size   9 Byte, Start Byte 160
-; TheHallFloor        Size   9 Byte, Start Byte 169
-; TheHallWall         Size   9 Byte, Start Byte 178
-; TheHallNasty        Size   9 Byte, Start Byte 187
-; TheHallRamp         Size   9 Byte, Start Byte 196
-; TheHallConveyor     Size   9 Byte, Start Byte 205
-; TheHallConveyorData Size   4 Byte, Start Byte 214
-; TheHallRampData     Size   4 Byte, Start Byte 218
-; TheHallBorderColor  Size   1 Byte, Start Byte 222
-; TheHallReserved     Size   4 Byte, Start Byte 223
-; TheHallItem		    Size   8 Byte, Start Byte 227
-; TheHallDirection    Size   4 Byte, Start Byte 235
-; TheHallUnused       Size   1 Byte, Start Byte 239
-; TheHallEnemy1		Size   5 Byte, Start Byte 240
-; TheHallEnemy2		Size   5 Byte, Start Byte 245
-; TheHallEnemy3		Size   5 Byte, Start Byte 250
-; TheHallEnemy4		Size   5 Byte, Start Byte 255
-; TheHallPosWilly     Size   2 Byte, Start Byte 280
+; TheHallLayout             Size 128 Byte, Start Byte   0
+; TheHallTile               Size  32 Byte, Start Byte 128
+; TheHallBackground         Size   9 Byte, Start Byte 160
+; TheHallFloor              Size   9 Byte, Start Byte 169
+; TheHallWall               Size   9 Byte, Start Byte 178
+; TheHallNasty              Size   9 Byte, Start Byte 187
+; TheHallRamp               Size   9 Byte, Start Byte 196
+; TheHallConveyor           Size   9 Byte, Start Byte 205
+; TheHallConveyorData       Size   4 Byte, Start Byte 214
+; TheHallRampData           Size   4 Byte, Start Byte 218
+; TheHallBorderColor        Size   1 Byte, Start Byte 222
+; TheHallReserved           Size   4 Byte, Start Byte 223
+; TheHallItem		        Size   8 Byte, Start Byte 227
+; TheHallDirection          Size   4 Byte, Start Byte 235
+; TheHallUnused             Size   1 Byte, Start Byte 239
+; TheHallEnemy1		        Size   5 Byte, Start Byte 240
+; TheHallEnemy2		        Size   5 Byte, Start Byte 245
+; TheHallEnemy3		        Size   5 Byte, Start Byte 250
+; TheHallEnemy4		        Size   5 Byte, Start Byte 255
+; TheHallEnemy5		        Size   5 Byte, Start Byte 260
+; TheHallEnemy6		        Size   5 Byte, Start Byte 265
+; TheHallEnemy7		        Size   5 Byte, Start Byte 270
+; TheHallEnemy8		        Size   5 Byte, Start Byte 275
+; TheHallPosWilly           Size   2 Byte, Start Byte 280
+; TheHallEnemyColors5_8     Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
@@ -84,7 +89,7 @@ TheHallBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheHallReserved:
-    DEFB RED, YELLOW, YELLOW, 7                         ; Enemy colors: all WHITE (7)
+    DEFB RED, YELLOW, YELLOW, NONE                         ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheHallItem:
@@ -122,4 +127,4 @@ TheHallPosWilly:
     db 50, 20                   ; Posizione di Willy
     
 TheHallEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8

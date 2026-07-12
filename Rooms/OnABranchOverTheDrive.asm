@@ -89,7 +89,7 @@ OnABranchOverTheDriveBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 OnABranchOverTheDriveReserved:
-    DEFB 2, 3, 4, YELLOW                         ; Enemy colors: all WHITE (7)
+    DEFB RED, MAGENTA, GREEN, YELLOW                         ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 OnABranchOverTheDriveItem:
@@ -113,7 +113,7 @@ OnABranchOverTheDriveEnemy2:
 OnABranchOverTheDriveEnemy3:
     DEFB $C0, 10, 112, 0, 56          ; [DoubleBall (41456) - vertical], Guardian = 62, Starts X=112, Y=0, Limit X=56
 OnABranchOverTheDriveEnemy4:
-    DEFB $80, 18, 128, 40, 240                ; [Tronchese (41448) - vertical], Guardian = 62, Starts X=112, Y=0, Limit X=56
+    DEFB $80, 18, 128, 40, 240         ; [Tronchese (41448) - vertical], Guardian = 62, Starts X=128, Y=40, Limit X=240
 OnABranchOverTheDriveEnemy5:
     DEFB 0, 0, 0, 0, 0
 OnABranchOverTheDriveEnemy6:

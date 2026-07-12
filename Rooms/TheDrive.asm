@@ -107,7 +107,7 @@ TheDriveUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheDriveEnemy1:
-    DEFB $80, 2, 112, 80, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
+    DEFB $80, 2, 112, 80, 232         ; [Uccello (41128) - horizontal], Guardian = 22, Starts X=112, Y=88, Limit X=232
 TheDriveEnemy2:
     DEFB $80, 2, 128, 88, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
 TheDriveEnemy3:
@@ -127,4 +127,4 @@ TheDrivePosWilly:
     db 200, 101                      ; Posizione di Willy
 
 TheDriveEnemyColors5_8:
-    DEFB CYAN, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB CYAN, NONE, NONE, NONE               ; Colori per nemici 5-8

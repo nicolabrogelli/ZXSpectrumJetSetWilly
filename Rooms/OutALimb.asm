@@ -1,30 +1,31 @@
 ;===========================================================================
 ; OutALimb.asm
 ;
-; OutALimbLayout       Size 128 Byte, Start Byte   0
-; OutALimbTile         Size  32 Byte, Start Byte 128
-; OutALimbBackground   Size   9 Byte, Start Byte 160
-; OutALimbFloor        Size   9 Byte, Start Byte 169
-; OutALimbWall         Size   9 Byte, Start Byte 178
-; OutALimbNasty        Size   9 Byte, Start Byte 187
-; OutALimbRamp         Size   9 Byte, Start Byte 196
-; OutALimbConveyor     Size   9 Byte, Start Byte 205
-; OutALimbConveyorData Size   4 Byte, Start Byte 214
-; OutALimbRampData     Size   4 Byte, Start Byte 218
-; OutALimbBorderColor  Size   1 Byte, Start Byte 222
-; OutALimbReserved     Size   4 Byte, Start Byte 223
-; OutALimbItem         Size   8 Byte, Start Byte 227
-; OutALimbDirection    Size   4 Byte, Start Byte 235
-; OutALimbUnused       Size   1 Byte, Start Byte 239
-; OutALimbEnemy1       Size   5 Byte, Start Byte 240
-; OutALimbEnemy2       Size   5 Byte, Start Byte 245
-; OutALimbEnemy3       Size   5 Byte, Start Byte 250
-; OutALimbEnemy4       Size   5 Byte, Start Byte 255
-; OutALimbEnemy5       Size   5 Byte, Start Byte 260
-; OutALimbEnemy6       Size   5 Byte, Start Byte 265
-; OutALimbEnemy7       Size   5 Byte, Start Byte 270
-; OutALimbEnemy8       Size   5 Byte, Start Byte 275
-; OutALimbPosWilly     Size   2 Byte, Start Byte 280
+; OutALimbLayout            Size 128 Byte, Start Byte   0
+; OutALimbTile              Size  32 Byte, Start Byte 128
+; OutALimbBackground        Size   9 Byte, Start Byte 160
+; OutALimbFloor             Size   9 Byte, Start Byte 169
+; OutALimbWall              Size   9 Byte, Start Byte 178
+; OutALimbNasty             Size   9 Byte, Start Byte 187
+; OutALimbRamp              Size   9 Byte, Start Byte 196
+; OutALimbConveyor          Size   9 Byte, Start Byte 205
+; OutALimbConveyorData      Size   4 Byte, Start Byte 214
+; OutALimbRampData          Size   4 Byte, Start Byte 218
+; OutALimbBorderColor       Size   1 Byte, Start Byte 222
+; OutALimbReserved          Size   4 Byte, Start Byte 223
+; OutALimbItem              Size   8 Byte, Start Byte 227
+; OutALimbDirection         Size   4 Byte, Start Byte 235
+; OutALimbUnused            Size   1 Byte, Start Byte 239
+; OutALimbEnemy1            Size   5 Byte, Start Byte 240
+; OutALimbEnemy2            Size   5 Byte, Start Byte 245
+; OutALimbEnemy3            Size   5 Byte, Start Byte 250
+; OutALimbEnemy4            Size   5 Byte, Start Byte 255
+; OutALimbEnemy5            Size   5 Byte, Start Byte 260
+; OutALimbEnemy6            Size   5 Byte, Start Byte 265
+; OutALimbEnemy7            Size   5 Byte, Start Byte 270
+; OutALimbEnemy8            Size   5 Byte, Start Byte 275
+; OutALimbPosWilly          Size   2 Byte, Start Byte 280
+; OutALimbEnemyColors5_8    Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
@@ -97,11 +98,11 @@ OutALimbUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 OutALimbEnemy1:
-    DEFB $80, 2, 112, 56, 184        ; [Uccello (41160) - Horizzontal], Guardian = 45, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 2, 112, 56, 184        ; [Uccello (41160) - Horizzontal], Guardian = 45, Starts X=112, Y=56, Limit X=84
 OutALimbEnemy2:
-    DEFB $C0, 6, 96, 0, 104          ; [Faccia (41320) - vertical], Guardian = 25, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, 6, 96, 0, 104          ; [Faccia (41320) - vertical], Guardian = 25, Starts X=96, Y=0, Limit X=104
 OutALimbEnemy3:
-    DEFB $80, 1, 152, 80, 240         ; [Sega (41664) - vertical], Guardian = 88, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 1, 152, 80, 240         ; [Sega (41664) - vertical], Guardian = 88, Starts X=152, Y=80, Limit X=240
 OutALimbEnemy4:
     DEFB 0, 0, 0, 0, 0               ; Empty slot
 OutALimbEnemy5:

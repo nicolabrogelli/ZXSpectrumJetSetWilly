@@ -108,7 +108,7 @@ TheBridgeUnused:
 TheBridgeEnemy1:
     DEFB $80, 2, 0, 80, 80              ; [Uccello (41120) - horizontal], Guardian = 20, Starts X=0, Y=80, Limit X=80
 TheBridgeEnemy2:
-    DEFB $80, 2, 112, 80, 232           ; [Uccello (41128) - horizontal], Guardian = 21, Starts X=80, Y=80, Limit X=232
+    DEFB $80, 2, 112, 80, 232           ; [Uccello (41128) - horizontal], Guardian = 21, Starts X=112, Y=80, Limit X=232
 TheBridgeEnemy3:
     DEFB $C0, 5, 96, 0, 96              ; [Ufo (41072) - vertical], Guardinan = 14, Starts X=96, Y=0, Limit Y=96
 TheBridgeEnemy4:

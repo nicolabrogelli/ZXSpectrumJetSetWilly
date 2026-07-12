@@ -115,9 +115,9 @@ InsideTheMegaTrunkEnemy3:
 InsideTheMegaTrunkEnemy4:
     DEFB $C0, 6, 96, 0, 104          ; Faccia (41312) - verical], Guardian = 44, Starts X=96, Y=0, Limit X=104
 InsideTheMegaTrunkEnemy5:
-    DEFB $80, 2, 0, 40, 80           ; Uccello (41152) - horizzontal], Guardian = 24, Starts X=96, Y=0, Limit X=104 
+    DEFB $80, 2, 0, 40, 80           ; Uccello (41152) - horizzontal], Guardian = 24, Starts X=0, Y=40, Limit X=80 
 InsideTheMegaTrunkEnemy6:           
-    DEFB $80, 2, 128, 88, 232        ; Uccello (41136) - horizzontal], Guardian = 44, Starts X=96, Y=0, Limit X=104 
+    DEFB $80, 2, 128, 88, 232        ; Uccello (41136) - horizzontal], Guardian = 44, Starts X=128, Y=88, Limit X=232 
 InsideTheMegaTrunkEnemy7:
     DEFB $80, 14, 136, 24, 240         ; Enemy 7 (Fiore)
 InsideTheMegaTrunkEnemy8:

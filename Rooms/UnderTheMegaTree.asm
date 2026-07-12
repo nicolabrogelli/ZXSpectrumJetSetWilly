@@ -100,7 +100,7 @@ UnderTheMegaTreeDirection:
     DEFB 3	                                ;Room to the left (Gfx_At the Foot of the MegaTree)
     DEFB 1	                                ;Room to the right (The Bridge)
     DEFB 7                                  ;Room above (CuckoosNest)
-    DEFB BLOCK                                ;Room below (None)
+    DEFB BLOCK                               ;Room below (None)
 
 UnderTheMegaTreeUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
@@ -109,9 +109,9 @@ UnderTheMegaTreeUnused:
 UnderTheMegaTreeEnemy1:
     DEFB $80, 13, 8, 104, 200         ; [Canguro (41216) - horizontal], Guardian = 32, Starts X=8, Y=104, Limit X=200
 UnderTheMegaTreeEnemy2:
-    DEFB $C0, 6, 112, 48, 87          ; [face (41296) - vertical, Guardian = 42, Starts X=120, Y=16, Limit Y=76
+    DEFB $C0, 6, 112, 48, 87          ; [face (41296) - vertical, Guardian = 42, Starts X=112, Y=48, Limit Y=87
 UnderTheMegaTreeEnemy3:
-    DEFB $80, 12, 80, 30, 180         ; [Maiale (41168) - horizontal, Guardian = 26, Starts X=80, Y=80, Limit X=180
+    DEFB $80, 12, 80, 30, 180         ; [Maiale (41168) - horizontal, Guardian = 26, Starts X=80, Y=30, Limit X=180
 UnderTheMegaTreeEnemy4:
     DEFB 0, 0, 0, 0, 0        
 UnderTheMegaTreeEnemy5:

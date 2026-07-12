@@ -7452,7 +7452,7 @@
  101++83F0 80 03 8C 38      DEFB $80, 3, 140, 56, 230       ; [Radar (41056) - horizontal], Guardinan = 12, Starts X=140, Y=56, Limit X=230
  101++83F4 E6
  102++83F5              TheOffLicenceEnemy2:
- 103++83F5 C0 06 3C 00      DEFB $C0, 6, 60, 0, 104         ; [Face (41132) - vertical], Guardinan = 44, Starts X=60, Y=56, Limit Y=106
+ 103++83F5 C0 06 3C 00      DEFB $C0, 6, 60, 0, 104         ; [Face (41132) - vertical], Guardinan = 44, Starts X=60, Y=0, Limit Y=104
  103++83F9 68
  104++83FA              TheOffLicenceEnemy3:
  105++83FA C0 09 50 08      DEFB $C0, 9, 80, 8, 104         ; [Ball (41040) - vertical], Guardinan = 10, Starts X=80, Y=8, Limit Y=104
@@ -7628,7 +7628,7 @@
  109++850E 80 02 00 50      DEFB $80, 2, 0, 80, 80              ; [Uccello (41120) - horizontal], Guardian = 20, Starts X=0, Y=80, Limit X=80
  109++8512 50
  110++8513              TheBridgeEnemy2:
- 111++8513 80 02 70 50      DEFB $80, 2, 112, 80, 232           ; [Uccello (41128) - horizontal], Guardian = 21, Starts X=80, Y=80, Limit X=232
+ 111++8513 80 02 70 50      DEFB $80, 2, 112, 80, 232           ; [Uccello (41128) - horizontal], Guardian = 21, Starts X=112, Y=80, Limit X=232
  111++8517 E8
  112++8518              TheBridgeEnemy3:
  113++8518 C0 05 60 00      DEFB $C0, 5, 96, 0, 96              ; [Ufo (41072) - vertical], Guardinan = 14, Starts X=96, Y=0, Limit Y=96
@@ -7796,7 +7796,7 @@
  100++8627 03               DEFB 3	                                ;Room to the left (Gfx_At the Foot of the MegaTree)
  101++8628 01               DEFB 1	                                ;Room to the right (The Bridge)
  102++8629 07               DEFB 7                                  ;Room above (CuckoosNest)
- 103++862A FF               DEFB BLOCK                                ;Room below (None)
+ 103++862A FF               DEFB BLOCK                               ;Room below (None)
  104++862B
  105++862B              UnderTheMegaTreeUnused:
  106++862B 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
@@ -7806,10 +7806,10 @@
  110++862C 80 0D 08 68      DEFB $80, 13, 8, 104, 200         ; [Canguro (41216) - horizontal], Guardian = 32, Starts X=8, Y=104, Limit X=200
  110++8630 C8
  111++8631              UnderTheMegaTreeEnemy2:
- 112++8631 C0 06 70 30      DEFB $C0, 6, 112, 48, 87          ; [face (41296) - vertical, Guardian = 42, Starts X=120, Y=16, Limit Y=76
+ 112++8631 C0 06 70 30      DEFB $C0, 6, 112, 48, 87          ; [face (41296) - vertical, Guardian = 42, Starts X=112, Y=48, Limit Y=87
  112++8635 57
  113++8636              UnderTheMegaTreeEnemy3:
- 114++8636 80 0C 50 1E      DEFB $80, 12, 80, 30, 180         ; [Maiale (41168) - horizontal, Guardian = 26, Starts X=80, Y=80, Limit X=180
+ 114++8636 80 0C 50 1E      DEFB $80, 12, 80, 30, 180         ; [Maiale (41168) - horizontal, Guardian = 26, Starts X=80, Y=30, Limit X=180
  114++863A B4
  115++863B              UnderTheMegaTreeEnemy4:
  116++863B 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -8005,7 +8005,7 @@
  124++8771 00
  125++8772
  126++8772              AtTheFootTheMegaTreePosWilly:
- 127++8772 C8 65            db 200, 101                   ; Posizione di Willy
+ 127++8772 C8 65            db 200, 101                     ; Posizione di Willy
  128++8774
  129++8774              AtTheFootTheMegaTreeEnemyColors5_8:
  130++8774 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
@@ -8157,7 +8157,7 @@
  107++8868
  108++8868              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8868              TheDriveEnemy1:
- 110++8868 80 02 70 50      DEFB $80, 2, 112, 80, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
+ 110++8868 80 02 70 50      DEFB $80, 2, 112, 80, 232         ; [Uccello (41128) - horizontal], Guardian = 22, Starts X=112, Y=88, Limit X=232
  110++886C E8
  111++886D              TheDriveEnemy2:
  112++886D 80 02 80 58      DEFB $80, 2, 128, 88, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
@@ -8185,7 +8185,7 @@
  127++8890 C8 65            db 200, 101                      ; Posizione di Willy
  128++8892
  129++8892              TheDriveEnemyColors5_8:
- 130++8892 05 03 04 07      DEFB CYAN, 3, 4, 7               ; Colori per nemici 5-8
+ 130++8892 05 00 00 00      DEFB CYAN, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/TheDrive.asm
   15+ 8896                  include "rooms/TheSecurityGuard.asm"            ; ID 05
 # file opened: rooms/TheSecurityGuard.asm
@@ -8369,161 +8369,166 @@
    1++89B4              ;===========================================================================
    2++89B4              ; EntranceToHades.asm
    3++89B4              ;
-   4++89B4              ; EntranceToHadesLayout       Size 128 Byte, Start Byte   0
-   5++89B4              ; EntranceToHadesTile         Size  32 Byte, Start Byte 128
-   6++89B4              ; EntranceToHadesBackground   Size   9 Byte, Start Byte 160
-   7++89B4              ; EntranceToHadesFloor        Size   9 Byte, Start Byte 169
-   8++89B4              ; EntranceToHadesWall         Size   9 Byte, Start Byte 178
-   9++89B4              ; EntranceToHadesNasty        Size   9 Byte, Start Byte 187
-  10++89B4              ; EntranceToHadesRamp         Size   9 Byte, Start Byte 196
-  11++89B4              ; EntranceToHadesConveyor     Size   9 Byte, Start Byte 205
-  12++89B4              ; EntranceToHadesConveyorData Size   4 Byte, Start Byte 214
-  13++89B4              ; EntranceToHadesRampData     Size   4 Byte, Start Byte 218
-  14++89B4              ; EntranceToHadesBorderColor  Size   1 Byte, Start Byte 222
-  15++89B4              ; EntranceToHadesReserved     Size   4 Byte, Start Byte 223
-  16++89B4              ; EntranceToHadesItem         Size   8 Byte, Start Byte 227
-  17++89B4              ; EntranceToHadesDirection    Size   4 Byte, Start Byte 235
-  18++89B4              ; EntranceToHadesUnused       Size   1 Byte, Start Byte 239
-  19++89B4              ; EntranceToHadesEnemy1       Size   5 Byte, Start Byte 240
-  20++89B4              ; EntranceToHadesEnemy2       Size   5 Byte, Start Byte 245
-  21++89B4              ; EntranceToHadesEnemy3       Size   5 Byte, Start Byte 250
-  22++89B4              ; EntranceToHadesEnemy4       Size   5 Byte, Start Byte 255
-  23++89B4              ; EntranceToHadesPosWilly     Size   2 Byte, Start Byte 280
-  24++89B4              ;
-  25++89B4              ;===========================================================================
-  26++89B4
-  27++89B4              EntranceToHadesLayout:
-  28++89B4 A0 00 00 00      DEFB 160,0,0,0,0,0,0,0	;Room layout
-  28++89B8 00 00 00 00
-  29++89BC A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
-  29++89C0 00 00 00 00
-  30++89C4 A0 00 00 15      DEFB 160,0,0,21,4,85,0,0
-  30++89C8 04 55 00 00
-  31++89CC A0 00 00 10      DEFB 160,0,0,16,68,67,0,0
-  31++89D0 44 43 00 00
-  32++89D4 A0 00 00 10      DEFB 160,0,0,16,68,84,0,0
-  32++89D8 44 54 00 00
-  33++89DC A0 00 00 10      DEFB 160,0,0,16,68,64,0,0
-  33++89E0 44 40 00 00
-  34++89E4 A0 00 00 15      DEFB 160,0,0,21,4,85,0,0
-  34++89E8 04 55 00 00
-  35++89EC A0 00 00 0C      DEFB 160,0,0,12,12,48,0,0
-  35++89F0 0C 30 00 00
-  36++89F4 A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
-  36++89F8 00 00 00 00
-  37++89FC A0 01 01 04      DEFB 160,1,1,4,20,21,4,16
-  37++8A00 14 15 04 10
-  38++8A04 A0 01 45 11      DEFB 160,1,69,17,17,4,17,16
-  38++8A08 11 04 11 10
-  39++8A0C A0 01 11 11      DEFB 160,1,17,17,20,4,17,16
-  39++8A10 14 04 11 10
-  40++8A14 A0 01 31 11      DEFB 160,1,49,17,17,4,21,16
-  40++8A18 11 04 15 10
-  41++8A1C A0 01 01 04      DEFB 160,1,1,4,17,4,17,21
-  41++8A20 11 04 11 15
-  42++8A24 A0 03 03 0C      DEFB 160,3,3,12,51,12,51,12
-  42++8A28 33 0C 33 0C
-  43++8A2C A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
-  43++8A30 00 00 00 00
-  44++8A34
-  45++8A34              EntranceToHadesTile:
-  46++8A34 20 20 20 20      DEFM "       Entrance to Hades        "
-  46++8A38 20 20 20 45
-  46++8A3C 6E 74 72 61
-  46++8A40 6E 63 65 20
-  46++8A44 74 6F 20 48
-  46++8A48 61 64 65 73
-  46++8A4C 20 20 20 20
-  46++8A50 20 20 20 20
-  47++8A54
-  48++8A54              EntranceToHadesBackground:                    ; Background
-  49++8A54 37 00 00 00      DEFB 55,0,0,0,0,0,0,0,0
-  49++8A58 00 00 00 00
-  49++8A5C 00
-  50++8A5D
-  51++8A5D              EntranceToHadesFloor:
-  52++8A5D A3 A0 14 82      DEFB 163,160,20,130,80,10,65,40,5      ; Floor Solid
-  52++8A61 50 0A 41 28
-  52++8A65 05
-  53++8A66
-  54++8A66              EntranceToHadesWall:
-  55++8A66 63 BB BB 38      DEFB 99,187,187,56,187,187,187,131,187   ; Wall Solid
-  55++8A6A BB BB BB 83
-  55++8A6E BB
-  56++8A6F
-  57++8A6F              EntranceToHadesNasty:
-  58++8A6F 32 BF 5C 58      DEFB 50,191,92,88,48,40,88,72,232  ; Nastry
-  58++8A73 30 28 58 48
-  58++8A77 E8
-  59++8A78
-  60++8A78              EntranceToHadesRamp:                          ; Ramp Solid
-  61++8A78 07 40 40 10      DEFB 7,64,64,16,16,4,4,1,1
-  61++8A7C 10 04 04 01
-  61++8A80 01
-  62++8A81
-  63++8A81              EntranceToHadesConveyor:                      ; Conveyor Solid
-  64++8A81 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0
-  64++8A85 00 00 00 00
-  64++8A89 00
-  65++8A8A
-  66++8A8A              EntranceToHadesConveyorData:
-  67++8A8A 00               DEFB 0
-  68++8A8B 00 00            DEFW 0
-  69++8A8D 00               DEFB 0
-  70++8A8E
-  71++8A8E              EntranceToHadesRampData:
-  72++8A8E 00               DEFB 0
-  73++8A8F C7 5F            DEFW 24519
-  74++8A91 00               DEFB 0
-  75++8A92
-  76++8A92              EntranceToHadesBorderColor:
-  77++8A92 02               DEFB 2                        ; Red border
-  78++8A93
-  79++8A93              EntranceToHadesReserved:
-  80++8A93 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors
-  81++8A97
-  82++8A97              EntranceToHadesItem:
-  83++8A97 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
-  83++8A9B 00 00 00 00
-  84++8A9F
-  85++8A9F              EntranceToHadesDirection:
-  86++8A9F 0E               DEFB 14                        ;Room to the left (Rescue Esmerelda)
-  87++8AA0 05               DEFB 5	                       ;Room to the right (The Security Guard)
-  88++8AA1 FF               DEFB $FF                       ;Room above (The Off Licence)
-  89++8AA2 FF               DEFB $FF                       ;Room below (The Off Licence)
-  90++8AA3
-  91++8AA3              EntranceToHadesUnused:
-  92++8AA3 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
-  93++8AA4
-  94++8AA4              EntranceToHadesEnemy1:
-  95++8AA4 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
-  95++8AA8 00
-  96++8AA9              EntranceToHadesEnemy2:
-  97++8AA9 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
-  97++8AAD 00
-  98++8AAE              EntranceToHadesEnemy3:
-  99++8AAE 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
-  99++8AB2 00
- 100++8AB3              EntranceToHadesEnemy4:
- 101++8AB3 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
- 101++8AB7 00
- 102++8AB8              EntranceToHadesEnemy5:
- 103++8AB8 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 103++8ABC 00
- 104++8ABD              EntranceToHadesEnemy6:
- 105++8ABD 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 105++8AC1 00
- 106++8AC2              EntranceToHadesEnemy7:
- 107++8AC2 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 107++8AC6 00
- 108++8AC7              EntranceToHadesEnemy8:
- 109++8AC7 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 109++8ACB 00
- 110++8ACC
- 111++8ACC              EntranceToHadesPosWilly:
- 112++8ACC 88 1E            db 136, 30                   ; Willy starting position
- 113++8ACE              EntranceToHadesEnemyColors5_8:
- 114++8ACE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+   4++89B4              ; EntranceToHadesLayout             Size 128 Byte, Start Byte   0
+   5++89B4              ; EntranceToHadesTile               Size  32 Byte, Start Byte 128
+   6++89B4              ; EntranceToHadesBackground         Size   9 Byte, Start Byte 160
+   7++89B4              ; EntranceToHadesFloor              Size   9 Byte, Start Byte 169
+   8++89B4              ; EntranceToHadesWall               Size   9 Byte, Start Byte 178
+   9++89B4              ; EntranceToHadesNasty              Size   9 Byte, Start Byte 187
+  10++89B4              ; EntranceToHadesRamp               Size   9 Byte, Start Byte 196
+  11++89B4              ; EntranceToHadesConveyor           Size   9 Byte, Start Byte 205
+  12++89B4              ; EntranceToHadesConveyorData       Size   4 Byte, Start Byte 214
+  13++89B4              ; EntranceToHadesRampData           Size   4 Byte, Start Byte 218
+  14++89B4              ; EntranceToHadesBorderColor        Size   1 Byte, Start Byte 222
+  15++89B4              ; EntranceToHadesReserved           Size   4 Byte, Start Byte 223
+  16++89B4              ; EntranceToHadesItem               Size   8 Byte, Start Byte 227
+  17++89B4              ; EntranceToHadesDirection          Size   4 Byte, Start Byte 235
+  18++89B4              ; EntranceToHadesUnused             Size   1 Byte, Start Byte 239
+  19++89B4              ; EntranceToHadesEnemy1             Size   5 Byte, Start Byte 240
+  20++89B4              ; EntranceToHadesEnemy2             Size   5 Byte, Start Byte 245
+  21++89B4              ; EntranceToHadesEnemy3             Size   5 Byte, Start Byte 250
+  22++89B4              ; EntranceToHadesEnemy4             Size   5 Byte, Start Byte 255
+  23++89B4              ; EntranceToHadesEnemy5             Size   5 Byte, Start Byte 260
+  24++89B4              ; EntranceToHadesEnemy6             Size   5 Byte, Start Byte 265
+  25++89B4              ; EntranceToHadesEnemy7             Size   5 Byte, Start Byte 270
+  26++89B4              ; EntranceToHadesEnemy8             Size   5 Byte, Start Byte 275
+  27++89B4              ; EntranceToHadesPosWilly           Size   2 Byte, Start Byte 280
+  28++89B4              ; EntranceToHadesEnemyColors5_8    Size   4 Byte, Start Byte 282
+  29++89B4              ;
+  30++89B4              ;===========================================================================
+  31++89B4
+  32++89B4              EntranceToHadesLayout:
+  33++89B4 A0 00 00 00      DEFB 160,0,0,0,0,0,0,0	;Room layout
+  33++89B8 00 00 00 00
+  34++89BC A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
+  34++89C0 00 00 00 00
+  35++89C4 A0 00 00 15      DEFB 160,0,0,21,4,85,0,0
+  35++89C8 04 55 00 00
+  36++89CC A0 00 00 10      DEFB 160,0,0,16,68,67,0,0
+  36++89D0 44 43 00 00
+  37++89D4 A0 00 00 10      DEFB 160,0,0,16,68,84,0,0
+  37++89D8 44 54 00 00
+  38++89DC A0 00 00 10      DEFB 160,0,0,16,68,64,0,0
+  38++89E0 44 40 00 00
+  39++89E4 A0 00 00 15      DEFB 160,0,0,21,4,85,0,0
+  39++89E8 04 55 00 00
+  40++89EC A0 00 00 0C      DEFB 160,0,0,12,12,48,0,0
+  40++89F0 0C 30 00 00
+  41++89F4 A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
+  41++89F8 00 00 00 00
+  42++89FC A0 01 01 04      DEFB 160,1,1,4,20,21,4,16
+  42++8A00 14 15 04 10
+  43++8A04 A0 01 45 11      DEFB 160,1,69,17,17,4,17,16
+  43++8A08 11 04 11 10
+  44++8A0C A0 01 11 11      DEFB 160,1,17,17,20,4,17,16
+  44++8A10 14 04 11 10
+  45++8A14 A0 01 31 11      DEFB 160,1,49,17,17,4,21,16
+  45++8A18 11 04 15 10
+  46++8A1C A0 01 01 04      DEFB 160,1,1,4,17,4,17,21
+  46++8A20 11 04 11 15
+  47++8A24 A0 03 03 0C      DEFB 160,3,3,12,51,12,51,12
+  47++8A28 33 0C 33 0C
+  48++8A2C A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
+  48++8A30 00 00 00 00
+  49++8A34
+  50++8A34              EntranceToHadesTile:
+  51++8A34 20 20 20 20      DEFM "       Entrance to Hades        "
+  51++8A38 20 20 20 45
+  51++8A3C 6E 74 72 61
+  51++8A40 6E 63 65 20
+  51++8A44 74 6F 20 48
+  51++8A48 61 64 65 73
+  51++8A4C 20 20 20 20
+  51++8A50 20 20 20 20
+  52++8A54
+  53++8A54              EntranceToHadesBackground:                    ; Background
+  54++8A54 37 00 00 00      DEFB 55,0,0,0,0,0,0,0,0
+  54++8A58 00 00 00 00
+  54++8A5C 00
+  55++8A5D
+  56++8A5D              EntranceToHadesFloor:
+  57++8A5D A3 A0 14 82      DEFB 163,160,20,130,80,10,65,40,5      ; Floor Solid
+  57++8A61 50 0A 41 28
+  57++8A65 05
+  58++8A66
+  59++8A66              EntranceToHadesWall:
+  60++8A66 63 BB BB 38      DEFB 99,187,187,56,187,187,187,131,187   ; Wall Solid
+  60++8A6A BB BB BB 83
+  60++8A6E BB
+  61++8A6F
+  62++8A6F              EntranceToHadesNasty:
+  63++8A6F 32 BF 5C 58      DEFB 50,191,92,88,48,40,88,72,232  ; Nastry
+  63++8A73 30 28 58 48
+  63++8A77 E8
+  64++8A78
+  65++8A78              EntranceToHadesRamp:                          ; Ramp Solid
+  66++8A78 07 40 40 10      DEFB 7,64,64,16,16,4,4,1,1
+  66++8A7C 10 04 04 01
+  66++8A80 01
+  67++8A81
+  68++8A81              EntranceToHadesConveyor:                      ; Conveyor Solid
+  69++8A81 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0
+  69++8A85 00 00 00 00
+  69++8A89 00
+  70++8A8A
+  71++8A8A              EntranceToHadesConveyorData:
+  72++8A8A 00               DEFB 0
+  73++8A8B 00 00            DEFW 0
+  74++8A8D 00               DEFB 0
+  75++8A8E
+  76++8A8E              EntranceToHadesRampData:
+  77++8A8E 00               DEFB 0
+  78++8A8F C7 5F            DEFW 24519
+  79++8A91 00               DEFB 0
+  80++8A92
+  81++8A92              EntranceToHadesBorderColor:
+  82++8A92 02               DEFB 2                        ; Red border
+  83++8A93
+  84++8A93              EntranceToHadesReserved:
+  85++8A93 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Enemy colors
+  86++8A97
+  87++8A97              EntranceToHadesItem:
+  88++8A97 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
+  88++8A9B 00 00 00 00
+  89++8A9F
+  90++8A9F              EntranceToHadesDirection:
+  91++8A9F 0E               DEFB 14                        ;Room to the left (Rescue Esmerelda)
+  92++8AA0 05               DEFB 5	                       ;Room to the right (The Security Guard)
+  93++8AA1 FF               DEFB BLOCK                       ;Room above (The Off Licence)
+  94++8AA2 FF               DEFB BLOCK                       ;Room below (The Off Licence)
+  95++8AA3
+  96++8AA3              EntranceToHadesUnused:
+  97++8AA3 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  98++8AA4
+  99++8AA4              EntranceToHadesEnemy1:
+ 100++8AA4 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 100++8AA8 00
+ 101++8AA9              EntranceToHadesEnemy2:
+ 102++8AA9 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 102++8AAD 00
+ 103++8AAE              EntranceToHadesEnemy3:
+ 104++8AAE 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 104++8AB2 00
+ 105++8AB3              EntranceToHadesEnemy4:
+ 106++8AB3 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 106++8AB7 00
+ 107++8AB8              EntranceToHadesEnemy5:
+ 108++8AB8 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 108++8ABC 00
+ 109++8ABD              EntranceToHadesEnemy6:
+ 110++8ABD 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 110++8AC1 00
+ 111++8AC2              EntranceToHadesEnemy7:
+ 112++8AC2 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 112++8AC6 00
+ 113++8AC7              EntranceToHadesEnemy8:
+ 114++8AC7 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 114++8ACB 00
+ 115++8ACC
+ 116++8ACC              EntranceToHadesPosWilly:
+ 117++8ACC 88 1E            db 136, 30                   ; Willy starting position
+ 118++8ACE              EntranceToHadesEnemyColors5_8:
+ 119++8ACE 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/EntranceToHades.asm
   17+ 8AD2                  include "rooms/CuckoosNest.asm"                 ; ID 07
 # file opened: rooms/CuckoosNest.asm
@@ -8672,10 +8677,10 @@
  107++8BC2
  108++8BC2              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8BC2              CuckoosNestEnemy1:
- 110++8BC2 80 04 60 40      DEFB $80, 4, 96, 64, 144         ; [Uovo (41272) - horizontal], Guardian = 39, Starts X=88, Y=40, Limit X=104
+ 110++8BC2 80 04 60 40      DEFB $80, 4, 96, 64, 144         ; [Uovo (41272) - horizontal], Guardian = 39, Starts X=96, Y=64, Limit X=144
  110++8BC6 90
  111++8BC7              CuckoosNestEnemy2:
- 112++8BC7 80 01 00 58      DEFB $80, 1, 0, 88, 88           ; [Sega (41384) - vertical], Guardian = 53, Starts X=32, Y=104, Limit X=112
+ 112++8BC7 80 01 00 58      DEFB $80, 1, 0, 88, 88           ; [Sega (41384) - vertical], Guardian = 53, Starts X=0, Y=88, Limit X=88
  112++8BCB 58
  113++8BCC              CuckoosNestEnemy3:
  114++8BCC 00 00 00 00      DEFB 0, 0, 0, 0, 0 ; DEFB $80, 17, 0, 82, 240         ; Enemy 3 (Freccia), horizontal, Starts X=0, Y=82, Limit X=240
@@ -8861,10 +8866,10 @@
  116++8CEF C0 06 60 00      DEFB $C0, 6, 96, 0, 104          ; Faccia (41312) - verical], Guardian = 44, Starts X=96, Y=0, Limit X=104
  116++8CF3 68
  117++8CF4              InsideTheMegaTrunkEnemy5:
- 118++8CF4 80 02 00 28      DEFB $80, 2, 0, 40, 80           ; Uccello (41152) - horizzontal], Guardian = 24, Starts X=96, Y=0, Limit X=104
+ 118++8CF4 80 02 00 28      DEFB $80, 2, 0, 40, 80           ; Uccello (41152) - horizzontal], Guardian = 24, Starts X=0, Y=40, Limit X=80
  118++8CF8 50
  119++8CF9              InsideTheMegaTrunkEnemy6:
- 120++8CF9 80 02 80 58      DEFB $80, 2, 128, 88, 232        ; Uccello (41136) - horizzontal], Guardian = 44, Starts X=96, Y=0, Limit X=104
+ 120++8CF9 80 02 80 58      DEFB $80, 2, 128, 88, 232        ; Uccello (41136) - horizzontal], Guardian = 44, Starts X=128, Y=88, Limit X=232
  120++8CFD E8
  121++8CFE              InsideTheMegaTrunkEnemy7:
  122++8CFE 80 0E 88 18      DEFB $80, 14, 136, 24, 240         ; Enemy 7 (Fiore)
@@ -9007,7 +9012,7 @@
   89++8DED
   90++8DED              ;The next two bytes are copied to 32991, but are not used.
   91++8DED              OnABranchOverTheDriveReserved:
-  92++8DED 02 03 04 06      DEFB 2, 3, 4, YELLOW                         ; Enemy colors: all WHITE (7)
+  92++8DED 02 03 04 06      DEFB RED, MAGENTA, GREEN, YELLOW                         ; Enemy colors
   93++8DF1
   94++8DF1              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++8DF1              OnABranchOverTheDriveItem:
@@ -9035,7 +9040,7 @@
  114++8E08 C0 0A 70 00      DEFB $C0, 10, 112, 0, 56          ; [DoubleBall (41456) - vertical], Guardian = 62, Starts X=112, Y=0, Limit X=56
  114++8E0C 38
  115++8E0D              OnABranchOverTheDriveEnemy4:
- 116++8E0D 80 12 80 28      DEFB $80, 18, 128, 40, 240                ; [Tronchese (41448) - vertical], Guardian = 62, Starts X=112, Y=0, Limit X=56
+ 116++8E0D 80 12 80 28      DEFB $80, 18, 128, 40, 240         ; [Tronchese (41448) - vertical], Guardian = 62, Starts X=128, Y=40, Limit X=240
  116++8E11 F0
  117++8E12              OnABranchOverTheDriveEnemy5:
  118++8E12 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -9236,172 +9241,177 @@
    1++8F4A              ;===========================================================================
    2++8F4A              ; TheHall.asm
    3++8F4A              ;
-   4++8F4A              ; TheHallLayout       Size 128 Byte, Start Byte   0
-   5++8F4A              ; TheHallTile         Size  32 Byte, Start Byte 128
-   6++8F4A              ; TheHallBackground   Size   9 Byte, Start Byte 160
-   7++8F4A              ; TheHallFloor        Size   9 Byte, Start Byte 169
-   8++8F4A              ; TheHallWall         Size   9 Byte, Start Byte 178
-   9++8F4A              ; TheHallNasty        Size   9 Byte, Start Byte 187
-  10++8F4A              ; TheHallRamp         Size   9 Byte, Start Byte 196
-  11++8F4A              ; TheHallConveyor     Size   9 Byte, Start Byte 205
-  12++8F4A              ; TheHallConveyorData Size   4 Byte, Start Byte 214
-  13++8F4A              ; TheHallRampData     Size   4 Byte, Start Byte 218
-  14++8F4A              ; TheHallBorderColor  Size   1 Byte, Start Byte 222
-  15++8F4A              ; TheHallReserved     Size   4 Byte, Start Byte 223
-  16++8F4A              ; TheHallItem		    Size   8 Byte, Start Byte 227
-  17++8F4A              ; TheHallDirection    Size   4 Byte, Start Byte 235
-  18++8F4A              ; TheHallUnused       Size   1 Byte, Start Byte 239
-  19++8F4A              ; TheHallEnemy1		Size   5 Byte, Start Byte 240
-  20++8F4A              ; TheHallEnemy2		Size   5 Byte, Start Byte 245
-  21++8F4A              ; TheHallEnemy3		Size   5 Byte, Start Byte 250
-  22++8F4A              ; TheHallEnemy4		Size   5 Byte, Start Byte 255
-  23++8F4A              ; TheHallPosWilly     Size   2 Byte, Start Byte 280
-  24++8F4A              ;
-  25++8F4A              ;===========================================================================
-  26++8F4A
-  27++8F4A              ; Room layout for Room  (The Hall)
-  28++8F4A              TheHallLayout:
-  29++8F4A 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0	;Room layout
-  29++8F4E 00 00 00 00
-  30++8F52 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  30++8F56 00 00 00 00
-  31++8F5A 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  31++8F5E 00 00 00 00
-  32++8F62 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  32++8F66 00 00 00 00
-  33++8F6A 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  33++8F6E 00 00 00 00
-  34++8F72 AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
-  34++8F76 AA AA AA AA
-  35++8F7A 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
-  35++8F7E 00 28 00 00
-  36++8F82 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
-  36++8F86 00 28 00 00
-  37++8F8A 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
-  37++8F8E 00 28 00 00
-  38++8F92 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
-  38++8F96 00 28 00 00
-  39++8F9A 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
-  39++8F9E 00 28 00 00
-  40++8FA2 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
-  40++8FA6 00 28 00 00
-  41++8FAA 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  41++8FAE 00 00 00 00
-  42++8FB2 00 00 C0 C0  	DEFB 0,0,192,192,48,0,0,0
-  42++8FB6 30 00 00 00
-  43++8FBA AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
-  43++8FBE AA AA AA AA
-  44++8FC2 AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
-  44++8FC6 AA AA AA AA
-  45++8FCA
-  46++8FCA              TheHallTile:
-  47++8FCA              ;The next 32 bytes are copied to 32896 and specify the room name.
-  48++8FCA 20 20 20 20      DEFM "            The Hall            "	    ;Room name
-  48++8FCE 20 20 20 20
-  48++8FD2 20 20 20 20
-  48++8FD6 54 68 65 20
-  48++8FDA 48 61 6C 6C
-  48++8FDE 20 20 20 20
-  48++8FE2 20 20 20 20
-  48++8FE6 20 20 20 20
-  49++8FEA
-  50++8FEA              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  51++8FEA              TheHallBackground:
-  52++8FEA 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0	            		;Background
-  52++8FEE 00 00 00 00
-  52++8FF2 00
-  53++8FF3
-  54++8FF3              TheHallFloor:
-  55++8FF3 47 FF AA 77      DEFB 71,255,170,119,170,119,170,85,170	    ;Floor Solid
-  55++8FF7 AA 77 AA 55
-  55++8FFB AA
-  56++8FFC
-  57++8FFC              TheHallWall:
-  58++8FFC 3A 20 10 0E      DEFB 58,32,16,14,193,48,9,198,32	    	;Wall Solid
-  58++9000 C1 30 09 C6
-  58++9004 20
-  59++9005
-  60++9005              TheHallNasty:
-  61++9005 44 88 A9 A9      DEFB 68,136,169,169,187,191,191,191,94	     ;Nasty
-  61++9009 BB BF BF BF
-  61++900D 5E
-  62++900E
-  63++900E              TheHallRamp:
-  64++900E 07 C0 C0 30      DEFB 7,192,192,48,48,12,12,3,3	        ;Ramp Solid
-  64++9012 30 0C 0C 03
-  64++9016 03
-  65++9017
-  66++9017              TheHallConveyor:
-  67++9017 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
-  67++901B 00 00 00 00
-  67++901F 00
-  68++9020
-  69++9020              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  70++9020              TheHallConveyorData:
-  71++9020 00               DEFB 0	                                ;Direction (right)
-  72++9021 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
-  73++9023 00               DEFB 0	                                ;Length
-  74++9024
-  75++9024              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  76++9024              TheHallRampData:
-  77++9024 00               DEFB 0	                                ;Direction (up to the right)
-  78++9025 A5 5F            DEFW 24485	                            ;Location in the attribute buffer at 24064: (14,7)
-  79++9027 06               DEFB 6	                                ;Length
-  80++9028
-  81++9028              ;The next byte is copied to 32990 and specifies the border colour.
-  82++9028              TheHallBorderColor:
-  83++9028 04               DEFB 4	                                ;Border colour
-  84++9029
-  85++9029              ;The next two bytes are copied to 32991, but are not used.
-  86++9029              TheHallReserved:
-  87++9029 02 06 06 07      DEFB RED, YELLOW, YELLOW, 7                         ; Enemy colors: all WHITE (7)
-  88++902D
-  89++902D              ;The next eight bytes are copied to 32993 and define the item graphic.
-  90++902D              TheHallItem:
-  91++902D 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	         ;Item graphic (unused)
-  91++9031 00 00 00 00
-  92++9035
-  93++9035              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  94++9035              TheHallDirection:
-  95++9035 14               DEFB 20	                        ;Room to the left (Ballroom East)
-  96++9036 0A               DEFB 10	                        ;Room to the right (The Front Door)
-  97++9037 FF               DEFB BLOCK	                        ;Room above (The Off Licence)
-  98++9038 FF               DEFB BLOCK	                        ;Room below (The Off Licence)
-  99++9039
- 100++9039              TheHallUnused:
- 101++9039 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
- 102++903A
- 103++903A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 104++903A              TheHallEnemy1:
- 105++903A 80 0C 28 18      DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 26, Starts X=40, Y=24, Limit X=240
- 105++903E F0
- 106++903F              TheHallEnemy2:
- 107++903F C0 10 50 30      DEFB $C0, 16, 80, 48, 60          ; [Candelabro (41672) - horizzontal], Guardian = 89, Starts X=40, Y=24, Limit X=240
- 107++9043 3C
- 108++9044              TheHallEnemy3:
- 109++9044 80 02 48 50      DEFB $80, 2, 72, 80, 136         ; [Ucello (41720) - horizzontal], Guardian = 26, Starts X=40, Y=24, Limit X=240
- 109++9048 88
- 110++9049              TheHallEnemy4:
- 111++9049 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
- 111++904D 00
- 112++904E              TheHallEnemy5:
- 113++904E 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 113++9052 00
- 114++9053              TheHallEnemy6:
- 115++9053 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 115++9057 00
- 116++9058              TheHallEnemy7:
- 117++9058 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 117++905C 00
- 118++905D              TheHallEnemy8:
- 119++905D 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 119++9061 00
- 120++9062
- 121++9062              TheHallPosWilly:
- 122++9062 32 14            db 50, 20                   ; Posizione di Willy
- 123++9064
- 124++9064              TheHallEnemyColors5_8:
- 125++9064 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+   4++8F4A              ; TheHallLayout             Size 128 Byte, Start Byte   0
+   5++8F4A              ; TheHallTile               Size  32 Byte, Start Byte 128
+   6++8F4A              ; TheHallBackground         Size   9 Byte, Start Byte 160
+   7++8F4A              ; TheHallFloor              Size   9 Byte, Start Byte 169
+   8++8F4A              ; TheHallWall               Size   9 Byte, Start Byte 178
+   9++8F4A              ; TheHallNasty              Size   9 Byte, Start Byte 187
+  10++8F4A              ; TheHallRamp               Size   9 Byte, Start Byte 196
+  11++8F4A              ; TheHallConveyor           Size   9 Byte, Start Byte 205
+  12++8F4A              ; TheHallConveyorData       Size   4 Byte, Start Byte 214
+  13++8F4A              ; TheHallRampData           Size   4 Byte, Start Byte 218
+  14++8F4A              ; TheHallBorderColor        Size   1 Byte, Start Byte 222
+  15++8F4A              ; TheHallReserved           Size   4 Byte, Start Byte 223
+  16++8F4A              ; TheHallItem		        Size   8 Byte, Start Byte 227
+  17++8F4A              ; TheHallDirection          Size   4 Byte, Start Byte 235
+  18++8F4A              ; TheHallUnused             Size   1 Byte, Start Byte 239
+  19++8F4A              ; TheHallEnemy1		        Size   5 Byte, Start Byte 240
+  20++8F4A              ; TheHallEnemy2		        Size   5 Byte, Start Byte 245
+  21++8F4A              ; TheHallEnemy3		        Size   5 Byte, Start Byte 250
+  22++8F4A              ; TheHallEnemy4		        Size   5 Byte, Start Byte 255
+  23++8F4A              ; TheHallEnemy5		        Size   5 Byte, Start Byte 260
+  24++8F4A              ; TheHallEnemy6		        Size   5 Byte, Start Byte 265
+  25++8F4A              ; TheHallEnemy7		        Size   5 Byte, Start Byte 270
+  26++8F4A              ; TheHallEnemy8		        Size   5 Byte, Start Byte 275
+  27++8F4A              ; TheHallPosWilly           Size   2 Byte, Start Byte 280
+  28++8F4A              ; TheHallEnemyColors5_8     Size   4 Byte, Start Byte 282
+  29++8F4A              ;
+  30++8F4A              ;===========================================================================
+  31++8F4A
+  32++8F4A              ; Room layout for Room  (The Hall)
+  33++8F4A              TheHallLayout:
+  34++8F4A 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0	;Room layout
+  34++8F4E 00 00 00 00
+  35++8F52 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  35++8F56 00 00 00 00
+  36++8F5A 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  36++8F5E 00 00 00 00
+  37++8F62 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  37++8F66 00 00 00 00
+  38++8F6A 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  38++8F6E 00 00 00 00
+  39++8F72 AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
+  39++8F76 AA AA AA AA
+  40++8F7A 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
+  40++8F7E 00 28 00 00
+  41++8F82 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
+  41++8F86 00 28 00 00
+  42++8F8A 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
+  42++8F8E 00 28 00 00
+  43++8F92 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
+  43++8F96 00 28 00 00
+  44++8F9A 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
+  44++8F9E 00 28 00 00
+  45++8FA2 00 00 00 00  	DEFB 0,0,0,0,0,40,0,0
+  45++8FA6 00 28 00 00
+  46++8FAA 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  46++8FAE 00 00 00 00
+  47++8FB2 00 00 C0 C0  	DEFB 0,0,192,192,48,0,0,0
+  47++8FB6 30 00 00 00
+  48++8FBA AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
+  48++8FBE AA AA AA AA
+  49++8FC2 AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
+  49++8FC6 AA AA AA AA
+  50++8FCA
+  51++8FCA              TheHallTile:
+  52++8FCA              ;The next 32 bytes are copied to 32896 and specify the room name.
+  53++8FCA 20 20 20 20      DEFM "            The Hall            "	    ;Room name
+  53++8FCE 20 20 20 20
+  53++8FD2 20 20 20 20
+  53++8FD6 54 68 65 20
+  53++8FDA 48 61 6C 6C
+  53++8FDE 20 20 20 20
+  53++8FE2 20 20 20 20
+  53++8FE6 20 20 20 20
+  54++8FEA
+  55++8FEA              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  56++8FEA              TheHallBackground:
+  57++8FEA 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0	            		;Background
+  57++8FEE 00 00 00 00
+  57++8FF2 00
+  58++8FF3
+  59++8FF3              TheHallFloor:
+  60++8FF3 47 FF AA 77      DEFB 71,255,170,119,170,119,170,85,170	    ;Floor Solid
+  60++8FF7 AA 77 AA 55
+  60++8FFB AA
+  61++8FFC
+  62++8FFC              TheHallWall:
+  63++8FFC 3A 20 10 0E      DEFB 58,32,16,14,193,48,9,198,32	    	;Wall Solid
+  63++9000 C1 30 09 C6
+  63++9004 20
+  64++9005
+  65++9005              TheHallNasty:
+  66++9005 44 88 A9 A9      DEFB 68,136,169,169,187,191,191,191,94	     ;Nasty
+  66++9009 BB BF BF BF
+  66++900D 5E
+  67++900E
+  68++900E              TheHallRamp:
+  69++900E 07 C0 C0 30      DEFB 7,192,192,48,48,12,12,3,3	        ;Ramp Solid
+  69++9012 30 0C 0C 03
+  69++9016 03
+  70++9017
+  71++9017              TheHallConveyor:
+  72++9017 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++901B 00 00 00 00
+  72++901F 00
+  73++9020
+  74++9020              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  75++9020              TheHallConveyorData:
+  76++9020 00               DEFB 0	                                ;Direction (right)
+  77++9021 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
+  78++9023 00               DEFB 0	                                ;Length
+  79++9024
+  80++9024              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  81++9024              TheHallRampData:
+  82++9024 00               DEFB 0	                                ;Direction (up to the right)
+  83++9025 A5 5F            DEFW 24485	                            ;Location in the attribute buffer at 24064: (14,7)
+  84++9027 06               DEFB 6	                                ;Length
+  85++9028
+  86++9028              ;The next byte is copied to 32990 and specifies the border colour.
+  87++9028              TheHallBorderColor:
+  88++9028 04               DEFB 4	                                ;Border colour
+  89++9029
+  90++9029              ;The next two bytes are copied to 32991, but are not used.
+  91++9029              TheHallReserved:
+  92++9029 02 06 06 00      DEFB RED, YELLOW, YELLOW, NONE                         ; Enemy colors
+  93++902D
+  94++902D              ;The next eight bytes are copied to 32993 and define the item graphic.
+  95++902D              TheHallItem:
+  96++902D 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	         ;Item graphic (unused)
+  96++9031 00 00 00 00
+  97++9035
+  98++9035              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  99++9035              TheHallDirection:
+ 100++9035 14               DEFB 20	                        ;Room to the left (Ballroom East)
+ 101++9036 0A               DEFB 10	                        ;Room to the right (The Front Door)
+ 102++9037 FF               DEFB BLOCK	                        ;Room above (The Off Licence)
+ 103++9038 FF               DEFB BLOCK	                        ;Room below (The Off Licence)
+ 104++9039
+ 105++9039              TheHallUnused:
+ 106++9039 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 107++903A
+ 108++903A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 109++903A              TheHallEnemy1:
+ 110++903A 80 0C 28 18      DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 26, Starts X=40, Y=24, Limit X=240
+ 110++903E F0
+ 111++903F              TheHallEnemy2:
+ 112++903F C0 10 50 30      DEFB $C0, 16, 80, 48, 60          ; [Candelabro (41672) - horizzontal], Guardian = 89, Starts X=40, Y=24, Limit X=240
+ 112++9043 3C
+ 113++9044              TheHallEnemy3:
+ 114++9044 80 02 48 50      DEFB $80, 2, 72, 80, 136         ; [Ucello (41720) - horizzontal], Guardian = 26, Starts X=40, Y=24, Limit X=240
+ 114++9048 88
+ 115++9049              TheHallEnemy4:
+ 116++9049 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 116++904D 00
+ 117++904E              TheHallEnemy5:
+ 118++904E 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 118++9052 00
+ 119++9053              TheHallEnemy6:
+ 120++9053 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 120++9057 00
+ 121++9058              TheHallEnemy7:
+ 122++9058 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 122++905C 00
+ 123++905D              TheHallEnemy8:
+ 124++905D 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 124++9061 00
+ 125++9062
+ 126++9062              TheHallPosWilly:
+ 127++9062 32 14            db 50, 20                   ; Posizione di Willy
+ 128++9064
+ 129++9064              TheHallEnemyColors5_8:
+ 130++9064 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/TheHall.asm
   22+ 9068                  include "rooms/TreeTop.asm"                     ; ID 12
 # file opened: rooms/TreeTop.asm
@@ -9550,13 +9560,13 @@
  107++9158
  108++9158              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++9158              TreeTopEnemy1:
- 110++9158 80 02 00 28      DEFB $80, 2, 0, 40, 80          ; [Uccello (41152) - horizzontal], Guardian = 6, Starts X=16, Y=32, Limit X=88
+ 110++9158 80 02 00 28      DEFB $80, 2, 0, 40, 80          ; [Uccello (41152) - horizzontal], Guardian = 6, Starts X=0, Y=40, Limit X=80
  110++915C 50
  111++915D              TreeTopEnemy2:
- 112++915D 80 0E 00 50      DEFB $80, 14, 0, 80, 152         ; [Fiore (41328) - horizzontal], Guardian = 6, Starts X=16, Y=32, Limit X=88
+ 112++915D 80 0E 00 50      DEFB $80, 14, 0, 80, 152         ; [Fiore (41328) - horizzontal], Guardian = 6, Starts X=0, Y=80, Limit X=152
  112++9161 98
  113++9162              TreeTopEnemy3:
- 114++9162 80 0C 28 18      DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 6, Starts X=16, Y=32, Limit X=88
+ 114++9162 80 0C 28 18      DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 6, Starts X=40, Y=24, Limit X=240
  114++9166 F0
  115++9167              TreeTopEnemy4:
  116++9167 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
@@ -9577,7 +9587,7 @@
  126++9180              TreeTopPosWilly:
  127++9180 0A 1E            db 10, 30                 ; Posizione di Willy
  128++9182              TreeTopEnemyColors5_8:
- 129++9182 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 129++9182 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/TreeTop.asm
   23+ 9186                  include "rooms/OutALimb.asm"                    ; ID 13
 # file opened: rooms/OutALimb.asm

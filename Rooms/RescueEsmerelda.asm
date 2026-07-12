@@ -1,30 +1,31 @@
 ;===========================================================================
 ; RescueEsmerelda.asm
 ;
-; RescueEsmereldaLayout       Size 128 Byte, Start Byte   0
-; RescueEsmereldaTile         Size  32 Byte, Start Byte 128
-; RescueEsmereldaBackground   Size   9 Byte, Start Byte 160
-; RescueEsmereldaFloor        Size   9 Byte, Start Byte 169
-; RescueEsmereldaWall         Size   9 Byte, Start Byte 178
-; RescueEsmereldaNasty        Size   9 Byte, Start Byte 187
-; RescueEsmereldaRamp         Size   9 Byte, Start Byte 196
-; RescueEsmereldaConveyor     Size   9 Byte, Start Byte 205
-; RescueEsmereldaConveyorData Size   4 Byte, Start Byte 214
-; RescueEsmereldaRampData     Size   4 Byte, Start Byte 218
-; RescueEsmereldaBorderColor  Size   1 Byte, Start Byte 222
-; RescueEsmereldaReserved     Size   4 Byte, Start Byte 223
-; RescueEsmereldaItem         Size   8 Byte, Start Byte 227
-; RescueEsmereldaDirection    Size   4 Byte, Start Byte 235
-; RescueEsmereldaUnused       Size   1 Byte, Start Byte 239
-; RescueEsmereldaEnemy1       Size   5 Byte, Start Byte 240
-; RescueEsmereldaEnemy2       Size   5 Byte, Start Byte 245
-; RescueEsmereldaEnemy3       Size   5 Byte, Start Byte 250
-; RescueEsmereldaEnemy4       Size   5 Byte, Start Byte 255
-; RescueEsmereldaEnemy5       Size   5 Byte, Start Byte 260
-; RescueEsmereldaEnemy6       Size   5 Byte, Start Byte 265
-; RescueEsmereldaEnemy7       Size   5 Byte, Start Byte 270
-; RescueEsmereldaEnemy8       Size   5 Byte, Start Byte 275
-; RescueEsmereldaPosWilly     Size   2 Byte, Start Byte 280
+; RescueEsmereldaLayout             Size 128 Byte, Start Byte   0
+; RescueEsmereldaTile               Size  32 Byte, Start Byte 128
+; RescueEsmereldaBackground         Size   9 Byte, Start Byte 160
+; RescueEsmereldaFloor              Size   9 Byte, Start Byte 169
+; RescueEsmereldaWall               Size   9 Byte, Start Byte 178
+; RescueEsmereldaNasty              Size   9 Byte, Start Byte 187
+; RescueEsmereldaRamp               Size   9 Byte, Start Byte 196
+; RescueEsmereldaConveyor           Size   9 Byte, Start Byte 205
+; RescueEsmereldaConveyorData       Size   4 Byte, Start Byte 214
+; RescueEsmereldaRampData           Size   4 Byte, Start Byte 218
+; RescueEsmereldaBorderColor        Size   1 Byte, Start Byte 222
+; RescueEsmereldaReserved           Size   4 Byte, Start Byte 223
+; RescueEsmereldaItem               Size   8 Byte, Start Byte 227
+; RescueEsmereldaDirection          Size   4 Byte, Start Byte 235
+; RescueEsmereldaUnused             Size   1 Byte, Start Byte 239
+; RescueEsmereldaEnemy1             Size   5 Byte, Start Byte 240
+; RescueEsmereldaEnemy2             Size   5 Byte, Start Byte 245
+; RescueEsmereldaEnemy3             Size   5 Byte, Start Byte 250
+; RescueEsmereldaEnemy4             Size   5 Byte, Start Byte 255
+; RescueEsmereldaEnemy5             Size   5 Byte, Start Byte 260
+; RescueEsmereldaEnemy6             Size   5 Byte, Start Byte 265
+; RescueEsmereldaEnemy7             Size   5 Byte, Start Byte 270
+; RescueEsmereldaEnemy8             Size   5 Byte, Start Byte 275
+; RescueEsmereldaPosWilly           Size   2 Byte, Start Byte 280
+; RescueEsmereldaEnemyColors5_8     Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
@@ -97,13 +98,13 @@ RescueEsmereldaUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 RescueEsmereldaEnemy1:
-    DEFB $C0, 20, 32, 48, 96        ; Enemy 1 (Nonnino), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $C0, 20, 32, 48, 96        ; [Nonnino (40992) - Horizzontal], Guardian = 4, Starts X=32, Y=49, Limit X=96
 RescueEsmereldaEnemy2:
-    DEFB $C0, 20, 96, 40, 104        ; Enemy 2 (Nonnino), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $C0, 20, 96, 40, 104        ; [Nonnino (40976) - Horizzontal], Guardian = 2, Starts X=96, Y=40, Limit X=104
 RescueEsmereldaEnemy3:
-    DEFB $C0, 21, 192, 0, 16         ; Enemy 3 (Parrucca), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $C0, 21, 192, 0, 16         ; [Nonnino (41080) - Horizzontal], Guardian = 15, Starts X=192, Y=0, Limit X=16
 RescueEsmereldaEnemy4:
-    DEFB $80, 2, 40, 32, 72               ; Empty 4 (Uccello)
+    DEFB $80, 2, 40, 32, 72          ; [Uccello (41064) - Horizzontal], Guardian = 13, Starts X=40, Y=32, Limit X=72
 RescueEsmereldaEnemy5:
     DEFB 0, 0, 0, 0, 0
 RescueEsmereldaEnemy6:
