@@ -41,7 +41,7 @@ Secondo Byte
 	  • %010011  (19): Tipo 19 (Periscopio)
 	  • %010100  (20): Tipo 20 (Nonnino)
 	  • %010101  (21): Tipo 21 (Parrucca)
-	  • %010110  (22): Tipo 22 (Disponibile)
+	  • %010110  (22): Tipo 22 (Frate)
 	  • %010111  (23): Tipo 23 (Disponibile)
 	  • %011000  (24): Tipo 24 (Disponibile)
 	  • %011001  (25): Tipo 25 (Disponibile)

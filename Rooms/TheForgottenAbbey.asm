@@ -20,6 +20,10 @@
 ; TheForgottenAbbeyEnemy2       Size   5 Byte, Start Byte 245
 ; TheForgottenAbbeyEnemy3       Size   5 Byte, Start Byte 250
 ; TheForgottenAbbeyEnemy4       Size   5 Byte, Start Byte 255
+; TheForgottenAbbeyEnemy5       Size   5 Byte, Start Byte 260
+; TheForgottenAbbeyEnemy6       Size   5 Byte, Start Byte 265
+; TheForgottenAbbeyEnemy7       Size   5 Byte, Start Byte 270
+; TheForgottenAbbeyEnemy8       Size   5 Byte, Start Byte 275
 ; TheForgottenAbbeyPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
@@ -78,7 +82,7 @@ TheForgottenAbbeyBorderColor:
     DEFB 1
 
 TheForgottenAbbeyReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB GREEN, YELLOW, RED, WHITE               ; Enemy colors
 
 TheForgottenAbbeyItem:
     DEFB 24,36,219,219,36,24,24,24
@@ -94,23 +98,23 @@ TheForgottenAbbeyUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 TheForgottenAbbeyEnemy1:
-    DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, 22, 32, 40, 160        ; Enemy 1 (Frate), horizontal, Starts X=40, Y=128, Limit X=180
 TheForgottenAbbeyEnemy2:
-    DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $80, 22, 96, 40, 224         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
 TheForgottenAbbeyEnemy3:
-    DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, 22, 72, 72, 160         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 TheForgottenAbbeyEnemy4:
-    DEFB 0, 0, 0, 0, 0               ; Empty slot
+    DEFB $80, 22, 154, 72, 189         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 TheForgottenAbbeyEnemy5:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 22, 40, 104, 96         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 TheForgottenAbbeyEnemy6:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 22, 88, 104, 144         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 TheForgottenAbbeyEnemy7:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 22, 128, 104, 184         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 TheForgottenAbbeyEnemy8:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 22, 184, 104, 240         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 
 TheForgottenAbbeyPosWilly:
     db 200, 50                   ; Posizione di Willy
 TheForgottenAbbeyEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB YELLOW, BLUE, GREEN, RED               ; Colori per nemici 5-8

@@ -73,6 +73,9 @@ ItemsTable:
     ; Stanza 17 (Up On The Battlements)
     db 17, 31, 4, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
     
+    ; Stanza 19 (The Forgotten Abbey)
+    db 19, 2, 3, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+
     ; Stanza 33 (The Bathroom)
     db 33, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
 
@@ -391,7 +394,7 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_theforgottenabbey
 
-    ld   a, 189              ; Room ID = 19
+    ld   a, 19               ; Room ID = 19
     jp   .set_room
 
 .not_theforgottenabbey
