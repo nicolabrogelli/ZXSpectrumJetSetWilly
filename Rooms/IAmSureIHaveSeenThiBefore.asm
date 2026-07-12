@@ -20,6 +20,10 @@
 ; IAmSureIHaveSeenThiBeforeEnemy2       Size   5 Byte, Start Byte 245
 ; IAmSureIHaveSeenThiBeforeEnemy3       Size   5 Byte, Start Byte 250
 ; IAmSureIHaveSeenThiBeforeEnemy4       Size   5 Byte, Start Byte 255
+; IAmSureIHaveSeenThiBeforeEnemy5       Size   5 Byte, Start Byte 240
+; IAmSureIHaveSeenThiBeforeEnemy6       Size   5 Byte, Start Byte 245
+; IAmSureIHaveSeenThiBeforeEnemy7       Size   5 Byte, Start Byte 250
+; IAmSureIHaveSeenThiBeforeEnemy8       Size   5 Byte, Start Byte 255
 ; IAmSureIHaveSeenThiBeforePosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
@@ -47,7 +51,7 @@ IAmSureIHaveSeenThiBeforeTile:
     DEFM "I'm sure I've seen this before.."
 
 IAmSureIHaveSeenThiBeforeBackground:                    ; Background
-    DEFB 8,0,0,0,0,0,0,0,0
+    DEFB $0F,0,0,0,0,0,0,0,0
 
 IAmSureIHaveSeenThiBeforeFloor:
     DEFB 12,128,64,32,80,72,84,82,85       ; Floor Solid
@@ -78,7 +82,7 @@ IAmSureIHaveSeenThiBeforeBorderColor:
     DEFB 3
 
 IAmSureIHaveSeenThiBeforeReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB WHITE, MAGENTA, CYAN, CYAN               ; Enemy colors
 
 IAmSureIHaveSeenThiBeforeItem:
     DEFB 24,36,24,44,94,94,231,102
@@ -86,22 +90,22 @@ IAmSureIHaveSeenThiBeforeItem:
 IAmSureIHaveSeenThiBeforeDirection:
 	DEFB 16					;Room to the left (We must perform a Quirkafleeg)
 	DEFB 14					;Room to the right (Rescue Esmerelda)
-	DEFB $FF				;Room above (The Off Licence)
-	DEFB $FF				;Room below (The Off Licence)
+	DEFB BLOCK				;Room above (The Off Licence)
+	DEFB BLOCK				;Room below (The Off Licence)
 
 IAmSureIHaveSeenThiBeforeUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 IAmSureIHaveSeenThiBeforeEnemy1:
-    DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $C0, 11, 40, 48, 96          ; [Soldato (40992) - horizontal], Guardian = 4, Starts X=88, Y=40, Limit X=104
 IAmSureIHaveSeenThiBeforeEnemy2:
-    DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $D0, 11, 88, 44, 104          ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=113, Y=44, Limit X=104
 IAmSureIHaveSeenThiBeforeEnemy3:
-    DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $E0, 11, 152, 32, 96          ; [Soldato (41000) - horizontal], Guardina = 5, Starts X=136, Y=44, Limit X=104
 IAmSureIHaveSeenThiBeforeEnemy4:
-    DEFB 0, 0, 0, 0, 0               ; Empty slot
+    DEFB $F0, 11, 200, 48, 96          ; [Soldato (40992) - horizontal], Guardina = 2, Starts X=184, Y=48, Limit X=96
 IAmSureIHaveSeenThiBeforeEnemy5:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 2, 0, 32, 72            ; [Uccello (40992) - veritcal], Guardina = 13, Starts X=184, Y=48, Limit X=96
 IAmSureIHaveSeenThiBeforeEnemy6:
     DEFB 0, 0, 0, 0, 0
 IAmSureIHaveSeenThiBeforeEnemy7:
@@ -112,4 +116,4 @@ IAmSureIHaveSeenThiBeforeEnemy8:
 IAmSureIHaveSeenThiBeforePosWilly:
     db 200, 50                   ; Posizione di Willy
 IAmSureIHaveSeenThiBeforeEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB CYAN, NONE, NONE, NONE               ; Colori per nemici 5-8

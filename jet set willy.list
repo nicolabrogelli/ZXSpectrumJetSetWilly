@@ -9914,143 +9914,147 @@
   20++93C2              ; IAmSureIHaveSeenThiBeforeEnemy2       Size   5 Byte, Start Byte 245
   21++93C2              ; IAmSureIHaveSeenThiBeforeEnemy3       Size   5 Byte, Start Byte 250
   22++93C2              ; IAmSureIHaveSeenThiBeforeEnemy4       Size   5 Byte, Start Byte 255
-  23++93C2              ; IAmSureIHaveSeenThiBeforePosWilly     Size   2 Byte, Start Byte 280
-  24++93C2              ;
-  25++93C2              ;===========================================================================
-  26++93C2
-  27++93C2              ; Room layout for Room  (I am sure I have seen this before)
-  28++93C2              IAmSureIHaveSeenThiBeforeLayout:
-  29++93C2 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0	;Room layout
-  29++93C6 00 00 00 00
-  30++93CA 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  30++93CE 00 00 00 00
-  31++93D2 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  31++93D6 00 00 00 00
-  32++93DA 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  32++93DE 00 00 00 00
-  33++93E2 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  33++93E6 00 00 00 00
-  34++93EA 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  34++93EE 00 00 00 00
-  35++93F2 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  35++93F6 00 00 00 00
-  36++93FA 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  36++93FE 00 00 00 00
-  37++9402 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  37++9406 00 00 00 00
-  38++940A AA 42 A4 2A  	DEFB 170,66,164,42,164,42,66,170
-  38++940E A4 2A 42 AA
-  39++9412 AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
-  39++9416 AC 2A C2 AA
-  40++941A AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
-  40++941E AC 2A C2 AA
-  41++9422 AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
-  41++9426 AC 2A C2 AA
-  42++942A AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
-  42++942E AC 2A C2 AA
-  43++9432 AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
-  43++9436 AC 2A C2 AA
-  44++943A AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
-  44++943E AA AA AA AA
-  45++9442
-  46++9442              IAmSureIHaveSeenThiBeforeTile:
-  47++9442 49 27 6D 20      DEFM "I'm sure I've seen this before.."
-  47++9446 73 75 72 65
-  47++944A 20 49 27 76
-  47++944E 65 20 73 65
-  47++9452 65 6E 20 74
-  47++9456 68 69 73 20
-  47++945A 62 65 66 6F
-  47++945E 72 65 2E 2E
-  48++9462
-  49++9462              IAmSureIHaveSeenThiBeforeBackground:                    ; Background
-  50++9462 08 00 00 00      DEFB 8,0,0,0,0,0,0,0,0
-  50++9466 00 00 00 00
-  50++946A 00
-  51++946B
-  52++946B              IAmSureIHaveSeenThiBeforeFloor:
-  53++946B 0C 80 40 20      DEFB 12,128,64,32,80,72,84,82,85       ; Floor Solid
-  53++946F 50 48 54 52
-  53++9473 55
-  54++9474
-  55++9474              IAmSureIHaveSeenThiBeforeWall:
-  56++9474 53 66 66 66      DEFB 83,102,102,102,0,102,102,102,102   ; Wall Solid
-  56++9478 00 66 66 66
-  56++947C 66
-  57++947D
-  58++947D              IAmSureIHaveSeenThiBeforeNasty:
-  59++947D 4C 51 55 54      DEFB 76,81,85,84,85,21,85,69,85  ; Nastry
-  59++9481 55 15 55 45
-  59++9485 55
-  60++9486
-  61++9486              IAmSureIHaveSeenThiBeforeRamp:                          ; Ramp Solid
-  62++9486 0C 00 00 00      DEFB 12,0,0,0,0,0,0,0,0
-  62++948A 00 00 00 00
-  62++948E 00
-  63++948F
-  64++948F              IAmSureIHaveSeenThiBeforeConveyor:                      ; Conveyor Solid
-  65++948F FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0
-  65++9493 00 00 00 00
-  65++9497 00
-  66++9498
-  67++9498              IAmSureIHaveSeenThiBeforeConveyorData:
-  68++9498 00               DEFB 0
-  69++9499 00 00            DEFW 0
-  70++949B 00               DEFB 0
-  71++949C
-  72++949C              IAmSureIHaveSeenThiBeforeRampData:
-  73++949C 00               DEFB 0
-  74++949D 00 00            DEFW 0
-  75++949F 00               DEFB 0
-  76++94A0
-  77++94A0              IAmSureIHaveSeenThiBeforeBorderColor:
-  78++94A0 03               DEFB 3
-  79++94A1
-  80++94A1              IAmSureIHaveSeenThiBeforeReserved:
-  81++94A1 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
-  82++94A5
-  83++94A5              IAmSureIHaveSeenThiBeforeItem:
-  84++94A5 18 24 18 2C      DEFB 24,36,24,44,94,94,231,102
-  84++94A9 5E 5E E7 66
-  85++94AD
-  86++94AD              IAmSureIHaveSeenThiBeforeDirection:
-  87++94AD 10           	DEFB 16					;Room to the left (We must perform a Quirkafleeg)
-  88++94AE 0E           	DEFB 14					;Room to the right (Rescue Esmerelda)
-  89++94AF FF           	DEFB $FF				;Room above (The Off Licence)
-  90++94B0 FF           	DEFB $FF				;Room below (The Off Licence)
-  91++94B1
-  92++94B1              IAmSureIHaveSeenThiBeforeUnused:
-  93++94B1 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
-  94++94B2
-  95++94B2              IAmSureIHaveSeenThiBeforeEnemy1:
-  96++94B2 80 03 8C 38      DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
-  96++94B6 E6
-  97++94B7              IAmSureIHaveSeenThiBeforeEnemy2:
-  98++94B7 C0 06 3C 38      DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
-  98++94BB 6A
-  99++94BC              IAmSureIHaveSeenThiBeforeEnemy3:
- 100++94BC C0 09 50 10      DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
- 100++94C0 6A
- 101++94C1              IAmSureIHaveSeenThiBeforeEnemy4:
- 102++94C1 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
- 102++94C5 00
- 103++94C6              IAmSureIHaveSeenThiBeforeEnemy5:
- 104++94C6 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 104++94CA 00
- 105++94CB              IAmSureIHaveSeenThiBeforeEnemy6:
- 106++94CB 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 106++94CF 00
- 107++94D0              IAmSureIHaveSeenThiBeforeEnemy7:
- 108++94D0 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 108++94D4 00
- 109++94D5              IAmSureIHaveSeenThiBeforeEnemy8:
- 110++94D5 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 110++94D9 00
- 111++94DA
- 112++94DA              IAmSureIHaveSeenThiBeforePosWilly:
- 113++94DA C8 32            db 200, 50                   ; Posizione di Willy
- 114++94DC              IAmSureIHaveSeenThiBeforeEnemyColors5_8:
- 115++94DC 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+  23++93C2              ; IAmSureIHaveSeenThiBeforeEnemy5       Size   5 Byte, Start Byte 240
+  24++93C2              ; IAmSureIHaveSeenThiBeforeEnemy6       Size   5 Byte, Start Byte 245
+  25++93C2              ; IAmSureIHaveSeenThiBeforeEnemy7       Size   5 Byte, Start Byte 250
+  26++93C2              ; IAmSureIHaveSeenThiBeforeEnemy8       Size   5 Byte, Start Byte 255
+  27++93C2              ; IAmSureIHaveSeenThiBeforePosWilly     Size   2 Byte, Start Byte 280
+  28++93C2              ;
+  29++93C2              ;===========================================================================
+  30++93C2
+  31++93C2              ; Room layout for Room  (I am sure I have seen this before)
+  32++93C2              IAmSureIHaveSeenThiBeforeLayout:
+  33++93C2 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0	;Room layout
+  33++93C6 00 00 00 00
+  34++93CA 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  34++93CE 00 00 00 00
+  35++93D2 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  35++93D6 00 00 00 00
+  36++93DA 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  36++93DE 00 00 00 00
+  37++93E2 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  37++93E6 00 00 00 00
+  38++93EA 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  38++93EE 00 00 00 00
+  39++93F2 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  39++93F6 00 00 00 00
+  40++93FA 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  40++93FE 00 00 00 00
+  41++9402 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  41++9406 00 00 00 00
+  42++940A AA 42 A4 2A  	DEFB 170,66,164,42,164,42,66,170
+  42++940E A4 2A 42 AA
+  43++9412 AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
+  43++9416 AC 2A C2 AA
+  44++941A AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
+  44++941E AC 2A C2 AA
+  45++9422 AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
+  45++9426 AC 2A C2 AA
+  46++942A AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
+  46++942E AC 2A C2 AA
+  47++9432 AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
+  47++9436 AC 2A C2 AA
+  48++943A AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
+  48++943E AA AA AA AA
+  49++9442
+  50++9442              IAmSureIHaveSeenThiBeforeTile:
+  51++9442 49 27 6D 20      DEFM "I'm sure I've seen this before.."
+  51++9446 73 75 72 65
+  51++944A 20 49 27 76
+  51++944E 65 20 73 65
+  51++9452 65 6E 20 74
+  51++9456 68 69 73 20
+  51++945A 62 65 66 6F
+  51++945E 72 65 2E 2E
+  52++9462
+  53++9462              IAmSureIHaveSeenThiBeforeBackground:                    ; Background
+  54++9462 0F 00 00 00      DEFB $0F,0,0,0,0,0,0,0,0
+  54++9466 00 00 00 00
+  54++946A 00
+  55++946B
+  56++946B              IAmSureIHaveSeenThiBeforeFloor:
+  57++946B 0C 80 40 20      DEFB 12,128,64,32,80,72,84,82,85       ; Floor Solid
+  57++946F 50 48 54 52
+  57++9473 55
+  58++9474
+  59++9474              IAmSureIHaveSeenThiBeforeWall:
+  60++9474 53 66 66 66      DEFB 83,102,102,102,0,102,102,102,102   ; Wall Solid
+  60++9478 00 66 66 66
+  60++947C 66
+  61++947D
+  62++947D              IAmSureIHaveSeenThiBeforeNasty:
+  63++947D 4C 51 55 54      DEFB 76,81,85,84,85,21,85,69,85  ; Nastry
+  63++9481 55 15 55 45
+  63++9485 55
+  64++9486
+  65++9486              IAmSureIHaveSeenThiBeforeRamp:                          ; Ramp Solid
+  66++9486 0C 00 00 00      DEFB 12,0,0,0,0,0,0,0,0
+  66++948A 00 00 00 00
+  66++948E 00
+  67++948F
+  68++948F              IAmSureIHaveSeenThiBeforeConveyor:                      ; Conveyor Solid
+  69++948F FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0
+  69++9493 00 00 00 00
+  69++9497 00
+  70++9498
+  71++9498              IAmSureIHaveSeenThiBeforeConveyorData:
+  72++9498 00               DEFB 0
+  73++9499 00 00            DEFW 0
+  74++949B 00               DEFB 0
+  75++949C
+  76++949C              IAmSureIHaveSeenThiBeforeRampData:
+  77++949C 00               DEFB 0
+  78++949D 00 00            DEFW 0
+  79++949F 00               DEFB 0
+  80++94A0
+  81++94A0              IAmSureIHaveSeenThiBeforeBorderColor:
+  82++94A0 03               DEFB 3
+  83++94A1
+  84++94A1              IAmSureIHaveSeenThiBeforeReserved:
+  85++94A1 07 03 05 05      DEFB WHITE, MAGENTA, CYAN, CYAN               ; Enemy colors
+  86++94A5
+  87++94A5              IAmSureIHaveSeenThiBeforeItem:
+  88++94A5 18 24 18 2C      DEFB 24,36,24,44,94,94,231,102
+  88++94A9 5E 5E E7 66
+  89++94AD
+  90++94AD              IAmSureIHaveSeenThiBeforeDirection:
+  91++94AD 10           	DEFB 16					;Room to the left (We must perform a Quirkafleeg)
+  92++94AE 0E           	DEFB 14					;Room to the right (Rescue Esmerelda)
+  93++94AF FF           	DEFB BLOCK				;Room above (The Off Licence)
+  94++94B0 FF           	DEFB BLOCK				;Room below (The Off Licence)
+  95++94B1
+  96++94B1              IAmSureIHaveSeenThiBeforeUnused:
+  97++94B1 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  98++94B2
+  99++94B2              IAmSureIHaveSeenThiBeforeEnemy1:
+ 100++94B2 C0 0B 28 30      DEFB $C0, 11, 40, 48, 96          ; [Soldato (40992) - horizontal], Guardian = 4, Starts X=88, Y=40, Limit X=104
+ 100++94B6 60
+ 101++94B7              IAmSureIHaveSeenThiBeforeEnemy2:
+ 102++94B7 D0 0B 58 2C      DEFB $D0, 11, 88, 44, 104          ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=113, Y=44, Limit X=104
+ 102++94BB 68
+ 103++94BC              IAmSureIHaveSeenThiBeforeEnemy3:
+ 104++94BC E0 0B 98 20      DEFB $E0, 11, 152, 32, 96          ; [Soldato (41000) - horizontal], Guardina = 5, Starts X=136, Y=44, Limit X=104
+ 104++94C0 60
+ 105++94C1              IAmSureIHaveSeenThiBeforeEnemy4:
+ 106++94C1 F0 0B C8 30      DEFB $F0, 11, 200, 48, 96          ; [Soldato (40992) - horizontal], Guardina = 2, Starts X=184, Y=48, Limit X=96
+ 106++94C5 60
+ 107++94C6              IAmSureIHaveSeenThiBeforeEnemy5:
+ 108++94C6 80 02 00 20      DEFB $80, 2, 0, 32, 72            ; [Uccello (40992) - veritcal], Guardina = 13, Starts X=184, Y=48, Limit X=96
+ 108++94CA 48
+ 109++94CB              IAmSureIHaveSeenThiBeforeEnemy6:
+ 110++94CB 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 110++94CF 00
+ 111++94D0              IAmSureIHaveSeenThiBeforeEnemy7:
+ 112++94D0 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 112++94D4 00
+ 113++94D5              IAmSureIHaveSeenThiBeforeEnemy8:
+ 114++94D5 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 114++94D9 00
+ 115++94DA
+ 116++94DA              IAmSureIHaveSeenThiBeforePosWilly:
+ 117++94DA C8 32            db 200, 50                   ; Posizione di Willy
+ 118++94DC              IAmSureIHaveSeenThiBeforeEnemyColors5_8:
+ 119++94DC 05 00 00 00      DEFB CYAN, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/IAmSureIHaveSeenThiBefore.asm
   26+ 94E0                  include "rooms/WeMustPerformQuirkafleeg.asm"    ; ID 16
 # file opened: rooms/WeMustPerformQuirkafleeg.asm
