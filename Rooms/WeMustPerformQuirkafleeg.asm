@@ -20,11 +20,15 @@
 ; WeMustPerformQuirkafleegEnemy2       Size   5 Byte, Start Byte 245
 ; WeMustPerformQuirkafleegEnemy3       Size   5 Byte, Start Byte 250
 ; WeMustPerformQuirkafleegEnemy4       Size   5 Byte, Start Byte 255
+; WeMustPerformQuirkafleegEnemy5       Size   5 Byte, Start Byte 260
+; WeMustPerformQuirkafleegEnemy6       Size   5 Byte, Start Byte 265
+; WeMustPerformQuirkafleegEnemy7       Size   5 Byte, Start Byte 270
+; WeMustPerformQuirkafleegEnemy8       Size   5 Byte, Start Byte 275
 ; WeMustPerformQuirkafleegPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
 
-; Room layout for Room  (I am sure I have seen this before)
+; Room layout for Room  (We must perform a Quirkafleeg)
 WeMustPerformQuirkafleegLayout:
 	DEFB 0,0,0,0,0,0,0,0			;Room layout
 	DEFB 0,0,0,0,0,0,0,0
@@ -46,22 +50,22 @@ WeMustPerformQuirkafleegLayout:
 WeMustPerformQuirkafleegTile:
     DEFM "  We must perform a Quirkafleeg "
 
-WeMustPerformQuirkafleegBackground:                    ; Background
+WeMustPerformQuirkafleegBackground:                 ; Background
     DEFB 6,0,0,0,0,0,0,0,0
 
 WeMustPerformQuirkafleegFloor:
-    DEFB 56,51,187,221,204,85,153,221,238       ; Floor Solid
+    DEFB 56,51,187,221,204,85,153,221,238           ; Floor Solid
 
 WeMustPerformQuirkafleegWall:
-    DEFB 13,39,246,0,220,209,4,119,128   ; Wall Solid
+    DEFB 13,39,246,0,220,209,4,119,128              ; Wall Solid
 
 WeMustPerformQuirkafleegNasty:
-    DEFB 69,64,228,78,68,68,68,238,255  ; Nastry
+    DEFB 69,64,228,78,68,68,68,238,255              ; Nastry
 
-WeMustPerformQuirkafleegRamp:                          ; Ramp Solid
+WeMustPerformQuirkafleegRamp:                       ; Ramp Solid
     DEFB 7,128,64,32,48,168,100,34,17              
 
-WeMustPerformQuirkafleegConveyor:                      ; Conveyor Solid
+WeMustPerformQuirkafleegConveyor:                   ; Conveyor Solid
     DEFB 255,0,0,0,0,0,0,0,0
 
 WeMustPerformQuirkafleegConveyorData:

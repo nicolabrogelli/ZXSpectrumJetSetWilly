@@ -97,13 +97,13 @@ IAmSureIHaveSeenThiBeforeUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 IAmSureIHaveSeenThiBeforeEnemy1:
-    DEFB $C0, 11, 40, 48, 96          ; [Soldato (40992) - horizontal], Guardian = 4, Starts X=88, Y=40, Limit X=104
+    DEFB $C0, 11, 40, 48, 96          ; [Soldato (40992) - vertical], Guardian = 4, Starts X=88, Y=40, Limit X=104
 IAmSureIHaveSeenThiBeforeEnemy2:
-    DEFB $D0, 11, 88, 44, 104          ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=113, Y=44, Limit X=104
+    DEFB $D0, 11, 88, 44, 104          ; [Soldato (40984) - vertical], Guardina = 3, Starts X=113, Y=44, Limit X=104
 IAmSureIHaveSeenThiBeforeEnemy3:
-    DEFB $E0, 11, 152, 32, 96          ; [Soldato (41000) - horizontal], Guardina = 5, Starts X=136, Y=44, Limit X=104
+    DEFB $E0, 11, 152, 32, 96          ; [Soldato (41000) - vertical], Guardina = 5, Starts X=136, Y=44, Limit X=104
 IAmSureIHaveSeenThiBeforeEnemy4:
-    DEFB $F0, 11, 200, 48, 96          ; [Soldato (40992) - horizontal], Guardina = 2, Starts X=184, Y=48, Limit X=96
+    DEFB $F0, 11, 200, 48, 96          ; [Soldato (40992) - vertical], Guardina = 2, Starts X=184, Y=48, Limit X=96
 IAmSureIHaveSeenThiBeforeEnemy5:
     DEFB $80, 2, 0, 32, 72            ; [Uccello (40992) - veritcal], Guardina = 13, Starts X=184, Y=48, Limit X=96
 IAmSureIHaveSeenThiBeforeEnemy6:
