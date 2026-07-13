@@ -201,6 +201,29 @@ Phys_ApplyGravity:
     jr   nc, .no_step_down
     
 .do_step_down:
+    ; Controlla se il nuovo Y (B + 8) causerebbe collisioni con muri a sinistra o a destra.
+    ; Se sì, annulla lo step down per evitare che Willy sprofondi/entri nei blocchi Wall.
+    ld   a, b
+    add  a, 8
+    push bc
+    ld   b, a              ; B = Y + 8
+    ; C = X (bordo sinistro)
+    call CheckWillyWallCollision
+    pop  bc
+    jr   c, .no_step_down  ; Se collide, non effettuare lo step down
+    
+    ld   a, b
+    add  a, 8
+    push bc
+    ld   b, a              ; B = Y + 8
+    ld   a, c
+    add  a, 7
+    ld   c, a              ; C = X + 7 (bordo destro)
+    call CheckWillyWallCollision
+    pop  bc
+    jr   c, .no_step_down  ; Se collide, non effettuare lo step down
+
+    ; Applica lo step down
     ld   a, b
     add  a, 8
     ld   b, a              ; B = Y + 8
