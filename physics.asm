@@ -357,13 +357,51 @@ Phys_ApplyGravity:
     sub d                 ; A = PlayerY - velocity_y
     ld  b, a              ; B = new PlayerY
 
-    ; Controlla se stiamo cadendo (velocity_y <= 0)
     ld  a, (velocity_y)
     bit 7, a              ; Se negativo, bit 7 = 1
     jr  nz, .falling_checks
     or  a                 ; Se zero
     jr  z, .falling_checks
-    jp  .no_collision_checks ; Se stiamo salendo, non controlliamo collisioni
+    
+    ; Se stiamo salendo, controlla la collisione della testa con il soffitto (muri Wall)
+    ; In questo punto, bc contiene: C = PlayerX, B = new PlayerY
+    push bc
+    
+    ; Controlla se la testa a sinistra (PlayerX, new_Y) colpisce un Wall
+    call CheckWallCell
+    jr   c, .ceiling_collision
+    
+    ; Controlla se la testa a destra (PlayerX + 7, new_Y) colpisce un Wall
+    ld   a, c
+    add  a, 7
+    ld   c, a              ; C = PlayerX + 7
+    call CheckWallCell
+    jr   c, .ceiling_collision
+    
+    pop  bc
+    jp   .no_collision_checks
+    
+.ceiling_collision:
+    pop  bc                 ; Ripristina bc originale (C = PlayerX, B = new PlayerY)
+    
+    ; Calcola la coordinata Y clampata appena sotto il soffitto.
+    ; Il muro colpito è a riga r = new_Y / 8.
+    ; Il limite Y consentito è riga r + 1, cioè Y = (r + 1) * 8.
+    ld   a, b              ; A = new_Y
+    srl  a
+    srl  a
+    srl  a                 ; A = r (0..15)
+    inc  a                 ; r + 1
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8 (Y clampato)
+    
+    ld   b, a              ; B = Y clampato
+    
+    ; Ferma la velocità verso l'alto (inizia la caduta)
+    xor  a
+    ld   (velocity_y), a
+    jp   .save_pos
     
 .falling_checks:
     ; --- CONTROLLO ATTERRAGGIO SU RAMPA ---
