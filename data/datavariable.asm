@@ -31,6 +31,8 @@ room_gravity_preset: db 1
 
 ; Buffer e contatori
 counter:        dw 0
+last_music_counter_low: db 0
+last_frame_counter: dw 0
 line_buffer:    .256 db 0
 unpacked_layout: .512 db 0
 

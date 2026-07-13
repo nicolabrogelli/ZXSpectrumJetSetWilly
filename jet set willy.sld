@@ -4115,282 +4115,295 @@ audio.asm|111||0|1|30241|T|
 audio.asm|112||0|1|30242|T|
 audio.asm|113||0|1|30244|T|
 audio.asm|114||0|1|30246|T|
-audio.asm|115||0|1|30248|T|
-audio.asm|116||0|1|30250|T|
-audio.asm|117||0|1|30252|F|Audio_UpdateMusic.dur_ok
-audio.asm|117||0|1|30252|L|,Audio_UpdateMusic,dur_ok,+used
-audio.asm|118||0|1|30252|T|
-audio.asm|120||0|1|30255|F|Audio_UpdateMusic.play_current_note
-audio.asm|120||0|1|30255|L|,Audio_UpdateMusic,play_current_note,+used
+audio.asm|115||0|1|30248|F|Audio_UpdateMusic.dur_ok
+audio.asm|115||0|1|30248|L|,Audio_UpdateMusic,dur_ok,+used
+audio.asm|116||0|1|30248|T|
+audio.asm|118||0|1|30251|F|Audio_UpdateMusic.play_current_note
+audio.asm|118||0|1|30251|L|,Audio_UpdateMusic,play_current_note,+used
+audio.asm|120||0|1|30251|T|
+audio.asm|121||0|1|30254|T|
 audio.asm|122||0|1|30255|T|
-audio.asm|123||0|1|30258|T|
-audio.asm|124||0|1|30259|T|
+audio.asm|123||0|1|30257|T|
+audio.asm|124||0|1|30260|T|
 audio.asm|125||0|1|30261|T|
-audio.asm|126||0|1|30264|T|
-audio.asm|127||0|1|30265|T|
-audio.asm|128||0|1|30266|T|
-audio.asm|129||0|1|30267|T|
-audio.asm|130||0|1|30268|T|
-audio.asm|133||0|1|30270|T|
-audio.asm|134||0|1|30271|T|
-audio.asm|135||0|1|30273|F|Audio_UpdateMusic.note_loop
-audio.asm|135||0|1|30273|L|,Audio_UpdateMusic,note_loop,+used
-audio.asm|137||0|1|30273|T|
+audio.asm|126||0|1|30262|T|
+audio.asm|127||0|1|30263|T|
+audio.asm|128||0|1|30264|T|
+audio.asm|131||0|1|30266|T|
+audio.asm|132||0|1|30267|T|
+audio.asm|133||0|1|30269|F|Audio_UpdateMusic.note_loop
+audio.asm|133||0|1|30269|L|,Audio_UpdateMusic,note_loop,+used
+audio.asm|135||0|1|30269|T|
+audio.asm|136||0|1|30272|T|
+audio.asm|137||0|1|30274|T|
 audio.asm|138||0|1|30276|T|
-audio.asm|139||0|1|30278|T|
-audio.asm|140||0|1|30280|T|
-audio.asm|141||0|1|30281|F|Audio_UpdateMusic.d1
-audio.asm|141||0|1|30281|L|,Audio_UpdateMusic,d1,+used
-audio.asm|142||0|1|30281|T|
-audio.asm|143||0|1|30282|T|
-audio.asm|144||0|1|30283|T|
-audio.asm|145||0|1|30284|T|
-audio.asm|148||0|1|30286|T|
+audio.asm|139||0|1|30277|F|Audio_UpdateMusic.d1
+audio.asm|139||0|1|30277|L|,Audio_UpdateMusic,d1,+used
+audio.asm|140||0|1|30277|T|
+audio.asm|141||0|1|30278|T|
+audio.asm|142||0|1|30279|T|
+audio.asm|143||0|1|30280|T|
+audio.asm|146||0|1|30282|T|
+audio.asm|147||0|1|30285|T|
+audio.asm|148||0|1|30287|T|
 audio.asm|149||0|1|30289|T|
-audio.asm|150||0|1|30291|T|
-audio.asm|151||0|1|30293|T|
-audio.asm|152||0|1|30294|F|Audio_UpdateMusic.d2
-audio.asm|152||0|1|30294|L|,Audio_UpdateMusic,d2,+used
-audio.asm|153||0|1|30294|T|
-audio.asm|154||0|1|30295|T|
-audio.asm|155||0|1|30296|T|
-audio.asm|156||0|1|30297|T|
-audio.asm|158||0|1|30299|T|
-audio.asm|160||0|1|30301|F|Audio_UpdateMusic.done
-audio.asm|160||0|1|30301|L|,Audio_UpdateMusic,done,+used
-audio.asm|161||0|1|30301|T|
-audio.asm|162||0|1|30302|T|
-audio.asm|163||0|1|30303|T|
-audio.asm|164||0|1|30304|T|
-audio.asm|165||0|1|30305|T|
-audio.asm|167||0|1|30306|F|Audio_MusicSheet
-audio.asm|167||0|1|30306|L|,Audio_MusicSheet,,+used
-audio.asm|181||0|1|30376|F|Audio_PlayCollectSound
-audio.asm|181||0|1|30376|L|,Audio_PlayCollectSound,,+used
-audio.asm|182||0|1|30376|T|
-audio.asm|183||0|1|30377|T|
-audio.asm|185||0|1|30378|T|
-audio.asm|186||0|1|30380|F|Audio_PlayCollectSound.sound_loop
-audio.asm|186||0|1|30380|L|,Audio_PlayCollectSound,sound_loop,+used
-audio.asm|187||0|1|30380|T|
-audio.asm|188||0|1|30383|T|
-audio.asm|189||0|1|30385|T|
-audio.asm|191||0|1|30387|T|
-audio.asm|192||0|1|30389|F|Audio_PlayCollectSound.d1
-audio.asm|192||0|1|30389|L|,Audio_PlayCollectSound,d1,+used
-audio.asm|193||0|1|30389|T|
-audio.asm|194||0|1|30390|T|
-audio.asm|196||0|1|30392|T|
-audio.asm|197||0|1|30395|T|
-audio.asm|198||0|1|30397|T|
-audio.asm|200||0|1|30399|T|
-audio.asm|201||0|1|30401|F|Audio_PlayCollectSound.d2
-audio.asm|201||0|1|30401|L|,Audio_PlayCollectSound,d2,+used
-audio.asm|202||0|1|30401|T|
-audio.asm|203||0|1|30402|T|
-audio.asm|205||0|1|30404|T|
-audio.asm|207||0|1|30406|T|
-audio.asm|208||0|1|30407|T|
-audio.asm|209||0|1|30408|T|
-data/datavariable.asm|5||0|1|30409|F|PlayerPos
-data/datavariable.asm|5||0|1|30409|L|,PlayerPos,,+used
-data/datavariable.asm|6||0|1|30411|F|PlayerPosOld
-data/datavariable.asm|6||0|1|30411|L|,PlayerPosOld,,+used
-data/datavariable.asm|7||0|1|30413|F|bodyPos
-data/datavariable.asm|7||0|1|30413|L|,bodyPos,
-data/datavariable.asm|10||0|1|30415|F|body_state
-data/datavariable.asm|10||0|1|30415|L|,body_state,,+used
-data/datavariable.asm|11||0|1|30416|F|direction
-data/datavariable.asm|11||0|1|30416|L|,direction,,+used
-data/datavariable.asm|12||0|1|30417|F|flags
-data/datavariable.asm|12||0|1|30417|L|,flags,,+used
-data/datavariable.asm|14||0|1|30418|F|collision_active
-data/datavariable.asm|14||0|1|30418|L|,collision_active,
-data/datavariable.asm|15||0|1|30419|F|items_collected
-data/datavariable.asm|15||0|1|30419|L|,items_collected,,+used
-data/datavariable.asm|16||0|1|30420|F|sprite_shift
-data/datavariable.asm|16||0|1|30420|L|,sprite_shift,,+used
-data/datavariable.asm|17||0|1|30421|F|room_border_color
-data/datavariable.asm|17||0|1|30421|L|,room_border_color,,+used
-data/datavariable.asm|20||0|1|30422|F|velocity_y
-data/datavariable.asm|20||0|1|30422|L|,velocity_y,,+used
-data/datavariable.asm|21||0|1|30423|F|on_ground
-data/datavariable.asm|21||0|1|30423|L|,on_ground,,+used
-data/datavariable.asm|22||0|1|30424|F|jump_pressed
-data/datavariable.asm|22||0|1|30424|L|,jump_pressed,,+used
-data/datavariable.asm|23||0|1|30425|F|jump_prev
-data/datavariable.asm|23||0|1|30425|L|,jump_prev,,+used
-data/datavariable.asm|24||0|1|30426|F|jump_start_y
-data/datavariable.asm|24||0|1|30426|L|,jump_start_y,,+used
-data/datavariable.asm|25||0|1|30427|F|jump_dir
-data/datavariable.asm|25||0|1|30427|L|,jump_dir,,+used
-data/datavariable.asm|26||0|1|30428|F|jump_frame
-data/datavariable.asm|26||0|1|30428|L|,jump_frame,,+used
-data/datavariable.asm|27||0|1|30429|F|current_input_dir
-data/datavariable.asm|27||0|1|30429|L|,current_input_dir,,+used
-data/datavariable.asm|28||0|1|30430|F|q_prev
-data/datavariable.asm|28||0|1|30430|L|,q_prev,,+used
-data/datavariable.asm|29||0|1|30431|F|room_jump_strength
-data/datavariable.asm|29||0|1|30431|L|,room_jump_strength,,+used
-data/datavariable.asm|30||0|1|30432|F|room_gravity_preset
-data/datavariable.asm|30||0|1|30432|L|,room_gravity_preset,,+used
-data/datavariable.asm|33||0|1|30433|F|counter
-data/datavariable.asm|33||0|1|30433|L|,counter,,+used
-data/datavariable.asm|34||0|1|30435|F|line_buffer
-data/datavariable.asm|34||0|1|30435|L|,line_buffer,
-data/datavariable.asm|35||0|1|30691|F|unpacked_layout
-data/datavariable.asm|35||0|1|30691|L|,unpacked_layout,,+used
-data/datavariable.asm|38||0|1|31203|F|current_room
-data/datavariable.asm|38||0|1|31203|L|,current_room,,+used
-data/datavariable.asm|39||0|1|31204|F|conveyor_dir
-data/datavariable.asm|39||0|1|31204|L|,conveyor_dir,,+used
-data/datavariable.asm|40||0|1|31205|F|conveyor_len
-data/datavariable.asm|40||0|1|31205|L|,conveyor_len,,+used
-data/datavariable.asm|41||0|1|31206|F|conveyor_row
-data/datavariable.asm|41||0|1|31206|L|,conveyor_row,,+used
-data/datavariable.asm|42||0|1|31207|F|conveyor_col
-data/datavariable.asm|42||0|1|31207|L|,conveyor_col,,+used
-data/datavariable.asm|43||0|1|31208|F|ramp_dir
-data/datavariable.asm|43||0|1|31208|L|,ramp_dir,,+used
-data/datavariable.asm|44||0|1|31209|F|ramp_len
-data/datavariable.asm|44||0|1|31209|L|,ramp_len,,+used
-data/datavariable.asm|45||0|1|31210|F|ramp_row
-data/datavariable.asm|45||0|1|31210|L|,ramp_row,,+used
-data/datavariable.asm|46||0|1|31211|F|ramp_col
-data/datavariable.asm|46||0|1|31211|L|,ramp_col,,+used
-data/datavariable.asm|47||0|1|31212|F|current_room_items
-data/datavariable.asm|47||0|1|31212|L|,current_room_items,,+used
-data/datavariable.asm|48||0|1|31292|F|num_room_items
-data/datavariable.asm|48||0|1|31292|L|,num_room_items,,+used
-data/datavariable.asm|49||0|1|31293|F|room_ptr
-data/datavariable.asm|49||0|1|31293|L|,room_ptr,,+used
-data/datavariable.asm|50||0|1|31295|F|enemy_update_rate
-data/datavariable.asm|50||0|1|31295|L|,enemy_update_rate,,+used
-data/datavariable.asm|51||0|1|31296|F|enemy_update_timer
-data/datavariable.asm|51||0|1|31296|L|,enemy_update_timer,,+used
-data/datavariable.asm|52||0|1|31297|F|player_speed
-data/datavariable.asm|52||0|1|31297|L|,player_speed,,+used
-data/datavariable.asm|53||0|1|31298|F|transition_active
-data/datavariable.asm|53||0|1|31298|L|,transition_active,,+used
-data/datavariable.asm|54||0|1|31299|F|Audio_jump_sound_note
-data/datavariable.asm|54||0|1|31299|L|,Audio_jump_sound_note,,+used
-data/datavariable.asm|55||0|1|31300|F|Audio_jump_sound_timer
-data/datavariable.asm|55||0|1|31300|L|,Audio_jump_sound_timer,,+used
-data/datavariable.asm|56||0|1|31301|F|Audio_music_note_idx
-data/datavariable.asm|56||0|1|31301|L|,Audio_music_note_idx,,+used
-data/datavariable.asm|57||0|1|31302|F|Audio_music_frame_counter
-data/datavariable.asm|57||0|1|31302|L|,Audio_music_frame_counter,,+used
-jet set willy.asm|22||0|1|31303|F|start
-jet set willy.asm|22||0|1|31303|L|,start,
-jet set willy.asm|23||0|1|31303|T|
-jet set willy.asm|24||0|1|31306|T|
-jet set willy.asm|25||0|1|31309|T|
-jet set willy.asm|30||0|1|31312|F|Main
-jet set willy.asm|30||0|1|31312|L|,Main,,+used
-jet set willy.asm|32||0|1|31312|T|
-jet set willy.asm|33||0|1|31313|T|
-jet set willy.asm|34||0|1|31316|T|
-jet set willy.asm|36||0|1|31319|T|
-jet set willy.asm|37||0|1|31322|T|
-jet set willy.asm|39||0|1|31325|T|
-jet set willy.asm|40||0|1|31327|T|
-jet set willy.asm|41||0|1|31330|T|
-jet set willy.asm|42||0|1|31333|T|
-jet set willy.asm|44||0|1|31336|T|
-jet set willy.asm|45||0|1|31339|T|
-jet set willy.asm|46||0|1|31341|T|
-jet set willy.asm|47||0|1|31344|F|LoadRoomAndRestart
-jet set willy.asm|47||0|1|31344|L|,LoadRoomAndRestart,,+used
-jet set willy.asm|48||0|1|31344|T|
-jet set willy.asm|49||0|1|31347|T|
-jet set willy.asm|50||0|1|31350|T|
-jet set willy.asm|51||0|1|31353|T|
-jet set willy.asm|52||0|1|31356|T|
-jet set willy.asm|53||0|1|31359|T|
-jet set willy.asm|54||0|1|31362|T|
-jet set willy.asm|56||0|1|31365|T|
-jet set willy.asm|57||0|1|31368|T|
-jet set willy.asm|58||0|1|31369|T|
-jet set willy.asm|59||0|1|31371|T|
-jet set willy.asm|60||0|1|31374|T|
-jet set willy.asm|61||0|1|31376|F|LoadRoomAndRestart.skip_player_pos
-jet set willy.asm|61||0|1|31376|L|,LoadRoomAndRestart,skip_player_pos,+used
-jet set willy.asm|62||0|1|31376|T|
-jet set willy.asm|63||0|1|31377|T|
-jet set willy.asm|64||0|1|31380|F|LoadRoomAndRestart.after_player_pos
-jet set willy.asm|64||0|1|31380|L|,LoadRoomAndRestart,after_player_pos,+used
-jet set willy.asm|67||0|1|31380|T|
-jet set willy.asm|68||0|1|31383|T|
-jet set willy.asm|69||0|1|31386|T|
-jet set willy.asm|70||0|1|31387|T|
-jet set willy.asm|71||0|1|31388|T|
-jet set willy.asm|72||0|1|31391|T|
-jet set willy.asm|75||0|1|31393|T|
-jet set willy.asm|76||0|1|31394|T|
-jet set willy.asm|77||0|1|31395|T|
-jet set willy.asm|78||0|1|31396|T|
-jet set willy.asm|79||0|1|31397|T|
-jet set willy.asm|80||0|1|31400|T|
-jet set willy.asm|81||0|1|31402|T|
-jet set willy.asm|82||0|1|31403|T|
-jet set willy.asm|83||0|1|31405|T|
-jet set willy.asm|85||0|1|31408|T|
-jet set willy.asm|87||0|1|31411|F|Main_loop
-jet set willy.asm|87||0|1|31411|L|,Main_loop,,+used
-jet set willy.asm|88||0|1|31411|T|
-jet set willy.asm|90||0|1|31412|T|
-jet set willy.asm|91||0|1|31415|T|
-jet set willy.asm|94||0|1|31418|T|
-jet set willy.asm|95||0|1|31421|T|
-jet set willy.asm|97||0|1|31424|T|
-jet set willy.asm|98||0|1|31427|T|
-jet set willy.asm|102||0|1|31430|T|
-jet set willy.asm|103||0|1|31434|T|
-jet set willy.asm|106||0|1|31438|T|
-jet set willy.asm|107||0|1|31441|T|
+audio.asm|150||0|1|30290|F|Audio_UpdateMusic.d2
+audio.asm|150||0|1|30290|L|,Audio_UpdateMusic,d2,+used
+audio.asm|151||0|1|30290|T|
+audio.asm|152||0|1|30291|T|
+audio.asm|153||0|1|30292|T|
+audio.asm|154||0|1|30293|T|
+audio.asm|156||0|1|30295|T|
+audio.asm|158||0|1|30297|F|Audio_UpdateMusic.done
+audio.asm|158||0|1|30297|L|,Audio_UpdateMusic,done,+used
+audio.asm|159||0|1|30297|T|
+audio.asm|160||0|1|30298|T|
+audio.asm|161||0|1|30299|T|
+audio.asm|162||0|1|30300|T|
+audio.asm|163||0|1|30301|T|
+audio.asm|165||0|1|30302|F|Audio_MusicSheet
+audio.asm|165||0|1|30302|L|,Audio_MusicSheet,,+used
+audio.asm|179||0|1|30372|F|Audio_PlayCollectSound
+audio.asm|179||0|1|30372|L|,Audio_PlayCollectSound,,+used
+audio.asm|180||0|1|30372|T|
+audio.asm|181||0|1|30373|T|
+audio.asm|183||0|1|30374|T|
+audio.asm|184||0|1|30376|F|Audio_PlayCollectSound.sound_loop
+audio.asm|184||0|1|30376|L|,Audio_PlayCollectSound,sound_loop,+used
+audio.asm|185||0|1|30376|T|
+audio.asm|186||0|1|30379|T|
+audio.asm|187||0|1|30381|T|
+audio.asm|189||0|1|30383|T|
+audio.asm|190||0|1|30385|F|Audio_PlayCollectSound.d1
+audio.asm|190||0|1|30385|L|,Audio_PlayCollectSound,d1,+used
+audio.asm|191||0|1|30385|T|
+audio.asm|192||0|1|30386|T|
+audio.asm|194||0|1|30388|T|
+audio.asm|195||0|1|30391|T|
+audio.asm|196||0|1|30393|T|
+audio.asm|198||0|1|30395|T|
+audio.asm|199||0|1|30397|F|Audio_PlayCollectSound.d2
+audio.asm|199||0|1|30397|L|,Audio_PlayCollectSound,d2,+used
+audio.asm|200||0|1|30397|T|
+audio.asm|201||0|1|30398|T|
+audio.asm|203||0|1|30400|T|
+audio.asm|205||0|1|30402|T|
+audio.asm|206||0|1|30403|T|
+audio.asm|207||0|1|30404|T|
+data/datavariable.asm|5||0|1|30405|F|PlayerPos
+data/datavariable.asm|5||0|1|30405|L|,PlayerPos,,+used
+data/datavariable.asm|6||0|1|30407|F|PlayerPosOld
+data/datavariable.asm|6||0|1|30407|L|,PlayerPosOld,,+used
+data/datavariable.asm|7||0|1|30409|F|bodyPos
+data/datavariable.asm|7||0|1|30409|L|,bodyPos,
+data/datavariable.asm|10||0|1|30411|F|body_state
+data/datavariable.asm|10||0|1|30411|L|,body_state,,+used
+data/datavariable.asm|11||0|1|30412|F|direction
+data/datavariable.asm|11||0|1|30412|L|,direction,,+used
+data/datavariable.asm|12||0|1|30413|F|flags
+data/datavariable.asm|12||0|1|30413|L|,flags,,+used
+data/datavariable.asm|14||0|1|30414|F|collision_active
+data/datavariable.asm|14||0|1|30414|L|,collision_active,
+data/datavariable.asm|15||0|1|30415|F|items_collected
+data/datavariable.asm|15||0|1|30415|L|,items_collected,,+used
+data/datavariable.asm|16||0|1|30416|F|sprite_shift
+data/datavariable.asm|16||0|1|30416|L|,sprite_shift,,+used
+data/datavariable.asm|17||0|1|30417|F|room_border_color
+data/datavariable.asm|17||0|1|30417|L|,room_border_color,,+used
+data/datavariable.asm|20||0|1|30418|F|velocity_y
+data/datavariable.asm|20||0|1|30418|L|,velocity_y,,+used
+data/datavariable.asm|21||0|1|30419|F|on_ground
+data/datavariable.asm|21||0|1|30419|L|,on_ground,,+used
+data/datavariable.asm|22||0|1|30420|F|jump_pressed
+data/datavariable.asm|22||0|1|30420|L|,jump_pressed,,+used
+data/datavariable.asm|23||0|1|30421|F|jump_prev
+data/datavariable.asm|23||0|1|30421|L|,jump_prev,,+used
+data/datavariable.asm|24||0|1|30422|F|jump_start_y
+data/datavariable.asm|24||0|1|30422|L|,jump_start_y,,+used
+data/datavariable.asm|25||0|1|30423|F|jump_dir
+data/datavariable.asm|25||0|1|30423|L|,jump_dir,,+used
+data/datavariable.asm|26||0|1|30424|F|jump_frame
+data/datavariable.asm|26||0|1|30424|L|,jump_frame,,+used
+data/datavariable.asm|27||0|1|30425|F|current_input_dir
+data/datavariable.asm|27||0|1|30425|L|,current_input_dir,,+used
+data/datavariable.asm|28||0|1|30426|F|q_prev
+data/datavariable.asm|28||0|1|30426|L|,q_prev,,+used
+data/datavariable.asm|29||0|1|30427|F|room_jump_strength
+data/datavariable.asm|29||0|1|30427|L|,room_jump_strength,,+used
+data/datavariable.asm|30||0|1|30428|F|room_gravity_preset
+data/datavariable.asm|30||0|1|30428|L|,room_gravity_preset,,+used
+data/datavariable.asm|33||0|1|30429|F|counter
+data/datavariable.asm|33||0|1|30429|L|,counter,,+used
+data/datavariable.asm|34||0|1|30431|F|last_music_counter_low
+data/datavariable.asm|34||0|1|30431|L|,last_music_counter_low,
+data/datavariable.asm|35||0|1|30432|F|last_frame_counter
+data/datavariable.asm|35||0|1|30432|L|,last_frame_counter,,+used
+data/datavariable.asm|36||0|1|30434|F|line_buffer
+data/datavariable.asm|36||0|1|30434|L|,line_buffer,
+data/datavariable.asm|37||0|1|30690|F|unpacked_layout
+data/datavariable.asm|37||0|1|30690|L|,unpacked_layout,,+used
+data/datavariable.asm|40||0|1|31202|F|current_room
+data/datavariable.asm|40||0|1|31202|L|,current_room,,+used
+data/datavariable.asm|41||0|1|31203|F|conveyor_dir
+data/datavariable.asm|41||0|1|31203|L|,conveyor_dir,,+used
+data/datavariable.asm|42||0|1|31204|F|conveyor_len
+data/datavariable.asm|42||0|1|31204|L|,conveyor_len,,+used
+data/datavariable.asm|43||0|1|31205|F|conveyor_row
+data/datavariable.asm|43||0|1|31205|L|,conveyor_row,,+used
+data/datavariable.asm|44||0|1|31206|F|conveyor_col
+data/datavariable.asm|44||0|1|31206|L|,conveyor_col,,+used
+data/datavariable.asm|45||0|1|31207|F|ramp_dir
+data/datavariable.asm|45||0|1|31207|L|,ramp_dir,,+used
+data/datavariable.asm|46||0|1|31208|F|ramp_len
+data/datavariable.asm|46||0|1|31208|L|,ramp_len,,+used
+data/datavariable.asm|47||0|1|31209|F|ramp_row
+data/datavariable.asm|47||0|1|31209|L|,ramp_row,,+used
+data/datavariable.asm|48||0|1|31210|F|ramp_col
+data/datavariable.asm|48||0|1|31210|L|,ramp_col,,+used
+data/datavariable.asm|49||0|1|31211|F|current_room_items
+data/datavariable.asm|49||0|1|31211|L|,current_room_items,,+used
+data/datavariable.asm|50||0|1|31291|F|num_room_items
+data/datavariable.asm|50||0|1|31291|L|,num_room_items,,+used
+data/datavariable.asm|51||0|1|31292|F|room_ptr
+data/datavariable.asm|51||0|1|31292|L|,room_ptr,,+used
+data/datavariable.asm|52||0|1|31294|F|enemy_update_rate
+data/datavariable.asm|52||0|1|31294|L|,enemy_update_rate,,+used
+data/datavariable.asm|53||0|1|31295|F|enemy_update_timer
+data/datavariable.asm|53||0|1|31295|L|,enemy_update_timer,,+used
+data/datavariable.asm|54||0|1|31296|F|player_speed
+data/datavariable.asm|54||0|1|31296|L|,player_speed,,+used
+data/datavariable.asm|55||0|1|31297|F|transition_active
+data/datavariable.asm|55||0|1|31297|L|,transition_active,,+used
+data/datavariable.asm|56||0|1|31298|F|Audio_jump_sound_note
+data/datavariable.asm|56||0|1|31298|L|,Audio_jump_sound_note,,+used
+data/datavariable.asm|57||0|1|31299|F|Audio_jump_sound_timer
+data/datavariable.asm|57||0|1|31299|L|,Audio_jump_sound_timer,,+used
+data/datavariable.asm|58||0|1|31300|F|Audio_music_note_idx
+data/datavariable.asm|58||0|1|31300|L|,Audio_music_note_idx,,+used
+data/datavariable.asm|59||0|1|31301|F|Audio_music_frame_counter
+data/datavariable.asm|59||0|1|31301|L|,Audio_music_frame_counter,,+used
+jet set willy.asm|22||0|1|31302|F|start
+jet set willy.asm|22||0|1|31302|L|,start,
+jet set willy.asm|23||0|1|31302|T|
+jet set willy.asm|24||0|1|31305|T|
+jet set willy.asm|25||0|1|31308|T|
+jet set willy.asm|30||0|1|31311|F|Main
+jet set willy.asm|30||0|1|31311|L|,Main,,+used
+jet set willy.asm|32||0|1|31311|T|
+jet set willy.asm|33||0|1|31312|T|
+jet set willy.asm|34||0|1|31315|T|
+jet set willy.asm|36||0|1|31318|T|
+jet set willy.asm|37||0|1|31321|T|
+jet set willy.asm|39||0|1|31324|T|
+jet set willy.asm|40||0|1|31326|T|
+jet set willy.asm|41||0|1|31329|T|
+jet set willy.asm|42||0|1|31332|T|
+jet set willy.asm|44||0|1|31335|T|
+jet set willy.asm|45||0|1|31338|T|
+jet set willy.asm|46||0|1|31340|T|
+jet set willy.asm|47||0|1|31343|F|LoadRoomAndRestart
+jet set willy.asm|47||0|1|31343|L|,LoadRoomAndRestart,,+used
+jet set willy.asm|48||0|1|31343|T|
+jet set willy.asm|49||0|1|31346|T|
+jet set willy.asm|50||0|1|31349|T|
+jet set willy.asm|51||0|1|31352|T|
+jet set willy.asm|52||0|1|31355|T|
+jet set willy.asm|53||0|1|31358|T|
+jet set willy.asm|54||0|1|31361|T|
+jet set willy.asm|56||0|1|31364|T|
+jet set willy.asm|57||0|1|31367|T|
+jet set willy.asm|58||0|1|31368|T|
+jet set willy.asm|59||0|1|31370|T|
+jet set willy.asm|60||0|1|31373|T|
+jet set willy.asm|61||0|1|31375|F|LoadRoomAndRestart.skip_player_pos
+jet set willy.asm|61||0|1|31375|L|,LoadRoomAndRestart,skip_player_pos,+used
+jet set willy.asm|62||0|1|31375|T|
+jet set willy.asm|63||0|1|31376|T|
+jet set willy.asm|64||0|1|31379|F|LoadRoomAndRestart.after_player_pos
+jet set willy.asm|64||0|1|31379|L|,LoadRoomAndRestart,after_player_pos,+used
+jet set willy.asm|67||0|1|31379|T|
+jet set willy.asm|68||0|1|31382|T|
+jet set willy.asm|69||0|1|31385|T|
+jet set willy.asm|70||0|1|31386|T|
+jet set willy.asm|71||0|1|31387|T|
+jet set willy.asm|72||0|1|31390|T|
+jet set willy.asm|75||0|1|31392|T|
+jet set willy.asm|76||0|1|31393|T|
+jet set willy.asm|77||0|1|31394|T|
+jet set willy.asm|78||0|1|31395|T|
+jet set willy.asm|79||0|1|31396|T|
+jet set willy.asm|80||0|1|31399|T|
+jet set willy.asm|81||0|1|31401|T|
+jet set willy.asm|82||0|1|31402|T|
+jet set willy.asm|83||0|1|31404|T|
+jet set willy.asm|85||0|1|31407|T|
+jet set willy.asm|87||0|1|31410|F|Main_loop
+jet set willy.asm|87||0|1|31410|L|,Main_loop,,+used
+jet set willy.asm|88||0|1|31410|F|Main_loop.sync_loop
+jet set willy.asm|88||0|1|31410|L|,Main_loop,sync_loop,+used
+jet set willy.asm|89||0|1|31410|T|
+jet set willy.asm|90||0|1|31411|T|
+jet set willy.asm|91||0|1|31414|T|
+jet set willy.asm|92||0|1|31418|T|
+jet set willy.asm|93||0|1|31419|T|
+jet set willy.asm|94||0|1|31421|T|
+jet set willy.asm|95||0|1|31422|T|
+jet set willy.asm|96||0|1|31424|T|
+jet set willy.asm|98||0|1|31426|T|
+jet set willy.asm|99||0|1|31429|T|
+jet set willy.asm|101||0|1|31432|T|
+jet set willy.asm|102||0|1|31435|T|
+jet set willy.asm|105||0|1|31438|T|
+jet set willy.asm|106||0|1|31441|T|
 jet set willy.asm|108||0|1|31444|T|
 jet set willy.asm|109||0|1|31447|T|
-jet set willy.asm|110||0|1|31450|T|
-jet set willy.asm|111||0|1|31453|T|
-jet set willy.asm|114||0|1|31456|T|
-jet set willy.asm|115||0|1|31459|T|
-jet set willy.asm|119||0|1|31461|T|
-jet set willy.asm|122||0|1|31464|T|
-jet set willy.asm|125||0|1|31467|T|
-jet set willy.asm|126||0|1|31468|T|
-jet set willy.asm|127||0|1|31471|T|
-jet set willy.asm|128||0|1|31474|T|
-jet set willy.asm|129||0|1|31477|T|
-jet set willy.asm|130||0|1|31480|T|
-jet set willy.asm|131||0|1|31482|T|
-jet set willy.asm|133||0|1|31485|F|Main_loop.no_nasty_collision
-jet set willy.asm|133||0|1|31485|L|,Main_loop,no_nasty_collision,+used
-jet set willy.asm|136||0|1|31485|T|
+jet set willy.asm|113||0|1|31450|T|
+jet set willy.asm|114||0|1|31454|T|
+jet set willy.asm|117||0|1|31458|T|
+jet set willy.asm|118||0|1|31461|T|
+jet set willy.asm|119||0|1|31464|T|
+jet set willy.asm|120||0|1|31467|T|
+jet set willy.asm|121||0|1|31470|T|
+jet set willy.asm|122||0|1|31473|T|
+jet set willy.asm|125||0|1|31476|T|
+jet set willy.asm|126||0|1|31479|T|
+jet set willy.asm|130||0|1|31481|T|
+jet set willy.asm|133||0|1|31484|T|
+jet set willy.asm|136||0|1|31487|T|
 jet set willy.asm|137||0|1|31488|T|
-jet set willy.asm|140||0|1|31490|T|
-jet set willy.asm|141||0|1|31493|T|
-jet set willy.asm|142||0|1|31495|T|
-jet set willy.asm|143||0|1|31497|F|Main_loop.raster_loop
-jet set willy.asm|143||0|1|31497|L|,Main_loop,raster_loop,+used
-jet set willy.asm|144||0|1|31497|T|
-jet set willy.asm|145||0|1|31499|T|
-jet set willy.asm|146||0|1|31500|T|
-jet set willy.asm|147||0|1|31502|T|
-jet set willy.asm|148||0|1|31504|F|Main_loop.delay
-jet set willy.asm|148||0|1|31504|L|,Main_loop,delay,+used
-jet set willy.asm|149||0|1|31504|T|
-jet set willy.asm|150||0|1|31505|T|
-jet set willy.asm|151||0|1|31507|T|
-jet set willy.asm|154||0|1|31509|T|
-jet set willy.asm|155||0|1|31512|T|
-jet set willy.asm|156||0|1|31514|T|
-jet set willy.asm|158||0|1|31516|F|Main_loop.no_collision
-jet set willy.asm|158||0|1|31516|L|,Main_loop,no_collision,+used
-jet set willy.asm|160||0|1|31516|T|
-jet set willy.asm|161||0|1|31519|T|
-jet set willy.asm|163||0|1|31521|F|Main_loop.no_collision_change
-jet set willy.asm|163||0|1|31521|L|,Main_loop,no_collision_change,+used
-jet set willy.asm|164||0|1|31521|T|
+jet set willy.asm|138||0|1|31491|T|
+jet set willy.asm|139||0|1|31494|T|
+jet set willy.asm|140||0|1|31497|T|
+jet set willy.asm|141||0|1|31500|T|
+jet set willy.asm|142||0|1|31502|T|
+jet set willy.asm|144||0|1|31505|F|Main_loop.no_nasty_collision
+jet set willy.asm|144||0|1|31505|L|,Main_loop,no_nasty_collision,+used
+jet set willy.asm|147||0|1|31505|T|
+jet set willy.asm|148||0|1|31508|T|
+jet set willy.asm|151||0|1|31510|T|
+jet set willy.asm|152||0|1|31513|T|
+jet set willy.asm|153||0|1|31515|T|
+jet set willy.asm|154||0|1|31517|F|Main_loop.raster_loop
+jet set willy.asm|154||0|1|31517|L|,Main_loop,raster_loop,+used
+jet set willy.asm|155||0|1|31517|T|
+jet set willy.asm|156||0|1|31519|T|
+jet set willy.asm|157||0|1|31520|T|
+jet set willy.asm|158||0|1|31522|T|
+jet set willy.asm|159||0|1|31524|F|Main_loop.delay
+jet set willy.asm|159||0|1|31524|L|,Main_loop,delay,+used
+jet set willy.asm|160||0|1|31524|T|
+jet set willy.asm|161||0|1|31525|T|
+jet set willy.asm|162||0|1|31527|T|
+jet set willy.asm|165||0|1|31529|T|
+jet set willy.asm|166||0|1|31532|T|
+jet set willy.asm|167||0|1|31534|T|
+jet set willy.asm|169||0|1|31536|F|Main_loop.no_collision
+jet set willy.asm|169||0|1|31536|L|,Main_loop,no_collision,+used
+jet set willy.asm|171||0|1|31536|T|
+jet set willy.asm|172||0|1|31539|T|
+jet set willy.asm|174||0|1|31541|F|Main_loop.no_collision_change
+jet set willy.asm|174||0|1|31541|L|,Main_loop,no_collision_change,+used
+jet set willy.asm|175||0|1|31541|T|
 resources.asm|9||0|2|33536|F|RoomsStart
 resources.asm|9||0|2|33536|L|,RoomsStart,
 rooms/TheOffLicence.asm|33||0|2|33536|F|TheOffLicenceLayout

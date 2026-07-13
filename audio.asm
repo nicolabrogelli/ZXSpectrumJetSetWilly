@@ -109,9 +109,7 @@ Audio_UpdateMusic:
     ; Leggi durata (secondo byte)
     inc  hl
     ld   a, (hl)
-    srl  a                        ; Divide per 8 (velocizza 8x)
-    srl  a
-    srl  a
+    srl  a                        ; Divide per 2 (velocizza 2x, quattro volte più lento rispetto all'inizio)
     jr   nz, .dur_ok
     ld   a, 1
 .dur_ok:

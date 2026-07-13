@@ -85,7 +85,18 @@ LoadRoomAndRestart:
     call Gfx_PrintPlayer
 
 Main_loop:
+.sync_loop:
     halt
+    ld   hl, (counter)
+    ld   de, (last_frame_counter)
+    or   a
+    sbc  hl, de
+    ld   a, l
+    cp   2
+    jr   c, .sync_loop
+    
+    ld   hl, (counter)
+    ld   (last_frame_counter), hl
     
     call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
     call Audio_UpdateMusic        ; Aggiorna la musica
