@@ -407,6 +407,14 @@ Enemy_DrawRoom:
     jp   z, .got_parrucca
     cp   22
     jp   z, .got_frate
+    cp   23
+    jp   z, .got_facehell_hl
+    cp   24
+    jp   z, .got_facehell_hr
+    cp   25
+    jp   z, .got_facehell_ll
+    cp   26
+    jp   z, .got_facehell_lr
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -586,6 +594,42 @@ Enemy_DrawRoom:
     pop  de
     pop  hl
     ret
+
+.got_facehell_hl:
+    ld   hl, FaceHellHL
+    jr   .got_static_sprite
+
+.got_facehell_hr:
+    ld   hl, FaceHellHR
+    jr   .got_static_sprite
+
+.got_facehell_ll:
+    ld   hl, FaceHellLL
+    jr   .got_static_sprite
+
+.got_facehell_lr:
+    ld   hl, FaceHellLR
+    jr   .got_static_sprite
+
+.got_static_sprite:
+    ; Disegna alla coordinata corrente senza aggiungere l'animazione
+    ld   c, (ix+2)         ; C = Current X (Offset 2)
+    ld   b, (ix+3)         ; B = Current Y (Offset 3)
+    
+    push ix                ; Salva slot pointer
+    push hl
+    pop  ix                ; IX = sprite data pointer
+    call Gfx_DrawPixelSprite16x16
+    pop  ix                ; Ripristina slot pointer
+    
+    ; Applica gli attributi colore per la posizione corrente
+    ld   c, (ix+2)         ; C = Current X
+    ld   b, (ix+3)         ; B = Current Y
+    ld   a, (ix+10)        ; A = Color (Offset 10)
+    call Gfx_SetEnemyColorAttributes
+    
+    pop  bc                ; Ripristina contatore ciclo
+    jp   .next
 
 ; -------------------------------------------------------------------
 ; Aggiorna le posizioni dei nemici attivi per il prossimo frame

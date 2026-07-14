@@ -82,7 +82,7 @@ EntranceToHadesBorderColor:
     DEFB 2                        ; Red border
 
 EntranceToHadesReserved:
-    DEFB NONE, NONE, NONE, NONE               ; Enemy colors
+    DEFB RED, RED, RED, RED               ; Enemy colors
 
 EntranceToHadesItem:
     DEFB 0,0,0,0,0,0,0,0
@@ -97,13 +97,13 @@ EntranceToHadesUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
 
 EntranceToHadesEnemy1:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB $C0, 23, 32, 0, 88         ; FaceHellHL (Top-Left)
 EntranceToHadesEnemy2:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB $C0, 24, 16, 0, 88         ; FaceHellHR (Top-Right)
 EntranceToHadesEnemy3:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB $C0, 25, 24, 16, 104         ; FaceHellLL (Bottom-Left)
 EntranceToHadesEnemy4:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB 0, 0, 0, 0, 0 ;DEFB $C0, 26, 76, 16, 104         ; FaceHellLR (Bottom-Right)
 EntranceToHadesEnemy5:
     DEFB 0, 0, 0, 0, 0
 EntranceToHadesEnemy6:
