@@ -114,6 +114,6 @@ UpOnTheBattlementsEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 UpOnTheBattlementsPosWilly:
-    db 200, 50                   ; Posizione di Willy
+    db 230, 50                   ; Posizione di Willy
 UpOnTheBattlementsEnemyColors5_8:
     DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

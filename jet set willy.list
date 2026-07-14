@@ -10202,7 +10202,7 @@
  115++94D9 00
  116++94DA
  117++94DA              IAmSureIHaveSeenThiBeforePosWilly:
- 118++94DA C8 32            db 200, 50                   ; Posizione di Willy
+ 118++94DA E6 32            db 230, 50                   ; Posizione di Willy
  119++94DC              IAmSureIHaveSeenThiBeforeEnemyColors5_8:
  120++94DC 05 00 00 00      DEFB CYAN, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/IAmSureIHaveSeenThiBefore.asm
@@ -10368,7 +10368,7 @@
  114++95F7 00
  115++95F8
  116++95F8              WeMustPerformQuirkafleegPosWilly:
- 117++95F8 C8 32            db 200, 50                   ; Posizione di Willy
+ 117++95F8 E6 32            db 230, 50                   ; Posizione di Willy
  118++95FA              WeMustPerformQuirkafleegEnemyColors5_8:
  119++95FA 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/WeMustPerformQuirkafleeg.asm
@@ -10534,7 +10534,7 @@
  114++9715 00
  115++9716
  116++9716              UpOnTheBattlementsPosWilly:
- 117++9716 C8 32            db 200, 50                   ; Posizione di Willy
+ 117++9716 E6 32            db 230, 50                   ; Posizione di Willy
  118++9718              UpOnTheBattlementsEnemyColors5_8:
  119++9718 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/UpOnTheBattlements.asm
