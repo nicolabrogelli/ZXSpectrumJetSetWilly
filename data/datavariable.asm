@@ -57,3 +57,5 @@ Audio_jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
 Audio_jump_sound_timer:   db 0
 Audio_music_note_idx:      db 0
 Audio_music_frame_counter: db 1
+rope_old_frame:            db 34
+

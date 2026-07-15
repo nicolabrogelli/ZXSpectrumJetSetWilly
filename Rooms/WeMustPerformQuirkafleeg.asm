@@ -103,7 +103,7 @@ WeMustPerformQuirkafleegEnemy2:
 WeMustPerformQuirkafleegEnemy3:
     DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 WeMustPerformQuirkafleegEnemy4:
-    DEFB 0, 0, 0, 0, 0               ; Empty slot
+    DEFB 1, 128, 0, 0, 0             ; Rope (type 1), X-coordinate = 128
 WeMustPerformQuirkafleegEnemy5:
     DEFB 0, 0, 0, 0, 0
 WeMustPerformQuirkafleegEnemy6:

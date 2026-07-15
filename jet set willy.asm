@@ -108,7 +108,7 @@ Main_loop:
     call Enemy_EraseRoom
     call Enemy_DrawRoom
 
-    
+
     ; 3. Salva le posizioni correnti del player per il prossimo frame
     ld   bc, (PlayerPos)
     ld   (PlayerPosOld), bc
