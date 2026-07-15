@@ -2190,31 +2190,32 @@
  292+ 665F FE 95            dw UpOnTheBattlementsLayout         ; 17
  293+ 6661 1C 97            dw OntheRoofLayout                  ; 18
  294+ 6663 3A 98            dw TheForgottenAbbeyLayout          ; 19
- 295+ 6665 00 00 00 00      dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 20-32: padding
- 295+ 6669 00 00 00 00
- 295+ 666D 00 00 00 00
- 295+ 6671 00 00 00 00
- 295+ 6675 00 00 00 00
- 295+ 6679 00 00 00 00
- 295+ 667D 00 00 00 00
- 296+ 6681 58 99            dw TheBathroomLayout                ; 33
- 297+ 6683 00 00            dw 0                                ; 34
- 298+ 6685 76 9A            dw MastreBedRoomLayout              ; 35
- 299+ 6687 00 00 00 00      dw 0,0,0,0,0,0,0,0,0                ; 36-44: padding
- 299+ 668B 00 00 00 00
- 299+ 668F 00 00 00 00
- 299+ 6693 00 00 00 00
- 299+ 6697 00 00
- 300+ 6699 94 9B            dw UnderTheDriveLayout              ; 45
- 301+ 669B 00 00 00 00      dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60
- 301+ 669F 00 00 00 00
- 301+ 66A3 00 00 00 00
- 301+ 66A7 00 00 00 00
- 301+ 66AB 00 00 00 00
- 301+ 66AF 00 00 00 00
- 301+ 66B3 00 00 00 00
- 301+ 66B7 00 00
- 302+ 66B9
+ 295+ 6665 58 99            dw BallRoomEastLayout               ; 20
+ 296+ 6667 00 00 00 00      dw 0,0,0,0,0,0,0,0,0,0,0,0,0        ; 21-32: padding
+ 296+ 666B 00 00 00 00
+ 296+ 666F 00 00 00 00
+ 296+ 6673 00 00 00 00
+ 296+ 6677 00 00 00 00
+ 296+ 667B 00 00 00 00
+ 296+ 667F 00 00
+ 297+ 6681 76 9A            dw TheBathroomLayout                ; 33
+ 298+ 6683 00 00            dw 0                                ; 34
+ 299+ 6685 94 9B            dw MastreBedRoomLayout              ; 35
+ 300+ 6687 00 00 00 00      dw 0,0,0,0,0,0,0,0,0                ; 36-44: padding
+ 300+ 668B 00 00 00 00
+ 300+ 668F 00 00 00 00
+ 300+ 6693 00 00 00 00
+ 300+ 6697 00 00
+ 301+ 6699 B2 9C            dw UnderTheDriveLayout              ; 45
+ 302+ 669B 00 00 00 00      dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60
+ 302+ 669F 00 00 00 00
+ 302+ 66A3 00 00 00 00
+ 302+ 66A7 00 00 00 00
+ 302+ 66AB 00 00 00 00
+ 302+ 66AF 00 00 00 00
+ 302+ 66B3 00 00 00 00
+ 302+ 66B7 00 00
+ 303+ 66B9
 # file closed: input.asm
   16  66B9                  include "physics.asm"
 # file opened: physics.asm
@@ -5407,7 +5408,7 @@
  403+ 756D                  ; Confronto con TheBathroomLayout
  404+ 756D                  ; ---------------------------------------------------------------
  405+ 756D 2A F8 7B         ld   hl, (room_ptr)
- 406+ 7570 11 58 99         ld   de, TheBathroomLayout
+ 406+ 7570 11 76 9A         ld   de, TheBathroomLayout
  407+ 7573 B7               or   a
  408+ 7574 ED 52            sbc  hl, de
  409+ 7576 20 05            jr   nz, .not_thebathroom
@@ -5420,7 +5421,7 @@
  416+ 757D                  ; Confronto con MastreBedRoomLayout
  417+ 757D                  ; ---------------------------------------------------------------
  418+ 757D 2A F8 7B         ld   hl, (room_ptr)
- 419+ 7580 11 76 9A         ld   de, MastreBedRoomLayout
+ 419+ 7580 11 94 9B         ld   de, MastreBedRoomLayout
  420+ 7583 B7               or   a
  421+ 7584 ED 52            sbc  hl, de
  422+ 7586 20 05            jr   nz, .not_masterbed
@@ -5433,7 +5434,7 @@
  429+ 758D                  ; Confronto con UnderTheDrive
  430+ 758D                  ; ---------------------------------------------------------------
  431+ 758D 2A F8 7B         ld   hl, (room_ptr)
- 432+ 7590 11 94 9B         ld   de, UnderTheDriveLayout
+ 432+ 7590 11 B2 9C         ld   de, UnderTheDriveLayout
  433+ 7593 B7               or   a
  434+ 7594 ED 52            sbc  hl, de
  435+ 7596 20 05            jr   nz, .unknown
@@ -11201,521 +11202,698 @@
  119++9954              TheForgottenAbbeyEnemyColors5_8:
  120++9954 06 01 04 02      DEFB YELLOW, BLUE, GREEN, RED               ; Colori per nemici 5-8
 # file closed: rooms/TheForgottenAbbey.asm
-  30+ 9958
-  31+ 9958                  include "rooms/TheBathroom.asm"                 ; ID 33
-# file opened: rooms/TheBathroom.asm
+  30+ 9958                  include "rooms/BallRoomEast.asm"                ; ID 20
+# file opened: rooms/BallRoomEast.asm
    1++9958              ;===========================================================================
-   2++9958              ; TheBathroom.asm
+   2++9958              ; BallRoomEast.asm
    3++9958              ;
-   4++9958              ; TheBathroomLayout       Size 128 Byte, Start Byte   0
-   5++9958              ; TheBathroomTile         Size  32 Byte, Start Byte 128
-   6++9958              ; TheBathroomBackground   Size   9 Byte, Start Byte 160
-   7++9958              ; TheBathroomFloor        Size   9 Byte, Start Byte 169
-   8++9958              ; TheBathroomWall         Size   9 Byte, Start Byte 178
-   9++9958              ; TheBathroomNasty        Size   9 Byte, Start Byte 187
-  10++9958              ; TheBathroomRamp         Size   9 Byte, Start Byte 196
-  11++9958              ; TheBathroomConveyor     Size   9 Byte, Start Byte 205
-  12++9958              ; TheBathroomConveyorData Size   4 Byte, Start Byte 214
-  13++9958              ; TheBathroomRampData     Size   4 Byte, Start Byte 218
-  14++9958              ; TheBathroomBorderColor  Size   1 Byte, Start Byte 222
-  15++9958              ; TheBathroomReserved     Size   4 Byte, Start Byte 223
-  16++9958              ; TheBathroomItem		   Size   8 Byte, Start Byte 227
-  17++9958              ; TheBathroomDirection    Size   4 Byte, Start Byte 235
-  18++9958              ; TheBathroomUnused       Size   1 Byte, Start Byte 239
-  19++9958              ; TheBathroomEnemy1		Size   5 Byte, Start Byte 240
-  20++9958              ; TheBathroomEnemy2		Size   5 Byte, Start Byte 245
-  21++9958              ; TheBathroomEnemy3		Size   5 Byte, Start Byte 250
-  22++9958              ; TheBathroomEnemy4		Size   5 Byte, Start Byte 255
-  23++9958              ; TheBathroomPosWilly     Size   2 Byte, Start Byte 280
-  24++9958              ;
-  25++9958              ;===========================================================================
-  26++9958
-  27++9958              ; Room layout for Room  (Master Bedroom)
-  28++9958              TheBathroomLayout:
-  29++9958 A0 00 00 00      DEFB 160,0,0,0,0,0,0,10
-  29++995C 00 00 00 0A
-  30++9960 A0 00 00 00      DEFB 160,0,0,0,0,0,0,10
-  30++9964 00 00 00 0A
-  31++9968 A0 00 00 00      DEFB 160,0,0,0,0,0,0,10
-  31++996C 00 00 00 0A
-  32++9970 00 00 00 00      DEFB 0,0,0,0,0,0,0,10
-  32++9974 00 00 00 0A
-  33++9978 00 00 00 00      DEFB 0,0,0,0,0,0,0,10
-  33++997C 00 00 00 0A
-  34++9980 55 55 55 50      DEFB 85,85,85,80,37,85,85,90
-  34++9984 25 55 55 5A
-  35++9988 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
-  35++998C 20 00 00 0A
-  36++9990 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
-  36++9994 20 00 00 0A
-  37++9998 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
-  37++999C 20 00 00 0A
-  38++99A0 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
-  38++99A4 20 00 00 0A
-  39++99A8 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
-  39++99AC 20 00 00 0A
-  40++99B0 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
-  40++99B4 20 00 00 0A
-  41++99B8 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
-  41++99BC 20 00 00 0A
-  42++99C0 00 05 40 00      DEFB 0,5,64,0,0,0,0,10
-  42++99C4 00 00 00 0A
-  43++99C8 00 00 00 00      DEFB 0,0,0,0,0,0,0,10
-  43++99CC 00 00 00 0A
-  44++99D0 55 55 55 55      DEFB 85,85,85,85,85,85,85,90
-  44++99D4 55 55 55 5A
-  45++99D8
-  46++99D8              TheBathroomTile:
-  47++99D8              ;The next 32 bytes are copied to 32896 and specify the room name.
-  48++99D8 20 20 20 20      DEFM "          The Bathroom          "	    ;Room name
-  48++99DC 20 20 20 20
-  48++99E0 20 20 54 68
-  48++99E4 65 20 42 61
-  48++99E8 74 68 72 6F
-  48++99EC 6F 6D 20 20
-  48++99F0 20 20 20 20
-  48++99F4 20 20 20 20
-  49++99F8
-  50++99F8              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  51++99F8              TheBathroomBackground:
-  52++99F8 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
-  52++99FC 00 00 00 00
-  52++9A00 00
-  53++9A01
-  54++9A01              TheBathroomFloor:
-  55++9A01 16 00 40 09      DEFB 22,0,64,9,100,146,45,150,255	    ;Floor Solid
-  55++9A05 64 92 2D 96
-  55++9A09 FF
-  56++9A0A
-  57++9A0A              TheBathroomWall:
-  58++9A0A 0E 1F AA 00      DEFB 14,31,170,0,85,248,85,0,170	    ;Wall Solid
-  58++9A0E 55 F8 55 00
-  58++9A12 AA
-  59++9A13
-  60++9A13              TheBathroomNasty:
-  61++9A13 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Nasty
-  61++9A17 00 00 00 00
-  61++9A1B 00
-  62++9A1C
-  63++9A1C              TheBathroomRamp:
-  64++9A1C 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0	            ;Ramp Solid
-  64++9A20 00 30 00 C0
-  64++9A24 00
-  65++9A25
-  66++9A25              TheBathroomConveyor:
-  67++9A25 3D A5 00 00      DEFB 61,165,0,0,0,0,0,0,255	            ;Conveyor
-  67++9A29 00 00 00 00
-  67++9A2D FF
-  68++9A2E
-  69++9A2E              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  70++9A2E              TheBathroomConveyorData:
-  71++9A2E 00               DEFB 0	                                ;Direction (right)
-  72++9A2F D4 5F            DEFW 24532	                                ;Location in the attribute buffer at 24064: (15,12)
-  73++9A31 04               DEFB 4	                                ;Length
-  74++9A32
-  75++9A32              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  76++9A32              TheBathroomRampData:
-  77++9A32 01               DEFB 1	                                ;Direction (up to the right)
-  78++9A33 89 5F            DEFW 24457                              ;Location in the attribute buffer at 24064: (14,7)
-  79++9A35 08               DEFB 8	                                ;Length
-  80++9A36
-  81++9A36              ;The next byte is copied to 32990 and specifies the border colour.
-  82++9A36              TheBathroomBorderColor:
-  83++9A36 04               DEFB 4	                                ;Border colour
-  84++9A37
-  85++9A37              ;The next two bytes are copied to 32991, but are not used.
-  86++9A37              TheBathroomReserved:
-  87++9A37 04 00 00 00      DEFB 4, 0, 0, 0                         ; Enemy colors: all WHITE (7)
-  88++9A3B
-  89++9A3B              ;The next eight bytes are copied to 32993 and define the item graphic.
-  90++9A3B              TheBathroomItem:
-  91++9A3B 1F 04 0A 77      DEFB 31,4,10,119,135,177,170,10	                ;Item graphic
-  91++9A3F 87 B1 AA 0A
-  92++9A43
-  93++9A43              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  94++9A43              TheBathroomDirection:
-  95++9A43 22               DEFB 34	                                ;Room to the left (Top Landing)
-  96++9A44 20               DEFB 32	                                ;Room to the right (Halfway up the East Wall)
-  97++9A45 27               DEFB 39	                                ;Room above (Emergency Generator)
-  98++9A46 1B               DEFB 27                                 ;Room below (The Chapel)
-  99++9A47
- 100++9A47              TheBathroomUnused:
- 101++9A47 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
- 102++9A48
- 103++9A48              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 104++9A48              TheBathroomEnemy1:
- 105++9A48 80 0A 08 17      DEFB $80, 10, 8, 23, 200         ; DoubleBall 1 (Uccello), horizontal, Starts X=8, Y=96, Limit X=200
- 105++9A4C C8
- 106++9A4D              TheBathroomEnemy2:
- 107++9A4D 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty
- 107++9A51 00
- 108++9A52              TheBathroomEnemy3:
- 109++9A52 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty
- 109++9A56 00
- 110++9A57              TheBathroomEnemy4:
- 111++9A57 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
- 111++9A5B 00
- 112++9A5C              TheBathroomEnemy5:
- 113++9A5C 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 113++9A60 00
- 114++9A61              TheBathroomEnemy6:
- 115++9A61 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 115++9A65 00
- 116++9A66              TheBathroomEnemy7:
- 117++9A66 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 117++9A6A 00
- 118++9A6B              TheBathroomEnemy8:
- 119++9A6B 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 119++9A6F 00
- 120++9A70
- 121++9A70              TheBathroomPosWilly:
- 122++9A70 C8 5A            db 200, 90                  ; Posizione di Willy
- 123++9A72              TheBathroomEnemyColors5_8:
- 124++9A72 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
-# file closed: rooms/TheBathroom.asm
-  32+ 9A76                  include "rooms/MasterBedRoom.asm"               ; ID 35
-# file opened: rooms/MasterBedRoom.asm
+   4++9958              ; BallRoomEastLayout            Size 128 Byte, Start Byte   0
+   5++9958              ; BallRoomEastTile              Size  32 Byte, Start Byte 128
+   6++9958              ; BallRoomEastBackground        Size   9 Byte, Start Byte 160
+   7++9958              ; BallRoomEastFloor             Size   9 Byte, Start Byte 169
+   8++9958              ; BallRoomEastWall              Size   9 Byte, Start Byte 178
+   9++9958              ; BallRoomEastNasty             Size   9 Byte, Start Byte 187
+  10++9958              ; BallRoomEastRamp              Size   9 Byte, Start Byte 196
+  11++9958              ; BallRoomEastConveyor          Size   9 Byte, Start Byte 205
+  12++9958              ; BallRoomEastConveyorData      Size   4 Byte, Start Byte 214
+  13++9958              ; BallRoomEastRampData          Size   4 Byte, Start Byte 218
+  14++9958              ; BallRoomEastBorderColor       Size   1 Byte, Start Byte 222
+  15++9958              ; BallRoomEastReserved          Size   4 Byte, Start Byte 223
+  16++9958              ; BallRoomEastItem		        Size   8 Byte, Start Byte 227
+  17++9958              ; BallRoomEastDirection         Size   4 Byte, Start Byte 235
+  18++9958              ; BallRoomEastUnused            Size   1 Byte, Start Byte 239
+  19++9958              ; BallRoomEastEnemy1		    Size   5 Byte, Start Byte 240
+  20++9958              ; BallRoomEastEnemy2		    Size   5 Byte, Start Byte 245
+  21++9958              ; BallRoomEastEnemy3		    Size   5 Byte, Start Byte 250
+  22++9958              ; BallRoomEastEnemy4		    Size   5 Byte, Start Byte 255
+  23++9958              ; BallRoomEastEnemy5		    Size   5 Byte, Start Byte 260
+  24++9958              ; BallRoomEastEnemy6		    Size   5 Byte, Start Byte 265
+  25++9958              ; BallRoomEastEnemy7		    Size   5 Byte, Start Byte 270
+  26++9958              ; BallRoomEastEnemy8		    Size   5 Byte, Start Byte 275
+  27++9958              ; BallRoomEastPosWilly          Size   2 Byte, Start Byte 280
+  28++9958              ; BallRoomEastEnemyColors5_8    Size   4 Byte, Start Byte 282
+  29++9958              ;
+  30++9958              ;===========================================================================
+  31++9958
+  32++9958              ; Room layout for Room  (Ballroom East)
+  33++9958              BallRoomEastLayout:
+  34++9958 A0 40 0A 00      DEFB 160,64,10,0,0,0,0,0	;Room layout
+  34++995C 00 00 00 00
+  35++9960 A0 40 0A 00      DEFB 160,64,10,0,0,0,0,0
+  35++9964 00 00 00 00
+  36++9968 A0 40 0A 00      DEFB 160,64,10,0,0,0,0,0
+  36++996C 00 00 00 00
+  37++9970 00 40 00 00      DEFB 0,64,0,0,0,0,0,0
+  37++9974 00 00 00 00
+  38++9978 00 40 00 00      DEFB 0,64,0,0,0,0,0,0
+  38++997C 00 00 00 00
+  39++9980 55 55 5A 0A      DEFB 85,85,90,10,170,170,170,170
+  39++9984 AA AA AA AA
+  40++9988 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  40++998C 00 00 00 00
+  41++9990 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  41++9994 00 00 00 00
+  42++9998 00 00 15 55      DEFB 0,0,21,85,85,85,85,85
+  42++999C 55 55 55 55
+  43++99A0 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  43++99A4 00 00 00 00
+  44++99A8 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  44++99AC 00 00 00 00
+  45++99B0 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  45++99B4 00 00 00 00
+  46++99B8 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  46++99BC 00 00 00 00
+  47++99C0 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  47++99C4 00 00 00 00
+  48++99C8 AA AA AA AA      DEFB 170,170,170,170,170,170,170,170
+  48++99CC AA AA AA AA
+  49++99D0 AA AA AA AA      DEFB 170,170,170,170,170,170,170,170
+  49++99D4 AA AA AA AA
+  50++99D8
+  51++99D8              BallRoomEastTile:
+  52++99D8              ;The next 32 bytes are copied to 32896 and specify the room name.
+  53++99D8 20 20 20 20      DEFM "         Ballroom East          "	    ;Room name
+  53++99DC 20 20 20 20
+  53++99E0 20 42 61 6C
+  53++99E4 6C 72 6F 6F
+  53++99E8 6D 20 45 61
+  53++99EC 73 74 20 20
+  53++99F0 20 20 20 20
+  53++99F4 20 20 20 20
+  54++99F8
+  55++99F8              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  56++99F8              BallRoomEastBackground:
+  57++99F8 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+  57++99FC 00 00 00 00
+  57++9A00 00
+  58++9A01
+  59++9A01              BallRoomEastFloor:
+  60++9A01 06 AA 55 22      DEFB 6,170,85,34,68,34,68,34,68	    ;Floor Solid
+  60++9A05 44 22 44 22
+  60++9A09 44
+  61++9A0A
+  62++9A0A              BallRoomEastWall:
+  63++9A0A 0F 44 44 FF      DEFB 15,68,68,255,17,17,255,85,170	    ;Wall Solid
+  63++9A0E 11 11 FF 55
+  63++9A12 AA
+  64++9A13
+  65++9A13              BallRoomEastNasty:
+  66++9A13 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	    ;Nasty
+  66++9A17 00 00 00 00
+  66++9A1B 00
+  67++9A1C
+  68++9A1C              BallRoomEastRamp:
+  69++9A1C FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Ramp Solid
+  69++9A20 00 00 00 00
+  69++9A24 00
+  70++9A25
+  71++9A25              BallRoomEastConveyor:
+  72++9A25 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++9A29 00 00 00 00
+  72++9A2D 00
+  73++9A2E
+  74++9A2E              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  75++9A2E              BallRoomEastConveyorData:
+  76++9A2E 00               DEFB 0	                                ;Direction (right)
+  77++9A2F 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
+  78++9A31 00               DEFB 0	                                ;Length
+  79++9A32
+  80++9A32              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  81++9A32              BallRoomEastRampData:
+  82++9A32 00               DEFB 0	                                ;Direction (up to the right)
+  83++9A33 00 00            DEFW 0                                  ;Location in the attribute buffer at 24064: (14,7)
+  84++9A35 00               DEFB 0	                                ;Length
+  85++9A36
+  86++9A36              ;The next byte is copied to 32990 and specifies the border colour.
+  87++9A36              BallRoomEastBorderColor:
+  88++9A36 02               DEFB 2	                                ;Border colour
+  89++9A37
+  90++9A37              ;The next two bytes are copied to 32991, but are not used.
+  91++9A37              BallRoomEastReserved:
+  92++9A37 00 03 05 06      DEFB NONE, MAGENTA, CYAN, YELLOW                        ; Enemy colors
+  93++9A3B
+  94++9A3B              ;The next eight bytes are copied to 32993 and define the item graphic.
+  95++9A3B              BallRoomEastItem:
+  96++9A3B 81 81 42 24      DEFB 129,129,66,36,24,24,24,231	                ;Item graphic (unused)
+  96++9A3F 18 18 18 E7
+  97++9A43
+  98++9A43              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  99++9A43              BallRoomEastDirection:
+ 100++9A43 15               DEFB 21	        ;Room to the left (Ballroom West)
+ 101++9A44 0B               DEFB 11	        ;Room to the right (The Hall)
+ 102++9A45 1A               DEFB 26	        ;Room above (East Wall Base)
+ 103++9A46 FF               DEFB BLOCK	        ;Room below (The Off Licence)
+ 104++9A47
+ 105++9A47              BallRoomEastUnused:
+ 106++9A47 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 107++9A48
+ 108++9A48              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 109++9A48              BallRoomEastEnemy1:
+ 110++9A48 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 110++9A4C 00
+ 111++9A4D              BallRoomEastEnemy2:
+ 112++9A4D C0 06 28 30      DEFB $C0, 6, 40, 48, 87         ; [Face (41296) - vertical], Guardinan = 42, Starts X=60, Y=0, Limit Y=104
+ 112++9A51 57
+ 113++9A52              BallRoomEastEnemy3:
+ 114++9A52 E0 06 38 30      DEFB $E0, 6, 56, 48, 96         ; [Face (41280) - vertical], Guardinan = 40, Starts X=60, Y=0, Limit Y=104
+ 114++9A56 60
+ 115++9A57              BallRoomEastEnemy4:
+ 116++9A57 C0 06 58 48      DEFB $C0, 6, 88, 72, 96         ; [Face (41288) - vertical], Guardinan = 41, Starts X=60, Y=0, Limit Y=104
+ 116++9A5B 60
+ 117++9A5C              BallRoomEastEnemy5:
+ 118++9A5C 80 02 70 50       DEFB $80, 2, 112, 80, 232        ; [Uccello (41128) - horizzontal], Guardinan = 21, Starts X=60, Y=0, Limit Y=104
+ 118++9A60 E8
+ 119++9A61              BallRoomEastEnemy6:
+ 120++9A61 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 120++9A65 00
+ 121++9A66              BallRoomEastEnemy7:
+ 122++9A66 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 122++9A6A 00
+ 123++9A6B              BallRoomEastEnemy8:
+ 124++9A6B 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 124++9A6F 00
+ 125++9A70
+ 126++9A70              BallRoomEastPosWilly:
+ 127++9A70 C8 65            db 200, 101                     ; Posizione di Willy
+ 128++9A72
+ 129++9A72              BallRoomEastEnemyColors5_8:
+ 130++9A72 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE               ; Colori per nemici 5-8
+# file closed: rooms/BallRoomEast.asm
+  31+ 9A76
+  32+ 9A76                  include "rooms/TheBathroom.asm"                 ; ID 33
+# file opened: rooms/TheBathroom.asm
    1++9A76              ;===========================================================================
-   2++9A76              ; MasterBedroom.asm
+   2++9A76              ; TheBathroom.asm
    3++9A76              ;
-   4++9A76              ; Ho creato solo il template deve essere gestito con i dati corretti della stanza
-   5++9A76              ;
-   6++9A76              ; MasterBedroomLayout       Size 128 Byte, Start Byte   0
-   7++9A76              ; MasterBedroomTile         Size  32 Byte, Start Byte 128
-   8++9A76              ; MasterBedroomBackground   Size   9 Byte, Start Byte 160
-   9++9A76              ; MasterBedroomFloor        Size   9 Byte, Start Byte 169
-  10++9A76              ; MasterBedroomWall         Size   9 Byte, Start Byte 178
-  11++9A76              ; MasterBedroomNasty        Size   9 Byte, Start Byte 187
-  12++9A76              ; MasterBedroomRamp         Size   9 Byte, Start Byte 196
-  13++9A76              ; MasterBedroomConveyor     Size   9 Byte, Start Byte 205
-  14++9A76              ; MasterBedroomConveyorData Size   4 Byte, Start Byte 214
-  15++9A76              ; MasterBedroomRampData     Size   4 Byte, Start Byte 218
-  16++9A76              ; MasterBedroomBorderColor  Size   1 Byte, Start Byte 222
-  17++9A76              ; MasterBedroomReserved     Size   4 Byte, Start Byte 223
-  18++9A76              ; MasterBedroomItem		    Size   8 Byte, Start Byte 227
-  19++9A76              ; MasterBedroomDirection    Size   4 Byte, Start Byte 235
-  20++9A76              ; MasterBedroomUnused       Size   1 Byte, Start Byte 239
-  21++9A76              ; MasterBedroomEnemy1		Size   5 Byte, Start Byte 240
-  22++9A76              ; MasterBedroomEnemy2		Size   5 Byte, Start Byte 245
-  23++9A76              ; MasterBedroomEnemy3		Size   5 Byte, Start Byte 250
-  24++9A76              ; MasterBedroomEnemy4		Size   5 Byte, Start Byte 255
-  25++9A76              ; MasterBedroomPosWilly     Size   2 Byte, Start Byte 280
-  26++9A76              ;
-  27++9A76              ;===========================================================================
-  28++9A76
-  29++9A76              ; Room layout for Room  (Master Bedroom)
-  30++9A76              MastreBedRoomLayout:
-  31++9A76 AA AA AA AA      DEFB 170,170,170,170,170,170,170,170
-  31++9A7A AA AA AA AA
-  32++9A7E A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  32++9A82 00 00 00 00
-  33++9A86 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  33++9A8A 00 00 00 00
-  34++9A8E A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  34++9A92 00 00 00 00
-  35++9A96 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  35++9A9A 00 00 00 00
-  36++9A9E A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  36++9AA2 00 00 00 00
-  37++9AA6 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  37++9AAA 00 00 00 00
-  38++9AAE A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  38++9AB2 00 00 00 00
-  39++9AB6 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  39++9ABA 00 00 00 00
-  40++9ABE A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  40++9AC2 00 00 00 00
-  41++9AC6 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
-  41++9ACA 00 00 00 00
-  42++9ACE AC 00 00 00      DEFB 172,0,0,0,0,0,0,0
-  42++9AD2 00 00 00 00
-  43++9AD6 A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
-  43++9ADA 00 00 00 00
-  44++9ADE 95 55 55 55      DEFB 149,85,85,85,64,0,0,0
-  44++9AE2 40 00 00 00
-  45++9AE6 AA AA AA AA      DEFB 170,170,170,170,160,0,0,0
-  45++9AEA A0 00 00 00
-  46++9AEE AA AA AA AA      DEFB 170,170,170,170,169,85,85,85
-  46++9AF2 A9 55 55 55
-  47++9AF6
-  48++9AF6              MastreBedRoomTile:
-  49++9AF6              ;The next 32 bytes are copied to 32896 and specify the room name.
-  50++9AF6 20 20 20 20      DEFM "         Master Bedroom         "	    ;Room name
-  50++9AFA 20 20 20 20
-  50++9AFE 20 4D 61 73
-  50++9B02 74 65 72 20
-  50++9B06 42 65 64 72
-  50++9B0A 6F 6F 6D 20
-  50++9B0E 20 20 20 20
-  50++9B12 20 20 20 20
-  51++9B16
-  52++9B16              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  53++9B16              MastreBedRoomBackground:
-  54++9B16 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
-  54++9B1A 00 00 00 00
-  54++9B1E 00
-  55++9B1F
-  56++9B1F              MastreBedRoomFloor:
-  57++9B1F 06 FF 6B B5      DEFB 6,255,107,181,0,173,0,74,0	        ;Floor Solid
-  57++9B23 00 AD 00 4A
-  57++9B27 00
-  58++9B28
-  59++9B28              MastreBedRoomWall:
-  60++9B28 33 00 51 FB      DEFB 51,0,81,251,81,0,170,191,170	    ;Wall Solid
-  60++9B2C 51 00 AA BF
-  60++9B30 AA
-  61++9B31
-  62++9B31              MastreBedRoomNasty:
-  63++9B31 47 00 00 00      DEFB 71,0,0,0,0,124,254,127,62	        ;Nasty
-  63++9B35 00 7C FE 7F
-  63++9B39 3E
-  64++9B3A
-  65++9B3A              MastreBedRoomRamp:
-  66++9B3A 07 C0 40 B0      DEFB 7,192,64,176,0,172,0,83,0	        ;Ramp Solid
-  66++9B3E 00 AC 00 53
-  66++9B42 00
-  67++9B43
-  68++9B43              MastreBedRoomConveyor:
-  69++9B43 29 55 55 55      DEFB 41,85,85,85,85,81,95,64,170	    ;Conveyor
-  69++9B47 55 51 5F 40
-  69++9B4B AA
-  70++9B4C
-  71++9B4C              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  72++9B4C              MastreBedRoomConveyorData:
-  73++9B4C 01               DEFB 1	                                ;Direction (right)
-  74++9B4D 82 5F            DEFW 24450	                            ;Location in the attribute buffer at 24064: (15,12)
-  75++9B4F 04               DEFB 4	                                ;Length
-  76++9B50
-  77++9B50              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  78++9B50              MastreBedRoomRampData:
-  79++9B50 00               DEFB 0	                                ;Direction (up to the right)
-  80++9B51 D2 5F            DEFW 24530	                            ;Location in the attribute buffer at 24064: (14,7)
-  81++9B53 02               DEFB 2	                                ;Length
-  82++9B54
-  83++9B54              ;The next byte is copied to 32990 and specifies the border colour.
-  84++9B54              MastreBedRoomBorderColor:
-  85++9B54 04               DEFB 4	                                ;Border colour
-  86++9B55
-  87++9B55              ;The next two bytes are copied to 32991, but are not used.
-  88++9B55              MastreBedRoomReserved:
-  89++9B55 02 03 04 07      DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
-  90++9B59
-  91++9B59              ;The next eight bytes are copied to 32993 and define the item graphic.
-  92++9B59              MastreBedRoomItem:
-  93++9B59 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
-  93++9B5D 00 00 00 00
-  94++9B61
-  95++9B61              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  96++9B61              MastreBedRoomDirection:
-  97++9B61 24               DEFB 36	                               ;Room to the left (A bit of tree)
-  98++9B62 22               DEFB 34                                ;Room to the right (Top Landing)
-  99++9B63 29               DEFB 41                                ;Room above  (The Attic)
- 100++9B64 1D               DEFB 29                                ;Room below (The Nightmare Room)
- 101++9B65
- 102++9B65              MastreBedRoomUnused:
- 103++9B65 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
- 104++9B66
- 105++9B66              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 106++9B66              MastreBedRoomEnemy1:
- 107++9B66 80 00 08 4C      DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
- 107++9B6A C8
- 108++9B6B              MastreBedRoomEnemy2:
- 109++9B6B 80 00 50 4C      DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
- 109++9B6F B4
- 110++9B70              MastreBedRoomEnemy3:
- 111++9B70 C0 04 78 10      DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
- 111++9B74 4C
- 112++9B75              MastreBedRoomEnemy4:
- 113++9B75 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
- 113++9B79 00
- 114++9B7A              MastreBedRoomEnemy5:
- 115++9B7A 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 115++9B7E 00
- 116++9B7F              MastreBedRoomEnemy6:
- 117++9B7F 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 117++9B83 00
- 118++9B84              MastreBedRoomEnemy7:
- 119++9B84 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 119++9B88 00
- 120++9B89              MastreBedRoomEnemy8:
- 121++9B89 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 121++9B8D 00
- 122++9B8E
- 123++9B8E              MastreBedRoomPosWilly:
- 124++9B8E C8 65            db 200, 101                   ; Posizione di Willy
- 125++9B90              MastreBedRoomEnemyColors5_8:
- 126++9B90 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
-# file closed: rooms/MasterBedRoom.asm
-  33+ 9B94                  include "rooms/UnderTheDrive.asm"               ; ID 45
-# file opened: rooms/UnderTheDrive.asm
+   4++9A76              ; TheBathroomLayout       Size 128 Byte, Start Byte   0
+   5++9A76              ; TheBathroomTile         Size  32 Byte, Start Byte 128
+   6++9A76              ; TheBathroomBackground   Size   9 Byte, Start Byte 160
+   7++9A76              ; TheBathroomFloor        Size   9 Byte, Start Byte 169
+   8++9A76              ; TheBathroomWall         Size   9 Byte, Start Byte 178
+   9++9A76              ; TheBathroomNasty        Size   9 Byte, Start Byte 187
+  10++9A76              ; TheBathroomRamp         Size   9 Byte, Start Byte 196
+  11++9A76              ; TheBathroomConveyor     Size   9 Byte, Start Byte 205
+  12++9A76              ; TheBathroomConveyorData Size   4 Byte, Start Byte 214
+  13++9A76              ; TheBathroomRampData     Size   4 Byte, Start Byte 218
+  14++9A76              ; TheBathroomBorderColor  Size   1 Byte, Start Byte 222
+  15++9A76              ; TheBathroomReserved     Size   4 Byte, Start Byte 223
+  16++9A76              ; TheBathroomItem		   Size   8 Byte, Start Byte 227
+  17++9A76              ; TheBathroomDirection    Size   4 Byte, Start Byte 235
+  18++9A76              ; TheBathroomUnused       Size   1 Byte, Start Byte 239
+  19++9A76              ; TheBathroomEnemy1		Size   5 Byte, Start Byte 240
+  20++9A76              ; TheBathroomEnemy2		Size   5 Byte, Start Byte 245
+  21++9A76              ; TheBathroomEnemy3		Size   5 Byte, Start Byte 250
+  22++9A76              ; TheBathroomEnemy4		Size   5 Byte, Start Byte 255
+  23++9A76              ; TheBathroomPosWilly     Size   2 Byte, Start Byte 280
+  24++9A76              ;
+  25++9A76              ;===========================================================================
+  26++9A76
+  27++9A76              ; Room layout for Room  (Master Bedroom)
+  28++9A76              TheBathroomLayout:
+  29++9A76 A0 00 00 00      DEFB 160,0,0,0,0,0,0,10
+  29++9A7A 00 00 00 0A
+  30++9A7E A0 00 00 00      DEFB 160,0,0,0,0,0,0,10
+  30++9A82 00 00 00 0A
+  31++9A86 A0 00 00 00      DEFB 160,0,0,0,0,0,0,10
+  31++9A8A 00 00 00 0A
+  32++9A8E 00 00 00 00      DEFB 0,0,0,0,0,0,0,10
+  32++9A92 00 00 00 0A
+  33++9A96 00 00 00 00      DEFB 0,0,0,0,0,0,0,10
+  33++9A9A 00 00 00 0A
+  34++9A9E 55 55 55 50      DEFB 85,85,85,80,37,85,85,90
+  34++9AA2 25 55 55 5A
+  35++9AA6 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
+  35++9AAA 20 00 00 0A
+  36++9AAE 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
+  36++9AB2 20 00 00 0A
+  37++9AB6 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
+  37++9ABA 20 00 00 0A
+  38++9ABE 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
+  38++9AC2 20 00 00 0A
+  39++9AC6 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
+  39++9ACA 20 00 00 0A
+  40++9ACE 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
+  40++9AD2 20 00 00 0A
+  41++9AD6 80 00 00 00      DEFB 128,0,0,0,32,0,0,10
+  41++9ADA 20 00 00 0A
+  42++9ADE 00 05 40 00      DEFB 0,5,64,0,0,0,0,10
+  42++9AE2 00 00 00 0A
+  43++9AE6 00 00 00 00      DEFB 0,0,0,0,0,0,0,10
+  43++9AEA 00 00 00 0A
+  44++9AEE 55 55 55 55      DEFB 85,85,85,85,85,85,85,90
+  44++9AF2 55 55 55 5A
+  45++9AF6
+  46++9AF6              TheBathroomTile:
+  47++9AF6              ;The next 32 bytes are copied to 32896 and specify the room name.
+  48++9AF6 20 20 20 20      DEFM "          The Bathroom          "	    ;Room name
+  48++9AFA 20 20 20 20
+  48++9AFE 20 20 54 68
+  48++9B02 65 20 42 61
+  48++9B06 74 68 72 6F
+  48++9B0A 6F 6D 20 20
+  48++9B0E 20 20 20 20
+  48++9B12 20 20 20 20
+  49++9B16
+  50++9B16              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  51++9B16              TheBathroomBackground:
+  52++9B16 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+  52++9B1A 00 00 00 00
+  52++9B1E 00
+  53++9B1F
+  54++9B1F              TheBathroomFloor:
+  55++9B1F 16 00 40 09      DEFB 22,0,64,9,100,146,45,150,255	    ;Floor Solid
+  55++9B23 64 92 2D 96
+  55++9B27 FF
+  56++9B28
+  57++9B28              TheBathroomWall:
+  58++9B28 0E 1F AA 00      DEFB 14,31,170,0,85,248,85,0,170	    ;Wall Solid
+  58++9B2C 55 F8 55 00
+  58++9B30 AA
+  59++9B31
+  60++9B31              TheBathroomNasty:
+  61++9B31 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Nasty
+  61++9B35 00 00 00 00
+  61++9B39 00
+  62++9B3A
+  63++9B3A              TheBathroomRamp:
+  64++9B3A 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0	            ;Ramp Solid
+  64++9B3E 00 30 00 C0
+  64++9B42 00
+  65++9B43
+  66++9B43              TheBathroomConveyor:
+  67++9B43 3D A5 00 00      DEFB 61,165,0,0,0,0,0,0,255	            ;Conveyor
+  67++9B47 00 00 00 00
+  67++9B4B FF
+  68++9B4C
+  69++9B4C              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  70++9B4C              TheBathroomConveyorData:
+  71++9B4C 00               DEFB 0	                                ;Direction (right)
+  72++9B4D D4 5F            DEFW 24532	                                ;Location in the attribute buffer at 24064: (15,12)
+  73++9B4F 04               DEFB 4	                                ;Length
+  74++9B50
+  75++9B50              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  76++9B50              TheBathroomRampData:
+  77++9B50 01               DEFB 1	                                ;Direction (up to the right)
+  78++9B51 89 5F            DEFW 24457                              ;Location in the attribute buffer at 24064: (14,7)
+  79++9B53 08               DEFB 8	                                ;Length
+  80++9B54
+  81++9B54              ;The next byte is copied to 32990 and specifies the border colour.
+  82++9B54              TheBathroomBorderColor:
+  83++9B54 04               DEFB 4	                                ;Border colour
+  84++9B55
+  85++9B55              ;The next two bytes are copied to 32991, but are not used.
+  86++9B55              TheBathroomReserved:
+  87++9B55 04 00 00 00      DEFB 4, 0, 0, 0                         ; Enemy colors: all WHITE (7)
+  88++9B59
+  89++9B59              ;The next eight bytes are copied to 32993 and define the item graphic.
+  90++9B59              TheBathroomItem:
+  91++9B59 1F 04 0A 77      DEFB 31,4,10,119,135,177,170,10	                ;Item graphic
+  91++9B5D 87 B1 AA 0A
+  92++9B61
+  93++9B61              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  94++9B61              TheBathroomDirection:
+  95++9B61 22               DEFB 34	                                ;Room to the left (Top Landing)
+  96++9B62 20               DEFB 32	                                ;Room to the right (Halfway up the East Wall)
+  97++9B63 27               DEFB 39	                                ;Room above (Emergency Generator)
+  98++9B64 1B               DEFB 27                                 ;Room below (The Chapel)
+  99++9B65
+ 100++9B65              TheBathroomUnused:
+ 101++9B65 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 102++9B66
+ 103++9B66              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 104++9B66              TheBathroomEnemy1:
+ 105++9B66 80 0A 08 17      DEFB $80, 10, 8, 23, 200         ; DoubleBall 1 (Uccello), horizontal, Starts X=8, Y=96, Limit X=200
+ 105++9B6A C8
+ 106++9B6B              TheBathroomEnemy2:
+ 107++9B6B 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty
+ 107++9B6F 00
+ 108++9B70              TheBathroomEnemy3:
+ 109++9B70 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty
+ 109++9B74 00
+ 110++9B75              TheBathroomEnemy4:
+ 111++9B75 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 111++9B79 00
+ 112++9B7A              TheBathroomEnemy5:
+ 113++9B7A 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 113++9B7E 00
+ 114++9B7F              TheBathroomEnemy6:
+ 115++9B7F 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 115++9B83 00
+ 116++9B84              TheBathroomEnemy7:
+ 117++9B84 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 117++9B88 00
+ 118++9B89              TheBathroomEnemy8:
+ 119++9B89 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 119++9B8D 00
+ 120++9B8E
+ 121++9B8E              TheBathroomPosWilly:
+ 122++9B8E C8 5A            db 200, 90                  ; Posizione di Willy
+ 123++9B90              TheBathroomEnemyColors5_8:
+ 124++9B90 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+# file closed: rooms/TheBathroom.asm
+  33+ 9B94                  include "rooms/MasterBedRoom.asm"               ; ID 35
+# file opened: rooms/MasterBedRoom.asm
    1++9B94              ;===========================================================================
-   2++9B94              ; UnderTheDrive.asm
+   2++9B94              ; MasterBedroom.asm
    3++9B94              ;
-   4++9B94              ; UnderTheDriveLayout       Size 128 Byte, Start Byte   0
-   5++9B94              ; UnderTheDriveTile         Size  32 Byte, Start Byte 128
-   6++9B94              ; UnderTheDriveBackground   Size   9 Byte, Start Byte 160
-   7++9B94              ; UnderTheDriveFloor        Size   9 Byte, Start Byte 169
-   8++9B94              ; UnderTheDriveWall         Size   9 Byte, Start Byte 178
-   9++9B94              ; UnderTheDriveNasty        Size   9 Byte, Start Byte 187
-  10++9B94              ; UnderTheDriveRamp         Size   9 Byte, Start Byte 196
-  11++9B94              ; UnderTheDriveConveyor     Size   9 Byte, Start Byte 205
-  12++9B94              ; UnderTheDriveConveyorData Size   4 Byte, Start Byte 214
-  13++9B94              ; UnderTheDriveRampData     Size   4 Byte, Start Byte 218
-  14++9B94              ; UnderTheDriveBorderColor  Size   1 Byte, Start Byte 222
-  15++9B94              ; UnderTheDriveReserved     Size   4 Byte, Start Byte 223
-  16++9B94              ; UnderTheDriveItem         Size   8 Byte, Start Byte 227
-  17++9B94              ; UnderTheDriveDirection    Size   4 Byte, Start Byte 235
-  18++9B94              ; UnderTheDriveUnused       Size   1 Byte, Start Byte 239
-  19++9B94              ; UnderTheDriveEnemy1       Size   5 Byte, Start Byte 240
-  20++9B94              ; UnderTheDriveEnemy2       Size   5 Byte, Start Byte 245
-  21++9B94              ; UnderTheDriveEnemy3       Size   5 Byte, Start Byte 250
-  22++9B94              ; UnderTheDriveEnemy4       Size   5 Byte, Start Byte 255
-  23++9B94              ; UnderTheDrivePosWilly     Size   2 Byte, Start Byte 280
-  24++9B94              ;
-  25++9B94              ;===========================================================================
-  26++9B94
-  27++9B94              ; Room layout for Room 2 (Under The Drive)
-  28++9B94              UnderTheDriveLayout:
-  29++9B94 A0 00 00 00  	DEFB 160,0,0,0,0,0,170,170	;Room layout
-  29++9B98 00 00 AA AA
-  30++9B9C A0 00 00 00  	DEFB 160,0,0,0,0,0,170,170
-  30++9BA0 00 00 AA AA
-  31++9BA4 A0 00 00 00  	DEFB 160,0,0,0,0,0,170,170
-  31++9BA8 00 00 AA AA
-  32++9BAC A0 00 00 00  	DEFB 160,0,0,0,0,5,170,170
-  32++9BB0 00 05 AA AA
-  33++9BB4 A8 00 00 00  	DEFB 168,0,0,0,0,0,170,170
-  33++9BB8 00 00 AA AA
-  34++9BBC AA 00 00 00  	DEFB 170,0,0,0,16,0,2,170
-  34++9BC0 10 00 02 AA
-  35++9BC4 AA 80 00 00  	DEFB 170,128,0,0,0,80,0,170
-  35++9BC8 00 50 00 AA
-  36++9BCC AA A0 00 00  	DEFB 170,160,0,0,0,0,0,10
-  36++9BD0 00 00 00 0A
-  37++9BD4 AA A8 00 00  	DEFB 170,168,0,0,80,0,0,0
-  37++9BD8 50 00 00 00
-  38++9BDC AA AA 00 00  	DEFB 170,170,0,0,0,192,0,0
-  38++9BE0 00 C0 00 00
-  39++9BE4 AA AA 80 00  	DEFB 170,170,128,0,0,0,0,0
-  39++9BE8 00 00 00 00
-  40++9BEC AA AA A0 00  	DEFB 170,170,160,0,0,0,0,0
-  40++9BF0 00 00 00 00
-  41++9BF4 AA AA A8 00  	DEFB 170,170,168,0,0,0,0,0
-  41++9BF8 00 00 00 00
-  42++9BFC AA AA AA 00  	DEFB 170,170,170,0,0,0,0,0
-  42++9C00 00 00 00 00
-  43++9C04 AA AA AA 80  	DEFB 170,170,170,128,48,12,12,0
-  43++9C08 30 0C 0C 00
-  44++9C0C AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
-  44++9C10 AA AA AA AA
-  45++9C14
-  46++9C14              UnderTheDriveTile:
-  47++9C14 20 20 20 20  	DEFM "          Under the Drive       "
-  47++9C18 20 20 20 20
-  47++9C1C 20 20 55 6E
-  47++9C20 64 65 72 20
-  47++9C24 74 68 65 20
-  47++9C28 44 72 69 76
-  47++9C2C 65 20 20 20
-  47++9C30 20 20 20 20
-  48++9C34
-  49++9C34              UnderTheDriveBackground:                    ; Background
-  50++9C34 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0
-  50++9C38 00 00 00 00
-  50++9C3C 00
-  51++9C3D
-  52++9C3D              UnderTheDriveFloor:
-  53++9C3D 06 FF FF A5      DEFB 6,255,255,165,88,36,66,32,0       ; Floor Solid
-  53++9C41 58 24 42 20
-  53++9C45 00
-  54++9C46
-  55++9C46              UnderTheDriveWall:
-  56++9C46 0C 10 2A 55      DEFB 12,16,42,85,160,16,32,16,8   ; Wall Solid
-  56++9C4A A0 10 20 10
-  56++9C4E 08
-  57++9C4F
-  58++9C4F              UnderTheDriveNasty:
-  59++9C4F 04 18 18 14      DEFB 4,24,24,20,34,34,85,17,40  ; Nastry
-  59++9C53 22 22 55 11
-  59++9C57 28
-  60++9C58
-  61++9C58              UnderTheDriveRamp:                          ; Ramp Solid
-  62++9C58 07 80 40 A0      DEFB 7,128,64,160,80,168,84,170,85
-  62++9C5C 50 A8 54 AA
-  62++9C60 55
-  63++9C61
-  64++9C61              UnderTheDriveConveyor:                      ; Conveyor Solid
-  65++9C61 02 E0 AA F8      DEFB 2,224,170,248,0,255,255,102,102
-  65++9C65 00 FF FF 66
-  65++9C69 66
-  66++9C6A
-  67++9C6A              UnderTheDriveConveyorData:
-  68++9C6A 00               DEFB 0
-  69++9C6B 52 5F            DEFW 24402
-  70++9C6D 00               DEFB 0
-  71++9C6E
-  72++9C6E              UnderTheDriveRampData:
-  73++9C6E 00               DEFB 0
-  74++9C6F CD 5F            DEFW 24525
-  75++9C71 0C               DEFB 12
-  76++9C72
-  77++9C72              UnderTheDriveBorderColor:
-  78++9C72 04               DEFB 4
-  79++9C73
-  80++9C73              UnderTheDriveReserved:
-  81++9C73 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
-  82++9C77
-  83++9C77              UnderTheDriveItem:
-  84++9C77 81 64 CD 0F      DEFB 129,100,205,15,97,218,51,26
-  84++9C7B 61 DA 33 1A
-  85++9C7F
-  86++9C7F              UnderTheDriveDirection:
-  87++9C7F 06           	DEFB 6						;Room to the left (Entrance to Hades)
-  88++9C80 2E           	DEFB 46						;Room to the right (Tree Root)
-  89++9C81 04           	DEFB 4						;Room above (The Drive)
-  90++9C82 FF           	DEFB $FF					;Room below (The Off Licence)
-  91++9C83
-  92++9C83              UnderTheDriveUnused:
-  93++9C83 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
-  94++9C84
-  95++9C84              UnderTheDriveEnemy1:
-  96++9C84 80 03 8C 38      DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
-  96++9C88 E6
-  97++9C89              UnderTheDriveEnemy2:
-  98++9C89 C0 06 3C 38      DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
-  98++9C8D 6A
-  99++9C8E              UnderTheDriveEnemy3:
- 100++9C8E C0 09 50 10      DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
- 100++9C92 6A
- 101++9C93              UnderTheDriveEnemy4:
- 102++9C93 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
- 102++9C97 00
- 103++9C98              UnderTheDriveEnemy5:
- 104++9C98 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 104++9C9C 00
- 105++9C9D              UnderTheDriveEnemy6:
- 106++9C9D 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 106++9CA1 00
- 107++9CA2              UnderTheDriveEnemy7:
- 108++9CA2 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 108++9CA6 00
- 109++9CA7              UnderTheDriveEnemy8:
- 110++9CA7 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 110++9CAB 00
- 111++9CAC
- 112++9CAC              UnderTheDrivePosWilly:
- 113++9CAC 88 68            db 136, 104                   ; Posizione di Willy
- 114++9CAE              UnderTheDriveEnemyColors5_8:
- 115++9CAE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+   4++9B94              ; Ho creato solo il template deve essere gestito con i dati corretti della stanza
+   5++9B94              ;
+   6++9B94              ; MasterBedroomLayout       Size 128 Byte, Start Byte   0
+   7++9B94              ; MasterBedroomTile         Size  32 Byte, Start Byte 128
+   8++9B94              ; MasterBedroomBackground   Size   9 Byte, Start Byte 160
+   9++9B94              ; MasterBedroomFloor        Size   9 Byte, Start Byte 169
+  10++9B94              ; MasterBedroomWall         Size   9 Byte, Start Byte 178
+  11++9B94              ; MasterBedroomNasty        Size   9 Byte, Start Byte 187
+  12++9B94              ; MasterBedroomRamp         Size   9 Byte, Start Byte 196
+  13++9B94              ; MasterBedroomConveyor     Size   9 Byte, Start Byte 205
+  14++9B94              ; MasterBedroomConveyorData Size   4 Byte, Start Byte 214
+  15++9B94              ; MasterBedroomRampData     Size   4 Byte, Start Byte 218
+  16++9B94              ; MasterBedroomBorderColor  Size   1 Byte, Start Byte 222
+  17++9B94              ; MasterBedroomReserved     Size   4 Byte, Start Byte 223
+  18++9B94              ; MasterBedroomItem		    Size   8 Byte, Start Byte 227
+  19++9B94              ; MasterBedroomDirection    Size   4 Byte, Start Byte 235
+  20++9B94              ; MasterBedroomUnused       Size   1 Byte, Start Byte 239
+  21++9B94              ; MasterBedroomEnemy1		Size   5 Byte, Start Byte 240
+  22++9B94              ; MasterBedroomEnemy2		Size   5 Byte, Start Byte 245
+  23++9B94              ; MasterBedroomEnemy3		Size   5 Byte, Start Byte 250
+  24++9B94              ; MasterBedroomEnemy4		Size   5 Byte, Start Byte 255
+  25++9B94              ; MasterBedroomPosWilly     Size   2 Byte, Start Byte 280
+  26++9B94              ;
+  27++9B94              ;===========================================================================
+  28++9B94
+  29++9B94              ; Room layout for Room  (Master Bedroom)
+  30++9B94              MastreBedRoomLayout:
+  31++9B94 AA AA AA AA      DEFB 170,170,170,170,170,170,170,170
+  31++9B98 AA AA AA AA
+  32++9B9C A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  32++9BA0 00 00 00 00
+  33++9BA4 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  33++9BA8 00 00 00 00
+  34++9BAC A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  34++9BB0 00 00 00 00
+  35++9BB4 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  35++9BB8 00 00 00 00
+  36++9BBC A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  36++9BC0 00 00 00 00
+  37++9BC4 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  37++9BC8 00 00 00 00
+  38++9BCC A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  38++9BD0 00 00 00 00
+  39++9BD4 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  39++9BD8 00 00 00 00
+  40++9BDC A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  40++9BE0 00 00 00 00
+  41++9BE4 A0 00 00 0A      DEFB 160,0,0,10,0,0,0,0
+  41++9BE8 00 00 00 00
+  42++9BEC AC 00 00 00      DEFB 172,0,0,0,0,0,0,0
+  42++9BF0 00 00 00 00
+  43++9BF4 A0 00 00 00      DEFB 160,0,0,0,0,0,0,0
+  43++9BF8 00 00 00 00
+  44++9BFC 95 55 55 55      DEFB 149,85,85,85,64,0,0,0
+  44++9C00 40 00 00 00
+  45++9C04 AA AA AA AA      DEFB 170,170,170,170,160,0,0,0
+  45++9C08 A0 00 00 00
+  46++9C0C AA AA AA AA      DEFB 170,170,170,170,169,85,85,85
+  46++9C10 A9 55 55 55
+  47++9C14
+  48++9C14              MastreBedRoomTile:
+  49++9C14              ;The next 32 bytes are copied to 32896 and specify the room name.
+  50++9C14 20 20 20 20      DEFM "         Master Bedroom         "	    ;Room name
+  50++9C18 20 20 20 20
+  50++9C1C 20 4D 61 73
+  50++9C20 74 65 72 20
+  50++9C24 42 65 64 72
+  50++9C28 6F 6F 6D 20
+  50++9C2C 20 20 20 20
+  50++9C30 20 20 20 20
+  51++9C34
+  52++9C34              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  53++9C34              MastreBedRoomBackground:
+  54++9C34 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
+  54++9C38 00 00 00 00
+  54++9C3C 00
+  55++9C3D
+  56++9C3D              MastreBedRoomFloor:
+  57++9C3D 06 FF 6B B5      DEFB 6,255,107,181,0,173,0,74,0	        ;Floor Solid
+  57++9C41 00 AD 00 4A
+  57++9C45 00
+  58++9C46
+  59++9C46              MastreBedRoomWall:
+  60++9C46 33 00 51 FB      DEFB 51,0,81,251,81,0,170,191,170	    ;Wall Solid
+  60++9C4A 51 00 AA BF
+  60++9C4E AA
+  61++9C4F
+  62++9C4F              MastreBedRoomNasty:
+  63++9C4F 47 00 00 00      DEFB 71,0,0,0,0,124,254,127,62	        ;Nasty
+  63++9C53 00 7C FE 7F
+  63++9C57 3E
+  64++9C58
+  65++9C58              MastreBedRoomRamp:
+  66++9C58 07 C0 40 B0      DEFB 7,192,64,176,0,172,0,83,0	        ;Ramp Solid
+  66++9C5C 00 AC 00 53
+  66++9C60 00
+  67++9C61
+  68++9C61              MastreBedRoomConveyor:
+  69++9C61 29 55 55 55      DEFB 41,85,85,85,85,81,95,64,170	    ;Conveyor
+  69++9C65 55 51 5F 40
+  69++9C69 AA
+  70++9C6A
+  71++9C6A              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  72++9C6A              MastreBedRoomConveyorData:
+  73++9C6A 01               DEFB 1	                                ;Direction (right)
+  74++9C6B 82 5F            DEFW 24450	                            ;Location in the attribute buffer at 24064: (15,12)
+  75++9C6D 04               DEFB 4	                                ;Length
+  76++9C6E
+  77++9C6E              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  78++9C6E              MastreBedRoomRampData:
+  79++9C6E 00               DEFB 0	                                ;Direction (up to the right)
+  80++9C6F D2 5F            DEFW 24530	                            ;Location in the attribute buffer at 24064: (14,7)
+  81++9C71 02               DEFB 2	                                ;Length
+  82++9C72
+  83++9C72              ;The next byte is copied to 32990 and specifies the border colour.
+  84++9C72              MastreBedRoomBorderColor:
+  85++9C72 04               DEFB 4	                                ;Border colour
+  86++9C73
+  87++9C73              ;The next two bytes are copied to 32991, but are not used.
+  88++9C73              MastreBedRoomReserved:
+  89++9C73 02 03 04 07      DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+  90++9C77
+  91++9C77              ;The next eight bytes are copied to 32993 and define the item graphic.
+  92++9C77              MastreBedRoomItem:
+  93++9C77 00 00 00 00      DEFB 0,0,0,0,0,0,0,0	                ;Item graphic (unused)
+  93++9C7B 00 00 00 00
+  94++9C7F
+  95++9C7F              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+  96++9C7F              MastreBedRoomDirection:
+  97++9C7F 24               DEFB 36	                               ;Room to the left (A bit of tree)
+  98++9C80 22               DEFB 34                                ;Room to the right (Top Landing)
+  99++9C81 29               DEFB 41                                ;Room above  (The Attic)
+ 100++9C82 1D               DEFB 29                                ;Room below (The Nightmare Room)
+ 101++9C83
+ 102++9C83              MastreBedRoomUnused:
+ 103++9C83 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 104++9C84
+ 105++9C84              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 106++9C84              MastreBedRoomEnemy1:
+ 107++9C84 80 00 08 4C      DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+ 107++9C88 C8
+ 108++9C89              MastreBedRoomEnemy2:
+ 109++9C89 80 00 50 4C      DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+ 109++9C8D B4
+ 110++9C8E              MastreBedRoomEnemy3:
+ 111++9C8E C0 04 78 10      DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+ 111++9C92 4C
+ 112++9C93              MastreBedRoomEnemy4:
+ 113++9C93 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 113++9C97 00
+ 114++9C98              MastreBedRoomEnemy5:
+ 115++9C98 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 115++9C9C 00
+ 116++9C9D              MastreBedRoomEnemy6:
+ 117++9C9D 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 117++9CA1 00
+ 118++9CA2              MastreBedRoomEnemy7:
+ 119++9CA2 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 119++9CA6 00
+ 120++9CA7              MastreBedRoomEnemy8:
+ 121++9CA7 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 121++9CAB 00
+ 122++9CAC
+ 123++9CAC              MastreBedRoomPosWilly:
+ 124++9CAC C8 65            db 200, 101                   ; Posizione di Willy
+ 125++9CAE              MastreBedRoomEnemyColors5_8:
+ 126++9CAE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+# file closed: rooms/MasterBedRoom.asm
+  34+ 9CB2                  include "rooms/UnderTheDrive.asm"               ; ID 45
+# file opened: rooms/UnderTheDrive.asm
+   1++9CB2              ;===========================================================================
+   2++9CB2              ; UnderTheDrive.asm
+   3++9CB2              ;
+   4++9CB2              ; UnderTheDriveLayout       Size 128 Byte, Start Byte   0
+   5++9CB2              ; UnderTheDriveTile         Size  32 Byte, Start Byte 128
+   6++9CB2              ; UnderTheDriveBackground   Size   9 Byte, Start Byte 160
+   7++9CB2              ; UnderTheDriveFloor        Size   9 Byte, Start Byte 169
+   8++9CB2              ; UnderTheDriveWall         Size   9 Byte, Start Byte 178
+   9++9CB2              ; UnderTheDriveNasty        Size   9 Byte, Start Byte 187
+  10++9CB2              ; UnderTheDriveRamp         Size   9 Byte, Start Byte 196
+  11++9CB2              ; UnderTheDriveConveyor     Size   9 Byte, Start Byte 205
+  12++9CB2              ; UnderTheDriveConveyorData Size   4 Byte, Start Byte 214
+  13++9CB2              ; UnderTheDriveRampData     Size   4 Byte, Start Byte 218
+  14++9CB2              ; UnderTheDriveBorderColor  Size   1 Byte, Start Byte 222
+  15++9CB2              ; UnderTheDriveReserved     Size   4 Byte, Start Byte 223
+  16++9CB2              ; UnderTheDriveItem         Size   8 Byte, Start Byte 227
+  17++9CB2              ; UnderTheDriveDirection    Size   4 Byte, Start Byte 235
+  18++9CB2              ; UnderTheDriveUnused       Size   1 Byte, Start Byte 239
+  19++9CB2              ; UnderTheDriveEnemy1       Size   5 Byte, Start Byte 240
+  20++9CB2              ; UnderTheDriveEnemy2       Size   5 Byte, Start Byte 245
+  21++9CB2              ; UnderTheDriveEnemy3       Size   5 Byte, Start Byte 250
+  22++9CB2              ; UnderTheDriveEnemy4       Size   5 Byte, Start Byte 255
+  23++9CB2              ; UnderTheDrivePosWilly     Size   2 Byte, Start Byte 280
+  24++9CB2              ;
+  25++9CB2              ;===========================================================================
+  26++9CB2
+  27++9CB2              ; Room layout for Room 2 (Under The Drive)
+  28++9CB2              UnderTheDriveLayout:
+  29++9CB2 A0 00 00 00  	DEFB 160,0,0,0,0,0,170,170	;Room layout
+  29++9CB6 00 00 AA AA
+  30++9CBA A0 00 00 00  	DEFB 160,0,0,0,0,0,170,170
+  30++9CBE 00 00 AA AA
+  31++9CC2 A0 00 00 00  	DEFB 160,0,0,0,0,0,170,170
+  31++9CC6 00 00 AA AA
+  32++9CCA A0 00 00 00  	DEFB 160,0,0,0,0,5,170,170
+  32++9CCE 00 05 AA AA
+  33++9CD2 A8 00 00 00  	DEFB 168,0,0,0,0,0,170,170
+  33++9CD6 00 00 AA AA
+  34++9CDA AA 00 00 00  	DEFB 170,0,0,0,16,0,2,170
+  34++9CDE 10 00 02 AA
+  35++9CE2 AA 80 00 00  	DEFB 170,128,0,0,0,80,0,170
+  35++9CE6 00 50 00 AA
+  36++9CEA AA A0 00 00  	DEFB 170,160,0,0,0,0,0,10
+  36++9CEE 00 00 00 0A
+  37++9CF2 AA A8 00 00  	DEFB 170,168,0,0,80,0,0,0
+  37++9CF6 50 00 00 00
+  38++9CFA AA AA 00 00  	DEFB 170,170,0,0,0,192,0,0
+  38++9CFE 00 C0 00 00
+  39++9D02 AA AA 80 00  	DEFB 170,170,128,0,0,0,0,0
+  39++9D06 00 00 00 00
+  40++9D0A AA AA A0 00  	DEFB 170,170,160,0,0,0,0,0
+  40++9D0E 00 00 00 00
+  41++9D12 AA AA A8 00  	DEFB 170,170,168,0,0,0,0,0
+  41++9D16 00 00 00 00
+  42++9D1A AA AA AA 00  	DEFB 170,170,170,0,0,0,0,0
+  42++9D1E 00 00 00 00
+  43++9D22 AA AA AA 80  	DEFB 170,170,170,128,48,12,12,0
+  43++9D26 30 0C 0C 00
+  44++9D2A AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
+  44++9D2E AA AA AA AA
+  45++9D32
+  46++9D32              UnderTheDriveTile:
+  47++9D32 20 20 20 20  	DEFM "          Under the Drive       "
+  47++9D36 20 20 20 20
+  47++9D3A 20 20 55 6E
+  47++9D3E 64 65 72 20
+  47++9D42 74 68 65 20
+  47++9D46 44 72 69 76
+  47++9D4A 65 20 20 20
+  47++9D4E 20 20 20 20
+  48++9D52
+  49++9D52              UnderTheDriveBackground:                    ; Background
+  50++9D52 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0
+  50++9D56 00 00 00 00
+  50++9D5A 00
+  51++9D5B
+  52++9D5B              UnderTheDriveFloor:
+  53++9D5B 06 FF FF A5      DEFB 6,255,255,165,88,36,66,32,0       ; Floor Solid
+  53++9D5F 58 24 42 20
+  53++9D63 00
+  54++9D64
+  55++9D64              UnderTheDriveWall:
+  56++9D64 0C 10 2A 55      DEFB 12,16,42,85,160,16,32,16,8   ; Wall Solid
+  56++9D68 A0 10 20 10
+  56++9D6C 08
+  57++9D6D
+  58++9D6D              UnderTheDriveNasty:
+  59++9D6D 04 18 18 14      DEFB 4,24,24,20,34,34,85,17,40  ; Nastry
+  59++9D71 22 22 55 11
+  59++9D75 28
+  60++9D76
+  61++9D76              UnderTheDriveRamp:                          ; Ramp Solid
+  62++9D76 07 80 40 A0      DEFB 7,128,64,160,80,168,84,170,85
+  62++9D7A 50 A8 54 AA
+  62++9D7E 55
+  63++9D7F
+  64++9D7F              UnderTheDriveConveyor:                      ; Conveyor Solid
+  65++9D7F 02 E0 AA F8      DEFB 2,224,170,248,0,255,255,102,102
+  65++9D83 00 FF FF 66
+  65++9D87 66
+  66++9D88
+  67++9D88              UnderTheDriveConveyorData:
+  68++9D88 00               DEFB 0
+  69++9D89 52 5F            DEFW 24402
+  70++9D8B 00               DEFB 0
+  71++9D8C
+  72++9D8C              UnderTheDriveRampData:
+  73++9D8C 00               DEFB 0
+  74++9D8D CD 5F            DEFW 24525
+  75++9D8F 0C               DEFB 12
+  76++9D90
+  77++9D90              UnderTheDriveBorderColor:
+  78++9D90 04               DEFB 4
+  79++9D91
+  80++9D91              UnderTheDriveReserved:
+  81++9D91 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+  82++9D95
+  83++9D95              UnderTheDriveItem:
+  84++9D95 81 64 CD 0F      DEFB 129,100,205,15,97,218,51,26
+  84++9D99 61 DA 33 1A
+  85++9D9D
+  86++9D9D              UnderTheDriveDirection:
+  87++9D9D 06           	DEFB 6						;Room to the left (Entrance to Hades)
+  88++9D9E 2E           	DEFB 46						;Room to the right (Tree Root)
+  89++9D9F 04           	DEFB 4						;Room above (The Drive)
+  90++9DA0 FF           	DEFB $FF					;Room below (The Off Licence)
+  91++9DA1
+  92++9DA1              UnderTheDriveUnused:
+  93++9DA1 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  94++9DA2
+  95++9DA2              UnderTheDriveEnemy1:
+  96++9DA2 80 03 8C 38      DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+  96++9DA6 E6
+  97++9DA7              UnderTheDriveEnemy2:
+  98++9DA7 C0 06 3C 38      DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+  98++9DAB 6A
+  99++9DAC              UnderTheDriveEnemy3:
+ 100++9DAC C0 09 50 10      DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+ 100++9DB0 6A
+ 101++9DB1              UnderTheDriveEnemy4:
+ 102++9DB1 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
+ 102++9DB5 00
+ 103++9DB6              UnderTheDriveEnemy5:
+ 104++9DB6 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 104++9DBA 00
+ 105++9DBB              UnderTheDriveEnemy6:
+ 106++9DBB 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 106++9DBF 00
+ 107++9DC0              UnderTheDriveEnemy7:
+ 108++9DC0 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 108++9DC4 00
+ 109++9DC5              UnderTheDriveEnemy8:
+ 110++9DC5 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 110++9DC9 00
+ 111++9DCA
+ 112++9DCA              UnderTheDrivePosWilly:
+ 113++9DCA 88 68            db 136, 104                   ; Posizione di Willy
+ 114++9DCC              UnderTheDriveEnemyColors5_8:
+ 115++9DCC 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/UnderTheDrive.asm
-  34+ 9CB2
-  35+ 9CB2                  org 40968
-  36+ A008 03               DEFB %00000011    ; Rope (bits 0-2), initially swinging right to left (bit 7)
-  37+ A009 22               DEFB 34           ; Initial animation frame index
-  38+ A00A 80               DEFB 128          ; X-coordinate of the top of the rope (128)
-  39+ A00B
-  40+ A00B                  org $B200
-  41+ B200                  include "data/datasprite.asm"
+  35+ 9DD0
+  36+ 9DD0                  org 40968
+  37+ A008 03               DEFB %00000011    ; Rope (bits 0-2), initially swinging right to left (bit 7)
+  38+ A009 22               DEFB 34           ; Initial animation frame index
+  39+ A00A 80               DEFB 128          ; X-coordinate of the top of the rope (128)
+  40+ A00B
+  41+ A00B                  org $B200
+  42+ B200                  include "data/datasprite.asm"
 # file opened: data/datasprite.asm
    1++B200
    2++B200
@@ -13193,7 +13371,7 @@
  451++C738 0A 90 01 40
  451++C73C 00 00 00 00
 # file closed: data/datasprite.asm
-  42+ C740
+  43+ C740
 # file closed: resources.asm
  180  C740
  181  C740                  SAVESNA "jet set willy.sna", start
