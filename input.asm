@@ -293,7 +293,8 @@ RoomsListTable:
     dw OntheRoofLayout                  ; 18
     dw TheForgottenAbbeyLayout          ; 19
     dw BallRoomEastLayout               ; 20
-    dw 0,0,0,0,0,0,0,0,0,0,0,0,0        ; 21-32: padding
+    dw BallRoomWestLayout               ; 21
+    dw 0,0,0,0,0,0,0,0,0,0,0,0          ; 22-32: padding
     dw TheBathroomLayout                ; 33
     dw 0                                ; 34
     dw MastreBedRoomLayout              ; 35
