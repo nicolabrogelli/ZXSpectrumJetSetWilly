@@ -54,7 +54,7 @@ BallRoomWestTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 BallRoomWestBackground:
-    DEFB $0,0,0,0,0,0,0,0,0	            ;Background
+    DEFB $07,0,0,0,0,0,0,0,0	            ;Background
 
 BallRoomWestFloor:
     DEFB 50,170,168,173,175,32,170,85,85	    ;Floor Solid

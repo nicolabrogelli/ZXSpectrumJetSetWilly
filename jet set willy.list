@@ -11402,7 +11402,7 @@
  124++9A6F 00
  125++9A70
  126++9A70              BallRoomEastPosWilly:
- 127++9A70 C8 65            db 200, 101                     ; Posizione di Willy
+ 127++9A70 C8 55            db 200, 85                     ; Posizione di Willy
  128++9A72
  129++9A72              BallRoomEastEnemyColors5_8:
  130++9A72 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE               ; Colori per nemici 5-8
@@ -11488,7 +11488,7 @@
   54++9B16
   55++9B16              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
   56++9B16              BallRoomWestBackground:
-  57++9B16 00 00 00 00      DEFB $0,0,0,0,0,0,0,0,0	            ;Background
+  57++9B16 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
   57++9B1A 00 00 00 00
   57++9B1E 00
   58++9B1F
