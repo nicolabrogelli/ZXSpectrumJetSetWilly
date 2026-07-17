@@ -51,7 +51,7 @@ WeMustPerformQuirkafleegTile:
     DEFM "  We must perform a Quirkafleeg "
 
 WeMustPerformQuirkafleegBackground:                 ; Background
-    DEFB 6,0,0,0,0,0,0,0,0
+    DEFB 7,0,0,0,0,0,0,0,0
 
 WeMustPerformQuirkafleegFloor:
     DEFB 56,51,187,221,204,85,153,221,238           ; Floor Solid
