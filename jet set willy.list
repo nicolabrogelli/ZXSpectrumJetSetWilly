@@ -5081,7 +5081,7 @@
   68+ 7429 00
   69+ 742A
   70+ 742A                  ; Stanza 15 (I'm sure I've seen this before..)
-  71+ 742A 0F 1F 04 03      db 15, 31, 4, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  71+ 742A 0F 1F 04 0B      db 15, 31, 4, (BLUE * 8) + MAGENTA, 0    ; Oggetto 1 alla colonna X=31, riga Y=4, Paper = BLUE (1), Ink = MAGENTA (3), (Stato: 0=attivo)
   71+ 742E 00
   72+ 742F
   73+ 742F                  ; Stanza 17 (Up On The Battlements)

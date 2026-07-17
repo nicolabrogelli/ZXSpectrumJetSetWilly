@@ -68,7 +68,7 @@ ItemsTable:
     db 13, 5, 1, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
     
     ; Stanza 15 (I'm sure I've seen this before..)
-    db 15, 31, 4, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    db 15, 31, 4, (BLUE * 8) + MAGENTA, 0    ; Oggetto 1 alla colonna X=31, riga Y=4, Paper = BLUE (1), Ink = MAGENTA (3), (Stato: 0=attivo)
 
     ; Stanza 17 (Up On The Battlements)
     db 17, 31, 4, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
