@@ -397,7 +397,35 @@ DetermineCurrentRoomID:
     ld   a, 19               ; Room ID = 19
     jp   .set_room
 
-.not_theforgottenabbey
+.not_theforgottenabbey:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con BallRoomEastLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, BallRoomEastLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_ballroomeast
+
+    ld   a, 20               ; Room ID = 20
+    jp   .set_room
+
+.not_ballroomeast:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con BallRoomWestLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, BallRoomWestLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_ballroomwest
+
+    ld   a, 21               ; Room ID = 21
+    jp   .set_room
+
+.not_ballroomwest:
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
