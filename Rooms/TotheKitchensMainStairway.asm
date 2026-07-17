@@ -113,7 +113,7 @@ TotheKitchensMainStairwayEnemy2:
 TotheKitchensMainStairwayEnemy3:
     DEFB 0, 0, 0, 0, 0                  
 TotheKitchensMainStairwayEnemy4:
-    DEFB $C0, 10, 16, 72, 48           ; [Double Ball (41704) - vertical], Guardinan = 41, Starts X=60, Y=0, Limit Y=104
+    DEFB $80, 10, 16, 72, 48           ; [Double Ball (41704) - horizzontal], Guardinan = 41, Starts X=60, Y=0, Limit Y=104
 TotheKitchensMainStairwayEnemy5:
     DEFB $80, 4, 0, 96, 240            ; [Uovo (41712) - horizzontal], Guardinan = 21, Starts X=60, Y=0, Limit Y=104
 TotheKitchensMainStairwayEnemy6:
