@@ -294,7 +294,8 @@ RoomsListTable:
     dw TheForgottenAbbeyLayout          ; 19
     dw BallRoomEastLayout               ; 20
     dw BallRoomWestLayout               ; 21
-    dw 0,0,0,0,0,0,0,0,0,0,0,0          ; 22-32: padding
+    dw TotheKitchensMainStairwayLayout  ; 22 
+    dw 0,0,0,0,0,0,0,0,0,0            ; 23-32: padding
     dw TheBathroomLayout                ; 33
     dw 0                                ; 34
     dw MastreBedRoomLayout              ; 35

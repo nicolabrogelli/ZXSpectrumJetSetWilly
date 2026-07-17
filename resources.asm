@@ -29,6 +29,8 @@ RoomsStart:
     include "rooms/TheForgottenAbbey.asm"           ; ID 19
     include "rooms/BallRoomEast.asm"                ; ID 20
     include "rooms/BallRoomWest.asm"                ; ID 21
+    include "rooms/TotheKitchensMainStairway.asm"   ; ID 22
+    
 
     include "rooms/TheBathroom.asm"                 ; ID 33
     include "rooms/MasterBedRoom.asm"               ; ID 35

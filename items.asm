@@ -428,6 +428,20 @@ DetermineCurrentRoomID:
 .not_ballroomwest:
 
     ; ---------------------------------------------------------------
+    ; Confronto con TotheKitchensMainStairwayLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TotheKitchensMainStairwayLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_tothekitchen
+
+    ld   a, 22               ; Room ID = 22
+    jp   .set_room
+
+.not_tothekitchen
+
+    ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
