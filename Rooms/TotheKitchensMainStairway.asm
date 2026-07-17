@@ -89,7 +89,7 @@ TotheKitchensMainStairwayBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TotheKitchensMainStairwayReserved:
-    DEFB NONE, MAGENTA, CYAN, YELLOW                        ; Enemy colors
+    DEFB NONE, YELLOW, CYAN, MAGENTA                        ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TotheKitchensMainStairwayItem:
@@ -109,22 +109,22 @@ TotheKitchensMainStairwayUnused:
 TotheKitchensMainStairwayEnemy1:
     DEFB 0, 0, 0, 0, 0
 TotheKitchensMainStairwayEnemy2:
-    DEFB $C0, 6, 40, 48, 87         ; [Face (41296) - vertical], Guardinan = 42, Starts X=60, Y=0, Limit Y=104
+    DEFB $80, 3, 104, 24, 168          ; [Radar (41688) - horizzontal], Guardinan = 42, Starts X=60, Y=0, Limit Y=104
 TotheKitchensMainStairwayEnemy3:
-    DEFB $E0, 6, 56, 48, 96         ; [Face (41280) - vertical], Guardinan = 40, Starts X=60, Y=0, Limit Y=104
+    DEFB 0, 0, 0, 0, 0                  
 TotheKitchensMainStairwayEnemy4:
-    DEFB $C0, 6, 88, 72, 96         ; [Face (41288) - vertical], Guardinan = 41, Starts X=60, Y=0, Limit Y=104
+    DEFB $C0, 10, 16, 72, 48           ; [Double Ball (41704) - vertical], Guardinan = 41, Starts X=60, Y=0, Limit Y=104
 TotheKitchensMainStairwayEnemy5:
-     DEFB $80, 2, 112, 80, 232        ; [Uccello (41128) - horizzontal], Guardinan = 21, Starts X=60, Y=0, Limit Y=104
+    DEFB $80, 4, 0, 96, 240            ; [Uovo (41712) - horizzontal], Guardinan = 21, Starts X=60, Y=0, Limit Y=104
 TotheKitchensMainStairwayEnemy6:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 2, 72, 80, 136           ; [Uccello (41720) - horizzontal], Guardinan = 21, Starts X=60, Y=0, Limit Y=104  
 TotheKitchensMainStairwayEnemy7:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 27, 0, 24, 88
 TotheKitchensMainStairwayEnemy8:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 28, 96, 48, 192
 
 TotheKitchensMainStairwayPosWilly:
     db 200, 90                     ; Posizione di Willy
     
 TotheKitchensMainStairwayEnemyColors5_8:
-    DEFB MAGENTA, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB GREEN, YELLOW, MAGENTA, WHITE               ; Colori per nemici 5-8

@@ -359,7 +359,7 @@ Enemy_DrawRoom:
     
     ; Determina quale sprite usare basato sul tipo (Offset 1, Bit 5-0)
     ld   a, (ix+1)         ; Tipo
-    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca, 22=Frate)
+    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca, 22=Frate, 23..26=FaceHell, 27=PinzaGiaccio, 28=Ruota)
     
     cp   0
     jp   z, .got_lametta
@@ -415,6 +415,10 @@ Enemy_DrawRoom:
     jp   z, .got_facehell_ll
     cp   26
     jp   z, .got_facehell_lr
+    cp   27
+    jp   z, .got_pinzagiaccio
+    cp   28
+    jp   z, .got_ruota
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -550,6 +554,14 @@ Enemy_DrawRoom:
     ld   hl, FrateSprite
     jp   z, .got_sprite
     ld   hl, FrateSprite + 128
+    jp   .got_sprite
+
+.got_pinzagiaccio:
+    ld   hl, PinzaGiaccioSprite
+    jp   .got_sprite
+
+.got_ruota:
+    ld   hl, RuotaSprite
     jp   .got_sprite
 
 
