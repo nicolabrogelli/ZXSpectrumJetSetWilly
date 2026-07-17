@@ -51,7 +51,7 @@ OntheRoofTile:
     DEFM "          On the Roof           "
 
 OntheRoofBackground:                    ; Background
-    DEFB 68,0,0,0,0,0,0,0,0
+    DEFB 71,0,0,0,0,0,0,0,0
 
 OntheRoofFloor:
     DEFB 7,128,192,224,208,88,156,222,205       ; Floor Solid
