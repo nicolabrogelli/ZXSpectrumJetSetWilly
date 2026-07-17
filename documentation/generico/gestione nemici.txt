@@ -48,6 +48,6 @@ Secondo Byte
 	  • %011010  (26): Tipo 26 (FaceHellLR - Bottom-Right)
 	  • %011011  (27): Tipo 27 (PinzaGiaccioSprite)
 	  • %011100  (28): Tipo 28 (RuotaSprite)
-	  • %011101  (29): Tipo 29 (Disponibile)
+	  • %011101  (29): Tipo 29 (SalieraSprite)
 	  • %011110  (30): Tipo 30 (Disponibile)
 	  • %011111  (31): Tipo 31 (Disponibile)
