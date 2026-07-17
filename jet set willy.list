@@ -5109,7 +5109,7 @@
   86+ 745B 00
   87+ 745C
   88+ 745C                  ; Stanza 22 (To the Kitchens Main Stairway)
-  89+ 745C 16 02 09 04      db 22, 2, 9, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  89+ 745C 16 02 09 0C      db 22, 2, 9, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
   89+ 7460 00
   90+ 7461
   91+ 7461                  ; Stanza 33 (The Bathroom)

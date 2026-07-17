@@ -86,7 +86,7 @@ ItemsTable:
     db 21, 27, 12, CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
 
     ; Stanza 22 (To the Kitchens Main Stairway)
-    db 22, 2, 9, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    db 22, 2, 9, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
 
     ; Stanza 33 (The Bathroom)
     db 33, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
