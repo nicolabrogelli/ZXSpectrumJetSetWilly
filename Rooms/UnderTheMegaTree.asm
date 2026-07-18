@@ -53,23 +53,23 @@ UnderTheMegaTreeTile:
     DEFM "       Under the MegaTree       "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-UnderTheMegaTreeBackground:
+UnderTheMegaTreeBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	            ;Background
 
 UnderTheMegaTreeFloor:
-    DEFB 68,215,179,117,109,92,24,8,4	    ;Floor Solid
+    DEFB 68,215,179,117,109,92,24,8,4       ; Floor Solid
 
 UnderTheMegaTreeWall:
-    DEFB 66,189,170,93,162,243,10,6,1	    ;Wall Solid
+    DEFB 66,189,170,93,162,243,10,6,1   ; Wall Solid
 
 UnderTheMegaTreeNasty:
-    DEFB 70,73,106,59,58,252,30,107,232	    ;Nasty
+    DEFB 70,73,106,59,58,252,30,107,232  ; Nastry
 
 UnderTheMegaTreeRamp:
-    DEFB 255,0,0,0,255,0,0,0,0	            ;Ramp Solid
+    DEFB 255,0,0,0,255,0,0,0,0              ; Ramp Solid
 
 UnderTheMegaTreeConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 UnderTheMegaTreeConveyorData:
@@ -89,7 +89,7 @@ UnderTheMegaTreeBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 UnderTheMegaTreeReserved:
-    DEFB CYAN, MAGENTA, RED, NONE                         ; Enemy colors
+    DEFB CYAN, MAGENTA, RED, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 UnderTheMegaTreeItem:
@@ -103,7 +103,7 @@ UnderTheMegaTreeDirection:
     DEFB BLOCK                               ;Room below (None)
 
 UnderTheMegaTreeUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 UnderTheMegaTreeEnemy1:
@@ -124,7 +124,7 @@ UnderTheMegaTreeEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 UnderTheMegaTreePosWilly:
-    db 200, 101                   ; Posizione di Willy
+    db 200, 101                     ; Posizione di Willy
     
 UnderTheMegaTreeEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

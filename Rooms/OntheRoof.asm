@@ -63,10 +63,10 @@ OntheRoofNasty:
     DEFB 70,85,153,221,204,85,153,221,204  ; Nastry
 
 OntheRoofRamp:                          ; Ramp Solid
-    DEFB 7,0,0,0,0,0,0,0,0              
+    DEFB 7,0,0,0,0,0,0,0,0              ; Ramp Solid
 
 OntheRoofConveyor:                      ; Conveyor Solid
-    DEFB 10,240,240,240,255,255,0,0,255
+    DEFB 10,240,240,240,255,255,0,0,255                      ; Conveyor Solid
 
 OntheRoofConveyorData:
     DEFB 1
@@ -82,7 +82,7 @@ OntheRoofBorderColor:
     DEFB 2
 
 OntheRoofReserved:
-    DEFB CYAN, NONE, NONE, NONE               ; Enemy colors
+    DEFB CYAN, NONE, NONE, NONE     ; Enemy colors
 
 OntheRoofItem:
     DEFB 1,2,5,10,84,40,48,72
@@ -94,7 +94,7 @@ OntheRoofDirection:
 	DEFB $FF					;Room below (The Off Licence)
 
 OntheRoofUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 OntheRoofEnemy1:
     DEFB $80, 13, 112, 104, 192        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
@@ -114,6 +114,6 @@ OntheRoofEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 OntheRoofPosWilly:
-    db 200, 50                   ; Posizione di Willy
+    db 200, 50                     ; Posizione di Willy
 OntheRoofEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

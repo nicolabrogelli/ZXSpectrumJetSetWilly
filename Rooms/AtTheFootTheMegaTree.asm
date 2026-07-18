@@ -53,23 +53,23 @@ AtTheFootTheMegaTreeTile:
     DEFM "  At the Foot of the MegaTree   "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-AtTheFootTheMegaTreeBackground:
+AtTheFootTheMegaTreeBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	            ;Background
 
 AtTheFootTheMegaTreeFloor:
-    DEFB 4,240,249,191,31,12,16,40,68	    ;Floor Solid
+    DEFB 4,240,249,191,31,12,16,40,68       ; Floor Solid
 
 AtTheFootTheMegaTreeWall:
-    DEFB 22,171,171,173,170,170,174,85,85	    ;Wall Solid
+    DEFB 22,171,171,173,170,170,174,85,85   ; Wall Solid
 
 AtTheFootTheMegaTreeNasty:
-    DEFB 6,110,116,56,30,110,116,56,30	    ;Nasty
+    DEFB 6,110,116,56,30,110,116,56,30  ; Nastry
 
 AtTheFootTheMegaTreeRamp:
-    DEFB 7,192,0,48,0,12,0,3,0	            ;Ramp Solid
+    DEFB 7,192,0,48,0,12,0,3,0              ; Ramp Solid
 
 AtTheFootTheMegaTreeConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 AtTheFootTheMegaTreeConveyorData:
@@ -89,7 +89,7 @@ AtTheFootTheMegaTreeBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 AtTheFootTheMegaTreeReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA                         ; Enemy colors
+    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 AtTheFootTheMegaTreeItem:
@@ -103,7 +103,7 @@ AtTheFootTheMegaTreeDirection:
     DEFB BLOCK                                ;Room below (None)
 
 AtTheFootTheMegaTreeUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 AtTheFootTheMegaTreeEnemy1:
@@ -127,4 +127,4 @@ AtTheFootTheMegaTreePosWilly:
     db 200, 101                     ; Posizione di Willy
     
 AtTheFootTheMegaTreeEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

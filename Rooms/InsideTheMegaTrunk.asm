@@ -53,23 +53,23 @@ InsideTheMegaTrunkTile:
     DEFM "      Inside the MegaTrunk      "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-InsideTheMegaTrunkBackground:
+InsideTheMegaTrunkBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	            ;Background
 
 InsideTheMegaTrunkFloor:
-    DEFB 4,245,250,191,31,38,20,34,16	    ;Floor Solid
+    DEFB 4,245,250,191,31,38,20,34,16       ; Floor Solid
 
 InsideTheMegaTrunkWall:
-    DEFB 22,171,171,173,170,170,174,85,85	;Wall Solid
+    DEFB 22,171,171,173,170,170,174,85,85   ; Wall Solid
 
 InsideTheMegaTrunkNasty:
-    DEFB 6,110,116,56,30,110,116,56,30	    ;Nasty
+    DEFB 6,110,116,56,30,110,116,56,30  ; Nastry
 
 InsideTheMegaTrunkRamp:
-    DEFB 7,64,0,16,0,4,0,1,0	            ;Ramp Solid
+    DEFB 7,64,0,16,0,4,0,1,0              ; Ramp Solid
 
 InsideTheMegaTrunkConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 InsideTheMegaTrunkConveyorData:
@@ -89,7 +89,7 @@ InsideTheMegaTrunkBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 InsideTheMegaTrunkReserved:
-    DEFB MAGENTA, MAGENTA, MAGENTA, RED                         ; Enemy colors: all WHITE (7)
+    DEFB MAGENTA, MAGENTA, MAGENTA, RED     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 InsideTheMegaTrunkItem:
@@ -103,7 +103,7 @@ InsideTheMegaTrunkDirection:
 	DEFB 3									;Room below (Gfx_At the Foot of the MegaTree)
 
 InsideTheMegaTrunkUnused:
-    DEFB 0                                  ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 InsideTheMegaTrunkEnemy1:
@@ -124,7 +124,7 @@ InsideTheMegaTrunkEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 InsideTheMegaTrunkPosWilly:
-    db 200, 85                             ; Posizione di Willy
+    db 200, 85                     ; Posizione di Willy
 
 InsideTheMegaTrunkEnemyColors5_8:
-    DEFB CYAN, GREEN, YELLOW, NONE               ; Colori per nemici 5-8
+    DEFB CYAN, GREEN, YELLOW, NONE     ; Colori per nemici 5-8

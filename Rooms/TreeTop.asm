@@ -53,23 +53,23 @@ TreeTopTile:
     DEFM "            Tree Top            "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-TreeTopBackground:
+TreeTopBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	            		;Background
 
 TreeTopFloor:
-    DEFB 4,170,85,170,88,48,16,16,8	    ;Floor Solid
+    DEFB 4,170,85,170,88,48,16,16,8       ; Floor Solid
 
 TreeTopWall:
-    DEFB 22,165,40,82,85,85,73,162,181	    	;Wall Solid
+    DEFB 22,165,40,82,85,85,73,162,181   ; Wall Solid
 
 TreeTopNasty:
-    DEFB 66,137,74,18,52,24,52,82,145	     ;Nasty
+    DEFB 66,137,74,18,52,24,52,82,145  ; Nastry
 
 TreeTopRamp:
-    DEFB 7,64,0,16,0,4,0,1,0	        ;Ramp Solid
+    DEFB 7,64,0,16,0,4,0,1,0              ; Ramp Solid
 
 TreeTopConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TreeTopConveyorData:
@@ -89,7 +89,7 @@ TreeTopBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TreeTopReserved:
-    DEFB CYAN, YELLOW, RED, NONE                         ; Enemy colors: all WHITE (7)
+    DEFB CYAN, YELLOW, RED, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TreeTopItem:
@@ -103,7 +103,7 @@ TreeTopDirection:
 	DEFB 8		    							;Room below (Inside the MegaTrunk)
 
 TreeTopUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TreeTopEnemy1:
@@ -124,6 +124,6 @@ TreeTopEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TreeTopPosWilly:
-    db 10, 30                 ; Posizione di Willy    
+    db 10, 30                     ; Posizione di Willy
 TreeTopEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

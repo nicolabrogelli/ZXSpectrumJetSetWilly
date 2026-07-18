@@ -64,10 +64,10 @@ TheOffLicenceNasty:
     DEFB 5,248,136,158,189,189,158,136,248  ; Nastry
 
 TheOffLicenceRamp:                          ; Ramp Solid
-    DEFB 7,3,0,12,0,48,0,192,0              
+    DEFB 7,3,0,12,0,48,0,192,0              ; Ramp Solid
 
 TheOffLicenceConveyor:                      ; Conveyor Solid
-    DEFB 67,51,255,51,0,255,0,170,0
+    DEFB 67,51,255,51,0,255,0,170,0                      ; Conveyor Solid
 
 TheOffLicenceConveyorData:
     DEFB 0

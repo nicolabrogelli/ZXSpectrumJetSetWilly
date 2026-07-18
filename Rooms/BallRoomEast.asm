@@ -53,23 +53,23 @@ BallRoomEastTile:
     DEFM "         Ballroom East          "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-BallRoomEastBackground:
+BallRoomEastBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	            ;Background
 
 BallRoomEastFloor:
-    DEFB 6,170,85,34,68,34,68,34,68	    ;Floor Solid
+    DEFB 6,170,85,34,68,34,68,34,68       ; Floor Solid
 
 BallRoomEastWall:
-    DEFB 15,68,68,255,17,17,255,85,170	    ;Wall Solid
+    DEFB 15,68,68,255,17,17,255,85,170   ; Wall Solid
 
 BallRoomEastNasty:
-    DEFB 255,0,0,0,0,0,0,0,0	    ;Nasty
+    DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
 
 BallRoomEastRamp:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Ramp Solid
+    DEFB 255,0,0,0,0,0,0,0,0              ; Ramp Solid
 
 BallRoomEastConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 BallRoomEastConveyorData:
@@ -89,7 +89,7 @@ BallRoomEastBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 BallRoomEastReserved:
-    DEFB NONE, MAGENTA, CYAN, YELLOW                        ; Enemy colors
+    DEFB NONE, MAGENTA, CYAN, YELLOW     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 BallRoomEastItem:
@@ -103,7 +103,7 @@ BallRoomEastDirection:
     DEFB BLOCK	        ;Room below (The Off Licence)
 
 BallRoomEastUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 BallRoomEastEnemy1:
@@ -127,4 +127,4 @@ BallRoomEastPosWilly:
     db 200, 85                     ; Posizione di Willy
     
 BallRoomEastEnemyColors5_8:
-    DEFB MAGENTA, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB MAGENTA, NONE, NONE, NONE     ; Colori per nemici 5-8

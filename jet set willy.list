@@ -8015,12 +8015,12 @@
   64++83C3 F8
   65++83C4
   66++83C4              TheOffLicenceRamp:                          ; Ramp Solid
-  67++83C4 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0
+  67++83C4 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0              ; Ramp Solid
   67++83C8 00 30 00 C0
   67++83CC 00
   68++83CD
   69++83CD              TheOffLicenceConveyor:                      ; Conveyor Solid
-  70++83CD 43 33 FF 33      DEFB 67,51,255,51,0,255,0,170,0
+  70++83CD 43 33 FF 33      DEFB 67,51,255,51,0,255,0,170,0                      ; Conveyor Solid
   70++83D1 00 FF 00 AA
   70++83D5 00
   71++83D6
@@ -8163,33 +8163,33 @@
   52++84BA 20 20 20 20
   53++84BE
   54++84BE              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  55++84BE              TheBridgeBackground:
+  55++84BE              TheBridgeBackground:                    ; Background
   56++84BE 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	                ;Background
   56++84C2 00 00 00 00
   56++84C6 00
   57++84C7
   58++84C7              TheBridgeFloor:
-  59++84C7 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64	    ;Floor Solid
+  59++84C7 44 FF FF FD      DEFB 68,255,255,253,187,214,114,96,64       ; Floor Solid
   59++84CB BB D6 72 60
   59++84CF 40
   60++84D0
   61++84D0              TheBridgeWall:
-  62++84D0 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136	        ;Wall Solid
+  62++84D0 46 22 77 22      DEFB 70,34,119,34,136,34,119,34,136   ; Wall Solid
   62++84D4 88 22 77 22
   62++84D8 88
   63++84D9
   64++84D9              TheBridgeNasty:
-  65++84D9 2F 03 84 48      DEFB 47,3,132,72,48,3,132,72,48	            ;Nasty
+  65++84D9 2F 03 84 48      DEFB 47,3,132,72,48,3,132,72,48  ; Nastry
   65++84DD 30 03 84 48
   65++84E1 30
   66++84E2
   67++84E2              TheBridgeRamp:
-  68++84E2 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200	            ;Ramp Solid
+  68++84E2 07 03 03 0C      DEFB 7,3,3,12,13,50,55,194,200              ; Ramp Solid
   68++84E6 0D 32 37 C2
   68++84EA C8
   69++84EB
   70++84EB              TheBridgeConveyor:
-  71++84EB 2C 01 40 04      DEFB 44,1,64,4,70,79,121,240,249	        ;Conveyor
+  71++84EB 2C 01 40 04      DEFB 44,1,64,4,70,79,121,240,249                      ; Conveyor Solid
   71++84EF 46 4F 79 F0
   71++84F3 F9
   72++84F4
@@ -8211,7 +8211,7 @@
   88++84FD
   89++84FD              ;The next two bytes are copied to 32991, but are not used.
   90++84FD              TheBridgeReserved:
-  91++84FD 02 03 04 00      DEFB RED, MAGENTA, GREEN, NONE           ; Enemy colors
+  91++84FD 02 03 04 00      DEFB RED, MAGENTA, GREEN, NONE     ; Enemy colors
   92++8501
   93++8501              ;The next eight bytes are copied to 32993 and define the item graphic.
   94++8501              TheBridgeItem:
@@ -8226,7 +8226,7 @@
  102++850C FF               DEFB BLOCK                              ; Room below (None)
  103++850D
  104++850D              TheBridgeUnused:
- 105++850D 00               DEFB $00                                  ; Padding byte to keep Enemy1 offset at 240
+ 105++850D 00               DEFB $00                          ; Padding byte to keep Enemy1 offset at 240
  106++850E
  107++850E              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  108++850E              TheBridgeEnemy1:
@@ -8255,10 +8255,10 @@
  123++8535 00
  124++8536
  125++8536              TheBridgePosWilly:
- 126++8536 88 4C            db 136, 76                   ; Posizione di Willy
+ 126++8536 88 4C            db 136, 76                     ; Posizione di Willy
  127++8538
  128++8538              TheBridgeEnemyColors5_8:
- 129++8538 00 00 00 00      DEFB NONE, NONE, NONE, NONE  ; Colori per nemici 5-8
+ 129++8538 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
  130++853C
 # file closed: rooms/TheBridge.asm
   12+ 853C                  include "rooms/UnderTheMegaTree.asm"            ; ID 02
@@ -8341,33 +8341,33 @@
   53++85D8 20 20 20 20
   54++85DC
   55++85DC              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++85DC              UnderTheMegaTreeBackground:
+  56++85DC              UnderTheMegaTreeBackground:                    ; Background
   57++85DC 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
   57++85E0 00 00 00 00
   57++85E4 00
   58++85E5
   59++85E5              UnderTheMegaTreeFloor:
-  60++85E5 44 D7 B3 75      DEFB 68,215,179,117,109,92,24,8,4	    ;Floor Solid
+  60++85E5 44 D7 B3 75      DEFB 68,215,179,117,109,92,24,8,4       ; Floor Solid
   60++85E9 6D 5C 18 08
   60++85ED 04
   61++85EE
   62++85EE              UnderTheMegaTreeWall:
-  63++85EE 42 BD AA 5D      DEFB 66,189,170,93,162,243,10,6,1	    ;Wall Solid
+  63++85EE 42 BD AA 5D      DEFB 66,189,170,93,162,243,10,6,1   ; Wall Solid
   63++85F2 A2 F3 0A 06
   63++85F6 01
   64++85F7
   65++85F7              UnderTheMegaTreeNasty:
-  66++85F7 46 49 6A 3B      DEFB 70,73,106,59,58,252,30,107,232	    ;Nasty
+  66++85F7 46 49 6A 3B      DEFB 70,73,106,59,58,252,30,107,232  ; Nastry
   66++85FB 3A FC 1E 6B
   66++85FF E8
   67++8600
   68++8600              UnderTheMegaTreeRamp:
-  69++8600 FF 00 00 00      DEFB 255,0,0,0,255,0,0,0,0	            ;Ramp Solid
+  69++8600 FF 00 00 00      DEFB 255,0,0,0,255,0,0,0,0              ; Ramp Solid
   69++8604 FF 00 00 00
   69++8608 00
   70++8609
   71++8609              UnderTheMegaTreeConveyor:
-  72++8609 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++8609 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++860D 00 00 00 00
   72++8611 00
   73++8612
@@ -8389,7 +8389,7 @@
   89++861B
   90++861B              ;The next two bytes are copied to 32991, but are not used.
   91++861B              UnderTheMegaTreeReserved:
-  92++861B 05 03 02 00      DEFB CYAN, MAGENTA, RED, NONE                         ; Enemy colors
+  92++861B 05 03 02 00      DEFB CYAN, MAGENTA, RED, NONE     ; Enemy colors
   93++861F
   94++861F              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++861F              UnderTheMegaTreeItem:
@@ -8404,7 +8404,7 @@
  103++862A FF               DEFB BLOCK                               ;Room below (None)
  104++862B
  105++862B              UnderTheMegaTreeUnused:
- 106++862B 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++862B 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++862C
  108++862C              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++862C              UnderTheMegaTreeEnemy1:
@@ -8433,10 +8433,10 @@
  124++8653 00
  125++8654
  126++8654              UnderTheMegaTreePosWilly:
- 127++8654 C8 65            db 200, 101                   ; Posizione di Willy
+ 127++8654 C8 65            db 200, 101                     ; Posizione di Willy
  128++8656
  129++8656              UnderTheMegaTreeEnemyColors5_8:
- 130++8656 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 130++8656 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/UnderTheMegaTree.asm
   13+ 865A                  include "rooms/AtTheFootTheMegaTree.asm"        ; ID 03
 # file opened: rooms/AtTheFootTheMegaTree.asm
@@ -8518,33 +8518,33 @@
   53++86F6 65 20 20 20
   54++86FA
   55++86FA              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++86FA              AtTheFootTheMegaTreeBackground:
+  56++86FA              AtTheFootTheMegaTreeBackground:                    ; Background
   57++86FA 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
   57++86FE 00 00 00 00
   57++8702 00
   58++8703
   59++8703              AtTheFootTheMegaTreeFloor:
-  60++8703 04 F0 F9 BF      DEFB 4,240,249,191,31,12,16,40,68	    ;Floor Solid
+  60++8703 04 F0 F9 BF      DEFB 4,240,249,191,31,12,16,40,68       ; Floor Solid
   60++8707 1F 0C 10 28
   60++870B 44
   61++870C
   62++870C              AtTheFootTheMegaTreeWall:
-  63++870C 16 AB AB AD      DEFB 22,171,171,173,170,170,174,85,85	    ;Wall Solid
+  63++870C 16 AB AB AD      DEFB 22,171,171,173,170,170,174,85,85   ; Wall Solid
   63++8710 AA AA AE 55
   63++8714 55
   64++8715
   65++8715              AtTheFootTheMegaTreeNasty:
-  66++8715 06 6E 74 38      DEFB 6,110,116,56,30,110,116,56,30	    ;Nasty
+  66++8715 06 6E 74 38      DEFB 6,110,116,56,30,110,116,56,30  ; Nastry
   66++8719 1E 6E 74 38
   66++871D 1E
   67++871E
   68++871E              AtTheFootTheMegaTreeRamp:
-  69++871E 07 C0 00 30      DEFB 7,192,0,48,0,12,0,3,0	            ;Ramp Solid
+  69++871E 07 C0 00 30      DEFB 7,192,0,48,0,12,0,3,0              ; Ramp Solid
   69++8722 00 0C 00 03
   69++8726 00
   70++8727
   71++8727              AtTheFootTheMegaTreeConveyor:
-  72++8727 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++8727 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++872B 00 00 00 00
   72++872F 00
   73++8730
@@ -8566,7 +8566,7 @@
   89++8739
   90++8739              ;The next two bytes are copied to 32991, but are not used.
   91++8739              AtTheFootTheMegaTreeReserved:
-  92++8739 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA                         ; Enemy colors
+  92++8739 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
   93++873D
   94++873D              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++873D              AtTheFootTheMegaTreeItem:
@@ -8581,7 +8581,7 @@
  103++8748 FF               DEFB BLOCK                                ;Room below (None)
  104++8749
  105++8749              AtTheFootTheMegaTreeUnused:
- 106++8749 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++8749 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++874A
  108++874A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++874A              AtTheFootTheMegaTreeEnemy1:
@@ -8613,7 +8613,7 @@
  127++8772 C8 65            db 200, 101                     ; Posizione di Willy
  128++8774
  129++8774              AtTheFootTheMegaTreeEnemyColors5_8:
- 130++8774 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 130++8774 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/AtTheFootTheMegaTree.asm
   14+ 8778                  include "rooms/TheDrive.asm"                    ; ID 04
 # file opened: rooms/TheDrive.asm
@@ -8695,33 +8695,33 @@
   53++8814 20 20 20 20
   54++8818
   55++8818              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++8818              TheDriveBackground:
+  56++8818              TheDriveBackground:                    ; Background
   57++8818 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
   57++881C 00 00 00 00
   57++8820 00
   58++8821
   59++8821              TheDriveFloor:
-  60++8821 06 AA 55 AA      DEFB 6,170,85,170,255,255,85,170,85	    ;Floor Solid
+  60++8821 06 AA 55 AA      DEFB 6,170,85,170,255,255,85,170,85       ; Floor Solid
   60++8825 FF FF 55 AA
   60++8829 55
   61++882A
   62++882A              TheDriveWall:
-  63++882A 0D 70 07 77      DEFB 13,112,7,119,119,0,59,11,125	    ;Wall Solid
+  63++882A 0D 70 07 77      DEFB 13,112,7,119,119,0,59,11,125   ; Wall Solid
   63++882E 77 00 3B 0B
   63++8832 7D
   64++8833
   65++8833              TheDriveNasty:
-  66++8833 44 14 2A 14      DEFB 68,20,42,20,9,106,156,8,8	        ;Nasty
+  66++8833 44 14 2A 14      DEFB 68,20,42,20,9,106,156,8,8  ; Nastry
   66++8837 09 6A 9C 08
   66++883B 08
   67++883C
   68++883C              TheDriveRamp:
-  69++883C 05 C0 40 70      DEFB 5,192,64,112,112,12,116,119,5	            ;Ramp Solid
+  69++883C 05 C0 40 70      DEFB 5,192,64,112,112,12,116,119,5              ; Ramp Solid
   69++8840 70 0C 74 77
   69++8844 05
   70++8845
   71++8845              TheDriveConveyor:
-  72++8845 42 7B 00 ED      DEFB 66,123,0,237,0,170,85,170,85	            ;Conveyor
+  72++8845 42 7B 00 ED      DEFB 66,123,0,237,0,170,85,170,85                      ; Conveyor Solid
   72++8849 00 AA 55 AA
   72++884D 55
   73++884E
@@ -8743,7 +8743,7 @@
   89++8857
   90++8857              ;The next two bytes are copied to 32991, but are not used.
   91++8857              TheDriveReserved:
-  92++8857 03 04 06 05      DEFB MAGENTA, GREEN, YELLOW, CYAN                         ; Enemy colors
+  92++8857 03 04 06 05      DEFB MAGENTA, GREEN, YELLOW, CYAN     ; Enemy colors
   93++885B
   94++885B              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++885B              TheDriveItem:
@@ -8758,7 +8758,7 @@
  103++8866 2D               DEFB 45                                 ;Room below (Under the Drive)
  104++8867
  105++8867              TheDriveUnused:
- 106++8867 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++8867 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++8868
  108++8868              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8868              TheDriveEnemy1:
@@ -8787,10 +8787,10 @@
  124++888F 00
  125++8890
  126++8890              TheDrivePosWilly:
- 127++8890 C8 65            db 200, 101                      ; Posizione di Willy
+ 127++8890 C8 65            db 200, 101                     ; Posizione di Willy
  128++8892
  129++8892              TheDriveEnemyColors5_8:
- 130++8892 05 00 00 00      DEFB CYAN, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 130++8892 05 00 00 00      DEFB CYAN, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/TheDrive.asm
   15+ 8896                  include "rooms/TheSecurityGuard.asm"            ; ID 05
 # file opened: rooms/TheSecurityGuard.asm
@@ -8872,33 +8872,33 @@
   53++8932 20 20 20 20
   54++8936
   55++8936              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++8936              TheSecurityGuardBackground:
+  56++8936              TheSecurityGuardBackground:                    ; Background
   57++8936 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
   57++893A 00 00 00 00
   57++893E 00
   58++893F
   59++893F              TheSecurityGuardFloor:
-  60++893F 04 FF FF AA      DEFB 4,255,255,170,85,170,85,170,85	    ;Floor Solid
+  60++893F 04 FF FF AA      DEFB 4,255,255,170,85,170,85,170,85       ; Floor Solid
   60++8943 55 AA 55 AA
   60++8947 55
   61++8948
   62++8948              TheSecurityGuardWall:
-  63++8948 0D 0E C6 95      DEFB 13,14,198,149,176,54,134,192,237	;Wall Solid
+  63++8948 0D 0E C6 95      DEFB 13,14,198,149,176,54,134,192,237   ; Wall Solid
   63++894C B0 36 86 C0
   63++8950 ED
   64++8951
   65++8951              TheSecurityGuardNasty:
-  66++8951 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Nasty
+  66++8951 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
   66++8955 00 00 00 00
   66++8959 00
   67++895A
   68++895A              TheSecurityGuardRamp:
-  69++895A 07 E0 40 20      DEFB 7,224,64,32,16,14,4,2,1	        ;Ramp Solid
+  69++895A 07 E0 40 20      DEFB 7,224,64,32,16,14,4,2,1              ; Ramp Solid
   69++895E 10 0E 04 02
   69++8962 01
   70++8963
   71++8963              TheSecurityGuardConveyor:
-  72++8963 42 6F 00 B7      DEFB 66,111,0,183,0,170,85,170,85	    ;Conveyor
+  72++8963 42 6F 00 B7      DEFB 66,111,0,183,0,170,85,170,85                      ; Conveyor Solid
   72++8967 00 AA 55 AA
   72++896B 55
   73++896C
@@ -8920,7 +8920,7 @@
   89++8975
   90++8975              ;The next two bytes are copied to 32991, but are not used.
   91++8975              TheSecurityGuardReserved:
-  92++8975 02 04 06 02      DEFB RED, GREEN, YELLOW, RED                         ; Enemy colors: all WHITE (7)
+  92++8975 02 04 06 02      DEFB RED, GREEN, YELLOW, RED     ; Enemy colors
   93++8979
   94++8979              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++8979              TheSecurityGuardItem:
@@ -8935,7 +8935,7 @@
  103++8984 06               DEFB 6	                                ;Room below (Entrance to Hades)
  104++8985
  105++8985              TheSecurityGuardUnused:
- 106++8985 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++8985 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++8986
  108++8986              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8986              TheSecurityGuardEnemy1:
@@ -8964,10 +8964,10 @@
  124++89AD 00
  125++89AE
  126++89AE              TheSecurityGuardPosWilly:
- 127++89AE C8 65            db 200, 101                         ; Posizione di Willy
+ 127++89AE C8 65            db 200, 101                     ; Posizione di Willy
  128++89B0
  129++89B0              TheSecurityGuardEnemyColors5_8:
- 130++89B0 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 130++89B0 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/TheSecurityGuard.asm
   16+ 89B4                  include "rooms/EntranceToHades.asm"             ; ID 06
 # file opened: rooms/EntranceToHades.asm
@@ -9052,7 +9052,7 @@
   54++8A5C 00
   55++8A5D
   56++8A5D              EntranceToHadesFloor:
-  57++8A5D A3 A0 14 82      DEFB 163,160,20,130,80,10,65,40,5      ; Floor Solid
+  57++8A5D A3 A0 14 82      DEFB 163,160,20,130,80,10,65,40,5       ; Floor Solid
   57++8A61 50 0A 41 28
   57++8A65 05
   58++8A66
@@ -9067,12 +9067,12 @@
   63++8A77 E8
   64++8A78
   65++8A78              EntranceToHadesRamp:                          ; Ramp Solid
-  66++8A78 07 40 40 10      DEFB 7,64,64,16,16,4,4,1,1
+  66++8A78 07 40 40 10      DEFB 7,64,64,16,16,4,4,1,1              ; Ramp Solid
   66++8A7C 10 04 04 01
   66++8A80 01
   67++8A81
   68++8A81              EntranceToHadesConveyor:                      ; Conveyor Solid
-  69++8A81 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0
+  69++8A81 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   69++8A85 00 00 00 00
   69++8A89 00
   70++8A8A
@@ -9090,7 +9090,7 @@
   82++8A92 02               DEFB 2                        ; Red border
   83++8A93
   84++8A93              EntranceToHadesReserved:
-  85++8A93 02 02 02 02      DEFB RED, RED, RED, RED               ; Enemy colors
+  85++8A93 02 02 02 02      DEFB RED, RED, RED, RED     ; Enemy colors
   86++8A97
   87++8A97              EntranceToHadesItem:
   88++8A97 00 00 00 00      DEFB 0,0,0,0,0,0,0,0
@@ -9103,7 +9103,7 @@
   94++8AA2 FF               DEFB BLOCK                       ;Room below (The Off Licence)
   95++8AA3
   96++8AA3              EntranceToHadesUnused:
-  97++8AA3 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  97++8AA3 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   98++8AA4
   99++8AA4              EntranceToHadesEnemy1:
  100++8AA4 C0 17 20 00      DEFB $C0, 23, 32, 0, 88         ; FaceHellHL (Top-Left)
@@ -9131,9 +9131,9 @@
  114++8ACB 00
  115++8ACC
  116++8ACC              EntranceToHadesPosWilly:
- 117++8ACC 88 1E            db 136, 30                   ; Willy starting position
+ 117++8ACC 88 1E            db 136, 30                     ; Posizione di Willy
  118++8ACE              EntranceToHadesEnemyColors5_8:
- 119++8ACE 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 119++8ACE 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/EntranceToHades.asm
   17+ 8AD2                  include "rooms/CuckoosNest.asm"                 ; ID 07
 # file opened: rooms/CuckoosNest.asm
@@ -9215,33 +9215,33 @@
   53++8B6E 20 20 20 20
   54++8B72
   55++8B72              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++8B72              CuckoosNestBackground:
+  56++8B72              CuckoosNestBackground:                    ; Background
   57++8B72 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
   57++8B76 00 00 00 00
   57++8B7A 00
   58++8B7B
   59++8B7B              CuckoosNestFloor:
-  60++8B7B 04 04 03 C9      DEFB 4,4,3,201,216,48,54,35,1	    ;Floor Solid
+  60++8B7B 04 04 03 C9      DEFB 4,4,3,201,216,48,54,35,1       ; Floor Solid
   60++8B7F D8 30 36 23
   60++8B83 01
   61++8B84
   62++8B84              CuckoosNestWall:
-  63++8B84 16 FF 60 0E      DEFB 22,255,96,14,240,3,60,199,56	    ;Wall Solid
+  63++8B84 16 FF 60 0E      DEFB 22,255,96,14,240,3,60,199,56   ; Wall Solid
   63++8B88 F0 03 3C C7
   63++8B8C 38
   64++8B8D
   65++8B8D              CuckoosNestNasty:
-  66++8B8D 06 C2 34 0B      DEFB 6,194,52,11,68,136,11,48,8	    ;Nasty
+  66++8B8D 06 C2 34 0B      DEFB 6,194,52,11,68,136,11,48,8  ; Nastry
   66++8B91 44 88 0B 30
   66++8B95 08
   67++8B96
   68++8B96              CuckoosNestRamp:
-  69++8B96 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0	            ;Ramp Solid
+  69++8B96 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0              ; Ramp Solid
   69++8B9A 00 30 00 C0
   69++8B9E 00
   70++8B9F
   71++8B9F              CuckoosNestConveyor:
-  72++8B9F FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++8B9F FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++8BA3 00 00 00 00
   72++8BA7 00
   73++8BA8
@@ -9263,7 +9263,7 @@
   89++8BB1
   90++8BB1              ;The next two bytes are copied to 32991, but are not used.
   91++8BB1              CuckoosNestReserved:
-  92++8BB1 05 03 07 00      DEFB CYAN, MAGENTA, WHITE, NONE                         ; Enemy colors: all WHITE (7)
+  92++8BB1 05 03 07 00      DEFB CYAN, MAGENTA, WHITE, NONE     ; Enemy colors
   93++8BB5
   94++8BB5              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++8BB5              CuckoosNestItem:
@@ -9278,7 +9278,7 @@
  103++8BC0 02           	DEFB 2		;Room below (Under the MegaTree)
  104++8BC1
  105++8BC1              CuckoosNestUnused:
- 106++8BC1 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++8BC1 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++8BC2
  108++8BC2              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8BC2              CuckoosNestEnemy1:
@@ -9307,10 +9307,10 @@
  124++8BE9 00
  125++8BEA
  126++8BEA              CuckoosNestPosWilly:
- 127++8BEA 1E 50            db 30, 80                   ; Posizione di Willy
+ 127++8BEA 1E 50            db 30, 80                     ; Posizione di Willy
  128++8BEC
  129++8BEC              CuckoosNestEnemyColors5_8:
- 130++8BEC 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 130++8BEC 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/CuckoosNest.asm
   18+ 8BF0                  include "rooms/InsideTheMegaTrunk.asm"          ; ID 08
 # file opened: rooms/InsideTheMegaTrunk.asm
@@ -9392,33 +9392,33 @@
   53++8C8C 20 20 20 20
   54++8C90
   55++8C90              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++8C90              InsideTheMegaTrunkBackground:
+  56++8C90              InsideTheMegaTrunkBackground:                    ; Background
   57++8C90 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
   57++8C94 00 00 00 00
   57++8C98 00
   58++8C99
   59++8C99              InsideTheMegaTrunkFloor:
-  60++8C99 04 F5 FA BF      DEFB 4,245,250,191,31,38,20,34,16	    ;Floor Solid
+  60++8C99 04 F5 FA BF      DEFB 4,245,250,191,31,38,20,34,16       ; Floor Solid
   60++8C9D 1F 26 14 22
   60++8CA1 10
   61++8CA2
   62++8CA2              InsideTheMegaTrunkWall:
-  63++8CA2 16 AB AB AD      DEFB 22,171,171,173,170,170,174,85,85	;Wall Solid
+  63++8CA2 16 AB AB AD      DEFB 22,171,171,173,170,170,174,85,85   ; Wall Solid
   63++8CA6 AA AA AE 55
   63++8CAA 55
   64++8CAB
   65++8CAB              InsideTheMegaTrunkNasty:
-  66++8CAB 06 6E 74 38      DEFB 6,110,116,56,30,110,116,56,30	    ;Nasty
+  66++8CAB 06 6E 74 38      DEFB 6,110,116,56,30,110,116,56,30  ; Nastry
   66++8CAF 1E 6E 74 38
   66++8CB3 1E
   67++8CB4
   68++8CB4              InsideTheMegaTrunkRamp:
-  69++8CB4 07 40 00 10      DEFB 7,64,0,16,0,4,0,1,0	            ;Ramp Solid
+  69++8CB4 07 40 00 10      DEFB 7,64,0,16,0,4,0,1,0              ; Ramp Solid
   69++8CB8 00 04 00 01
   69++8CBC 00
   70++8CBD
   71++8CBD              InsideTheMegaTrunkConveyor:
-  72++8CBD FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++8CBD FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++8CC1 00 00 00 00
   72++8CC5 00
   73++8CC6
@@ -9440,7 +9440,7 @@
   89++8CCF
   90++8CCF              ;The next two bytes are copied to 32991, but are not used.
   91++8CCF              InsideTheMegaTrunkReserved:
-  92++8CCF 03 03 03 02      DEFB MAGENTA, MAGENTA, MAGENTA, RED                         ; Enemy colors: all WHITE (7)
+  92++8CCF 03 03 03 02      DEFB MAGENTA, MAGENTA, MAGENTA, RED     ; Enemy colors
   93++8CD3
   94++8CD3              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++8CD3              InsideTheMegaTrunkItem:
@@ -9455,7 +9455,7 @@
  103++8CDE 03           	DEFB 3									;Room below (Gfx_At the Foot of the MegaTree)
  104++8CDF
  105++8CDF              InsideTheMegaTrunkUnused:
- 106++8CDF 00               DEFB 0                                  ; Padding byte to keep Enemy1 offset at 240
+ 106++8CDF 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++8CE0
  108++8CE0              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8CE0              InsideTheMegaTrunkEnemy1:
@@ -9484,10 +9484,10 @@
  124++8D07 00
  125++8D08
  126++8D08              InsideTheMegaTrunkPosWilly:
- 127++8D08 C8 55            db 200, 85                             ; Posizione di Willy
+ 127++8D08 C8 55            db 200, 85                     ; Posizione di Willy
  128++8D0A
  129++8D0A              InsideTheMegaTrunkEnemyColors5_8:
- 130++8D0A 05 04 06 00      DEFB CYAN, GREEN, YELLOW, NONE               ; Colori per nemici 5-8
+ 130++8D0A 05 04 06 00      DEFB CYAN, GREEN, YELLOW, NONE     ; Colori per nemici 5-8
 # file closed: rooms/InsideTheMegaTrunk.asm
   19+ 8D0E                  include "rooms/OnABranchOverTheDrive.asm"       ; ID 09
 # file opened: rooms/OnABranchOverTheDrive.asm
@@ -9569,33 +9569,33 @@
   53++8DAA 65 20 20 20
   54++8DAE
   55++8DAE              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++8DAE              OnABranchOverTheDriveBackground:
+  56++8DAE              OnABranchOverTheDriveBackground:                    ; Background
   57++8DAE 0F 00 00 00      DEFB $0F,0,0,0,0,0,0,0,0	            ;Background
   57++8DB2 00 00 00 00
   57++8DB6 00
   58++8DB7
   59++8DB7              OnABranchOverTheDriveFloor:
-  60++8DB7 0A 1F F3 E1      DEFB 10,31,243,225,96,48,44,64,128	    ;Floor Solid
+  60++8DB7 0A 1F F3 E1      DEFB 10,31,243,225,96,48,44,64,128       ; Floor Solid
   60++8DBB 60 30 2C 40
   60++8DBF 80
   61++8DC0
   62++8DC0              OnABranchOverTheDriveWall:
-  63++8DC0 4A 09 12 0A      DEFB 74,9,18,10,31,228,8,8,8	    	;Wall Solid
+  63++8DC0 4A 09 12 0A      DEFB 74,9,18,10,31,228,8,8,8   ; Wall Solid
   63++8DC4 1F E4 08 08
   63++8DC8 08
   64++8DC9
   65++8DC9              OnABranchOverTheDriveNasty:
-  66++8DC9 0C 42 29 54      DEFB 12,66,41,84,38,135,35,42,4	    	;Nasty
+  66++8DC9 0C 42 29 54      DEFB 12,66,41,84,38,135,35,42,4  ; Nastry
   66++8DCD 26 87 23 2A
   66++8DD1 04
   67++8DD2
   68++8DD2              OnABranchOverTheDriveRamp:
-  69++8DD2 0F 05 02 04      DEFB 15,5,2,4,8,80,32,64,128	        ;Ramp Solid
+  69++8DD2 0F 05 02 04      DEFB 15,5,2,4,8,80,32,64,128              ; Ramp Solid
   69++8DD6 08 50 20 40
   69++8DDA 80
   70++8DDB
   71++8DDB              OnABranchOverTheDriveConveyor:
-  72++8DDB FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++8DDB FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++8DDF 00 00 00 00
   72++8DE3 00
   73++8DE4
@@ -9617,7 +9617,7 @@
   89++8DED
   90++8DED              ;The next two bytes are copied to 32991, but are not used.
   91++8DED              OnABranchOverTheDriveReserved:
-  92++8DED 02 03 04 06      DEFB RED, MAGENTA, GREEN, YELLOW                         ; Enemy colors
+  92++8DED 02 03 04 06      DEFB RED, MAGENTA, GREEN, YELLOW     ; Enemy colors
   93++8DF1
   94++8DF1              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++8DF1              OnABranchOverTheDriveItem:
@@ -9632,7 +9632,7 @@
  103++8DFC 04           	DEFB 4									;Room below (The Drive)
  104++8DFD
  105++8DFD              OnABranchOverTheDriveUnused:
- 106++8DFD 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++8DFD 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++8DFE
  108++8DFE              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8DFE              OnABranchOverTheDriveEnemy1:
@@ -9661,9 +9661,9 @@
  124++8E25 00
  125++8E26
  126++8E26              OnABranchOverTheDrivePosWilly:
- 127++8E26 C8 1E            db 200, 30                   ; Posizione di Willy
+ 127++8E26 C8 1E            db 200, 30                     ; Posizione di Willy
  128++8E28              OnABranchOverTheDriveEnemyColors5_8:
- 129++8E28 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 129++8E28 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/OnABranchOverTheDrive.asm
   20+ 8E2C                  include "rooms/TheFrontDoor.asm"                ; ID 10
 # file opened: rooms/TheFrontDoor.asm
@@ -9745,33 +9745,33 @@
   53++8EC8 20 20 20 20
   54++8ECC
   55++8ECC              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++8ECC              TheFrontDoorBackground:
+  56++8ECC              TheFrontDoorBackground:                    ; Background
   57++8ECC 2F 00 00 00      DEFB 47,0,0,0,0,0,0,0,0	            		;Background
   57++8ED0 00 00 00 00
   57++8ED4 00
   58++8ED5
   59++8ED5              TheFrontDoorFloor:
-  60++8ED5 47 FF AA 77      DEFB 71,255,170,119,170,119,170,85,170	    ;Floor Solid
+  60++8ED5 47 FF AA 77      DEFB 71,255,170,119,170,119,170,85,170       ; Floor Solid
   60++8ED9 AA 77 AA 55
   60++8EDD AA
   61++8EDE
   62++8EDE              TheFrontDoorWall:
-  63++8EDE 3A 20 10 0E      DEFB 58,32,16,14,193,48,9,198,32	    	;Wall Solid
+  63++8EDE 3A 20 10 0E      DEFB 58,32,16,14,193,48,9,198,32   ; Wall Solid
   63++8EE2 C1 30 09 C6
   63++8EE6 20
   64++8EE7
   65++8EE7              TheFrontDoorNasty:
-  66++8EE7 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	    			;Nasty
+  66++8EE7 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
   66++8EEB 00 00 00 00
   66++8EEF 00
   67++8EF0
   68++8EF0              TheFrontDoorRamp:
-  69++8EF0 2F C0 40 B0      DEFB 47,192,64,176,80,172,84,171,85	        ;Ramp Solid
+  69++8EF0 2F C0 40 B0      DEFB 47,192,64,176,80,172,84,171,85              ; Ramp Solid
   69++8EF4 50 AC 54 AB
   69++8EF8 55
   70++8EF9
   71++8EF9              TheFrontDoorConveyor:
-  72++8EF9 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++8EF9 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++8EFD 00 00 00 00
   72++8F01 00
   73++8F02
@@ -9793,7 +9793,7 @@
   89++8F0B
   90++8F0B              ;The next two bytes are copied to 32991, but are not used.
   91++8F0B              TheFrontDoorReserved:
-  92++8F0B 00 00 00 00      DEFB NONE, NONE, NONE, NONE                         ; Enemy colors: all WHITE (7)
+  92++8F0B 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Enemy colors
   93++8F0F
   94++8F0F              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++8F0F              TheFrontDoorItem:
@@ -9808,7 +9808,7 @@
  103++8F1A 05           	DEFB 5									;Room below (The Security Guard)
  104++8F1B
  105++8F1B              TheFrontDoorUnused:
- 106++8F1B 00               DEFB 0                                  ; Padding byte to keep Enemy1 offset at 240
+ 106++8F1B 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++8F1C
  108++8F1C              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8F1C              TheFrontDoorEnemy1:
@@ -9837,9 +9837,9 @@
  124++8F43 00
  125++8F44
  126++8F44              TheFrontDoorPosWilly:
- 127++8F44 32 14            db 50, 20                   ; Posizione di Willy
+ 127++8F44 32 14            db 50, 20                     ; Posizione di Willy
  128++8F46              TheFrontDoorEnemyColors5_8:
- 129++8F46 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 129++8F46 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/TheFrontDoor.asm
   21+ 8F4A                  include "rooms/TheHall.asm"                     ; ID 11
 # file opened: rooms/TheHall.asm
@@ -9921,33 +9921,33 @@
   53++8FE6 20 20 20 20
   54++8FEA
   55++8FEA              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++8FEA              TheHallBackground:
+  56++8FEA              TheHallBackground:                    ; Background
   57++8FEA 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0	            		;Background
   57++8FEE 00 00 00 00
   57++8FF2 00
   58++8FF3
   59++8FF3              TheHallFloor:
-  60++8FF3 47 FF AA 77      DEFB 71,255,170,119,170,119,170,85,170	    ;Floor Solid
+  60++8FF3 47 FF AA 77      DEFB 71,255,170,119,170,119,170,85,170       ; Floor Solid
   60++8FF7 AA 77 AA 55
   60++8FFB AA
   61++8FFC
   62++8FFC              TheHallWall:
-  63++8FFC 3A 20 10 0E      DEFB 58,32,16,14,193,48,9,198,32	    	;Wall Solid
+  63++8FFC 3A 20 10 0E      DEFB 58,32,16,14,193,48,9,198,32   ; Wall Solid
   63++9000 C1 30 09 C6
   63++9004 20
   64++9005
   65++9005              TheHallNasty:
-  66++9005 44 88 A9 A9      DEFB 68,136,169,169,187,191,191,191,94	     ;Nasty
+  66++9005 44 88 A9 A9      DEFB 68,136,169,169,187,191,191,191,94  ; Nastry
   66++9009 BB BF BF BF
   66++900D 5E
   67++900E
   68++900E              TheHallRamp:
-  69++900E 07 C0 C0 30      DEFB 7,192,192,48,48,12,12,3,3	        ;Ramp Solid
+  69++900E 07 C0 C0 30      DEFB 7,192,192,48,48,12,12,3,3              ; Ramp Solid
   69++9012 30 0C 0C 03
   69++9016 03
   70++9017
   71++9017              TheHallConveyor:
-  72++9017 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++9017 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++901B 00 00 00 00
   72++901F 00
   73++9020
@@ -9969,7 +9969,7 @@
   89++9029
   90++9029              ;The next two bytes are copied to 32991, but are not used.
   91++9029              TheHallReserved:
-  92++9029 02 06 06 00      DEFB RED, YELLOW, YELLOW, NONE                         ; Enemy colors
+  92++9029 02 06 06 00      DEFB RED, YELLOW, YELLOW, NONE     ; Enemy colors
   93++902D
   94++902D              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++902D              TheHallItem:
@@ -9984,7 +9984,7 @@
  103++9038 FF               DEFB BLOCK	                        ;Room below (The Off Licence)
  104++9039
  105++9039              TheHallUnused:
- 106++9039 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++9039 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++903A
  108++903A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++903A              TheHallEnemy1:
@@ -10013,10 +10013,10 @@
  124++9061 00
  125++9062
  126++9062              TheHallPosWilly:
- 127++9062 32 14            db 50, 20                   ; Posizione di Willy
+ 127++9062 32 14            db 50, 20                     ; Posizione di Willy
  128++9064
  129++9064              TheHallEnemyColors5_8:
- 130++9064 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 130++9064 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/TheHall.asm
   22+ 9068                  include "rooms/TreeTop.asm"                     ; ID 12
 # file opened: rooms/TreeTop.asm
@@ -10098,33 +10098,33 @@
   53++9104 20 20 20 20
   54++9108
   55++9108              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++9108              TreeTopBackground:
+  56++9108              TreeTopBackground:                    ; Background
   57++9108 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            		;Background
   57++910C 00 00 00 00
   57++9110 00
   58++9111
   59++9111              TreeTopFloor:
-  60++9111 04 AA 55 AA      DEFB 4,170,85,170,88,48,16,16,8	    ;Floor Solid
+  60++9111 04 AA 55 AA      DEFB 4,170,85,170,88,48,16,16,8       ; Floor Solid
   60++9115 58 30 10 10
   60++9119 08
   61++911A
   62++911A              TreeTopWall:
-  63++911A 16 A5 28 52      DEFB 22,165,40,82,85,85,73,162,181	    	;Wall Solid
+  63++911A 16 A5 28 52      DEFB 22,165,40,82,85,85,73,162,181   ; Wall Solid
   63++911E 55 55 49 A2
   63++9122 B5
   64++9123
   65++9123              TreeTopNasty:
-  66++9123 42 89 4A 12      DEFB 66,137,74,18,52,24,52,82,145	     ;Nasty
+  66++9123 42 89 4A 12      DEFB 66,137,74,18,52,24,52,82,145  ; Nastry
   66++9127 34 18 34 52
   66++912B 91
   67++912C
   68++912C              TreeTopRamp:
-  69++912C 07 40 00 10      DEFB 7,64,0,16,0,4,0,1,0	        ;Ramp Solid
+  69++912C 07 40 00 10      DEFB 7,64,0,16,0,4,0,1,0              ; Ramp Solid
   69++9130 00 04 00 01
   69++9134 00
   70++9135
   71++9135              TreeTopConveyor:
-  72++9135 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++9135 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++9139 00 00 00 00
   72++913D 00
   73++913E
@@ -10146,7 +10146,7 @@
   89++9147
   90++9147              ;The next two bytes are copied to 32991, but are not used.
   91++9147              TreeTopReserved:
-  92++9147 05 06 02 00      DEFB CYAN, YELLOW, RED, NONE                         ; Enemy colors: all WHITE (7)
+  92++9147 05 06 02 00      DEFB CYAN, YELLOW, RED, NONE     ; Enemy colors
   93++914B
   94++914B              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++914B              TreeTopItem:
@@ -10161,7 +10161,7 @@
  103++9156 08           	DEFB 8		    							;Room below (Inside the MegaTrunk)
  104++9157
  105++9157              TreeTopUnused:
- 106++9157 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++9157 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++9158
  108++9158              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++9158              TreeTopEnemy1:
@@ -10190,9 +10190,9 @@
  124++917F 00
  125++9180
  126++9180              TreeTopPosWilly:
- 127++9180 0A 1E            db 10, 30                 ; Posizione di Willy
+ 127++9180 0A 1E            db 10, 30                     ; Posizione di Willy
  128++9182              TreeTopEnemyColors5_8:
- 129++9182 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 129++9182 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/TreeTop.asm
   23+ 9186                  include "rooms/OutALimb.asm"                    ; ID 13
 # file opened: rooms/OutALimb.asm
@@ -10293,12 +10293,12 @@
   64++9249 82
   65++924A
   66++924A              OutALimbRamp:                          ; Ramp Solid
-  67++924A 04 00 00 00      DEFB 4,0,0,0,0,0,0,0,0
+  67++924A 04 00 00 00      DEFB 4,0,0,0,0,0,0,0,0              ; Ramp Solid
   67++924E 00 00 00 00
   67++9252 00
   68++9253
   69++9253              OutALimbConveyor:                      ; Conveyor Solid
-  70++9253 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0
+  70++9253 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   70++9257 00 00 00 00
   70++925B 00
   71++925C
@@ -10316,7 +10316,7 @@
   83++9264 05               DEFB 5
   84++9265
   85++9265              OutALimbReserved:
-  86++9265 03 05 06 00      DEFB MAGENTA, CYAN, YELLOW, NONE               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+  86++9265 03 05 06 00      DEFB MAGENTA, CYAN, YELLOW, NONE     ; Enemy colors
   87++9269
   88++9269              OutALimbItem:
   89++9269 60 B8 BE 5D      DEFB 96,184,190,93,90,53,42,21
@@ -10329,7 +10329,7 @@
   95++9274 09               DEFB 9		;Room below (None)
   96++9275
   97++9275              OutALimbUnused:
-  98++9275 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  98++9275 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   99++9276
  100++9276              OutALimbEnemy1:
  101++9276 80 02 70 38      DEFB $80, 2, 112, 56, 184        ; [Uccello (41160) - Horizzontal], Guardian = 45, Starts X=112, Y=56, Limit X=84
@@ -10357,9 +10357,9 @@
  115++929D 00
  116++929E
  117++929E              OutALimbPosWilly:
- 118++929E C8 32            db 200, 50                   ; Posizione di Willy
+ 118++929E C8 32            db 200, 50                     ; Posizione di Willy
  119++92A0              OutALimbEnemyColors5_8:
- 120++92A0 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 120++92A0 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/OutALimb.asm
   24+ 92A4                  include "rooms/RescueEsmerelda.asm"             ; ID 14
 # file opened: rooms/RescueEsmerelda.asm
@@ -10439,33 +10439,33 @@
   52++933C 20 20 20 20
   52++9340 20 20 20 20
   53++9344
-  54++9344              RescueEsmereldaBackground:                      ; Background
+  54++9344              RescueEsmereldaBackground:                    ; Background
   55++9344 17 00 00 00      DEFB 23,0,0,0,0,0,0,0,0
   55++9348 00 00 00 00
   55++934C 00
   56++934D
   57++934D              RescueEsmereldaFloor:
-  58++934D 17 03 03 0C      DEFB 23,3,3,12,12,49,50,196,200             ; Floor Solid
+  58++934D 17 03 03 0C      DEFB 23,3,3,12,12,49,50,196,200       ; Floor Solid
   58++9351 0C 31 32 C4
   58++9355 C8
   59++9356
   60++9356              RescueEsmereldaWall:
-  61++9356 04 EE 00 BB      DEFB 4,238,0,187,0,238,0,187,0              ; Wall Solid
+  61++9356 04 EE 00 BB      DEFB 4,238,0,187,0,238,0,187,0   ; Wall Solid
   61++935A 00 EE 00 BB
   61++935E 00
   62++935F
   63++935F              RescueEsmereldaNasty:
-  64++935F 55 D1 E2 C4      DEFB 85,209,226,196,200,209,226,196,200     ; Nastry
+  64++935F 55 D1 E2 C4      DEFB 85,209,226,196,200,209,226,196,200  ; Nastry
   64++9363 C8 D1 E2 C4
   64++9367 C8
   65++9368
   66++9368              RescueEsmereldaRamp:                            ; Ramp Solid
-  67++9368 17 00 00 00      DEFB 23,0,0,0,0,0,0,0,0
+  67++9368 17 00 00 00      DEFB 23,0,0,0,0,0,0,0,0              ; Ramp Solid
   67++936C 00 00 00 00
   67++9370 00
   68++9371
   69++9371              RescueEsmereldaConveyor:                        ; Conveyor Solid
-  70++9371 16 F1 AA F8      DEFB 22,241,170,248,170,0,238,0,187
+  70++9371 16 F1 AA F8      DEFB 22,241,170,248,170,0,238,0,187                      ; Conveyor Solid
   70++9375 AA 00 EE 00
   70++9379 BB
   71++937A
@@ -10483,7 +10483,7 @@
   83++9382 01               DEFB 1
   84++9383
   85++9383              RescueEsmereldaReserved:
-  86++9383 06 04 07 07      DEFB YELLOW, GREEN, WHITE, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+  86++9383 06 04 07 07      DEFB YELLOW, GREEN, WHITE, 7     ; Enemy colors
   87++9387
   88++9387              RescueEsmereldaItem:
   89++9387 FF 49 49 49      DEFB 255,73,73,73,73,73,73,255
@@ -10524,9 +10524,9 @@
  115++93BB 00
  116++93BC
  117++93BC              RescueEsmereldaPosWilly:
- 118++93BC C8 32            db 200, 50                   ; Posizione di Willy
+ 118++93BC C8 32            db 200, 50                     ; Posizione di Willy
  119++93BE              RescueEsmereldaEnemyColors5_8:
- 120++93BE 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 120++93BE 02 03 04 07      DEFB 2, 3, 4, 7     ; Colori per nemici 5-8
 # file closed: rooms/RescueEsmerelda.asm
   25+ 93C2                  include "rooms/IAmSureIHaveSeenThiBefore.asm"   ; ID 15
 # file opened: rooms/IAmSureIHaveSeenThiBefore.asm
@@ -10627,12 +10627,12 @@
   64++9485 55
   65++9486
   66++9486              IAmSureIHaveSeenThiBeforeRamp:                          ; Ramp Solid
-  67++9486 0C 00 00 00      DEFB 12,0,0,0,0,0,0,0,0
+  67++9486 0C 00 00 00      DEFB 12,0,0,0,0,0,0,0,0              ; Ramp Solid
   67++948A 00 00 00 00
   67++948E 00
   68++948F
   69++948F              IAmSureIHaveSeenThiBeforeConveyor:                      ; Conveyor Solid
-  70++948F FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0
+  70++948F FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   70++9493 00 00 00 00
   70++9497 00
   71++9498
@@ -10650,7 +10650,7 @@
   83++94A0 03               DEFB 3
   84++94A1
   85++94A1              IAmSureIHaveSeenThiBeforeReserved:
-  86++94A1 07 03 05 05      DEFB WHITE, MAGENTA, CYAN, CYAN               ; Enemy colors
+  86++94A1 07 03 05 05      DEFB WHITE, MAGENTA, CYAN, CYAN     ; Enemy colors
   87++94A5
   88++94A5              IAmSureIHaveSeenThiBeforeItem:
   89++94A5 18 24 18 2C      DEFB 24,36,24,44,94,94,231,102
@@ -10663,7 +10663,7 @@
   95++94B0 FF           	DEFB BLOCK				;Room below (The Off Licence)
   96++94B1
   97++94B1              IAmSureIHaveSeenThiBeforeUnused:
-  98++94B1 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  98++94B1 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   99++94B2
  100++94B2              IAmSureIHaveSeenThiBeforeEnemy1:
  101++94B2 C0 0B 28 30      DEFB $C0, 11, 40, 48, 96          ; [Soldato (40992) - vertical], Guardian = 4, Starts X=40, Y=48, Limit X=96
@@ -10691,9 +10691,9 @@
  115++94D9 00
  116++94DA
  117++94DA              IAmSureIHaveSeenThiBeforePosWilly:
- 118++94DA E6 32            db 230, 50                   ; Posizione di Willy
+ 118++94DA E6 32            db 230, 50                     ; Posizione di Willy
  119++94DC              IAmSureIHaveSeenThiBeforeEnemyColors5_8:
- 120++94DC 05 00 00 00      DEFB CYAN, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 120++94DC 05 00 00 00      DEFB CYAN, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/IAmSureIHaveSeenThiBefore.asm
   26+ 94E0                  include "rooms/WeMustPerformQuirkafleeg.asm"    ; ID 16
 # file opened: rooms/WeMustPerformQuirkafleeg.asm
@@ -10772,33 +10772,33 @@
   51++9578 6B 61 66 6C
   51++957C 65 65 67 20
   52++9580
-  53++9580              WeMustPerformQuirkafleegBackground:                 ; Background
+  53++9580              WeMustPerformQuirkafleegBackground:                    ; Background
   54++9580 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0
   54++9584 00 00 00 00
   54++9588 00
   55++9589
   56++9589              WeMustPerformQuirkafleegFloor:
-  57++9589 38 33 BB DD      DEFB 56,51,187,221,204,85,153,221,238           ; Floor Solid
+  57++9589 38 33 BB DD      DEFB 56,51,187,221,204,85,153,221,238       ; Floor Solid
   57++958D CC 55 99 DD
   57++9591 EE
   58++9592
   59++9592              WeMustPerformQuirkafleegWall:
-  60++9592 0D 27 F6 00      DEFB 13,39,246,0,220,209,4,119,128              ; Wall Solid
+  60++9592 0D 27 F6 00      DEFB 13,39,246,0,220,209,4,119,128   ; Wall Solid
   60++9596 DC D1 04 77
   60++959A 80
   61++959B
   62++959B              WeMustPerformQuirkafleegNasty:
-  63++959B 45 40 E4 4E      DEFB 69,64,228,78,68,68,68,238,255              ; Nastry
+  63++959B 45 40 E4 4E      DEFB 69,64,228,78,68,68,68,238,255  ; Nastry
   63++959F 44 44 44 EE
   63++95A3 FF
   64++95A4
   65++95A4              WeMustPerformQuirkafleegRamp:                       ; Ramp Solid
-  66++95A4 07 80 40 20      DEFB 7,128,64,32,48,168,100,34,17
+  66++95A4 07 80 40 20      DEFB 7,128,64,32,48,168,100,34,17              ; Ramp Solid
   66++95A8 30 A8 64 22
   66++95AC 11
   67++95AD
   68++95AD              WeMustPerformQuirkafleegConveyor:                   ; Conveyor Solid
-  69++95AD FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0
+  69++95AD FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   69++95B1 00 00 00 00
   69++95B5 00
   70++95B6
@@ -10816,7 +10816,7 @@
   82++95BE 02               DEFB 2
   83++95BF
   84++95BF              WeMustPerformQuirkafleegReserved:
-  85++95BF 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+  85++95BF 04 02 05 07      DEFB 4, 2, 5, 7     ; Enemy colors
   86++95C3
   87++95C3              WeMustPerformQuirkafleegItem:
   88++95C3 18 24 18 2C      DEFB 24,36,24,44,94,94,231,102
@@ -10829,7 +10829,7 @@
   94++95CE FF           	DEFB $FF				;Room below (The Off Licence)
   95++95CF
   96++95CF              WeMustPerformQuirkafleegUnused:
-  97++95CF 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  97++95CF 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   98++95D0
   99++95D0              WeMustPerformQuirkafleegEnemy1:
  100++95D0 80 03 8C 38      DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
@@ -10857,9 +10857,9 @@
  114++95F7 00
  115++95F8
  116++95F8              WeMustPerformQuirkafleegPosWilly:
- 117++95F8 E6 32            db 230, 50                   ; Posizione di Willy
+ 117++95F8 E6 32            db 230, 50                     ; Posizione di Willy
  118++95FA              WeMustPerformQuirkafleegEnemyColors5_8:
- 119++95FA 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 119++95FA 02 03 04 07      DEFB 2, 3, 4, 7     ; Colori per nemici 5-8
 # file closed: rooms/WeMustPerformQuirkafleeg.asm
   27+ 95FE                  include "rooms/UpOnTheBattlements.asm"          ; ID 17
 # file opened: rooms/UpOnTheBattlements.asm
@@ -10959,12 +10959,12 @@
   63++96C1 88
   64++96C2
   65++96C2              UpOnTheBattlementsRamp:                          ; Ramp Solid
-  66++96C2 04 00 00 00      DEFB 4,0,0,0,0,0,0,0,0
+  66++96C2 04 00 00 00      DEFB 4,0,0,0,0,0,0,0,0              ; Ramp Solid
   66++96C6 00 00 00 00
   66++96CA 00
   67++96CB
   68++96CB              UpOnTheBattlementsConveyor:                      ; Conveyor Solid
-  69++96CB 42 28 AA 0A      DEFB 66,40,170,10,0,85,85,85,255
+  69++96CB 42 28 AA 0A      DEFB 66,40,170,10,0,85,85,85,255                      ; Conveyor Solid
   69++96CF 00 55 55 55
   69++96D3 FF
   70++96D4
@@ -10982,7 +10982,7 @@
   82++96DC 02               DEFB 2
   83++96DD
   84++96DD              UpOnTheBattlementsReserved:
-  85++96DD 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+  85++96DD 04 02 05 07      DEFB 4, 2, 5, 7     ; Enemy colors
   86++96E1
   87++96E1              UpOnTheBattlementsItem:
   88++96E1 18 24 18 2C      DEFB 24,36,24,44,94,94,231,102
@@ -10995,7 +10995,7 @@
   94++96EC FF           	DEFB $FF	;Room below (The Off Licence)
   95++96ED
   96++96ED              UpOnTheBattlementsUnused:
-  97++96ED 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  97++96ED 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   98++96EE
   99++96EE              UpOnTheBattlementsEnemy1:
  100++96EE C0 0B 28 28      DEFB $C0, 11, 40, 40, 104           ; [Soldato (40976) - vertical], Guardian = 2, Starts X=88, Y=40, Limit X=104
@@ -11023,9 +11023,9 @@
  114++9715 00
  115++9716
  116++9716              UpOnTheBattlementsPosWilly:
- 117++9716 E6 32            db 230, 50                   ; Posizione di Willy
+ 117++9716 E6 32            db 230, 50                     ; Posizione di Willy
  118++9718              UpOnTheBattlementsEnemyColors5_8:
- 119++9718 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 119++9718 02 03 04 07      DEFB 2, 3, 4, 7     ; Colori per nemici 5-8
 # file closed: rooms/UpOnTheBattlements.asm
   28+ 971C                  include "rooms/OntheRoof.asm"                   ; ID 18
 # file opened: rooms/OntheRoof.asm
@@ -11125,12 +11125,12 @@
   63++97DF CC
   64++97E0
   65++97E0              OntheRoofRamp:                          ; Ramp Solid
-  66++97E0 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0
+  66++97E0 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0              ; Ramp Solid
   66++97E4 00 00 00 00
   66++97E8 00
   67++97E9
   68++97E9              OntheRoofConveyor:                      ; Conveyor Solid
-  69++97E9 0A F0 F0 F0      DEFB 10,240,240,240,255,255,0,0,255
+  69++97E9 0A F0 F0 F0      DEFB 10,240,240,240,255,255,0,0,255                      ; Conveyor Solid
   69++97ED FF FF 00 00
   69++97F1 FF
   70++97F2
@@ -11148,7 +11148,7 @@
   82++97FA 02               DEFB 2
   83++97FB
   84++97FB              OntheRoofReserved:
-  85++97FB 05 00 00 00      DEFB CYAN, NONE, NONE, NONE               ; Enemy colors
+  85++97FB 05 00 00 00      DEFB CYAN, NONE, NONE, NONE     ; Enemy colors
   86++97FF
   87++97FF              OntheRoofItem:
   88++97FF 01 02 05 0A      DEFB 1,2,5,10,84,40,48,72
@@ -11161,7 +11161,7 @@
   94++980A FF           	DEFB $FF					;Room below (The Off Licence)
   95++980B
   96++980B              OntheRoofUnused:
-  97++980B 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  97++980B 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   98++980C
   99++980C              OntheRoofEnemy1:
  100++980C 80 0D 70 68      DEFB $80, 13, 112, 104, 192        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
@@ -11189,9 +11189,9 @@
  114++9833 00
  115++9834
  116++9834              OntheRoofPosWilly:
- 117++9834 C8 32            db 200, 50                   ; Posizione di Willy
+ 117++9834 C8 32            db 200, 50                     ; Posizione di Willy
  118++9836              OntheRoofEnemyColors5_8:
- 119++9836 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 119++9836 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/OntheRoof.asm
   29+ 983A                  include "rooms/TheForgottenAbbey.asm"           ; ID 19
 # file opened: rooms/TheForgottenAbbey.asm
@@ -11291,12 +11291,12 @@
   63++98FD 3C
   64++98FE
   65++98FE              TheForgottenAbbeyRamp:                          ; Ramp Solid
-  66++98FE 07 80 40 E0      DEFB 7,128,64,224,48,168,212,34,137
+  66++98FE 07 80 40 E0      DEFB 7,128,64,224,48,168,212,34,137              ; Ramp Solid
   66++9902 30 A8 D4 22
   66++9906 89
   67++9907
   68++9907              TheForgottenAbbeyConveyor:                      ; Conveyor Solid
-  69++9907 0F 70 55 00      DEFB 15,112,85,0,187,170,170,170,170
+  69++9907 0F 70 55 00      DEFB 15,112,85,0,187,170,170,170,170                      ; Conveyor Solid
   69++990B BB AA AA AA
   69++990F AA
   70++9910
@@ -11314,7 +11314,7 @@
   82++9918 01               DEFB 1
   83++9919
   84++9919              TheForgottenAbbeyReserved:
-  85++9919 04 06 02 07      DEFB GREEN, YELLOW, RED, WHITE               ; Enemy colors
+  85++9919 04 06 02 07      DEFB GREEN, YELLOW, RED, WHITE     ; Enemy colors
   86++991D
   87++991D              TheForgottenAbbeyItem:
   88++991D 18 24 DB DB      DEFB 24,36,219,219,36,24,24,24
@@ -11328,7 +11328,7 @@
   95++9929
   96++9929
   97++9929              TheForgottenAbbeyUnused:
-  98++9929 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  98++9929 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   99++992A
  100++992A              TheForgottenAbbeyEnemy1:
  101++992A 80 16 20 28      DEFB $80, 22, 32, 40, 160        ; Enemy 1 (Frate), horizontal, Starts X=40, Y=128, Limit X=180
@@ -11356,9 +11356,9 @@
  115++9951 F0
  116++9952
  117++9952              TheForgottenAbbeyPosWilly:
- 118++9952 C8 32            db 200, 50                   ; Posizione di Willy
+ 118++9952 C8 32            db 200, 50                     ; Posizione di Willy
  119++9954              TheForgottenAbbeyEnemyColors5_8:
- 120++9954 06 01 04 02      DEFB YELLOW, BLUE, GREEN, RED               ; Colori per nemici 5-8
+ 120++9954 06 01 04 02      DEFB YELLOW, BLUE, GREEN, RED     ; Colori per nemici 5-8
 # file closed: rooms/TheForgottenAbbey.asm
   30+ 9958                  include "rooms/BallRoomEast.asm"                ; ID 20
 # file opened: rooms/BallRoomEast.asm
@@ -11440,33 +11440,33 @@
   53++99F4 20 20 20 20
   54++99F8
   55++99F8              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++99F8              BallRoomEastBackground:
+  56++99F8              BallRoomEastBackground:                    ; Background
   57++99F8 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
   57++99FC 00 00 00 00
   57++9A00 00
   58++9A01
   59++9A01              BallRoomEastFloor:
-  60++9A01 06 AA 55 22      DEFB 6,170,85,34,68,34,68,34,68	    ;Floor Solid
+  60++9A01 06 AA 55 22      DEFB 6,170,85,34,68,34,68,34,68       ; Floor Solid
   60++9A05 44 22 44 22
   60++9A09 44
   61++9A0A
   62++9A0A              BallRoomEastWall:
-  63++9A0A 0F 44 44 FF      DEFB 15,68,68,255,17,17,255,85,170	    ;Wall Solid
+  63++9A0A 0F 44 44 FF      DEFB 15,68,68,255,17,17,255,85,170   ; Wall Solid
   63++9A0E 11 11 FF 55
   63++9A12 AA
   64++9A13
   65++9A13              BallRoomEastNasty:
-  66++9A13 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	    ;Nasty
+  66++9A13 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
   66++9A17 00 00 00 00
   66++9A1B 00
   67++9A1C
   68++9A1C              BallRoomEastRamp:
-  69++9A1C FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Ramp Solid
+  69++9A1C FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0              ; Ramp Solid
   69++9A20 00 00 00 00
   69++9A24 00
   70++9A25
   71++9A25              BallRoomEastConveyor:
-  72++9A25 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+  72++9A25 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++9A29 00 00 00 00
   72++9A2D 00
   73++9A2E
@@ -11488,7 +11488,7 @@
   89++9A37
   90++9A37              ;The next two bytes are copied to 32991, but are not used.
   91++9A37              BallRoomEastReserved:
-  92++9A37 00 03 05 06      DEFB NONE, MAGENTA, CYAN, YELLOW                        ; Enemy colors
+  92++9A37 00 03 05 06      DEFB NONE, MAGENTA, CYAN, YELLOW     ; Enemy colors
   93++9A3B
   94++9A3B              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++9A3B              BallRoomEastItem:
@@ -11503,7 +11503,7 @@
  103++9A46 FF               DEFB BLOCK	        ;Room below (The Off Licence)
  104++9A47
  105++9A47              BallRoomEastUnused:
- 106++9A47 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++9A47 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++9A48
  108++9A48              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++9A48              BallRoomEastEnemy1:
@@ -11535,7 +11535,7 @@
  127++9A70 C8 55            db 200, 85                     ; Posizione di Willy
  128++9A72
  129++9A72              BallRoomEastEnemyColors5_8:
- 130++9A72 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 130++9A72 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/BallRoomEast.asm
   31+ 9A76                  include "rooms/BallRoomWest.asm"                ; ID 21
 # file opened: rooms/BallRoomWest.asm
@@ -11617,33 +11617,33 @@
   53++9B12 20 20 20 20
   54++9B16
   55++9B16              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++9B16              BallRoomWestBackground:
+  56++9B16              BallRoomWestBackground:                    ; Background
   57++9B16 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
   57++9B1A 00 00 00 00
   57++9B1E 00
   58++9B1F
   59++9B1F              BallRoomWestFloor:
-  60++9B1F 32 AA A8 AD      DEFB 50,170,168,173,175,32,170,85,85	    ;Floor Solid
+  60++9B1F 32 AA A8 AD      DEFB 50,170,168,173,175,32,170,85,85       ; Floor Solid
   60++9B23 AF 20 AA 55
   60++9B27 55
   61++9B28
   62++9B28              BallRoomWestWall:
-  63++9B28 23 11 22 88      DEFB 35,17,34,136,17,68,136,34,68	    ;Wall Solid
+  63++9B28 23 11 22 88      DEFB 35,17,34,136,17,68,136,34,68   ; Wall Solid
   63++9B2C 11 44 88 22
   63++9B30 44
   64++9B31
   65++9B31              BallRoomWestNasty:
-  66++9B31 42 28 54 AA      DEFB 66,40,84,170,84,168,84,20,46	    ;Nasty
+  66++9B31 42 28 54 AA      DEFB 66,40,84,170,84,168,84,20,46  ; Nastry
   66++9B35 54 A8 54 14
   66++9B39 2E
   67++9B3A
   68++9B3A              BallRoomWestRamp:
-  69++9B3A 07 C0 C0 30      DEFB 7,192,192,48,176,12,12,3,11	            ;Ramp Solid
+  69++9B3A 07 C0 C0 30      DEFB 7,192,192,48,176,12,12,3,11              ; Ramp Solid
   69++9B3E B0 0C 0C 03
   69++9B42 0B
   70++9B43
   71++9B43              BallRoomWestConveyor:
-  72++9B43 46 FF FF FF      DEFB 70,255,255,255,170,85,24,24,24	            ;Conveyor
+  72++9B43 46 FF FF FF      DEFB 70,255,255,255,170,85,24,24,24                      ; Conveyor Solid
   72++9B47 AA 55 18 18
   72++9B4B 18
   73++9B4C
@@ -11665,7 +11665,7 @@
   89++9B55
   90++9B55              ;The next two bytes are copied to 32991, but are not used.
   91++9B55              BallRoomWestReserved:
-  92++9B55 03 05 03 00      DEFB MAGENTA, CYAN, MAGENTA, NONE                        ; Enemy colors
+  92++9B55 03 05 03 00      DEFB MAGENTA, CYAN, MAGENTA, NONE     ; Enemy colors
   93++9B59
   94++9B59              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++9B59              BallRoomWestItem:
@@ -11680,7 +11680,7 @@
  103++9B64 FF           	DEFB BLOCK					;Room below (The Off Licence)
  104++9B65
  105++9B65              BallRoomWestUnused:
- 106++9B65 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++9B65 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++9B66
  108++9B66              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++9B66              BallRoomWestEnemy1:
@@ -11712,7 +11712,7 @@
  127++9B8E 32 5A            db 50, 90                     ; Posizione di Willy
  128++9B90
  129++9B90              BallRoomWestEnemyColors5_8:
- 130++9B90 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 130++9B90 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/BallRoomWest.asm
   32+ 9B94                  include "rooms/TotheKitchensMainStairway.asm"   ; ID 22
 # file opened: rooms/TotheKitchensMainStairway.asm
@@ -11794,33 +11794,33 @@
   53++9C30 72 77 61 79
   54++9C34
   55++9C34              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++9C34              TotheKitchensMainStairwayBackground:
+  56++9C34              TotheKitchensMainStairwayBackground:                    ; Background
   57++9C34 0F 00 00 00      DEFB 15,0,0,0,0,0,0,0,0	            ;Background
   57++9C38 00 00 00 00
   57++9C3C 00
   58++9C3D
   59++9C3D              TotheKitchensMainStairwayFloor:
-  60++9C3D 0D FF FF 00      DEFB 13,255,255,0,255,0,0,0,0	    ;Floor Solid
+  60++9C3D 0D FF FF 00      DEFB 13,255,255,0,255,0,0,0,0       ; Floor Solid
   60++9C41 FF 00 00 00
   60++9C45 00
   61++9C46
   62++9C46              TotheKitchensMainStairwayWall:
-  63++9C46 3A 00 15 BF      DEFB 58,0,21,191,21,0,81,251,81	    ;Wall Solid
+  63++9C46 3A 00 15 BF      DEFB 58,0,21,191,21,0,81,251,81   ; Wall Solid
   63++9C4A 15 00 51 FB
   63++9C4E 51
   64++9C4F
   65++9C4F              TotheKitchensMainStairwayNasty:
-  66++9C4F 4D 18 5A BD      DEFB 77,24,90,189,25,126,153,36,36	    ;Nasty
+  66++9C4F 4D 18 5A BD      DEFB 77,24,90,189,25,126,153,36,36  ; Nastry
   66++9C53 19 7E 99 24
   66++9C57 24
   67++9C58
   68++9C58              TotheKitchensMainStairwayRamp:
-  69++9C58 0F C0 80 30      DEFB 15,192,128,48,32,12,8,3,2	            ;Ramp Solid
+  69++9C58 0F C0 80 30      DEFB 15,192,128,48,32,12,8,3,2              ; Ramp Solid
   69++9C5C 20 0C 08 03
   69++9C60 02
   70++9C61
   71++9C61              TotheKitchensMainStairwayConveyor:
-  72++9C61 6B F0 AA 78      DEFB 107,240,170,120,255,170,85,170,85            ;Conveyor
+  72++9C61 6B F0 AA 78      DEFB 107,240,170,120,255,170,85,170,85                      ; Conveyor Solid
   72++9C65 FF AA 55 AA
   72++9C69 55
   73++9C6A
@@ -11842,7 +11842,7 @@
   89++9C73
   90++9C73              ;The next two bytes are copied to 32991, but are not used.
   91++9C73              TotheKitchensMainStairwayReserved:
-  92++9C73 00 06 05 03      DEFB NONE, YELLOW, CYAN, MAGENTA                        ; Enemy colors
+  92++9C73 00 06 05 03      DEFB NONE, YELLOW, CYAN, MAGENTA     ; Enemy colors
   93++9C77
   94++9C77              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++9C77              TotheKitchensMainStairwayItem:
@@ -11857,7 +11857,7 @@
  103++9C82 FF           	DEFB BLOCK				;Room below (The Off Licence)
  104++9C83
  105++9C83              TotheKitchensMainStairwayUnused:
- 106++9C83 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++9C83 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++9C84
  108++9C84              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++9C84              TotheKitchensMainStairwayEnemy1:
@@ -11889,7 +11889,7 @@
  127++9CAC C8 5A            db 200, 90                     ; Posizione di Willy
  128++9CAE
  129++9CAE              TotheKitchensMainStairwayEnemyColors5_8:
- 130++9CAE 04 06 03 07      DEFB GREEN, YELLOW, MAGENTA, WHITE               ; Colori per nemici 5-8
+ 130++9CAE 04 06 03 07      DEFB GREEN, YELLOW, MAGENTA, WHITE     ; Colori per nemici 5-8
 # file closed: rooms/TotheKitchensMainStairway.asm
   33+ 9CB2                  include "rooms/TheKitchen.asm"                  ; ID 23
 # file opened: rooms/TheKitchen.asm
@@ -11971,33 +11971,33 @@
   53++9D4E 20 20 20 20
   54++9D52
   55++9D52              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++9D52              TheKitchenBackground:
+  56++9D52              TheKitchenBackground:                    ; Background
   57++9D52 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0	            ;Background
   57++9D56 00 00 00 00
   57++9D5A 00
   58++9D5B
   59++9D5B              TheKitchenFloor:
-  60++9D5B 04 FE 01 7D      DEFB 4,254,1,125,133,129,129,129,1	    ;Floor Solid
+  60++9D5B 04 FE 01 7D      DEFB 4,254,1,125,133,129,129,129,1       ; Floor Solid
   60++9D5F 85 81 81 81
   60++9D63 01
   61++9D64
   62++9D64              TheKitchenWall:
-  63++9D64 4D 42 A5 5A      DEFB 77,66,165,90,36,36,90,165,66	    ;Wall Solid
+  63++9D64 4D 42 A5 5A      DEFB 77,66,165,90,36,36,90,165,66   ; Wall Solid
   63++9D68 24 24 5A A5
   63++9D6C 42
   64++9D6D
   65++9D6D              TheKitchenNasty:
-  66++9D6D FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	    ;Nasty
+  66++9D6D FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
   66++9D71 00 00 00 00
   66++9D75 00
   67++9D76
   68++9D76              TheKitchenRamp:
-  69++9D76 47 03 00 0C      DEFB 71,3,0,12,0,48,0,192,0	            ;Ramp Solid
+  69++9D76 47 03 00 0C      DEFB 71,3,0,12,0,48,0,192,0              ; Ramp Solid
   69++9D7A 00 30 00 C0
   69++9D7E 00
   70++9D7F
   71++9D7F              TheKitchenConveyor:
-  72++9D7F FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0            ;Conveyor
+  72++9D7F FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++9D83 00 00 00 00
   72++9D87 00
   73++9D88
@@ -12019,7 +12019,7 @@
   89++9D91
   90++9D91              ;The next two bytes are copied to 32991, but are not used.
   91++9D91              TheKitchenReserved:
-  92++9D91 03 06 04 03      DEFB MAGENTA, YELLOW, GREEN, MAGENTA                        ; Enemy colors
+  92++9D91 03 06 04 03      DEFB MAGENTA, YELLOW, GREEN, MAGENTA     ; Enemy colors
   93++9D95
   94++9D95              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++9D95              TheKitchenItem:
@@ -12034,7 +12034,7 @@
  103++9DA0 FF           	DEFB BLOCK	;Room below (The Off Licence)
  104++9DA1
  105++9DA1              TheKitchenUnused:
- 106++9DA1 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++9DA1 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++9DA2
  108++9DA2              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++9DA2              TheKitchenEnemy1:
@@ -12066,7 +12066,7 @@
  127++9DCA C8 5A            db 200, 90                     ; Posizione di Willy
  128++9DCC
  129++9DCC              TheKitchenEnemyColors5_8:
- 130++9DCC 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 130++9DCC 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/TheKitchen.asm
   34+ 9DD0                  include "rooms/WestofKitchen.asm"               ; ID 24
 # file opened: rooms/WestofKitchen.asm
@@ -12325,33 +12325,33 @@
   53++9F8A 20 20 20 20
   54++9F8E
   55++9F8E              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++9F8E              ColdStoreBackground:
+  56++9F8E              ColdStoreBackground:                    ; Background
   57++9F8E 0E 00 00 00      DEFB 14,0,0,0,0,0,0,0,0	            ;Background
   57++9F92 00 00 00 00
   57++9F96 00
   58++9F97
   59++9F97              ColdStoreFloor:
-  60++9F97 0D FF FF 55      DEFB 13,255,255,85,170,85,170,0,0	    ;Floor Solid
+  60++9F97 0D FF FF 55      DEFB 13,255,255,85,170,85,170,0,0       ; Floor Solid
   60++9F9B AA 55 AA 00
   60++9F9F 00
   61++9FA0
   62++9FA0              ColdStoreWall:
-  63++9FA0 22 92 52 4A      DEFB 34,146,82,74,73,41,37,164,146	    ;Wall Solid
+  63++9FA0 22 92 52 4A      DEFB 34,146,82,74,73,41,37,164,146   ; Wall Solid
   63++9FA4 49 29 25 A4
   63++9FA8 92
   64++9FA9
   65++9FA9              ColdStoreNasty:
-  66++9FA9 4F 20 22 14      DEFB 79,32,34,20,216,27,40,68,4	    ;Nasty
+  66++9FA9 4F 20 22 14      DEFB 79,32,34,20,216,27,40,68,4  ; Nastry
   66++9FAD D8 1B 28 44
   66++9FB1 04
   67++9FB2
   68++9FB2              ColdStoreRamp:
-  69++9FB2 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Ramp Solid
+  69++9FB2 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0              ; Ramp Solid
   69++9FB6 00 00 00 00
   69++9FBA 00
   70++9FBB
   71++9FBB              ColdStoreConveyor:
-  72++9FBB FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0           ;Conveyor
+  72++9FBB FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++9FBF 00 00 00 00
   72++9FC3 00
   73++9FC4
@@ -12373,7 +12373,7 @@
   89++9FCD
   90++9FCD              ;The next two bytes are copied to 32991, but are not used.
   91++9FCD              ColdStoreReserved:
-  92++9FCD 06 07 05 03      DEFB YELLOW, WHITE, CYAN, MAGENTA                        ; Enemy colors
+  92++9FCD 06 07 05 03      DEFB YELLOW, WHITE, CYAN, MAGENTA     ; Enemy colors
   93++9FD1
   94++9FD1              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++9FD1              ColdStoreItem:
@@ -12388,7 +12388,7 @@
  103++9FDC FF           	DEFB BLOCK					;Room below (The Off Licence)
  104++9FDD
  105++9FDD              ColdStoreUnused:
- 106++9FDD 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++9FDD 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++9FDE
  108++9FDE              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++9FDE              ColdStoreEnemy1:
@@ -12420,7 +12420,7 @@
  127++A006 C8 65            db 200, 101                     ; Posizione di Willy
  128++A008
  129++A008              ColdStoreEnemyColors5_8:
- 130++A008 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 130++A008 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/ColdStore.asm
   36+ A00C                  include "rooms/EastWallBase.asm"                 ; ID 26
 # file opened: rooms/EastWallBase.asm
@@ -12502,33 +12502,33 @@
   53++A0A8 20 20 20 20
   54++A0AC
   55++A0AC              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++A0AC              EastWallBaseBackground:
+  56++A0AC              EastWallBaseBackground:                    ; Background
   57++A0AC 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0	            ;Background
   57++A0B0 00 00 00 00
   57++A0B4 00
   58++A0B5
   59++A0B5              EastWallBaseFloor:
-  60++A0B5 05 5B A4 A4      DEFB 5,91,164,164,85,10,0,0,0	    ;Floor Solid
+  60++A0B5 05 5B A4 A4      DEFB 5,91,164,164,85,10,0,0,0       ; Floor Solid
   60++A0B9 55 0A 00 00
   60++A0BD 00
   61++A0BE
   62++A0BE              EastWallBaseWall:
-  63++A0BE 26 59 25 26      DEFB 38,89,37,38,217,41,214,84,150	    ;Wall Solid
+  63++A0BE 26 59 25 26      DEFB 38,89,37,38,217,41,214,84,150   ; Wall Solid
   63++A0C2 D9 29 D6 54
   63++A0C6 96
   64++A0C7
   65++A0C7              EastWallBaseNasty:
-  66++A0C7 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	    ;Nasty
+  66++A0C7 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
   66++A0CB 00 00 00 00
   66++A0CF 00
   67++A0D0
   68++A0D0              EastWallBaseRamp:
-  69++A0D0 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Ramp Solid
+  69++A0D0 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0              ; Ramp Solid
   69++A0D4 00 00 00 00
   69++A0D8 00
   70++A0D9
   71++A0D9              EastWallBaseConveyor:
-  72++A0D9 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0           ;Conveyor
+  72++A0D9 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
   72++A0DD 00 00 00 00
   72++A0E1 00
   73++A0E2
@@ -12550,7 +12550,7 @@
   89++A0EB
   90++A0EB              ;The next two bytes are copied to 32991, but are not used.
   91++A0EB              EastWallBaseReserved:
-  92++A0EB 02 03 00 00      DEFB RED, MAGENTA, NONE, NONE                        ; Enemy colors
+  92++A0EB 02 03 00 00      DEFB RED, MAGENTA, NONE, NONE     ; Enemy colors
   93++A0EF
   94++A0EF              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++A0EF              EastWallBaseItem:
@@ -12565,7 +12565,7 @@
  103++A0FA 14           	DEFB 20					;Room below (Ballroom East)
  104++A0FB
  105++A0FB              EastWallBaseUnused:
- 106++A0FB 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 106++A0FB 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++A0FC
  108++A0FC              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A0FC              EastWallBaseEnemy1:
@@ -12597,7 +12597,7 @@
  127++A124 14 14            db 20, 20                     ; Posizione di Willy
  128++A126
  129++A126              EastWallBaseEnemyColors5_8:
- 130++A126 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 130++A126 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/EastWallBase.asm
   37+ A12A
   38+ A12A
@@ -12676,33 +12676,33 @@
   48++A1C6 20 20 20 20
   49++A1CA
   50++A1CA              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  51++A1CA              TheBathroomBackground:
+  51++A1CA              TheBathroomBackground:                    ; Background
   52++A1CA 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
   52++A1CE 00 00 00 00
   52++A1D2 00
   53++A1D3
   54++A1D3              TheBathroomFloor:
-  55++A1D3 16 00 40 09      DEFB 22,0,64,9,100,146,45,150,255	    ;Floor Solid
+  55++A1D3 16 00 40 09      DEFB 22,0,64,9,100,146,45,150,255       ; Floor Solid
   55++A1D7 64 92 2D 96
   55++A1DB FF
   56++A1DC
   57++A1DC              TheBathroomWall:
-  58++A1DC 0E 1F AA 00      DEFB 14,31,170,0,85,248,85,0,170	    ;Wall Solid
+  58++A1DC 0E 1F AA 00      DEFB 14,31,170,0,85,248,85,0,170   ; Wall Solid
   58++A1E0 55 F8 55 00
   58++A1E4 AA
   59++A1E5
   60++A1E5              TheBathroomNasty:
-  61++A1E5 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0	            ;Nasty
+  61++A1E5 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
   61++A1E9 00 00 00 00
   61++A1ED 00
   62++A1EE
   63++A1EE              TheBathroomRamp:
-  64++A1EE 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0	            ;Ramp Solid
+  64++A1EE 07 03 00 0C      DEFB 7,3,0,12,0,48,0,192,0              ; Ramp Solid
   64++A1F2 00 30 00 C0
   64++A1F6 00
   65++A1F7
   66++A1F7              TheBathroomConveyor:
-  67++A1F7 3D A5 00 00      DEFB 61,165,0,0,0,0,0,0,255	            ;Conveyor
+  67++A1F7 3D A5 00 00      DEFB 61,165,0,0,0,0,0,0,255                      ; Conveyor Solid
   67++A1FB 00 00 00 00
   67++A1FF FF
   68++A200
@@ -12724,7 +12724,7 @@
   84++A209
   85++A209              ;The next two bytes are copied to 32991, but are not used.
   86++A209              TheBathroomReserved:
-  87++A209 04 00 00 00      DEFB 4, 0, 0, 0                         ; Enemy colors: all WHITE (7)
+  87++A209 04 00 00 00      DEFB 4, 0, 0, 0     ; Enemy colors
   88++A20D
   89++A20D              ;The next eight bytes are copied to 32993 and define the item graphic.
   90++A20D              TheBathroomItem:
@@ -12739,7 +12739,7 @@
   98++A218 1B               DEFB 27                                 ;Room below (The Chapel)
   99++A219
  100++A219              TheBathroomUnused:
- 101++A219 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+ 101++A219 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  102++A21A
  103++A21A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  104++A21A              TheBathroomEnemy1:
@@ -12768,9 +12768,9 @@
  119++A241 00
  120++A242
  121++A242              TheBathroomPosWilly:
- 122++A242 C8 5A            db 200, 90                  ; Posizione di Willy
+ 122++A242 C8 5A            db 200, 90                     ; Posizione di Willy
  123++A244              TheBathroomEnemyColors5_8:
- 124++A244 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 124++A244 02 03 04 07      DEFB 2, 3, 4, 7     ; Colori per nemici 5-8
 # file closed: rooms/TheBathroom.asm
   40+ A248                  include "rooms/MasterBedRoom.asm"               ; ID 35
 # file opened: rooms/MasterBedRoom.asm
@@ -13039,12 +13039,12 @@
   59++A429 28
   60++A42A
   61++A42A              UnderTheDriveRamp:                          ; Ramp Solid
-  62++A42A 07 80 40 A0      DEFB 7,128,64,160,80,168,84,170,85
+  62++A42A 07 80 40 A0      DEFB 7,128,64,160,80,168,84,170,85              ; Ramp Solid
   62++A42E 50 A8 54 AA
   62++A432 55
   63++A433
   64++A433              UnderTheDriveConveyor:                      ; Conveyor Solid
-  65++A433 02 E0 AA F8      DEFB 2,224,170,248,0,255,255,102,102
+  65++A433 02 E0 AA F8      DEFB 2,224,170,248,0,255,255,102,102                      ; Conveyor Solid
   65++A437 00 FF FF 66
   65++A43B 66
   66++A43C
@@ -13062,7 +13062,7 @@
   78++A444 04               DEFB 4
   79++A445
   80++A445              UnderTheDriveReserved:
-  81++A445 04 02 05 07      DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+  81++A445 04 02 05 07      DEFB 4, 2, 5, 7     ; Enemy colors
   82++A449
   83++A449              UnderTheDriveItem:
   84++A449 81 64 CD 0F      DEFB 129,100,205,15,97,218,51,26
@@ -13075,7 +13075,7 @@
   90++A454 FF           	DEFB $FF					;Room below (The Off Licence)
   91++A455
   92++A455              UnderTheDriveUnused:
-  93++A455 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+  93++A455 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   94++A456
   95++A456              UnderTheDriveEnemy1:
   96++A456 80 03 8C 38      DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
@@ -13103,9 +13103,9 @@
  110++A47D 00
  111++A47E
  112++A47E              UnderTheDrivePosWilly:
- 113++A47E 88 68            db 136, 104                   ; Posizione di Willy
+ 113++A47E 88 68            db 136, 104                     ; Posizione di Willy
  114++A480              UnderTheDriveEnemyColors5_8:
- 115++A480 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 115++A480 02 03 04 07      DEFB 2, 3, 4, 7     ; Colori per nemici 5-8
 # file closed: rooms/UnderTheDrive.asm
   42+ A484
   43+ A484                  org 40968

@@ -52,23 +52,23 @@ TheBridgeTile:
     DEFM "         The Bridge             "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-TheBridgeBackground:
+TheBridgeBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	                ;Background
 
 TheBridgeFloor:
-    DEFB 68,255,255,253,187,214,114,96,64	    ;Floor Solid
+    DEFB 68,255,255,253,187,214,114,96,64       ; Floor Solid
 
 TheBridgeWall:
-    DEFB 70,34,119,34,136,34,119,34,136	        ;Wall Solid
+    DEFB 70,34,119,34,136,34,119,34,136   ; Wall Solid
 
 TheBridgeNasty:
-    DEFB 47,3,132,72,48,3,132,72,48	            ;Nasty
+    DEFB 47,3,132,72,48,3,132,72,48  ; Nastry
 
 TheBridgeRamp:
-    DEFB 7,3,3,12,13,50,55,194,200	            ;Ramp Solid
+    DEFB 7,3,3,12,13,50,55,194,200              ; Ramp Solid
 
 TheBridgeConveyor:
-    DEFB 44,1,64,4,70,79,121,240,249	        ;Conveyor
+    DEFB 44,1,64,4,70,79,121,240,249                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TheBridgeConveyorData:
@@ -88,7 +88,7 @@ TheBridgeBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheBridgeReserved:
-    DEFB RED, MAGENTA, GREEN, NONE           ; Enemy colors
+    DEFB RED, MAGENTA, GREEN, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheBridgeItem:
@@ -102,7 +102,7 @@ TheBridgeDirection:
     DEFB BLOCK                              ; Room below (None)
 
 TheBridgeUnused:
-    DEFB $00                                  ; Padding byte to keep Enemy1 offset at 240
+    DEFB $00                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBridgeEnemy1:
@@ -123,7 +123,7 @@ TheBridgeEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheBridgePosWilly:
-    db 136, 76                   ; Posizione di Willy
+    db 136, 76                     ; Posizione di Willy
 
 TheBridgeEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE  ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

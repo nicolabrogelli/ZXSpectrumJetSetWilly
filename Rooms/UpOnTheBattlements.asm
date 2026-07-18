@@ -63,10 +63,10 @@ UpOnTheBattlementsNasty:
     DEFB 32,74,42,26,72,108,106,41,136  ; Nastry
 
 UpOnTheBattlementsRamp:                          ; Ramp Solid
-    DEFB 4,0,0,0,0,0,0,0,0              
+    DEFB 4,0,0,0,0,0,0,0,0              ; Ramp Solid
 
 UpOnTheBattlementsConveyor:                      ; Conveyor Solid
-    DEFB 66,40,170,10,0,85,85,85,255
+    DEFB 66,40,170,10,0,85,85,85,255                      ; Conveyor Solid
 
 UpOnTheBattlementsConveyorData:
     DEFB 0
@@ -82,7 +82,7 @@ UpOnTheBattlementsBorderColor:
     DEFB 2
 
 UpOnTheBattlementsReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB 4, 2, 5, 7     ; Enemy colors
 
 UpOnTheBattlementsItem:
     DEFB 24,36,24,44,94,94,231,102
@@ -94,7 +94,7 @@ UpOnTheBattlementsDirection:
 	DEFB $FF	;Room below (The Off Licence)
 
 UpOnTheBattlementsUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 UpOnTheBattlementsEnemy1:
     DEFB $C0, 11, 40, 40, 104           ; [Soldato (40976) - vertical], Guardian = 2, Starts X=88, Y=40, Limit X=104
@@ -114,6 +114,6 @@ UpOnTheBattlementsEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 UpOnTheBattlementsPosWilly:
-    db 230, 50                   ; Posizione di Willy
+    db 230, 50                     ; Posizione di Willy
 UpOnTheBattlementsEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB 2, 3, 4, 7     ; Colori per nemici 5-8

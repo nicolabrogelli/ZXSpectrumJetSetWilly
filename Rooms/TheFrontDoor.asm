@@ -53,23 +53,23 @@ TheFrontDoorTile:
     DEFM "         The Front Door         "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-TheFrontDoorBackground:
+TheFrontDoorBackground:                    ; Background
     DEFB 47,0,0,0,0,0,0,0,0	            		;Background
 
 TheFrontDoorFloor:
-    DEFB 71,255,170,119,170,119,170,85,170	    ;Floor Solid
+    DEFB 71,255,170,119,170,119,170,85,170       ; Floor Solid
 
 TheFrontDoorWall:
-    DEFB 58,32,16,14,193,48,9,198,32	    	;Wall Solid
+    DEFB 58,32,16,14,193,48,9,198,32   ; Wall Solid
 
 TheFrontDoorNasty:
-    DEFB 255,0,0,0,0,0,0,0,0	    			;Nasty
+    DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
 
 TheFrontDoorRamp:
-    DEFB 47,192,64,176,80,172,84,171,85	        ;Ramp Solid
+    DEFB 47,192,64,176,80,172,84,171,85              ; Ramp Solid
 
 TheFrontDoorConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TheFrontDoorConveyorData:
@@ -89,7 +89,7 @@ TheFrontDoorBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheFrontDoorReserved:
-    DEFB NONE, NONE, NONE, NONE                         ; Enemy colors: all WHITE (7)
+    DEFB NONE, NONE, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheFrontDoorItem:
@@ -103,7 +103,7 @@ TheFrontDoorDirection:
 	DEFB 5									;Room below (The Security Guard)
 
 TheFrontDoorUnused:
-    DEFB 0                                  ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheFrontDoorEnemy1:
@@ -124,6 +124,6 @@ TheFrontDoorEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheFrontDoorPosWilly:
-    db 50, 20                   ; Posizione di Willy
+    db 50, 20                     ; Posizione di Willy
 TheFrontDoorEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

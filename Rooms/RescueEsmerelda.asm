@@ -51,23 +51,23 @@ RescueEsmereldaLayout:
 RescueEsmereldaTile:
     DEFM "        Rescue Esmerelda        "
 
-RescueEsmereldaBackground:                      ; Background
+RescueEsmereldaBackground:                    ; Background
     DEFB 23,0,0,0,0,0,0,0,0
 
 RescueEsmereldaFloor:
-    DEFB 23,3,3,12,12,49,50,196,200             ; Floor Solid
+    DEFB 23,3,3,12,12,49,50,196,200       ; Floor Solid
 
 RescueEsmereldaWall:
-    DEFB 4,238,0,187,0,238,0,187,0              ; Wall Solid
+    DEFB 4,238,0,187,0,238,0,187,0   ; Wall Solid
 
 RescueEsmereldaNasty:
-    DEFB 85,209,226,196,200,209,226,196,200     ; Nastry
+    DEFB 85,209,226,196,200,209,226,196,200  ; Nastry
 
 RescueEsmereldaRamp:                            ; Ramp Solid
-    DEFB 23,0,0,0,0,0,0,0,0              
+    DEFB 23,0,0,0,0,0,0,0,0              ; Ramp Solid
 
 RescueEsmereldaConveyor:                        ; Conveyor Solid
-    DEFB 22,241,170,248,170,0,238,0,187
+    DEFB 22,241,170,248,170,0,238,0,187                      ; Conveyor Solid
 
 RescueEsmereldaConveyorData:
     DEFB 1
@@ -83,7 +83,7 @@ RescueEsmereldaBorderColor:
     DEFB 1
 
 RescueEsmereldaReserved:
-    DEFB YELLOW, GREEN, WHITE, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB YELLOW, GREEN, WHITE, 7     ; Enemy colors
 
 RescueEsmereldaItem:
     DEFB 255,73,73,73,73,73,73,255
@@ -115,6 +115,6 @@ RescueEsmereldaEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 RescueEsmereldaPosWilly:
-    db 200, 50                   ; Posizione di Willy
+    db 200, 50                     ; Posizione di Willy
 RescueEsmereldaEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB 2, 3, 4, 7     ; Colori per nemici 5-8

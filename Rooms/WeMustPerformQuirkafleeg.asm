@@ -50,23 +50,23 @@ WeMustPerformQuirkafleegLayout:
 WeMustPerformQuirkafleegTile:
     DEFM "  We must perform a Quirkafleeg "
 
-WeMustPerformQuirkafleegBackground:                 ; Background
+WeMustPerformQuirkafleegBackground:                    ; Background
     DEFB 7,0,0,0,0,0,0,0,0
 
 WeMustPerformQuirkafleegFloor:
-    DEFB 56,51,187,221,204,85,153,221,238           ; Floor Solid
+    DEFB 56,51,187,221,204,85,153,221,238       ; Floor Solid
 
 WeMustPerformQuirkafleegWall:
-    DEFB 13,39,246,0,220,209,4,119,128              ; Wall Solid
+    DEFB 13,39,246,0,220,209,4,119,128   ; Wall Solid
 
 WeMustPerformQuirkafleegNasty:
-    DEFB 69,64,228,78,68,68,68,238,255              ; Nastry
+    DEFB 69,64,228,78,68,68,68,238,255  ; Nastry
 
 WeMustPerformQuirkafleegRamp:                       ; Ramp Solid
-    DEFB 7,128,64,32,48,168,100,34,17              
+    DEFB 7,128,64,32,48,168,100,34,17              ; Ramp Solid
 
 WeMustPerformQuirkafleegConveyor:                   ; Conveyor Solid
-    DEFB 255,0,0,0,0,0,0,0,0
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 WeMustPerformQuirkafleegConveyorData:
     DEFB 0
@@ -82,7 +82,7 @@ WeMustPerformQuirkafleegBorderColor:
     DEFB 2
 
 WeMustPerformQuirkafleegReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB 4, 2, 5, 7     ; Enemy colors
 
 WeMustPerformQuirkafleegItem:
     DEFB 24,36,24,44,94,94,231,102
@@ -94,7 +94,7 @@ WeMustPerformQuirkafleegDirection:
 	DEFB $FF				;Room below (The Off Licence)
 
 WeMustPerformQuirkafleegUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 WeMustPerformQuirkafleegEnemy1:
     DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
@@ -114,6 +114,6 @@ WeMustPerformQuirkafleegEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 WeMustPerformQuirkafleegPosWilly:
-    db 230, 50                   ; Posizione di Willy
+    db 230, 50                     ; Posizione di Willy
 WeMustPerformQuirkafleegEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB 2, 3, 4, 7     ; Colori per nemici 5-8

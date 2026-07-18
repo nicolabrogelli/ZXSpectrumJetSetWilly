@@ -53,23 +53,23 @@ TheHallTile:
     DEFM "            The Hall            "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-TheHallBackground:
+TheHallBackground:                    ; Background
     DEFB 7,0,0,0,0,0,0,0,0	            		;Background
 
 TheHallFloor:
-    DEFB 71,255,170,119,170,119,170,85,170	    ;Floor Solid
+    DEFB 71,255,170,119,170,119,170,85,170       ; Floor Solid
 
 TheHallWall:
-    DEFB 58,32,16,14,193,48,9,198,32	    	;Wall Solid
+    DEFB 58,32,16,14,193,48,9,198,32   ; Wall Solid
 
 TheHallNasty:
-    DEFB 68,136,169,169,187,191,191,191,94	     ;Nasty
+    DEFB 68,136,169,169,187,191,191,191,94  ; Nastry
 
 TheHallRamp:
-    DEFB 7,192,192,48,48,12,12,3,3	        ;Ramp Solid
+    DEFB 7,192,192,48,48,12,12,3,3              ; Ramp Solid
 
 TheHallConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TheHallConveyorData:
@@ -89,7 +89,7 @@ TheHallBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheHallReserved:
-    DEFB RED, YELLOW, YELLOW, NONE                         ; Enemy colors
+    DEFB RED, YELLOW, YELLOW, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheHallItem:
@@ -103,7 +103,7 @@ TheHallDirection:
     DEFB BLOCK	                        ;Room below (The Off Licence)
 
 TheHallUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheHallEnemy1:
@@ -124,7 +124,7 @@ TheHallEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheHallPosWilly:
-    db 50, 20                   ; Posizione di Willy
+    db 50, 20                     ; Posizione di Willy
     
 TheHallEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

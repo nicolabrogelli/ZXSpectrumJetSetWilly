@@ -53,23 +53,23 @@ CuckoosNestTile:
     DEFM "         Cuckoo's Nest          "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-CuckoosNestBackground:
+CuckoosNestBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	            ;Background
 
 CuckoosNestFloor:
-    DEFB 4,4,3,201,216,48,54,35,1	    ;Floor Solid
+    DEFB 4,4,3,201,216,48,54,35,1       ; Floor Solid
 
 CuckoosNestWall:
-    DEFB 22,255,96,14,240,3,60,199,56	    ;Wall Solid
+    DEFB 22,255,96,14,240,3,60,199,56   ; Wall Solid
 
 CuckoosNestNasty:
-    DEFB 6,194,52,11,68,136,11,48,8	    ;Nasty
+    DEFB 6,194,52,11,68,136,11,48,8  ; Nastry
 
 CuckoosNestRamp:
-    DEFB 7,3,0,12,0,48,0,192,0	            ;Ramp Solid
+    DEFB 7,3,0,12,0,48,0,192,0              ; Ramp Solid
 
 CuckoosNestConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 CuckoosNestConveyorData:
@@ -89,7 +89,7 @@ CuckoosNestBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 CuckoosNestReserved:
-    DEFB CYAN, MAGENTA, WHITE, NONE                         ; Enemy colors: all WHITE (7)
+    DEFB CYAN, MAGENTA, WHITE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 CuckoosNestItem:
@@ -103,7 +103,7 @@ CuckoosNestDirection:
 	DEFB 2		;Room below (Under the MegaTree)
 
 CuckoosNestUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 CuckoosNestEnemy1:
@@ -124,7 +124,7 @@ CuckoosNestEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 CuckoosNestPosWilly:
-    db 30, 80                   ; Posizione di Willy
+    db 30, 80                     ; Posizione di Willy
 
 CuckoosNestEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

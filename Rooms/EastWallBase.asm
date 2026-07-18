@@ -53,23 +53,23 @@ EastWallBaseTile:
     DEFM "         East Wall Base         "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-EastWallBaseBackground:
+EastWallBaseBackground:                    ; Background
     DEFB 7,0,0,0,0,0,0,0,0	            ;Background
 
 EastWallBaseFloor:
-    DEFB 5,91,164,164,85,10,0,0,0	    ;Floor Solid
+    DEFB 5,91,164,164,85,10,0,0,0       ; Floor Solid
 
 EastWallBaseWall:
-    DEFB 38,89,37,38,217,41,214,84,150	    ;Wall Solid
+    DEFB 38,89,37,38,217,41,214,84,150   ; Wall Solid
 
 EastWallBaseNasty:
-    DEFB 255,0,0,0,0,0,0,0,0	    ;Nasty
+    DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
 
 EastWallBaseRamp:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Ramp Solid
+    DEFB 255,0,0,0,0,0,0,0,0              ; Ramp Solid
 
 EastWallBaseConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0           ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 EastWallBaseConveyorData:
@@ -89,7 +89,7 @@ EastWallBaseBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 EastWallBaseReserved:
-    DEFB RED, MAGENTA, NONE, NONE                        ; Enemy colors
+    DEFB RED, MAGENTA, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 EastWallBaseItem:
@@ -103,7 +103,7 @@ EastWallBaseDirection:
 	DEFB 20					;Room below (Ballroom East)
 
 EastWallBaseUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 EastWallBaseEnemy1:
@@ -127,4 +127,4 @@ EastWallBasePosWilly:
     db 20, 20                     ; Posizione di Willy
     
 EastWallBaseEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

@@ -53,23 +53,23 @@ TheKitchenTile:
     DEFM "          The Kitchen           "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-TheKitchenBackground:
+TheKitchenBackground:                    ; Background
     DEFB 7,0,0,0,0,0,0,0,0	            ;Background
 
 TheKitchenFloor:
-    DEFB 4,254,1,125,133,129,129,129,1	    ;Floor Solid
+    DEFB 4,254,1,125,133,129,129,129,1       ; Floor Solid
 
 TheKitchenWall:
-    DEFB 77,66,165,90,36,36,90,165,66	    ;Wall Solid
+    DEFB 77,66,165,90,36,36,90,165,66   ; Wall Solid
 
 TheKitchenNasty:
-    DEFB 255,0,0,0,0,0,0,0,0	    ;Nasty
+    DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
 
 TheKitchenRamp:
-    DEFB 71,3,0,12,0,48,0,192,0	            ;Ramp Solid
+    DEFB 71,3,0,12,0,48,0,192,0              ; Ramp Solid
 
 TheKitchenConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0            ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TheKitchenConveyorData:
@@ -89,7 +89,7 @@ TheKitchenBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheKitchenReserved:
-    DEFB MAGENTA, YELLOW, GREEN, MAGENTA                        ; Enemy colors
+    DEFB MAGENTA, YELLOW, GREEN, MAGENTA     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheKitchenItem:
@@ -103,7 +103,7 @@ TheKitchenDirection:
 	DEFB BLOCK	;Room below (The Off Licence)
 
 TheKitchenUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheKitchenEnemy1:
@@ -127,4 +127,4 @@ TheKitchenPosWilly:
     db 200, 90                     ; Posizione di Willy
     
 TheKitchenEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

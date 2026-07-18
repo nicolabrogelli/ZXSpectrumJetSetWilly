@@ -64,10 +64,10 @@ OutALimbNasty:
     DEFB 2,1,129,6,88,32,64,136,130  ; Nastry
 
 OutALimbRamp:                          ; Ramp Solid
-    DEFB 4,0,0,0,0,0,0,0,0              
+    DEFB 4,0,0,0,0,0,0,0,0              ; Ramp Solid
 
 OutALimbConveyor:                      ; Conveyor Solid
-    DEFB 255,0,0,0,0,0,0,0,0
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 OutALimbConveyorData:
     DEFB 0
@@ -83,7 +83,7 @@ OutALimbBorderColor:
     DEFB 5
 
 OutALimbReserved:
-    DEFB MAGENTA, CYAN, YELLOW, NONE               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB MAGENTA, CYAN, YELLOW, NONE     ; Enemy colors
 
 OutALimbItem:
     DEFB 96,184,190,93,90,53,42,21
@@ -95,7 +95,7 @@ OutALimbDirection:
     DEFB 9		;Room below (None)
 
 OutALimbUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 OutALimbEnemy1:
     DEFB $80, 2, 112, 56, 184        ; [Uccello (41160) - Horizzontal], Guardian = 45, Starts X=112, Y=56, Limit X=84
@@ -115,6 +115,6 @@ OutALimbEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 OutALimbPosWilly:
-    db 200, 50                   ; Posizione di Willy
+    db 200, 50                     ; Posizione di Willy
 OutALimbEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

@@ -53,23 +53,23 @@ TheDriveTile:
     DEFM "            The Drive           "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-TheDriveBackground:
+TheDriveBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	            ;Background
 
 TheDriveFloor:
-    DEFB 6,170,85,170,255,255,85,170,85	    ;Floor Solid
+    DEFB 6,170,85,170,255,255,85,170,85       ; Floor Solid
 
 TheDriveWall:
-    DEFB 13,112,7,119,119,0,59,11,125	    ;Wall Solid
+    DEFB 13,112,7,119,119,0,59,11,125   ; Wall Solid
 
 TheDriveNasty:
-    DEFB 68,20,42,20,9,106,156,8,8	        ;Nasty
+    DEFB 68,20,42,20,9,106,156,8,8  ; Nastry
 
 TheDriveRamp:
-    DEFB 5,192,64,112,112,12,116,119,5	            ;Ramp Solid
+    DEFB 5,192,64,112,112,12,116,119,5              ; Ramp Solid
 
 TheDriveConveyor:
-    DEFB 66,123,0,237,0,170,85,170,85	            ;Conveyor
+    DEFB 66,123,0,237,0,170,85,170,85                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TheDriveConveyorData:
@@ -89,7 +89,7 @@ TheDriveBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheDriveReserved:
-    DEFB MAGENTA, GREEN, YELLOW, CYAN                         ; Enemy colors
+    DEFB MAGENTA, GREEN, YELLOW, CYAN     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheDriveItem:
@@ -103,7 +103,7 @@ TheDriveDirection:
     DEFB 45                                 ;Room below (Under the Drive)
 
 TheDriveUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheDriveEnemy1:
@@ -124,7 +124,7 @@ TheDriveEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheDrivePosWilly:
-    db 200, 101                      ; Posizione di Willy
+    db 200, 101                     ; Posizione di Willy
 
 TheDriveEnemyColors5_8:
-    DEFB CYAN, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB CYAN, NONE, NONE, NONE     ; Colori per nemici 5-8

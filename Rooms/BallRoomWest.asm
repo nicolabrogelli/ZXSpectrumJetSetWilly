@@ -53,23 +53,23 @@ BallRoomWestTile:
     DEFM "         Ballroom West          "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-BallRoomWestBackground:
+BallRoomWestBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	            ;Background
 
 BallRoomWestFloor:
-    DEFB 50,170,168,173,175,32,170,85,85	    ;Floor Solid
+    DEFB 50,170,168,173,175,32,170,85,85       ; Floor Solid
 
 BallRoomWestWall:
-    DEFB 35,17,34,136,17,68,136,34,68	    ;Wall Solid
+    DEFB 35,17,34,136,17,68,136,34,68   ; Wall Solid
 
 BallRoomWestNasty:
-    DEFB 66,40,84,170,84,168,84,20,46	    ;Nasty
+    DEFB 66,40,84,170,84,168,84,20,46  ; Nastry
 
 BallRoomWestRamp:
-    DEFB 7,192,192,48,176,12,12,3,11	            ;Ramp Solid
+    DEFB 7,192,192,48,176,12,12,3,11              ; Ramp Solid
 
 BallRoomWestConveyor:
-    DEFB 70,255,255,255,170,85,24,24,24	            ;Conveyor
+    DEFB 70,255,255,255,170,85,24,24,24                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 BallRoomWestConveyorData:
@@ -89,7 +89,7 @@ BallRoomWestBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 BallRoomWestReserved:
-    DEFB MAGENTA, CYAN, MAGENTA, NONE                        ; Enemy colors
+    DEFB MAGENTA, CYAN, MAGENTA, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 BallRoomWestItem:
@@ -103,7 +103,7 @@ BallRoomWestDirection:
 	DEFB BLOCK					;Room below (The Off Licence)
 
 BallRoomWestUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 BallRoomWestEnemy1:
@@ -127,4 +127,4 @@ BallRoomWestPosWilly:
     db 50, 90                     ; Posizione di Willy
     
 BallRoomWestEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

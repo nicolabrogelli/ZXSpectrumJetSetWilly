@@ -63,10 +63,10 @@ TheForgottenAbbeyNasty:
     DEFB 66,24,60,126,153,153,126,66,60  ; Nastry
 
 TheForgottenAbbeyRamp:                          ; Ramp Solid
-    DEFB 7,128,64,224,48,168,212,34,137             
+    DEFB 7,128,64,224,48,168,212,34,137              ; Ramp Solid
 
 TheForgottenAbbeyConveyor:                      ; Conveyor Solid
-    DEFB 15,112,85,0,187,170,170,170,170
+    DEFB 15,112,85,0,187,170,170,170,170                      ; Conveyor Solid
 
 TheForgottenAbbeyConveyorData:
     DEFB 0
@@ -82,7 +82,7 @@ TheForgottenAbbeyBorderColor:
     DEFB 1
 
 TheForgottenAbbeyReserved:
-    DEFB GREEN, YELLOW, RED, WHITE               ; Enemy colors
+    DEFB GREEN, YELLOW, RED, WHITE     ; Enemy colors
 
 TheForgottenAbbeyItem:
     DEFB 24,36,219,219,36,24,24,24
@@ -95,7 +95,7 @@ TheForgottenAbbeyDirection:
 
 
 TheForgottenAbbeyUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 TheForgottenAbbeyEnemy1:
     DEFB $80, 22, 32, 40, 160        ; Enemy 1 (Frate), horizontal, Starts X=40, Y=128, Limit X=180
@@ -115,6 +115,6 @@ TheForgottenAbbeyEnemy8:
     DEFB $80, 22, 184, 104, 240         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 
 TheForgottenAbbeyPosWilly:
-    db 200, 50                   ; Posizione di Willy
+    db 200, 50                     ; Posizione di Willy
 TheForgottenAbbeyEnemyColors5_8:
-    DEFB YELLOW, BLUE, GREEN, RED               ; Colori per nemici 5-8
+    DEFB YELLOW, BLUE, GREEN, RED     ; Colori per nemici 5-8

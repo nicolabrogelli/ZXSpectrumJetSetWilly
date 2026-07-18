@@ -53,23 +53,23 @@ OnABranchOverTheDriveTile:
     DEFM "   On a Branch Over the Drive   "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-OnABranchOverTheDriveBackground:
+OnABranchOverTheDriveBackground:                    ; Background
     DEFB $0F,0,0,0,0,0,0,0,0	            ;Background
 
 OnABranchOverTheDriveFloor:
-    DEFB 10,31,243,225,96,48,44,64,128	    ;Floor Solid
+    DEFB 10,31,243,225,96,48,44,64,128       ; Floor Solid
 
 OnABranchOverTheDriveWall:
-    DEFB 74,9,18,10,31,228,8,8,8	    	;Wall Solid
+    DEFB 74,9,18,10,31,228,8,8,8   ; Wall Solid
 
 OnABranchOverTheDriveNasty:
-    DEFB 12,66,41,84,38,135,35,42,4	    	;Nasty
+    DEFB 12,66,41,84,38,135,35,42,4  ; Nastry
 
 OnABranchOverTheDriveRamp:
-    DEFB 15,5,2,4,8,80,32,64,128	        ;Ramp Solid
+    DEFB 15,5,2,4,8,80,32,64,128              ; Ramp Solid
 
 OnABranchOverTheDriveConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 OnABranchOverTheDriveConveyorData:
@@ -89,7 +89,7 @@ OnABranchOverTheDriveBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 OnABranchOverTheDriveReserved:
-    DEFB RED, MAGENTA, GREEN, YELLOW                         ; Enemy colors
+    DEFB RED, MAGENTA, GREEN, YELLOW     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 OnABranchOverTheDriveItem:
@@ -103,7 +103,7 @@ OnABranchOverTheDriveDirection:
 	DEFB 4									;Room below (The Drive)
 
 OnABranchOverTheDriveUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 OnABranchOverTheDriveEnemy1:
@@ -124,6 +124,6 @@ OnABranchOverTheDriveEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 OnABranchOverTheDrivePosWilly:
-    db 200, 30                   ; Posizione di Willy
+    db 200, 30                     ; Posizione di Willy
 OnABranchOverTheDriveEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

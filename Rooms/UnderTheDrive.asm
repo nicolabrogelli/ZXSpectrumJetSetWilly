@@ -59,10 +59,10 @@ UnderTheDriveNasty:
     DEFB 4,24,24,20,34,34,85,17,40  ; Nastry
 
 UnderTheDriveRamp:                          ; Ramp Solid
-    DEFB 7,128,64,160,80,168,84,170,85              
+    DEFB 7,128,64,160,80,168,84,170,85              ; Ramp Solid
 
 UnderTheDriveConveyor:                      ; Conveyor Solid
-    DEFB 2,224,170,248,0,255,255,102,102
+    DEFB 2,224,170,248,0,255,255,102,102                      ; Conveyor Solid
 
 UnderTheDriveConveyorData:
     DEFB 0
@@ -78,7 +78,7 @@ UnderTheDriveBorderColor:
     DEFB 4
 
 UnderTheDriveReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB 4, 2, 5, 7     ; Enemy colors
 
 UnderTheDriveItem:
     DEFB 129,100,205,15,97,218,51,26
@@ -90,7 +90,7 @@ UnderTheDriveDirection:
 	DEFB $FF					;Room below (The Off Licence)
 
 UnderTheDriveUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 UnderTheDriveEnemy1:
     DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
@@ -110,6 +110,6 @@ UnderTheDriveEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 UnderTheDrivePosWilly:
-    db 136, 104                   ; Posizione di Willy
+    db 136, 104                     ; Posizione di Willy
 UnderTheDriveEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB 2, 3, 4, 7     ; Colori per nemici 5-8

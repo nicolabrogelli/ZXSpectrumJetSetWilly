@@ -54,7 +54,7 @@ EntranceToHadesBackground:                    ; Background
     DEFB 55,0,0,0,0,0,0,0,0
 
 EntranceToHadesFloor:
-    DEFB 163,160,20,130,80,10,65,40,5      ; Floor Solid
+    DEFB 163,160,20,130,80,10,65,40,5       ; Floor Solid
 
 EntranceToHadesWall:
     DEFB 99,187,187,56,187,187,187,131,187   ; Wall Solid
@@ -63,10 +63,10 @@ EntranceToHadesNasty:
     DEFB 50,191,92,88,48,40,88,72,232  ; Nastry
 
 EntranceToHadesRamp:                          ; Ramp Solid
-    DEFB 7,64,64,16,16,4,4,1,1            
+    DEFB 7,64,64,16,16,4,4,1,1              ; Ramp Solid
 
 EntranceToHadesConveyor:                      ; Conveyor Solid
-    DEFB 255,0,0,0,0,0,0,0,0
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 EntranceToHadesConveyorData:
     DEFB 0
@@ -82,7 +82,7 @@ EntranceToHadesBorderColor:
     DEFB 2                        ; Red border
 
 EntranceToHadesReserved:
-    DEFB RED, RED, RED, RED               ; Enemy colors
+    DEFB RED, RED, RED, RED     ; Enemy colors
 
 EntranceToHadesItem:
     DEFB 0,0,0,0,0,0,0,0
@@ -94,7 +94,7 @@ EntranceToHadesDirection:
     DEFB BLOCK                       ;Room below (The Off Licence)
 
 EntranceToHadesUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 EntranceToHadesEnemy1:
     DEFB $C0, 23, 32, 0, 88         ; FaceHellHL (Top-Left)
@@ -114,6 +114,6 @@ EntranceToHadesEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 EntranceToHadesPosWilly:
-    db 136, 30                   ; Willy starting position
+    db 136, 30                     ; Posizione di Willy
 EntranceToHadesEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

@@ -64,10 +64,10 @@ IAmSureIHaveSeenThiBeforeNasty:
     DEFB 76,81,85,84,85,21,85,69,85  ; Nastry
 
 IAmSureIHaveSeenThiBeforeRamp:                          ; Ramp Solid
-    DEFB 12,0,0,0,0,0,0,0,0              
+    DEFB 12,0,0,0,0,0,0,0,0              ; Ramp Solid
 
 IAmSureIHaveSeenThiBeforeConveyor:                      ; Conveyor Solid
-    DEFB 255,0,0,0,0,0,0,0,0
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 IAmSureIHaveSeenThiBeforeConveyorData:
     DEFB 0
@@ -83,7 +83,7 @@ IAmSureIHaveSeenThiBeforeBorderColor:
     DEFB 3
 
 IAmSureIHaveSeenThiBeforeReserved:
-    DEFB WHITE, MAGENTA, CYAN, CYAN               ; Enemy colors
+    DEFB WHITE, MAGENTA, CYAN, CYAN     ; Enemy colors
 
 IAmSureIHaveSeenThiBeforeItem:
     DEFB 24,36,24,44,94,94,231,102
@@ -95,7 +95,7 @@ IAmSureIHaveSeenThiBeforeDirection:
 	DEFB BLOCK				;Room below (The Off Licence)
 
 IAmSureIHaveSeenThiBeforeUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 IAmSureIHaveSeenThiBeforeEnemy1:
     DEFB $C0, 11, 40, 48, 96          ; [Soldato (40992) - vertical], Guardian = 4, Starts X=40, Y=48, Limit X=96
@@ -115,6 +115,6 @@ IAmSureIHaveSeenThiBeforeEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 IAmSureIHaveSeenThiBeforePosWilly:
-    db 230, 50                   ; Posizione di Willy
+    db 230, 50                     ; Posizione di Willy
 IAmSureIHaveSeenThiBeforeEnemyColors5_8:
-    DEFB CYAN, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB CYAN, NONE, NONE, NONE     ; Colori per nemici 5-8

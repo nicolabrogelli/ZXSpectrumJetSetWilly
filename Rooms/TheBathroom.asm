@@ -48,23 +48,23 @@ TheBathroomTile:
     DEFM "          The Bathroom          "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-TheBathroomBackground:
+TheBathroomBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	            ;Background
 
 TheBathroomFloor:
-    DEFB 22,0,64,9,100,146,45,150,255	    ;Floor Solid
+    DEFB 22,0,64,9,100,146,45,150,255       ; Floor Solid
 
 TheBathroomWall:
-    DEFB 14,31,170,0,85,248,85,0,170	    ;Wall Solid
+    DEFB 14,31,170,0,85,248,85,0,170   ; Wall Solid
 
 TheBathroomNasty:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Nasty
+    DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
 
 TheBathroomRamp:
-    DEFB 7,3,0,12,0,48,0,192,0	            ;Ramp Solid
+    DEFB 7,3,0,12,0,48,0,192,0              ; Ramp Solid
 
 TheBathroomConveyor:
-    DEFB 61,165,0,0,0,0,0,0,255	            ;Conveyor
+    DEFB 61,165,0,0,0,0,0,0,255                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TheBathroomConveyorData:
@@ -84,7 +84,7 @@ TheBathroomBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheBathroomReserved:
-    DEFB 4, 0, 0, 0                         ; Enemy colors: all WHITE (7)
+    DEFB 4, 0, 0, 0     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheBathroomItem:
@@ -98,7 +98,7 @@ TheBathroomDirection:
     DEFB 27                                 ;Room below (The Chapel)
 
 TheBathroomUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBathroomEnemy1:
@@ -119,6 +119,6 @@ TheBathroomEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheBathroomPosWilly:
-    db 200, 90                  ; Posizione di Willy
+    db 200, 90                     ; Posizione di Willy
 TheBathroomEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB 2, 3, 4, 7     ; Colori per nemici 5-8

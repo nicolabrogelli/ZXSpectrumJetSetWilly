@@ -53,23 +53,23 @@ TotheKitchensMainStairwayTile:
     DEFM "To the Kitchens    Main Stairway"	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-TotheKitchensMainStairwayBackground:
+TotheKitchensMainStairwayBackground:                    ; Background
     DEFB 15,0,0,0,0,0,0,0,0	            ;Background
 
 TotheKitchensMainStairwayFloor:
-    DEFB 13,255,255,0,255,0,0,0,0	    ;Floor Solid
+    DEFB 13,255,255,0,255,0,0,0,0       ; Floor Solid
 
 TotheKitchensMainStairwayWall:
-    DEFB 58,0,21,191,21,0,81,251,81	    ;Wall Solid
+    DEFB 58,0,21,191,21,0,81,251,81   ; Wall Solid
 
 TotheKitchensMainStairwayNasty:
-    DEFB 77,24,90,189,25,126,153,36,36	    ;Nasty
+    DEFB 77,24,90,189,25,126,153,36,36  ; Nastry
 
 TotheKitchensMainStairwayRamp:
-    DEFB 15,192,128,48,32,12,8,3,2	            ;Ramp Solid
+    DEFB 15,192,128,48,32,12,8,3,2              ; Ramp Solid
 
 TotheKitchensMainStairwayConveyor:
-    DEFB 107,240,170,120,255,170,85,170,85            ;Conveyor
+    DEFB 107,240,170,120,255,170,85,170,85                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TotheKitchensMainStairwayConveyorData:
@@ -89,7 +89,7 @@ TotheKitchensMainStairwayBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TotheKitchensMainStairwayReserved:
-    DEFB NONE, YELLOW, CYAN, MAGENTA                        ; Enemy colors
+    DEFB NONE, YELLOW, CYAN, MAGENTA     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TotheKitchensMainStairwayItem:
@@ -103,7 +103,7 @@ TotheKitchensMainStairwayDirection:
 	DEFB BLOCK				;Room below (The Off Licence)
 
 TotheKitchensMainStairwayUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TotheKitchensMainStairwayEnemy1:
@@ -127,4 +127,4 @@ TotheKitchensMainStairwayPosWilly:
     db 200, 90                     ; Posizione di Willy
     
 TotheKitchensMainStairwayEnemyColors5_8:
-    DEFB GREEN, YELLOW, MAGENTA, WHITE               ; Colori per nemici 5-8
+    DEFB GREEN, YELLOW, MAGENTA, WHITE     ; Colori per nemici 5-8
