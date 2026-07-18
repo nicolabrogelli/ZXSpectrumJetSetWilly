@@ -94,8 +94,11 @@ ItemsTable:
     db 25, 5, 8, (BLUE * 8) + CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
     db 25, 5, 11, (BLUE * 8) + YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
 
+    ; Stanza 27 (The Chapel)
+    db 27, 29, 6, MAGENTA, 0            ; Oggetto 3 alla colonna X=24, riga Y=11, YELLOW, (Stato: 0=attivo)
+
     ; Stanza 33 (The Bathroom)
-    db 33, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
+    db 33, 31, 8, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
 
     ; Stanza 35 (Master Bedroom)
 
@@ -125,6 +128,7 @@ ItemsTable:
 ;   10 = The Front Door
 ;   11 = The Hall
 ;   12 = Tree Top
+;   27 = The Chapel
 ;   33 = The Bathroom
 ;   35 = Master Bedroom
 ;
@@ -500,6 +504,20 @@ DetermineCurrentRoomID:
     jp   .set_room
 
 .notcoldstore
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheChapelLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheChapelLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_thechapel
+
+    ld   a, 27               ; Room ID = 27
+    jp   .set_room
+
+.not_thechapel:
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
