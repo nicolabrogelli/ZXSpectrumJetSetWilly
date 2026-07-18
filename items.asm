@@ -88,6 +88,12 @@ ItemsTable:
     ; Stanza 22 (To the Kitchens Main Stairway)
     db 22, 2, 9, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
 
+    ; Stanza 22 (Cold Store)
+    db 25, 3, 2, (BLUE * 8) + MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    db 25, 8, 5, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    db 25, 5, 8, (BLUE * 8) + CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    db 25, 5, 11, (BLUE * 8) + YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+
     ; Stanza 33 (The Bathroom)
     db 33, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
 
