@@ -29,7 +29,7 @@
 ;
 ;===========================================================================
 
-; Room layout for Room  (West Of Kitchen)
+; Room layout for Room  (Cold Store)
 ColdStoreLayout:           
 	DEFB 0,3,0,0,0,0,0,0	    ;Room layout
 	DEFB 0,0,0,48,0,0,192,0
@@ -89,7 +89,7 @@ ColdStoreBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 ColdStoreReserved:
-    DEFB NONE, MAGENTA, CYAN, YELLOW                        ; Enemy colors
+    DEFB YELLOW, WHITE, CYAN, MAGENTA                        ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 ColdStoreItem:
@@ -107,15 +107,15 @@ ColdStoreUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 ColdStoreEnemy1:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 31, 0, 104, 192
 ColdStoreEnemy2:
-    DEFB $C0, 6, 40, 48, 87         
+    DEFB $80, 30, 0, 72, 40         
 ColdStoreEnemy3:
-    DEFB $E0, 6, 56, 48, 96         
+    DEFB $80, 31, 0, 48, 48         
 ColdStoreEnemy4:
-    DEFB $C0, 6, 88, 72, 96         
+    DEFB $80, 30, 0, 24, 72         
 ColdStoreEnemy5:
-     DEFB $80, 2, 112, 80, 232      
+    DEFB 0, 0, 0, 0, 0 
 ColdStoreEnemy6:
     DEFB 0, 0, 0, 0, 0
 ColdStoreEnemy7:

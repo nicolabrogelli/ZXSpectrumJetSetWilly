@@ -359,7 +359,7 @@ Enemy_DrawRoom:
     
     ; Determina quale sprite usare basato sul tipo (Offset 1, Bit 5-0)
     ld   a, (ix+1)         ; Tipo
-    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca, 22=Frate, 23..26=FaceHell, 27=PinzaGiaccio, 28=Ruota, 29=Saliera)
+    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca, 22=Frate, 23..26=FaceHell, 27=PinzaGiaccio, 28=Ruota, 29=Saliera, 30=Gelato, 31=Pinguino)
     
     cp   0
     jp   z, .got_lametta
@@ -421,6 +421,10 @@ Enemy_DrawRoom:
     jp   z, .got_ruota
     cp   29
     jp   z, .got_saliera
+    cp   30
+    jp   z, .got_gelato
+    cp   31
+    jp   z, .got_pinguino
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -568,6 +572,18 @@ Enemy_DrawRoom:
 
 .got_saliera:
     ld   hl, SalieraSprite
+    jp   .got_sprite
+
+.got_gelato:
+    ld   hl, GelatoSprite
+    jp   .got_sprite
+
+.got_pinguino:
+    ld   a, (ix+6)         ; Direction (1=Left, 2=Right)
+    cp   1                 ; Left?
+    ld   hl, PinguinoSprite       ; If Left, use the first 4 frames
+    jp   z, .got_sprite
+    ld   hl, PinguinoSprite + 128 ; If Right, use the other 4 frames
     jp   .got_sprite
 
 
