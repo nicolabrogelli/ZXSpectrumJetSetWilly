@@ -298,7 +298,8 @@ RoomsListTable:
     dw TheKitchenLayout                 ; 23
     dw WestOfKitchenLayout              ; 24
     dw ColdStoreLayout                  ; 25
-    dw 0,0,0,0,0,0,0                    ; 26-32: padding
+    dw EastWallBaseLayout               ; 26
+    dw 0,0,0,0,0,0                    ; 27-32: padding
     dw TheBathroomLayout                ; 33
     dw 0                                ; 34
     dw MastreBedRoomLayout              ; 35
