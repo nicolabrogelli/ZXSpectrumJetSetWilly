@@ -468,6 +468,34 @@ DetermineCurrentRoomID:
 .notthekitchen
 
     ; ---------------------------------------------------------------
+    ; Confronto con TheKitchenLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WestOfKitchenLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .notwestofkitchen
+
+    ld   a, 24               ; Room ID = 24
+    jp   .set_room
+
+.notwestofkitchen
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheKitchenLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, ColdStoreLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .notcoldstore
+
+    ld   a, 25               ; Room ID = 25
+    jp   .set_room
+
+.notcoldstore
+
+    ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)

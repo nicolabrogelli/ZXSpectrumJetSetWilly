@@ -31,7 +31,8 @@ RoomsStart:
     include "rooms/BallRoomWest.asm"                ; ID 21
     include "rooms/TotheKitchensMainStairway.asm"   ; ID 22
     include "rooms/TheKitchen.asm"                  ; ID 23
-    include "rooms/WestofKitchen.asm"                  ; ID 24
+    include "rooms/WestofKitchen.asm"               ; ID 24
+    include "rooms/ColdStore.asm"                   ; ID 25
     
 
     include "rooms/TheBathroom.asm"                 ; ID 33
