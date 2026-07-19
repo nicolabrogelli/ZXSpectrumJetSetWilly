@@ -639,27 +639,155 @@ Gfx_PrintRoomName:
     ret
 
 Gfx_PrintWillyLives:
-    ld   c, 0              ; Colonna 0
+    push hl
+    push bc
+    push de
+    push af
+    
+    ; Primo Willy (Colonna 0, giallo)
+    ld   hl, willy_lives
+    ld   a, (hl)
+    cp   1
+    ld   c, 0
+    jr   c, .erase_1
     ld   a, $40 | YELLOW
     call Gfx_DrawWillyLifeIcon
-    ld   c, 2              ; Colonna 2
+    jr   .check_2
+.erase_1:
+    call Gfx_EraseWillyLifeIcon
+    
+.check_2:
+    ld   a, (willy_lives)
+    cp   2
+    ld   c, 2
+    jr   c, .erase_2
     ld   a, $40 | CYAN
     call Gfx_DrawWillyLifeIcon
-    ld   c, 4              ; Colonna 4
+    jr   .check_3
+.erase_2:
+    call Gfx_EraseWillyLifeIcon
+
+.check_3:
+    ld   a, (willy_lives)
+    cp   3
+    ld   c, 4
+    jr   c, .erase_3
     ld   a, $40 | GREEN
     call Gfx_DrawWillyLifeIcon
-    ld   c, 6              ; Colonna 6
+    jr   .check_4
+.erase_3:
+    call Gfx_EraseWillyLifeIcon
+
+.check_4:
+    ld   a, (willy_lives)
+    cp   4
+    ld   c, 6
+    jr   c, .erase_4
     ld   a, $40 | MAGENTA
     call Gfx_DrawWillyLifeIcon
-    ld   c, 8              ; Colonna 8
+    jr   .check_5
+.erase_4:
+    call Gfx_EraseWillyLifeIcon
+
+.check_5:
+    ld   a, (willy_lives)
+    cp   5
+    ld   c, 8
+    jr   c, .erase_5
     ld   a, $40 | RED
     call Gfx_DrawWillyLifeIcon
-    ld   c, 10             ; Colonna 10
+    jr   .check_6
+.erase_5:
+    call Gfx_EraseWillyLifeIcon
+
+.check_6:
+    ld   a, (willy_lives)
+    cp   6
+    ld   c, 10
+    jr   c, .erase_6
     ld   a, $40 | BLUE
     call Gfx_DrawWillyLifeIcon
-    ld   c, 12             ; Colonna 12
+    jr   .check_7
+.erase_6:
+    call Gfx_EraseWillyLifeIcon
+
+.check_7:
+    ld   a, (willy_lives)
+    cp   7
+    ld   c, 12
+    jr   c, .erase_7
     ld   a, $40 | WHITE
     call Gfx_DrawWillyLifeIcon
+    jr   .done
+.erase_7:
+    call Gfx_EraseWillyLifeIcon
+
+.done:
+    pop  af
+    pop  de
+    pop  bc
+    pop  hl
+    ret
+
+Gfx_EraseWillyLifeIcon:
+    ; Input: C = Colonna (0..31)
+    ld   e, c              ; E = Colonna
+    
+    ; 1. Cancella la testa a Row 20, Colonna E
+    ld   a, e
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    ld   c, a              ; C = X pixel
+    ld   b, 160            ; B = Y pixel (Row 20)
+    call Gfx_ClearPixelSprite8x8
+    
+    ; 2. Cancella il corpo a Row 21, Colonna E
+    ld   b, 168            ; B = Y pixel (Row 21)
+    call Gfx_ClearPixelSprite8x8
+    
+    ; 3. Resetta gli attributi a Row 20 e Row 21 per Colonna E a nero (0)
+    ; AttrAddr = $5A80 + E
+    ld   h, $5a
+    ld   a, $80
+    add  a, e
+    ld   l, a
+    jr   nc, .no_carry1
+    inc  h
+.no_carry1:
+    ld   (hl), 0           ; Scrivi colore testa a 0 (nero)
+    
+    ; AttrAddr = $5AA0 + E
+    ld   h, $5a
+    ld   a, $a0
+    add  a, e
+    ld   l, a
+    jr   nc, .no_carry2
+    inc  h
+.no_carry2:
+    ld   (hl), 0           ; Scrivi colore corpo a 0 (nero)
+    ret
+
+Gfx_ClearPixelSprite8x8:
+    push bc
+    push de
+    push hl
+    
+    ; 1. Calcola indirizzo schermo
+    ld   h, b
+    ld   l, c
+    call Gfx_GetScreenAddr ; HL = indirizzo schermo
+    
+    ld   c, 8          ; 8 linee
+.line_loop:
+    ld   (hl), 0       ; Pulisci la cella dello schermo (imposta a zero)
+    call Gfx_IncScreenLine ; Prossima scanline sullo schermo
+    dec  c
+    jr   nz, .line_loop
+    
+    pop  hl
+    pop  de
+    pop  bc
     ret
 
 Gfx_UpdateItemsCollectedDisplay:

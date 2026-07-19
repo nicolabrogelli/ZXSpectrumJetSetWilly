@@ -142,6 +142,15 @@ Main_loop:
     jr   z, .draw_raster_bars ; se disabilitato, disegna le raster bar per debug
     
 .willy_dies:
+    ; Decrementa le vite e aggiorna la visualizzazione
+    ld   hl, willy_lives
+    ld   a, (hl)
+    or   a
+    jr   z, .no_lives_dec
+    dec  (hl)
+.no_lives_dec:
+    call Gfx_PrintWillyLives
+
     ; Gestisci la morte di Willy:
     ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
     call Gfx_DeleteCharAtOldPos
