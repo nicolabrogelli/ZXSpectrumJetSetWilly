@@ -123,8 +123,19 @@ Main_loop:
     
     ; Controlla collisione con Nasties (morte di Willy)
     call Phys_CheckNastyCollision
-    jr   nc, .no_nasty_collision
+    jr   c, .willy_dies
     
+    ; Controlla collisione con guardiani
+    call CheckCollision
+    jr   nc, .no_collision
+    
+    ; C'è collisione con un guardiano!
+    ; Controlla se la morte per collisione con i guardiani è abilitata
+    ld   a, (flag_guardian_collision_death)
+    or   a
+    jr   z, .draw_raster_bars ; se disabilitato, disegna le raster bar per debug
+    
+.willy_dies:
     ; Gestisci la morte di Willy:
     ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
     call Gfx_DeleteCharAtOldPos
@@ -140,13 +151,9 @@ Main_loop:
     ld   (jump_dir), a
     ld   a, 1
     ld   (on_ground), a
-
-.no_nasty_collision:
+    jr   .no_collision ; Salta il disegno delle raster bar poiché Willy è morto
     
-    ; 5. Gestisci la collisione (disegna le raster bar se collide)
-    call CheckCollision
-    jr   nc, .no_collision
-    
+.draw_raster_bars:
     ; Collisione attiva: disegna le raster bar nel bordo
     ld   a, (counter)
     and  7                 ; Colore iniziale basato sul contatore di frame

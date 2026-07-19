@@ -15,6 +15,7 @@ collision_active: db $00
 items_collected:  db $00
 sprite_shift:     db $00
 room_border_color: db $00
+flag_guardian_collision_death: db $01 ; 1 = abilita morte per collisione con guardiani, 0 = disabilita (disegna raster bar debug)
 
 ; Fisica
 velocity_y:     db $00

@@ -1,3 +1,4 @@
+warning[backslash]: File name contains \, use / instead (\ fails on most of the supported platforms): C:\Users\nicol\Documents\Progetti\asm\ZXSPECTRUM-JET SET WILLY\jet set willy.asm
 # file opened: jet set willy.asm
    1  0000              ;===========================================================================
    2  0000              ; main.asm
@@ -119,9 +120,9 @@
   38+ 5DCD DB FE            in a, (0xFE)
   39+ 5DCF
   40+ 5DCF                  ; Incrementa il contatore (usato per animazioni/raster bars)
-  41+ 5DCF 2A 99 79         ld hl, (counter)
+  41+ 5DCF 2A 9A 79         ld hl, (counter)
   42+ 5DD2 23               inc hl
-  43+ 5DD3 22 99 79         ld (counter), hl
+  43+ 5DD3 22 9A 79         ld (counter), hl
   44+ 5DD6
   45+ 5DD6                  ; Ripristina registri
   46+ 5DD6 E1               pop hl
@@ -347,7 +348,7 @@
  214+ 5E99 E6 07            and  7                 ; A = scanline (0..7)
  215+ 5E9B 5F               ld   e, a
  216+ 5E9C 16 00            ld   d, 0              ; DE = scanline offset
- 217+ 5E9E 2A F8 7C         ld   hl, (room_ptr)
+ 217+ 5E9E 2A F9 7C         ld   hl, (room_ptr)
  218+ 5EA1 C5               push bc
  219+ 5EA2 01 E3 00         ld   bc, OFFSET_ITEM_GRAPHIC
  220+ 5EA5 09               add  hl, bc
@@ -365,21 +366,21 @@
  232+ 5EAE D1               pop  de
  233+ 5EAF
  234+ 5EAF                  ; --- Controlla Conveyor ---
- 235+ 5EAF 3A A0 7C         ld   a, (conveyor_len)
+ 235+ 5EAF 3A A1 7C         ld   a, (conveyor_len)
  236+ 5EB2 B7               or   a
  237+ 5EB3 CA DB 5E         jp   z, .check_ramp
  238+ 5EB6
- 239+ 5EB6 3A A1 7C         ld   a, (conveyor_row)
+ 239+ 5EB6 3A A2 7C         ld   a, (conveyor_row)
  240+ 5EB9 BB               cp   e
  241+ 5EBA C2 DB 5E         jp   nz, .check_ramp
  242+ 5EBD
- 243+ 5EBD 3A A2 7C         ld   a, (conveyor_col)
+ 243+ 5EBD 3A A3 7C         ld   a, (conveyor_col)
  244+ 5EC0 B9               cp   c
  245+ 5EC1 CA D5 5E         jp   z, .is_conveyor
  246+ 5EC4 DA CA 5E         jp   c, .c_greater
  247+ 5EC7 C3 DB 5E         jp   .check_ramp
  248+ 5ECA              .c_greater:
- 249+ 5ECA 21 A0 7C         ld   hl, conveyor_len
+ 249+ 5ECA 21 A1 7C         ld   hl, conveyor_len
  250+ 5ECD 86               add  a, (hl)
  251+ 5ECE B9               cp   c
  252+ 5ECF CA DB 5E         jp   z, .check_ramp
@@ -389,31 +390,31 @@
  256+ 5ED8 C3 2E 5F         jp   .load_tile
  257+ 5EDB
  258+ 5EDB              .check_ramp:
- 259+ 5EDB 3A A4 7C         ld   a, (ramp_len)
+ 259+ 5EDB 3A A5 7C         ld   a, (ramp_len)
  260+ 5EDE B7               or   a
  261+ 5EDF CA 0F 5F         jp   z, .normal_grid
  262+ 5EE2
- 263+ 5EE2 3A A5 7C         ld   a, (ramp_row)     ; A = RampRowStart
+ 263+ 5EE2 3A A6 7C         ld   a, (ramp_row)     ; A = RampRowStart
  264+ 5EE5 BB               cp   e                 ; compare with player row E
  265+ 5EE6 DA 0F 5F         jp   c, .normal_grid   ; if RampRowStart < E, skip!
  266+ 5EE9
  267+ 5EE9 93               sub  e                 ; A = RampRowStart - E
  268+ 5EEA 47               ld   b, a              ; B = distance from start row (0..ramp_len-1)
- 269+ 5EEB 3A A4 7C         ld   a, (ramp_len)
+ 269+ 5EEB 3A A5 7C         ld   a, (ramp_len)
  270+ 5EEE B8               cp   b
  271+ 5EEF CA 0F 5F         jp   z, .normal_grid   ; if B == ramp_len, too high!
  272+ 5EF2 DA 0F 5F         jp   c, .normal_grid   ; if B > ramp_len, too high!
  273+ 5EF5
  274+ 5EF5                  ; Calcola ExpectedCol:
- 275+ 5EF5 3A A3 7C         ld   a, (ramp_dir)
+ 275+ 5EF5 3A A4 7C         ld   a, (ramp_dir)
  276+ 5EF8 B7               or   a
  277+ 5EF9 28 06            jr   z, .r_left
  278+ 5EFB              .r_right:
- 279+ 5EFB 3A A6 7C         ld   a, (ramp_col)
+ 279+ 5EFB 3A A7 7C         ld   a, (ramp_col)
  280+ 5EFE 80               add  a, b              ; A = ramp_col + B
  281+ 5EFF 18 04            jr   .compare_col
  282+ 5F01              .r_left:
- 283+ 5F01 3A A6 7C         ld   a, (ramp_col)
+ 283+ 5F01 3A A7 7C         ld   a, (ramp_col)
  284+ 5F04 90               sub  b                 ; A = ramp_col - B
  285+ 5F05              .compare_col:
  286+ 5F05 B9               cp   c                 ; Compare with player col C
@@ -447,7 +448,7 @@
  314+ 5F2B 21 BB 00         ld   hl, OFFSET_NASTY
  315+ 5F2E              .load_tile:
  316+ 5F2E D5               push de
- 317+ 5F2F ED 5B F8 7C      ld   de, (room_ptr)
+ 317+ 5F2F ED 5B F9 7C      ld   de, (room_ptr)
  318+ 5F33 19               add  hl, de            ; HL = tile pointer
  319+ 5F34 D1               pop  de
  320+ 5F35
@@ -743,7 +744,7 @@
  610+ 6068 3E 06            ld   a, YELLOW         ; Inchiostro Giallo
  611+ 606A CD 01 5E         call Gfx_Ink
  612+ 606D
- 613+ 606D 2A F8 7C         ld   hl, (room_ptr)    ; HL = indirizzo stanza
+ 613+ 606D 2A F9 7C         ld   hl, (room_ptr)    ; HL = indirizzo stanza
  614+ 6070 11 80 00         ld   de, 128           ; Offset del nome stanza (32 byte)
  615+ 6073 19               add  hl, de            ; HL = indirizzo nome stanza
  616+ 6074 06 20            ld   b, 32             ; B = 32 caratteri
@@ -1011,7 +1012,7 @@
  864+ 61DB 16 00            ld   d, 0
  865+ 61DD 59               ld   e, c              ; DE = C
  866+ 61DE 19               add  hl, de            ; HL = B * 8 + C
- 867+ 61DF ED 5B F8 7C      ld   de, (room_ptr)
+ 867+ 61DF ED 5B F9 7C      ld   de, (room_ptr)
  868+ 61E3 19               add  hl, de            ; HL = layout byte address
  869+ 61E4 7E               ld   a, (hl)           ; A = layout byte
  870+ 61E5 57               ld   d, a              ; D = salva il byte di layout
@@ -1027,7 +1028,7 @@
  880+ 61EE D5               push de
  881+ 61EF C5               push bc
  882+ 61F0
- 883+ 61F0 ED 5B F8 7C      ld   de, (room_ptr)
+ 883+ 61F0 ED 5B F9 7C      ld   de, (room_ptr)
  884+ 61F4 B7               or   a
  885+ 61F5 20 06            jr   nz, .not_bg
  886+ 61F7 21 A0 00         ld   hl, OFFSET_BG
@@ -1146,7 +1147,7 @@
  999+ 626B 85               add  a, l
 1000+ 626C 6F               ld   l, a              ; HL = r * 8 + c / 4
 1001+ 626D
-1002+ 626D ED 5B F8 7C      ld   de, (room_ptr)
+1002+ 626D ED 5B F9 7C      ld   de, (room_ptr)
 1003+ 6271 19               add  hl, de            ; HL = layout byte address
 1004+ 6272 7E               ld   a, (hl)           ; A = layout byte
 1005+ 6273
@@ -1200,7 +1201,7 @@
 1053+ 62AB 21 BB 00         ld   hl, OFFSET_NASTY
 1054+ 62AE
 1055+ 62AE              .load_attr:
-1056+ 62AE ED 5B F8 7C      ld   de, (room_ptr)
+1056+ 62AE ED 5B F9 7C      ld   de, (room_ptr)
 1057+ 62B2 19               add  hl, de            ; HL = tile pointer
 1058+ 62B3 7E               ld   a, (hl)           ; A = primo byte del tile (l'attributo colore)
 1059+ 62B4
@@ -1434,19 +1435,19 @@
 1287+ 6382 DD E5            push ix
 1288+ 6384
 1289+ 6384                  ; --- 1. Disegna Conveyor ---
-1290+ 6384 2A F8 7C         ld   hl, (room_ptr)
+1290+ 6384 2A F9 7C         ld   hl, (room_ptr)
 1291+ 6387 11 D6 00         ld   de, OFFSET_CONVEYOR_DATA
 1292+ 638A 19               add  hl, de            ; HL = ConveyorData pointer
 1293+ 638B
 1294+ 638B 7E               ld   a, (hl)           ; A = Direction
-1295+ 638C 32 9F 7C         ld   (conveyor_dir), a
+1295+ 638C 32 A0 7C         ld   (conveyor_dir), a
 1296+ 638F 23               inc  hl
 1297+ 6390 5E               ld   e, (hl)
 1298+ 6391 23               inc  hl
 1299+ 6392 56               ld   d, (hl)           ; DE = Location
 1300+ 6393 23               inc  hl
 1301+ 6394 7E               ld   a, (hl)           ; A = Length
-1302+ 6395 32 A0 7C         ld   (conveyor_len), a
+1302+ 6395 32 A1 7C         ld   (conveyor_len), a
 1303+ 6398
 1304+ 6398                  ; Controlla se DE (Location) è 0
 1305+ 6398 7A               ld   a, d
@@ -1482,17 +1483,17 @@
 1335+ 63BD E1               pop  hl                ; HL = original pointer (Length)
 1336+ 63BE
 1337+ 63BE 78               ld   a, b
-1338+ 63BF 32 A1 7C         ld   (conveyor_row), a
+1338+ 63BF 32 A2 7C         ld   (conveyor_row), a
 1339+ 63C2 79               ld   a, c
-1340+ 63C3 32 A2 7C         ld   (conveyor_col), a
+1340+ 63C3 32 A3 7C         ld   (conveyor_col), a
 1341+ 63C6
-1342+ 63C6 3A A0 7C         ld   a, (conveyor_len) ; A = Length
+1342+ 63C6 3A A1 7C         ld   a, (conveyor_len) ; A = Length
 1343+ 63C9 B7               or   a
 1344+ 63CA 28 14            jr   z, .draw_ramp
 1345+ 63CC 57               ld   d, a              ; D = contatore lunghezza
 1346+ 63CD
 1347+ 63CD                  ; IX = room_ptr + OFFSET_CONVEYOR
-1348+ 63CD 2A F8 7C         ld   hl, (room_ptr)
+1348+ 63CD 2A F9 7C         ld   hl, (room_ptr)
 1349+ 63D0 C5               push bc
 1350+ 63D1 01 CD 00         ld   bc, OFFSET_CONVEYOR
 1351+ 63D4 09               add  hl, bc
@@ -1508,19 +1509,19 @@
 1361+ 63E0
 1362+ 63E0              .draw_ramp:
 1363+ 63E0                  ; --- 2. Disegna Ramp ---
-1364+ 63E0 2A F8 7C         ld   hl, (room_ptr)
+1364+ 63E0 2A F9 7C         ld   hl, (room_ptr)
 1365+ 63E3 11 DA 00         ld   de, OFFSET_RAMP_DATA
 1366+ 63E6 19               add  hl, de            ; HL = RampData pointer
 1367+ 63E7
 1368+ 63E7 7E               ld   a, (hl)           ; A = Direction (0 = up-left, 1 = up-right)
-1369+ 63E8 32 A3 7C         ld   (ramp_dir), a
+1369+ 63E8 32 A4 7C         ld   (ramp_dir), a
 1370+ 63EB 23               inc  hl
 1371+ 63EC 5E               ld   e, (hl)
 1372+ 63ED 23               inc  hl
 1373+ 63EE 56               ld   d, (hl)           ; DE = Location
 1374+ 63EF 23               inc  hl
 1375+ 63F0 7E               ld   a, (hl)           ; A = Length
-1376+ 63F1 32 A4 7C         ld   (ramp_len), a
+1376+ 63F1 32 A5 7C         ld   (ramp_len), a
 1377+ 63F4
 1378+ 63F4                  ; Controlla se DE (Location) è 0
 1379+ 63F4 7A               ld   a, d
@@ -1555,17 +1556,17 @@
 1408+ 6419 E1               pop  hl                ; HL = original pointer (Length)
 1409+ 641A
 1410+ 641A 78               ld   a, b
-1411+ 641B 32 A5 7C         ld   (ramp_row), a
+1411+ 641B 32 A6 7C         ld   (ramp_row), a
 1412+ 641E 79               ld   a, c
-1413+ 641F 32 A6 7C         ld   (ramp_col), a
+1413+ 641F 32 A7 7C         ld   (ramp_col), a
 1414+ 6422
-1415+ 6422 3A A4 7C         ld   a, (ramp_len)     ; A = Length
+1415+ 6422 3A A5 7C         ld   a, (ramp_len)     ; A = Length
 1416+ 6425 B7               or   a
 1417+ 6426 28 1E            jr   z, .done_ramp
 1418+ 6428 57               ld   d, a              ; D = contatore lunghezza
 1419+ 6429
 1420+ 6429                  ; IX = room_ptr + OFFSET_RAMP
-1421+ 6429 2A F8 7C         ld   hl, (room_ptr)
+1421+ 6429 2A F9 7C         ld   hl, (room_ptr)
 1422+ 642C C5               push bc
 1423+ 642D 01 C4 00         ld   bc, OFFSET_RAMP
 1424+ 6430 09               add  hl, bc
@@ -1576,7 +1577,7 @@
 1429+ 6435              .ramp_loop:
 1430+ 6435 CD 8C 61         call Gfx_DrawTile
 1431+ 6438
-1432+ 6438 3A A3 7C         ld   a, (ramp_dir)
+1432+ 6438 3A A4 7C         ld   a, (ramp_dir)
 1433+ 643B B7               or   a
 1434+ 643C 28 03            jr   z, .up_left
 1435+ 643E              .up_right:
@@ -1636,11 +1637,11 @@
   35+ 644C                  ; Il movimento orizzontale in aria continua anche se non ci sono
   36+ 644C                  ; tasti di direzione premuti (jump_dir decide).
   37+ 644C                  ; ---------------------------------------------------------------
-  38+ 644C 3A 8F 79         ld   a, (on_ground)
+  38+ 644C 3A 90 79         ld   a, (on_ground)
   39+ 644F B7               or   a
   40+ 6450 20 1A            jr   nz, .on_ground_check
   41+ 6452
-  42+ 6452 3A 93 79         ld   a, (jump_dir)
+  42+ 6452 3A 94 79         ld   a, (jump_dir)
   43+ 6455 B7               or   a
   44+ 6456 C8               ret  z                  ; Se jump_dir è 0, salto verticale -> nessun movimento orizzontale
   45+ 6457
@@ -1686,7 +1687,7 @@
   85+ 6484              movePlayer_left:
   86+ 6484
   87+ 6484                  ; Calcola nuova posizione: X - speed
-  88+ 6484 3A FC 7C         ld   a, (player_speed)
+  88+ 6484 3A FD 7C         ld   a, (player_speed)
   89+ 6487 5F               ld   e, a
   90+ 6488
   91+ 6488 79               ld   a, c
@@ -1708,7 +1709,7 @@
  107+ 6494 38 6F            jr   c, save_x
  108+ 6496
  109+ 6496                  ; Applica movimento
- 110+ 6496 3A FC 7C         ld   a, (player_speed)
+ 110+ 6496 3A FD 7C         ld   a, (player_speed)
  111+ 6499 5F               ld   e, a
  112+ 649A
  113+ 649A 79               ld   a, c
@@ -1722,7 +1723,7 @@
  121+ 649F              ; ---------------------------------------------------------------
  122+ 649F              .clamp_left:
  123+ 649F                  ; Controlla se c'è una stanza a sinistra
- 124+ 649F 2A F8 7C         ld   hl, (room_ptr)
+ 124+ 649F 2A F9 7C         ld   hl, (room_ptr)
  125+ 64A2 11 EB 00         ld   de, 235           ; Offset per stanza a sinistra
  126+ 64A5 19               add  hl, de
  127+ 64A6 7E               ld   a, (hl)           ; A = ID stanza a sinistra
@@ -1748,7 +1749,7 @@
  147+ 64BD              ; ===============================================================
  148+ 64BD              movePlayer_right:
  149+ 64BD                  ; Impedisci lo spostamento a destra se Willy è sul conveyor nella stanza The Off Licence (room 0).
- 150+ 64BD 3A 9E 7C         ld   a, (current_room)
+ 150+ 64BD 3A 9F 7C         ld   a, (current_room)
  151+ 64C0 B7               or   a                      ; Room 0 = The Off Licence
  152+ 64C1 20 04            jr   nz, .continue_right
  153+ 64C3 CD 96 6A         call CheckWillyOnConveyor
@@ -1756,7 +1757,7 @@
  155+ 64C7
  156+ 64C7              .continue_right:
  157+ 64C7                  ; Prova movimento X + speed
- 158+ 64C7 3A FC 7C         ld   a, (player_speed)
+ 158+ 64C7 3A FD 7C         ld   a, (player_speed)
  159+ 64CA 5F               ld   e, a
  160+ 64CB
  161+ 64CB 79               ld   a, c
@@ -1782,7 +1783,7 @@
  181+ 64DB 38 28            jr   c, save_x
  182+ 64DD
  183+ 64DD                  ; Applica movimento
- 184+ 64DD 3A FC 7C         ld   a, (player_speed)
+ 184+ 64DD 3A FD 7C         ld   a, (player_speed)
  185+ 64E0 5F               ld   e, a
  186+ 64E1
  187+ 64E1 79               ld   a, c
@@ -1796,7 +1797,7 @@
  195+ 64E6              ; ---------------------------------------------------------------
  196+ 64E6              .clamp_right:
  197+ 64E6                  ; Controlla se c'è una stanza a destra
- 198+ 64E6 2A F8 7C         ld   hl, (room_ptr)
+ 198+ 64E6 2A F9 7C         ld   hl, (room_ptr)
  199+ 64E9 11 EC 00         ld   de, 236           ; Offset per stanza a destra
  200+ 64EC 19               add  hl, de
  201+ 64ED 7E               ld   a, (hl)           ; A = ID stanza a destra
@@ -1868,7 +1869,7 @@
  267+ 6517                  ; ---------------------------------------------------------------
  268+ 6517                  ; Accede alla struttura dati della stanza corrente
  269+ 6517                  ; ---------------------------------------------------------------
- 270+ 6517 2A F8 7C         ld   hl, (room_ptr)
+ 270+ 6517 2A F9 7C         ld   hl, (room_ptr)
  271+ 651A
  272+ 651A                  ; ---------------------------------------------------------------
  273+ 651A                  ; Salta all’offset dove è memorizzata la posizione iniziale
@@ -1921,7 +1922,7 @@
   23+ 652A
   24+ 652A              Input_CheckCtrl:
   25+ 652A AF               xor  a
-  26+ 652B 32 95 79         ld   (current_input_dir), a
+  26+ 652B 32 96 79         ld   (current_input_dir), a
   27+ 652E
   28+ 652E                  ; ── Sezione 1: tasto Q (cambio stanza) ──────────────────────────
   29+ 652E                  ;
@@ -1935,13 +1936,13 @@
   37+ 6537
   38+ 6537                  ; Q è premuto: debounce tramite (q_prev).
   39+ 6537                  ; Se (q_prev) ≠ 0 il tasto era già giù nel frame precedente → ignora.
-  40+ 6537 3A 96 79         ld   a, (q_prev)
+  40+ 6537 3A 97 79         ld   a, (q_prev)
   41+ 653A B7               or   a
   42+ 653B 20 0D            jr   nz, .q_handled         ; era già premuto, niente da fare
   43+ 653D
   44+ 653D                  ; ── Primo frame di pressione di Q ──
   45+ 653D 3E 01            ld   a, 1
-  46+ 653F 32 96 79         ld   (q_prev), a            ; marca "Q era premuto"
+  46+ 653F 32 97 79         ld   (q_prev), a            ; marca "Q era premuto"
   47+ 6542
   48+ 6542                  ; NOTA sullo stack:
   49+ 6542                  ; Input_CheckCtrl è stata invocata con CALL, quindi l'indirizzo di ritorno
@@ -1953,7 +1954,7 @@
   55+ 6546
   56+ 6546              .q_not_pressed:
   57+ 6546 AF               xor  a
-  58+ 6547 32 96 79         ld   (q_prev), a            ; Q rilasciato → azzera debounce
+  58+ 6547 32 97 79         ld   (q_prev), a            ; Q rilasciato → azzera debounce
   59+ 654A
   60+ 654A              .q_handled:
   61+ 654A
@@ -1969,7 +1970,7 @@
   71+ 6551                  ; Se Willy è sul conveyor nella stanza The Off Licence (room 0),
   72+ 6551                  ; impedisci lo spostamento da sinistra a destra (disabilita tasto destra P / bit 0).
   73+ 6551 F5               push af
-  74+ 6552 3A 9E 7C         ld   a, (current_room)
+  74+ 6552 3A 9F 7C         ld   a, (current_room)
   75+ 6555 B7               or   a                      ; Room 0 = The Off Licence
   76+ 6556 20 09            jr   nz, .no_block_conveyor
   77+ 6558 CD 96 6A         call CheckWillyOnConveyor
@@ -1989,8 +1990,8 @@
   91+ 656C DD CB 00 C6      set 0, (ix)                 ; flags bit 0 = "movimento in corso"
   92+ 6570 5F               ld  e, a                    ; salva A
   93+ 6571 3E 01            ld  a, 1
-  94+ 6573 32 95 79         ld  (current_input_dir), a
-  95+ 6576 3A 8F 79         ld  a, (on_ground)
+  94+ 6573 32 96 79         ld  (current_input_dir), a
+  95+ 6576 3A 90 79         ld  a, (on_ground)
   96+ 6579 B7               or  a
   97+ 657A 28 05            jr  z, .skip_dir_left
   98+ 657C 3E 01            ld  a, 1
@@ -2005,8 +2006,8 @@
  107+ 6588 DD CB 00 C6      set 0, (ix)                 ; flags bit 0 = "movimento in corso"
  108+ 658C 5F               ld  e, a
  109+ 658D 3E 02            ld  a, 2
- 110+ 658F 32 95 79         ld  (current_input_dir), a
- 111+ 6592 3A 8F 79         ld  a, (on_ground)
+ 110+ 658F 32 96 79         ld  (current_input_dir), a
+ 111+ 6592 3A 90 79         ld  a, (on_ground)
  112+ 6595 B7               or  a
  113+ 6596 28 05            jr  z, .skip_dir_right
  114+ 6598 3E 02            ld  a, 2
@@ -2030,19 +2031,19 @@
  132+ 65A7              .released:
  133+ 65A7                  ; Nessun tasto di salto premuto: azzera debounce.
  134+ 65A7 AF               xor a
- 135+ 65A8 32 91 79         ld  (jump_prev), a
+ 135+ 65A8 32 92 79         ld  (jump_prev), a
  136+ 65AB 18 10            jr  .end
  137+ 65AD
  138+ 65AD              .pressed:
  139+ 65AD                  ; Tasto salto premuto: edge detection.
  140+ 65AD                  ; Se (jump_prev) ≠ 0 era già premuto nel frame precedente → ignora.
- 141+ 65AD 3A 91 79         ld  a, (jump_prev)
+ 141+ 65AD 3A 92 79         ld  a, (jump_prev)
  142+ 65B0 B7               or  a
  143+ 65B1 20 0A            jr  nz, .end
  144+ 65B3                  ; Primo frame di pressione:
  145+ 65B3 3E 01            ld  a, 1
- 146+ 65B5 32 90 79         ld  (jump_pressed), a       ; segnala "salto appena scattato"
- 147+ 65B8 32 91 79         ld  (jump_prev), a          ; marca come già premuto (debounce)
+ 146+ 65B5 32 91 79         ld  (jump_pressed), a       ; segnala "salto appena scattato"
+ 147+ 65B8 32 92 79         ld  (jump_prev), a          ; marca come già premuto (debounce)
  148+ 65BB CB D2            set 2, d                    ; imposta bit 2 di D = "salto attivo"
  149+ 65BD
  150+ 65BD              .end:
@@ -2069,7 +2070,7 @@
  171+ 65C4 E6 04            and  $04                    ; tieni solo il bit 2 (salto)
  172+ 65C6 57               ld   d, a                   ; D = solo salto, direzioni azzerate
  173+ 65C7 AF               xor  a
- 174+ 65C8 32 95 79         ld   (current_input_dir), a
+ 174+ 65C8 32 96 79         ld   (current_input_dir), a
  175+ 65CB C9               ret
  176+ 65CC
  177+ 65CC              ; -------------------------------------------------------------------
@@ -2078,7 +2079,7 @@
  180+ 65CC              PerformRoomChange:
  181+ 65CC                  ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..45)
  182+ 65CC 21 3D 66         ld   hl, RoomsListTable
- 183+ 65CF ED 4B F8 7C      ld   bc, (room_ptr)            ; BC = layout corrente
+ 183+ 65CF ED 4B F9 7C      ld   bc, (room_ptr)            ; BC = layout corrente
  184+ 65D3 1E 00            ld   e, 0                      ; E = contatore indice
  185+ 65D5              .loop:
  186+ 65D5 7E               ld   a, (hl)
@@ -2125,14 +2126,14 @@
  227+ 65FF 28 E7            jr   z, .next_index_loop       ; Se è zero, riprova col prossimo
  228+ 6601
  229+ 6601                  ; Trovato! DE = layout
- 230+ 6601 ED 53 F8 7C      ld   (room_ptr), de
+ 230+ 6601 ED 53 F9 7C      ld   (room_ptr), de
  231+ 6605
  232+ 6605                  ; 4. Pulisci lo schermo e ricarica la stanza
  233+ 6605 21 8D 5C         ld   hl, ATTR_P
  234+ 6608 36 07            ld   (hl), $07
  235+ 660A CD AF 0D         call CLS
  236+ 660D
- 237+ 660D C3 2C 7D         jp   LoadRoomAndRestart
+ 237+ 660D C3 2D 7D         jp   LoadRoomAndRestart
  238+ 6610
  239+ 6610              TriggerRoomChange:
  240+ 6610                  ; Input: A = nuovo room ID, C = Willy X, B = Willy Y
@@ -2140,7 +2141,7 @@
  242+ 6614 ED 43 83 79      ld   (PlayerPosOld), bc
  243+ 6618
  244+ 6618                  ; Reset velocity_y
- 245+ 6618 21 8E 79         ld   hl, velocity_y
+ 245+ 6618 21 8F 79         ld   hl, velocity_y
  246+ 661B 36 00            ld   (hl), 0
  247+ 661D
  248+ 661D                  ; Trova l'indirizzo del layout corrispondente da RoomsListTable
@@ -2154,11 +2155,11 @@
  256+ 6626 23               inc  hl
  257+ 6627 56               ld   d, (hl)                   ; DE = puntatore al layout della nuova stanza
  258+ 6628
- 259+ 6628 ED 53 F8 7C      ld   (room_ptr), de            ; Aggiorna room_ptr
+ 259+ 6628 ED 53 F9 7C      ld   (room_ptr), de            ; Aggiorna room_ptr
  260+ 662C
  261+ 662C                  ; Imposta il flag di transizione per non caricare la posizione di default
  262+ 662C 3E 01            ld   a, 1
- 263+ 662E 32 FD 7C         ld   (transition_active), a
+ 263+ 662E 32 FE 7C         ld   (transition_active), a
  264+ 6631
  265+ 6631                  ; Pulisci lo schermo
  266+ 6631 21 8D 5C         ld   hl, ATTR_P
@@ -2167,7 +2168,7 @@
  269+ 6639
  270+ 6639                  ; Pulisci lo stack (rimuove il ritorno alla routine chiamante dal Main_loop)
  271+ 6639 E1               pop  hl
- 272+ 663A C3 2C 7D         jp   LoadRoomAndRestart
+ 272+ 663A C3 2D 7D         jp   LoadRoomAndRestart
  273+ 663D
  274+ 663D              RoomsListTable:
  275+ 663D 00 83            dw TheOffLicenceLayout              ; 0
@@ -2293,7 +2294,7 @@
   69+ 66F0 78               ld  a, b              ; B = PlayerY (pixel)
   70+ 66F1
   71+ 66F1                  ; --- CONTROLLO RAMPA PER IL MOVIMENTO ---
-  72+ 66F1 3A 8F 79         ld   a, (on_ground)
+  72+ 66F1 3A 90 79         ld   a, (on_ground)
   73+ 66F4 B7               or   a
   74+ 66F5 28 42            jr   z, .not_on_ramp_walk ; Se siamo in volo, non fare il snap della camminata sulla rampa
   75+ 66F7
@@ -2317,24 +2318,24 @@
   93+ 670A ED 43 81 79      ld   (PlayerPos), bc    ; Salva la posizione Y allineata alla rampa
   94+ 670E
   95+ 670E                  ; Gestisci il salto mentre siamo sulla rampa
-  96+ 670E 3A 90 79         ld   a, (jump_pressed)
+  96+ 670E 3A 91 79         ld   a, (jump_pressed)
   97+ 6711 B7               or   a
   98+ 6712 CA 83 69         jp   z, .end            ; Se non salta, abbiamo finito per questo frame
   99+ 6715
  100+ 6715 AF               xor  a
- 101+ 6716 32 FE 7C         ld   (Audio_jump_sound_note), a
- 102+ 6719 32 FF 7C         ld   (Audio_jump_sound_timer), a
+ 101+ 6716 32 FF 7C         ld   (Audio_jump_sound_note), a
+ 102+ 6719 32 00 7D         ld   (Audio_jump_sound_timer), a
  103+ 671C
- 104+ 671C 3A 97 79         ld   a, (room_jump_strength)
- 105+ 671F 32 8E 79         ld   (velocity_y), a
+ 104+ 671C 3A 98 79         ld   a, (room_jump_strength)
+ 105+ 671F 32 8F 79         ld   (velocity_y), a
  106+ 6722 AF               xor  a
- 107+ 6723 32 8F 79         ld   (on_ground), a
- 108+ 6726 32 90 79         ld   (jump_pressed), a
- 109+ 6729 32 94 79         ld   (jump_frame), a
+ 107+ 6723 32 90 79         ld   (on_ground), a
+ 108+ 6726 32 91 79         ld   (jump_pressed), a
+ 109+ 6729 32 95 79         ld   (jump_frame), a
  110+ 672C 78               ld   a, b              ; B = PlayerY (ramp_Y)
- 111+ 672D 32 92 79         ld   (jump_start_y), a
- 112+ 6730 3A 95 79         ld   a, (current_input_dir)
- 113+ 6733 32 93 79         ld   (jump_dir), a
+ 111+ 672D 32 93 79         ld   (jump_start_y), a
+ 112+ 6730 3A 96 79         ld   a, (current_input_dir)
+ 113+ 6733 32 94 79         ld   (jump_dir), a
  114+ 6736 C3 10 68         jp   .in_air
  115+ 6739
  116+ 6739              .not_on_ramp_walk:
@@ -2342,7 +2343,7 @@
  118+ 673D 78               ld  a, b              ; B = PlayerY (pixel)
  119+ 673E
  120+ 673E                  ; Controlla se siamo a mezz'aria (on_ground == 0)
- 121+ 673E 3A 8F 79         ld  a, (on_ground)
+ 121+ 673E 3A 90 79         ld  a, (on_ground)
  122+ 6741 B7               or  a
  123+ 6742 CA 10 68         jp  z, .in_air        ; Se siamo in volo, continua a volare
  124+ 6745
@@ -2475,8 +2476,8 @@
  251+ 67D7
  252+ 67D7                  ; Se nessuna delle due è solida, iniziamo a cadere!
  253+ 67D7 AF               xor  a
- 254+ 67D8 32 8F 79         ld   (on_ground), a
- 255+ 67DB 32 8E 79         ld   (velocity_y), a   ; Inizia la caduta con velocità 0
+ 254+ 67D8 32 90 79         ld   (on_ground), a
+ 255+ 67DB 32 8F 79         ld   (velocity_y), a   ; Inizia la caduta con velocità 0
  256+ 67DE C3 10 68         jp   .in_air
  257+ 67E1
  258+ 67E1              .still_on_ground:
@@ -2485,35 +2486,35 @@
  261+ 67E1 ED 4B 81 79      ld   bc, (PlayerPos)
  262+ 67E5
  263+ 67E5                  ; Gestisci il salto
- 264+ 67E5 3A 90 79         ld   a, (jump_pressed)
+ 264+ 67E5 3A 91 79         ld   a, (jump_pressed)
  265+ 67E8 B7               or   a
  266+ 67E9 CA 83 69         jp   z, .end
  267+ 67EC
  268+ 67EC AF               xor  a
- 269+ 67ED 32 FE 7C         ld   (Audio_jump_sound_note), a
- 270+ 67F0 32 FF 7C         ld   (Audio_jump_sound_timer), a
+ 269+ 67ED 32 FF 7C         ld   (Audio_jump_sound_note), a
+ 270+ 67F0 32 00 7D         ld   (Audio_jump_sound_timer), a
  271+ 67F3
- 272+ 67F3 3A 97 79         ld   a, (room_jump_strength)
- 273+ 67F6 32 8E 79         ld   (velocity_y), a
+ 272+ 67F3 3A 98 79         ld   a, (room_jump_strength)
+ 273+ 67F6 32 8F 79         ld   (velocity_y), a
  274+ 67F9 AF               xor  a
- 275+ 67FA 32 8F 79         ld   (on_ground), a
- 276+ 67FD 32 90 79         ld   (jump_pressed), a
- 277+ 6800 32 94 79         ld   (jump_frame), a
+ 275+ 67FA 32 90 79         ld   (on_ground), a
+ 276+ 67FD 32 91 79         ld   (jump_pressed), a
+ 277+ 6800 32 95 79         ld   (jump_frame), a
  278+ 6803 78               ld   a, b              ; B = PlayerY
- 279+ 6804 32 92 79         ld   (jump_start_y), a
- 280+ 6807 3A 95 79         ld   a, (current_input_dir)
- 281+ 680A 32 93 79         ld   (jump_dir), a
+ 279+ 6804 32 93 79         ld   (jump_start_y), a
+ 280+ 6807 3A 96 79         ld   a, (current_input_dir)
+ 281+ 680A 32 94 79         ld   (jump_dir), a
  282+ 680D C3 10 68         jp   .in_air
  283+ 6810
  284+ 6810              .in_air:
  285+ 6810                  ; Incrementa jump_frame per mantenere coerente la gravità frazionaria del salto
- 286+ 6810 3A 94 79         ld   a, (jump_frame)
+ 286+ 6810 3A 95 79         ld   a, (jump_frame)
  287+ 6813 3C               inc  a
- 288+ 6814 32 94 79         ld   (jump_frame), a
+ 288+ 6814 32 95 79         ld   (jump_frame), a
  289+ 6817
  290+ 6817                  ; Leggi il preset della gravità
  291+ 6817 47               ld   b, a                  ; Salva jump_frame in B
- 292+ 6818 3A 98 79         ld   a, (room_gravity_preset)
+ 292+ 6818 3A 99 79         ld   a, (room_gravity_preset)
  293+ 681B
  294+ 681B                  ; Controlla il preset
  295+ 681B B7               or   a                     ; cp 0 (Gravità 0.5)
@@ -2555,12 +2556,12 @@
  331+ 6845 18 00            jr   .apply_gravity
  332+ 6847
  333+ 6847              .apply_gravity:
- 334+ 6847 3A 8E 79         ld   a, (velocity_y)
+ 334+ 6847 3A 8F 79         ld   a, (velocity_y)
  335+ 684A D6 01            sub  1
  336+ 684C 18 03            jr   .clamp_fall_speed
  337+ 684E
  338+ 684E              .skip_gravity:
- 339+ 684E 3A 8E 79         ld   a, (velocity_y)
+ 339+ 684E 3A 8F 79         ld   a, (velocity_y)
  340+ 6851
  341+ 6851              .clamp_fall_speed:
  342+ 6851                  ; Controlla se positivo per evitare bug con cp signed
@@ -2572,7 +2573,7 @@
  348+ 6859 3E F4            ld  a, -MAX_FALL_SPEED
  349+ 685B
  350+ 685B              .store_vel:
- 351+ 685B 32 8E 79         ld  (velocity_y), a
+ 351+ 685B 32 8F 79         ld  (velocity_y), a
  352+ 685E
  353+ 685E                  ; Applica movimento verticale: PlayerY = PlayerY - velocity_y
  354+ 685E ED 4B 81 79      ld  bc, (PlayerPos)
@@ -2581,7 +2582,7 @@
  357+ 6864 92               sub d                 ; A = PlayerY - velocity_y
  358+ 6865 47               ld  b, a              ; B = new PlayerY
  359+ 6866
- 360+ 6866 3A 8E 79         ld  a, (velocity_y)
+ 360+ 6866 3A 8F 79         ld  a, (velocity_y)
  361+ 6869 CB 7F            bit 7, a              ; Se negativo, bit 7 = 1
  362+ 686B 20 2A            jr  nz, .falling_checks
  363+ 686D B7               or  a                 ; Se zero
@@ -2624,7 +2625,7 @@
  400+ 6890
  401+ 6890                  ; Ferma la velocità verso l'alto (inizia la caduta)
  402+ 6890 AF               xor  a
- 403+ 6891 32 8E 79         ld   (velocity_y), a
+ 403+ 6891 32 8F 79         ld   (velocity_y), a
  404+ 6894 C3 39 69         jp   .save_pos
  405+ 6897
  406+ 6897              .falling_checks:
@@ -2640,7 +2641,7 @@
  416+ 68A2 67               ld   h, a               ; H = ramp_Y
  417+ 68A3
  418+ 68A3                  ; Controlla se il salto è iniziato da sotto la rampa
- 419+ 68A3 3A 92 79         ld   a, (jump_start_y)
+ 419+ 68A3 3A 93 79         ld   a, (jump_start_y)
  420+ 68A6 B7               or   a
  421+ 68A7 28 06            jr   z, .jump_start_ok  ; Se 0, non siamo in salto (è una caduta normale), permetti atterraggio
  422+ 68A9
@@ -2664,12 +2665,12 @@
  440+ 68BC 44               ld   b, h               ; B = ramp_Y
  441+ 68BD ED 43 81 79      ld   (PlayerPos), bc
  442+ 68C1 3E 01            ld   a, 1
- 443+ 68C3 32 8F 79         ld   (on_ground), a
+ 443+ 68C3 32 90 79         ld   (on_ground), a
  444+ 68C6 AF               xor  a
- 445+ 68C7 32 8E 79         ld   (velocity_y), a
- 446+ 68CA 32 92 79         ld   (jump_start_y), a  ; Reset jump Y
- 447+ 68CD 32 93 79         ld   (jump_dir), a
- 448+ 68D0 32 94 79         ld   (jump_frame), a
+ 445+ 68C7 32 8F 79         ld   (velocity_y), a
+ 446+ 68CA 32 93 79         ld   (jump_start_y), a  ; Reset jump Y
+ 447+ 68CD 32 94 79         ld   (jump_dir), a
+ 448+ 68D0 32 95 79         ld   (jump_frame), a
  449+ 68D3 C3 83 69         jp   .end
  450+ 68D6
  451+ 68D6              .no_ramp_landing:
@@ -2735,16 +2736,16 @@
  511+ 6915
  512+ 6915 ED 43 81 79      ld   (PlayerPos), bc
  513+ 6919 3E 01            ld   a, 1
- 514+ 691B 32 8F 79         ld   (on_ground), a
+ 514+ 691B 32 90 79         ld   (on_ground), a
  515+ 691E AF               xor  a
- 516+ 691F 32 8E 79         ld   (velocity_y), a
- 517+ 6922 32 92 79         ld   (jump_start_y), a  ; Reset jump Y
- 518+ 6925 32 93 79         ld   (jump_dir), a
- 519+ 6928 32 94 79         ld   (jump_frame), a
+ 516+ 691F 32 8F 79         ld   (velocity_y), a
+ 517+ 6922 32 93 79         ld   (jump_start_y), a  ; Reset jump Y
+ 518+ 6925 32 94 79         ld   (jump_dir), a
+ 519+ 6928 32 95 79         ld   (jump_frame), a
  520+ 692B C3 83 69         jp   .end
  521+ 692E
  522+ 692E              .no_collision_checks:
- 523+ 692E 3A 8E 79         ld   a, (velocity_y)
+ 523+ 692E 3A 8F 79         ld   a, (velocity_y)
  524+ 6931 57               ld   d, a                  ; Ripristina D = velocity_y (evita corruzione se proveniamo da .check_landing)
  525+ 6932 ED 4B 81 79      ld   bc, (PlayerPos)
  526+ 6936 78               ld   a, b
@@ -2758,7 +2759,7 @@
  534+ 693E
  535+ 693E                  ; Willy sta andando sopra il bordo superiore (Y < 0)
  536+ 693E                  ; Controlla se c'è una stanza sopra
- 537+ 693E 2A F8 7C         ld   hl, (room_ptr)
+ 537+ 693E 2A F9 7C         ld   hl, (room_ptr)
  538+ 6941 11 ED 00         ld   de, 237           ; Offset per stanza sopra
  539+ 6944 19               add  hl, de
  540+ 6945 7E               ld   a, (hl)           ; A = ID stanza sopra
@@ -2772,9 +2773,9 @@
  548+ 694F              .no_up_transition:
  549+ 694F 06 00            ld   b, 0
  550+ 6951 AF               xor  a
- 551+ 6952 32 8E 79         ld   (velocity_y), a
- 552+ 6955 32 92 79         ld   (jump_start_y), a
- 553+ 6958 32 93 79         ld   (jump_dir), a
+ 551+ 6952 32 8F 79         ld   (velocity_y), a
+ 552+ 6955 32 93 79         ld   (jump_start_y), a
+ 553+ 6958 32 94 79         ld   (jump_dir), a
  554+ 695B 18 22            jr   .save_ok
  555+ 695D
  556+ 695D              .check_max:
@@ -2784,7 +2785,7 @@
  560+ 6962
  561+ 6962                  ; Willy sta andando sotto il bordo inferiore (Y >= 113)
  562+ 6962                  ; Controlla se c'è una stanza sotto
- 563+ 6962 2A F8 7C         ld   hl, (room_ptr)
+ 563+ 6962 2A F9 7C         ld   hl, (room_ptr)
  564+ 6965 11 EE 00         ld   de, 238           ; Offset per stanza sotto
  565+ 6968 19               add  hl, de
  566+ 6969 7E               ld   a, (hl)           ; A = ID stanza sotto
@@ -2798,16 +2799,16 @@
  574+ 6973              .no_down_transition:
  575+ 6973 06 70            ld   b, 112
  576+ 6975 AF               xor  a
- 577+ 6976 32 8E 79         ld   (velocity_y), a
- 578+ 6979 32 92 79         ld   (jump_start_y), a
- 579+ 697C 32 93 79         ld   (jump_dir), a
+ 577+ 6976 32 8F 79         ld   (velocity_y), a
+ 578+ 6979 32 93 79         ld   (jump_start_y), a
+ 579+ 697C 32 94 79         ld   (jump_dir), a
  580+ 697F
  581+ 697F              .save_ok:
  582+ 697F ED 43 81 79      ld   (PlayerPos), bc
  583+ 6983
  584+ 6983              .end:
  585+ 6983 AF               xor  a
- 586+ 6984 32 90 79         ld   (jump_pressed), a
+ 586+ 6984 32 91 79         ld   (jump_pressed), a
  587+ 6987 C9               ret
  588+ 6988
  589+ 6988              ; -------------------------------------------------------------------
@@ -2889,24 +2890,24 @@
  665+ 69DE 5F               ld   e, a              ; E = c (column)
  666+ 69DF
  667+ 69DF                  ; --- CONTROLLO CONVEYOR ---
- 668+ 69DF 3A A0 7C         ld   a, (conveyor_len)
+ 668+ 69DF 3A A1 7C         ld   a, (conveyor_len)
  669+ 69E2 B7               or   a
  670+ 69E3 28 1C            jr   z, .check_ramp    ; Se non c'è conveyor, controlla rampa
  671+ 69E5
  672+ 69E5                  ; Controlla se Row corrisponde
- 673+ 69E5 3A A1 7C         ld   a, (conveyor_row)
+ 673+ 69E5 3A A2 7C         ld   a, (conveyor_row)
  674+ 69E8 BA               cp   d
  675+ 69E9 20 16            jr   nz, .check_ramp   ; Row diversa, controlla rampa
  676+ 69EB
  677+ 69EB                  ; Controlla se Col è compresa: c >= conveyor_col e c < conveyor_col + conveyor_len
- 678+ 69EB 3A A2 7C         ld   a, (conveyor_col)
+ 678+ 69EB 3A A3 7C         ld   a, (conveyor_col)
  679+ 69EE BB               cp   e
  680+ 69EF 28 0E            jr   z, .is_conveyor   ; c == conveyor_col -> solido!
  681+ 69F1 38 02            jr   c, .c_greater     ; c > conveyor_col -> controlla limite superiore
  682+ 69F3 18 0C            jr   .check_ramp       ; c < conveyor_col
  683+ 69F5              .c_greater:
  684+ 69F5 47               ld   b, a              ; B = conveyor_col
- 685+ 69F6 3A A0 7C         ld   a, (conveyor_len)
+ 685+ 69F6 3A A1 7C         ld   a, (conveyor_len)
  686+ 69F9 80               add  a, b              ; A = conveyor_col + conveyor_len
  687+ 69FA BB               cp   e
  688+ 69FB 28 04            jr   z, .check_ramp    ; c == len (fuori)
@@ -2916,31 +2917,31 @@
  692+ 6A01
  693+ 6A01              .check_ramp:
  694+ 6A01                  ; --- CONTROLLO RAMP ---
- 695+ 6A01 3A A4 7C         ld   a, (ramp_len)
+ 695+ 6A01 3A A5 7C         ld   a, (ramp_len)
  696+ 6A04 B7               or   a
  697+ 6A05 28 25            jr   z, .not_solid     ; Se non c'è rampa, fine
  698+ 6A07
- 699+ 6A07 3A A5 7C         ld   a, (ramp_row)     ; A = RampRowStart
+ 699+ 6A07 3A A6 7C         ld   a, (ramp_row)     ; A = RampRowStart
  700+ 6A0A BA               cp   d                 ; compare with player row D
  701+ 6A0B 38 1F            jr   c, .not_solid     ; if RampRowStart < D, skip!
  702+ 6A0D
  703+ 6A0D 92               sub  d                 ; A = RampRowStart - D
  704+ 6A0E 47               ld   b, a              ; B = distance from start row (0..ramp_len-1)
- 705+ 6A0F 3A A4 7C         ld   a, (ramp_len)
+ 705+ 6A0F 3A A5 7C         ld   a, (ramp_len)
  706+ 6A12 B8               cp   b
  707+ 6A13 28 17            jr   z, .not_solid     ; if B == ramp_len, too high!
  708+ 6A15 38 15            jr   c, .not_solid     ; if B > ramp_len, too high!
  709+ 6A17
  710+ 6A17                  ; Calcola ExpectedCol:
- 711+ 6A17 3A A3 7C         ld   a, (ramp_dir)
+ 711+ 6A17 3A A4 7C         ld   a, (ramp_dir)
  712+ 6A1A B7               or   a
  713+ 6A1B 28 06            jr   z, .r_left
  714+ 6A1D              .r_right:
- 715+ 6A1D 3A A6 7C         ld   a, (ramp_col)
+ 715+ 6A1D 3A A7 7C         ld   a, (ramp_col)
  716+ 6A20 80               add  a, b              ; A = ramp_col + B
  717+ 6A21 18 04            jr   .compare_col
  718+ 6A23              .r_left:
- 719+ 6A23 3A A6 7C         ld   a, (ramp_col)
+ 719+ 6A23 3A A7 7C         ld   a, (ramp_col)
  720+ 6A26 90               sub  b                 ; A = ramp_col - B
  721+ 6A27              .compare_col:
  722+ 6A27 BB               cp   e                 ; Compare with player col E
@@ -2965,11 +2966,11 @@
  741+ 6A36              ; Applica la forza di trascinamento del conveyor se Willy vi è sopra
  742+ 6A36              ; -------------------------------------------------------------------
  743+ 6A36              Phys_ApplyConveyor:
- 744+ 6A36 3A 8F 79         ld   a, (on_ground)
+ 744+ 6A36 3A 90 79         ld   a, (on_ground)
  745+ 6A39 B7               or   a
  746+ 6A3A C8               ret  z                 ; Se non è a terra, nessuna forza
  747+ 6A3B
- 748+ 6A3B 3A A0 7C         ld   a, (conveyor_len)
+ 748+ 6A3B 3A A1 7C         ld   a, (conveyor_len)
  749+ 6A3E B7               or   a
  750+ 6A3F C8               ret  z                 ; Se non c'è conveyor in questa stanza, fine
  751+ 6A40
@@ -2984,7 +2985,7 @@
  760+ 6A4D
  761+ 6A4D                  ; Confronta con conveyor_row
  762+ 6A4D 57               ld   d, a              ; D = RowPiedi
- 763+ 6A4E 3A A1 7C         ld   a, (conveyor_row)
+ 763+ 6A4E 3A A2 7C         ld   a, (conveyor_row)
  764+ 6A51 BA               cp   d
  765+ 6A52 C0               ret  nz                ; Se non siamo sulla riga del conveyor, fine
  766+ 6A53
@@ -3004,8 +3005,8 @@
  780+ 6A64 57               ld   d, a              ; D = ColEnd
  781+ 6A65
  782+ 6A65                  ; conveyor_col_end = conveyor_col + conveyor_len - 1
- 783+ 6A65 3A A2 7C         ld   a, (conveyor_col)
- 784+ 6A68 21 A0 7C         ld   hl, conveyor_len
+ 783+ 6A65 3A A3 7C         ld   a, (conveyor_col)
+ 784+ 6A68 21 A1 7C         ld   hl, conveyor_len
  785+ 6A6B 86               add  a, (hl)
  786+ 6A6C 3D               dec  a                 ; A = conveyor_col_end
  787+ 6A6D
@@ -3014,14 +3015,14 @@
  790+ 6A6E D8               ret  c                 ; Se conveyor_col_end < E, fine
  791+ 6A6F
  792+ 6A6F                  ; D >= conveyor_col
- 793+ 6A6F 3A A2 7C         ld   a, (conveyor_col)
+ 793+ 6A6F 3A A3 7C         ld   a, (conveyor_col)
  794+ 6A72 5F               ld   e, a
  795+ 6A73 7A               ld   a, d
  796+ 6A74 BB               cp   e
  797+ 6A75 D8               ret  c                 ; Se D < conveyor_col, fine
  798+ 6A76
  799+ 6A76                  ; Willy è sul conveyor! Muovilo nella direzione del conveyor!
- 800+ 6A76 3A 9F 7C         ld   a, (conveyor_dir)
+ 800+ 6A76 3A A0 7C         ld   a, (conveyor_dir)
  801+ 6A79 B7               or   a
  802+ 6A7A 28 0B            jr   z, .move_left
  803+ 6A7C
@@ -3054,11 +3055,11 @@
  830+ 6A97 D5               push de
  831+ 6A98 E5               push hl
  832+ 6A99
- 833+ 6A99 3A 8F 79         ld   a, (on_ground)
+ 833+ 6A99 3A 90 79         ld   a, (on_ground)
  834+ 6A9C B7               or   a
  835+ 6A9D 28 44            jr   z, .not_on_conveyor
  836+ 6A9F
- 837+ 6A9F 3A A0 7C         ld   a, (conveyor_len)
+ 837+ 6A9F 3A A1 7C         ld   a, (conveyor_len)
  838+ 6AA2 B7               or   a
  839+ 6AA3 28 3E            jr   z, .not_on_conveyor
  840+ 6AA5
@@ -3073,7 +3074,7 @@
  849+ 6AB2
  850+ 6AB2                  ; Confronta con conveyor_row
  851+ 6AB2 57               ld   d, a              ; D = RowPiedi
- 852+ 6AB3 3A A1 7C         ld   a, (conveyor_row)
+ 852+ 6AB3 3A A2 7C         ld   a, (conveyor_row)
  853+ 6AB6 BA               cp   d
  854+ 6AB7 20 2A            jr   nz, .not_on_conveyor
  855+ 6AB9
@@ -3093,8 +3094,8 @@
  869+ 6ACA 57               ld   d, a              ; D = ColEnd
  870+ 6ACB
  871+ 6ACB                  ; conveyor_col_end = conveyor_col + conveyor_len - 1
- 872+ 6ACB 3A A2 7C         ld   a, (conveyor_col)
- 873+ 6ACE 21 A0 7C         ld   hl, conveyor_len
+ 872+ 6ACB 3A A3 7C         ld   a, (conveyor_col)
+ 873+ 6ACE 21 A1 7C         ld   hl, conveyor_len
  874+ 6AD1 86               add  a, (hl)
  875+ 6AD2 3D               dec  a                 ; A = conveyor_col_end
  876+ 6AD3
@@ -3103,7 +3104,7 @@
  879+ 6AD4 38 0D            jr   c, .not_on_conveyor
  880+ 6AD6
  881+ 6AD6                  ; D >= conveyor_col
- 882+ 6AD6 3A A2 7C         ld   a, (conveyor_col)
+ 882+ 6AD6 3A A3 7C         ld   a, (conveyor_col)
  883+ 6AD9 5F               ld   e, a
  884+ 6ADA 7A               ld   a, d
  885+ 6ADB BB               cp   e
@@ -3132,18 +3133,18 @@
  908+ 6AE8 C5               push bc
  909+ 6AE9 E5               push hl
  910+ 6AEA
- 911+ 6AEA 3A A4 7C         ld   a, (ramp_len)
+ 911+ 6AEA 3A A5 7C         ld   a, (ramp_len)
  912+ 6AED B7               or   a
  913+ 6AEE 28 6B            jr   z, .no
  914+ 6AF0
  915+ 6AF0                  ; 1. Verifica se Col (in E) è nel range orizzontale della rampa
- 916+ 6AF0 3A A3 7C         ld   a, (ramp_dir)
+ 916+ 6AF0 3A A4 7C         ld   a, (ramp_dir)
  917+ 6AF3 B7               or   a
  918+ 6AF4 28 1A            jr   z, .range_left
  919+ 6AF6              .range_right:
- 920+ 6AF6 3A A6 7C         ld   a, (ramp_col)
+ 920+ 6AF6 3A A7 7C         ld   a, (ramp_col)
  921+ 6AF9 47               ld   b, a              ; B = ramp_col
- 922+ 6AFA 3A A4 7C         ld   a, (ramp_len)
+ 922+ 6AFA 3A A5 7C         ld   a, (ramp_len)
  923+ 6AFD 80               add  a, b              ; A = ramp_col + ramp_len
  924+ 6AFE 4F               ld   c, a              ; C = limit_right (exclusive)
  925+ 6AFF
@@ -3159,20 +3160,20 @@
  935+ 6B08 47               ld   b, a              ; B = offset (0..ramp_len-1)
  936+ 6B09
  937+ 6B09                  ; SlopeRow = ramp_row - B
- 938+ 6B09 3A A5 7C         ld   a, (ramp_row)
+ 938+ 6B09 3A A6 7C         ld   a, (ramp_row)
  939+ 6B0C 90               sub  b
  940+ 6B0D 47               ld   b, a              ; B = SlopeRow
  941+ 6B0E 18 1F            jr   .check_row_match
  942+ 6B10
  943+ 6B10              .range_left:
  944+ 6B10                  ; Per rampa a sinistra, range è [ramp_col - ramp_len + 1, ramp_col]
- 945+ 6B10 21 A4 7C         ld   hl, ramp_len
- 946+ 6B13 3A A6 7C         ld   a, (ramp_col)
+ 945+ 6B10 21 A5 7C         ld   hl, ramp_len
+ 946+ 6B13 3A A7 7C         ld   a, (ramp_col)
  947+ 6B16 96               sub  (hl)
  948+ 6B17 3C               inc  a                 ; A = ramp_col - ramp_len + 1
  949+ 6B18 47               ld   b, a              ; B = limit_left
  950+ 6B19
- 951+ 6B19 3A A6 7C         ld   a, (ramp_col)
+ 951+ 6B19 3A A7 7C         ld   a, (ramp_col)
  952+ 6B1C 3C               inc  a
  953+ 6B1D 4F               ld   c, a              ; C = limit_right (exclusive)
  954+ 6B1E
@@ -3183,12 +3184,12 @@
  959+ 6B23 30 12            jr   nc, .check_platform_case
  960+ 6B25
  961+ 6B25                  ; Calcola B = ramp_col - Col
- 962+ 6B25 3A A6 7C         ld   a, (ramp_col)
+ 962+ 6B25 3A A7 7C         ld   a, (ramp_col)
  963+ 6B28 93               sub  e
  964+ 6B29 47               ld   b, a              ; B = offset
  965+ 6B2A
  966+ 6B2A                  ; SlopeRow = ramp_row - B
- 967+ 6B2A 3A A5 7C         ld   a, (ramp_row)
+ 967+ 6B2A 3A A6 7C         ld   a, (ramp_row)
  968+ 6B2D 90               sub  b
  969+ 6B2E 47               ld   b, a              ; B = SlopeRow
  970+ 6B2F
@@ -3203,24 +3204,24 @@
  979+ 6B37
  980+ 6B37              .check_platform_case:
  981+ 6B37                  ; 2. Controlla se è sulla piattaforma adiacente in cima
- 982+ 6B37 3A A3 7C         ld   a, (ramp_dir)
+ 982+ 6B37 3A A4 7C         ld   a, (ramp_dir)
  983+ 6B3A B7               or   a
  984+ 6B3B 28 09            jr   z, .plat_left
  985+ 6B3D              .plat_right:
- 986+ 6B3D 3A A6 7C         ld   a, (ramp_col)
- 987+ 6B40 21 A4 7C         ld   hl, ramp_len
+ 986+ 6B3D 3A A7 7C         ld   a, (ramp_col)
+ 987+ 6B40 21 A5 7C         ld   hl, ramp_len
  988+ 6B43 86               add  a, (hl)           ; A = ramp_col + ramp_len
  989+ 6B44 18 07            jr   .compare_plat
  990+ 6B46              .plat_left:
- 991+ 6B46 3A A6 7C         ld   a, (ramp_col)
- 992+ 6B49 21 A4 7C         ld   hl, ramp_len
+ 991+ 6B46 3A A7 7C         ld   a, (ramp_col)
+ 992+ 6B49 21 A5 7C         ld   hl, ramp_len
  993+ 6B4C 96               sub  (hl)              ; A = ramp_col - ramp_len
  994+ 6B4D              .compare_plat:
  995+ 6B4D BB               cp   e                 ; Compare with Col
  996+ 6B4E 20 0B            jr   nz, .no
  997+ 6B50
- 998+ 6B50 3A A5 7C         ld   a, (ramp_row)
- 999+ 6B53 21 A4 7C         ld   hl, ramp_len
+ 998+ 6B50 3A A6 7C         ld   a, (ramp_row)
+ 999+ 6B53 21 A5 7C         ld   hl, ramp_len
 1000+ 6B56 96               sub  (hl)
 1001+ 6B57 3C               inc  a                 ; A = ramp_row - ramp_len + 1
 1002+ 6B58 BA               cp   d                 ; Compare with Row
@@ -3341,8 +3342,8 @@
 1117+ 6BB5 D5               push de
 1118+ 6BB6 C5               push bc
 1119+ 6BB7
-1120+ 6BB7 2A F8 7C         ld   hl, (room_ptr)     ; HL = inizio layout stanza (128 byte)
-1121+ 6BBA 11 9E 7A         ld   de, unpacked_layout ; DE = buffer RAM
+1120+ 6BB7 2A F9 7C         ld   hl, (room_ptr)     ; HL = inizio layout stanza (128 byte)
+1121+ 6BBA 11 9F 7A         ld   de, unpacked_layout ; DE = buffer RAM
 1122+ 6BBD 06 80            ld   b, 128             ; 128 byte
 1123+ 6BBF              .byte_loop:
 1124+ 6BBF 7E               ld   a, (hl)            ; Leggi byte compresso
@@ -3408,7 +3409,7 @@
 1184+ 6BED 59               ld   e, c
 1185+ 6BEE 16 00            ld   d, 0
 1186+ 6BF0 19               add  hl, de            ; HL = Row * 32 + Col
-1187+ 6BF1 11 9E 7A         ld   de, unpacked_layout
+1187+ 6BF1 11 9F 7A         ld   de, unpacked_layout
 1188+ 6BF4 19               add  hl, de
 1189+ 6BF5 7E               ld   a, (hl)           ; A = cell type
 1190+ 6BF6
@@ -3424,23 +3425,23 @@
 1200+ 6BF9              ;         in tal caso A = PlayerY (Y teorico del player sulla rampa)
 1201+ 6BF9              ; -------------------------------------------------------------------
 1202+ 6BF9              GetRampY:
-1203+ 6BF9 3A A4 7C         ld   a, (ramp_len)
+1203+ 6BF9 3A A5 7C         ld   a, (ramp_len)
 1204+ 6BFC B7               or   a
 1205+ 6BFD C8               ret  z                 ; Se non c'è rampa (len=0), return carry clear
 1206+ 6BFE
-1207+ 6BFE 3A A3 7C         ld   a, (ramp_dir)
+1207+ 6BFE 3A A4 7C         ld   a, (ramp_dir)
 1208+ 6C01 B7               or   a
 1209+ 6C02 28 4C            jr   z, .dir_left
 1210+ 6C04
 1211+ 6C04              .dir_right:
 1212+ 6C04                  ; Rampa sale a destra (up-right)
-1213+ 6C04 3A A6 7C         ld   a, (ramp_col)
+1213+ 6C04 3A A7 7C         ld   a, (ramp_col)
 1214+ 6C07 87               add  a, a              ; *2
 1215+ 6C08 87               add  a, a              ; *4
 1216+ 6C09 87               add  a, a              ; *8 (X start in pixel)
 1217+ 6C0A 5F               ld   e, a              ; E = X_left
 1218+ 6C0B
-1219+ 6C0B 3A A4 7C         ld   a, (ramp_len)
+1219+ 6C0B 3A A5 7C         ld   a, (ramp_len)
 1220+ 6C0E 87               add  a, a              ; *2
 1221+ 6C0F 87               add  a, a              ; *4
 1222+ 6C10 87               add  a, a              ; *8
@@ -3460,8 +3461,8 @@
 1236+ 6C1E D2 AA 6C         jp   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary + 8, fuori
 1237+ 6C21
 1238+ 6C21                  ; Piattaforma adiacente! Restituisci PlayerY = (ramp_row - ramp_len + 1) * 8 - 16
-1239+ 6C21 3A A5 7C         ld   a, (ramp_row)
-1240+ 6C24 21 A4 7C         ld   hl, ramp_len
+1239+ 6C21 3A A6 7C         ld   a, (ramp_row)
+1240+ 6C24 21 A5 7C         ld   hl, ramp_len
 1241+ 6C27 96               sub  (hl)
 1242+ 6C28 3C               inc  a                 ; A = Row
 1243+ 6C29 87               add  a, a              ; *2
@@ -3472,7 +3473,7 @@
 1248+ 6C2F C9               ret
 1249+ 6C30
 1250+ 6C30              .on_ramp_slope:
-1251+ 6C30 3A A5 7C         ld   a, (ramp_row)
+1251+ 6C30 3A A6 7C         ld   a, (ramp_row)
 1252+ 6C33 87               add  a, a              ; *2
 1253+ 6C34 87               add  a, a              ; *4
 1254+ 6C35 87               add  a, a              ; *8
@@ -3484,8 +3485,8 @@
 1260+ 6C3A                  ; platform_Y = (ramp_row - ramp_len + 1) * 8 - 16
 1261+ 6C3A 57               ld   d, a              ; D = calculated Y
 1262+ 6C3B
-1263+ 6C3B 3A A5 7C         ld   a, (ramp_row)
-1264+ 6C3E 21 A4 7C         ld   hl, ramp_len
+1263+ 6C3B 3A A6 7C         ld   a, (ramp_row)
+1264+ 6C3E 21 A5 7C         ld   hl, ramp_len
 1265+ 6C41 96               sub  (hl)
 1266+ 6C42 3C               inc  a                 ; A = Row
 1267+ 6C43 87               add  a, a              ; *2
@@ -3507,8 +3508,8 @@
 1283+ 6C50
 1284+ 6C50              .dir_left:
 1285+ 6C50                  ; Rampa sale a sinistra (up-left)
-1286+ 6C50 21 A4 7C         ld   hl, ramp_len
-1287+ 6C53 3A A6 7C         ld   a, (ramp_col)
+1286+ 6C50 21 A5 7C         ld   hl, ramp_len
+1287+ 6C53 3A A7 7C         ld   a, (ramp_col)
 1288+ 6C56 96               sub  (hl)
 1289+ 6C57 3C               inc  a                 ; A = ramp_col - ramp_len + 1
 1290+ 6C58 87               add  a, a              ; *2
@@ -3516,7 +3517,7 @@
 1292+ 6C5A 87               add  a, a              ; *8
 1293+ 6C5B 5F               ld   e, a              ; E = X_left
 1294+ 6C5C
-1295+ 6C5C 3A A6 7C         ld   a, (ramp_col)
+1295+ 6C5C 3A A7 7C         ld   a, (ramp_col)
 1296+ 6C5F 87               add  a, a              ; *2
 1297+ 6C60 87               add  a, a              ; *4
 1298+ 6C61 87               add  a, a              ; *8
@@ -3537,8 +3538,8 @@
 1313+ 6C71 D2 AA 6C         jp   nc, .out_of_ramp  ; Se PlayerX <= X_left - 9, fuori
 1314+ 6C74
 1315+ 6C74                  ; Piattaforma adiacente a sinistra! Restituisci PlayerY = (ramp_row - ramp_len + 1) * 8 - 16
-1316+ 6C74 3A A5 7C         ld   a, (ramp_row)
-1317+ 6C77 21 A4 7C         ld   hl, ramp_len
+1316+ 6C74 3A A6 7C         ld   a, (ramp_row)
+1317+ 6C77 21 A5 7C         ld   hl, ramp_len
 1318+ 6C7A 96               sub  (hl)
 1319+ 6C7B 3C               inc  a                 ; A = Row
 1320+ 6C7C 87               add  a, a              ; *2
@@ -3549,13 +3550,13 @@
 1325+ 6C82 C9               ret
 1326+ 6C83
 1327+ 6C83              .on_ramp_slope_left:
-1328+ 6C83 3A A6 7C         ld   a, (ramp_col)
+1328+ 6C83 3A A7 7C         ld   a, (ramp_col)
 1329+ 6C86 87               add  a, a              ; *2
 1330+ 6C87 87               add  a, a              ; *4
 1331+ 6C88 87               add  a, a              ; *8
 1332+ 6C89 57               ld   d, a              ; D = X_start
 1333+ 6C8A
-1334+ 6C8A 3A A5 7C         ld   a, (ramp_row)
+1334+ 6C8A 3A A6 7C         ld   a, (ramp_row)
 1335+ 6C8D 87               add  a, a              ; *2
 1336+ 6C8E 87               add  a, a              ; *4
 1337+ 6C8F 87               add  a, a              ; *8
@@ -3567,8 +3568,8 @@
 1343+ 6C94                  ; platform_Y = (ramp_row - ramp_len + 1) * 8 - 16
 1344+ 6C94 57               ld   d, a              ; D = calculated Y
 1345+ 6C95
-1346+ 6C95 3A A5 7C         ld   a, (ramp_row)
-1347+ 6C98 21 A4 7C         ld   hl, ramp_len
+1346+ 6C95 3A A6 7C         ld   a, (ramp_row)
+1347+ 6C98 21 A5 7C         ld   hl, ramp_len
 1348+ 6C9B 96               sub  (hl)
 1349+ 6C9C 3C               inc  a                 ; A = Row
 1350+ 6C9D 87               add  a, a              ; *2
@@ -3602,7 +3603,7 @@
 1378+ 6CAD D5               push de
 1379+ 6CAE F5               push af
 1380+ 6CAF
-1381+ 6CAF 2A F8 7C         ld   hl, (room_ptr)
+1381+ 6CAF 2A F9 7C         ld   hl, (room_ptr)
 1382+ 6CB2 11 EF 00         ld   de, OFFSET_PHYSICS_SETTINGS
 1383+ 6CB5 19               add  hl, de
 1384+ 6CB6 7E               ld   a, (hl)
@@ -3610,21 +3611,21 @@
 1386+ 6CB8 20 0C            jr   nz, .custom_settings
 1387+ 6CBA
 1388+ 6CBA 3E 06            ld   a, 6
-1389+ 6CBC 32 97 79         ld   (room_jump_strength), a
+1389+ 6CBC 32 98 79         ld   (room_jump_strength), a
 1390+ 6CBF 3E 01            ld   a, 1
-1391+ 6CC1 32 98 79         ld   (room_gravity_preset), a
+1391+ 6CC1 32 99 79         ld   (room_gravity_preset), a
 1392+ 6CC4 18 12            jr   .done
 1393+ 6CC6
 1394+ 6CC6              .custom_settings:
 1395+ 6CC6 F5               push af
 1396+ 6CC7 E6 0F            and  $0f                  ; Maschera i 4 bit inferiori (JJJJ)
-1397+ 6CC9 32 97 79         ld   (room_jump_strength), a
+1397+ 6CC9 32 98 79         ld   (room_jump_strength), a
 1398+ 6CCC F1               pop  af
 1399+ 6CCD CB 3F            srl  a
 1400+ 6CCF CB 3F            srl  a
 1401+ 6CD1 CB 3F            srl  a
 1402+ 6CD3 CB 3F            srl  a                  ; Sposta i 4 bit superiori in quelli inferiori (GGGG)
-1403+ 6CD5 32 98 79         ld   (room_gravity_preset), a
+1403+ 6CD5 32 99 79         ld   (room_gravity_preset), a
 1404+ 6CD8
 1405+ 6CD8              .done:
 1406+ 6CD8 F1               pop  af
@@ -3864,14 +3865,14 @@
   31+ 6DA5 DD E5            push ix
   32+ 6DA7
   33+ 6DA7                  ; 1. Imposta IX all'indirizzo dell'array dei colori in ROM (room_ptr + 223)
-  34+ 6DA7 2A F8 7C         ld   hl, (room_ptr)
+  34+ 6DA7 2A F9 7C         ld   hl, (room_ptr)
   35+ 6DAA 11 DF 00         ld   de, 223
   36+ 6DAD 19               add  hl, de
   37+ 6DAE E5               push hl
   38+ 6DAF DD E1            pop  ix                ; IX = color pointer
   39+ 6DB1
   40+ 6DB1                  ; 2. Imposta HL all'indirizzo dei dati dei nemici (room_ptr + 240)
-  41+ 6DB1 2A F8 7C         ld   hl, (room_ptr)
+  41+ 6DB1 2A F9 7C         ld   hl, (room_ptr)
   42+ 6DB4 11 F0 00         ld   de, 240           ; Offset degli enemy nella stanza
   43+ 6DB7 19               add  hl, de            ; HL = indirizzo di RoomXEnemy1
   44+ 6DB8
@@ -3884,7 +3885,7 @@
   51+ 6DC2
   52+ 6DC2 E5               push hl
   53+ 6DC3 D5               push de
-  54+ 6DC4 2A F8 7C         ld   hl, (room_ptr)
+  54+ 6DC4 2A F9 7C         ld   hl, (room_ptr)
   55+ 6DC7 11 1A 01         ld   de, OFFSET_COLORS_5_8
   56+ 6DCA 19               add  hl, de
   57+ 6DCB E5               push hl
@@ -4514,21 +4515,21 @@
  681+ 715A DD E5            push ix
  682+ 715C
  683+ 715C                  ; Controlla il tasso di aggiornamento dei nemici (speed divider)
- 684+ 715C 3A FA 7C         ld   a, (enemy_update_rate)
+ 684+ 715C 3A FB 7C         ld   a, (enemy_update_rate)
  685+ 715F FE 01            cp   1
  686+ 7161 28 1D            jr   z, .do_update             ; Se 1, aggiorna ad ogni frame (velocità normale)
  687+ 7163
- 688+ 7163 3A FB 7C         ld   a, (enemy_update_timer)
+ 688+ 7163 3A FC 7C         ld   a, (enemy_update_timer)
  689+ 7166 3C               inc  a
  690+ 7167 47               ld   b, a                      ; B = timer + 1
- 691+ 7168 3A FA 7C         ld   a, (enemy_update_rate)
+ 691+ 7168 3A FB 7C         ld   a, (enemy_update_rate)
  692+ 716B B8               cp   b
  693+ 716C 28 0C            jr   z, .reset_timer
  694+ 716E 38 0A            jr   c, .reset_timer
  695+ 7170
  696+ 7170                  ; Salva contatore incrementato e salta l'aggiornamento
  697+ 7170 78               ld   a, b
- 698+ 7171 32 FB 7C         ld   (enemy_update_timer), a
+ 698+ 7171 32 FC 7C         ld   (enemy_update_timer), a
  699+ 7174
  700+ 7174              .skip_update:
  701+ 7174 DD E1            pop  ix
@@ -4539,7 +4540,7 @@
  706+ 717A
  707+ 717A              .reset_timer:
  708+ 717A AF               xor  a
- 709+ 717B 32 FB 7C         ld   (enemy_update_timer), a
+ 709+ 717B 32 FC 7C         ld   (enemy_update_timer), a
  710+ 717E 18 00            jr   .do_update
  711+ 7180
  712+ 7180              .do_update:
@@ -4770,7 +4771,7 @@
  937+ 72DF
  938+ 72DF                  ; Salva il frame corrente come vecchio per il prossimo ciclo di erase
  939+ 72DF 3A 09 A0         ld   a, (40969)
- 940+ 72E2 32 02 7D         ld   (rope_old_frame), a
+ 940+ 72E2 32 03 7D         ld   (rope_old_frame), a
  941+ 72E5
  942+ 72E5 C1               pop  bc
  943+ 72E6 D1               pop  de
@@ -4782,14 +4783,14 @@
  949+ 72EA D5               push de
  950+ 72EB C5               push bc
  951+ 72EC
- 952+ 72EC 3A 02 7D         ld   a, (rope_old_frame)
+ 952+ 72EC 3A 03 7D         ld   a, (rope_old_frame)
  953+ 72EF FE 22            cp   34
  954+ 72F1 28 2B            jr   z, .done
  955+ 72F3
  956+ 72F3 06 08            ld   b, 8              ; 8 segmenti
  957+ 72F5 16 00            ld   d, 0              ; D = S (segment index, 0..7)
  958+ 72F7              .loop:
- 959+ 72F7 3A 02 7D         ld   a, (rope_old_frame)
+ 959+ 72F7 3A 03 7D         ld   a, (rope_old_frame)
  960+ 72FA 62               ld   h, d              ; H = S
  961+ 72FB CD 22 73         call CalculateRopeX    ; A = X
  962+ 72FE 4F               ld   c, a              ; C = X
@@ -4964,12 +4965,12 @@
 1131+ 73B5 19               add  hl, de        ; HL = Row * 32 + Col
 1132+ 73B6
 1133+ 73B6                  ; 2. Leggi il tipo di cella (0..3) da unpacked_layout + HL
-1134+ 73B6 11 9E 7A         ld   de, unpacked_layout
+1134+ 73B6 11 9F 7A         ld   de, unpacked_layout
 1135+ 73B9 19               add  hl, de        ; HL = unpacked_layout + index
 1136+ 73BA 7E               ld   a, (hl)       ; A = cell type (0..3)
 1137+ 73BB
 1138+ 73BB                  ; 3. Calcola il tile pointer in base a type
-1139+ 73BB 2A F8 7C         ld   hl, (room_ptr)
+1139+ 73BB 2A F9 7C         ld   hl, (room_ptr)
 1140+ 73BE B7               or   a
 1141+ 73BF 20 06            jr   nz, .not_bg
 1142+ 73C1 11 A0 00         ld   de, OFFSET_BG
@@ -5156,7 +5157,7 @@
   95+ 74AF 00
   96+ 74B0
   97+ 74B0                  ; Stanza 27 (The Chapel)
-  98+ 74B0 1B 1C 06 03      db 27, 28, 6, MAGENTA, 0            ; Oggetto 3 alla colonna X=24, riga Y=11, YELLOW, (Stato: 0=attivo)
+  98+ 74B0 1B 1D 06 03      db 27, 29, 6, MAGENTA, 0            ; Oggetto 3 alla colonna X=24, riga Y=11, YELLOW, (Stato: 0=attivo)
   98+ 74B4 00
   99+ 74B5
  100+ 74B5                  ; Stanza 33 (The Bathroom)
@@ -5207,7 +5208,7 @@
  144+ 74BD                  ; ---------------------------------------------------------------
  145+ 74BD                  ; Confronto con TheOffLicenceLayout
  146+ 74BD                  ; ---------------------------------------------------------------
- 147+ 74BD 2A F8 7C         ld   hl, (room_ptr)
+ 147+ 74BD 2A F9 7C         ld   hl, (room_ptr)
  148+ 74C0 11 00 83         ld   de, TheOffLicenceLayout
  149+ 74C3 B7               or   a
  150+ 74C4 ED 52            sbc  hl, de
@@ -5221,7 +5222,7 @@
  158+ 74CD                  ; -------------------------------------------------q--------------
  159+ 74CD                  ; Confronto con TheBridgeLayout
  160+ 74CD                  ; ---------------------------------------------------------------
- 161+ 74CD 2A F8 7C         ld   hl, (room_ptr)
+ 161+ 74CD 2A F9 7C         ld   hl, (room_ptr)
  162+ 74D0 11 1E 84         ld   de, TheBridgeLayout
  163+ 74D3 B7               or   a
  164+ 74D4 ED 52            sbc  hl, de
@@ -5235,7 +5236,7 @@
  172+ 74DD                  ; ---------------------------------------------------------------
  173+ 74DD                  ; Confronto con UnderTheMegaTreeLayout
  174+ 74DD                  ; ---------------------------------------------------------------
- 175+ 74DD 2A F8 7C         ld   hl, (room_ptr)
+ 175+ 74DD 2A F9 7C         ld   hl, (room_ptr)
  176+ 74E0 11 3C 85         ld   de, UnderTheMegaTreeLayout
  177+ 74E3 B7               or   a
  178+ 74E4 ED 52            sbc  hl, de
@@ -5249,7 +5250,7 @@
  186+ 74ED                  ; ---------------------------------------------------------------
  187+ 74ED                  ; Confronto con AtTheFootTheMegaTreeLayout
  188+ 74ED                  ; ---------------------------------------------------------------
- 189+ 74ED 2A F8 7C         ld   hl, (room_ptr)
+ 189+ 74ED 2A F9 7C         ld   hl, (room_ptr)
  190+ 74F0 11 5A 86         ld   de, AtTheFootTheMegaTreeLayout
  191+ 74F3 B7               or   a
  192+ 74F4 ED 52            sbc  hl, de
@@ -5263,7 +5264,7 @@
  200+ 74FD                  ; ---------------------------------------------------------------
  201+ 74FD                  ; Confronto con TheDriveLayout
  202+ 74FD                  ; ---------------------------------------------------------------
- 203+ 74FD 2A F8 7C         ld   hl, (room_ptr)
+ 203+ 74FD 2A F9 7C         ld   hl, (room_ptr)
  204+ 7500 11 78 87         ld   de, TheDriveLayout
  205+ 7503 B7               or   a
  206+ 7504 ED 52            sbc  hl, de
@@ -5277,7 +5278,7 @@
  214+ 750D                  ; ---------------------------------------------------------------
  215+ 750D                  ; Confronto con TheSecurityGuardLayout
  216+ 750D                  ; ---------------------------------------------------------------
- 217+ 750D 2A F8 7C         ld   hl, (room_ptr)
+ 217+ 750D 2A F9 7C         ld   hl, (room_ptr)
  218+ 7510 11 96 88         ld   de, TheSecurityGuardLayout
  219+ 7513 B7               or   a
  220+ 7514 ED 52            sbc  hl, de
@@ -5291,7 +5292,7 @@
  228+ 751D                  ; ---------------------------------------------------------------
  229+ 751D                  ; Confronto con EntranceToHadesLayout
  230+ 751D                  ; ---------------------------------------------------------------
- 231+ 751D 2A F8 7C         ld   hl, (room_ptr)
+ 231+ 751D 2A F9 7C         ld   hl, (room_ptr)
  232+ 7520 11 B4 89         ld   de, EntranceToHadesLayout
  233+ 7523 B7               or   a
  234+ 7524 ED 52            sbc  hl, de
@@ -5305,7 +5306,7 @@
  242+ 752D                  ; ---------------------------------------------------------------
  243+ 752D                  ; Confronto con CuckoosNestLayout
  244+ 752D                  ; ---------------------------------------------------------------
- 245+ 752D 2A F8 7C         ld   hl, (room_ptr)
+ 245+ 752D 2A F9 7C         ld   hl, (room_ptr)
  246+ 7530 11 D2 8A         ld   de, CuckoosNestLayout
  247+ 7533 B7               or   a
  248+ 7534 ED 52            sbc  hl, de
@@ -5319,7 +5320,7 @@
  256+ 753D                  ; ---------------------------------------------------------------
  257+ 753D                  ; Confronto con InsideTheMegaTrunkLayout
  258+ 753D                  ; ---------------------------------------------------------------
- 259+ 753D 2A F8 7C         ld   hl, (room_ptr)
+ 259+ 753D 2A F9 7C         ld   hl, (room_ptr)
  260+ 7540 11 F0 8B         ld   de, InsideTheMegaTrunkLayout
  261+ 7543 B7               or   a
  262+ 7544 ED 52            sbc  hl, de
@@ -5333,7 +5334,7 @@
  270+ 754D                  ; ---------------------------------------------------------------
  271+ 754D                  ; Confronto con OnABranchOverTheDriveLayout
  272+ 754D                  ; ---------------------------------------------------------------
- 273+ 754D 2A F8 7C         ld   hl, (room_ptr)
+ 273+ 754D 2A F9 7C         ld   hl, (room_ptr)
  274+ 7550 11 0E 8D         ld   de, OnABranchOverTheDriveLayout
  275+ 7553 B7               or   a
  276+ 7554 ED 52            sbc  hl, de
@@ -5347,7 +5348,7 @@
  284+ 755D                  ; ---------------------------------------------------------------
  285+ 755D                  ; Confronto con TheFrontDoor
  286+ 755D                  ; ---------------------------------------------------------------
- 287+ 755D 2A F8 7C         ld   hl, (room_ptr)
+ 287+ 755D 2A F9 7C         ld   hl, (room_ptr)
  288+ 7560 11 2C 8E         ld   de, TheFrontDoorLayout
  289+ 7563 B7               or   a
  290+ 7564 ED 52            sbc  hl, de
@@ -5361,7 +5362,7 @@
  298+ 756D                  ; ---------------------------------------------------------------
  299+ 756D                  ; Confronto con TheHall
  300+ 756D                  ; ---------------------------------------------------------------
- 301+ 756D 2A F8 7C         ld   hl, (room_ptr)
+ 301+ 756D 2A F9 7C         ld   hl, (room_ptr)
  302+ 7570 11 4A 8F         ld   de, TheHallLayout
  303+ 7573 B7               or   a
  304+ 7574 ED 52            sbc  hl, de
@@ -5375,7 +5376,7 @@
  312+ 757D                  ; ---------------------------------------------------------------
  313+ 757D                  ; Confronto con TreeTop
  314+ 757D                  ; ---------------------------------------------------------------
- 315+ 757D 2A F8 7C         ld   hl, (room_ptr)
+ 315+ 757D 2A F9 7C         ld   hl, (room_ptr)
  316+ 7580 11 68 90         ld   de, TreeTopLayout
  317+ 7583 B7               or   a
  318+ 7584 ED 52            sbc  hl, de
@@ -5389,7 +5390,7 @@
  326+ 758D                  ; ---------------------------------------------------------------
  327+ 758D                  ; Confronto con TreeTop
  328+ 758D                  ; ---------------------------------------------------------------
- 329+ 758D 2A F8 7C         ld   hl, (room_ptr)
+ 329+ 758D 2A F9 7C         ld   hl, (room_ptr)
  330+ 7590 11 86 91         ld   de, OutALimbLayout
  331+ 7593 B7               or   a
  332+ 7594 ED 52            sbc  hl, de
@@ -5403,7 +5404,7 @@
  340+ 759D                  ; ---------------------------------------------------------------
  341+ 759D                  ; Confronto con ResecueEsmeralda
  342+ 759D                  ; ---------------------------------------------------------------
- 343+ 759D 2A F8 7C         ld   hl, (room_ptr)
+ 343+ 759D 2A F9 7C         ld   hl, (room_ptr)
  344+ 75A0 11 A4 92         ld   de, RescueEsmereldaLayout
  345+ 75A3 B7               or   a
  346+ 75A4 ED 52            sbc  hl, de
@@ -5417,7 +5418,7 @@
  354+ 75AD                  ; ---------------------------------------------------------------
  355+ 75AD                  ; Confronto con ResecueEsmeralda
  356+ 75AD                  ; ---------------------------------------------------------------
- 357+ 75AD 2A F8 7C         ld   hl, (room_ptr)
+ 357+ 75AD 2A F9 7C         ld   hl, (room_ptr)
  358+ 75B0 11 C2 93         ld   de, IAmSureIHaveSeenThiBeforeLayout
  359+ 75B3 B7               or   a
  360+ 75B4 ED 52            sbc  hl, de
@@ -5431,7 +5432,7 @@
  368+ 75BD                  ; ---------------------------------------------------------------
  369+ 75BD                  ; Confronto con ResecueEsmeralda
  370+ 75BD                  ; ---------------------------------------------------------------
- 371+ 75BD 2A F8 7C         ld   hl, (room_ptr)
+ 371+ 75BD 2A F9 7C         ld   hl, (room_ptr)
  372+ 75C0 11 E0 94         ld   de, WeMustPerformQuirkafleegLayout
  373+ 75C3 B7               or   a
  374+ 75C4 ED 52            sbc  hl, de
@@ -5445,7 +5446,7 @@
  382+ 75CD                  ; ---------------------------------------------------------------
  383+ 75CD                  ; Confronto con ResecueEsmeralda
  384+ 75CD                  ; ---------------------------------------------------------------
- 385+ 75CD 2A F8 7C         ld   hl, (room_ptr)
+ 385+ 75CD 2A F9 7C         ld   hl, (room_ptr)
  386+ 75D0 11 FE 95         ld   de, UpOnTheBattlementsLayout
  387+ 75D3 B7               or   a
  388+ 75D4 ED 52            sbc  hl, de
@@ -5459,7 +5460,7 @@
  396+ 75DD                  ; ---------------------------------------------------------------
  397+ 75DD                  ; Confronto con ResecueEsmeralda
  398+ 75DD                  ; ---------------------------------------------------------------
- 399+ 75DD 2A F8 7C         ld   hl, (room_ptr)
+ 399+ 75DD 2A F9 7C         ld   hl, (room_ptr)
  400+ 75E0 11 1C 97         ld   de, OntheRoofLayout
  401+ 75E3 B7               or   a
  402+ 75E4 ED 52            sbc  hl, de
@@ -5473,7 +5474,7 @@
  410+ 75ED                  ; ---------------------------------------------------------------
  411+ 75ED                  ; Confronto con ResecueEsmeralda
  412+ 75ED                  ; ---------------------------------------------------------------
- 413+ 75ED 2A F8 7C         ld   hl, (room_ptr)
+ 413+ 75ED 2A F9 7C         ld   hl, (room_ptr)
  414+ 75F0 11 3A 98         ld   de, TheForgottenAbbeyLayout
  415+ 75F3 B7               or   a
  416+ 75F4 ED 52            sbc  hl, de
@@ -5487,7 +5488,7 @@
  424+ 75FD                  ; ---------------------------------------------------------------
  425+ 75FD                  ; Confronto con BallRoomEastLayout
  426+ 75FD                  ; ---------------------------------------------------------------
- 427+ 75FD 2A F8 7C         ld   hl, (room_ptr)
+ 427+ 75FD 2A F9 7C         ld   hl, (room_ptr)
  428+ 7600 11 58 99         ld   de, BallRoomEastLayout
  429+ 7603 B7               or   a
  430+ 7604 ED 52            sbc  hl, de
@@ -5501,7 +5502,7 @@
  438+ 760D                  ; ---------------------------------------------------------------
  439+ 760D                  ; Confronto con BallRoomWestLayout
  440+ 760D                  ; ---------------------------------------------------------------
- 441+ 760D 2A F8 7C         ld   hl, (room_ptr)
+ 441+ 760D 2A F9 7C         ld   hl, (room_ptr)
  442+ 7610 11 76 9A         ld   de, BallRoomWestLayout
  443+ 7613 B7               or   a
  444+ 7614 ED 52            sbc  hl, de
@@ -5515,7 +5516,7 @@
  452+ 761D                  ; ---------------------------------------------------------------
  453+ 761D                  ; Confronto con TotheKitchensMainStairwayLayout
  454+ 761D                  ; ---------------------------------------------------------------
- 455+ 761D 2A F8 7C         ld   hl, (room_ptr)
+ 455+ 761D 2A F9 7C         ld   hl, (room_ptr)
  456+ 7620 11 94 9B         ld   de, TotheKitchensMainStairwayLayout
  457+ 7623 B7               or   a
  458+ 7624 ED 52            sbc  hl, de
@@ -5529,7 +5530,7 @@
  466+ 762D                  ; ---------------------------------------------------------------
  467+ 762D                  ; Confronto con TheKitchenLayout
  468+ 762D                  ; ---------------------------------------------------------------
- 469+ 762D 2A F8 7C         ld   hl, (room_ptr)
+ 469+ 762D 2A F9 7C         ld   hl, (room_ptr)
  470+ 7630 11 B2 9C         ld   de, TheKitchenLayout
  471+ 7633 B7               or   a
  472+ 7634 ED 52            sbc  hl, de
@@ -5543,7 +5544,7 @@
  480+ 763D                  ; ---------------------------------------------------------------
  481+ 763D                  ; Confronto con TheKitchenLayout
  482+ 763D                  ; ---------------------------------------------------------------
- 483+ 763D 2A F8 7C         ld   hl, (room_ptr)
+ 483+ 763D 2A F9 7C         ld   hl, (room_ptr)
  484+ 7640 11 D0 9D         ld   de, WestOfKitchenLayout
  485+ 7643 B7               or   a
  486+ 7644 ED 52            sbc  hl, de
@@ -5557,7 +5558,7 @@
  494+ 764D                  ; ---------------------------------------------------------------
  495+ 764D                  ; Confronto con TheKitchenLayout
  496+ 764D                  ; ---------------------------------------------------------------
- 497+ 764D 2A F8 7C         ld   hl, (room_ptr)
+ 497+ 764D 2A F9 7C         ld   hl, (room_ptr)
  498+ 7650 11 EE 9E         ld   de, ColdStoreLayout
  499+ 7653 B7               or   a
  500+ 7654 ED 52            sbc  hl, de
@@ -5571,7 +5572,7 @@
  508+ 765D                  ; ---------------------------------------------------------------
  509+ 765D                  ; Confronto con TheChapelLayout
  510+ 765D                  ; ---------------------------------------------------------------
- 511+ 765D 2A F8 7C         ld   hl, (room_ptr)
+ 511+ 765D 2A F9 7C         ld   hl, (room_ptr)
  512+ 7660 11 2A A1         ld   de, TheChapelLayout
  513+ 7663 B7               or   a
  514+ 7664 ED 52            sbc  hl, de
@@ -5585,7 +5586,7 @@
  522+ 766D                  ; ---------------------------------------------------------------
  523+ 766D                  ; Confronto con TheBathroomLayout
  524+ 766D                  ; ---------------------------------------------------------------
- 525+ 766D 2A F8 7C         ld   hl, (room_ptr)
+ 525+ 766D 2A F9 7C         ld   hl, (room_ptr)
  526+ 7670 11 48 A2         ld   de, TheBathroomLayout
  527+ 7673 B7               or   a
  528+ 7674 ED 52            sbc  hl, de
@@ -5598,7 +5599,7 @@
  535+ 767D                  ; ---------------------------------------------------------------
  536+ 767D                  ; Confronto con MastreBedRoomLayout
  537+ 767D                  ; ---------------------------------------------------------------
- 538+ 767D 2A F8 7C         ld   hl, (room_ptr)
+ 538+ 767D 2A F9 7C         ld   hl, (room_ptr)
  539+ 7680 11 66 A3         ld   de, MastreBedRoomLayout
  540+ 7683 B7               or   a
  541+ 7684 ED 52            sbc  hl, de
@@ -5611,7 +5612,7 @@
  548+ 768D                  ; ---------------------------------------------------------------
  549+ 768D                  ; Confronto con UnderTheDrive
  550+ 768D                  ; ---------------------------------------------------------------
- 551+ 768D 2A F8 7C         ld   hl, (room_ptr)
+ 551+ 768D 2A F9 7C         ld   hl, (room_ptr)
  552+ 7690 11 84 A4         ld   de, UnderTheDriveLayout
  553+ 7693 B7               or   a
  554+ 7694 ED 52            sbc  hl, de
@@ -5629,7 +5630,7 @@
  566+ 769F              .set_room:
  567+ 769F
  568+ 769F                  ; Salva l'ID della stanza corrente
- 569+ 769F 32 9E 7C         ld   (current_room), a
+ 569+ 769F 32 9F 7C         ld   (current_room), a
  570+ 76A2
  571+ 76A2                  ; Ripristina i registri
  572+ 76A2 D1               pop  de
@@ -5691,10 +5692,10 @@
  628+ 76B9                  ; Nessun item attivo nella stanza
  629+ 76B9                  ; ---------------------------------------------------------------
  630+ 76B9 AF               xor  a
- 631+ 76BA 32 F7 7C         ld   (num_room_items), a
+ 631+ 76BA 32 F8 7C         ld   (num_room_items), a
  632+ 76BD
  633+ 76BD                  ; IY punta alla cache degli item attivi
- 634+ 76BD FD 21 A7 7C      ld   iy, current_room_items
+ 634+ 76BD FD 21 A8 7C      ld   iy, current_room_items
  635+ 76C1
  636+ 76C1                  ; ---------------------------------------------------------------
  637+ 76C1                  ; Recupera il puntatore alla bitmap dell'oggetto associato
@@ -5702,7 +5703,7 @@
  639+ 76C1                  ;
  640+ 76C1                  ; room_ptr + OFFSET_ITEM_GRAPHIC
  641+ 76C1                  ; ---------------------------------------------------------------
- 642+ 76C1 2A F8 7C         ld   hl, (room_ptr)
+ 642+ 76C1 2A F9 7C         ld   hl, (room_ptr)
  643+ 76C4 11 E3 00         ld   de, OFFSET_ITEM_GRAPHIC
  644+ 76C7 19               add  hl, de
  645+ 76C8
@@ -5730,7 +5731,7 @@
  667+ 76D3                  ; ---------------------------------------------------------------
  668+ 76D3 57               ld   d, a
  669+ 76D4
- 670+ 76D4 3A 9E 7C         ld   a, (current_room)
+ 670+ 76D4 3A 9F 7C         ld   a, (current_room)
  671+ 76D7 BA               cp   d
  672+ 76D8 20 45            jr   nz, .next_item
  673+ 76DA
@@ -5823,9 +5824,9 @@
  760+ 7714 FD 09            add  iy, bc
  761+ 7716
  762+ 7716                  ; Incrementa il numero di item attivi
- 763+ 7716 3A F7 7C         ld   a, (num_room_items)
+ 763+ 7716 3A F8 7C         ld   a, (num_room_items)
  764+ 7719 3C               inc  a
- 765+ 771A 32 F7 7C         ld   (num_room_items), a
+ 765+ 771A 32 F8 7C         ld   (num_room_items), a
  766+ 771D
  767+ 771D 18 04            jr   .next_no_inc
  768+ 771F
@@ -6067,7 +6068,7 @@
 1004+ 7774                  ;
 1005+ 7774                  ; DE = base della struttura stanza
 1006+ 7774                  ; ---------------------------------------------------------------
-1007+ 7774 ED 5B F8 7C      ld   de, (room_ptr)
+1007+ 7774 ED 5B F9 7C      ld   de, (room_ptr)
 1008+ 7778
 1009+ 7778                  ; ---------------------------------------------------------------
 1010+ 7778                  ; Seleziona il tile corretto in base al tipo di cella.
@@ -6380,7 +6381,7 @@
 1317+ 77F9                  ; ---------------------------------------------------------------
 1318+ 77F9 57               ld   d, a              ; D = RoomID item
 1319+ 77FA
-1320+ 77FA 3A 9E 7C         ld   a, (current_room)
+1320+ 77FA 3A 9F 7C         ld   a, (current_room)
 1321+ 77FD BA               cp   d
 1322+ 77FE
 1323+ 77FE                  ; Se appartiene a un'altra stanza salta il record
@@ -6651,7 +6652,7 @@
   17+ 786B E5               push hl
   18+ 786C
   19+ 786C                  ; Controlla se il suono è attivo (note < 18)
-  20+ 786C 3A FE 7C         ld   a, (Audio_jump_sound_note)
+  20+ 786C 3A FF 7C         ld   a, (Audio_jump_sound_note)
   21+ 786F FE 12            cp   18                        ; Ci sono 18 note (0..17)
   22+ 7871 30 2A            jr   nc, .done                 ; Se >= 18, non stiamo riproducendo
   23+ 7873
@@ -6687,9 +6688,9 @@
   53+ 7894 10 E8            djnz .note_loop
   54+ 7896
   55+ 7896                  ; Passa alla nota successiva
-  56+ 7896 3A FE 7C         ld   a, (Audio_jump_sound_note)
+  56+ 7896 3A FF 7C         ld   a, (Audio_jump_sound_note)
   57+ 7899 3C               inc  a
-  58+ 789A 32 FE 7C         ld   (Audio_jump_sound_note), a
+  58+ 789A 32 FF 7C         ld   (Audio_jump_sound_note), a
   59+ 789D
   60+ 789D              .done:
   61+ 789D E1               pop  hl
@@ -6718,24 +6719,24 @@
   80+ 78B7 E5               push hl
   81+ 78B8
   82+ 78B8                  ; Se il salto sta riproducendo un effetto sonoro, non suonare la musica
-  83+ 78B8 3A FE 7C         ld   a, (Audio_jump_sound_note)
+  83+ 78B8 3A FF 7C         ld   a, (Audio_jump_sound_note)
   84+ 78BB FE 12            cp   18
   85+ 78BD 38 56            jr   c, .done                 ; Salto attivo -> niente musica
   86+ 78BF
   87+ 78BF                  ; Decrementa il contatore dei frame della nota corrente
-  88+ 78BF 3A 01 7D         ld   a, (Audio_music_frame_counter)
+  88+ 78BF 3A 02 7D         ld   a, (Audio_music_frame_counter)
   89+ 78C2 3D               dec  a
-  90+ 78C3 32 01 7D         ld   (Audio_music_frame_counter), a
+  90+ 78C3 32 02 7D         ld   (Audio_music_frame_counter), a
   91+ 78C6 20 1F            jr   nz, .play_current_note   ; Se non è zero, continua a suonare
   92+ 78C8
   93+ 78C8                  ; Altrimenti carica la nota successiva
-  94+ 78C8 3A 00 7D         ld   a, (Audio_music_note_idx)
+  94+ 78C8 3A 01 7D         ld   a, (Audio_music_note_idx)
   95+ 78CB 3C               inc  a
   96+ 78CC FE 23            cp   35                       ; Abbiamo 35 note in totale
   97+ 78CE 38 01            jr   c, .no_wrap
   98+ 78D0 AF               xor  a                        ; Torna a 0 se raggiunge la fine (loop)
   99+ 78D1              .no_wrap:
- 100+ 78D1 32 00 7D         ld   (Audio_music_note_idx), a
+ 100+ 78D1 32 01 7D         ld   (Audio_music_note_idx), a
  101+ 78D4
  102+ 78D4                  ; Carica la durata e impostala come nuovo contatore di frame
  103+ 78D4 5F               ld   e, a
@@ -6751,11 +6752,11 @@
  113+ 78E0 20 02            jr   nz, .dur_ok
  114+ 78E2 3E 01            ld   a, 1
  115+ 78E4              .dur_ok:
- 116+ 78E4 32 01 7D         ld   (Audio_music_frame_counter), a
+ 116+ 78E4 32 02 7D         ld   (Audio_music_frame_counter), a
  117+ 78E7
  118+ 78E7              .play_current_note:
  119+ 78E7                  ; Ottieni il delay della nota corrente (primo byte)
- 120+ 78E7 3A 00 7D         ld   a, (Audio_music_note_idx)
+ 120+ 78E7 3A 01 7D         ld   a, (Audio_music_note_idx)
  121+ 78EA 5F               ld   e, a
  122+ 78EB 16 00            ld   d, 0
  123+ 78ED 21 1A 79         ld   hl, Audio_MusicSheet
@@ -6877,1064 +6878,1072 @@
   15+ 798B 00           items_collected:  db $00
   16+ 798C 00           sprite_shift:     db $00
   17+ 798D 00           room_border_color: db $00
-  18+ 798E
-  19+ 798E              ; Fisica
-  20+ 798E 00           velocity_y:     db $00
-  21+ 798F 01           on_ground:      db $01
-  22+ 7990 00           jump_pressed:   db $00
-  23+ 7991 00           jump_prev:      db $00
-  24+ 7992 00           jump_start_y:   db $00
-  25+ 7993 00           jump_dir:       db $00
-  26+ 7994 00           jump_frame:     db $00
-  27+ 7995 00           current_input_dir: db $00
-  28+ 7996 00           q_prev:         db $00
-  29+ 7997 06           room_jump_strength:  db 6
-  30+ 7998 01           room_gravity_preset: db 1
-  31+ 7999
-  32+ 7999              ; Buffer e contatori
-  33+ 7999 00 00        counter:        dw 0
-  34+ 799B 00           last_music_counter_low: db 0
-  35+ 799C 00 00        last_frame_counter: dw 0
-  36+ 799E 00          > db 0
-  36+ 799F 00          > db 0
-  36+ 79A0 00          > db 0
-  36+ 79A1 00          > db 0
-  36+ 79A2 00          > db 0
-  36+ 79A3 00          > db 0
-  36+ 79A4 00          > db 0
-  36+ 79A5 00          > db 0
-  36+ 79A6 00          > db 0
-  36+ 79A7 00          > db 0
-  36+ 79A8 00          > db 0
-  36+ 79A9 00          > db 0
-  36+ 79AA 00          > db 0
-  36+ 79AB 00          > db 0
-  36+ 79AC 00          > db 0
-  36+ 79AD 00          > db 0
-  36+ 79AE 00          > db 0
-  36+ 79AF 00          > db 0
-  36+ 79B0 00          > db 0
-  36+ 79B1 00          > db 0
-  36+ 79B2 00          > db 0
-  36+ 79B3 00          > db 0
-  36+ 79B4 00          > db 0
-  36+ 79B5 00          > db 0
-  36+ 79B6 00          > db 0
-  36+ 79B7 00          > db 0
-  36+ 79B8 00          > db 0
-  36+ 79B9 00          > db 0
-  36+ 79BA 00          > db 0
-  36+ 79BB 00          > db 0
-  36+ 79BC 00          > db 0
-  36+ 79BD 00          > db 0
-  36+ 79BE 00          > db 0
-  36+ 79BF 00          > db 0
-  36+ 79C0 00          > db 0
-  36+ 79C1 00          > db 0
-  36+ 79C2 00          > db 0
-  36+ 79C3 00          > db 0
-  36+ 79C4 00          > db 0
-  36+ 79C5 00          > db 0
-  36+ 79C6 00          > db 0
-  36+ 79C7 00          > db 0
-  36+ 79C8 00          > db 0
-  36+ 79C9 00          > db 0
-  36+ 79CA 00          > db 0
-  36+ 79CB 00          > db 0
-  36+ 79CC 00          > db 0
-  36+ 79CD 00          > db 0
-  36+ 79CE 00          > db 0
-  36+ 79CF 00          > db 0
-  36+ 79D0 00          > db 0
-  36+ 79D1 00          > db 0
-  36+ 79D2 00          > db 0
-  36+ 79D3 00          > db 0
-  36+ 79D4 00          > db 0
-  36+ 79D5 00          > db 0
-  36+ 79D6 00          > db 0
-  36+ 79D7 00          > db 0
-  36+ 79D8 00          > db 0
-  36+ 79D9 00          > db 0
-  36+ 79DA 00          > db 0
-  36+ 79DB 00          > db 0
-  36+ 79DC 00          > db 0
-  36+ 79DD 00          > db 0
-  36+ 79DE 00          > db 0
-  36+ 79DF 00          > db 0
-  36+ 79E0 00          > db 0
-  36+ 79E1 00          > db 0
-  36+ 79E2 00          > db 0
-  36+ 79E3 00          > db 0
-  36+ 79E4 00          > db 0
-  36+ 79E5 00          > db 0
-  36+ 79E6 00          > db 0
-  36+ 79E7 00          > db 0
-  36+ 79E8 00          > db 0
-  36+ 79E9 00          > db 0
-  36+ 79EA 00          > db 0
-  36+ 79EB 00          > db 0
-  36+ 79EC 00          > db 0
-  36+ 79ED 00          > db 0
-  36+ 79EE 00          > db 0
-  36+ 79EF 00          > db 0
-  36+ 79F0 00          > db 0
-  36+ 79F1 00          > db 0
-  36+ 79F2 00          > db 0
-  36+ 79F3 00          > db 0
-  36+ 79F4 00          > db 0
-  36+ 79F5 00          > db 0
-  36+ 79F6 00          > db 0
-  36+ 79F7 00          > db 0
-  36+ 79F8 00          > db 0
-  36+ 79F9 00          > db 0
-  36+ 79FA 00          > db 0
-  36+ 79FB 00          > db 0
-  36+ 79FC 00          > db 0
-  36+ 79FD 00          > db 0
-  36+ 79FE 00          > db 0
-  36+ 79FF 00          > db 0
-  36+ 7A00 00          > db 0
-  36+ 7A01 00          > db 0
-  36+ 7A02 00          > db 0
-  36+ 7A03 00          > db 0
-  36+ 7A04 00          > db 0
-  36+ 7A05 00          > db 0
-  36+ 7A06 00          > db 0
-  36+ 7A07 00          > db 0
-  36+ 7A08 00          > db 0
-  36+ 7A09 00          > db 0
-  36+ 7A0A 00          > db 0
-  36+ 7A0B 00          > db 0
-  36+ 7A0C 00          > db 0
-  36+ 7A0D 00          > db 0
-  36+ 7A0E 00          > db 0
-  36+ 7A0F 00          > db 0
-  36+ 7A10 00          > db 0
-  36+ 7A11 00          > db 0
-  36+ 7A12 00          > db 0
-  36+ 7A13 00          > db 0
-  36+ 7A14 00          > db 0
-  36+ 7A15 00          > db 0
-  36+ 7A16 00          > db 0
-  36+ 7A17 00          > db 0
-  36+ 7A18 00          > db 0
-  36+ 7A19 00          > db 0
-  36+ 7A1A 00          > db 0
-  36+ 7A1B 00          > db 0
-  36+ 7A1C 00          > db 0
-  36+ 7A1D 00          > db 0
-  36+ 7A1E 00          > db 0
-  36+ 7A1F 00          > db 0
-  36+ 7A20 00          > db 0
-  36+ 7A21 00          > db 0
-  36+ 7A22 00          > db 0
-  36+ 7A23 00          > db 0
-  36+ 7A24 00          > db 0
-  36+ 7A25 00          > db 0
-  36+ 7A26 00          > db 0
-  36+ 7A27 00          > db 0
-  36+ 7A28 00          > db 0
-  36+ 7A29 00          > db 0
-  36+ 7A2A 00          > db 0
-  36+ 7A2B 00          > db 0
-  36+ 7A2C 00          > db 0
-  36+ 7A2D 00          > db 0
-  36+ 7A2E 00          > db 0
-  36+ 7A2F 00          > db 0
-  36+ 7A30 00          > db 0
-  36+ 7A31 00          > db 0
-  36+ 7A32 00          > db 0
-  36+ 7A33 00          > db 0
-  36+ 7A34 00          > db 0
-  36+ 7A35 00          > db 0
-  36+ 7A36 00          > db 0
-  36+ 7A37 00          > db 0
-  36+ 7A38 00          > db 0
-  36+ 7A39 00          > db 0
-  36+ 7A3A 00          > db 0
-  36+ 7A3B 00          > db 0
-  36+ 7A3C 00          > db 0
-  36+ 7A3D 00          > db 0
-  36+ 7A3E 00          > db 0
-  36+ 7A3F 00          > db 0
-  36+ 7A40 00          > db 0
-  36+ 7A41 00          > db 0
-  36+ 7A42 00          > db 0
-  36+ 7A43 00          > db 0
-  36+ 7A44 00          > db 0
-  36+ 7A45 00          > db 0
-  36+ 7A46 00          > db 0
-  36+ 7A47 00          > db 0
-  36+ 7A48 00          > db 0
-  36+ 7A49 00          > db 0
-  36+ 7A4A 00          > db 0
-  36+ 7A4B 00          > db 0
-  36+ 7A4C 00          > db 0
-  36+ 7A4D 00          > db 0
-  36+ 7A4E 00          > db 0
-  36+ 7A4F 00          > db 0
-  36+ 7A50 00          > db 0
-  36+ 7A51 00          > db 0
-  36+ 7A52 00          > db 0
-  36+ 7A53 00          > db 0
-  36+ 7A54 00          > db 0
-  36+ 7A55 00          > db 0
-  36+ 7A56 00          > db 0
-  36+ 7A57 00          > db 0
-  36+ 7A58 00          > db 0
-  36+ 7A59 00          > db 0
-  36+ 7A5A 00          > db 0
-  36+ 7A5B 00          > db 0
-  36+ 7A5C 00          > db 0
-  36+ 7A5D 00          > db 0
-  36+ 7A5E 00          > db 0
-  36+ 7A5F 00          > db 0
-  36+ 7A60 00          > db 0
-  36+ 7A61 00          > db 0
-  36+ 7A62 00          > db 0
-  36+ 7A63 00          > db 0
-  36+ 7A64 00          > db 0
-  36+ 7A65 00          > db 0
-  36+ 7A66 00          > db 0
-  36+ 7A67 00          > db 0
-  36+ 7A68 00          > db 0
-  36+ 7A69 00          > db 0
-  36+ 7A6A 00          > db 0
-  36+ 7A6B 00          > db 0
-  36+ 7A6C 00          > db 0
-  36+ 7A6D 00          > db 0
-  36+ 7A6E 00          > db 0
-  36+ 7A6F 00          > db 0
-  36+ 7A70 00          > db 0
-  36+ 7A71 00          > db 0
-  36+ 7A72 00          > db 0
-  36+ 7A73 00          > db 0
-  36+ 7A74 00          > db 0
-  36+ 7A75 00          > db 0
-  36+ 7A76 00          > db 0
-  36+ 7A77 00          > db 0
-  36+ 7A78 00          > db 0
-  36+ 7A79 00          > db 0
-  36+ 7A7A 00          > db 0
-  36+ 7A7B 00          > db 0
-  36+ 7A7C 00          > db 0
-  36+ 7A7D 00          > db 0
-  36+ 7A7E 00          > db 0
-  36+ 7A7F 00          > db 0
-  36+ 7A80 00          > db 0
-  36+ 7A81 00          > db 0
-  36+ 7A82 00          > db 0
-  36+ 7A83 00          > db 0
-  36+ 7A84 00          > db 0
-  36+ 7A85 00          > db 0
-  36+ 7A86 00          > db 0
-  36+ 7A87 00          > db 0
-  36+ 7A88 00          > db 0
-  36+ 7A89 00          > db 0
-  36+ 7A8A 00          > db 0
-  36+ 7A8B 00          > db 0
-  36+ 7A8C 00          > db 0
-  36+ 7A8D 00          > db 0
-  36+ 7A8E 00          > db 0
-  36+ 7A8F 00          > db 0
-  36+ 7A90 00          > db 0
-  36+ 7A91 00          > db 0
-  36+ 7A92 00          > db 0
-  36+ 7A93 00          > db 0
-  36+ 7A94 00          > db 0
-  36+ 7A95 00          > db 0
-  36+ 7A96 00          > db 0
-  36+ 7A97 00          > db 0
-  36+ 7A98 00          > db 0
-  36+ 7A99 00          > db 0
-  36+ 7A9A 00          > db 0
-  36+ 7A9B 00          > db 0
-  36+ 7A9C 00          > db 0
-  36+ 7A9D 00          > db 0
+  18+ 798E 01           flag_guardian_collision_death: db $01 ; 1 = abilita morte per collisione con guardiani, 0 = disabilita (disegna raster bar debug)
+  19+ 798F
+  20+ 798F              ; Fisica
+  21+ 798F 00           velocity_y:     db $00
+  22+ 7990 01           on_ground:      db $01
+  23+ 7991 00           jump_pressed:   db $00
+  24+ 7992 00           jump_prev:      db $00
+  25+ 7993 00           jump_start_y:   db $00
+  26+ 7994 00           jump_dir:       db $00
+  27+ 7995 00           jump_frame:     db $00
+  28+ 7996 00           current_input_dir: db $00
+  29+ 7997 00           q_prev:         db $00
+  30+ 7998 06           room_jump_strength:  db 6
+  31+ 7999 01           room_gravity_preset: db 1
+  32+ 799A
+  33+ 799A              ; Buffer e contatori
+  34+ 799A 00 00        counter:        dw 0
+  35+ 799C 00           last_music_counter_low: db 0
+  36+ 799D 00 00        last_frame_counter: dw 0
+  37+ 799F 00          > db 0
+  37+ 79A0 00          > db 0
+  37+ 79A1 00          > db 0
+  37+ 79A2 00          > db 0
+  37+ 79A3 00          > db 0
+  37+ 79A4 00          > db 0
+  37+ 79A5 00          > db 0
+  37+ 79A6 00          > db 0
+  37+ 79A7 00          > db 0
+  37+ 79A8 00          > db 0
+  37+ 79A9 00          > db 0
+  37+ 79AA 00          > db 0
+  37+ 79AB 00          > db 0
+  37+ 79AC 00          > db 0
+  37+ 79AD 00          > db 0
+  37+ 79AE 00          > db 0
+  37+ 79AF 00          > db 0
+  37+ 79B0 00          > db 0
+  37+ 79B1 00          > db 0
+  37+ 79B2 00          > db 0
+  37+ 79B3 00          > db 0
+  37+ 79B4 00          > db 0
+  37+ 79B5 00          > db 0
+  37+ 79B6 00          > db 0
+  37+ 79B7 00          > db 0
+  37+ 79B8 00          > db 0
+  37+ 79B9 00          > db 0
+  37+ 79BA 00          > db 0
+  37+ 79BB 00          > db 0
+  37+ 79BC 00          > db 0
+  37+ 79BD 00          > db 0
+  37+ 79BE 00          > db 0
+  37+ 79BF 00          > db 0
+  37+ 79C0 00          > db 0
+  37+ 79C1 00          > db 0
+  37+ 79C2 00          > db 0
+  37+ 79C3 00          > db 0
+  37+ 79C4 00          > db 0
+  37+ 79C5 00          > db 0
+  37+ 79C6 00          > db 0
+  37+ 79C7 00          > db 0
+  37+ 79C8 00          > db 0
+  37+ 79C9 00          > db 0
+  37+ 79CA 00          > db 0
+  37+ 79CB 00          > db 0
+  37+ 79CC 00          > db 0
+  37+ 79CD 00          > db 0
+  37+ 79CE 00          > db 0
+  37+ 79CF 00          > db 0
+  37+ 79D0 00          > db 0
+  37+ 79D1 00          > db 0
+  37+ 79D2 00          > db 0
+  37+ 79D3 00          > db 0
+  37+ 79D4 00          > db 0
+  37+ 79D5 00          > db 0
+  37+ 79D6 00          > db 0
+  37+ 79D7 00          > db 0
+  37+ 79D8 00          > db 0
+  37+ 79D9 00          > db 0
+  37+ 79DA 00          > db 0
+  37+ 79DB 00          > db 0
+  37+ 79DC 00          > db 0
+  37+ 79DD 00          > db 0
+  37+ 79DE 00          > db 0
+  37+ 79DF 00          > db 0
+  37+ 79E0 00          > db 0
+  37+ 79E1 00          > db 0
+  37+ 79E2 00          > db 0
+  37+ 79E3 00          > db 0
+  37+ 79E4 00          > db 0
+  37+ 79E5 00          > db 0
+  37+ 79E6 00          > db 0
+  37+ 79E7 00          > db 0
+  37+ 79E8 00          > db 0
+  37+ 79E9 00          > db 0
+  37+ 79EA 00          > db 0
+  37+ 79EB 00          > db 0
+  37+ 79EC 00          > db 0
+  37+ 79ED 00          > db 0
+  37+ 79EE 00          > db 0
+  37+ 79EF 00          > db 0
+  37+ 79F0 00          > db 0
+  37+ 79F1 00          > db 0
+  37+ 79F2 00          > db 0
+  37+ 79F3 00          > db 0
+  37+ 79F4 00          > db 0
+  37+ 79F5 00          > db 0
+  37+ 79F6 00          > db 0
+  37+ 79F7 00          > db 0
+  37+ 79F8 00          > db 0
+  37+ 79F9 00          > db 0
+  37+ 79FA 00          > db 0
+  37+ 79FB 00          > db 0
+  37+ 79FC 00          > db 0
+  37+ 79FD 00          > db 0
+  37+ 79FE 00          > db 0
+  37+ 79FF 00          > db 0
+  37+ 7A00 00          > db 0
+  37+ 7A01 00          > db 0
+  37+ 7A02 00          > db 0
+  37+ 7A03 00          > db 0
+  37+ 7A04 00          > db 0
+  37+ 7A05 00          > db 0
+  37+ 7A06 00          > db 0
+  37+ 7A07 00          > db 0
+  37+ 7A08 00          > db 0
+  37+ 7A09 00          > db 0
+  37+ 7A0A 00          > db 0
+  37+ 7A0B 00          > db 0
+  37+ 7A0C 00          > db 0
+  37+ 7A0D 00          > db 0
+  37+ 7A0E 00          > db 0
+  37+ 7A0F 00          > db 0
+  37+ 7A10 00          > db 0
+  37+ 7A11 00          > db 0
+  37+ 7A12 00          > db 0
+  37+ 7A13 00          > db 0
+  37+ 7A14 00          > db 0
+  37+ 7A15 00          > db 0
+  37+ 7A16 00          > db 0
+  37+ 7A17 00          > db 0
+  37+ 7A18 00          > db 0
+  37+ 7A19 00          > db 0
+  37+ 7A1A 00          > db 0
+  37+ 7A1B 00          > db 0
+  37+ 7A1C 00          > db 0
+  37+ 7A1D 00          > db 0
+  37+ 7A1E 00          > db 0
+  37+ 7A1F 00          > db 0
+  37+ 7A20 00          > db 0
+  37+ 7A21 00          > db 0
+  37+ 7A22 00          > db 0
+  37+ 7A23 00          > db 0
+  37+ 7A24 00          > db 0
+  37+ 7A25 00          > db 0
+  37+ 7A26 00          > db 0
+  37+ 7A27 00          > db 0
+  37+ 7A28 00          > db 0
+  37+ 7A29 00          > db 0
+  37+ 7A2A 00          > db 0
+  37+ 7A2B 00          > db 0
+  37+ 7A2C 00          > db 0
+  37+ 7A2D 00          > db 0
+  37+ 7A2E 00          > db 0
+  37+ 7A2F 00          > db 0
+  37+ 7A30 00          > db 0
+  37+ 7A31 00          > db 0
+  37+ 7A32 00          > db 0
+  37+ 7A33 00          > db 0
+  37+ 7A34 00          > db 0
+  37+ 7A35 00          > db 0
+  37+ 7A36 00          > db 0
+  37+ 7A37 00          > db 0
+  37+ 7A38 00          > db 0
+  37+ 7A39 00          > db 0
+  37+ 7A3A 00          > db 0
+  37+ 7A3B 00          > db 0
+  37+ 7A3C 00          > db 0
+  37+ 7A3D 00          > db 0
+  37+ 7A3E 00          > db 0
+  37+ 7A3F 00          > db 0
+  37+ 7A40 00          > db 0
+  37+ 7A41 00          > db 0
+  37+ 7A42 00          > db 0
+  37+ 7A43 00          > db 0
+  37+ 7A44 00          > db 0
+  37+ 7A45 00          > db 0
+  37+ 7A46 00          > db 0
+  37+ 7A47 00          > db 0
+  37+ 7A48 00          > db 0
+  37+ 7A49 00          > db 0
+  37+ 7A4A 00          > db 0
+  37+ 7A4B 00          > db 0
+  37+ 7A4C 00          > db 0
+  37+ 7A4D 00          > db 0
+  37+ 7A4E 00          > db 0
+  37+ 7A4F 00          > db 0
+  37+ 7A50 00          > db 0
+  37+ 7A51 00          > db 0
+  37+ 7A52 00          > db 0
+  37+ 7A53 00          > db 0
+  37+ 7A54 00          > db 0
+  37+ 7A55 00          > db 0
+  37+ 7A56 00          > db 0
+  37+ 7A57 00          > db 0
+  37+ 7A58 00          > db 0
+  37+ 7A59 00          > db 0
+  37+ 7A5A 00          > db 0
+  37+ 7A5B 00          > db 0
+  37+ 7A5C 00          > db 0
+  37+ 7A5D 00          > db 0
+  37+ 7A5E 00          > db 0
+  37+ 7A5F 00          > db 0
+  37+ 7A60 00          > db 0
+  37+ 7A61 00          > db 0
+  37+ 7A62 00          > db 0
+  37+ 7A63 00          > db 0
+  37+ 7A64 00          > db 0
+  37+ 7A65 00          > db 0
+  37+ 7A66 00          > db 0
+  37+ 7A67 00          > db 0
+  37+ 7A68 00          > db 0
+  37+ 7A69 00          > db 0
+  37+ 7A6A 00          > db 0
+  37+ 7A6B 00          > db 0
+  37+ 7A6C 00          > db 0
+  37+ 7A6D 00          > db 0
+  37+ 7A6E 00          > db 0
+  37+ 7A6F 00          > db 0
+  37+ 7A70 00          > db 0
+  37+ 7A71 00          > db 0
+  37+ 7A72 00          > db 0
+  37+ 7A73 00          > db 0
+  37+ 7A74 00          > db 0
+  37+ 7A75 00          > db 0
+  37+ 7A76 00          > db 0
+  37+ 7A77 00          > db 0
+  37+ 7A78 00          > db 0
+  37+ 7A79 00          > db 0
+  37+ 7A7A 00          > db 0
+  37+ 7A7B 00          > db 0
+  37+ 7A7C 00          > db 0
+  37+ 7A7D 00          > db 0
+  37+ 7A7E 00          > db 0
+  37+ 7A7F 00          > db 0
+  37+ 7A80 00          > db 0
+  37+ 7A81 00          > db 0
+  37+ 7A82 00          > db 0
+  37+ 7A83 00          > db 0
+  37+ 7A84 00          > db 0
+  37+ 7A85 00          > db 0
+  37+ 7A86 00          > db 0
+  37+ 7A87 00          > db 0
+  37+ 7A88 00          > db 0
+  37+ 7A89 00          > db 0
+  37+ 7A8A 00          > db 0
+  37+ 7A8B 00          > db 0
+  37+ 7A8C 00          > db 0
+  37+ 7A8D 00          > db 0
+  37+ 7A8E 00          > db 0
+  37+ 7A8F 00          > db 0
+  37+ 7A90 00          > db 0
+  37+ 7A91 00          > db 0
+  37+ 7A92 00          > db 0
+  37+ 7A93 00          > db 0
+  37+ 7A94 00          > db 0
+  37+ 7A95 00          > db 0
+  37+ 7A96 00          > db 0
+  37+ 7A97 00          > db 0
+  37+ 7A98 00          > db 0
+  37+ 7A99 00          > db 0
+  37+ 7A9A 00          > db 0
+  37+ 7A9B 00          > db 0
+  37+ 7A9C 00          > db 0
+  37+ 7A9D 00          > db 0
   37+ 7A9E 00          > db 0
-  37+ 7A9F 00          > db 0
-  37+ 7AA0 00          > db 0
-  37+ 7AA1 00          > db 0
-  37+ 7AA2 00          > db 0
-  37+ 7AA3 00          > db 0
-  37+ 7AA4 00          > db 0
-  37+ 7AA5 00          > db 0
-  37+ 7AA6 00          > db 0
-  37+ 7AA7 00          > db 0
-  37+ 7AA8 00          > db 0
-  37+ 7AA9 00          > db 0
-  37+ 7AAA 00          > db 0
-  37+ 7AAB 00          > db 0
-  37+ 7AAC 00          > db 0
-  37+ 7AAD 00          > db 0
-  37+ 7AAE 00          > db 0
-  37+ 7AAF 00          > db 0
-  37+ 7AB0 00          > db 0
-  37+ 7AB1 00          > db 0
-  37+ 7AB2 00          > db 0
-  37+ 7AB3 00          > db 0
-  37+ 7AB4 00          > db 0
-  37+ 7AB5 00          > db 0
-  37+ 7AB6 00          > db 0
-  37+ 7AB7 00          > db 0
-  37+ 7AB8 00          > db 0
-  37+ 7AB9 00          > db 0
-  37+ 7ABA 00          > db 0
-  37+ 7ABB 00          > db 0
-  37+ 7ABC 00          > db 0
-  37+ 7ABD 00          > db 0
-  37+ 7ABE 00          > db 0
-  37+ 7ABF 00          > db 0
-  37+ 7AC0 00          > db 0
-  37+ 7AC1 00          > db 0
-  37+ 7AC2 00          > db 0
-  37+ 7AC3 00          > db 0
-  37+ 7AC4 00          > db 0
-  37+ 7AC5 00          > db 0
-  37+ 7AC6 00          > db 0
-  37+ 7AC7 00          > db 0
-  37+ 7AC8 00          > db 0
-  37+ 7AC9 00          > db 0
-  37+ 7ACA 00          > db 0
-  37+ 7ACB 00          > db 0
-  37+ 7ACC 00          > db 0
-  37+ 7ACD 00          > db 0
-  37+ 7ACE 00          > db 0
-  37+ 7ACF 00          > db 0
-  37+ 7AD0 00          > db 0
-  37+ 7AD1 00          > db 0
-  37+ 7AD2 00          > db 0
-  37+ 7AD3 00          > db 0
-  37+ 7AD4 00          > db 0
-  37+ 7AD5 00          > db 0
-  37+ 7AD6 00          > db 0
-  37+ 7AD7 00          > db 0
-  37+ 7AD8 00          > db 0
-  37+ 7AD9 00          > db 0
-  37+ 7ADA 00          > db 0
-  37+ 7ADB 00          > db 0
-  37+ 7ADC 00          > db 0
-  37+ 7ADD 00          > db 0
-  37+ 7ADE 00          > db 0
-  37+ 7ADF 00          > db 0
-  37+ 7AE0 00          > db 0
-  37+ 7AE1 00          > db 0
-  37+ 7AE2 00          > db 0
-  37+ 7AE3 00          > db 0
-  37+ 7AE4 00          > db 0
-  37+ 7AE5 00          > db 0
-  37+ 7AE6 00          > db 0
-  37+ 7AE7 00          > db 0
-  37+ 7AE8 00          > db 0
-  37+ 7AE9 00          > db 0
-  37+ 7AEA 00          > db 0
-  37+ 7AEB 00          > db 0
-  37+ 7AEC 00          > db 0
-  37+ 7AED 00          > db 0
-  37+ 7AEE 00          > db 0
-  37+ 7AEF 00          > db 0
-  37+ 7AF0 00          > db 0
-  37+ 7AF1 00          > db 0
-  37+ 7AF2 00          > db 0
-  37+ 7AF3 00          > db 0
-  37+ 7AF4 00          > db 0
-  37+ 7AF5 00          > db 0
-  37+ 7AF6 00          > db 0
-  37+ 7AF7 00          > db 0
-  37+ 7AF8 00          > db 0
-  37+ 7AF9 00          > db 0
-  37+ 7AFA 00          > db 0
-  37+ 7AFB 00          > db 0
-  37+ 7AFC 00          > db 0
-  37+ 7AFD 00          > db 0
-  37+ 7AFE 00          > db 0
-  37+ 7AFF 00          > db 0
-  37+ 7B00 00          > db 0
-  37+ 7B01 00          > db 0
-  37+ 7B02 00          > db 0
-  37+ 7B03 00          > db 0
-  37+ 7B04 00          > db 0
-  37+ 7B05 00          > db 0
-  37+ 7B06 00          > db 0
-  37+ 7B07 00          > db 0
-  37+ 7B08 00          > db 0
-  37+ 7B09 00          > db 0
-  37+ 7B0A 00          > db 0
-  37+ 7B0B 00          > db 0
-  37+ 7B0C 00          > db 0
-  37+ 7B0D 00          > db 0
-  37+ 7B0E 00          > db 0
-  37+ 7B0F 00          > db 0
-  37+ 7B10 00          > db 0
-  37+ 7B11 00          > db 0
-  37+ 7B12 00          > db 0
-  37+ 7B13 00          > db 0
-  37+ 7B14 00          > db 0
-  37+ 7B15 00          > db 0
-  37+ 7B16 00          > db 0
-  37+ 7B17 00          > db 0
-  37+ 7B18 00          > db 0
-  37+ 7B19 00          > db 0
-  37+ 7B1A 00          > db 0
-  37+ 7B1B 00          > db 0
-  37+ 7B1C 00          > db 0
-  37+ 7B1D 00          > db 0
-  37+ 7B1E 00          > db 0
-  37+ 7B1F 00          > db 0
-  37+ 7B20 00          > db 0
-  37+ 7B21 00          > db 0
-  37+ 7B22 00          > db 0
-  37+ 7B23 00          > db 0
-  37+ 7B24 00          > db 0
-  37+ 7B25 00          > db 0
-  37+ 7B26 00          > db 0
-  37+ 7B27 00          > db 0
-  37+ 7B28 00          > db 0
-  37+ 7B29 00          > db 0
-  37+ 7B2A 00          > db 0
-  37+ 7B2B 00          > db 0
-  37+ 7B2C 00          > db 0
-  37+ 7B2D 00          > db 0
-  37+ 7B2E 00          > db 0
-  37+ 7B2F 00          > db 0
-  37+ 7B30 00          > db 0
-  37+ 7B31 00          > db 0
-  37+ 7B32 00          > db 0
-  37+ 7B33 00          > db 0
-  37+ 7B34 00          > db 0
-  37+ 7B35 00          > db 0
-  37+ 7B36 00          > db 0
-  37+ 7B37 00          > db 0
-  37+ 7B38 00          > db 0
-  37+ 7B39 00          > db 0
-  37+ 7B3A 00          > db 0
-  37+ 7B3B 00          > db 0
-  37+ 7B3C 00          > db 0
-  37+ 7B3D 00          > db 0
-  37+ 7B3E 00          > db 0
-  37+ 7B3F 00          > db 0
-  37+ 7B40 00          > db 0
-  37+ 7B41 00          > db 0
-  37+ 7B42 00          > db 0
-  37+ 7B43 00          > db 0
-  37+ 7B44 00          > db 0
-  37+ 7B45 00          > db 0
-  37+ 7B46 00          > db 0
-  37+ 7B47 00          > db 0
-  37+ 7B48 00          > db 0
-  37+ 7B49 00          > db 0
-  37+ 7B4A 00          > db 0
-  37+ 7B4B 00          > db 0
-  37+ 7B4C 00          > db 0
-  37+ 7B4D 00          > db 0
-  37+ 7B4E 00          > db 0
-  37+ 7B4F 00          > db 0
-  37+ 7B50 00          > db 0
-  37+ 7B51 00          > db 0
-  37+ 7B52 00          > db 0
-  37+ 7B53 00          > db 0
-  37+ 7B54 00          > db 0
-  37+ 7B55 00          > db 0
-  37+ 7B56 00          > db 0
-  37+ 7B57 00          > db 0
-  37+ 7B58 00          > db 0
-  37+ 7B59 00          > db 0
-  37+ 7B5A 00          > db 0
-  37+ 7B5B 00          > db 0
-  37+ 7B5C 00          > db 0
-  37+ 7B5D 00          > db 0
-  37+ 7B5E 00          > db 0
-  37+ 7B5F 00          > db 0
-  37+ 7B60 00          > db 0
-  37+ 7B61 00          > db 0
-  37+ 7B62 00          > db 0
-  37+ 7B63 00          > db 0
-  37+ 7B64 00          > db 0
-  37+ 7B65 00          > db 0
-  37+ 7B66 00          > db 0
-  37+ 7B67 00          > db 0
-  37+ 7B68 00          > db 0
-  37+ 7B69 00          > db 0
-  37+ 7B6A 00          > db 0
-  37+ 7B6B 00          > db 0
-  37+ 7B6C 00          > db 0
-  37+ 7B6D 00          > db 0
-  37+ 7B6E 00          > db 0
-  37+ 7B6F 00          > db 0
-  37+ 7B70 00          > db 0
-  37+ 7B71 00          > db 0
-  37+ 7B72 00          > db 0
-  37+ 7B73 00          > db 0
-  37+ 7B74 00          > db 0
-  37+ 7B75 00          > db 0
-  37+ 7B76 00          > db 0
-  37+ 7B77 00          > db 0
-  37+ 7B78 00          > db 0
-  37+ 7B79 00          > db 0
-  37+ 7B7A 00          > db 0
-  37+ 7B7B 00          > db 0
-  37+ 7B7C 00          > db 0
-  37+ 7B7D 00          > db 0
-  37+ 7B7E 00          > db 0
-  37+ 7B7F 00          > db 0
-  37+ 7B80 00          > db 0
-  37+ 7B81 00          > db 0
-  37+ 7B82 00          > db 0
-  37+ 7B83 00          > db 0
-  37+ 7B84 00          > db 0
-  37+ 7B85 00          > db 0
-  37+ 7B86 00          > db 0
-  37+ 7B87 00          > db 0
-  37+ 7B88 00          > db 0
-  37+ 7B89 00          > db 0
-  37+ 7B8A 00          > db 0
-  37+ 7B8B 00          > db 0
-  37+ 7B8C 00          > db 0
-  37+ 7B8D 00          > db 0
-  37+ 7B8E 00          > db 0
-  37+ 7B8F 00          > db 0
-  37+ 7B90 00          > db 0
-  37+ 7B91 00          > db 0
-  37+ 7B92 00          > db 0
-  37+ 7B93 00          > db 0
-  37+ 7B94 00          > db 0
-  37+ 7B95 00          > db 0
-  37+ 7B96 00          > db 0
-  37+ 7B97 00          > db 0
-  37+ 7B98 00          > db 0
-  37+ 7B99 00          > db 0
-  37+ 7B9A 00          > db 0
-  37+ 7B9B 00          > db 0
-  37+ 7B9C 00          > db 0
-  37+ 7B9D 00          > db 0
-  37+ 7B9E 00          > db 0
-  37+ 7B9F 00          > db 0
-  37+ 7BA0 00          > db 0
-  37+ 7BA1 00          > db 0
-  37+ 7BA2 00          > db 0
-  37+ 7BA3 00          > db 0
-  37+ 7BA4 00          > db 0
-  37+ 7BA5 00          > db 0
-  37+ 7BA6 00          > db 0
-  37+ 7BA7 00          > db 0
-  37+ 7BA8 00          > db 0
-  37+ 7BA9 00          > db 0
-  37+ 7BAA 00          > db 0
-  37+ 7BAB 00          > db 0
-  37+ 7BAC 00          > db 0
-  37+ 7BAD 00          > db 0
-  37+ 7BAE 00          > db 0
-  37+ 7BAF 00          > db 0
-  37+ 7BB0 00          > db 0
-  37+ 7BB1 00          > db 0
-  37+ 7BB2 00          > db 0
-  37+ 7BB3 00          > db 0
-  37+ 7BB4 00          > db 0
-  37+ 7BB5 00          > db 0
-  37+ 7BB6 00          > db 0
-  37+ 7BB7 00          > db 0
-  37+ 7BB8 00          > db 0
-  37+ 7BB9 00          > db 0
-  37+ 7BBA 00          > db 0
-  37+ 7BBB 00          > db 0
-  37+ 7BBC 00          > db 0
-  37+ 7BBD 00          > db 0
-  37+ 7BBE 00          > db 0
-  37+ 7BBF 00          > db 0
-  37+ 7BC0 00          > db 0
-  37+ 7BC1 00          > db 0
-  37+ 7BC2 00          > db 0
-  37+ 7BC3 00          > db 0
-  37+ 7BC4 00          > db 0
-  37+ 7BC5 00          > db 0
-  37+ 7BC6 00          > db 0
-  37+ 7BC7 00          > db 0
-  37+ 7BC8 00          > db 0
-  37+ 7BC9 00          > db 0
-  37+ 7BCA 00          > db 0
-  37+ 7BCB 00          > db 0
-  37+ 7BCC 00          > db 0
-  37+ 7BCD 00          > db 0
-  37+ 7BCE 00          > db 0
-  37+ 7BCF 00          > db 0
-  37+ 7BD0 00          > db 0
-  37+ 7BD1 00          > db 0
-  37+ 7BD2 00          > db 0
-  37+ 7BD3 00          > db 0
-  37+ 7BD4 00          > db 0
-  37+ 7BD5 00          > db 0
-  37+ 7BD6 00          > db 0
-  37+ 7BD7 00          > db 0
-  37+ 7BD8 00          > db 0
-  37+ 7BD9 00          > db 0
-  37+ 7BDA 00          > db 0
-  37+ 7BDB 00          > db 0
-  37+ 7BDC 00          > db 0
-  37+ 7BDD 00          > db 0
-  37+ 7BDE 00          > db 0
-  37+ 7BDF 00          > db 0
-  37+ 7BE0 00          > db 0
-  37+ 7BE1 00          > db 0
-  37+ 7BE2 00          > db 0
-  37+ 7BE3 00          > db 0
-  37+ 7BE4 00          > db 0
-  37+ 7BE5 00          > db 0
-  37+ 7BE6 00          > db 0
-  37+ 7BE7 00          > db 0
-  37+ 7BE8 00          > db 0
-  37+ 7BE9 00          > db 0
-  37+ 7BEA 00          > db 0
-  37+ 7BEB 00          > db 0
-  37+ 7BEC 00          > db 0
-  37+ 7BED 00          > db 0
-  37+ 7BEE 00          > db 0
-  37+ 7BEF 00          > db 0
-  37+ 7BF0 00          > db 0
-  37+ 7BF1 00          > db 0
-  37+ 7BF2 00          > db 0
-  37+ 7BF3 00          > db 0
-  37+ 7BF4 00          > db 0
-  37+ 7BF5 00          > db 0
-  37+ 7BF6 00          > db 0
-  37+ 7BF7 00          > db 0
-  37+ 7BF8 00          > db 0
-  37+ 7BF9 00          > db 0
-  37+ 7BFA 00          > db 0
-  37+ 7BFB 00          > db 0
-  37+ 7BFC 00          > db 0
-  37+ 7BFD 00          > db 0
-  37+ 7BFE 00          > db 0
-  37+ 7BFF 00          > db 0
-  37+ 7C00 00          > db 0
-  37+ 7C01 00          > db 0
-  37+ 7C02 00          > db 0
-  37+ 7C03 00          > db 0
-  37+ 7C04 00          > db 0
-  37+ 7C05 00          > db 0
-  37+ 7C06 00          > db 0
-  37+ 7C07 00          > db 0
-  37+ 7C08 00          > db 0
-  37+ 7C09 00          > db 0
-  37+ 7C0A 00          > db 0
-  37+ 7C0B 00          > db 0
-  37+ 7C0C 00          > db 0
-  37+ 7C0D 00          > db 0
-  37+ 7C0E 00          > db 0
-  37+ 7C0F 00          > db 0
-  37+ 7C10 00          > db 0
-  37+ 7C11 00          > db 0
-  37+ 7C12 00          > db 0
-  37+ 7C13 00          > db 0
-  37+ 7C14 00          > db 0
-  37+ 7C15 00          > db 0
-  37+ 7C16 00          > db 0
-  37+ 7C17 00          > db 0
-  37+ 7C18 00          > db 0
-  37+ 7C19 00          > db 0
-  37+ 7C1A 00          > db 0
-  37+ 7C1B 00          > db 0
-  37+ 7C1C 00          > db 0
-  37+ 7C1D 00          > db 0
-  37+ 7C1E 00          > db 0
-  37+ 7C1F 00          > db 0
-  37+ 7C20 00          > db 0
-  37+ 7C21 00          > db 0
-  37+ 7C22 00          > db 0
-  37+ 7C23 00          > db 0
-  37+ 7C24 00          > db 0
-  37+ 7C25 00          > db 0
-  37+ 7C26 00          > db 0
-  37+ 7C27 00          > db 0
-  37+ 7C28 00          > db 0
-  37+ 7C29 00          > db 0
-  37+ 7C2A 00          > db 0
-  37+ 7C2B 00          > db 0
-  37+ 7C2C 00          > db 0
-  37+ 7C2D 00          > db 0
-  37+ 7C2E 00          > db 0
-  37+ 7C2F 00          > db 0
-  37+ 7C30 00          > db 0
-  37+ 7C31 00          > db 0
-  37+ 7C32 00          > db 0
-  37+ 7C33 00          > db 0
-  37+ 7C34 00          > db 0
-  37+ 7C35 00          > db 0
-  37+ 7C36 00          > db 0
-  37+ 7C37 00          > db 0
-  37+ 7C38 00          > db 0
-  37+ 7C39 00          > db 0
-  37+ 7C3A 00          > db 0
-  37+ 7C3B 00          > db 0
-  37+ 7C3C 00          > db 0
-  37+ 7C3D 00          > db 0
-  37+ 7C3E 00          > db 0
-  37+ 7C3F 00          > db 0
-  37+ 7C40 00          > db 0
-  37+ 7C41 00          > db 0
-  37+ 7C42 00          > db 0
-  37+ 7C43 00          > db 0
-  37+ 7C44 00          > db 0
-  37+ 7C45 00          > db 0
-  37+ 7C46 00          > db 0
-  37+ 7C47 00          > db 0
-  37+ 7C48 00          > db 0
-  37+ 7C49 00          > db 0
-  37+ 7C4A 00          > db 0
-  37+ 7C4B 00          > db 0
-  37+ 7C4C 00          > db 0
-  37+ 7C4D 00          > db 0
-  37+ 7C4E 00          > db 0
-  37+ 7C4F 00          > db 0
-  37+ 7C50 00          > db 0
-  37+ 7C51 00          > db 0
-  37+ 7C52 00          > db 0
-  37+ 7C53 00          > db 0
-  37+ 7C54 00          > db 0
-  37+ 7C55 00          > db 0
-  37+ 7C56 00          > db 0
-  37+ 7C57 00          > db 0
-  37+ 7C58 00          > db 0
-  37+ 7C59 00          > db 0
-  37+ 7C5A 00          > db 0
-  37+ 7C5B 00          > db 0
-  37+ 7C5C 00          > db 0
-  37+ 7C5D 00          > db 0
-  37+ 7C5E 00          > db 0
-  37+ 7C5F 00          > db 0
-  37+ 7C60 00          > db 0
-  37+ 7C61 00          > db 0
-  37+ 7C62 00          > db 0
-  37+ 7C63 00          > db 0
-  37+ 7C64 00          > db 0
-  37+ 7C65 00          > db 0
-  37+ 7C66 00          > db 0
-  37+ 7C67 00          > db 0
-  37+ 7C68 00          > db 0
-  37+ 7C69 00          > db 0
-  37+ 7C6A 00          > db 0
-  37+ 7C6B 00          > db 0
-  37+ 7C6C 00          > db 0
-  37+ 7C6D 00          > db 0
-  37+ 7C6E 00          > db 0
-  37+ 7C6F 00          > db 0
-  37+ 7C70 00          > db 0
-  37+ 7C71 00          > db 0
-  37+ 7C72 00          > db 0
-  37+ 7C73 00          > db 0
-  37+ 7C74 00          > db 0
-  37+ 7C75 00          > db 0
-  37+ 7C76 00          > db 0
-  37+ 7C77 00          > db 0
-  37+ 7C78 00          > db 0
-  37+ 7C79 00          > db 0
-  37+ 7C7A 00          > db 0
-  37+ 7C7B 00          > db 0
-  37+ 7C7C 00          > db 0
-  37+ 7C7D 00          > db 0
-  37+ 7C7E 00          > db 0
-  37+ 7C7F 00          > db 0
-  37+ 7C80 00          > db 0
-  37+ 7C81 00          > db 0
-  37+ 7C82 00          > db 0
-  37+ 7C83 00          > db 0
-  37+ 7C84 00          > db 0
-  37+ 7C85 00          > db 0
-  37+ 7C86 00          > db 0
-  37+ 7C87 00          > db 0
-  37+ 7C88 00          > db 0
-  37+ 7C89 00          > db 0
-  37+ 7C8A 00          > db 0
-  37+ 7C8B 00          > db 0
-  37+ 7C8C 00          > db 0
-  37+ 7C8D 00          > db 0
-  37+ 7C8E 00          > db 0
-  37+ 7C8F 00          > db 0
-  37+ 7C90 00          > db 0
-  37+ 7C91 00          > db 0
-  37+ 7C92 00          > db 0
-  37+ 7C93 00          > db 0
-  37+ 7C94 00          > db 0
-  37+ 7C95 00          > db 0
-  37+ 7C96 00          > db 0
-  37+ 7C97 00          > db 0
-  37+ 7C98 00          > db 0
-  37+ 7C99 00          > db 0
-  37+ 7C9A 00          > db 0
-  37+ 7C9B 00          > db 0
-  37+ 7C9C 00          > db 0
-  37+ 7C9D 00          > db 0
-  38+ 7C9E
-  39+ 7C9E              ; Gestione Stanze
-  40+ 7C9E 00           current_room:   db 0
-  41+ 7C9F 00           conveyor_dir:   db 0
-  42+ 7CA0 00           conveyor_len:   db 0
-  43+ 7CA1 00           conveyor_row:   db 0
-  44+ 7CA2 00           conveyor_col:   db 0
-  45+ 7CA3 00           ramp_dir:       db 0
-  46+ 7CA4 00           ramp_len:       db 0
-  47+ 7CA5 00           ramp_row:       db 0
-  48+ 7CA6 00           ramp_col:       db 0
-  49+ 7CA7 00          > db 0
-  49+ 7CA8 00          > db 0
-  49+ 7CA9 00          > db 0
-  49+ 7CAA 00          > db 0
-  49+ 7CAB 00          > db 0
-  49+ 7CAC 00          > db 0
-  49+ 7CAD 00          > db 0
-  49+ 7CAE 00          > db 0
-  49+ 7CAF 00          > db 0
-  49+ 7CB0 00          > db 0
-  49+ 7CB1 00          > db 0
-  49+ 7CB2 00          > db 0
-  49+ 7CB3 00          > db 0
-  49+ 7CB4 00          > db 0
-  49+ 7CB5 00          > db 0
-  49+ 7CB6 00          > db 0
-  49+ 7CB7 00          > db 0
-  49+ 7CB8 00          > db 0
-  49+ 7CB9 00          > db 0
-  49+ 7CBA 00          > db 0
-  49+ 7CBB 00          > db 0
-  49+ 7CBC 00          > db 0
-  49+ 7CBD 00          > db 0
-  49+ 7CBE 00          > db 0
-  49+ 7CBF 00          > db 0
-  49+ 7CC0 00          > db 0
-  49+ 7CC1 00          > db 0
-  49+ 7CC2 00          > db 0
-  49+ 7CC3 00          > db 0
-  49+ 7CC4 00          > db 0
-  49+ 7CC5 00          > db 0
-  49+ 7CC6 00          > db 0
-  49+ 7CC7 00          > db 0
-  49+ 7CC8 00          > db 0
-  49+ 7CC9 00          > db 0
-  49+ 7CCA 00          > db 0
-  49+ 7CCB 00          > db 0
-  49+ 7CCC 00          > db 0
-  49+ 7CCD 00          > db 0
-  49+ 7CCE 00          > db 0
-  49+ 7CCF 00          > db 0
-  49+ 7CD0 00          > db 0
-  49+ 7CD1 00          > db 0
-  49+ 7CD2 00          > db 0
-  49+ 7CD3 00          > db 0
-  49+ 7CD4 00          > db 0
-  49+ 7CD5 00          > db 0
-  49+ 7CD6 00          > db 0
-  49+ 7CD7 00          > db 0
-  49+ 7CD8 00          > db 0
-  49+ 7CD9 00          > db 0
-  49+ 7CDA 00          > db 0
-  49+ 7CDB 00          > db 0
-  49+ 7CDC 00          > db 0
-  49+ 7CDD 00          > db 0
-  49+ 7CDE 00          > db 0
-  49+ 7CDF 00          > db 0
-  49+ 7CE0 00          > db 0
-  49+ 7CE1 00          > db 0
-  49+ 7CE2 00          > db 0
-  49+ 7CE3 00          > db 0
-  49+ 7CE4 00          > db 0
-  49+ 7CE5 00          > db 0
-  49+ 7CE6 00          > db 0
-  49+ 7CE7 00          > db 0
-  49+ 7CE8 00          > db 0
-  49+ 7CE9 00          > db 0
-  49+ 7CEA 00          > db 0
-  49+ 7CEB 00          > db 0
-  49+ 7CEC 00          > db 0
-  49+ 7CED 00          > db 0
-  49+ 7CEE 00          > db 0
-  49+ 7CEF 00          > db 0
-  49+ 7CF0 00          > db 0
-  49+ 7CF1 00          > db 0
-  49+ 7CF2 00          > db 0
-  49+ 7CF3 00          > db 0
-  49+ 7CF4 00          > db 0
-  49+ 7CF5 00          > db 0
-  49+ 7CF6 00          > db 0
-  50+ 7CF7 00           num_room_items:     db 0
-  51+ 7CF8 00 83        room_ptr:           dw TheOffLicenceLayout;
-  52+ 7CFA 01           enemy_update_rate:  db 1
-  53+ 7CFB 00           enemy_update_timer: db 0
-  54+ 7CFC 03           player_speed:       db 3
-  55+ 7CFD 00           transition_active:  db 0
-  56+ 7CFE 12           Audio_jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
-  57+ 7CFF 00           Audio_jump_sound_timer:   db 0
-  58+ 7D00 00           Audio_music_note_idx:      db 0
-  59+ 7D01 01           Audio_music_frame_counter: db 1
-  60+ 7D02 22           rope_old_frame:            db 34
-  61+ 7D03
+  38+ 7A9F 00          > db 0
+  38+ 7AA0 00          > db 0
+  38+ 7AA1 00          > db 0
+  38+ 7AA2 00          > db 0
+  38+ 7AA3 00          > db 0
+  38+ 7AA4 00          > db 0
+  38+ 7AA5 00          > db 0
+  38+ 7AA6 00          > db 0
+  38+ 7AA7 00          > db 0
+  38+ 7AA8 00          > db 0
+  38+ 7AA9 00          > db 0
+  38+ 7AAA 00          > db 0
+  38+ 7AAB 00          > db 0
+  38+ 7AAC 00          > db 0
+  38+ 7AAD 00          > db 0
+  38+ 7AAE 00          > db 0
+  38+ 7AAF 00          > db 0
+  38+ 7AB0 00          > db 0
+  38+ 7AB1 00          > db 0
+  38+ 7AB2 00          > db 0
+  38+ 7AB3 00          > db 0
+  38+ 7AB4 00          > db 0
+  38+ 7AB5 00          > db 0
+  38+ 7AB6 00          > db 0
+  38+ 7AB7 00          > db 0
+  38+ 7AB8 00          > db 0
+  38+ 7AB9 00          > db 0
+  38+ 7ABA 00          > db 0
+  38+ 7ABB 00          > db 0
+  38+ 7ABC 00          > db 0
+  38+ 7ABD 00          > db 0
+  38+ 7ABE 00          > db 0
+  38+ 7ABF 00          > db 0
+  38+ 7AC0 00          > db 0
+  38+ 7AC1 00          > db 0
+  38+ 7AC2 00          > db 0
+  38+ 7AC3 00          > db 0
+  38+ 7AC4 00          > db 0
+  38+ 7AC5 00          > db 0
+  38+ 7AC6 00          > db 0
+  38+ 7AC7 00          > db 0
+  38+ 7AC8 00          > db 0
+  38+ 7AC9 00          > db 0
+  38+ 7ACA 00          > db 0
+  38+ 7ACB 00          > db 0
+  38+ 7ACC 00          > db 0
+  38+ 7ACD 00          > db 0
+  38+ 7ACE 00          > db 0
+  38+ 7ACF 00          > db 0
+  38+ 7AD0 00          > db 0
+  38+ 7AD1 00          > db 0
+  38+ 7AD2 00          > db 0
+  38+ 7AD3 00          > db 0
+  38+ 7AD4 00          > db 0
+  38+ 7AD5 00          > db 0
+  38+ 7AD6 00          > db 0
+  38+ 7AD7 00          > db 0
+  38+ 7AD8 00          > db 0
+  38+ 7AD9 00          > db 0
+  38+ 7ADA 00          > db 0
+  38+ 7ADB 00          > db 0
+  38+ 7ADC 00          > db 0
+  38+ 7ADD 00          > db 0
+  38+ 7ADE 00          > db 0
+  38+ 7ADF 00          > db 0
+  38+ 7AE0 00          > db 0
+  38+ 7AE1 00          > db 0
+  38+ 7AE2 00          > db 0
+  38+ 7AE3 00          > db 0
+  38+ 7AE4 00          > db 0
+  38+ 7AE5 00          > db 0
+  38+ 7AE6 00          > db 0
+  38+ 7AE7 00          > db 0
+  38+ 7AE8 00          > db 0
+  38+ 7AE9 00          > db 0
+  38+ 7AEA 00          > db 0
+  38+ 7AEB 00          > db 0
+  38+ 7AEC 00          > db 0
+  38+ 7AED 00          > db 0
+  38+ 7AEE 00          > db 0
+  38+ 7AEF 00          > db 0
+  38+ 7AF0 00          > db 0
+  38+ 7AF1 00          > db 0
+  38+ 7AF2 00          > db 0
+  38+ 7AF3 00          > db 0
+  38+ 7AF4 00          > db 0
+  38+ 7AF5 00          > db 0
+  38+ 7AF6 00          > db 0
+  38+ 7AF7 00          > db 0
+  38+ 7AF8 00          > db 0
+  38+ 7AF9 00          > db 0
+  38+ 7AFA 00          > db 0
+  38+ 7AFB 00          > db 0
+  38+ 7AFC 00          > db 0
+  38+ 7AFD 00          > db 0
+  38+ 7AFE 00          > db 0
+  38+ 7AFF 00          > db 0
+  38+ 7B00 00          > db 0
+  38+ 7B01 00          > db 0
+  38+ 7B02 00          > db 0
+  38+ 7B03 00          > db 0
+  38+ 7B04 00          > db 0
+  38+ 7B05 00          > db 0
+  38+ 7B06 00          > db 0
+  38+ 7B07 00          > db 0
+  38+ 7B08 00          > db 0
+  38+ 7B09 00          > db 0
+  38+ 7B0A 00          > db 0
+  38+ 7B0B 00          > db 0
+  38+ 7B0C 00          > db 0
+  38+ 7B0D 00          > db 0
+  38+ 7B0E 00          > db 0
+  38+ 7B0F 00          > db 0
+  38+ 7B10 00          > db 0
+  38+ 7B11 00          > db 0
+  38+ 7B12 00          > db 0
+  38+ 7B13 00          > db 0
+  38+ 7B14 00          > db 0
+  38+ 7B15 00          > db 0
+  38+ 7B16 00          > db 0
+  38+ 7B17 00          > db 0
+  38+ 7B18 00          > db 0
+  38+ 7B19 00          > db 0
+  38+ 7B1A 00          > db 0
+  38+ 7B1B 00          > db 0
+  38+ 7B1C 00          > db 0
+  38+ 7B1D 00          > db 0
+  38+ 7B1E 00          > db 0
+  38+ 7B1F 00          > db 0
+  38+ 7B20 00          > db 0
+  38+ 7B21 00          > db 0
+  38+ 7B22 00          > db 0
+  38+ 7B23 00          > db 0
+  38+ 7B24 00          > db 0
+  38+ 7B25 00          > db 0
+  38+ 7B26 00          > db 0
+  38+ 7B27 00          > db 0
+  38+ 7B28 00          > db 0
+  38+ 7B29 00          > db 0
+  38+ 7B2A 00          > db 0
+  38+ 7B2B 00          > db 0
+  38+ 7B2C 00          > db 0
+  38+ 7B2D 00          > db 0
+  38+ 7B2E 00          > db 0
+  38+ 7B2F 00          > db 0
+  38+ 7B30 00          > db 0
+  38+ 7B31 00          > db 0
+  38+ 7B32 00          > db 0
+  38+ 7B33 00          > db 0
+  38+ 7B34 00          > db 0
+  38+ 7B35 00          > db 0
+  38+ 7B36 00          > db 0
+  38+ 7B37 00          > db 0
+  38+ 7B38 00          > db 0
+  38+ 7B39 00          > db 0
+  38+ 7B3A 00          > db 0
+  38+ 7B3B 00          > db 0
+  38+ 7B3C 00          > db 0
+  38+ 7B3D 00          > db 0
+  38+ 7B3E 00          > db 0
+  38+ 7B3F 00          > db 0
+  38+ 7B40 00          > db 0
+  38+ 7B41 00          > db 0
+  38+ 7B42 00          > db 0
+  38+ 7B43 00          > db 0
+  38+ 7B44 00          > db 0
+  38+ 7B45 00          > db 0
+  38+ 7B46 00          > db 0
+  38+ 7B47 00          > db 0
+  38+ 7B48 00          > db 0
+  38+ 7B49 00          > db 0
+  38+ 7B4A 00          > db 0
+  38+ 7B4B 00          > db 0
+  38+ 7B4C 00          > db 0
+  38+ 7B4D 00          > db 0
+  38+ 7B4E 00          > db 0
+  38+ 7B4F 00          > db 0
+  38+ 7B50 00          > db 0
+  38+ 7B51 00          > db 0
+  38+ 7B52 00          > db 0
+  38+ 7B53 00          > db 0
+  38+ 7B54 00          > db 0
+  38+ 7B55 00          > db 0
+  38+ 7B56 00          > db 0
+  38+ 7B57 00          > db 0
+  38+ 7B58 00          > db 0
+  38+ 7B59 00          > db 0
+  38+ 7B5A 00          > db 0
+  38+ 7B5B 00          > db 0
+  38+ 7B5C 00          > db 0
+  38+ 7B5D 00          > db 0
+  38+ 7B5E 00          > db 0
+  38+ 7B5F 00          > db 0
+  38+ 7B60 00          > db 0
+  38+ 7B61 00          > db 0
+  38+ 7B62 00          > db 0
+  38+ 7B63 00          > db 0
+  38+ 7B64 00          > db 0
+  38+ 7B65 00          > db 0
+  38+ 7B66 00          > db 0
+  38+ 7B67 00          > db 0
+  38+ 7B68 00          > db 0
+  38+ 7B69 00          > db 0
+  38+ 7B6A 00          > db 0
+  38+ 7B6B 00          > db 0
+  38+ 7B6C 00          > db 0
+  38+ 7B6D 00          > db 0
+  38+ 7B6E 00          > db 0
+  38+ 7B6F 00          > db 0
+  38+ 7B70 00          > db 0
+  38+ 7B71 00          > db 0
+  38+ 7B72 00          > db 0
+  38+ 7B73 00          > db 0
+  38+ 7B74 00          > db 0
+  38+ 7B75 00          > db 0
+  38+ 7B76 00          > db 0
+  38+ 7B77 00          > db 0
+  38+ 7B78 00          > db 0
+  38+ 7B79 00          > db 0
+  38+ 7B7A 00          > db 0
+  38+ 7B7B 00          > db 0
+  38+ 7B7C 00          > db 0
+  38+ 7B7D 00          > db 0
+  38+ 7B7E 00          > db 0
+  38+ 7B7F 00          > db 0
+  38+ 7B80 00          > db 0
+  38+ 7B81 00          > db 0
+  38+ 7B82 00          > db 0
+  38+ 7B83 00          > db 0
+  38+ 7B84 00          > db 0
+  38+ 7B85 00          > db 0
+  38+ 7B86 00          > db 0
+  38+ 7B87 00          > db 0
+  38+ 7B88 00          > db 0
+  38+ 7B89 00          > db 0
+  38+ 7B8A 00          > db 0
+  38+ 7B8B 00          > db 0
+  38+ 7B8C 00          > db 0
+  38+ 7B8D 00          > db 0
+  38+ 7B8E 00          > db 0
+  38+ 7B8F 00          > db 0
+  38+ 7B90 00          > db 0
+  38+ 7B91 00          > db 0
+  38+ 7B92 00          > db 0
+  38+ 7B93 00          > db 0
+  38+ 7B94 00          > db 0
+  38+ 7B95 00          > db 0
+  38+ 7B96 00          > db 0
+  38+ 7B97 00          > db 0
+  38+ 7B98 00          > db 0
+  38+ 7B99 00          > db 0
+  38+ 7B9A 00          > db 0
+  38+ 7B9B 00          > db 0
+  38+ 7B9C 00          > db 0
+  38+ 7B9D 00          > db 0
+  38+ 7B9E 00          > db 0
+  38+ 7B9F 00          > db 0
+  38+ 7BA0 00          > db 0
+  38+ 7BA1 00          > db 0
+  38+ 7BA2 00          > db 0
+  38+ 7BA3 00          > db 0
+  38+ 7BA4 00          > db 0
+  38+ 7BA5 00          > db 0
+  38+ 7BA6 00          > db 0
+  38+ 7BA7 00          > db 0
+  38+ 7BA8 00          > db 0
+  38+ 7BA9 00          > db 0
+  38+ 7BAA 00          > db 0
+  38+ 7BAB 00          > db 0
+  38+ 7BAC 00          > db 0
+  38+ 7BAD 00          > db 0
+  38+ 7BAE 00          > db 0
+  38+ 7BAF 00          > db 0
+  38+ 7BB0 00          > db 0
+  38+ 7BB1 00          > db 0
+  38+ 7BB2 00          > db 0
+  38+ 7BB3 00          > db 0
+  38+ 7BB4 00          > db 0
+  38+ 7BB5 00          > db 0
+  38+ 7BB6 00          > db 0
+  38+ 7BB7 00          > db 0
+  38+ 7BB8 00          > db 0
+  38+ 7BB9 00          > db 0
+  38+ 7BBA 00          > db 0
+  38+ 7BBB 00          > db 0
+  38+ 7BBC 00          > db 0
+  38+ 7BBD 00          > db 0
+  38+ 7BBE 00          > db 0
+  38+ 7BBF 00          > db 0
+  38+ 7BC0 00          > db 0
+  38+ 7BC1 00          > db 0
+  38+ 7BC2 00          > db 0
+  38+ 7BC3 00          > db 0
+  38+ 7BC4 00          > db 0
+  38+ 7BC5 00          > db 0
+  38+ 7BC6 00          > db 0
+  38+ 7BC7 00          > db 0
+  38+ 7BC8 00          > db 0
+  38+ 7BC9 00          > db 0
+  38+ 7BCA 00          > db 0
+  38+ 7BCB 00          > db 0
+  38+ 7BCC 00          > db 0
+  38+ 7BCD 00          > db 0
+  38+ 7BCE 00          > db 0
+  38+ 7BCF 00          > db 0
+  38+ 7BD0 00          > db 0
+  38+ 7BD1 00          > db 0
+  38+ 7BD2 00          > db 0
+  38+ 7BD3 00          > db 0
+  38+ 7BD4 00          > db 0
+  38+ 7BD5 00          > db 0
+  38+ 7BD6 00          > db 0
+  38+ 7BD7 00          > db 0
+  38+ 7BD8 00          > db 0
+  38+ 7BD9 00          > db 0
+  38+ 7BDA 00          > db 0
+  38+ 7BDB 00          > db 0
+  38+ 7BDC 00          > db 0
+  38+ 7BDD 00          > db 0
+  38+ 7BDE 00          > db 0
+  38+ 7BDF 00          > db 0
+  38+ 7BE0 00          > db 0
+  38+ 7BE1 00          > db 0
+  38+ 7BE2 00          > db 0
+  38+ 7BE3 00          > db 0
+  38+ 7BE4 00          > db 0
+  38+ 7BE5 00          > db 0
+  38+ 7BE6 00          > db 0
+  38+ 7BE7 00          > db 0
+  38+ 7BE8 00          > db 0
+  38+ 7BE9 00          > db 0
+  38+ 7BEA 00          > db 0
+  38+ 7BEB 00          > db 0
+  38+ 7BEC 00          > db 0
+  38+ 7BED 00          > db 0
+  38+ 7BEE 00          > db 0
+  38+ 7BEF 00          > db 0
+  38+ 7BF0 00          > db 0
+  38+ 7BF1 00          > db 0
+  38+ 7BF2 00          > db 0
+  38+ 7BF3 00          > db 0
+  38+ 7BF4 00          > db 0
+  38+ 7BF5 00          > db 0
+  38+ 7BF6 00          > db 0
+  38+ 7BF7 00          > db 0
+  38+ 7BF8 00          > db 0
+  38+ 7BF9 00          > db 0
+  38+ 7BFA 00          > db 0
+  38+ 7BFB 00          > db 0
+  38+ 7BFC 00          > db 0
+  38+ 7BFD 00          > db 0
+  38+ 7BFE 00          > db 0
+  38+ 7BFF 00          > db 0
+  38+ 7C00 00          > db 0
+  38+ 7C01 00          > db 0
+  38+ 7C02 00          > db 0
+  38+ 7C03 00          > db 0
+  38+ 7C04 00          > db 0
+  38+ 7C05 00          > db 0
+  38+ 7C06 00          > db 0
+  38+ 7C07 00          > db 0
+  38+ 7C08 00          > db 0
+  38+ 7C09 00          > db 0
+  38+ 7C0A 00          > db 0
+  38+ 7C0B 00          > db 0
+  38+ 7C0C 00          > db 0
+  38+ 7C0D 00          > db 0
+  38+ 7C0E 00          > db 0
+  38+ 7C0F 00          > db 0
+  38+ 7C10 00          > db 0
+  38+ 7C11 00          > db 0
+  38+ 7C12 00          > db 0
+  38+ 7C13 00          > db 0
+  38+ 7C14 00          > db 0
+  38+ 7C15 00          > db 0
+  38+ 7C16 00          > db 0
+  38+ 7C17 00          > db 0
+  38+ 7C18 00          > db 0
+  38+ 7C19 00          > db 0
+  38+ 7C1A 00          > db 0
+  38+ 7C1B 00          > db 0
+  38+ 7C1C 00          > db 0
+  38+ 7C1D 00          > db 0
+  38+ 7C1E 00          > db 0
+  38+ 7C1F 00          > db 0
+  38+ 7C20 00          > db 0
+  38+ 7C21 00          > db 0
+  38+ 7C22 00          > db 0
+  38+ 7C23 00          > db 0
+  38+ 7C24 00          > db 0
+  38+ 7C25 00          > db 0
+  38+ 7C26 00          > db 0
+  38+ 7C27 00          > db 0
+  38+ 7C28 00          > db 0
+  38+ 7C29 00          > db 0
+  38+ 7C2A 00          > db 0
+  38+ 7C2B 00          > db 0
+  38+ 7C2C 00          > db 0
+  38+ 7C2D 00          > db 0
+  38+ 7C2E 00          > db 0
+  38+ 7C2F 00          > db 0
+  38+ 7C30 00          > db 0
+  38+ 7C31 00          > db 0
+  38+ 7C32 00          > db 0
+  38+ 7C33 00          > db 0
+  38+ 7C34 00          > db 0
+  38+ 7C35 00          > db 0
+  38+ 7C36 00          > db 0
+  38+ 7C37 00          > db 0
+  38+ 7C38 00          > db 0
+  38+ 7C39 00          > db 0
+  38+ 7C3A 00          > db 0
+  38+ 7C3B 00          > db 0
+  38+ 7C3C 00          > db 0
+  38+ 7C3D 00          > db 0
+  38+ 7C3E 00          > db 0
+  38+ 7C3F 00          > db 0
+  38+ 7C40 00          > db 0
+  38+ 7C41 00          > db 0
+  38+ 7C42 00          > db 0
+  38+ 7C43 00          > db 0
+  38+ 7C44 00          > db 0
+  38+ 7C45 00          > db 0
+  38+ 7C46 00          > db 0
+  38+ 7C47 00          > db 0
+  38+ 7C48 00          > db 0
+  38+ 7C49 00          > db 0
+  38+ 7C4A 00          > db 0
+  38+ 7C4B 00          > db 0
+  38+ 7C4C 00          > db 0
+  38+ 7C4D 00          > db 0
+  38+ 7C4E 00          > db 0
+  38+ 7C4F 00          > db 0
+  38+ 7C50 00          > db 0
+  38+ 7C51 00          > db 0
+  38+ 7C52 00          > db 0
+  38+ 7C53 00          > db 0
+  38+ 7C54 00          > db 0
+  38+ 7C55 00          > db 0
+  38+ 7C56 00          > db 0
+  38+ 7C57 00          > db 0
+  38+ 7C58 00          > db 0
+  38+ 7C59 00          > db 0
+  38+ 7C5A 00          > db 0
+  38+ 7C5B 00          > db 0
+  38+ 7C5C 00          > db 0
+  38+ 7C5D 00          > db 0
+  38+ 7C5E 00          > db 0
+  38+ 7C5F 00          > db 0
+  38+ 7C60 00          > db 0
+  38+ 7C61 00          > db 0
+  38+ 7C62 00          > db 0
+  38+ 7C63 00          > db 0
+  38+ 7C64 00          > db 0
+  38+ 7C65 00          > db 0
+  38+ 7C66 00          > db 0
+  38+ 7C67 00          > db 0
+  38+ 7C68 00          > db 0
+  38+ 7C69 00          > db 0
+  38+ 7C6A 00          > db 0
+  38+ 7C6B 00          > db 0
+  38+ 7C6C 00          > db 0
+  38+ 7C6D 00          > db 0
+  38+ 7C6E 00          > db 0
+  38+ 7C6F 00          > db 0
+  38+ 7C70 00          > db 0
+  38+ 7C71 00          > db 0
+  38+ 7C72 00          > db 0
+  38+ 7C73 00          > db 0
+  38+ 7C74 00          > db 0
+  38+ 7C75 00          > db 0
+  38+ 7C76 00          > db 0
+  38+ 7C77 00          > db 0
+  38+ 7C78 00          > db 0
+  38+ 7C79 00          > db 0
+  38+ 7C7A 00          > db 0
+  38+ 7C7B 00          > db 0
+  38+ 7C7C 00          > db 0
+  38+ 7C7D 00          > db 0
+  38+ 7C7E 00          > db 0
+  38+ 7C7F 00          > db 0
+  38+ 7C80 00          > db 0
+  38+ 7C81 00          > db 0
+  38+ 7C82 00          > db 0
+  38+ 7C83 00          > db 0
+  38+ 7C84 00          > db 0
+  38+ 7C85 00          > db 0
+  38+ 7C86 00          > db 0
+  38+ 7C87 00          > db 0
+  38+ 7C88 00          > db 0
+  38+ 7C89 00          > db 0
+  38+ 7C8A 00          > db 0
+  38+ 7C8B 00          > db 0
+  38+ 7C8C 00          > db 0
+  38+ 7C8D 00          > db 0
+  38+ 7C8E 00          > db 0
+  38+ 7C8F 00          > db 0
+  38+ 7C90 00          > db 0
+  38+ 7C91 00          > db 0
+  38+ 7C92 00          > db 0
+  38+ 7C93 00          > db 0
+  38+ 7C94 00          > db 0
+  38+ 7C95 00          > db 0
+  38+ 7C96 00          > db 0
+  38+ 7C97 00          > db 0
+  38+ 7C98 00          > db 0
+  38+ 7C99 00          > db 0
+  38+ 7C9A 00          > db 0
+  38+ 7C9B 00          > db 0
+  38+ 7C9C 00          > db 0
+  38+ 7C9D 00          > db 0
+  38+ 7C9E 00          > db 0
+  39+ 7C9F
+  40+ 7C9F              ; Gestione Stanze
+  41+ 7C9F 00           current_room:   db 0
+  42+ 7CA0 00           conveyor_dir:   db 0
+  43+ 7CA1 00           conveyor_len:   db 0
+  44+ 7CA2 00           conveyor_row:   db 0
+  45+ 7CA3 00           conveyor_col:   db 0
+  46+ 7CA4 00           ramp_dir:       db 0
+  47+ 7CA5 00           ramp_len:       db 0
+  48+ 7CA6 00           ramp_row:       db 0
+  49+ 7CA7 00           ramp_col:       db 0
+  50+ 7CA8 00          > db 0
+  50+ 7CA9 00          > db 0
+  50+ 7CAA 00          > db 0
+  50+ 7CAB 00          > db 0
+  50+ 7CAC 00          > db 0
+  50+ 7CAD 00          > db 0
+  50+ 7CAE 00          > db 0
+  50+ 7CAF 00          > db 0
+  50+ 7CB0 00          > db 0
+  50+ 7CB1 00          > db 0
+  50+ 7CB2 00          > db 0
+  50+ 7CB3 00          > db 0
+  50+ 7CB4 00          > db 0
+  50+ 7CB5 00          > db 0
+  50+ 7CB6 00          > db 0
+  50+ 7CB7 00          > db 0
+  50+ 7CB8 00          > db 0
+  50+ 7CB9 00          > db 0
+  50+ 7CBA 00          > db 0
+  50+ 7CBB 00          > db 0
+  50+ 7CBC 00          > db 0
+  50+ 7CBD 00          > db 0
+  50+ 7CBE 00          > db 0
+  50+ 7CBF 00          > db 0
+  50+ 7CC0 00          > db 0
+  50+ 7CC1 00          > db 0
+  50+ 7CC2 00          > db 0
+  50+ 7CC3 00          > db 0
+  50+ 7CC4 00          > db 0
+  50+ 7CC5 00          > db 0
+  50+ 7CC6 00          > db 0
+  50+ 7CC7 00          > db 0
+  50+ 7CC8 00          > db 0
+  50+ 7CC9 00          > db 0
+  50+ 7CCA 00          > db 0
+  50+ 7CCB 00          > db 0
+  50+ 7CCC 00          > db 0
+  50+ 7CCD 00          > db 0
+  50+ 7CCE 00          > db 0
+  50+ 7CCF 00          > db 0
+  50+ 7CD0 00          > db 0
+  50+ 7CD1 00          > db 0
+  50+ 7CD2 00          > db 0
+  50+ 7CD3 00          > db 0
+  50+ 7CD4 00          > db 0
+  50+ 7CD5 00          > db 0
+  50+ 7CD6 00          > db 0
+  50+ 7CD7 00          > db 0
+  50+ 7CD8 00          > db 0
+  50+ 7CD9 00          > db 0
+  50+ 7CDA 00          > db 0
+  50+ 7CDB 00          > db 0
+  50+ 7CDC 00          > db 0
+  50+ 7CDD 00          > db 0
+  50+ 7CDE 00          > db 0
+  50+ 7CDF 00          > db 0
+  50+ 7CE0 00          > db 0
+  50+ 7CE1 00          > db 0
+  50+ 7CE2 00          > db 0
+  50+ 7CE3 00          > db 0
+  50+ 7CE4 00          > db 0
+  50+ 7CE5 00          > db 0
+  50+ 7CE6 00          > db 0
+  50+ 7CE7 00          > db 0
+  50+ 7CE8 00          > db 0
+  50+ 7CE9 00          > db 0
+  50+ 7CEA 00          > db 0
+  50+ 7CEB 00          > db 0
+  50+ 7CEC 00          > db 0
+  50+ 7CED 00          > db 0
+  50+ 7CEE 00          > db 0
+  50+ 7CEF 00          > db 0
+  50+ 7CF0 00          > db 0
+  50+ 7CF1 00          > db 0
+  50+ 7CF2 00          > db 0
+  50+ 7CF3 00          > db 0
+  50+ 7CF4 00          > db 0
+  50+ 7CF5 00          > db 0
+  50+ 7CF6 00          > db 0
+  50+ 7CF7 00          > db 0
+  51+ 7CF8 00           num_room_items:     db 0
+  52+ 7CF9 00 83        room_ptr:           dw TheOffLicenceLayout;
+  53+ 7CFB 01           enemy_update_rate:  db 1
+  54+ 7CFC 00           enemy_update_timer: db 0
+  55+ 7CFD 03           player_speed:       db 3
+  56+ 7CFE 00           transition_active:  db 0
+  57+ 7CFF 12           Audio_jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
+  58+ 7D00 00           Audio_jump_sound_timer:   db 0
+  59+ 7D01 00           Audio_music_note_idx:      db 0
+  60+ 7D02 01           Audio_music_frame_counter: db 1
+  61+ 7D03 22           rope_old_frame:            db 34
+  62+ 7D04
 # file closed: data/datavariable.asm
-  21  7D03
-  22  7D03              start:
-  23  7D03 31 FF FF         ld   sp, $ffff
-  24  7D06 CD AD 5D         call SetupIM2
-  25  7D09 C3 0C 7D         jp   Main
-  26  7D0C
-  27  7D0C
-  28  7D0C
-  29  7D0C              ;    org $7F50
-  30  7D0C              Main:
-  31  7D0C                  ; Inizializza
-  32  7D0C AF               xor  a
-  33  7D0D 32 87 79         ld  (body_state), a
-  34  7D10 32 8B 79         ld  (items_collected), a
-  35  7D13
-  36  7D13 CD DB 5D         call Gfx_CopyChars
-  37  7D16 CD E7 5D         call Gfx_DefineChars
-  38  7D19
-  39  7D19 3E 02            ld   a, $02
-  40  7D1B CD 01 16         call OPENCHAN
-  41  7D1E 21 00 80         ld   hl, $8000
-  42  7D21 22 7B 5C         ld   (UDG), hl
-  43  7D24
-  44  7D24 21 8D 5C         ld   hl, ATTR_P
-  45  7D27 36 07            ld   (hl), $07
-  46  7D29 CD AF 0D         call CLS
-  47  7D2C              LoadRoomAndRestart:
-  48  7D2C CD BB 74         call DetermineCurrentRoomID
-  49  7D2F CD AC 6C         call Phys_LoadRoomSettings
-  50  7D32 CD C9 61         call Gfx_DrawRoom
-  51  7D35 CD 7F 63         call Gfx_DrawConveyorsAndRamps
-  52  7D38 CD 5F 60         call Gfx_PrintRoomName
-  53  7D3B CD A5 76         call Items_DrawRoom
-  54  7D3E CD A2 6D         call Enemy_LoadRoom
-  55  7D41
-  56  7D41 3A FD 7C         ld   a, (transition_active)
-  57  7D44 B7               or   a
-  58  7D45 20 05            jr   nz, .skip_player_pos
-  59  7D47 CD 17 65         call LoadPositionPlayeinRoom
-  60  7D4A 18 04            jr   .after_player_pos
-  61  7D4C              .skip_player_pos:
-  62  7D4C AF               xor  a
-  63  7D4D 32 FD 7C         ld   (transition_active), a
-  64  7D50              .after_player_pos:
-  65  7D50
-  66  7D50                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
-  67  7D50 2A F8 7C         ld   hl, (room_ptr)
-  68  7D53 11 DE 00         ld   de, OFFSET_BORDER_COLOR
-  69  7D56 19               add  hl, de
-  70  7D57 7E               ld   a, (hl)
-  71  7D58 32 8D 79         ld   (room_border_color), a
-  72  7D5B D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
-  73  7D5D
-  74  7D5D                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
-  75  7D5D 87               add  a, a
-  76  7D5E 87               add  a, a
-  77  7D5F 87               add  a, a              ; Sposta nei bit 3-5
-  78  7D60 47               ld   b, a
-  79  7D61 3A 48 5C         ld   a, (BORDCR)
-  80  7D64 E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
-  81  7D66 B0               or   b                 ; Imposta nuovo colore bordo
-  82  7D67 F6 07            or   $07               ; Imposta ink a bianco
-  83  7D69 32 48 5C         ld   (BORDCR), a
-  84  7D6C
-  85  7D6C CD F3 5F         call Gfx_PrintPlayer
-  86  7D6F
-  87  7D6F              Main_loop:
-  88  7D6F              .sync_loop:
-  89  7D6F 76               halt
-  90  7D70 2A 99 79         ld   hl, (counter)
-  91  7D73 ED 5B 9C 79      ld   de, (last_frame_counter)
-  92  7D77 B7               or   a
-  93  7D78 ED 52            sbc  hl, de
-  94  7D7A 7D               ld   a, l
-  95  7D7B FE 02            cp   2
-  96  7D7D 38 F0            jr   c, .sync_loop
-  97  7D7F
-  98  7D7F 2A 99 79         ld   hl, (counter)
-  99  7D82 22 9C 79         ld   (last_frame_counter), hl
- 100  7D85
- 101  7D85 CD 68 78         call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
- 102  7D88 CD B4 78         call Audio_UpdateMusic        ; Aggiorna la musica
- 103  7D8B
- 104  7D8B                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
- 105  7D8B CD 46 60         call Gfx_DeleteCharAtOldPos
- 106  7D8E CD F3 5F         call Gfx_PrintPlayer
- 107  7D91
- 108  7D91 CD CC 6E         call Enemy_EraseRoom
- 109  7D94 CD 00 6F         call Enemy_DrawRoom
- 110  7D97
- 111  7D97
- 112  7D97                  ; 3. Salva le posizioni correnti del player per il prossimo frame
- 113  7D97 ED 4B 81 79      ld   bc, (PlayerPos)
- 114  7D9B ED 43 83 79      ld   (PlayerPosOld), bc
- 115  7D9F
- 116  7D9F                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
- 117  7D9F CD 2A 65         call Input_CheckCtrl
- 118  7DA2 CD 4C 64         call MovePlayer
- 119  7DA5 CD EC 66         call Phys_ApplyGravity
- 120  7DA8 CD 36 6A         call Phys_ApplyConveyor
- 121  7DAB CD 57 71         call Enemy_Update
- 122  7DAE CD EE 77         call Items_CheckCollision
- 123  7DB1
- 124  7DB1                  ; Controlla collisione con Nasties (morte di Willy)
- 125  7DB1 CD 05 6D         call Phys_CheckNastyCollision
- 126  7DB4 30 18            jr   nc, .no_nasty_collision
- 127  7DB6
- 128  7DB6                  ; Gestisci la morte di Willy:
- 129  7DB6                  ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
- 130  7DB6 CD 46 60         call Gfx_DeleteCharAtOldPos
- 131  7DB9
- 132  7DB9                  ; 2. Ripristina la posizione iniziale nella stanza
- 133  7DB9 CD 17 65         call LoadPositionPlayeinRoom
- 134  7DBC
- 135  7DBC                  ; 3. Reimposta la fisica di Willy
- 136  7DBC AF               xor  a
- 137  7DBD 32 8E 79         ld   (velocity_y), a
- 138  7DC0 32 90 79         ld   (jump_pressed), a
- 139  7DC3 32 94 79         ld   (jump_frame), a
- 140  7DC6 32 93 79         ld   (jump_dir), a
- 141  7DC9 3E 01            ld   a, 1
- 142  7DCB 32 8F 79         ld   (on_ground), a
- 143  7DCE
- 144  7DCE              .no_nasty_collision:
- 145  7DCE
- 146  7DCE                  ; 5. Gestisci la collisione (disegna le raster bar se collide)
- 147  7DCE CD 88 69         call CheckCollision
- 148  7DD1 30 1A            jr   nc, .no_collision
- 149  7DD3
- 150  7DD3                  ; Collisione attiva: disegna le raster bar nel bordo
- 151  7DD3 3A 99 79         ld   a, (counter)
- 152  7DD6 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
- 153  7DD8 06 1E            ld   b, 30             ; Numero di righe della barra raster
- 154  7DDA              .raster_loop:
- 155  7DDA D3 FE            out  ($fe), a
- 156  7DDC 3C               inc  a
- 157  7DDD E6 07            and  7
- 158  7DDF 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
- 159  7DE1              .delay:
- 160  7DE1 0D               dec  c
- 161  7DE2 20 FD            jr   nz, .delay
- 162  7DE4 10 F4            djnz .raster_loop
- 163  7DE6
- 164  7DE6                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
- 165  7DE6 3A 8D 79         ld   a, (room_border_color)
- 166  7DE9 D3 FE            out  ($fe), a
- 167  7DEB 18 05            jr   .no_collision_change
- 168  7DED
- 169  7DED              .no_collision:
- 170  7DED                  ; Nessuna collisione: mantieni il bordo al colore della stanza
- 171  7DED 3A 8D 79         ld   a, (room_border_color)
- 172  7DF0 D3 FE            out  ($fe), a
- 173  7DF2
- 174  7DF2              .no_collision_change:
- 175  7DF2 C3 6F 7D         jp   Main_loop
- 176  7DF5
- 177  7DF5
- 178  7DF5
- 179  7DF5                  include "resources.asm"
+  21  7D04
+  22  7D04              start:
+  23  7D04 31 FF FF         ld   sp, $ffff
+  24  7D07 CD AD 5D         call SetupIM2
+  25  7D0A C3 0D 7D         jp   Main
+  26  7D0D
+  27  7D0D
+  28  7D0D
+  29  7D0D              ;    org $7F50
+  30  7D0D              Main:
+  31  7D0D                  ; Inizializza
+  32  7D0D AF               xor  a
+  33  7D0E 32 87 79         ld  (body_state), a
+  34  7D11 32 8B 79         ld  (items_collected), a
+  35  7D14
+  36  7D14 CD DB 5D         call Gfx_CopyChars
+  37  7D17 CD E7 5D         call Gfx_DefineChars
+  38  7D1A
+  39  7D1A 3E 02            ld   a, $02
+  40  7D1C CD 01 16         call OPENCHAN
+  41  7D1F 21 00 80         ld   hl, $8000
+  42  7D22 22 7B 5C         ld   (UDG), hl
+  43  7D25
+  44  7D25 21 8D 5C         ld   hl, ATTR_P
+  45  7D28 36 07            ld   (hl), $07
+  46  7D2A CD AF 0D         call CLS
+  47  7D2D              LoadRoomAndRestart:
+  48  7D2D CD BB 74         call DetermineCurrentRoomID
+  49  7D30 CD AC 6C         call Phys_LoadRoomSettings
+  50  7D33 CD C9 61         call Gfx_DrawRoom
+  51  7D36 CD 7F 63         call Gfx_DrawConveyorsAndRamps
+  52  7D39 CD 5F 60         call Gfx_PrintRoomName
+  53  7D3C CD A5 76         call Items_DrawRoom
+  54  7D3F CD A2 6D         call Enemy_LoadRoom
+  55  7D42
+  56  7D42 3A FE 7C         ld   a, (transition_active)
+  57  7D45 B7               or   a
+  58  7D46 20 05            jr   nz, .skip_player_pos
+  59  7D48 CD 17 65         call LoadPositionPlayeinRoom
+  60  7D4B 18 04            jr   .after_player_pos
+  61  7D4D              .skip_player_pos:
+  62  7D4D AF               xor  a
+  63  7D4E 32 FE 7C         ld   (transition_active), a
+  64  7D51              .after_player_pos:
+  65  7D51
+  66  7D51                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
+  67  7D51 2A F9 7C         ld   hl, (room_ptr)
+  68  7D54 11 DE 00         ld   de, OFFSET_BORDER_COLOR
+  69  7D57 19               add  hl, de
+  70  7D58 7E               ld   a, (hl)
+  71  7D59 32 8D 79         ld   (room_border_color), a
+  72  7D5C D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
+  73  7D5E
+  74  7D5E                  ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
+  75  7D5E 87               add  a, a
+  76  7D5F 87               add  a, a
+  77  7D60 87               add  a, a              ; Sposta nei bit 3-5
+  78  7D61 47               ld   b, a
+  79  7D62 3A 48 5C         ld   a, (BORDCR)
+  80  7D65 E6 C7            and  $c7               ; Pulisce vecchi bit del bordo
+  81  7D67 B0               or   b                 ; Imposta nuovo colore bordo
+  82  7D68 F6 07            or   $07               ; Imposta ink a bianco
+  83  7D6A 32 48 5C         ld   (BORDCR), a
+  84  7D6D
+  85  7D6D CD F3 5F         call Gfx_PrintPlayer
+  86  7D70
+  87  7D70              Main_loop:
+  88  7D70              .sync_loop:
+  89  7D70 76               halt
+  90  7D71 2A 9A 79         ld   hl, (counter)
+  91  7D74 ED 5B 9D 79      ld   de, (last_frame_counter)
+  92  7D78 B7               or   a
+  93  7D79 ED 52            sbc  hl, de
+  94  7D7B 7D               ld   a, l
+  95  7D7C FE 02            cp   2
+  96  7D7E 38 F0            jr   c, .sync_loop
+  97  7D80
+  98  7D80 2A 9A 79         ld   hl, (counter)
+  99  7D83 22 9D 79         ld   (last_frame_counter), hl
+ 100  7D86
+ 101  7D86 CD 68 78         call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
+ 102  7D89 CD B4 78         call Audio_UpdateMusic        ; Aggiorna la musica
+ 103  7D8C
+ 104  7D8C                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
+ 105  7D8C CD 46 60         call Gfx_DeleteCharAtOldPos
+ 106  7D8F CD F3 5F         call Gfx_PrintPlayer
+ 107  7D92
+ 108  7D92 CD CC 6E         call Enemy_EraseRoom
+ 109  7D95 CD 00 6F         call Enemy_DrawRoom
+ 110  7D98
+ 111  7D98
+ 112  7D98                  ; 3. Salva le posizioni correnti del player per il prossimo frame
+ 113  7D98 ED 4B 81 79      ld   bc, (PlayerPos)
+ 114  7D9C ED 43 83 79      ld   (PlayerPosOld), bc
+ 115  7DA0
+ 116  7DA0                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
+ 117  7DA0 CD 2A 65         call Input_CheckCtrl
+ 118  7DA3 CD 4C 64         call MovePlayer
+ 119  7DA6 CD EC 66         call Phys_ApplyGravity
+ 120  7DA9 CD 36 6A         call Phys_ApplyConveyor
+ 121  7DAC CD 57 71         call Enemy_Update
+ 122  7DAF CD EE 77         call Items_CheckCollision
+ 123  7DB2
+ 124  7DB2                  ; Controlla collisione con Nasties (morte di Willy)
+ 125  7DB2 CD 05 6D         call Phys_CheckNastyCollision
+ 126  7DB5 38 0B            jr   c, .willy_dies
+ 127  7DB7
+ 128  7DB7                  ; Controlla collisione con guardiani
+ 129  7DB7 CD 88 69         call CheckCollision
+ 130  7DBA 30 3A            jr   nc, .no_collision
+ 131  7DBC
+ 132  7DBC                  ; C'è collisione con un guardiano!
+ 133  7DBC                  ; Controlla se la morte per collisione con i guardiani è abilitata
+ 134  7DBC 3A 8E 79         ld   a, (flag_guardian_collision_death)
+ 135  7DBF B7               or   a
+ 136  7DC0 28 1A            jr   z, .draw_raster_bars ; se disabilitato, disegna le raster bar per debug
+ 137  7DC2
+ 138  7DC2              .willy_dies:
+ 139  7DC2                  ; Gestisci la morte di Willy:
+ 140  7DC2                  ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
+ 141  7DC2 CD 46 60         call Gfx_DeleteCharAtOldPos
+ 142  7DC5
+ 143  7DC5                  ; 2. Ripristina la posizione iniziale nella stanza
+ 144  7DC5 CD 17 65         call LoadPositionPlayeinRoom
+ 145  7DC8
+ 146  7DC8                  ; 3. Reimposta la fisica di Willy
+ 147  7DC8 AF               xor  a
+ 148  7DC9 32 8F 79         ld   (velocity_y), a
+ 149  7DCC 32 91 79         ld   (jump_pressed), a
+ 150  7DCF 32 95 79         ld   (jump_frame), a
+ 151  7DD2 32 94 79         ld   (jump_dir), a
+ 152  7DD5 3E 01            ld   a, 1
+ 153  7DD7 32 90 79         ld   (on_ground), a
+ 154  7DDA 18 1A            jr   .no_collision ; Salta il disegno delle raster bar poiché Willy è morto
+ 155  7DDC
+ 156  7DDC              .draw_raster_bars:
+ 157  7DDC                  ; Collisione attiva: disegna le raster bar nel bordo
+ 158  7DDC 3A 9A 79         ld   a, (counter)
+ 159  7DDF E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+ 160  7DE1 06 1E            ld   b, 30             ; Numero di righe della barra raster
+ 161  7DE3              .raster_loop:
+ 162  7DE3 D3 FE            out  ($fe), a
+ 163  7DE5 3C               inc  a
+ 164  7DE6 E6 07            and  7
+ 165  7DE8 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+ 166  7DEA              .delay:
+ 167  7DEA 0D               dec  c
+ 168  7DEB 20 FD            jr   nz, .delay
+ 169  7DED 10 F4            djnz .raster_loop
+ 170  7DEF
+ 171  7DEF                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+ 172  7DEF 3A 8D 79         ld   a, (room_border_color)
+ 173  7DF2 D3 FE            out  ($fe), a
+ 174  7DF4 18 05            jr   .no_collision_change
+ 175  7DF6
+ 176  7DF6              .no_collision:
+ 177  7DF6                  ; Nessuna collisione: mantieni il bordo al colore della stanza
+ 178  7DF6 3A 8D 79         ld   a, (room_border_color)
+ 179  7DF9 D3 FE            out  ($fe), a
+ 180  7DFB
+ 181  7DFB              .no_collision_change:
+ 182  7DFB C3 70 7D         jp   Main_loop
+ 183  7DFE
+ 184  7DFE
+ 185  7DFE
+ 186  7DFE                  include "resources.asm"
 # file opened: resources.asm
-   1+ 7DF5              ;===========================================================================
-   2+ 7DF5              ; resources.asm
-   3+ 7DF5              ;
-   4+ 7DF5              ; Gestione delle risorse statiche non modificabili del gioco.
-   5+ 7DF5              ; Contiene le stanze (livelli) e le sprite dei personaggi.
-   6+ 7DF5              ;===========================================================================
-   7+ 7DF5
-   8+ 7DF5                  org $8300
+   1+ 7DFE              ;===========================================================================
+   2+ 7DFE              ; resources.asm
+   3+ 7DFE              ;
+   4+ 7DFE              ; Gestione delle risorse statiche non modificabili del gioco.
+   5+ 7DFE              ; Contiene le stanze (livelli) e le sprite dei personaggi.
+   6+ 7DFE              ;===========================================================================
+   7+ 7DFE
+   8+ 7DFE                  org $8300
    9+ 8300              RoomsStart:
   10+ 8300                  include "rooms/TheOffLicence.asm"               ; ID 00
 # file opened: rooms/TheOffLicence.asm
@@ -15013,6 +15022,6 @@
 # file closed: data/datasprite.asm
   51+ CA80
 # file closed: resources.asm
- 180  CA80
- 181  CA80                  SAVESNA "jet set willy.sna", start
+ 187  CA80
+ 188  CA80                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm
