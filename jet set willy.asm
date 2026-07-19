@@ -107,6 +107,13 @@ Main_loop:
 
     call Enemy_EraseRoom
     call Enemy_DrawRoom
+    
+    ; Se l'animazione delle vite è abilitata, aggiorna la visualizzazione delle icone camminanti
+    ld   a, (flag_animate_lives)
+    or   a
+    jr   z, .skip_lives_anim
+    call Gfx_PrintWillyLives
+.skip_lives_anim:
 
 
     ; 3. Salva le posizioni correnti del player per il prossimo frame

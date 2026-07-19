@@ -867,24 +867,74 @@ Gfx_DrawWillyLifeIcon:
     ld   d, a              ; D = Colore
     ld   e, c              ; E = Colonna
     
-    ; 1. Disegna la testa a Row 19, Colonna E
+    ; 0. Cancella la testa e il corpo per evitare artefatti da OR
+    push bc
+    push de
+    ld   a, e
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    ld   c, a              ; C = X pixel
+    ld   b, 160            ; B = Y pixel (Row 20 / head)
+    call Gfx_ClearPixelSprite8x8
+    ld   b, 168            ; B = Y pixel (Row 21 / body)
+    call Gfx_ClearPixelSprite8x8
+    pop  de
+    pop  bc
+    
+    ; 1. Disegna la testa a Row 20, Colonna E
     ; X pixel = E * 8
     ld   a, e
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
     ld   c, a              ; C = X pixel
-    ld   b, 160            ; B = Y pixel (Row 19)
+    ld   b, 160            ; B = Y pixel (Row 20)
     ld   ix, Willy + 0*8   ; IX = head facing right
     call Gfx_DrawPixelSprite8x8
     
-    ; 2. Disegna il corpo a Row 20, Colonna E
-    ld   b, 168            ; B = Y pixel (Row 20)
-    ld   ix, Willy + 1*8   ; IX = body frame 1
+    ; 2. Disegna il corpo a Row 21, Colonna E
+    ld   b, 168            ; B = Y pixel (Row 21)
+    
+    push de                ; SALVA D = Colore, E = Colonna
+    
+    ; Determina il frame del corpo per le icone delle vite
+    ld   a, (flag_animate_lives)
+    or   a
+    jr   z, .static_body   ; se 0, usa il frame statico (1)
+    
+    ; Altrimenti calcola il frame animato dal contatore
+    ld   a, (counter)
+    rrca
+    rrca
+    rrca
+    and  %00000011         ; A = 0..3
+    cp   3
+    jr   nz, .not_3
+    ld   a, 1              ; map 3 to 1 -> cycle is 0, 1, 2, 1
+.not_3:
+    ; A = 0, 1, 2. Aggiungiamo 1 per ottenere l'offset del frame del corpo (1, 2, 3)
+    inc  a
+    jr   .calc_ix
+    
+.static_body:
+    ld   a, 1              ; frame statico 1
+    
+.calc_ix:
+    ; calcola IX = Willy + A * 8
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    ld   e, a
+    ld   d, 0
+    ld   ix, Willy
+    add  ix, de
     call Gfx_DrawPixelSprite8x8
     
-    ; 3. Imposta l'attributo colore per la testa (Row 19, Colonna E)
-    ; AttrAddr = $5A60 + E
+    pop  de                ; RIPRISTINA D = Colore, E = Colonna
+    
+    ; 3. Imposta l'attributo colore per la testa (Row 20, Colonna E)
+    ; AttrAddr = $5A80 + E
     ld   h, $5a
     ld   a, $80
     add  a, e
@@ -894,8 +944,8 @@ Gfx_DrawWillyLifeIcon:
 .no_carry1:
     ld   (hl), d           ; Scrivi colore testa
     
-    ; 4. Imposta l'attributo colore per il corpo (Row 20, Colonna E)
-    ; AttrAddr = $5A80 + E
+    ; 4. Imposta l'attributo colore per il corpo (Row 21, Colonna E)
+    ; AttrAddr = $5AA0 + E
     ld   h, $5a
     ld   a, $A0
     add  a, e
