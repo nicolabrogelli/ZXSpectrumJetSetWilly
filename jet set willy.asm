@@ -122,8 +122,14 @@ Main_loop:
     call Items_CheckCollision
     
     ; Controlla collisione con Nasties (morte di Willy)
+    ld   a, (flag_nasty_collision_death)
+    or   a
+    jr   z, .no_nasty_collision_check
+    
     call Phys_CheckNastyCollision
     jr   c, .willy_dies
+    
+.no_nasty_collision_check:
     
     ; Controlla collisione con guardiani
     call CheckCollision
