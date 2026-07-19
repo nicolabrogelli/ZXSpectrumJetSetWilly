@@ -23,9 +23,7 @@ start:
     ld   sp, $ffff
     call SetupIM2
     jp   Main
-
-    
-
+ 
 ;    org $7F50
 Main:
     ; Inizializza
