@@ -52,3 +52,4 @@ Secondo Byte
 	  • %011110  (30): Tipo 30 (GelatoSprite)
 	  • %011111  (31): Tipo 31 (PinguinoSprite)
 	  • %100000  (32): Tipo 32 (MuroSprite)
+	  • %100001  (33): Tipo 33 (DiavolettoSprite)

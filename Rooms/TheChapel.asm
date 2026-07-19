@@ -89,7 +89,7 @@ TheChapelBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheChapelReserved:
-    DEFB NONE, MAGENTA, CYAN, YELLOW                        ; Enemy colors
+    DEFB GREEN, GREEN, GREEN, MAGENTA                        ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheChapelItem:
@@ -107,24 +107,24 @@ TheChapelUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheChapelEnemy1:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $C0, 23, 216, 0, 88         ; FaceHellHL (Top-Right)
 TheChapelEnemy2:
-    DEFB $C0, 6, 40, 48, 87         
+    DEFB $C0, 24, 200, 0, 88         ; FaceHellHR (Top-Left)
 TheChapelEnemy3:
-    DEFB $E0, 6, 56, 48, 96         
+    DEFB $C0, 25, 208, 16, 104         ; FaceHellLL (Bottom-Center)       
 TheChapelEnemy4:
-    DEFB $C0, 6, 88, 72, 96         
+    DEFB $80, 22, 0, 96, 120         
 TheChapelEnemy5:
-     DEFB $80, 2, 112, 80, 232      
+     DEFB $C0, 32, 48, 56, 80
 TheChapelEnemy6:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $C0, 33, 136, 40, 80   
 TheChapelEnemy7:
     DEFB 0, 0, 0, 0, 0
 TheChapelEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheChapelPosWilly:
-    db 200, 101                     ; Posizione di Willy
+    db 200, 95                     ; Posizione di Willy
     
 TheChapelEnemyColors5_8:
-    DEFB MAGENTA, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB GREEN, CYAN, NONE, NONE               ; Colori per nemici 5-8
