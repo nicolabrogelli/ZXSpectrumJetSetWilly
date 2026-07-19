@@ -1182,6 +1182,7 @@ GetRampY:
     add  a, a              ; *8
     add  a, e              ; A = (ramp_col + ramp_len) * 8 = X_right_boundary
     ld   h, a              ; H = X_right_boundary
+    jr   c, .no_right_bound_check_right
     
     ld   a, c              ; A = PlayerX
     cp   e
@@ -1194,7 +1195,15 @@ GetRampY:
     sub  h                 ; A = PlayerX - X_right_boundary
     cp   8
     jp   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary + 8, fuori
+    jr   .on_platform_right
     
+.no_right_bound_check_right:
+    ld   a, c              ; A = PlayerX
+    cp   e
+    jp   c, .out_of_ramp   ; Se PlayerX < X_left, fuori
+    jr   .on_ramp_slope    ; Se >= X_left, è sicuramente sulla pendenza rampa (non può superare 256)
+    
+.on_platform_right:
     ; Piattaforma adiacente! Restituisci PlayerY = (ramp_row - ramp_len + 1) * 8 - 16
     ld   a, (ramp_row)
     ld   hl, ramp_len
@@ -1215,11 +1224,9 @@ GetRampY:
     sub  16                ; A = ramp_row * 8 - 16
     add  a, e              ; A = ramp_row * 8 - 16 + X_left
     sub  c                 ; A = A - PlayerX
-    
-    ; Calcola la quota della piattaforma:
-    ; platform_Y = (ramp_row - ramp_len + 1) * 8 - 16
     ld   d, a              ; D = calculated Y
     
+    ; H = platform_Y + 16 (confronto sicuro con offset +16)
     ld   a, (ramp_row)
     ld   hl, ramp_len
     sub  (hl)
@@ -1227,13 +1234,17 @@ GetRampY:
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    sub  16                ; A = platform_Y
+    ld   h, a              ; H = platform_Y + 16
     
-    cp   d                 ; Compara platform_Y con calculated Y
-    jr   c, .no_clamp      ; Se platform_Y < calculated Y, non limitare
+    ld   a, d              ; A = calculated Y
+    add  a, 16             ; A = calculated Y + 16
+    cp   h                 ; Compare (calculated Y + 16) con (platform_Y + 16)
+    jr   nc, .no_clamp     ; Se calculated Y >= platform_Y, non limitare
     
     ; Altrimenti, limita a platform_Y
-    scf                    ; Set carry (dentro rampa)
+    ld   a, h
+    sub  16                ; A = platform_Y
+    scf
     ret
     
 .no_clamp:
@@ -1258,11 +1269,14 @@ GetRampY:
     add  a, a              ; *8
     add  a, 8              ; A = (ramp_col + 1) * 8 (X_right_boundary)
     ld   h, a              ; H = X_right_boundary
+    jr   c, .no_right_bound_check_left
     
     ld   a, c              ; A = PlayerX
     cp   h
     jp   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary, fuori
     
+.no_right_bound_check_left:
+    ld   a, c              ; A = PlayerX
     cp   e
     jr   nc, .on_ramp_slope_left ; Se PlayerX >= X_left, pendenza rampa
     
@@ -1298,11 +1312,9 @@ GetRampY:
     sub  16                ; A = ramp_row * 8 - 16
     sub  d                 ; A = ramp_row * 8 - 16 - X_start
     add  a, c              ; A = A + PlayerX
-    
-    ; Calcola la quota della piattaforma:
-    ; platform_Y = (ramp_row - ramp_len + 1) * 8 - 16
     ld   d, a              ; D = calculated Y
     
+    ; H = platform_Y + 16 (confronto sicuro con offset +16)
     ld   a, (ramp_row)
     ld   hl, ramp_len
     sub  (hl)
@@ -1310,11 +1322,16 @@ GetRampY:
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
+    ld   h, a              ; H = platform_Y + 16
+    
+    ld   a, d              ; A = calculated Y
+    add  a, 16             ; A = calculated Y + 16
+    cp   h                 ; Compare (calculated Y + 16) con (platform_Y + 16)
+    jr   nc, .no_clamp_left ; Se calculated Y >= platform_Y, non limitare
+    
+    ; Altrimenti, limita a platform_Y
+    ld   a, h
     sub  16                ; A = platform_Y
-    
-    cp   d
-    jr   c, .no_clamp_left
-    
     scf
     ret
     
