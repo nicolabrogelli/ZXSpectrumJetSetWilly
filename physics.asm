@@ -639,10 +639,6 @@ CheckCollision:
     ret
 
 ; -------------------------------------------------------------------
-; Controlla se la coordinata pixel (X, Y) si trova su un conveyor o rampa
-; Input: C = X, B = Y
-; Output: Carry flag impostato se solida, altrimenti resettato
-; -------------------------------------------------------------------
 CheckConveyorOrRampCell:
     push hl
     push de
@@ -667,74 +663,38 @@ CheckConveyorOrRampCell:
     ; --- CONTROLLO CONVEYOR ---
     ld   a, (conveyor_len)
     or   a
-    jr   z, .check_ramp    ; Se non c'è conveyor, controlla rampa
+    jr   z, .not_solid     ; Se non c'è conveyor, fine
     
     ; Controlla se Row corrisponde
     ld   a, (conveyor_row)
     cp   d
-    jr   nz, .check_ramp   ; Row diversa, controlla rampa
+    jr   nz, .not_solid    ; Row diversa
     
     ; Controlla se Col è compresa: c >= conveyor_col e c < conveyor_col + conveyor_len
     ld   a, (conveyor_col)
     cp   e
     jr   z, .is_conveyor   ; c == conveyor_col -> solido!
     jr   c, .c_greater     ; c > conveyor_col -> controlla limite superiore
-    jr   .check_ramp       ; c < conveyor_col
+    jr   .not_solid        ; c < conveyor_col
 .c_greater:
     ld   b, a              ; B = conveyor_col
     ld   a, (conveyor_len)
     add  a, b              ; A = conveyor_col + conveyor_len
     cp   e
-    jr   z, .check_ramp    ; c == len (fuori)
-    jr   c, .check_ramp    ; c > len (fuori)
+    jr   z, .not_solid     ; c == len (fuori)
+    jr   c, .not_solid     ; c > len (fuori)
 .is_conveyor:
-    jr   .solid
-
-.check_ramp:
-    ; --- CONTROLLO RAMP ---
-    ld   a, (ramp_len)
-    or   a
-    jr   z, .not_solid     ; Se non c'è rampa, fine
-    
-    ld   a, (ramp_row)     ; A = RampRowStart
-    cp   d                 ; compare with player row D
-    jr   c, .not_solid     ; if RampRowStart < D, skip!
-    
-    sub  d                 ; A = RampRowStart - D
-    ld   b, a              ; B = distance from start row (0..ramp_len-1)
-    ld   a, (ramp_len)
-    cp   b
-    jr   z, .not_solid     ; if B == ramp_len, too high!
-    jr   c, .not_solid     ; if B > ramp_len, too high!
-    
-    ; Calcola ExpectedCol:
-    ld   a, (ramp_dir)
-    or   a
-    jr   z, .r_left
-.r_right:
-    ld   a, (ramp_col)
-    add  a, b              ; A = ramp_col + B
-    jr   .compare_col
-.r_left:
-    ld   a, (ramp_col)
-    sub  b                 ; A = ramp_col - B
-.compare_col:
-    cp   e                 ; Compare with player col E
-    jr   nz, .not_solid    ; If not equal, not on ramp!
-    jr   .solid            ; Se corrisponde, è solido!
+    pop  bc
+    pop  de
+    pop  hl
+    scf                    ; Set carry (solido)
+    ret
     
 .not_solid:
     pop  bc
     pop  de
     pop  hl
     or   a                 ; Clear carry
-    ret
-    
-.solid:
-    pop  bc
-    pop  de
-    pop  hl
-    scf                    ; Set carry
     ret
 
 ; -------------------------------------------------------------------
