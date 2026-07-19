@@ -178,7 +178,7 @@ checkCtrl_jump:
 ; Esegue il cambio di stanza ciclico alla stanza successiva
 ; -------------------------------------------------------------------
 PerformRoomChange:
-    ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..45)
+    ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..60)
     ld   hl, RoomsListTable
     ld   bc, (room_ptr)            ; BC = layout corrente
     ld   e, 0                      ; E = contatore indice
@@ -194,7 +194,7 @@ PerformRoomChange:
     inc  hl
     inc  e
     ld   a, e
-    cp   46                        ; 46 stanze totali (indice 0..45)
+    cp   61                        ; 61 stanze totali (indice 0..60)
     jr   c, .loop
     
     ld   e, 0                      ; Se non trovato, riparte da 0
@@ -205,7 +205,7 @@ PerformRoomChange:
 .next_index_loop:
     ld   a, c
     inc  a
-    cp   46
+    cp   61
     jr   c, .no_wrap
     xor  a
 .no_wrap:

@@ -1,3 +1,4 @@
+warning[backslash]: File name contains \, use / instead (\ fails on most of the supported platforms): C:\Users\nicol\Documents\Progetti\asm\ZXSPECTRUM-JET SET WILLY\jet set willy.asm
 # file opened: jet set willy.asm
    1  0000              ;===========================================================================
    2  0000              ; main.asm
@@ -2254,7 +2255,7 @@
  178+ 669C              ; Esegue il cambio di stanza ciclico alla stanza successiva
  179+ 669C              ; -------------------------------------------------------------------
  180+ 669C              PerformRoomChange:
- 181+ 669C                  ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..45)
+ 181+ 669C                  ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..60)
  182+ 669C 21 0D 67         ld   hl, RoomsListTable
  183+ 669F ED 4B C7 7D      ld   bc, (room_ptr)            ; BC = layout corrente
  184+ 66A3 1E 00            ld   e, 0                      ; E = contatore indice
@@ -2270,7 +2271,7 @@
  194+ 66AE 23               inc  hl
  195+ 66AF 1C               inc  e
  196+ 66B0 7B               ld   a, e
- 197+ 66B1 FE 2E            cp   46                        ; 46 stanze totali (indice 0..45)
+ 197+ 66B1 FE 3D            cp   61                        ; 61 stanze totali (indice 0..60)
  198+ 66B3 38 F0            jr   c, .loop
  199+ 66B5
  200+ 66B5 1E 00            ld   e, 0                      ; Se non trovato, riparte da 0
@@ -2281,7 +2282,7 @@
  205+ 66B8              .next_index_loop:
  206+ 66B8 79               ld   a, c
  207+ 66B9 3C               inc  a
- 208+ 66BA FE 2E            cp   46
+ 208+ 66BA FE 3D            cp   61
  209+ 66BC 38 01            jr   c, .no_wrap
  210+ 66BE AF               xor  a
  211+ 66BF              .no_wrap:
