@@ -111,7 +111,7 @@ TheNightmareRoomEnemy1:
 TheNightmareRoomEnemy2:
     DEFB $D0, 34, 88, 0, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheNightmareRoomEnemy3:
-    DEFB $E0, 34, 112, 0, 96         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $E0, 35, 112, 0, 96         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheNightmareRoomEnemy4:
     DEFB $F0, 34, 136, 8, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheNightmareRoomEnemy5:

@@ -359,7 +359,7 @@ Enemy_DrawRoom:
     
     ; Determina quale sprite usare basato sul tipo (Offset 1, Bit 5-0)
     ld   a, (ix+1)         ; Tipo
-    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca, 22=Frate, 23..26=FaceHell, 27=PinzaGiaccio, 28=Ruota, 29=Saliera, 30=Gelato, 31=Pinguino, 32=Muro, 33=Diavoletto, 34=Vecchia)
+    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca, 22=Frate, 23..26=FaceHell, 27=PinzaGiaccio, 28=Ruota, 29=Saliera, 30=Gelato, 31=Pinguino, 32=Muro, 33=Diavoletto, 34=Vecchia, 35=Piede)
     
     cp   0
     jp   z, .got_lametta
@@ -431,6 +431,8 @@ Enemy_DrawRoom:
     jp   z, .got_diavoletto
     cp   34
     jp   z, .got_vecchia
+    cp   35
+    jp   z, .got_piede
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -602,6 +604,10 @@ Enemy_DrawRoom:
 
 .got_vecchia:
     ld   hl, VecchiaSprite
+    jp   .got_sprite
+
+.got_piede:
+    ld   hl, PiedeSprite
     jp   .got_sprite
 
 
