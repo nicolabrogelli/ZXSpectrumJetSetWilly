@@ -301,7 +301,8 @@ RoomsListTable:
     dw EastWallBaseLayout               ; 26
     dw TheChapelLayout                  ; 27
     dw FirstLandingLayout               ; 28
-    dw 0,0,0,0                        ; 29-32: padding
+    dw TheNightmareRoomLayout           ; 29
+    dw 0,0,0                            ; 30-32: padding
     dw TheBathroomLayout                ; 33
     dw 0                                ; 34
     dw MastreBedRoomLayout              ; 35

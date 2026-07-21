@@ -134,6 +134,7 @@ ItemsTable:
 ;   12 = Tree Top
 ;   27 = The Chapel
 ;   28 = First Landing
+;   29 = The Nightmare Room
 ;   33 = The Bathroom
 ;   35 = Master Bedroom
 ;
@@ -537,6 +538,20 @@ DetermineCurrentRoomID:
     jp   .set_room
 
 .not_firstlanding:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheNightmareRoomLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheNightmareRoomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_thenightmareroom
+
+    ld   a, 29               ; Room ID = 29
+    jp   .set_room
+
+.not_thenightmareroom:
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
