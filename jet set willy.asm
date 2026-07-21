@@ -20,8 +20,7 @@
     include "data/datavariable.asm"
     
 start:
-    ld   sp, $ffff
-    call SetupIM2
+    ld   sp, $fdf0
     jp   Main
  
 ;    org $7F50
@@ -36,12 +35,14 @@ Main:
     
     ld   a, $02
     call OPENCHAN
-    ld   hl, $8000 
+    ld   hl, $8400 
     ld   (UDG), hl
 
     ld   hl, ATTR_P
     ld   (hl), $07
     call CLS
+
+    call SetupIM2
 LoadRoomAndRestart:
     call DetermineCurrentRoomID
     call Phys_LoadRoomSettings

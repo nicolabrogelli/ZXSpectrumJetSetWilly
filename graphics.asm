@@ -6,8 +6,8 @@
 ; Copia il set dei caratteri dalla ROM alla RAM
 ; -------------------------------------------------------------------
 Gfx_CopyChars:
-    ld hl, $3D00  ; Indirizzo del set di caratteri originale in ROM
-    ld de, $8000  ; Indirizzo nella RAM in cui copiare il set di caratteri
+    ld hl, $3D00  ; Indirizzo del set di caratteri originale in ROM (ASCII 32)
+    ld de, $8100  ; Indirizzo in RAM per ASCII 32..127 ($8000 + 32*8)
     ld bc, 768    ; Numero di byte da copiare (96 caratteri * 8 byte ciascuno)
     ldir          ; Copiare i dati
     ret
@@ -17,10 +17,10 @@ Gfx_CopyChars:
 ; -------------------------------------------------------------------
 Gfx_DefineChars:
     ld hl, Willy             ; Indirizzo dei dati del nuovo carattere
-    ld de, $7F00 + (1 * 8)      ; Indirizzo di ASCII 1 nel nuovo set di caratteri
-    ld bc, 72                   ; Numero di byte da copiare (9 caratteri * 8 byte)
+    ld de, $8008             ; Indirizzo di ASCII 1 nel nuovo set di caratteri ($8000 + 1*8)
+    ld bc, 72                ; Numero di byte da copiare (9 caratteri * 8 byte)
     ldir                        ; Effettua la copia dei caratteri
-    ld hl, $7F00                ; Indirizzo del nuovo set di caratteri in RAM (font start - 256)
+    ld hl, $8000                ; Indirizzo del nuovo set di caratteri in RAM (font base ASCII 0)
     ld ($5C36), hl              ; Aggiornare la variabile di sistema CHARS
     ret
 

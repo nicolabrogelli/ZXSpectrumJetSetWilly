@@ -62,4 +62,7 @@ Audio_jump_sound_timer:   db 0
 Audio_music_note_idx:      db 0
 Audio_music_frame_counter: db 1
 rope_old_frame:            db 34
+rope_dir_flags:            db %00000011 ; initially swinging right to left (bit 7)
+rope_frame_idx:            db 34        ; Initial animation frame index
+rope_top_x:                db 128       ; X-coordinate of the top of the rope (128)
 

@@ -359,7 +359,7 @@ Enemy_DrawRoom:
     
     ; Determina quale sprite usare basato sul tipo (Offset 1, Bit 5-0)
     ld   a, (ix+1)         ; Tipo
-    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca, 22=Frate, 23..26=FaceHell, 27=PinzaGiaccio, 28=Ruota, 29=Saliera, 30=Gelato, 31=Pinguino, 32=Muro, 33=Diavoletto)
+    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca, 22=Frate, 23..26=FaceHell, 27=PinzaGiaccio, 28=Ruota, 29=Saliera, 30=Gelato, 31=Pinguino, 32=Muro, 33=Diavoletto, 34=Vecchia)
     
     cp   0
     jp   z, .got_lametta
@@ -429,6 +429,8 @@ Enemy_DrawRoom:
     jp   z, .got_muro
     cp   33
     jp   z, .got_diavoletto
+    cp   34
+    jp   z, .got_vecchia
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -596,6 +598,10 @@ Enemy_DrawRoom:
 
 .got_diavoletto:
     ld   hl, DiavolettoSprite
+    jp   .got_sprite
+
+.got_vecchia:
+    ld   hl, VecchiaSprite
     jp   .got_sprite
 
 
@@ -867,37 +873,37 @@ Enemy_Update:
 ; ===================================================================
 
 Rope_Update:
-    ; 1. Leggi direzione (bit 7 di 40968)
-    ld   a, (40968)
+    ; 1. Leggi direzione (bit 7 di rope_dir_flags)
+    ld   a, (rope_dir_flags)
     and  $80
     jr   nz, .swing_left   ; Se bit 7 è 1, decrementa frame
     
 .swing_right:
-    ld   a, (40969)        ; F (0..33)
+    ld   a, (rope_frame_idx)        ; F (0..33)
     inc  a
     cp   34
     jr   nz, .save_right
     ; Se F raggiunge 34, inverti direzione (imposta bit 7 a 1) e imposta F = 32
-    ld   a, (40968)
+    ld   a, (rope_dir_flags)
     or   $80
-    ld   (40968), a
+    ld   (rope_dir_flags), a
     ld   a, 32
 .save_right:
-    ld   (40969), a
+    ld   (rope_frame_idx), a
     ret
     
 .swing_left:
-    ld   a, (40969)
+    ld   a, (rope_frame_idx)
     dec  a
     cp   $FF
     jr   nz, .save_left
     ; Se F raggiunge -1, inverti direzione (imposta bit 7 a 0) e imposta F = 1
-    ld   a, (40968)
+    ld   a, (rope_dir_flags)
     and  $7F
-    ld   (40968), a
+    ld   (rope_dir_flags), a
     ld   a, 1
 .save_left:
-    ld   (40969), a
+    ld   (rope_frame_idx), a
     ret
 
 Rope_Draw:
@@ -908,7 +914,7 @@ Rope_Draw:
     ld   b, 8              ; 8 segmenti
     ld   d, 0              ; D = S (segment index, 0..7)
 .loop:
-    ld   a, (40969)        ; A = F (frame index)
+    ld   a, (rope_frame_idx)        ; A = F (frame index)
     ld   h, d              ; H = S
     call CalculateRopeX    ; A = X
     ld   c, a              ; C = X (pixel)
@@ -1013,7 +1019,7 @@ CalculateRopeX:
     call MultiplyAbyL      ; HL = A * L
     ld   c, 5
     call DivideHLbyC       ; L = HL / 5
-    ld   a, (40970)        ; A = X_top
+    ld   a, (rope_top_x)        ; A = X_top
     sub  l                 ; A = X_top - L
     pop  hl
     pop  bc
@@ -1024,7 +1030,7 @@ CalculateRopeX:
     call MultiplyAbyL      ; HL = A * L
     ld   c, 5
     call DivideHLbyC       ; L = HL / 5
-    ld   a, (40970)        ; A = X_top
+    ld   a, (rope_top_x)        ; A = X_top
     add  a, l              ; A = X_top + L
     pop  hl
     pop  bc

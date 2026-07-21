@@ -89,7 +89,7 @@ TheNightmareRoomBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheNightmareRoomReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB CYAN, MAGENTA, YELLOW, RED     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheNightmareRoomItem:
@@ -107,19 +107,19 @@ TheNightmareRoomUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheNightmareRoomEnemy1:
-    DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, 34, 64, 0, 80         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheNightmareRoomEnemy2:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $D0, 34, 88, 0, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheNightmareRoomEnemy3:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $E0, 34, 112, 0, 96         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheNightmareRoomEnemy4:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $F0, 34, 136, 8, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheNightmareRoomEnemy5:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $C0, 34, 160, 0, 80         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheNightmareRoomEnemy6:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $D0, 34, 184, 0, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheNightmareRoomEnemy7:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $E0, 34, 224, 0, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheNightmareRoomEnemy8:
     DEFB 0, 0, 0, 0, 0
 
@@ -127,4 +127,4 @@ TheNightmareRoomPosWilly:
     db 200, 101                     ; Posizione di Willy
     
 TheNightmareRoomEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
+    DEFB CYAN, MAGENTA, NONE, NONE     ; Colori per nemici 5-8

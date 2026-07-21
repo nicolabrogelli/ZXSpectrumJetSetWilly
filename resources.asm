@@ -5,7 +5,7 @@
 ; Contiene le stanze (livelli) e le sprite dei personaggi.
 ;===========================================================================
 
-    org $8300
+    org $8400
 RoomsStart:
     include "rooms/TheOffLicence.asm"               ; ID 00
     include "rooms/TheBridge.asm"                   ; ID 01
@@ -42,11 +42,6 @@ RoomsStart:
     include "rooms/TheBathroom.asm"                 ; ID 33
     include "rooms/MasterBedRoom.asm"               ; ID 35
     include "rooms/UnderTheDrive.asm"               ; ID 45
-
-    org 40968
-    DEFB %00000011    ; Rope (bits 0-2), initially swinging right to left (bit 7)
-    DEFB 34           ; Initial animation frame index
-    DEFB 128          ; X-coordinate of the top of the rope (128)
 
     org $B200
     include "data/datasprite.asm"
