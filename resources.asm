@@ -34,7 +34,8 @@ RoomsStart:
     include "rooms/WestofKitchen.asm"               ; ID 24
     include "rooms/ColdStore.asm"                   ; ID 25
     include "rooms/EastWallBase.asm"                ; ID 26
-    include "rooms/TheChapel.asm"                    ; ID 27
+    include "rooms/TheChapel.asm"                   ; ID 27
+    include "rooms/FirstLanding.asm"                ; ID 28
     
 
     include "rooms/TheBathroom.asm"                 ; ID 33

@@ -300,7 +300,8 @@ RoomsListTable:
     dw ColdStoreLayout                  ; 25
     dw EastWallBaseLayout               ; 26
     dw TheChapelLayout                  ; 27
-    dw 0,0,0,0,0                        ; 28-32: padding
+    dw FirstLandingLayout               ; 28
+    dw 0,0,0,0                        ; 29-32: padding
     dw TheBathroomLayout                ; 33
     dw 0                                ; 34
     dw MastreBedRoomLayout              ; 35

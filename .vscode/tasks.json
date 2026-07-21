@@ -4,8 +4,8 @@
       {
         "label": "buildZXSpectrum",
         "type": "shell",
-        "command":"\"C:\\Users\\nicol\\Documents\\Progetti\\asm\\sjasmplus\\sjasmplus.exe\"",
-        //"command":"\"C:\\Users\\87003101\\Documents\\Progetti\\asm\\sjasmplus\\sjasmplus.exe\"",
+        //"command":"\"C:\\Users\\nicol\\Documents\\Progetti\\asm\\sjasmplus\\sjasmplus.exe\"",
+        "command":"\"C:\\Users\\87003101\\Documents\\Progetti\\asm\\sjasmplus\\sjasmplus.exe\"",
         "args": [
           //"--inc=./includes",
           "--sld=${workspaceFolder}/jet set willy.sld",
