@@ -302,7 +302,9 @@ RoomsListTable:
 .TheChapelLayout:                  dw TheChapelLayout                  ; 27
 .FirstLandingLayout:               dw FirstLandingLayout               ; 28
 .TheNightmareRoomLayout:           dw TheNightmareRoomLayout           ; 29
-                                   dw 0,0,0                            ; 30-32: padding
+.TheBanyanTreeLayout               dw TheBanyanTreeLayout              ; 30
+.SwimmingPoolLayout:               dw SwimmingPoolLayout               ; 31
+                                   dw 0                                ; 32: padding
 .TheBathroomLayout:                dw TheBathroomLayout                ; 33
                                    dw 0                                ; 34
 .MastreBedRoomLayout:              dw MastreBedRoomLayout              ; 35

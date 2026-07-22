@@ -101,6 +101,9 @@ ItemsTable:
     ; Stanza 28 (First Landing)
     ;ITEM RoomsListTable.FirstLandingLayout, 20, 13, YELLOW, 0           ; Oggetto 1 alla colonna X=20, riga Y=13, YELLOW, (Stato: 0=attivo)
 
+    ; Stanza 31 (Swimming Pool)
+    ITEM RoomsListTable.SwimmingPoolLayout, 4, 11, CYAN, 0
+
     ; Stanza 33 (The Bathroom)
     ITEM RoomsListTable.TheBathroomLayout, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
 
@@ -552,6 +555,34 @@ DetermineCurrentRoomID:
     jp   .set_room
 
 .not_thenightmareroom:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheBanyanTreeLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheBanyanTreeLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_thebanyantree
+
+    ld   a, 30               ; Room ID = 30
+    jp   .set_room
+
+.not_thebanyantree:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con SwimmingPoolLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, SwimmingPoolLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_swimmingpool
+
+    ld   a, 31               ; Room ID = 31
+    jp   .set_room
+
+.not_swimmingpool:
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
