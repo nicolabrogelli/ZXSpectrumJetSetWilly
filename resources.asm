@@ -39,9 +39,9 @@ RoomsStart:
     include "rooms/TheNightmareRoom.asm"            ; ID 29
     include "rooms/TheBanyanTree.asm"               ; ID 30
     include "rooms/SwimmingPool.asm"                ; ID 31
-    
-
+    include "rooms/HalfwayUpTheEastWall.asm"        ; ID 32
     include "rooms/TheBathroom.asm"                 ; ID 33
+    include "rooms/TopLanding.asm"                  ; ID 34
     include "rooms/MasterBedRoom.asm"               ; ID 35
     include "rooms/UnderTheDrive.asm"               ; ID 45
 

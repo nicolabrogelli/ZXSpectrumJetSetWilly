@@ -107,6 +107,9 @@ ItemsTable:
     ; Stanza 33 (The Bathroom)
     ITEM RoomsListTable.TheBathroomLayout, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
 
+    ; Stanza 34 (Top Landing)
+    ITEM RoomsListTable.TopLandingLayout, 20, 13, YELLOW, 0
+
     ; Stanza 35 (Master Bedroom)
 
     db $FF                        ; Fine tabella
@@ -585,6 +588,20 @@ DetermineCurrentRoomID:
 .not_swimmingpool:
 
     ; ---------------------------------------------------------------
+    ; Confronto con HalfwayUpTheEastWallLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, HalfwayUpTheEastWallLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_halfwayupeastwall
+
+    ld   a, 32               ; Room ID = 32
+    jp   .set_room
+
+.not_halfwayupeastwall:
+
+    ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
@@ -597,6 +614,19 @@ DetermineCurrentRoomID:
     jp   .set_room
 
 .not_thebathroom:
+    ; ---------------------------------------------------------------
+    ; Confronto con TopLandingLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TopLandingLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_toplanding
+
+    ld   a, 34               ; Room ID = 34
+    jp   .set_room
+
+.not_toplanding:
     ; ---------------------------------------------------------------
     ; Confronto con MastreBedRoomLayout
     ; ---------------------------------------------------------------

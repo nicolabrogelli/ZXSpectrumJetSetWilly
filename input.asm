@@ -304,9 +304,9 @@ RoomsListTable:
 .TheNightmareRoomLayout:           dw TheNightmareRoomLayout           ; 29
 .TheBanyanTreeLayout               dw TheBanyanTreeLayout              ; 30
 .SwimmingPoolLayout:               dw SwimmingPoolLayout               ; 31
-                                   dw 0                                ; 32: padding
+.HalfwayUpTheEastWallLayout:       dw HalfwayUpTheEastWallLayout       ; 32
 .TheBathroomLayout:                dw TheBathroomLayout                ; 33
-                                   dw 0                                ; 34
+.TopLandingLayout:                 dw TopLandingLayout                 ; 34
 .MastreBedRoomLayout:              dw MastreBedRoomLayout              ; 35
                                    dw 0,0,0,0,0,0,0,0,0                ; 36-44: padding
 .UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 45
