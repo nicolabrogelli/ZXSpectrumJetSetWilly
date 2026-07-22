@@ -272,40 +272,41 @@ TriggerRoomChange:
     jp   LoadRoomAndRestart
 
 RoomsListTable:
-    dw TheOffLicenceLayout              ; 0
-    dw TheBridgeLayout                  ; 1
-    dw UnderTheMegaTreeLayout           ; 2
-    dw AtTheFootTheMegaTreeLayout       ; 3
-    dw TheDriveLayout                   ; 4
-    dw TheSecurityGuardLayout           ; 5
-    dw EntranceToHadesLayout            ; 6
-    dw CuckoosNestLayout                ; 7
-    dw InsideTheMegaTrunkLayout         ; 8
-    dw OnABranchOverTheDriveLayout      ; 9
-    dw TheFrontDoorLayout               ; 10
-    dw TheHallLayout                    ; 11
-    dw TreeTopLayout                    ; 12
-    dw OutALimbLayout                   ; 13
-    dw RescueEsmereldaLayout            ; 14
-    dw IAmSureIHaveSeenThiBeforeLayout  ; 15
-    dw WeMustPerformQuirkafleegLayout   ; 16
-    dw UpOnTheBattlementsLayout         ; 17
-    dw OntheRoofLayout                  ; 18
-    dw TheForgottenAbbeyLayout          ; 19
-    dw BallRoomEastLayout               ; 20
-    dw BallRoomWestLayout               ; 21
-    dw TotheKitchensMainStairwayLayout  ; 22 
-    dw TheKitchenLayout                 ; 23
-    dw WestOfKitchenLayout              ; 24
-    dw ColdStoreLayout                  ; 25
-    dw EastWallBaseLayout               ; 26
-    dw TheChapelLayout                  ; 27
-    dw FirstLandingLayout               ; 28
-    dw TheNightmareRoomLayout           ; 29
-    dw 0,0,0                            ; 30-32: padding
-    dw TheBathroomLayout                ; 33
-    dw 0                                ; 34
-    dw MastreBedRoomLayout              ; 35
-    dw 0,0,0,0,0,0,0,0,0                ; 36-44: padding
-    dw UnderTheDriveLayout              ; 45
-    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60
+.TheOffLicenceLayout:              dw TheOffLicenceLayout              ; 00
+.TheBridgeLayout:                  dw TheBridgeLayout                  ; 01
+.UnderTheMegaTreeLayout:           dw UnderTheMegaTreeLayout           ; 02
+.AtTheFootTheMegaTreeLayout:       dw AtTheFootTheMegaTreeLayout       ; 03
+.TheDriveLayout:                   dw TheDriveLayout                   ; 04
+.TheSecurityGuardLayout:           dw TheSecurityGuardLayout           ; 05
+.EntranceToHadesLayout:            dw EntranceToHadesLayout            ; 06
+.CuckoosNestLayout:                dw CuckoosNestLayout                ; 07
+.InsideTheMegaTrunkLayout:         dw InsideTheMegaTrunkLayout         ; 08
+.OnABranchOverTheDriveLayout:      dw OnABranchOverTheDriveLayout      ; 09
+.TheFrontDoorLayout:               dw TheFrontDoorLayout               ; 10
+.TheHallLayout:                    dw TheHallLayout                    ; 11
+.TreeTopLayout:                    dw TreeTopLayout                    ; 12
+.OutALimbLayout:                   dw OutALimbLayout                   ; 13
+.RescueEsmereldaLayout:            dw RescueEsmereldaLayout            ; 14
+.IAmSureIHaveSeenThiBeforeLayout:  dw IAmSureIHaveSeenThiBeforeLayout  ; 15
+.WeMustPerformQuirkafleegLayout:   dw WeMustPerformQuirkafleegLayout   ; 16
+.UpOnTheBattlementsLayout:         dw UpOnTheBattlementsLayout         ; 17
+.OntheRoofLayout:                  dw OntheRoofLayout                  ; 18
+.TheForgottenAbbeyLayout:          dw TheForgottenAbbeyLayout          ; 19
+.BallRoomEastLayout:               dw BallRoomEastLayout               ; 20
+.BallRoomWestLayout:               dw BallRoomWestLayout               ; 21
+.TotheKitchensMainStairwayLayout:  dw TotheKitchensMainStairwayLayout  ; 22 
+.TheKitchenLayout:                 dw TheKitchenLayout                 ; 23
+.WestOfKitchenLayout:              dw WestOfKitchenLayout              ; 24
+.ColdStoreLayout:                  dw ColdStoreLayout                  ; 25
+.EastWallBaseLayout:               dw EastWallBaseLayout               ; 26
+.TheChapelLayout:                  dw TheChapelLayout                  ; 27
+.FirstLandingLayout:               dw FirstLandingLayout               ; 28
+.TheNightmareRoomLayout:           dw TheNightmareRoomLayout           ; 29
+                                   dw 0,0,0                            ; 30-32: padding
+.TheBathroomLayout:                dw TheBathroomLayout                ; 33
+                                   dw 0                                ; 34
+.MastreBedRoomLayout:              dw MastreBedRoomLayout              ; 35
+                                   dw 0,0,0,0,0,0,0,0,0                ; 36-44: padding
+.UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 45
+                                   dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60
+

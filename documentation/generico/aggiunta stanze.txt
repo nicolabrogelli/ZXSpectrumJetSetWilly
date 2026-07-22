@@ -13,3 +13,175 @@
   5. Room ID Mapping: Updated  DetermineCurrentRoomID  in items.asm to properly identify and return the correct Room IDs ( 8  and  9 ) for rendering
   items and general game state.
   6. Compiled Snapshot: Built the project using  sjasmplus  to ensure it compiles flawlessly (0 errors) and updated the  jet set willy.sna  snapshot file.
+
+
+
+
+
+  ## 1. Cosa significano le dichiarazioni dw TheOffLicenceLayout?
+
+  1. dw (Define Word): È una direttiva dell'assembler Z80 che alloca una parola a 16 bit (2 byte). Poiché il processore Z80 utilizza indirizzi di memoria a 16 bit (da $0000 a $FFFF), un puntatore in memoria occupa esattamente 2 byte.
+  2. TheOffLicenceLayout: È un'etichetta (label) definita nel file della stanza (es. TheOffLicence.asm) che identifica l'indirizzo di memoria RAM di partenza dove sono memorizzati i dati di quella specifica stanza (la mappa a blocchi, il nome,
+  le grafiche dei tile, le posizioni dei nemici, ecc.).
+  3. Risultato: Scrivere dw TheOffLicenceLayout inserisce nella tabella i 2 byte dell'indirizzo a cui si trova il layout della stanza The Off Licence.
+  ──────
+  ### 2. Logica della RoomsListTable
+
+  La tabella mappa ogni ID numerico di stanza (da 0 a 60) all'indirizzo dei suoi dati in memoria:
+
+   Indice (Room ID)                                           | Direttiva                                                  | Contenuto (Puntatore al Layout)                            | Offset in Tabella
+  ------------------------------------------------------------|------------------------------------------------------------|------------------------------------------------------------|-----------------------------------------------------------
+   0                                                          | dw                                                         | TheOffLicenceLayout                                        | RoomsListTable + 0
+   1                                                          | dw                                                         | TheBridgeLayout                                            | RoomsListTable + 2
+   2                                                          | dw                                                         | UnderTheMegaTreeLayout                                     | RoomsListTable + 4
+   ...                                                        | dw                                                         | ...                                                        | ...
+   N                                                          | dw                                                         | LayoutStanzaN                                              | RoomsListTable + N * 2
+
+  Poiché ogni indirizzo occupa 2 byte, l'indirizzo della stanza N si trova sempre all'offset:
+
+    Offset = N × 2
+    ──────
+  ### 3. Come viene utilizzata nel codice (input.asm)
+
+  Nelle routine del file input.asm, la RoomsListTable viene usata principalmente in due scenari:
+
+  #### A. Cambio stanza per transizione/porta (input.asm)
+
+  Quando Willy esce dal bordo dello schermo o prende una porta, il gioco conosce l'ID numerico della nuova stanza (es. A = ID stanza):
+
+  1. Calcola l'indirizzo del puntatore nella tabella: HL = RoomsListTable + (A * 2).
+  2. Legge i 2 byte contenuti a quell'indirizzo e li carica nel registro DE.
+  3. Salva DE nella variabile room_ptr (il puntatore alla stanza attiva).
+  4. Pulisce lo schermo e ricarica il motore di gioco con i nuovi dati della stanza.
+
+  #### B. Cambio ciclico delle stanze (input.asm)
+
+  Usato ad esempio per la modalità debug/cheat per scorrere tutte le stanze:
+
+  1. Cerca il valore attuale di room_ptr dentro RoomsListTable per capire qual è l'indice della stanza corrente (0..60).
+  2. Incrementa l'indice di 1 (con wrapping da 60 a 0).
+  3. Estrae il nuovo layout RoomsListTable[indice] e aggiorna room_ptr.
+  ──────
+  ### In sintesi
+
+  • RoomsListTable è l'indice centrale di tutte le stanze del gioco.
+  • dw NomeStanzaLayout memorizza il puntatore a 16 bit ai dati di quella specifica stanza.
+  • Moltiplicando l'ID numerico della stanza per 2, il motore di gioco trova istantaneamente dove risiedono in memoria i dati della stanza da disegnare a schermo.
+
+
+
+
+
+    Sì, è assolutamente possibile rendere la configurazione del primo byte di ItemsTable molto più intuitiva, leggibile e meno soggetta ad errori.
+
+  Attualmente, l'uso di numeri "magici" (es. db 0, ..., db 2, ..., db 10, ...) costringe a ricordare a memoria l'ID numerico di ogni stanza o a consultare continuamente i commenti.
+
+  Ecco 4 possibili soluzioni, dalla più semplice alla più avanzata e automatizzata, senza modificare il funzionamento del motore Z80 in runtime (ovvero mantenendo zero overhead di memoria RAM e di CPU).
+  ──────
+  ### Soluzione 1: Costanti simboliche (EQU) per gli ID delle stanze
+
+  Definire delle costanti chiare (ad esempio in un file di intestazione constants.asm o in testa a items.asm) che associano il nome della stanza al suo ID numerico:
+
+    ; Definizioni ID Stanze
+    ROOM_OFF_LICENCE                  EQU 0
+    ROOM_BRIDGE                       EQU 1
+    ROOM_UNDER_THE_MEGA_TREE          EQU 2
+    ROOM_AT_THE_FOOT_OF_THE_MEGA_TREE EQU 3
+    ROOM_THE_DRIVE                    EQU 4
+    ROOM_CUCKOOS_NEST                 EQU 7
+    ROOM_THE_FRONT_DOOR               EQU 10
+    ; ... e così via per le altre stanze
+    
+  Nella ItemsTable:
+
+    ItemsTable:
+        ; Stanza The Off Licence
+        db ROOM_OFF_LICENCE, 30, 4, YELLOW, 0
+        
+        ; Stanza Under the MegaTree
+        db ROOM_UNDER_THE_MEGA_TREE, 22, 0, MAGENTA, 0
+        
+        ; Stanza Cuckoo's Nest
+        db ROOM_CUCKOOS_NEST, 15, 7, MAGENTA, 0
+    
+  • Vantaggi: Molto semplice da implementare, rende il codice immediatamente leggibile.
+  • Svantaggi: Se si modifica l'ordine delle stanze in RoomsListTable, occorre aggiornare manualmente anche le costanti EQU.
+  ──────
+  ### Soluzione 2: Calcolo automatico dell'ID tramite il puntatore della stanza (Consigliata)
+
+  Poiché in input.asm esiste già la tabella RoomsListTable con l'elenco dei layout (dw TheOffLicenceLayout, dw TheBridgeLayout, ...), è possibile far calcolare all'assembler l'ID della stanza in modo automatico e dinamico durante la
+  compilazione.
+
+  Si può definire una macro-funzione o espressione:
+
+    #define ROOM_ID(layout) ((layout - RoomsListTable) / 2)
+    
+  Nella ItemsTable:
+
+    ItemsTable:
+        ; Stanza The Off Licence
+        db ROOM_ID(TheOffLicenceLayout), 30, 4, YELLOW, 0
+        
+        ; Stanza Under the MegaTree
+        db ROOM_ID(UnderTheMegaTreeLayout), 22, 0, MAGENTA, 0
+    
+        ; Stanza Cuckoo's Nest
+        db ROOM_ID(CuckoosNestLayout), 15, 7, MAGENTA, 0
+    
+  • Vantaggi:
+      • Usi direttamente i nomi dei layout delle stanze (TheOffLicenceLayout, CuckoosNestLayout, ecc.) già esistenti nel progetto.
+      • 100% automatico: Se aggiungi, sposti o riordini le stanze dentro RoomsListTable, l'ID numerico di ogni oggetto si aggiornerà da solo durante la compilazione!
+      • Zero costi: L'assembler esegue il calcolo in fase di build e genera esattamente il byte numerico finale.
+
+  ──────
+  ### Soluzione 3: Macro ad alto livello ITEM
+
+  Estendendo la Soluzione 2, si può creare una Macro dell'assembler dedicata alla dichiarazione di ciascun oggetto:
+
+    MACRO ITEM room_layout, x, y, color, state
+        db (room_layout - RoomsListTable) / 2, x, y, color, state
+    ENDM
+    
+  Nella ItemsTable:
+
+    ItemsTable:
+        ; Oggetti in The Off Licence
+        ITEM TheOffLicenceLayout, 30, 4, YELLOW, 0
+        ITEM TheOffLicenceLayout, 29, 4, CYAN,   0
+        
+        ; Oggetto in Under the MegaTree
+        ITEM UnderTheMegaTreeLayout, 22, 0, MAGENTA, 0
+        
+        ; Oggetto in The Front Door
+        ITEM TheFrontDoorLayout, 11, 4, (BLUE * 8) + MAGENTA, 0
+    
+  • Vantaggi:
+      • Codice estremamente pulito, elegante e auto-documentato.
+      • Riduce la possibilità di dimenticare virgole o parametri.
+
+  ──────
+  ### Soluzione 4: Sostituire l'ID Stanza con il Puntatore Diretto al Layout (dw)
+
+  Invece di memorizzare 1 byte con l'ID numerico della stanza (richiedendo poi una routine di conversione/match), si potrebbe modificare la struttura dell'item per memorizzare direttamente l'indirizzo a 16 bit (dw) del layout della stanza:
+
+    ItemsTable:
+        ; Oggetto in 6 byte invece di 5
+        dw TheOffLicenceLayout
+        db 30, 4, YELLOW, 0
+
+  • Vantaggi: Niente ID numerici o calcoli con l'assembler. Si confronta direttamente l'indirizzo (room_ptr) con il campo dw della tabella.
+  • Svantaggi: Aumenta la dimensione di ogni riga della tabella di 1 byte (da 5 a 6 byte per ogni oggetto) e richiede di modificare il codice Z80 in items.asm che legge la ItemsTable e fa il controllo di presenza dell'oggetto.
+  ──────
+  ### Confronto e Raccomandazione
+
+   Soluzione                                      | Leggibilità                                    | Manutenibilità                                 | Impatto su Codice Z80                         | Impatto su Memoria RAM
+  ------------------------------------------------|------------------------------------------------|------------------------------------------------|-----------------------------------------------|-----------------------------------------------
+   Soluzione 1 (EQU)                              | Buona                                          | Media                                          | Nessuno (0%)                                  | 0 byte
+   Soluzione 2 (ROOM_ID)                          | Ottima                                         | Eccellente                                     | Nessuno (0%)                                  | 0 byte
+   Soluzione 3 (MACRO ITEM)                       | Eccellente                                     | Eccellente                                     | Nessuno (0%)                                  | 0 byte
+   Soluzione 4 (dw Layout)                        | Molto Buona                                    | Buona                                          | Richiede Modifiche Z80                        | +1 Byte per Item
+
+  La Soluzione 2 o 3 è la scelta migliore per questo progetto: ti permette di scrivere direttamente il nome della stanza (es. TheOffLicenceLayout), è a prova di errore in caso di riordinamento delle stanze e non richiede di modificare una
+  singola riga di logica di esecuzione Z80.
+
+  Fammi sapere quale soluzione preferisci e quando desideri applicarla!

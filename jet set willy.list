@@ -75,7 +75,18 @@
   62+ 5DAD
   63+ 5DAD              BLOCK:          EQU $FF
   64+ 5DAD
-  65+ 5DAD
+  65+ 5DAD              ; Macro per inserire un oggetto calcolando l'ID della stanza a tempo di compilazione dall'offset in RoomsListTable
+  66+ 5DAD                  MACRO ITEM room_sublabel, x, y, color, state
+  67+ 5DAD ~                    db (room_sublabel - RoomsListTable) / 2, x, y, color, state
+  68+ 5DAD                  ENDM
+  69+ 5DAD
+  70+ 5DAD
+  71+ 5DAD
+  72+ 5DAD
+  73+ 5DAD
+  74+ 5DAD
+  75+ 5DAD
+  76+ 5DAD
 # file closed: constants.asm
   12  5DAD                  include "interrupts.asm"
 # file opened: interrupts.asm
@@ -2348,48 +2359,48 @@
  272+ 670A C3 34 7E         jp   LoadRoomAndRestart
  273+ 670D
  274+ 670D              RoomsListTable:
- 275+ 670D 00 84            dw TheOffLicenceLayout              ; 0
- 276+ 670F 1E 85            dw TheBridgeLayout                  ; 1
- 277+ 6711 3C 86            dw UnderTheMegaTreeLayout           ; 2
- 278+ 6713 5A 87            dw AtTheFootTheMegaTreeLayout       ; 3
- 279+ 6715 78 88            dw TheDriveLayout                   ; 4
- 280+ 6717 96 89            dw TheSecurityGuardLayout           ; 5
- 281+ 6719 B4 8A            dw EntranceToHadesLayout            ; 6
- 282+ 671B D2 8B            dw CuckoosNestLayout                ; 7
- 283+ 671D F0 8C            dw InsideTheMegaTrunkLayout         ; 8
- 284+ 671F 0E 8E            dw OnABranchOverTheDriveLayout      ; 9
- 285+ 6721 2C 8F            dw TheFrontDoorLayout               ; 10
- 286+ 6723 4A 90            dw TheHallLayout                    ; 11
- 287+ 6725 68 91            dw TreeTopLayout                    ; 12
- 288+ 6727 86 92            dw OutALimbLayout                   ; 13
- 289+ 6729 A4 93            dw RescueEsmereldaLayout            ; 14
- 290+ 672B C2 94            dw IAmSureIHaveSeenThiBeforeLayout  ; 15
- 291+ 672D E0 95            dw WeMustPerformQuirkafleegLayout   ; 16
- 292+ 672F FE 96            dw UpOnTheBattlementsLayout         ; 17
- 293+ 6731 1C 98            dw OntheRoofLayout                  ; 18
- 294+ 6733 3A 99            dw TheForgottenAbbeyLayout          ; 19
- 295+ 6735 58 9A            dw BallRoomEastLayout               ; 20
- 296+ 6737 76 9B            dw BallRoomWestLayout               ; 21
- 297+ 6739 94 9C            dw TotheKitchensMainStairwayLayout  ; 22
- 298+ 673B B2 9D            dw TheKitchenLayout                 ; 23
- 299+ 673D D0 9E            dw WestOfKitchenLayout              ; 24
- 300+ 673F EE 9F            dw ColdStoreLayout                  ; 25
- 301+ 6741 0C A1            dw EastWallBaseLayout               ; 26
- 302+ 6743 2A A2            dw TheChapelLayout                  ; 27
- 303+ 6745 48 A3            dw FirstLandingLayout               ; 28
- 304+ 6747 66 A4            dw TheNightmareRoomLayout           ; 29
- 305+ 6749 00 00 00 00      dw 0,0,0                            ; 30-32: padding
+ 275+ 670D 00 84        .TheOffLicenceLayout:              dw TheOffLicenceLayout              ; 00
+ 276+ 670F 1E 85        .TheBridgeLayout:                  dw TheBridgeLayout                  ; 01
+ 277+ 6711 3C 86        .UnderTheMegaTreeLayout:           dw UnderTheMegaTreeLayout           ; 02
+ 278+ 6713 5A 87        .AtTheFootTheMegaTreeLayout:       dw AtTheFootTheMegaTreeLayout       ; 03
+ 279+ 6715 78 88        .TheDriveLayout:                   dw TheDriveLayout                   ; 04
+ 280+ 6717 96 89        .TheSecurityGuardLayout:           dw TheSecurityGuardLayout           ; 05
+ 281+ 6719 B4 8A        .EntranceToHadesLayout:            dw EntranceToHadesLayout            ; 06
+ 282+ 671B D2 8B        .CuckoosNestLayout:                dw CuckoosNestLayout                ; 07
+ 283+ 671D F0 8C        .InsideTheMegaTrunkLayout:         dw InsideTheMegaTrunkLayout         ; 08
+ 284+ 671F 0E 8E        .OnABranchOverTheDriveLayout:      dw OnABranchOverTheDriveLayout      ; 09
+ 285+ 6721 2C 8F        .TheFrontDoorLayout:               dw TheFrontDoorLayout               ; 10
+ 286+ 6723 4A 90        .TheHallLayout:                    dw TheHallLayout                    ; 11
+ 287+ 6725 68 91        .TreeTopLayout:                    dw TreeTopLayout                    ; 12
+ 288+ 6727 86 92        .OutALimbLayout:                   dw OutALimbLayout                   ; 13
+ 289+ 6729 A4 93        .RescueEsmereldaLayout:            dw RescueEsmereldaLayout            ; 14
+ 290+ 672B C2 94        .IAmSureIHaveSeenThiBeforeLayout:  dw IAmSureIHaveSeenThiBeforeLayout  ; 15
+ 291+ 672D E0 95        .WeMustPerformQuirkafleegLayout:   dw WeMustPerformQuirkafleegLayout   ; 16
+ 292+ 672F FE 96        .UpOnTheBattlementsLayout:         dw UpOnTheBattlementsLayout         ; 17
+ 293+ 6731 1C 98        .OntheRoofLayout:                  dw OntheRoofLayout                  ; 18
+ 294+ 6733 3A 99        .TheForgottenAbbeyLayout:          dw TheForgottenAbbeyLayout          ; 19
+ 295+ 6735 58 9A        .BallRoomEastLayout:               dw BallRoomEastLayout               ; 20
+ 296+ 6737 76 9B        .BallRoomWestLayout:               dw BallRoomWestLayout               ; 21
+ 297+ 6739 94 9C        .TotheKitchensMainStairwayLayout:  dw TotheKitchensMainStairwayLayout  ; 22
+ 298+ 673B B2 9D        .TheKitchenLayout:                 dw TheKitchenLayout                 ; 23
+ 299+ 673D D0 9E        .WestOfKitchenLayout:              dw WestOfKitchenLayout              ; 24
+ 300+ 673F EE 9F        .ColdStoreLayout:                  dw ColdStoreLayout                  ; 25
+ 301+ 6741 0C A1        .EastWallBaseLayout:               dw EastWallBaseLayout               ; 26
+ 302+ 6743 2A A2        .TheChapelLayout:                  dw TheChapelLayout                  ; 27
+ 303+ 6745 48 A3        .FirstLandingLayout:               dw FirstLandingLayout               ; 28
+ 304+ 6747 66 A4        .TheNightmareRoomLayout:           dw TheNightmareRoomLayout           ; 29
+ 305+ 6749 00 00 00 00                                     dw 0,0,0                            ; 30-32: padding
  305+ 674D 00 00
- 306+ 674F 84 A5            dw TheBathroomLayout                ; 33
- 307+ 6751 00 00            dw 0                                ; 34
- 308+ 6753 A2 A6            dw MastreBedRoomLayout              ; 35
- 309+ 6755 00 00 00 00      dw 0,0,0,0,0,0,0,0,0                ; 36-44: padding
+ 306+ 674F 84 A5        .TheBathroomLayout:                dw TheBathroomLayout                ; 33
+ 307+ 6751 00 00                                           dw 0                                ; 34
+ 308+ 6753 A2 A6        .MastreBedRoomLayout:              dw MastreBedRoomLayout              ; 35
+ 309+ 6755 00 00 00 00                                     dw 0,0,0,0,0,0,0,0,0                ; 36-44: padding
  309+ 6759 00 00 00 00
  309+ 675D 00 00 00 00
  309+ 6761 00 00 00 00
  309+ 6765 00 00
- 310+ 6767 C0 A7            dw UnderTheDriveLayout              ; 45
- 311+ 6769 00 00 00 00      dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60
+ 310+ 6767 C0 A7        .UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 45
+ 311+ 6769 00 00 00 00                                     dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60
  311+ 676D 00 00 00 00
  311+ 6771 00 00 00 00
  311+ 6775 00 00 00 00
@@ -5222,125 +5233,166 @@
   25+ 74CE              ; -------------------------------------------------------------------
   26+ 74CE              ItemsTable:
   27+ 74CE                  ; Stanza 0 (The Off Licence)
-  28+ 74CE 00 1E 04 06      db 0, 30, 4, YELLOW, 0              ; Oggetto 1 alla colonna X=30,  riga Y=4, YELLOW, (Stato: 0=attivo)
-  28+ 74D2 00
-  29+ 74D3 00 1D 04 05      db 0, 29, 4, CYAN, 0                ; Oggetto 2 alla colonna X=29,  riga Y=4, CYAN, (Stato: 0=attivo)
-  29+ 74D7 00
-  30+ 74D8 00 1C 04 04      db 0, 28, 4, GREEN, 0               ; Oggetto 4 alla colonna X=28,  riga Y=4, GREEN, (Stato: 0=attivo)
-  30+ 74DC 00
-  31+ 74DD 00 1B 04 03      db 0, 27, 4, MAGENTA, 0             ; Oggetto 5 alla colonna X=27,  riga Y=4, GREEN, (Stato: 0=attivo)
-  31+ 74E1 00
-  32+ 74E2 00 1A 04 06      db 0, 26, 4, YELLOW, 0              ; Oggetto 6 alla colonna X=26,  riga Y=4, YELLOW, (Stato: 0=attivo)
-  32+ 74E6 00
-  33+ 74E7 00 19 04 05      db 0, 25, 4, CYAN, 0                ; Oggetto 7 alla colonna X=25,  riga Y=4, CYAN, (Stato: 0=attivo)
-  33+ 74EB 00
-  34+ 74EC 00 18 04 04      db 0, 24, 4, GREEN, 0               ; Oggetto 8 alla colonna X=24,  riga Y=4, GREEN, (Stato: 0=attivo)
-  34+ 74F0 00
-  35+ 74F1 00 17 04 03      db 0, 23, 4, MAGENTA, 0             ; Oggetto 9 alla colonna X=23,  riga Y=4, MAGENTA, (Stato: 0=attivo)
-  35+ 74F5 00
-  36+ 74F6 00 16 04 06      db 0, 22, 4, YELLOW, 0              ; Oggetto 10 alla colonna X=22, riga Y=4, YELLOW, (Stato: 0=attivo)
-  36+ 74FA 00
-  37+ 74FB 00 15 04 05      db 0, 21, 4, CYAN, 0                ; Oggetto 11 alla colonna X=21, riga Y=4, CYAN, (Stato: 0=attivo)
-  37+ 74FF 00
-  38+ 7500 00 14 04 04      db 0, 20, 4, GREEN, 0               ; Oggetto 12 alla colonna X=20, riga Y=4, GREEN, (Stato: 0=attivo)
-  38+ 7504 00
-  39+ 7505 00 13 04 03      db 0, 19, 4, MAGENTA, 0             ; Oggetto 13 alla colonna X=19, riga Y=4, MAGENTA, (Stato: 0=attivo)
-  39+ 7509 00
+  28+ 74CE                  ITEM RoomsListTable.TheOffLicenceLayout, 30, 4, YELLOW, 0              ; Oggetto 1 alla colonna X=30,  riga Y=4, YELLOW, (Stato: 0=attivo)
+  28+ 74CE 00 1E 04 06 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 30, 4, YELLOW, 0
+  28+ 74D2 00          >
+  29+ 74D3                  ITEM RoomsListTable.TheOffLicenceLayout, 29, 4, CYAN, 0                ; Oggetto 2 alla colonna X=29,  riga Y=4, CYAN, (Stato: 0=attivo)
+  29+ 74D3 00 1D 04 05 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 29, 4, CYAN, 0
+  29+ 74D7 00          >
+  30+ 74D8                  ITEM RoomsListTable.TheOffLicenceLayout, 28, 4, GREEN, 0               ; Oggetto 4 alla colonna X=28,  riga Y=4, GREEN, (Stato: 0=attivo)
+  30+ 74D8 00 1C 04 04 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 28, 4, GREEN, 0
+  30+ 74DC 00          >
+  31+ 74DD                  ITEM RoomsListTable.TheOffLicenceLayout, 27, 4, MAGENTA, 0             ; Oggetto 5 alla colonna X=27,  riga Y=4, GREEN, (Stato: 0=attivo)
+  31+ 74DD 00 1B 04 03 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 27, 4, MAGENTA, 0
+  31+ 74E1 00          >
+  32+ 74E2                  ITEM RoomsListTable.TheOffLicenceLayout, 26, 4, YELLOW, 0              ; Oggetto 6 alla colonna X=26,  riga Y=4, YELLOW, (Stato: 0=attivo)
+  32+ 74E2 00 1A 04 06 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 26, 4, YELLOW, 0
+  32+ 74E6 00          >
+  33+ 74E7                  ITEM RoomsListTable.TheOffLicenceLayout, 25, 4, CYAN, 0                ; Oggetto 7 alla colonna X=25,  riga Y=4, CYAN, (Stato: 0=attivo)
+  33+ 74E7 00 19 04 05 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 25, 4, CYAN, 0
+  33+ 74EB 00          >
+  34+ 74EC                  ITEM RoomsListTable.TheOffLicenceLayout, 24, 4, GREEN, 0               ; Oggetto 8 alla colonna X=24,  riga Y=4, GREEN, (Stato: 0=attivo)
+  34+ 74EC 00 18 04 04 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 24, 4, GREEN, 0
+  34+ 74F0 00          >
+  35+ 74F1                  ITEM RoomsListTable.TheOffLicenceLayout, 23, 4, MAGENTA, 0             ; Oggetto 9 alla colonna X=23,  riga Y=4, MAGENTA, (Stato: 0=attivo)
+  35+ 74F1 00 17 04 03 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 23, 4, MAGENTA, 0
+  35+ 74F5 00          >
+  36+ 74F6                  ITEM RoomsListTable.TheOffLicenceLayout, 22, 4, YELLOW, 0              ; Oggetto 10 alla colonna X=22, riga Y=4, YELLOW, (Stato: 0=attivo)
+  36+ 74F6 00 16 04 06 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 22, 4, YELLOW, 0
+  36+ 74FA 00          >
+  37+ 74FB                  ITEM RoomsListTable.TheOffLicenceLayout, 21, 4, CYAN, 0                ; Oggetto 11 alla colonna X=21, riga Y=4, CYAN, (Stato: 0=attivo)
+  37+ 74FB 00 15 04 05 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 21, 4, CYAN, 0
+  37+ 74FF 00          >
+  38+ 7500                  ITEM RoomsListTable.TheOffLicenceLayout, 20, 4, GREEN, 0               ; Oggetto 12 alla colonna X=20, riga Y=4, GREEN, (Stato: 0=attivo)
+  38+ 7500 00 14 04 04 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 20, 4, GREEN, 0
+  38+ 7504 00          >
+  39+ 7505                  ITEM RoomsListTable.TheOffLicenceLayout, 19, 4, MAGENTA, 0             ; Oggetto 13 alla colonna X=19, riga Y=4, MAGENTA, (Stato: 0=attivo)
+  39+ 7505 00 13 04 03 >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2, 19, 4, MAGENTA, 0
+  39+ 7509 00          >
   40+ 750A
   41+ 750A                  ; Stanza 1 (The Bridge)
   42+ 750A
   43+ 750A                  ; Stanza 2 (Under the MegaTree)
-  44+ 750A 02 16 00 03      db 2, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)
-  44+ 750E 00
+  44+ 750A                  ITEM RoomsListTable.UnderTheMegaTreeLayout, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)
+  44+ 750A 02 16 00 03 >        db (RoomsListTable.UnderTheMegaTreeLayout - RoomsListTable) / 2, 22, 0, MAGENTA, 0
+  44+ 750E 00          >
   45+ 750F
   46+ 750F                  ; Stanza 3 (Gfx_At The Foot TheMega Tree)
-  47+ 750F 03 01 0B 03      db 3, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)
-  47+ 7513 00
-  48+ 7514 03 04 0A 04      db 3, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)
-  48+ 7518 00
-  49+ 7519 03 07 0B 05      db 3, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)
-  49+ 751D 00
+  47+ 750F                  ITEM RoomsListTable.AtTheFootTheMegaTreeLayout, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)
+  47+ 750F 03 01 0B 03 >        db (RoomsListTable.AtTheFootTheMegaTreeLayout - RoomsListTable) / 2, 1, 11, MAGENTA, 0
+  47+ 7513 00          >
+  48+ 7514                  ITEM RoomsListTable.AtTheFootTheMegaTreeLayout, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)
+  48+ 7514 03 04 0A 04 >        db (RoomsListTable.AtTheFootTheMegaTreeLayout - RoomsListTable) / 2, 4, 10, GREEN, 0
+  48+ 7518 00          >
+  49+ 7519                  ITEM RoomsListTable.AtTheFootTheMegaTreeLayout, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)
+  49+ 7519 03 07 0B 05 >        db (RoomsListTable.AtTheFootTheMegaTreeLayout - RoomsListTable) / 2, 7, 11, CYAN, 0
+  49+ 751D 00          >
   50+ 751E
   51+ 751E                  ; Stanza 5 (The Drive)
   52+ 751E
   53+ 751E                  ; Stanza 6 (The Security Guard)
   54+ 751E
   55+ 751E                  ; Stanza 7 (Cuckoo's Nest)
-  56+ 751E 07 0F 07 03      db 7, 15, 7, MAGENTA, 0              ; Oggetto 1 alla colonna X=7, riga Y=15, YELLOW, (Stato: 0=attivo)
-  56+ 7522 00
+  56+ 751E                  ITEM RoomsListTable.CuckoosNestLayout, 15, 7, MAGENTA, 0              ; Oggetto 1 alla colonna X=7, riga Y=15, YELLOW, (Stato: 0=attivo)
+  56+ 751E 07 0F 07 03 >        db (RoomsListTable.CuckoosNestLayout - RoomsListTable) / 2, 15, 7, MAGENTA, 0
+  56+ 7522 00          >
   57+ 7523
   58+ 7523                  ; Stanza 10 (The Front Door)
-  59+ 7523 0A 0B 04 2B      db 10, 11, 4, 43, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  59+ 7527 00
+  59+ 7523                  ITEM RoomsListTable.TheFrontDoorLayout, 11, 4, 43, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  59+ 7523 0A 0B 04 2B >        db (RoomsListTable.TheFrontDoorLayout - RoomsListTable) / 2, 11, 4, 43, 0
+  59+ 7527 00          >
   60+ 7528
-  61+ 7528                  ; Stanza 12 (The Front Door)
-  62+ 7528 0C 10 03 04      db 12, 16, 3, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  62+ 752C 00
-  63+ 752D 0C 13 0D 03      db 12, 19, 13, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  63+ 7531 00
-  64+ 7532 0C 16 04 05      db 12, 22, 4, CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  64+ 7536 00
+  61+ 7528                  ; Stanza 12 (Tree Top)
+  62+ 7528                  ITEM RoomsListTable.TreeTopLayout, 16, 3, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  62+ 7528 0C 10 03 04 >        db (RoomsListTable.TreeTopLayout - RoomsListTable) / 2, 16, 3, GREEN, 0
+  62+ 752C 00          >
+  63+ 752D                  ITEM RoomsListTable.TreeTopLayout, 19, 13, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  63+ 752D 0C 13 0D 03 >        db (RoomsListTable.TreeTopLayout - RoomsListTable) / 2, 19, 13, MAGENTA, 0
+  63+ 7531 00          >
+  64+ 7532                  ITEM RoomsListTable.TreeTopLayout, 22, 4, CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  64+ 7532 0C 16 04 05 >        db (RoomsListTable.TreeTopLayout - RoomsListTable) / 2, 22, 4, CYAN, 0
+  64+ 7536 00          >
   65+ 7537
   66+ 7537                  ; Stanza 13 (Out on a Limb)
-  67+ 7537 0D 02 06 03      db 13, 2, 6, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  67+ 753B 00
-  68+ 753C 0D 05 01 04      db 13, 5, 1, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  68+ 7540 00
+  67+ 7537                  ITEM RoomsListTable.OutALimbLayout, 2, 6, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  67+ 7537 0D 02 06 03 >        db (RoomsListTable.OutALimbLayout - RoomsListTable) / 2, 2, 6, MAGENTA, 0
+  67+ 753B 00          >
+  68+ 753C                  ITEM RoomsListTable.OutALimbLayout, 5, 1, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  68+ 753C 0D 05 01 04 >        db (RoomsListTable.OutALimbLayout - RoomsListTable) / 2, 5, 1, GREEN, 0
+  68+ 7540 00          >
   69+ 7541
   70+ 7541                  ; Stanza 15 (I'm sure I've seen this before..)
-  71+ 7541 0F 1F 04 0B      db 15, 31, 4, (BLUE * 8) + MAGENTA, 0    ; Oggetto 1 alla colonna X=31, riga Y=4, Paper = BLUE (1), Ink = MAGENTA (3), (Stato: 0=attivo)
-  71+ 7545 00
+  71+ 7541                  ITEM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout, 31, 4, (BLUE * 8) + MAGENTA, 0    ; Oggetto 1 alla colonna X=31, riga Y=4, Paper = BLUE (1), Ink = MAGENTA (3), (Stato: 0=attivo)
+  71+ 7541 0F 1F 04 0B >        db (RoomsListTable.IAmSureIHaveSeenThiBeforeLayout - RoomsListTable) / 2, 31, 4, (BLUE * 8) + MAGENTA, 0
+  71+ 7545 00          >
   72+ 7546
   73+ 7546                  ; Stanza 17 (Up On The Battlements)
-  74+ 7546 11 1F 04 03      db 17, 31, 4, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  74+ 754A 00
+  74+ 7546                  ITEM RoomsListTable.UpOnTheBattlementsLayout, 31, 4, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  74+ 7546 11 1F 04 03 >        db (RoomsListTable.UpOnTheBattlementsLayout - RoomsListTable) / 2, 31, 4, MAGENTA, 0
+  74+ 754A 00          >
   75+ 754B
   76+ 754B                  ; Stanza 19 (The Forgotten Abbey)
-  77+ 754B 13 02 03 03      db 19, 2, 3, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  77+ 754F 00
+  77+ 754B                  ITEM RoomsListTable.TheForgottenAbbeyLayout, 2, 3, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  77+ 754B 13 02 03 03 >        db (RoomsListTable.TheForgottenAbbeyLayout - RoomsListTable) / 2, 2, 3, MAGENTA, 0
+  77+ 754F 00          >
   78+ 7550
   79+ 7550                  ; Stanza 21 ( Ballroom West )
-  80+ 7550 15 11 0C 03      db 21, 17, 12, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  80+ 7554 00
-  81+ 7555 15 12 0C 04      db 21, 18, 12, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  81+ 7559 00
-  82+ 755A 15 14 0C 05      db 21, 20, 12, CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  82+ 755E 00
-  83+ 755F 15 16 0C 06      db 21, 22, 12, YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  83+ 7563 00
-  84+ 7564 15 17 0C 03      db 21, 23, 12, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  84+ 7568 00
-  85+ 7569 15 19 0C 03      db 21, 25, 12, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  85+ 756D 00
-  86+ 756E 15 1B 0C 05      db 21, 27, 12, CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  86+ 7572 00
+  80+ 7550                  ITEM RoomsListTable.BallRoomWestLayout, 17, 12, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  80+ 7550 15 11 0C 03 >        db (RoomsListTable.BallRoomWestLayout - RoomsListTable) / 2, 17, 12, MAGENTA, 0
+  80+ 7554 00          >
+  81+ 7555                  ITEM RoomsListTable.BallRoomWestLayout, 18, 12, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  81+ 7555 15 12 0C 04 >        db (RoomsListTable.BallRoomWestLayout - RoomsListTable) / 2, 18, 12, GREEN, 0
+  81+ 7559 00          >
+  82+ 755A                  ITEM RoomsListTable.BallRoomWestLayout, 20, 12, CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  82+ 755A 15 14 0C 05 >        db (RoomsListTable.BallRoomWestLayout - RoomsListTable) / 2, 20, 12, CYAN, 0
+  82+ 755E 00          >
+  83+ 755F                  ITEM RoomsListTable.BallRoomWestLayout, 22, 12, YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  83+ 755F 15 16 0C 06 >        db (RoomsListTable.BallRoomWestLayout - RoomsListTable) / 2, 22, 12, YELLOW, 0
+  83+ 7563 00          >
+  84+ 7564                  ITEM RoomsListTable.BallRoomWestLayout, 23, 12, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  84+ 7564 15 17 0C 03 >        db (RoomsListTable.BallRoomWestLayout - RoomsListTable) / 2, 23, 12, MAGENTA, 0
+  84+ 7568 00          >
+  85+ 7569                  ITEM RoomsListTable.BallRoomWestLayout, 25, 12, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  85+ 7569 15 19 0C 03 >        db (RoomsListTable.BallRoomWestLayout - RoomsListTable) / 2, 25, 12, MAGENTA, 0
+  85+ 756D 00          >
+  86+ 756E                  ITEM RoomsListTable.BallRoomWestLayout, 27, 12, CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  86+ 756E 15 1B 0C 05 >        db (RoomsListTable.BallRoomWestLayout - RoomsListTable) / 2, 27, 12, CYAN, 0
+  86+ 7572 00          >
   87+ 7573
   88+ 7573                  ; Stanza 22 (To the Kitchens Main Stairway)
-  89+ 7573 16 02 09 0C      db 22, 2, 9, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  89+ 7577 00
-  90+ 7578 16 09 06 0B      db 22, 9, 6, (BLUE * 8) + MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  90+ 757C 00
+  89+ 7573                  ITEM RoomsListTable.TotheKitchensMainStairwayLayout, 2, 9, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  89+ 7573 16 02 09 0C >        db (RoomsListTable.TotheKitchensMainStairwayLayout - RoomsListTable) / 2, 2, 9, (BLUE * 8) + GREEN, 0
+  89+ 7577 00          >
+  90+ 7578                  ITEM RoomsListTable.TotheKitchensMainStairwayLayout, 9, 6, (BLUE * 8) + MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  90+ 7578 16 09 06 0B >        db (RoomsListTable.TotheKitchensMainStairwayLayout - RoomsListTable) / 2, 9, 6, (BLUE * 8) + MAGENTA, 0
+  90+ 757C 00          >
   91+ 757D
-  92+ 757D                  ; Stanza 22 (Cold Store)
-  93+ 757D 19 03 02 0B      db 25, 3, 2, (BLUE * 8) + MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  93+ 7581 00
-  94+ 7582 19 08 05 0C      db 25, 8, 5, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  94+ 7586 00
-  95+ 7587 19 05 08 0D      db 25, 5, 8, (BLUE * 8) + CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  95+ 758B 00
-  96+ 758C 19 05 0B 0E      db 25, 5, 11, (BLUE * 8) + YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  96+ 7590 00
+  92+ 757D                  ; Stanza 25 (Cold Store)
+  93+ 757D                  ITEM RoomsListTable.ColdStoreLayout, 3, 2, (BLUE * 8) + MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  93+ 757D 19 03 02 0B >        db (RoomsListTable.ColdStoreLayout - RoomsListTable) / 2, 3, 2, (BLUE * 8) + MAGENTA, 0
+  93+ 7581 00          >
+  94+ 7582                  ITEM RoomsListTable.ColdStoreLayout, 8, 5, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  94+ 7582 19 08 05 0C >        db (RoomsListTable.ColdStoreLayout - RoomsListTable) / 2, 8, 5, (BLUE * 8) + GREEN, 0
+  94+ 7586 00          >
+  95+ 7587                  ITEM RoomsListTable.ColdStoreLayout, 5, 8, (BLUE * 8) + CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  95+ 7587 19 05 08 0D >        db (RoomsListTable.ColdStoreLayout - RoomsListTable) / 2, 5, 8, (BLUE * 8) + CYAN, 0
+  95+ 758B 00          >
+  96+ 758C                  ITEM RoomsListTable.ColdStoreLayout, 5, 11, (BLUE * 8) + YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  96+ 758C 19 05 0B 0E >        db (RoomsListTable.ColdStoreLayout - RoomsListTable) / 2, 5, 11, (BLUE * 8) + YELLOW, 0
+  96+ 7590 00          >
   97+ 7591
   98+ 7591                  ; Stanza 27 (The Chapel)
-  99+ 7591 1B 1D 06 03      db 27, 29, 6, MAGENTA, 0            ; Oggetto 3 alla colonna X=24, riga Y=11, YELLOW, (Stato: 0=attivo)
-  99+ 7595 00
+  99+ 7591                  ITEM RoomsListTable.TheChapelLayout, 29, 6, MAGENTA, 0            ; Oggetto 3 alla colonna X=24, riga Y=11, YELLOW, (Stato: 0=attivo)
+  99+ 7591 1B 1D 06 03 >        db (RoomsListTable.TheChapelLayout - RoomsListTable) / 2, 29, 6, MAGENTA, 0
+  99+ 7595 00          >
  100+ 7596
  101+ 7596                  ; Stanza 28 (First Landing)
- 102+ 7596                  ;db 28, 20, 13, YELLOW, 0           ; Oggetto 1 alla colonna X=20, riga Y=13, YELLOW, (Stato: 0=attivo)
+ 102+ 7596                  ;ITEM RoomsListTable.FirstLandingLayout, 20, 13, YELLOW, 0           ; Oggetto 1 alla colonna X=20, riga Y=13, YELLOW, (Stato: 0=attivo)
  103+ 7596
  104+ 7596                  ; Stanza 33 (The Bathroom)
- 105+ 7596 21 17 0D 05      db 33, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
- 105+ 759A 00
+ 105+ 7596                  ITEM RoomsListTable.TheBathroomLayout, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
+ 105+ 7596 21 17 0D 05 >        db (RoomsListTable.TheBathroomLayout - RoomsListTable) / 2, 23, 13, CYAN, 0
+ 105+ 759A 00          >
  106+ 759B
  107+ 759B                  ; Stanza 35 (Master Bedroom)
  108+ 759B
