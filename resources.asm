@@ -46,8 +46,9 @@ RoomsStart:
     include "rooms/ABitOfTree.asm"                  ; ID 36
     include "rooms/Orangery.asm"                    ; ID 37
     include "rooms/PriestsHole.asm"                 ; ID 38
+    include "rooms/EmergencyGenerator.asm"          ; ID 39
+    include "rooms/DrJonesWillNeverBelieveThis.asm" ; ID 40
     include "rooms/UnderTheDrive.asm"               ; ID 45
 
-    org $B200
     include "data/datasprite.asm"
 

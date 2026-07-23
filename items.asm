@@ -688,6 +688,32 @@ DetermineCurrentRoomID:
 
 .not_priestshole:
     ; ---------------------------------------------------------------
+    ; Confronto con EmergencyGeneratorLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, EmergencyGeneratorLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_emergencygenerator
+
+    ld   a, 39               ; Room ID = 39
+    jp   .set_room
+
+.not_emergencygenerator:
+    ; ---------------------------------------------------------------
+    ; Confronto con DrJonesWillNeverBelieveThisLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, DrJonesWillNeverBelieveThisLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_drjoneswillneverbelievethis
+
+    ld   a, 40               ; Room ID = 40
+    jp   .set_room
+
+.not_drjoneswillneverbelievethis:
+    ; ---------------------------------------------------------------
     ; Confronto con UnderTheDrive
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)

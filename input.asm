@@ -205,7 +205,7 @@ PerformRoomChange:
 .next_index_loop:
     ld   a, c
     inc  a
-    cp   39                        ; Stanze principali (0..38), fa il wrap a 0 dopo PriestsHole (38)
+    cp   61                        ; 61 stanze totali (0..60), fa il wrap a 0 dopo l'ultima stanza
     jr   c, .no_wrap
     xor  a
 .no_wrap:
@@ -229,7 +229,13 @@ PerformRoomChange:
     ; Trovato! DE = layout
     ld   (room_ptr), de
     
-    ; 4. Pulisci lo schermo e ricarica la stanza
+    ; Azzera transition_active per far caricare a LoadRoomAndRestart
+    ; le coordinate iniziali reali definite nella stanza (OFFSET_POS_WILLY)
+    xor  a
+    ld   (transition_active), a
+    ld   (velocity_y), a
+    
+    ; Pulisci lo schermo e ricarica la stanza
     ld   hl, ATTR_P
     ld   (hl), $07
     call CLS
@@ -311,7 +317,9 @@ RoomsListTable:
 .ABitOfTreeLayout:                 dw ABitOfTreeLayout                 ; 36
 .OrangeryLayout:                    dw OrangeryLayout                   ; 37
 .PriestsHoleLayout:                dw PriestsHoleLayout                ; 38
-                                   dw 0,0,0,0,0,0                      ; 39-44: padding
+.EmergencyGeneratorLayout:         dw EmergencyGeneratorLayout         ; 39
+.DrJonesWillNeverBelieveThisLayout: dw DrJonesWillNeverBelieveThisLayout ; 40
+                                   dw 0,0,0,0                          ; 41-44: padding
 .UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 45
                                    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60
 

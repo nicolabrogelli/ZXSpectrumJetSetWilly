@@ -43,7 +43,7 @@ GRAVITY:        EQU 1
 PLAYER_MIN_X:    EQU 5
 PLAYER_MAX_X:    EQU 245
 
-items_grid:      EQU $B000
+items_grid:      EQU $CD00   ; Allocato in RAM libera dopo le sprite ($CCEC) per evitare sovrapposizioni
 
 ; Offsets all'interno della struttura dati della Stanza (256 byte)
 OFFSET_BG:       EQU 160
