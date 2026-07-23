@@ -53,8 +53,6 @@ constants.asm|43||0|-1|5|D|PLAYER_MIN_X
 constants.asm|43||0|-1|5|L|,PLAYER_MIN_X,,+equ,+used
 constants.asm|44||0|-1|245|D|PLAYER_MAX_X
 constants.asm|44||0|-1|245|L|,PLAYER_MAX_X,,+equ,+used
-constants.asm|46||0|-1|52480|D|items_grid
-constants.asm|46||0|-1|52480|L|,items_grid,,+equ,+used
 constants.asm|49||0|-1|160|D|OFFSET_BG
 constants.asm|49||0|-1|160|L|,OFFSET_BG,,+equ,+used
 constants.asm|50||0|-1|169|D|OFFSET_FLOOR
@@ -7455,3 +7453,5 @@ data/datasprite.asm|529||0|3|52204|F|VecchiaSprite
 data/datasprite.asm|529||0|3|52204|L|,VecchiaSprite,,+used
 data/datasprite.asm|543||0|3|52332|F|PiedeSprite
 data/datasprite.asm|543||0|3|52332|L|,PiedeSprite,,+used
+resources.asm|55||0|3|52460|F|items_grid
+resources.asm|55||0|3|52460|L|,items_grid,,+used

@@ -52,3 +52,4 @@ RoomsStart:
 
     include "data/datasprite.asm"
 
+items_grid:
