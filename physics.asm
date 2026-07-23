@@ -13,8 +13,12 @@ Phys_CheckSolid:
     push de
     push bc
     
-    ; Se Y >= 128, clampiamo a 127 per poter controllare il pavimento (riga 15)
+    ; Se Y < 0 (sopra lo schermo), non è solida
     ld   a, b
+    bit  7, a
+    jr   nz, .not_solid
+    
+    ; Se Y >= 128, clampiamo a 127 per poter controllare il pavimento (riga 15)
     cp   128
     jr   c, .y_ok
     ld   b, 127
@@ -90,6 +94,8 @@ Phys_ApplyGravity:
     
     ; Aggancia sulla rampa!
     ld   b, e               ; B = ramp_Y
+    bit  7, b
+    jp   nz, .ramp_top_exit ; Se B è negativo (bit 7 = 1), Willy è in cima alla rampa al bordo superiore!
     ld   (PlayerPos), bc    ; Salva la posizione Y allineata alla rampa
     
     ; Gestisci il salto mentre siamo sulla rampa
@@ -438,6 +444,11 @@ Phys_ApplyGravity:
     ; Atterrato sulla rampa!
     pop  bc                 ; BC ha C = PlayerX, B = new_Y
     ld   b, h               ; B = ramp_Y
+    
+    ; Controlla se ramp_Y è negativo (bordo superiore dello schermo)
+    bit  7, b
+    jr   nz, .ramp_top_exit ; Se B è negativo (bit 7 = 1), Willy è in cima alla rampa al bordo superiore!
+    
     ld   (PlayerPos), bc
     ld   a, 1
     ld   (on_ground), a
@@ -447,6 +458,14 @@ Phys_ApplyGravity:
     ld   (jump_dir), a
     ld   (jump_frame), a
     jp   .end
+
+.ramp_top_exit:
+    xor  a
+    ld   (velocity_y), a
+    ld   (jump_start_y), a
+    ld   (jump_dir), a
+    ld   (jump_frame), a
+    jr   .save_pos          ; Esegui controllo transizione di stanza verso l'alto!
     
 .no_ramp_landing:
     pop  bc
@@ -542,7 +561,7 @@ Phys_ApplyGravity:
     jr   z, .no_up_transition
     
     ; C'è una stanza sopra!
-    ld   b, 112            ; Posiziona Willy in fondo alla nuova stanza
+    ld   b, 96             ; Posiziona Willy a Y=96 (sopra il pavimento a riga 14 della nuova stanza)
     jp   TriggerRoomChange
     
 .no_up_transition:
@@ -568,7 +587,7 @@ Phys_ApplyGravity:
     jr   z, .no_down_transition
     
     ; C'è una stanza sotto!
-    ld   b, 0              ; Posiziona Willy in cima alla nuova stanza
+    ld   b, 4              ; Posiziona Willy a Y=4 (in cima alla nuova stanza, evita re-triggering di Y<=0)
     jp   TriggerRoomChange
     
 .no_down_transition:

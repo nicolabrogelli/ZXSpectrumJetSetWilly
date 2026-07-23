@@ -281,8 +281,8 @@ TriggerRoomChange:
     ld   (hl), $07
     call CLS
     
-    ; Pulisci lo stack (rimuove il ritorno alla routine chiamante dal Main_loop)
-    pop  hl
+    ; Reset dello stack pointer prima di riavviare la stanza
+    ld   sp, $fdf0
     jp   LoadRoomAndRestart
 
 RoomsListTable:

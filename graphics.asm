@@ -42,6 +42,7 @@ Gfx_At:
 ; -------------------------------------------------------------------
 Gfx_Ink:
     exx
+    and  $07               ; Garantisci colore 0..7
     ld   b, a
     ld   a, (ATTR_T)
     and  $f8

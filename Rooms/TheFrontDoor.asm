@@ -45,8 +45,8 @@ TheFrontDoorLayout:
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
-	DEFB 64,0,0,0,0,0,0,0
-	DEFB 160,0,0,0,0,0,0,0
+	DEFB 85,0,0,0,0,0,0,0
+	DEFB 170,0,0,0,0,0,0,0
 
 TheFrontDoorTile:
 ;The next 32 bytes are copied to 32896 and specify the room name.

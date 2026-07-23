@@ -44,6 +44,7 @@ Main:
 
     call SetupIM2
 LoadRoomAndRestart:
+    ld   sp, $fdf0             ; Ripristina lo stack pointer per evitare stack drift/reset
     call DetermineCurrentRoomID
     call Phys_LoadRoomSettings
     call Gfx_DrawRoom
@@ -67,18 +68,15 @@ LoadRoomAndRestart:
     ld   de, OFFSET_BORDER_COLOR
     add  hl, de
     ld   a, (hl)
+    and  $07               ; Garantisci un valore valido 0..7
     ld   (room_border_color), a
     out  ($fe), a          ; Imposta colore bordo hardware
     
-    ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
-    add  a, a
-    add  a, a
-    add  a, a              ; Sposta nei bit 3-5
-    ld   b, a
-    ld   a, (BORDCR)
-    and  $c7               ; Pulisce vecchi bit del bordo
-    or   b                 ; Imposta nuovo colore bordo
-    or   $07               ; Imposta ink a bianco
+    ; Aggiorna BORDCR per la ROM in modo sicuro (Paper = border, Ink = white)
+    rlca
+    rlca
+    rlca                   ; Sposta nei bit 3-5
+    or   $07               ; Ink bianco nei bit 0-2
     ld   (BORDCR), a
 
     call Gfx_PrintPlayer
