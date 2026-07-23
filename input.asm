@@ -244,14 +244,10 @@ PerformRoomChange:
 
 TriggerRoomChange:
     ; Input: A = nuovo room ID, C = Willy X, B = Willy Y
-    ld   (PlayerPos), bc
-    ld   (PlayerPosOld), bc
+    cp   61                        ; Max stanze in RoomsListTable (0..60)
+    ret  nc                        ; Se A >= 61, ignora transizione!
     
-    ; Reset velocity_y
-    ld   hl, velocity_y
-    ld   (hl), 0
-    
-    ; Trova l'indirizzo del layout corrispondente da RoomsListTable
+    push bc
     ld   hl, RoomsListTable
     ld   c, a
     ld   b, 0
@@ -261,6 +257,18 @@ TriggerRoomChange:
     ld   e, (hl)
     inc  hl
     ld   d, (hl)                   ; DE = puntatore al layout della nuova stanza
+    
+    ld   a, d
+    or   e                         ; DE == 0?
+    pop  bc
+    ret  z                         ; Se layout è NULL (stanza non creata), ignora transizione!
+    
+    ld   (PlayerPos), bc
+    ld   (PlayerPosOld), bc
+    
+    ; Reset velocity_y
+    ld   hl, velocity_y
+    ld   (hl), 0
     
     ld   (room_ptr), de            ; Aggiorna room_ptr
     

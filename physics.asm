@@ -1254,10 +1254,12 @@ GetRampY:
     
 .dir_left:
     ; Rampa sale a sinistra (up-left)
-    ld   hl, ramp_len
     ld   a, (ramp_col)
-    sub  (hl)
-    inc  a                 ; A = ramp_col - ramp_len + 1
+    inc  a                 ; A = ramp_col + 1
+    ld   hl, ramp_len
+    cp   (hl)              ; Compare (ramp_col + 1) con ramp_len
+    jp   c, .out_of_ramp   ; Se ramp_len > ramp_col + 1, evita underflow!
+    sub  (hl)              ; A = ramp_col - ramp_len + 1
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8

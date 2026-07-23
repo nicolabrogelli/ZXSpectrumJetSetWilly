@@ -80,8 +80,8 @@ TheFrontDoorConveyorData:
 ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
 TheFrontDoorRampData:
     DEFB 0	                                ;Direction (up to the right)
-    DEFW 24546	                            ;Location in the attribute buffer at 24064: (14,7)
-    DEFB 2	                                ;Length
+    DEFW 0	                                ;Location in the attribute buffer at 24064: none
+    DEFB 0	                                ;Length
 
 ;The next byte is copied to 32990 and specifies the border colour.
 TheFrontDoorBorderColor:
