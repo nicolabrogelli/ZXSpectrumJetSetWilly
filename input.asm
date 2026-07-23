@@ -205,7 +205,7 @@ PerformRoomChange:
 .next_index_loop:
     ld   a, c
     inc  a
-    cp   61
+    cp   39                        ; Stanze principali (0..38), fa il wrap a 0 dopo PriestsHole (38)
     jr   c, .no_wrap
     xor  a
 .no_wrap:
@@ -308,7 +308,10 @@ RoomsListTable:
 .TheBathroomLayout:                dw TheBathroomLayout                ; 33
 .TopLandingLayout:                 dw TopLandingLayout                 ; 34
 .MastreBedRoomLayout:              dw MastreBedRoomLayout              ; 35
-                                   dw 0,0,0,0,0,0,0,0,0                ; 36-44: padding
+.ABitOfTreeLayout:                 dw ABitOfTreeLayout                 ; 36
+.OrangeryLayout:                    dw OrangeryLayout                   ; 37
+.PriestsHoleLayout:                dw PriestsHoleLayout                ; 38
+                                   dw 0,0,0,0,0,0                      ; 39-44: padding
 .UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 45
                                    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60
 

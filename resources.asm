@@ -43,6 +43,9 @@ RoomsStart:
     include "rooms/TheBathroom.asm"                 ; ID 33
     include "rooms/TopLanding.asm"                  ; ID 34
     include "rooms/MasterBedRoom.asm"               ; ID 35
+    include "rooms/ABitOfTree.asm"                  ; ID 36
+    include "rooms/Orangery.asm"                    ; ID 37
+    include "rooms/PriestsHole.asm"                 ; ID 38
     include "rooms/UnderTheDrive.asm"               ; ID 45
 
     org $B200

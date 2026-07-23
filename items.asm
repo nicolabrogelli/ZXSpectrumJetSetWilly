@@ -112,6 +112,14 @@ ItemsTable:
 
     ; Stanza 35 (Master Bedroom)
 
+    ; Stanza 36 (A Bit of Tree)
+
+    ; Stanza 37 (Orangery)
+    ITEM RoomsListTable.OrangeryLayout, 27, 11, CYAN, 0
+
+    ; Stanza 38 (Priest's Hole)
+    ITEM RoomsListTable.PriestsHoleLayout, 27, 10, CYAN, 0
+
     db $FF                        ; Fine tabella
 
 ; -------------------------------------------------------------------
@@ -639,7 +647,46 @@ DetermineCurrentRoomID:
     ld   a, 35               ; Room ID = 35
     jp   .set_room
 
-.not_masterbed
+.not_masterbed:
+    ; ---------------------------------------------------------------
+    ; Confronto con ABitOfTreeLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, ABitOfTreeLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_abitoftree
+
+    ld   a, 36               ; Room ID = 36
+    jp   .set_room
+
+.not_abitoftree:
+    ; ---------------------------------------------------------------
+    ; Confronto con OrangeryLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, OrangeryLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_orangery
+
+    ld   a, 37               ; Room ID = 37
+    jp   .set_room
+
+.not_orangery:
+    ; ---------------------------------------------------------------
+    ; Confronto con PriestsHoleLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, PriestsHoleLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_priestshole
+
+    ld   a, 38               ; Room ID = 38
+    jp   .set_room
+
+.not_priestshole:
     ; ---------------------------------------------------------------
     ; Confronto con UnderTheDrive
     ; ---------------------------------------------------------------
