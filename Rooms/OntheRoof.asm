@@ -114,6 +114,6 @@ OntheRoofEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 OntheRoofPosWilly:
-    db 200, 50                     ; Posizione di Willy
+    db 200, 101                     ; Posizione di Willy
 OntheRoofEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

@@ -124,7 +124,7 @@ BallRoomWestEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 BallRoomWestPosWilly:
-    db 50, 90                     ; Posizione di Willy
+    db 50, 95                     ; Posizione di Willy
     
 BallRoomWestEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

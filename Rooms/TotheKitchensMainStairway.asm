@@ -124,7 +124,7 @@ TotheKitchensMainStairwayEnemy8:
     DEFB $80, 28, 96, 48, 192
 
 TotheKitchensMainStairwayPosWilly:
-    db 200, 90                     ; Posizione di Willy
+    db 100, 95                     ; Posizione di Willy
     
 TotheKitchensMainStairwayEnemyColors5_8:
     DEFB GREEN, YELLOW, MAGENTA, WHITE     ; Colori per nemici 5-8

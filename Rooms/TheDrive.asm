@@ -124,7 +124,7 @@ TheDriveEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheDrivePosWilly:
-    db 200, 101                     ; Posizione di Willy
+    db 200, 104                     ; Posizione di Willy
 
 TheDriveEnemyColors5_8:
     DEFB CYAN, NONE, NONE, NONE     ; Colori per nemici 5-8

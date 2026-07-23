@@ -8722,7 +8722,7 @@
  123++8635 00
  124++8636
  125++8636              TheBridgePosWilly:
- 126++8636 88 4C            db 136, 76                     ; Posizione di Willy
+ 126++8636 C8 68            db 200, 104                     ; Posizione di Willy
  127++8638
  128++8638              TheBridgeEnemyColors5_8:
  129++8638 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -8900,7 +8900,7 @@
  124++8753 00
  125++8754
  126++8754              UnderTheMegaTreePosWilly:
- 127++8754 C8 65            db 200, 101                     ; Posizione di Willy
+ 127++8754 C8 68            db 200, 104                     ; Posizione di Willy
  128++8756
  129++8756              UnderTheMegaTreeEnemyColors5_8:
  130++8756 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -9077,7 +9077,7 @@
  124++8871 00
  125++8872
  126++8872              AtTheFootTheMegaTreePosWilly:
- 127++8872 C8 65            db 200, 101                     ; Posizione di Willy
+ 127++8872 C8 68            db 200, 104                     ; Posizione di Willy
  128++8874
  129++8874              AtTheFootTheMegaTreeEnemyColors5_8:
  130++8874 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -9254,7 +9254,7 @@
  124++898F 00
  125++8990
  126++8990              TheDrivePosWilly:
- 127++8990 C8 65            db 200, 101                     ; Posizione di Willy
+ 127++8990 C8 68            db 200, 104                     ; Posizione di Willy
  128++8992
  129++8992              TheDriveEnemyColors5_8:
  130++8992 05 00 00 00      DEFB CYAN, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -9431,7 +9431,7 @@
  124++8AAD 00
  125++8AAE
  126++8AAE              TheSecurityGuardPosWilly:
- 127++8AAE C8 65            db 200, 101                     ; Posizione di Willy
+ 127++8AAE C8 68            db 200, 104                     ; Posizione di Willy
  128++8AB0
  129++8AB0              TheSecurityGuardEnemyColors5_8:
  130++8AB0 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -9774,7 +9774,7 @@
  124++8CE9 00
  125++8CEA
  126++8CEA              CuckoosNestPosWilly:
- 127++8CEA 1E 50            db 30, 80                     ; Posizione di Willy
+ 127++8CEA 1E 58            db 30, 88                     ; Posizione di Willy
  128++8CEC
  129++8CEC              CuckoosNestEnemyColors5_8:
  130++8CEC 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -9951,7 +9951,7 @@
  124++8E07 00
  125++8E08
  126++8E08              InsideTheMegaTrunkPosWilly:
- 127++8E08 C8 55            db 200, 85                     ; Posizione di Willy
+ 127++8E08 AA 58            db 170, 88                     ; Posizione di Willy
  128++8E0A
  129++8E0A              InsideTheMegaTrunkEnemyColors5_8:
  130++8E0A 05 04 06 00      DEFB CYAN, GREEN, YELLOW, NONE     ; Colori per nemici 5-8
@@ -10128,7 +10128,7 @@
  124++8F25 00
  125++8F26
  126++8F26              OnABranchOverTheDrivePosWilly:
- 127++8F26 C8 1E            db 200, 30                     ; Posizione di Willy
+ 127++8F26 C8 28            db 200, 40                   ; Posizione di Willy
  128++8F28              OnABranchOverTheDriveEnemyColors5_8:
  129++8F28 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/OnABranchOverTheDrive.asm
@@ -10304,7 +10304,7 @@
  124++9043 00
  125++9044
  126++9044              TheFrontDoorPosWilly:
- 127++9044 32 14            db 50, 20                     ; Posizione di Willy
+ 127++9044 32 18            db 50, 24                     ; Posizione di Willy
  128++9046              TheFrontDoorEnemyColors5_8:
  129++9046 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/TheFrontDoor.asm
@@ -10657,7 +10657,7 @@
  124++927F 00
  125++9280
  126++9280              TreeTopPosWilly:
- 127++9280 0A 1E            db 10, 30                     ; Posizione di Willy
+ 127++9280 0A 50            db 10, 80                     ; Posizione di Willy
  128++9282              TreeTopEnemyColors5_8:
  129++9282 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/TreeTop.asm
@@ -10824,7 +10824,7 @@
  115++939D 00
  116++939E
  117++939E              OutALimbPosWilly:
- 118++939E C8 32            db 200, 50                     ; Posizione di Willy
+ 118++939E C8 30            db 200, 48                     ; Posizione di Willy
  119++93A0              OutALimbEnemyColors5_8:
  120++93A0 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/OutALimb.asm
@@ -10991,7 +10991,7 @@
  115++94BB 00
  116++94BC
  117++94BC              RescueEsmereldaPosWilly:
- 118++94BC C8 32            db 200, 50                     ; Posizione di Willy
+ 118++94BC C8 38            db 200, 56                     ; Posizione di Willy
  119++94BE              RescueEsmereldaEnemyColors5_8:
  120++94BE 02 03 04 07      DEFB 2, 3, 4, 7     ; Colori per nemici 5-8
 # file closed: rooms/RescueEsmerelda.asm
@@ -11158,7 +11158,7 @@
  115++95D9 00
  116++95DA
  117++95DA              IAmSureIHaveSeenThiBeforePosWilly:
- 118++95DA E6 32            db 230, 50                     ; Posizione di Willy
+ 118++95DA E6 38            db 230, 56                     ; Posizione di Willy
  119++95DC              IAmSureIHaveSeenThiBeforeEnemyColors5_8:
  120++95DC 05 00 00 00      DEFB CYAN, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/IAmSureIHaveSeenThiBefore.asm
@@ -11324,7 +11324,7 @@
  114++96F7 00
  115++96F8
  116++96F8              WeMustPerformQuirkafleegPosWilly:
- 117++96F8 E6 32            db 230, 50                     ; Posizione di Willy
+ 117++96F8 E6 38            db 230, 56                     ; Posizione di Willy
  118++96FA              WeMustPerformQuirkafleegEnemyColors5_8:
  119++96FA 02 03 04 07      DEFB 2, 3, 4, 7     ; Colori per nemici 5-8
 # file closed: rooms/WeMustPerformQuirkafleeg.asm
@@ -11490,7 +11490,7 @@
  114++9815 00
  115++9816
  116++9816              UpOnTheBattlementsPosWilly:
- 117++9816 E6 32            db 230, 50                     ; Posizione di Willy
+ 117++9816 E6 38            db 230, 56                     ; Posizione di Willy
  118++9818              UpOnTheBattlementsEnemyColors5_8:
  119++9818 02 03 04 07      DEFB 2, 3, 4, 7     ; Colori per nemici 5-8
 # file closed: rooms/UpOnTheBattlements.asm
@@ -11656,7 +11656,7 @@
  114++9933 00
  115++9934
  116++9934              OntheRoofPosWilly:
- 117++9934 C8 32            db 200, 50                     ; Posizione di Willy
+ 117++9934 C8 65            db 200, 101                     ; Posizione di Willy
  118++9936              OntheRoofEnemyColors5_8:
  119++9936 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/OntheRoof.asm
@@ -11823,7 +11823,7 @@
  115++9A51 F0
  116++9A52
  117++9A52              TheForgottenAbbeyPosWilly:
- 118++9A52 C8 32            db 200, 50                     ; Posizione di Willy
+ 118++9A52 C8 68            db 200, 104                     ; Posizione di Willy
  119++9A54              TheForgottenAbbeyEnemyColors5_8:
  120++9A54 06 01 04 02      DEFB YELLOW, BLUE, GREEN, RED     ; Colori per nemici 5-8
 # file closed: rooms/TheForgottenAbbey.asm
@@ -11999,7 +11999,7 @@
  124++9B6F 00
  125++9B70
  126++9B70              BallRoomEastPosWilly:
- 127++9B70 C8 55            db 200, 85                     ; Posizione di Willy
+ 127++9B70 C8 5F            db 200, 95                     ; Posizione di Willy
  128++9B72
  129++9B72              BallRoomEastEnemyColors5_8:
  130++9B72 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -12176,7 +12176,7 @@
  124++9C8D 00
  125++9C8E
  126++9C8E              BallRoomWestPosWilly:
- 127++9C8E 32 5A            db 50, 90                     ; Posizione di Willy
+ 127++9C8E 32 5F            db 50, 95                     ; Posizione di Willy
  128++9C90
  129++9C90              BallRoomWestEnemyColors5_8:
  130++9C90 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -12353,7 +12353,7 @@
  124++9DAB C0
  125++9DAC
  126++9DAC              TotheKitchensMainStairwayPosWilly:
- 127++9DAC C8 5A            db 200, 90                     ; Posizione di Willy
+ 127++9DAC 64 5F            db 100, 95                     ; Posizione di Willy
  128++9DAE
  129++9DAE              TotheKitchensMainStairwayEnemyColors5_8:
  130++9DAE 04 06 03 07      DEFB GREEN, YELLOW, MAGENTA, WHITE     ; Colori per nemici 5-8
@@ -12530,7 +12530,7 @@
  124++9EC9 00
  125++9ECA
  126++9ECA              TheKitchenPosWilly:
- 127++9ECA C8 5A            db 200, 90                     ; Posizione di Willy
+ 127++9ECA 64 68            db 100, 104                     ; Posizione di Willy
  128++9ECC
  129++9ECC              TheKitchenEnemyColors5_8:
  130++9ECC 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -12707,7 +12707,7 @@
  124++9FE7 00
  125++9FE8
  126++9FE8              WestOfKitchenPosWilly:
- 127++9FE8 C8 65            db 200, 101                     ; Posizione di Willy
+ 127++9FE8 C8 68            db 200, 104                     ; Posizione di Willy
  128++9FEA
  129++9FEA              WestOfKitchenEnemyColors5_8:
  130++9FEA 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE               ; Colori per nemici 5-8
@@ -12884,7 +12884,7 @@
  124++A105 00
  125++A106
  126++A106              ColdStorePosWilly:
- 127++A106 C8 65            db 200, 101                     ; Posizione di Willy
+ 127++A106 C8 68            db 200, 104                     ; Posizione di Willy
  128++A108
  129++A108              ColdStoreEnemyColors5_8:
  130++A108 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -13061,7 +13061,7 @@
  124++A223 00
  125++A224
  126++A224              EastWallBasePosWilly:
- 127++A224 14 14            db 20, 20                     ; Posizione di Willy
+ 127++A224 14 1B            db 20, 27                     ; Posizione di Willy
  128++A226
  129++A226              EastWallBaseEnemyColors5_8:
  130++A226 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -13592,7 +13592,7 @@
  124++A57D 00
  125++A57E
  126++A57E              TheNightmareRoomPosWilly:
- 127++A57E C8 65            db 200, 101                     ; Posizione di Willy
+ 127++A57E C8 68            db 200, 104                     ; Posizione di Willy
  128++A580
  129++A580              TheNightmareRoomEnemyColors5_8:
  130++A580 05 03 00 00      DEFB CYAN, MAGENTA, NONE, NONE     ; Colori per nemici 5-8
@@ -13769,7 +13769,7 @@
  124++A69B 00
  125++A69C
  126++A69C              TheBanyanTreePosWilly:
- 127++A69C DC 50            db 220, 80                     ; Posizione di Willy
+ 127++A69C DC 4E            db 220, 78                     ; Posizione di Willy
  128++A69E
  129++A69E              TheBanyanTreeEnemyColors5_8:
  130++A69E 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -13946,7 +13946,7 @@
  124++A7B9 00
  125++A7BA
  126++A7BA              SwimmingPoolPosWilly:
- 127++A7BA C8 65            db 200, 101                     ; Posizione di Willy
+ 127++A7BA E1 50            db 225, 80                     ; Posizione di Willy
  128++A7BC
  129++A7BC              SwimmingPoolEnemyColors5_8:
  130++A7BC 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -14123,7 +14123,7 @@
  124++A8D7 00
  125++A8D8
  126++A8D8              HalfwayUpTheEastWallPosWilly:
- 127++A8D8 19 1E            db 25, 30                     ; Posizione di Willy
+ 127++A8D8 19 23            db 25, 35                     ; Posizione di Willy
  128++A8DA
  129++A8DA              HalfwayUpTheEastWallEnemyColors5_8:
  130++A8DA 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -14295,7 +14295,7 @@
  119++A9F5 00
  120++A9F6
  121++A9F6              TheBathroomPosWilly:
- 122++A9F6 C8 5A            db 200, 90                     ; Posizione di Willy
+ 122++A9F6 C8 68            db 200, 104                     ; Posizione di Willy
  123++A9F8              TheBathroomEnemyColors5_8:
  124++A9F8 02 03 04 07      DEFB 2, 3, 4, 7     ; Colori per nemici 5-8
 # file closed: rooms/TheBathroom.asm
@@ -14471,7 +14471,7 @@
  124++AB13 00
  125++AB14
  126++AB14              TopLandingPosWilly:
- 127++AB14 C8 65            db 200, 101                     ; Posizione di Willy
+ 127++AB14 C8 68            db 200, 104                     ; Posizione di Willy
  128++AB16
  129++AB16              TopLandingEnemyColors5_8:
  130++AB16 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -14645,7 +14645,7 @@
  121++AC31 00
  122++AC32
  123++AC32              MastreBedRoomPosWilly:
- 124++AC32 C8 65            db 200, 101                   ; Posizione di Willy
+ 124++AC32 C8 68            db 200, 104                   ; Posizione di Willy
  125++AC34              MastreBedRoomEnemyColors5_8:
  126++AC34 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
 # file closed: rooms/MasterBedRoom.asm
@@ -14821,7 +14821,7 @@
  124++AD4F 00
  125++AD50
  126++AD50              ABitOfTreePosWilly:
- 127++AD50 19 50            db 25, 80                     ; Posizione di Willy
+ 127++AD50 19 41            db 25, 65                     ; Posizione di Willy
  128++AD52
  129++AD52              ABitOfTreeEnemyColors5_8:
  130++AD52 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -14998,7 +14998,7 @@
  124++AE6D 00
  125++AE6E
  126++AE6E              OrangeryPosWilly:
- 127++AE6E 19 50            db 25, 80                     ; Posizione di Willy
+ 127++AE6E 05 30            db 5, 48                     ; Posizione di Willy
  128++AE70
  129++AE70              OrangeryEnemyColors5_8:
  130++AE70 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -15175,7 +15175,7 @@
  124++AF8B 00
  125++AF8C
  126++AF8C              PriestsHolePosWilly:
- 127++AF8C 19 1E            db 25, 30                     ; Posizione di Willy
+ 127++AF8C 19 19            db 25, 25                     ; Posizione di Willy
  128++AF8E
  129++AF8E              PriestsHoleEnemyColors5_8:
  130++AF8E 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -15276,9 +15276,9 @@
   63++B04C 15
   64++B04D
   65++B04D              EmergencyGeneratorNasty:
-  66++B04D 0A 18 3C 7E      DEFB 10,24,60,126,24,24,0,24,0  ; Nasty (Lightning/Hazard graphic)
-  66++B051 18 18 00 18
-  66++B055 00
+  66++B04D 0D FF 3F 03      DEFB 13,255,63,3,31,127,31,3,63  ; Nasty (Lightning/Hazard graphic)
+  66++B051 1F 7F 1F 03
+  66++B055 3F
   67++B056
   68++B056              EmergencyGeneratorRamp:
   69++B056 0F 03 00 0C      DEFB 15,3,0,12,0,48,0,192,0          ; Ramp Solid
@@ -15352,7 +15352,7 @@
  124++B0A9 00
  125++B0AA
  126++B0AA              EmergencyGeneratorPosWilly:
- 127++B0AA 32 50            db 50, 80                     ; Posizione sicura di Willy sul pavimento
+ 127++B0AA 14 68            db 20, 104                     ; Posizione sicura di Willy sul pavimento
  128++B0AC
  129++B0AC              EmergencyGeneratorEnemyColors5_8:
  130++B0AC 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -15453,9 +15453,9 @@
   63++B16A 88
   64++B16B
   65++B16B              DrJonesWillNeverBelieveThisNasty:
-  66++B16B 0A 18 3C 7E      DEFB 10,24,60,126,24,24,0,24,0  ; Nasty (Hazard graphic)
-  66++B16F 18 18 00 18
-  66++B173 00
+  66++B16B 43 01 04 22      DEFB 67,1,4,34,8,17,68,34,136  ; Nasty (Hazard graphic)
+  66++B16F 08 11 44 22
+  66++B173 88
   67++B174
   68++B174              DrJonesWillNeverBelieveThisRamp:
   69++B174 05 40 90 24      DEFB 5,64,144,36,72,18,36,9,2          ; Ramp Solid
@@ -15529,7 +15529,7 @@
  124++B1C7 00
  125++B1C8
  126++B1C8              DrJonesWillNeverBelieveThisPosWilly:
- 127++B1C8 32 50            db 50, 80                     ; Posizione sicura di Willy sul pavimento
+ 127++B1C8 14 68            db 20, 104                     ; Posizione sicura di Willy sul pavimento
  128++B1CA
  129++B1CA              DrJonesWillNeverBelieveThisEnemyColors5_8:
  130++B1CA 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

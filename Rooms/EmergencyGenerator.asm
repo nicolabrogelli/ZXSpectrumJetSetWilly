@@ -63,7 +63,7 @@ EmergencyGeneratorWall:
     DEFB 51,191,21,0,81,251,81,0,21  ; Wall Solid
 
 EmergencyGeneratorNasty:
-    DEFB 10,24,60,126,24,24,0,24,0  ; Nasty (Lightning/Hazard graphic)
+    DEFB 13,255,63,3,31,127,31,3,63  ; Nasty (Lightning/Hazard graphic)
 
 EmergencyGeneratorRamp:
     DEFB 15,3,0,12,0,48,0,192,0          ; Ramp Solid
@@ -124,7 +124,7 @@ EmergencyGeneratorEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 EmergencyGeneratorPosWilly:
-    db 50, 80                     ; Posizione sicura di Willy sul pavimento
+    db 20, 104                     ; Posizione sicura di Willy sul pavimento
     
 EmergencyGeneratorEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

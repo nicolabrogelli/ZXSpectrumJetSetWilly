@@ -124,7 +124,7 @@ TheBanyanTreeEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheBanyanTreePosWilly:
-    db 220, 80                     ; Posizione di Willy
+    db 220, 78                     ; Posizione di Willy
     
 TheBanyanTreeEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

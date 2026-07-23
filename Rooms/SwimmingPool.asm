@@ -124,7 +124,7 @@ SwimmingPoolEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 SwimmingPoolPosWilly:
-    db 200, 101                     ; Posizione di Willy
+    db 225, 80                     ; Posizione di Willy
     
 SwimmingPoolEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

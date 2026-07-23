@@ -124,7 +124,7 @@ ABitOfTreeEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 ABitOfTreePosWilly:
-    db 25, 80                     ; Posizione di Willy
+    db 25, 65                     ; Posizione di Willy
     
 ABitOfTreeEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

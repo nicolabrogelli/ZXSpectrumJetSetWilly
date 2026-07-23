@@ -124,7 +124,7 @@ PriestsHoleEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 PriestsHolePosWilly:
-    db 25, 30                     ; Posizione di Willy
+    db 25, 25                     ; Posizione di Willy
     
 PriestsHoleEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

@@ -124,7 +124,7 @@ EastWallBaseEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 EastWallBasePosWilly:
-    db 20, 20                     ; Posizione di Willy
+    db 20, 27                     ; Posizione di Willy
     
 EastWallBaseEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

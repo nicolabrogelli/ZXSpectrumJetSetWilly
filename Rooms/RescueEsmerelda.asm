@@ -115,6 +115,6 @@ RescueEsmereldaEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 RescueEsmereldaPosWilly:
-    db 200, 50                     ; Posizione di Willy
+    db 200, 56                     ; Posizione di Willy
 RescueEsmereldaEnemyColors5_8:
     DEFB 2, 3, 4, 7     ; Colori per nemici 5-8

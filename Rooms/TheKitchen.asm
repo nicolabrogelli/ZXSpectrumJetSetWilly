@@ -124,7 +124,7 @@ TheKitchenEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheKitchenPosWilly:
-    db 200, 90                     ; Posizione di Willy
+    db 100, 104                     ; Posizione di Willy
     
 TheKitchenEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

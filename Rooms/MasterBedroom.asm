@@ -121,6 +121,6 @@ MastreBedRoomEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 MastreBedRoomPosWilly:
-    db 200, 101                   ; Posizione di Willy
+    db 200, 104                   ; Posizione di Willy
 MastreBedRoomEnemyColors5_8:
     DEFB 2, 3, 4, 7               ; Colori per nemici 5-8

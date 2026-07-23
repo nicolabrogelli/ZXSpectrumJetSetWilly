@@ -124,6 +124,6 @@ TheFrontDoorEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheFrontDoorPosWilly:
-    db 50, 20                     ; Posizione di Willy
+    db 50, 24                     ; Posizione di Willy
 TheFrontDoorEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

@@ -115,6 +115,6 @@ IAmSureIHaveSeenThiBeforeEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 IAmSureIHaveSeenThiBeforePosWilly:
-    db 230, 50                     ; Posizione di Willy
+    db 230, 56                     ; Posizione di Willy
 IAmSureIHaveSeenThiBeforeEnemyColors5_8:
     DEFB CYAN, NONE, NONE, NONE     ; Colori per nemici 5-8

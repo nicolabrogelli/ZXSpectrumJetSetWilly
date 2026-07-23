@@ -123,7 +123,7 @@ TheBridgeEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheBridgePosWilly:
-    db 136, 76                     ; Posizione di Willy
+    db 200, 104                     ; Posizione di Willy
 
 TheBridgeEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

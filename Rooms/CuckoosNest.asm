@@ -124,7 +124,7 @@ CuckoosNestEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 CuckoosNestPosWilly:
-    db 30, 80                     ; Posizione di Willy
+    db 30, 88                     ; Posizione di Willy
 
 CuckoosNestEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

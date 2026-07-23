@@ -63,7 +63,7 @@ DrJonesWillNeverBelieveThisWall:
     DEFB 31,17,68,34,136,17,68,34,136  ; Wall Solid
 
 DrJonesWillNeverBelieveThisNasty:
-    DEFB 10,24,60,126,24,24,0,24,0  ; Nasty (Hazard graphic)
+    DEFB 67,1,4,34,8,17,68,34,136  ; Nasty (Hazard graphic)
 
 DrJonesWillNeverBelieveThisRamp:
     DEFB 5,64,144,36,72,18,36,9,2          ; Ramp Solid
@@ -124,7 +124,7 @@ DrJonesWillNeverBelieveThisEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 DrJonesWillNeverBelieveThisPosWilly:
-    db 50, 80                     ; Posizione sicura di Willy sul pavimento
+    db 20, 104                     ; Posizione sicura di Willy sul pavimento
     
 DrJonesWillNeverBelieveThisEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

@@ -115,6 +115,6 @@ OutALimbEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 OutALimbPosWilly:
-    db 200, 50                     ; Posizione di Willy
+    db 200, 48                     ; Posizione di Willy
 OutALimbEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

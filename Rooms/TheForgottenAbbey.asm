@@ -115,6 +115,6 @@ TheForgottenAbbeyEnemy8:
     DEFB $80, 22, 184, 104, 240         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 
 TheForgottenAbbeyPosWilly:
-    db 200, 50                     ; Posizione di Willy
+    db 200, 104                     ; Posizione di Willy
 TheForgottenAbbeyEnemyColors5_8:
     DEFB YELLOW, BLUE, GREEN, RED     ; Colori per nemici 5-8

@@ -124,7 +124,7 @@ InsideTheMegaTrunkEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 InsideTheMegaTrunkPosWilly:
-    db 200, 85                     ; Posizione di Willy
+    db 170, 88                     ; Posizione di Willy
 
 InsideTheMegaTrunkEnemyColors5_8:
     DEFB CYAN, GREEN, YELLOW, NONE     ; Colori per nemici 5-8

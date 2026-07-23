@@ -124,7 +124,7 @@ OrangeryEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 OrangeryPosWilly:
-    db 25, 80                     ; Posizione di Willy
+    db 5, 48                     ; Posizione di Willy
     
 OrangeryEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
