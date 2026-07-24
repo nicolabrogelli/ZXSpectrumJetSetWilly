@@ -89,7 +89,7 @@ NomenLuniBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 NomenLuniReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB YELLOW, GREEN, CYAN, YELLOW     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 NomenLuniItem:
@@ -107,13 +107,13 @@ NomenLuniUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 NomenLuniEnemy1:
-    DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 2, 0, 16, 80       
 NomenLuniEnemy2:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 3, 144, 24, 176  
 NomenLuniEnemy3:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $C0, 15, 128, 0, 64  
 NomenLuniEnemy4:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $C0, 7, 176, 56, 96
 NomenLuniEnemy5:
     DEFB 0, 0, 0, 0, 0
 NomenLuniEnemy6:

@@ -16892,7 +16892,7 @@
   89++BA7F
   90++BA7F              ;The next two bytes are copied to 32991, but are not used.
   91++BA7F              NomenLuniReserved:
-  92++BA7F 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+  92++BA7F 06 04 05 06      DEFB YELLOW, GREEN, CYAN, YELLOW     ; Enemy colors
   93++BA83
   94++BA83              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++BA83              NomenLuniItem:
@@ -16911,17 +16911,17 @@
  107++BA90
  108++BA90              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++BA90              NomenLuniEnemy1:
- 110++BA90 80 16 C0 40      DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
- 110++BA94 F0
+ 110++BA90 80 02 00 10      DEFB $80, 2, 0, 16, 80
+ 110++BA94 50
  111++BA95              NomenLuniEnemy2:
- 112++BA95 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 112++BA99 00
+ 112++BA95 80 03 90 18      DEFB $80, 3, 144, 24, 176
+ 112++BA99 B0
  113++BA9A              NomenLuniEnemy3:
- 114++BA9A 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 114++BA9E 00
+ 114++BA9A C0 0F 80 00      DEFB $C0, 15, 128, 0, 64
+ 114++BA9E 40
  115++BA9F              NomenLuniEnemy4:
- 116++BA9F 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 116++BAA3 00
+ 116++BA9F C0 07 B0 38      DEFB $C0, 7, 176, 56, 96
+ 116++BAA3 60
  117++BAA4              NomenLuniEnemy5:
  118++BAA4 00 00 00 00      DEFB 0, 0, 0, 0, 0
  118++BAA8 00
@@ -17069,7 +17069,7 @@
   89++BB9D
   90++BB9D              ;The next two bytes are copied to 32991, but are not used.
   91++BB9D              TheWineCellarReserved:
-  92++BB9D 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+  92++BB9D 03 06 04 03      DEFB MAGENTA, YELLOW, GREEN, MAGENTA     ; Enemy colors
   93++BBA1
   94++BBA1              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++BBA1              TheWineCellarItem:
@@ -17088,17 +17088,17 @@
  107++BBAE
  108++BBAE              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++BBAE              TheWineCellarEnemy1:
- 110++BBAE 80 16 C0 40      DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
- 110++BBB2 F0
+ 110++BBAE 80 16 00 18      DEFB $80, 22, 0, 24, 216         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++BBB2 D8
  111++BBB3              TheWineCellarEnemy2:
- 112++BBB3 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 112++BBB7 00
+ 112++BBB3 80 16 20 30      DEFB $80, 22, 32, 48, 216
+ 112++BBB7 D8
  113++BBB8              TheWineCellarEnemy3:
- 114++BBB8 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 114++BBBC 00
+ 114++BBB8 80 16 10 48      DEFB $80, 22, 16, 72, 216
+ 114++BBBC D8
  115++BBBD              TheWineCellarEnemy4:
- 116++BBBD 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 116++BBC1 00
+ 116++BBBD 80 01 38 68      DEFB $80, 1, 56, 104, 176
+ 116++BBC1 B0
  117++BBC2              TheWineCellarEnemy5:
  118++BBC2 00 00 00 00      DEFB 0, 0, 0, 0, 0
  118++BBC6 00
