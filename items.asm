@@ -885,10 +885,23 @@ DetermineCurrentRoomID:
     ld   de, WatchTowerLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_watchtower
 
     ld   a, 50               ; Room ID = 50
     jp   .set_room
+
+.not_watchtower:
+    ; ---------------------------------------------------------------
+    ; Confronto con TheWineCellar
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, ToolShedLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+
+    ld   a, 51               ; Room ID = 51
+    jp   .set_room    
 
 
 .unknown:

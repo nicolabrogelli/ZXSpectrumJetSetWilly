@@ -107,13 +107,13 @@ ToolShedUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 ToolShedEnemy1:
-    DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, 0, 32, 0, 64         
 ToolShedEnemy2:
     DEFB $C0, 6, 104, 48, 96 
 ToolShedEnemy3:
     DEFB $80, 13, 120, 72, 184 
 ToolShedEnemy4:
-    DEFB $C0, 41, 200, 32, 80 
+    DEFB $0, 0, 0, 0, 0
 ToolShedEnemy5:
     DEFB 0, 0, 0, 0, 0
 ToolShedEnemy6:
