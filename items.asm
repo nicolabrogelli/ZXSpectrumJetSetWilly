@@ -812,14 +812,28 @@ DetermineCurrentRoomID:
     ; ---------------------------------------------------------------
     ; Confronto con TreeRootLayout
     ; ---------------------------------------------------------------
-;    ld   hl, (room_ptr)
-;    ld   de, TreeRootLayout
-;    or   a
-;    sbc  hl, de
-;    jr   nz, .unknown
-;
-;    ld   a, 46               ; Room ID = 46
-;    jp   .set_room
+    ld   hl, (room_ptr)
+    ld   de, TreeRootLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_theroout
+
+    ld   a, 46               ; Room ID = 46
+    jp   .set_room
+
+.not_theroout:
+    ; ---------------------------------------------------------------
+    ; Confronto con NotUsedLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, NotUsedLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+
+    ld   a, 47               ; Room ID = 47
+    jp   .set_room
+
 
 .unknown:
 
