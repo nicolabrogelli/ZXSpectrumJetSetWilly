@@ -122,6 +122,9 @@ ItemsTable:
     ; Stanza 38 (Priest's Hole)
     ITEM RoomsListTable.PriestsHoleLayout, 9, 2, MAGENTA, 0
 
+    ; Stanza 40 (Dr Jones will never believe this)
+    ITEM RoomsListTable.DrJonesWillNeverBelieveThisLayout, 19, 7, MAGENTA, 0
+
     db $FF                        ; Fine tabella
 
 ; -------------------------------------------------------------------
