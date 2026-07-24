@@ -4,7 +4,7 @@
 ; Impostazioni e flag di configurazione a tempo di compilazione per Jet Set Willy.
 ; Ogni flag può essere abilitato (1) o disabilitato (0).
 ; Possono anche essere sovrascritti via riga di comando con sjasmplus 
-; (es. -DENABLE_MUSIC=0 -DENABLE_GUARDIAN_COLLISION_DEATH=0).
+; (es. -DENABLE_MUSIC=0 -DENABLE_ROOM_SKIP_KEYS=0).
 ;===========================================================================
 
 ; --- Musica di sottofondo ---
@@ -32,5 +32,12 @@ ENABLE_NASTY_COLLISION_DEATH EQU 0
 ; 1 = Abilita l'animazione camminante per le icone delle vite in basso a schermo
 ; 0 = Icone delle vite statiche
     IFNDEF ENABLE_ANIMATE_LIVES
-ENABLE_ANIMATE_LIVES EQU 1
+ENABLE_ANIMATE_LIVES EQU 0
+    ENDIF
+
+; --- Tasti di navigazione rapida tra le stanze (Q / A) ---
+; 1 = Abilita i tasti Q (stanza successiva) e A (stanza precedente) per scorrere tra le stanze
+; 0 = Disabilita i tasti Q e A
+    IFNDEF ENABLE_ROOM_SKIP_KEYS
+ENABLE_ROOM_SKIP_KEYS EQU 1
     ENDIF

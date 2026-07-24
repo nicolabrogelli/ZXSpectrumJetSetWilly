@@ -26,8 +26,8 @@ jump_start_y:   db $00
 jump_dir:       db $00
 jump_frame:     db $00
 current_input_dir: db $00
-q_prev:         db $00
-a_prev:         db $00
+q_prev:         db $01
+a_prev:         db $01
 room_jump_strength:  db 6
 room_gravity_preset: db 1
 

@@ -25,6 +25,7 @@ Input_CheckCtrl:
     xor  a
     ld   (current_input_dir), a
 
+    IF ENABLE_ROOM_SKIP_KEYS != 0
     ; ── Sezione 1a: tasto Q (cambio stanza AVANTI) ─────────────────────
     ;
     ; Porta $FB → riga Q, W, E, R, T. Bit 0 = Q.
@@ -86,6 +87,7 @@ Input_CheckCtrl:
     ld   (a_prev), a            ; A rilasciato → azzera debounce
 
 .a_handled:
+    ENDIF
 
     ; ── Sezione 2: movimento (sinistra / destra) ────────────────────
     ;
@@ -202,6 +204,7 @@ checkCtrl_jump:
     ld   (current_input_dir), a
     ret
 
+    IF ENABLE_ROOM_SKIP_KEYS != 0
 ; -------------------------------------------------------------------
 ; Esegue il cambio di stanza ciclico alla stanza successiva o precedente
 ; -------------------------------------------------------------------
@@ -230,7 +233,7 @@ PerformRoomChangeCommon:
     inc  hl
     inc  e
     ld   a, e
-    cp   61                        ; 61 stanze totali (indice 0..60)
+    cp   42                        ; 42 stanze totali (indice 0..41)
     jr   c, .loop
     
     ld   e, 0                      ; Se non trovato, riparte da 0
@@ -245,7 +248,7 @@ PerformRoomChangeCommon:
 .go_next:
     ld   a, c
     inc  a
-    cp   61                        ; 61 stanze totali (0..60), fa il wrap a 0 dopo l'ultima stanza
+    cp   42                        ; 42 stanze totali (0..41), fa il wrap a 0 dopo l'ultima stanza
     jr   c, .no_wrap_next
     xor  a
 .no_wrap_next:
@@ -256,7 +259,7 @@ PerformRoomChangeCommon:
     ld   a, c
     sub  1
     jr   nc, .no_wrap_prev
-    ld   a, 60
+    ld   a, 41                     ; 41 è l'ultimo indice valido
 .no_wrap_prev:
     ld   c, a                      ; C = nuovo indice candidato
 
@@ -299,6 +302,7 @@ PerformRoomChangeCommon:
     call CLS
     
     jp   LoadRoomAndRestart
+    ENDIF
 
 TriggerRoomChange:
     ; Input: A = nuovo room ID, C = Willy X, B = Willy Y
@@ -385,7 +389,5 @@ RoomsListTable:
 .PriestsHoleLayout:                dw PriestsHoleLayout                ; 38
 .EmergencyGeneratorLayout:         dw EmergencyGeneratorLayout         ; 39
 .DrJonesWillNeverBelieveThisLayout: dw DrJonesWillNeverBelieveThisLayout ; 40
-                                   dw 0,0,0,0                          ; 41-44: padding
-.UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 45
-                                   dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60
+.UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 41
 

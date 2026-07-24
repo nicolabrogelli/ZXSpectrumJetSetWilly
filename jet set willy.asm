@@ -30,6 +30,9 @@ Main:
     xor  a
     ld  (body_state), a
     ld  (items_collected), a
+    ld  a, 1
+    ld  (q_prev), a
+    ld  (a_prev), a
 
     call Gfx_CopyChars
     call Gfx_DefineChars
