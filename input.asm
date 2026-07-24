@@ -395,5 +395,8 @@ RoomsListTable:
 .OnTopOfTheHouseLayout:            dw OnTopOfTheHouseLayout            ; 44
 .UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 45
 .TreeRootLayout:                   dw TreeRootLayout                   ; 46
-                                   dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0      ; 47-60
+.NotUsedLayout                     dw NotUsedLayout                    ; 47
+.NomenLuniLayout                   dw NomenLuniLayout                  ; 48
+.TheWineCellarLayout               dw TheWineCellarLayout              ; 49
+                                   dw 0,0,0,0,0,0,0,0,0,0,0            ; 50-60
 

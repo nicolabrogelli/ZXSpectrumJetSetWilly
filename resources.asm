@@ -55,6 +55,8 @@ RoomsStart:
     include "rooms/UnderTheDrive.asm"               ; ID 45
     include "rooms/TreeRoot.asm"                    ; ID 46
     include "rooms/NotUsed.asm"                     ; ID 47
+    include "rooms/NomenLuni.asm"                   ; ID 48
+    include "rooms/TheWineCellar.asm"               ; ID 49
 
     include "data/datasprite.asm"
 

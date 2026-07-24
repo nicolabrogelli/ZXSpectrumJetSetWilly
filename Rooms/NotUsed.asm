@@ -124,7 +124,7 @@ NotUsedEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 NotUsedPosWilly:
-    db 200, 101                     ; Posizione di Willy
+    db 80, 101                     ; Posizione di Willy
     
 NotUsedEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
