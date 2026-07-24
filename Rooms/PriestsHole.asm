@@ -89,7 +89,7 @@ PriestsHoleBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 PriestsHoleReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB RED, GREEN, GREEN, GREEN     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 PriestsHoleItem:
@@ -107,13 +107,13 @@ PriestsHoleUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 PriestsHoleEnemy1:
-    DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 2, 176, 80, 24         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 PriestsHoleEnemy2:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $C0, 23, 48, 0, 88         ; FaceHellHL (Top-Left)
 PriestsHoleEnemy3:
-    DEFB 0, 0, 0, 0, 0
-PriestsHoleEnemy4:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $C0, 24, 32, 0, 88         ; FaceHellHR (Top-Right)
+EntranceToHaPriestsHoleEnemy4desEnemy3:
+    DEFB $C0, 25, 40, 16, 104         ; FaceHellLL (Bottom-Left)
 PriestsHoleEnemy5:
     DEFB 0, 0, 0, 0, 0
 PriestsHoleEnemy6:

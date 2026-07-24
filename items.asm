@@ -115,10 +115,12 @@ ItemsTable:
     ; Stanza 36 (A Bit of Tree)
 
     ; Stanza 37 (Orangery)
-    ITEM RoomsListTable.OrangeryLayout, 27, 11, CYAN, 0
+    ITEM RoomsListTable.OrangeryLayout, 28, 1, MAGENTA, 0
+    ITEM RoomsListTable.OrangeryLayout, 16, 6, GREEN, 0
+    ITEM RoomsListTable.OrangeryLayout, 6, 13, CYAN, 0
 
     ; Stanza 38 (Priest's Hole)
-    ITEM RoomsListTable.PriestsHoleLayout, 27, 10, CYAN, 0
+    ITEM RoomsListTable.PriestsHoleLayout, 9, 2, MAGENTA, 0
 
     db $FF                        ; Fine tabella
 
