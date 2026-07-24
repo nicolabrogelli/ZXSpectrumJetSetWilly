@@ -124,7 +124,7 @@ TreeRootEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TreeRootPosWilly:
-    db 200, 101                     ; Posizione di Willy
+    db 100, 101                     ; Posizione di Willy
     
 TreeRootEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

@@ -60,3 +60,4 @@ Secondo Byte
 	  • %100110  (38): Tipo 38 (SwissArmyKife)
 	  • %100111  (39): Tipo 39 (BotteSprite)
 	  • %101000  (40): Tipo 40 (OndaSprite)
+	  • %101001  (41): Tipo 41 (PalazzoSprite)

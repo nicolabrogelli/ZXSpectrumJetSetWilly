@@ -54,6 +54,7 @@ RoomsStart:
     include "rooms/OnTopOfTheHouse.asm"             ; ID 44
     include "rooms/UnderTheDrive.asm"               ; ID 45
     include "rooms/TreeRoot.asm"                    ; ID 46
+    include "rooms/NotUsed.asm"                     ; ID 47
 
     include "data/datasprite.asm"
 

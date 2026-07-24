@@ -543,6 +543,20 @@ DetermineCurrentRoomID:
 .notcoldstore
 
     ; ---------------------------------------------------------------
+    ; Confronto con TheKitchenLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, EastWallBaseLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .noteastwallbase
+
+    ld   a, 26               ; Room ID = 26
+    jp   .set_room
+
+.noteastwallbase
+
+    ; ---------------------------------------------------------------
     ; Confronto con TheChapelLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
@@ -798,14 +812,14 @@ DetermineCurrentRoomID:
     ; ---------------------------------------------------------------
     ; Confronto con TreeRootLayout
     ; ---------------------------------------------------------------
-    ld   hl, (room_ptr)
-    ld   de, TreeRootLayout
-    or   a
-    sbc  hl, de
-    jr   nz, .unknown
-
-    ld   a, 46               ; Room ID = 46
-    jp   .set_room
+;    ld   hl, (room_ptr)
+;    ld   de, TreeRootLayout
+;    or   a
+;    sbc  hl, de
+;    jr   nz, .unknown
+;
+;    ld   a, 46               ; Room ID = 46
+;    jp   .set_room
 
 .unknown:
 
