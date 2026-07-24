@@ -124,7 +124,7 @@ TheWineCellarEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheWineCellarPosWilly:
-    db 200, 101                     ; Posizione di Willy
+    db 180, 101                     ; Posizione di Willy
     
 TheWineCellarEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

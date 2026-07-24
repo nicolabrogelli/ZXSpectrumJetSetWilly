@@ -124,7 +124,7 @@ NomenLuniEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 NomenLuniPosWilly:
-    db 200, 101                     ; Posizione di Willy
+    db 150, 80                     ; Posizione di Willy
     
 NomenLuniEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

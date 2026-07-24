@@ -137,6 +137,17 @@ ItemsTable:
     ; Stanza 44 (On top of the house)
     ITEM RoomsListTable.OnTopOfTheHouseLayout, 18, 4, RED, 0    
 
+    ; Stanza 46 (Tree Root)
+    ITEM RoomsListTable.TreeRootLayout, 29, 4, GREEN, 0    
+
+    ; Stanza 49 (The Wine Cellar)
+    ITEM RoomsListTable.TheWineCellarLayout, 28, 4, MAGENTA, 0    
+    ITEM RoomsListTable.TheWineCellarLayout, 28, 7, GREEN, 0   
+    ITEM RoomsListTable.TheWineCellarLayout, 28, 10, MAGENTA, 0
+    ITEM RoomsListTable.TheWineCellarLayout, 4, 7, GREEN, 0   
+    ITEM RoomsListTable.TheWineCellarLayout, 2, 10, YELLOW, 0   
+    ITEM RoomsListTable.TheWineCellarLayout, 4, 13, YELLOW, 0  
+
     db $FF                        ; Fine tabella
 
 ; -------------------------------------------------------------------
@@ -829,11 +840,36 @@ DetermineCurrentRoomID:
     ld   de, NotUsedLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_used
 
     ld   a, 47               ; Room ID = 47
     jp   .set_room
 
+.not_used:
+    ; ---------------------------------------------------------------
+    ; Confronto con NomenLumi
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, NomenLuniLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_nomenlumi
+
+    ld   a, 48               ; Room ID = 48
+    jp   .set_room
+
+.not_nomenlumi:
+    ; ---------------------------------------------------------------
+    ; Confronto con TheWineCellar
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheWineCellarLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+
+    ld   a, 49               ; Room ID = 49
+    jp   .set_room
 
 .unknown:
 
