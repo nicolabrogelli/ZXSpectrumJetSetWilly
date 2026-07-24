@@ -8,6 +8,7 @@
     org  0x5dad
 
     ; Include files
+    include "settings.asm"
     include "constants.asm"
     include "interrupts.asm"
     include "graphics.asm"
@@ -96,7 +97,9 @@ Main_loop:
     ld   (last_frame_counter), hl
     
     call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
+    IF ENABLE_MUSIC != 0
     call Audio_UpdateMusic        ; Aggiorna la musica
+    ENDIF
     
     ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
     call Gfx_DeleteCharAtOldPos
@@ -106,11 +109,9 @@ Main_loop:
     call Enemy_DrawRoom
     
     ; Se l'animazione delle vite è abilitata, aggiorna la visualizzazione delle icone camminanti
-    ld   a, (flag_animate_lives)
-    or   a
-    jr   z, .skip_lives_anim
+    IF ENABLE_ANIMATE_LIVES != 0
     call Gfx_PrintWillyLives
-.skip_lives_anim:
+    ENDIF
 
 
     ; 3. Salva le posizioni correnti del player per il prossimo frame
@@ -126,14 +127,10 @@ Main_loop:
     call Items_CheckCollision
     
     ; Controlla collisione con Nasties (morte di Willy)
-    ld   a, (flag_nasty_collision_death)
-    or   a
-    jr   z, .no_nasty_collision_check
-    
+    IF ENABLE_NASTY_COLLISION_DEATH != 0
     call Phys_CheckNastyCollision
     jr   c, .willy_dies
-    
-.no_nasty_collision_check:
+    ENDIF
     
     ; Controlla collisione con guardiani
     call CheckCollision
@@ -141,9 +138,11 @@ Main_loop:
     
     ; C'è collisione con un guardiano!
     ; Controlla se la morte per collisione con i guardiani è abilitata
-    ld   a, (flag_guardian_collision_death)
-    or   a
-    jr   z, .draw_raster_bars ; se disabilitato, disegna le raster bar per debug
+    IF ENABLE_GUARDIAN_COLLISION_DEATH != 0
+    jr   .willy_dies
+    ELSE
+    jr   .draw_raster_bars ; se disabilitato, disegna le raster bar per debug
+    ENDIF
     
 .willy_dies:
     ; Decrementa le vite e aggiorna la visualizzazione

@@ -900,11 +900,8 @@ Gfx_DrawWillyLifeIcon:
     push de                ; SALVA D = Colore, E = Colonna
     
     ; Determina il frame del corpo per le icone delle vite
-    ld   a, (flag_animate_lives)
-    or   a
-    jr   z, .static_body   ; se 0, usa il frame statico (1)
-    
-    ; Altrimenti calcola il frame animato dal contatore
+    IF ENABLE_ANIMATE_LIVES != 0
+    ; Calcola il frame animato dal contatore
     ld   a, (counter)
     rrca
     rrca
@@ -914,12 +911,11 @@ Gfx_DrawWillyLifeIcon:
     jr   nz, .not_3
     ld   a, 1              ; map 3 to 1 -> cycle is 0, 1, 2, 1
 .not_3:
-    ; A = 0, 1, 2. Aggiungiamo 1 per ottenere l'offset del frame del corpo (1, 2, 3)
     inc  a
     jr   .calc_ix
-    
-.static_body:
+    ELSE
     ld   a, 1              ; frame statico 1
+    ENDIF
     
 .calc_ix:
     ; calcola IX = Willy + A * 8

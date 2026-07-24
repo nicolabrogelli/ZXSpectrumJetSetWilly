@@ -2,6 +2,7 @@
 ; constants.asm
 ;===========================================================================
 
+
 ; Indirizzi ROM
 CLS:        EQU $0daf
 OPENCHAN:   EQU $1601

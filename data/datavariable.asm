@@ -15,10 +15,7 @@ collision_active: db $00
 items_collected:  db $00
 sprite_shift:     db $00
 room_border_color: db $00
-flag_guardian_collision_death: db $00 ; 1 = abilita morte per collisione con guardiani, 0 = disabilita (disegna raster bar debug)
-flag_nasty_collision_death:    db $00 ; 1 = abilita morte per collisione con tiles Nasty, 0 = disabilita
 willy_lives:                   db 7   ; Numero iniziale di vite di Willy (7)
-flag_animate_lives:            db $00 ; 1 = abilita animazione camminata icone vite, 0 = disabilita
 
 ; Fisica
 velocity_y:     db $00
@@ -59,8 +56,10 @@ player_speed:       db 3
 transition_active:  db 0
 Audio_jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
 Audio_jump_sound_timer:   db 0
+    IF ENABLE_MUSIC != 0
 Audio_music_note_idx:      db 0
 Audio_music_frame_counter: db 1
+    ENDIF
 rope_old_frame:            db 34
 rope_dir_flags:            db %00000011 ; initially swinging right to left (bit 7)
 rope_frame_idx:            db 34        ; Initial animation frame index
