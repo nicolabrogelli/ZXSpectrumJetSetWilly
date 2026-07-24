@@ -124,7 +124,7 @@ AbovetheWestBedroomEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 AbovetheWestBedroomPosWilly:
-    db 100, 101                     ; Posizione di Willy
+    db 200, 50                     ; Posizione di Willy
     
 AbovetheWestBedroomEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

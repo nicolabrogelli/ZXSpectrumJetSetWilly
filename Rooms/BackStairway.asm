@@ -60,7 +60,7 @@ BackStairwayFloor:
     DEFB 67,255,68,68,255,17,17,255,0     ; Floor Solid
 
 BackStairwayWall:
-    DEFB 330,21,241,143,168,138,248,31,21  ; Wall Solid
+    DEFB 30,21,241,143,168,138,248,31,21  ; Wall Solid
 
 BackStairwayNasty:
     DEFB 255,0,0,0,0,0,0,0,0  ; Nastry

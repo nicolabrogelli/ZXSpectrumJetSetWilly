@@ -57,6 +57,17 @@ RoomsStart:
     include "rooms/NotUsed.asm"                     ; ID 47
     include "rooms/NomenLuni.asm"                   ; ID 48
     include "rooms/TheWineCellar.asm"               ; ID 49
+    include "rooms/WatchTower.asm"                  ; ID 50
+    include "rooms/ToolShed.asm"                    ; ID 51
+    include "rooms/BackStairway.asm"                ; ID 52
+    include "rooms/BackDoor.asm"                    ; ID 53
+    include "rooms/WestWing.asm"                    ; ID 54
+    include "rooms/WestBedroom.asm"                 ; ID 55
+    include "rooms/WestWingRoof.asm"                ; ID 56
+    include "rooms/AbovetheWestBedroom.asm"         ; ID 57
+    include "rooms/TheBeach.asm"                    ; ID 58
+    include "rooms/TheYacht.asm"                    ; ID 59
+    include "rooms/TheBow.asm"                      ; ID 60
 
     include "data/datasprite.asm"
 

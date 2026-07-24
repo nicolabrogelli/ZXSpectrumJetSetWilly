@@ -97,7 +97,7 @@ BackDoorItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 BackDoorDirection:
-	DEFB BLACK	;Room to the left (The Off Licence)
+	DEFB BLOCK	;Room to the left (The Off Licence)
 	DEFB 52		;Room to the right (Back Stairway)
 	DEFB 55		;Room above (West Bedroom)
 	DEFB 51		;Room below (Tool  Shed)
