@@ -89,7 +89,7 @@ ABitOfTreeBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 ABitOfTreeReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB YELLOW, MAGENTA, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 ABitOfTreeItem:
@@ -107,9 +107,9 @@ ABitOfTreeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 ABitOfTreeEnemy1:
-    DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 2, 0, 16, 80         ; [Uccello (41792) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 ABitOfTreeEnemy2:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $C0, 36, 56, 40, 80         ; [Uccello (41792) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 ABitOfTreeEnemy3:
     DEFB 0, 0, 0, 0, 0
 ABitOfTreeEnemy4:

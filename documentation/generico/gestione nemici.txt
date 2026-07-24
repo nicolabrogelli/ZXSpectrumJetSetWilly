@@ -55,3 +55,4 @@ Secondo Byte
 	  • %100001  (33): Tipo 33 (DiavolettoSprite)
 	  • %100010  (34): Tipo 34 (VecchiaSprite)
 	  • %100011  (35): Tipo 35 (PiedeSprite)
+	  • %100100  (36): Tipo 36 (ChipSprite)
