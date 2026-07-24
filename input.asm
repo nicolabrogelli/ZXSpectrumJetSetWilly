@@ -233,7 +233,7 @@ PerformRoomChangeCommon:
     inc  hl
     inc  e
     ld   a, e
-    cp   46                        ; 46 stanze totali (indice 0..45)
+    cp   61                        ; 61 stanze totali (indice 0..60)
     jr   c, .loop
     
     ld   e, 0                      ; Se non trovato, riparte da 0
@@ -248,7 +248,7 @@ PerformRoomChangeCommon:
 .go_next:
     ld   a, c
     inc  a
-    cp   46                        ; 46 stanze totali (0..45), fa il wrap a 0 dopo l'ultima stanza
+    cp   61                        ; 61 stanze totali (0..60), fa il wrap a 0 dopo l'ultima stanza
     jr   c, .no_wrap_next
     xor  a
 .no_wrap_next:
@@ -259,7 +259,7 @@ PerformRoomChangeCommon:
     ld   a, c
     sub  1
     jr   nc, .no_wrap_prev
-    ld   a, 45                     ; 45 è l'ultimo indice valido
+    ld   a, 60                     ; 60 è l'ultimo indice valido
 .no_wrap_prev:
     ld   c, a                      ; C = nuovo indice candidato
 
@@ -394,4 +394,6 @@ RoomsListTable:
 .ConservatoryRoofLayout:           dw ConservatoryRoofLayout           ; 43
 .OnTopOfTheHouseLayout:            dw OnTopOfTheHouseLayout            ; 44
 .UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 45
+.TreeRootLayout:                   dw TreeRootLayout                   ; 46
+                                   dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0      ; 47-60
 

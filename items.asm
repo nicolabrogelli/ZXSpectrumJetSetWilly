@@ -789,9 +789,22 @@ DetermineCurrentRoomID:
     ld   de, UnderTheDriveLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_underthedrive
 
     ld   a, 45               ; Room ID = 45
+    jp   .set_room
+
+.not_underthedrive:
+    ; ---------------------------------------------------------------
+    ; Confronto con TreeRootLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TreeRootLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+
+    ld   a, 46               ; Room ID = 46
     jp   .set_room
 
 .unknown:
