@@ -25,7 +25,7 @@ Input_CheckCtrl:
     xor  a
     ld   (current_input_dir), a
 
-    ; ── Sezione 1: tasto Q (cambio stanza) ──────────────────────────
+    ; ── Sezione 1a: tasto Q (cambio stanza AVANTI) ─────────────────────
     ;
     ; Porta $FB → riga Q, W, E, R, T. Bit 0 = Q.
     ; Se bit 0 = 0, Q è premuto.
@@ -47,17 +47,45 @@ Input_CheckCtrl:
 
     ; NOTA sullo stack:
     ; Input_CheckCtrl è stata invocata con CALL, quindi l'indirizzo di ritorno
-    ; è in cima allo stack. Vogliamo saltare a PerformRoomChange senza
+    ; è in cima allo stack. Vogliamo saltare a PerformRoomChangeNext senza
     ; tornare al chiamante, quindi POP HL scarta quell'indirizzo,
     ; poi JP salta direttamente.
     pop  hl                     ; rimuove indirizzo di ritorno di Input_CheckCtrl
-    jp   PerformRoomChange      ; salta al cambio stanza (non torna qui)
+    jp   PerformRoomChangeNext  ; salta al cambio stanza avanti (non torna qui)
 
 .q_not_pressed:
     xor  a
     ld   (q_prev), a            ; Q rilasciato → azzera debounce
 
 .q_handled:
+
+    ; ── Sezione 1b: tasto A (cambio stanza INDIETRO) ────────────────────
+    ;
+    ; Porta $FD → riga A, S, D, F, G. Bit 0 = A.
+    ; Se bit 0 = 0, A è premuto.
+
+    ld   bc, $fdfe
+    in   a, (c)
+    bit  0, a
+    jr   nz, .a_not_pressed     ; bit 0 = 1 → A non premuto, salta
+
+    ; A è premuto: debounce tramite (a_prev).
+    ld   a, (a_prev)
+    or   a
+    jr   nz, .a_handled         ; era già premuto, niente da fare
+
+    ; ── Primo frame di pressione di A ──
+    ld   a, 1
+    ld   (a_prev), a            ; marca "A era premuto"
+
+    pop  hl                     ; rimuove indirizzo di ritorno di Input_CheckCtrl
+    jp   PerformRoomChangePrev  ; salta al cambio stanza indietro (non torna qui)
+
+.a_not_pressed:
+    xor  a
+    ld   (a_prev), a            ; A rilasciato → azzera debounce
+
+.a_handled:
 
     ; ── Sezione 2: movimento (sinistra / destra) ────────────────────
     ;
@@ -175,9 +203,17 @@ checkCtrl_jump:
     ret
 
 ; -------------------------------------------------------------------
-; Esegue il cambio di stanza ciclico alla stanza successiva
+; Esegue il cambio di stanza ciclico alla stanza successiva o precedente
 ; -------------------------------------------------------------------
 PerformRoomChange:
+PerformRoomChangeNext:
+    ld   d, 1                      ; 1 = avanti
+    jr   PerformRoomChangeCommon
+
+PerformRoomChangePrev:
+    ld   d, 0                      ; 0 = indietro
+
+PerformRoomChangeCommon:
     ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..60)
     ld   hl, RoomsListTable
     ld   bc, (room_ptr)            ; BC = layout corrente
@@ -200,19 +236,34 @@ PerformRoomChange:
     ld   e, 0                      ; Se non trovato, riparte da 0
 
 .found:
-    ; 2. Trova il prossimo indice non nullo (ciclando)
+    ; 2. Trova il prossimo / precedente indice non nullo (ciclando)
     ld   c, e                      ; C = indice di partenza
-.next_index_loop:
+.index_loop:
+    bit  0, d
+    jr   z, .go_prev
+
+.go_next:
     ld   a, c
     inc  a
     cp   61                        ; 61 stanze totali (0..60), fa il wrap a 0 dopo l'ultima stanza
-    jr   c, .no_wrap
+    jr   c, .no_wrap_next
     xor  a
-.no_wrap:
+.no_wrap_next:
     ld   c, a                      ; C = nuovo indice candidato
-    
-    ; Leggi RoomsListTable[C]
+    jr   .check_candidate
+
+.go_prev:
+    ld   a, c
+    sub  1
+    jr   nc, .no_wrap_prev
+    ld   a, 60
+.no_wrap_prev:
+    ld   c, a                      ; C = nuovo indice candidato
+
+.check_candidate:
+    ; Leggi RoomsListTable[C] senza corrompere C (indice) né D (direzione)
     push hl
+    push de
     ld   hl, RoomsListTable
     ld   e, c
     ld   d, 0
@@ -220,13 +271,20 @@ PerformRoomChange:
     add  hl, de                    ; HL = RoomsListTable + C * 2
     ld   e, (hl)
     inc  hl
-    ld   d, (hl)                   ; DE = RoomsListTable[C]
+    ld   d, (hl)                   ; DE = RoomsListTable[C] (puntatore al layout)
     ld   a, d
     or   e                         ; DE == 0?
-    pop  hl
-    jr   z, .next_index_loop       ; Se è zero, riprova col prossimo
-    
-    ; Trovato! DE = layout
+    jr   nz, .found_candidate
+
+    ; Candidate is NULL (dw 0)
+    pop  de                        ; Ripristina D (direzione) e registro DE
+    pop  hl                        ; Ripristina HL
+    jr   .index_loop               ; Riprova con la stanza successiva/precedente (C e D intatti!)
+
+.found_candidate:
+    ; Trovato! DE = puntatore al layout della stanza
+    pop  af                        ; Scarta lo stack frame temporaneo per DE
+    pop  hl                        ; Ripristina HL
     ld   (room_ptr), de
     
     ; Azzera transition_active per far caricare a LoadRoomAndRestart
