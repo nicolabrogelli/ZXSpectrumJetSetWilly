@@ -14562,7 +14562,7 @@
   89++AADB
   90++AADB              ;The next two bytes are copied to 32991, but are not used.
   91++AADB              TopLandingReserved:
-  92++AADB 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+  92++AADB 07 05 02 03      DEFB WHITE, CYAN, RED, MAGENTA     ; Enemy colors
   93++AADF
   94++AADF              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++AADF              TopLandingItem:
@@ -14581,8 +14581,8 @@
  107++AAEC
  108++AAEC              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++AAEC              TopLandingEnemy1:
- 110++AAEC 80 16 C0 40      DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
- 110++AAF0 F0
+ 110++AAEC C0 00 30 10      DEFB $C0, 0, 48, 16, 104         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++AAF0 68
  111++AAF1              TopLandingEnemy2:
  112++AAF1 00 00 00 00      DEFB 0, 0, 0, 0, 0
  112++AAF5 00
@@ -14736,7 +14736,7 @@
   86++ABF9
   87++ABF9              ;The next two bytes are copied to 32991, but are not used.
   88++ABF9              MastreBedRoomReserved:
-  89++ABF9 02 03 04 07      DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+  89++ABF9 00 00 00 00      DEFB NONE, NONE, NONE, NONE                         ; Enemy colors: all WHITE (7)
   90++ABFD
   91++ABFD              ;The next eight bytes are copied to 32993 and define the item graphic.
   92++ABFD              MastreBedRoomItem:
@@ -14755,14 +14755,14 @@
  104++AC0A
  105++AC0A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  106++AC0A              MastreBedRoomEnemy1:
- 107++AC0A 80 00 08 4C      DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
- 107++AC0E C8
+ 107++AC0A 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 107++AC0E 00
  108++AC0F              MastreBedRoomEnemy2:
- 109++AC0F 80 00 50 4C      DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
- 109++AC13 B4
+ 109++AC0F 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 109++AC13 00
  110++AC14              MastreBedRoomEnemy3:
- 111++AC14 C0 04 78 10      DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
- 111++AC18 4C
+ 111++AC14 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 111++AC18 00
  112++AC19              MastreBedRoomEnemy4:
  113++AC19 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
  113++AC1D 00
@@ -14782,7 +14782,7 @@
  123++AC32              MastreBedRoomPosWilly:
  124++AC32 C8 68            db 200, 104                   ; Posizione di Willy
  125++AC34              MastreBedRoomEnemyColors5_8:
- 126++AC34 02 03 04 07      DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+ 126++AC34 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/MasterBedRoom.asm
   46+ AC38                  include "rooms/ABitOfTree.asm"                  ; ID 36
 # file opened: rooms/ABitOfTree.asm
@@ -15396,7 +15396,7 @@
   54++B032
   55++B032              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
   56++B032              EmergencyGeneratorBackground:
-  57++B032 08 00 00 00      DEFB $08,0,0,0,0,0,0,0,0	            ;Background
+  57++B032 0F 00 00 00      DEFB $0f,0,0,0,0,0,0,0,0	            ;Background
   57++B036 00 00 00 00
   57++B03A 00
   58++B03B
@@ -15443,7 +15443,7 @@
   89++B071
   90++B071              ;The next two bytes are copied to 32991, but are not used.
   91++B071              EmergencyGeneratorReserved:
-  92++B071 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+  92++B071 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE     ; Enemy colors
   93++B075
   94++B075              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++B075              EmergencyGeneratorItem:
@@ -15462,7 +15462,7 @@
  107++B082
  108++B082              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++B082              EmergencyGeneratorEnemy1:
- 110++B082 80 16 C0 40      DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++B082 80 0C 28 18      DEFB $80, 12, 40, 24, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
  110++B086 F0
  111++B087              EmergencyGeneratorEnemy2:
  112++B087 00 00 00 00      DEFB 0, 0, 0, 0, 0

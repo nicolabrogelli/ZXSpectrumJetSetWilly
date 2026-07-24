@@ -54,7 +54,7 @@ EmergencyGeneratorTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 EmergencyGeneratorBackground:                    
-    DEFB $08,0,0,0,0,0,0,0,0	            ;Background
+    DEFB $0f,0,0,0,0,0,0,0,0	            ;Background
 
 EmergencyGeneratorFloor:
     DEFB 47,102,102,102,102,102,102,102,102      ; Floor Solid
@@ -89,7 +89,7 @@ EmergencyGeneratorBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 EmergencyGeneratorReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB MAGENTA, NONE, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 EmergencyGeneratorItem:
@@ -107,7 +107,7 @@ EmergencyGeneratorUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 EmergencyGeneratorEnemy1:
-    DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 12, 40, 24, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 EmergencyGeneratorEnemy2:
     DEFB 0, 0, 0, 0, 0
 EmergencyGeneratorEnemy3:

@@ -86,7 +86,7 @@ MastreBedRoomBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 MastreBedRoomReserved:
-    DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+    DEFB NONE, NONE, NONE, NONE                         ; Enemy colors: all WHITE (7)
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 MastreBedRoomItem:
@@ -104,11 +104,11 @@ MastreBedRoomUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 MastreBedRoomEnemy1:
-    DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB 0, 0, 0, 0, 0
 MastreBedRoomEnemy2:
-    DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB 0, 0, 0, 0, 0
 MastreBedRoomEnemy3:
-    DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB 0, 0, 0, 0, 0
 MastreBedRoomEnemy4:
     DEFB 0, 0, 0, 0, 0         ; Empty slot
 MastreBedRoomEnemy5:
@@ -123,4 +123,4 @@ MastreBedRoomEnemy8:
 MastreBedRoomPosWilly:
     db 200, 104                   ; Posizione di Willy
 MastreBedRoomEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
