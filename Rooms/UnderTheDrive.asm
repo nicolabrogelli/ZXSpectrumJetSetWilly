@@ -58,16 +58,16 @@ UnderTheDriveWall:
 UnderTheDriveNasty:
     DEFB 4,24,24,20,34,34,85,17,40  ; Nastry
 
-UnderTheDriveRamp:                          ; Ramp Solid
+UnderTheDriveRamp:                          
     DEFB 7,128,64,160,80,168,84,170,85              ; Ramp Solid
 
-UnderTheDriveConveyor:                      ; Conveyor Solid
+UnderTheDriveConveyor:                     
     DEFB 2,224,170,248,0,255,255,102,102                      ; Conveyor Solid
 
 UnderTheDriveConveyorData:
     DEFB 0
     DEFW 24402
-    DEFB 0
+    DEFB 14
 
 UnderTheDriveRampData:
     DEFB 0
@@ -78,7 +78,7 @@ UnderTheDriveBorderColor:
     DEFB 4
 
 UnderTheDriveReserved:
-    DEFB 4, 2, 5, 7     ; Enemy colors
+    DEFB YELLOW, CYAN, MAGENTA, NONE     ; Enemy colors
 
 UnderTheDriveItem:
     DEFB 129,100,205,15,97,218,51,26
@@ -93,11 +93,11 @@ UnderTheDriveUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 UnderTheDriveEnemy1:
-    DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, 2, 96, 88, 232        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
 UnderTheDriveEnemy2:
-    DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $C0, 15, 144, 0, 64         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
 UnderTheDriveEnemy3:
-    DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, 8, 168, 64, 240         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
 UnderTheDriveEnemy4:
     DEFB 0, 0, 0, 0, 0               ; Empty slot
 UnderTheDriveEnemy5:

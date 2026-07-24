@@ -15774,12 +15774,12 @@
   59++B28D 22 22 55 11
   59++B291 28
   60++B292
-  61++B292              UnderTheDriveRamp:                          ; Ramp Solid
+  61++B292              UnderTheDriveRamp:
   62++B292 07 80 40 A0      DEFB 7,128,64,160,80,168,84,170,85              ; Ramp Solid
   62++B296 50 A8 54 AA
   62++B29A 55
   63++B29B
-  64++B29B              UnderTheDriveConveyor:                      ; Conveyor Solid
+  64++B29B              UnderTheDriveConveyor:
   65++B29B 02 E0 AA F8      DEFB 2,224,170,248,0,255,255,102,102                      ; Conveyor Solid
   65++B29F 00 FF FF 66
   65++B2A3 66
@@ -15787,7 +15787,7 @@
   67++B2A4              UnderTheDriveConveyorData:
   68++B2A4 00               DEFB 0
   69++B2A5 52 5F            DEFW 24402
-  70++B2A7 00               DEFB 0
+  70++B2A7 0E               DEFB 14
   71++B2A8
   72++B2A8              UnderTheDriveRampData:
   73++B2A8 00               DEFB 0
@@ -15798,7 +15798,7 @@
   78++B2AC 04               DEFB 4
   79++B2AD
   80++B2AD              UnderTheDriveReserved:
-  81++B2AD 04 02 05 07      DEFB 4, 2, 5, 7     ; Enemy colors
+  81++B2AD 06 05 03 00      DEFB YELLOW, CYAN, MAGENTA, NONE     ; Enemy colors
   82++B2B1
   83++B2B1              UnderTheDriveItem:
   84++B2B1 81 64 CD 0F      DEFB 129,100,205,15,97,218,51,26
@@ -15814,14 +15814,14 @@
   93++B2BD 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   94++B2BE
   95++B2BE              UnderTheDriveEnemy1:
-  96++B2BE 80 03 8C 38      DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
-  96++B2C2 E6
+  96++B2BE 80 02 60 58      DEFB $80, 2, 96, 88, 232        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+  96++B2C2 E8
   97++B2C3              UnderTheDriveEnemy2:
-  98++B2C3 C0 06 3C 38      DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
-  98++B2C7 6A
+  98++B2C3 C0 0F 90 00      DEFB $C0, 15, 144, 0, 64         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+  98++B2C7 40
   99++B2C8              UnderTheDriveEnemy3:
- 100++B2C8 C0 09 50 10      DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
- 100++B2CC 6A
+ 100++B2C8 80 08 A8 40      DEFB $80, 8, 168, 64, 240         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+ 100++B2CC F0
  101++B2CD              UnderTheDriveEnemy4:
  102++B2CD 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
  102++B2D1 00
