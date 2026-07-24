@@ -89,7 +89,7 @@ TheBanyanTreeBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheBanyanTreeReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB GREEN, MAGENTA, CYAN, YELLOW     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheBanyanTreeItem:
@@ -107,13 +107,13 @@ TheBanyanTreeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBanyanTreeEnemy1:
-    DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, 37, 80, 56, 80         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheBanyanTreeEnemy2:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $D0, 33, 104, 40, 80         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheBanyanTreeEnemy3:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $D0, 36, 128, 40, 80         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TheBanyanTreeEnemy4:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 1, 152, 80, 235 
 TheBanyanTreeEnemy5:
     DEFB 0, 0, 0, 0, 0
 TheBanyanTreeEnemy6:

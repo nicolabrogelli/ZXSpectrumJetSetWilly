@@ -66,7 +66,7 @@ SwimmingPoolNasty:
     DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
 
 SwimmingPoolRamp:
-    DEFB 7,3,3,15,15,63,63,255,255            ; Ramp Solid
+    DEFB 47,3,3,15,15,63,63,255,255            ; Ramp Solid
 
 SwimmingPoolConveyor:
     DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
@@ -89,7 +89,7 @@ SwimmingPoolBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 SwimmingPoolReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB YELLOW, NONE, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 SwimmingPoolItem:
@@ -107,7 +107,7 @@ SwimmingPoolUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 SwimmingPoolEnemy1:
-    DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 22, 40, 104, 96         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 SwimmingPoolEnemy2:
     DEFB 0, 0, 0, 0, 0
 SwimmingPoolEnemy3:

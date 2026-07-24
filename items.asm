@@ -101,8 +101,11 @@ ItemsTable:
     ; Stanza 28 (First Landing)
     ;ITEM RoomsListTable.FirstLandingLayout, 20, 13, YELLOW, 0           ; Oggetto 1 alla colonna X=20, riga Y=13, YELLOW, (Stato: 0=attivo)
 
+    ; Stanza 30 (The Bany Tree)
+    ITEM RoomsListTable.TheBanyanTreeLayout, 8, 14, MAGENTA, 0
+
     ; Stanza 31 (Swimming Pool)
-    ITEM RoomsListTable.SwimmingPoolLayout, 4, 11, CYAN, 0
+    ITEM RoomsListTable.SwimmingPoolLayout, 4, 11, MAGENTA, 0
 
     ; Stanza 33 (The Bathroom)
     ITEM RoomsListTable.TheBathroomLayout, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
