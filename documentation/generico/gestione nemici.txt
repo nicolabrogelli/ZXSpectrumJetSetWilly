@@ -57,3 +57,4 @@ Secondo Byte
 	  • %100011  (35): Tipo 35 (PiedeSprite)
 	  • %100100  (36): Tipo 36 (ChipSprite)
 	  • %100101  (37): Tipo 37 (IpnosiSprite)
+	  • %100110  (38): Tipo 38 (SwissArmyKife)

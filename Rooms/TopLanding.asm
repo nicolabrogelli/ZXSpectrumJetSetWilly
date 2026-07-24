@@ -109,7 +109,7 @@ TopLandingUnused:
 TopLandingEnemy1:
     DEFB $C0, 0, 48, 16, 104         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
 TopLandingEnemy2:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, 38, 80, 104, 240
 TopLandingEnemy3:
     DEFB 0, 0, 0, 0, 0
 TopLandingEnemy4:

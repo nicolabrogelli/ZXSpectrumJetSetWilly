@@ -108,7 +108,7 @@ ItemsTable:
     ITEM RoomsListTable.TheBathroomLayout, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
 
     ; Stanza 34 (Top Landing)
-    ITEM RoomsListTable.TopLandingLayout, 20, 13, YELLOW, 0
+    ITEM RoomsListTable.TopLandingLayout, 2, 9, MAGENTA, 0
 
     ; Stanza 35 (Master Bedroom)
 
