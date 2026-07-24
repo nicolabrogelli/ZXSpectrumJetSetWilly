@@ -113,7 +113,7 @@ TreeRootEnemy2:
 TreeRootEnemy3:
     DEFB $80, 13, 120, 72, 184 
 TreeRootEnemy4:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $C0, 41, 200, 32, 80 
 TreeRootEnemy5:
     DEFB 0, 0, 0, 0, 0
 TreeRootEnemy6:

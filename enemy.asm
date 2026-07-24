@@ -443,8 +443,8 @@ Enemy_DrawRoom:
     jp   z, .got_botte
     cp   40
     jp   z, .got_onda
-    ;cp   41
-    ;jp   z, .got_palazzo
+    cp   41
+    jp   z, .got_palazzo
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -642,9 +642,9 @@ Enemy_DrawRoom:
     ld   hl, OndaSprite
     jp   .got_sprite
 
-;.got_palazzo:
-;    ld   hl, PalazzoSprite
-;    jp   .got_sprite
+.got_palazzo:
+    ld   hl, PalazzoSprite
+    jp   .got_sprite
 
 
 .got_sprite:
