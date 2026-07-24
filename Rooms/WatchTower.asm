@@ -54,7 +54,7 @@ WatchTowerTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 WatchTowerBackground:                    
-    DEFB 8,0,0,0,0,0,0,0,0	            ;Background
+    DEFB $0F,0,0,0,0,0,0,0,0	            ;Background
 
 WatchTowerFloor:
     DEFB 6,255,255,170,85,170,85,0,0     ; Floor Solid
@@ -89,7 +89,7 @@ WatchTowerBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 WatchTowerReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB MAGENTA, WHITE, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 WatchTowerItem:
@@ -107,13 +107,13 @@ WatchTowerUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 WatchTowerEnemy1:
-    DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 14, 88, 72, 144
 WatchTowerEnemy2:
-    DEFB $C0, 6, 104, 48, 96 
+    DEFB $80, 2, 72, 56, 235 
 WatchTowerEnemy3:
-    DEFB $80, 13, 120, 72, 184 
+    DEFB 0, 0, 0, 0, 0
 WatchTowerEnemy4:
-    DEFB $C0, 41, 200, 32, 80 
+    DEFB 0, 0, 0, 0, 0
 WatchTowerEnemy5:
     DEFB 0, 0, 0, 0, 0
 WatchTowerEnemy6:
@@ -124,7 +124,7 @@ WatchTowerEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 WatchTowerPosWilly:
-    db 100, 101                     ; Posizione di Willy
+    db 100, 70                     ; Posizione di Willy
     
 WatchTowerEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

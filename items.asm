@@ -148,6 +148,12 @@ ItemsTable:
     ITEM RoomsListTable.TheWineCellarLayout, 2, 10, YELLOW, 0   
     ITEM RoomsListTable.TheWineCellarLayout, 4, 13, YELLOW, 0  
 
+    ; Stanza 50 (Watch Tower)
+    ITEM RoomsListTable.WatchTowerLayout, 10, 9, CYAN, 0        
+    ITEM RoomsListTable.WatchTowerLayout, 20, 9, CYAN, 0 
+    ITEM RoomsListTable.WatchTowerLayout, 24, 9, YELLOW, 0 
+    ITEM RoomsListTable.WatchTowerLayout, 25, 8, MAGENTA, 0 
+
     db $FF                        ; Fine tabella
 
 ; -------------------------------------------------------------------
@@ -866,10 +872,24 @@ DetermineCurrentRoomID:
     ld   de, TheWineCellarLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_thewinecellar
 
     ld   a, 49               ; Room ID = 49
     jp   .set_room
+
+.not_thewinecellar:
+    ; ---------------------------------------------------------------
+    ; Confronto con TheWineCellar
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WatchTowerLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+
+    ld   a, 50               ; Room ID = 50
+    jp   .set_room
+
 
 .unknown:
 
