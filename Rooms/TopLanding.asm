@@ -111,7 +111,7 @@ TopLandingEnemy1:
 TopLandingEnemy2:
     DEFB $80, 38, 80, 104, 240
 TopLandingEnemy3:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $C0, 39, 96, 16, 48
 TopLandingEnemy4:
     DEFB 0, 0, 0, 0, 0
 TopLandingEnemy5:
