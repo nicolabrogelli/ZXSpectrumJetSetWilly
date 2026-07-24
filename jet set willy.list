@@ -14226,7 +14226,7 @@
   89++A89F
   90++A89F              ;The next two bytes are copied to 32991, but are not used.
   91++A89F              HalfwayUpTheEastWallReserved:
-  92++A89F 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+  92++A89F 06 00 00 00      DEFB YELLOW, NONE, NONE, NONE     ; Enemy colors
   93++A8A3
   94++A8A3              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++A8A3              HalfwayUpTheEastWallItem:
@@ -14245,8 +14245,8 @@
  107++A8B0
  108++A8B0              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A8B0              HalfwayUpTheEastWallEnemy1:
- 110++A8B0 80 16 C0 40      DEFB $80, 22, 192, 64, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
- 110++A8B4 F0
+ 110++A8B0 80 1B 10 30      DEFB $80, 27, 16, 48, 57         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++A8B4 39
  111++A8B5              HalfwayUpTheEastWallEnemy2:
  112++A8B5 00 00 00 00      DEFB 0, 0, 0, 0, 0
  112++A8B9 00
