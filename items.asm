@@ -128,6 +128,15 @@ ItemsTable:
     ; Stanza 40 (Dr Jones will never believe this)
     ITEM RoomsListTable.DrJonesWillNeverBelieveThisLayout, 19, 7, MAGENTA, 0
 
+    ; Stanza 43 (Conservatory Roof)
+    ITEM RoomsListTable.ConservatoryRoofLayout, 22, 8, YELLOW, 0
+    ITEM RoomsListTable.ConservatoryRoofLayout, 25, 8, GREEN, 0
+    ITEM RoomsListTable.ConservatoryRoofLayout, 28, 8, CYAN, 0
+    ITEM RoomsListTable.ConservatoryRoofLayout, 31, 8, MAGENTA, 0
+
+    ; Stanza 44 (On top of the house)
+    ITEM RoomsListTable.OnTopOfTheHouseLayout, 18, 4, RED, 0    
+
     db $FF                        ; Fine tabella
 
 ; -------------------------------------------------------------------
@@ -721,6 +730,58 @@ DetermineCurrentRoomID:
     jp   .set_room
 
 .not_drjoneswillneverbelievethis:
+    ; ---------------------------------------------------------------
+    ; Confronto con TheAtticLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheAtticLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_theattic
+
+    ld   a, 41               ; Room ID = 41
+    jp   .set_room
+
+.not_theattic:
+    ; ---------------------------------------------------------------
+    ; Confronto con UnderTheRoofLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, UnderTheRoofLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_undertheroof
+
+    ld   a, 42               ; Room ID = 42
+    jp   .set_room
+
+.not_undertheroof:
+    ; ---------------------------------------------------------------
+    ; Confronto con ConservatoryRoofLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, ConservatoryRoofLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_conservatoryroof
+
+    ld   a, 43               ; Room ID = 43
+    jp   .set_room
+
+.not_conservatoryroof:
+    ; ---------------------------------------------------------------
+    ; Confronto con OnTopOfTheHouseLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, OnTopOfTheHouseLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_ontopofthehouse
+
+    ld   a, 44               ; Room ID = 44
+    jp   .set_room
+
+.not_ontopofthehouse:
     ; ---------------------------------------------------------------
     ; Confronto con UnderTheDrive
     ; ---------------------------------------------------------------

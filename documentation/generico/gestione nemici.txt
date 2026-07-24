@@ -59,3 +59,4 @@ Secondo Byte
 	  • %100101  (37): Tipo 37 (IpnosiSprite)
 	  • %100110  (38): Tipo 38 (SwissArmyKife)
 	  • %100111  (39): Tipo 39 (BotteSprite)
+	  • %101000  (40): Tipo 40 (OndaSprite)

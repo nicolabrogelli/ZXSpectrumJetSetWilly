@@ -233,7 +233,7 @@ PerformRoomChangeCommon:
     inc  hl
     inc  e
     ld   a, e
-    cp   42                        ; 42 stanze totali (indice 0..41)
+    cp   46                        ; 46 stanze totali (indice 0..45)
     jr   c, .loop
     
     ld   e, 0                      ; Se non trovato, riparte da 0
@@ -248,7 +248,7 @@ PerformRoomChangeCommon:
 .go_next:
     ld   a, c
     inc  a
-    cp   42                        ; 42 stanze totali (0..41), fa il wrap a 0 dopo l'ultima stanza
+    cp   46                        ; 46 stanze totali (0..45), fa il wrap a 0 dopo l'ultima stanza
     jr   c, .no_wrap_next
     xor  a
 .no_wrap_next:
@@ -259,7 +259,7 @@ PerformRoomChangeCommon:
     ld   a, c
     sub  1
     jr   nc, .no_wrap_prev
-    ld   a, 41                     ; 41 è l'ultimo indice valido
+    ld   a, 45                     ; 45 è l'ultimo indice valido
 .no_wrap_prev:
     ld   c, a                      ; C = nuovo indice candidato
 
@@ -389,5 +389,9 @@ RoomsListTable:
 .PriestsHoleLayout:                dw PriestsHoleLayout                ; 38
 .EmergencyGeneratorLayout:         dw EmergencyGeneratorLayout         ; 39
 .DrJonesWillNeverBelieveThisLayout: dw DrJonesWillNeverBelieveThisLayout ; 40
-.UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 41
+.TheAtticLayout:                   dw TheAtticLayout                   ; 41
+.UnderTheRoofLayout:               dw UnderTheRoofLayout               ; 42
+.ConservatoryRoofLayout:           dw ConservatoryRoofLayout           ; 43
+.OnTopOfTheHouseLayout:            dw OnTopOfTheHouseLayout            ; 44
+.UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 45
 

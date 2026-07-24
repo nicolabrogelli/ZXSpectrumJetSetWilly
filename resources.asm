@@ -48,6 +48,10 @@ RoomsStart:
     include "rooms/PriestsHole.asm"                 ; ID 38
     include "rooms/EmergencyGenerator.asm"          ; ID 39
     include "rooms/DrJonesWillNeverBelieveThis.asm" ; ID 40
+    include "rooms/TheAttic.asm"                    ; ID 41
+    include "rooms/UnderTheRoof.asm"                ; ID 42
+    include "rooms/ConservatoryRoof.asm"            ; ID 43
+    include "rooms/OnTopOfTheHouse.asm"             ; ID 44
     include "rooms/UnderTheDrive.asm"               ; ID 45
 
     include "data/datasprite.asm"

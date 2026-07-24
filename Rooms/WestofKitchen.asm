@@ -89,7 +89,7 @@ WestOfKitchenBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 WestOfKitchenReserved:
-    DEFB NONE, MAGENTA, CYAN, YELLOW                        ; Enemy colors
+    DEFB YELLOW, MAGENTA, CYAN, YELLOW                        ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 WestOfKitchenItem:
