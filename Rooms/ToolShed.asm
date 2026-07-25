@@ -89,7 +89,7 @@ ToolShedBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 ToolShedReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB GREEN, YELLOW, MAGENTA, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 ToolShedItem:
@@ -107,11 +107,11 @@ ToolShedUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 ToolShedEnemy1:
-    DEFB $C0, 0, 32, 0, 64         
+    DEFB $80, 18, 56, 48, 136         
 ToolShedEnemy2:
-    DEFB $C0, 6, 104, 48, 96 
+    DEFB $80, 38, 56, 72, 160 
 ToolShedEnemy3:
-    DEFB $80, 13, 120, 72, 184 
+    DEFB $80, 1, 56, 104, 176 
 ToolShedEnemy4:
     DEFB $0, 0, 0, 0, 0
 ToolShedEnemy5:

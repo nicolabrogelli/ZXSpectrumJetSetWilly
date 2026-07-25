@@ -17469,7 +17469,7 @@
   89++BDD9
   90++BDD9              ;The next two bytes are copied to 32991, but are not used.
   91++BDD9              ToolShedReserved:
-  92++BDD9 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+  92++BDD9 04 06 03 00      DEFB GREEN, YELLOW, MAGENTA, NONE     ; Enemy colors
   93++BDDD
   94++BDDD              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++BDDD              ToolShedItem:
@@ -17488,17 +17488,17 @@
  107++BDEA
  108++BDEA              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++BDEA              ToolShedEnemy1:
- 110++BDEA C0 00 20 00      DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
- 110++BDEE 40
+ 110++BDEA 80 12 38 30      DEFB $80, 18, 56, 48, 136
+ 110++BDEE 88
  111++BDEF              ToolShedEnemy2:
- 112++BDEF C0 06 68 30      DEFB $C0, 6, 104, 48, 96
- 112++BDF3 60
+ 112++BDEF 80 26 38 48      DEFB $80, 38, 56, 72, 160
+ 112++BDF3 A0
  113++BDF4              ToolShedEnemy3:
- 114++BDF4 80 0D 78 48      DEFB $80, 13, 120, 72, 184
- 114++BDF8 B8
+ 114++BDF4 80 01 38 68      DEFB $80, 1, 56, 104, 176
+ 114++BDF8 B0
  115++BDF9              ToolShedEnemy4:
- 116++BDF9 C0 29 C8 20      DEFB $C0, 41, 200, 32, 80
- 116++BDFD 50
+ 116++BDF9 00 00 00 00      DEFB $0, 0, 0, 0, 0
+ 116++BDFD 00
  117++BDFE              ToolShedEnemy5:
  118++BDFE 00 00 00 00      DEFB 0, 0, 0, 0, 0
  118++BE02 00
@@ -17646,7 +17646,7 @@
   89++BEF7
   90++BEF7              ;The next two bytes are copied to 32991, but are not used.
   91++BEF7              BackStairwayReserved:
-  92++BEF7 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+  92++BEF7 05 05 02 00      DEFB CYAN, CYAN, RED, NONE     ; Enemy colors
   93++BEFB
   94++BEFB              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++BEFB              BackStairwayItem:
@@ -17665,17 +17665,17 @@
  107++BF08
  108++BF08              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++BF08              BackStairwayEnemy1:
- 110++BF08 C0 00 20 00      DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
- 110++BF0C 40
+ 110++BF08 80 04 50 68      DEFB $80, 4, 80, 104, 235
+ 110++BF0C EB
  111++BF0D              BackStairwayEnemy2:
- 112++BF0D C0 06 68 30      DEFB $C0, 6, 104, 48, 96
- 112++BF11 60
+ 112++BF0D 80 1C 60 30      DEFB $80, 28, 96, 48, 192
+ 112++BF11 C0
  113++BF12              BackStairwayEnemy3:
- 114++BF12 80 0D 78 48      DEFB $80, 13, 120, 72, 184
- 114++BF16 B8
+ 114++BF12 C0 0F 18 00      DEFB $C0, 15, 24, 0, 64
+ 114++BF16 40
  115++BF17              BackStairwayEnemy4:
- 116++BF17 C0 29 C8 20      DEFB $C0, 41, 200, 32, 80
- 116++BF1B 50
+ 116++BF17 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 116++BF1B 00
  117++BF1C              BackStairwayEnemy5:
  118++BF1C 00 00 00 00      DEFB 0, 0, 0, 0, 0
  118++BF20 00
@@ -17823,7 +17823,7 @@
   89++C015
   90++C015              ;The next two bytes are copied to 32991, but are not used.
   91++C015              BackDoorReserved:
-  92++C015 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+  92++C015 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Enemy colors
   93++C019
   94++C019              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++C019              BackDoorItem:
@@ -17842,17 +17842,17 @@
  107++C026
  108++C026              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++C026              BackDoorEnemy1:
- 110++C026 C0 00 20 00      DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
- 110++C02A 40
+ 110++C026 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 110++C02A 00
  111++C02B              BackDoorEnemy2:
- 112++C02B C0 06 68 30      DEFB $C0, 6, 104, 48, 96
- 112++C02F 60
+ 112++C02B 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 112++C02F 00
  113++C030              BackDoorEnemy3:
- 114++C030 80 0D 78 48      DEFB $80, 13, 120, 72, 184
- 114++C034 B8
+ 114++C030 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 114++C034 00
  115++C035              BackDoorEnemy4:
- 116++C035 C0 29 C8 20      DEFB $C0, 41, 200, 32, 80
- 116++C039 50
+ 116++C035 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 116++C039 00
  117++C03A              BackDoorEnemy5:
  118++C03A 00 00 00 00      DEFB 0, 0, 0, 0, 0
  118++C03E 00
@@ -17867,7 +17867,7 @@
  124++C04D 00
  125++C04E
  126++C04E              BackDoorPosWilly:
- 127++C04E 64 65            db 100, 101                     ; Posizione di Willy
+ 127++C04E C8 3C            db 200, 60                     ; Posizione di Willy
  128++C050
  129++C050              BackDoorEnemyColors5_8:
  130++C050 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -18000,7 +18000,7 @@
   89++C133
   90++C133              ;The next two bytes are copied to 32991, but are not used.
   91++C133              WestWingReserved:
-  92++C133 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+  92++C133 05 06 02 00      DEFB CYAN, YELLOW, RED, NONE     ; Enemy colors
   93++C137
   94++C137              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++C137              WestWingItem:
@@ -18019,17 +18019,17 @@
  107++C144
  108++C144              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++C144              WestWingEnemy1:
- 110++C144 C0 00 20 00      DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
- 110++C148 40
+ 110++C144 C0 20 70 00      DEFB $C0, 32, 112, 0, 96
+ 110++C148 60
  111++C149              WestWingEnemy2:
- 112++C149 C0 06 68 30      DEFB $C0, 6, 104, 48, 96
- 112++C14D 60
+ 112++C149 D0 10 20 28      DEFB $D0, 16, 32, 40, 56
+ 112++C14D 38
  113++C14E              WestWingEnemy3:
- 114++C14E 80 0D 78 48      DEFB $80, 13, 120, 72, 184
- 114++C152 B8
+ 114++C14E 80 02 00 50      DEFB $80, 2, 0, 80, 80
+ 114++C152 50
  115++C153              WestWingEnemy4:
- 116++C153 C0 29 C8 20      DEFB $C0, 41, 200, 32, 80
- 116++C157 50
+ 116++C153 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 116++C157 00
  117++C158              WestWingEnemy5:
  118++C158 00 00 00 00      DEFB 0, 0, 0, 0, 0
  118++C15C 00
@@ -18044,7 +18044,7 @@
  124++C16B 00
  125++C16C
  126++C16C              WestWingPosWilly:
- 127++C16C 46 65            db 70, 101                     ; Posizione di Willy
+ 127++C16C 50 3C            db 80, 60                     ; Posizione di Willy
  128++C16E
  129++C16E              WestWingEnemyColors5_8:
  130++C16E 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -18177,7 +18177,7 @@
   89++C251
   90++C251              ;The next two bytes are copied to 32991, but are not used.
   91++C251              WestBedroomReserved:
-  92++C251 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+  92++C251 05 02 00 00      DEFB CYAN, RED, NONE, NONE     ; Enemy colors
   93++C255
   94++C255              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++C255              WestBedroomItem:
@@ -18196,17 +18196,17 @@
  107++C262
  108++C262              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++C262              WestBedroomEnemy1:
- 110++C262 C0 00 20 00      DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++C262 C0 00 58 00      DEFB $C0, 0, 88, 0, 64
  110++C266 40
  111++C267              WestBedroomEnemy2:
- 112++C267 C0 06 68 30      DEFB $C0, 6, 104, 48, 96
- 112++C26B 60
+ 112++C267 D0 29 70 00      DEFB $D0, 41, 112, 0, 80
+ 112++C26B 50
  113++C26C              WestBedroomEnemy3:
- 114++C26C 80 0D 78 48      DEFB $80, 13, 120, 72, 184
- 114++C270 B8
+ 114++C26C 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 114++C270 00
  115++C271              WestBedroomEnemy4:
- 116++C271 C0 29 C8 20      DEFB $C0, 41, 200, 32, 80
- 116++C275 50
+ 116++C271 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 116++C275 00
  117++C276              WestBedroomEnemy5:
  118++C276 00 00 00 00      DEFB 0, 0, 0, 0, 0
  118++C27A 00
@@ -18354,7 +18354,7 @@
   89++C36F
   90++C36F              ;The next two bytes are copied to 32991, but are not used.
   91++C36F              WestWingRoofReserved:
-  92++C36F 05 05 02 03      DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+  92++C36F 03 06 00 00      DEFB MAGENTA, YELLOW, NONE, NONE     ; Enemy colors
   93++C373
   94++C373              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++C373              WestWingRoofItem:
@@ -18373,17 +18373,17 @@
  107++C380
  108++C380              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++C380              WestWingRoofEnemy1:
- 110++C380 C0 00 20 00      DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
- 110++C384 40
+ 110++C380 80 01 38 68      DEFB $80, 1, 56, 104, 176
+ 110++C384 B0
  111++C385              WestWingRoofEnemy2:
- 112++C385 C0 06 68 30      DEFB $C0, 6, 104, 48, 96
- 112++C389 60
+ 112++C385 80 02 68 60      DEFB $80, 2, 104, 96, 232
+ 112++C389 E8
  113++C38A              WestWingRoofEnemy3:
- 114++C38A 80 0D 78 48      DEFB $80, 13, 120, 72, 184
- 114++C38E B8
+ 114++C38A 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 114++C38E 00
  115++C38F              WestWingRoofEnemy4:
- 116++C38F C0 29 C8 20      DEFB $C0, 41, 200, 32, 80
- 116++C393 50
+ 116++C38F 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 116++C393 00
  117++C394              WestWingRoofEnemy5:
  118++C394 00 00 00 00      DEFB 0, 0, 0, 0, 0
  118++C398 00

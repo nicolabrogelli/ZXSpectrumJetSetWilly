@@ -89,7 +89,7 @@ BackStairwayBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 BackStairwayReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB CYAN, CYAN, RED, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 BackStairwayItem:
@@ -107,13 +107,13 @@ BackStairwayUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 BackStairwayEnemy1:
-    DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 4, 80, 104, 235         
 BackStairwayEnemy2:
-    DEFB $C0, 6, 104, 48, 96 
+    DEFB $80, 28, 96, 48, 192 
 BackStairwayEnemy3:
-    DEFB $80, 13, 120, 72, 184 
+    DEFB $C0, 15, 24, 0, 64 
 BackStairwayEnemy4:
-    DEFB $C0, 41, 200, 32, 80 
+    DEFB 0, 0, 0, 0, 0
 BackStairwayEnemy5:
     DEFB 0, 0, 0, 0, 0
 BackStairwayEnemy6:
