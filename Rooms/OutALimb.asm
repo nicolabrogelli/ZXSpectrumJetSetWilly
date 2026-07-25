@@ -89,10 +89,10 @@ OutALimbItem:
     DEFB 96,184,190,93,90,53,42,21
 
 OutALimbDirection:
-    DEFB 10		;Room to the left (The Bridge)
-    DEFB 12		;Room to the right (None)
+    ROOM RoomsListTable.TheFrontDoorLayout		;Room to the left (The Bridge)
+    ROOM RoomsListTable.TreeTopLayout		;Room to the right (None)
     DEFB BLOCK	;Room above (None)
-    DEFB 9		;Room below (None)
+    ROOM RoomsListTable.OnABranchOverTheDriveLayout		;Room below (None)
 
 OutALimbUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

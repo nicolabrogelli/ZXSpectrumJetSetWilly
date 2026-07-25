@@ -97,10 +97,10 @@ InsideTheMegaTrunkItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 InsideTheMegaTrunkDirection:
-	DEFB 9									;Room to the left (On a Branch Over the Drive)
-	DEFB 7									;Room to the right (Cuckoo's Nest)
-	DEFB 12									;Room above (Tree Top)
-	DEFB 3									;Room below (Gfx_At the Foot of the MegaTree)
+	ROOM RoomsListTable.OnABranchOverTheDriveLayout									;Room to the left (On a Branch Over the Drive)
+	ROOM RoomsListTable.CuckoosNestLayout									;Room to the right (Cuckoo's Nest)
+	ROOM RoomsListTable.TreeTopLayout									;Room above (Tree Top)
+	ROOM RoomsListTable.AtTheFootTheMegaTreeLayout									;Room below (Gfx_At the Foot of the MegaTree)
 
 InsideTheMegaTrunkUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

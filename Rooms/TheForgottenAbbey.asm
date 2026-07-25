@@ -88,10 +88,10 @@ TheForgottenAbbeyItem:
     DEFB 24,36,219,219,36,24,24,24
 
 TheForgottenAbbeyDirection:
-	DEFB BLOCK					;Room to the left (The Wine Cellar - non ancora creata)
-	DEFB 5						;Room to the right (The Security Guard)
-	DEFB BLOCK					;Room above (None)
-	DEFB BLOCK					;Room below (None)
+	ROOM RoomsListTable.TheWineCellarLayout     					;Room to the left (The Wine Cellar - non ancora creata)
+	ROOM RoomsListTable.TheSecurityGuardLayout						;Room to the right (The Security Guard)
+	DEFB BLOCK					                                    ;Room above (None)
+	DEFB BLOCK					                                    ;Room below (None)
 
 
 TheForgottenAbbeyUnused:

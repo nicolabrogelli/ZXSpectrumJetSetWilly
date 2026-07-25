@@ -97,10 +97,10 @@ TheSecurityGuardItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheSecurityGuardDirection:
-    DEFB 19	                                ;Room to the left (The Forgotten Abbey)
-    DEFB 4	                                ;Room to the right (The Drive)
-    DEFB 10	                                ;Room above (The Front Door)
-    DEFB 6	                                ;Room below (Entrance to Hades)
+    ROOM RoomsListTable.TheForgottenAbbeyLayout ;Room to the left (The Forgotten Abbey)
+    ROOM RoomsListTable.TheDriveLayout	        ;Room to the right (The Drive)
+    ROOM RoomsListTable.TheFrontDoorLayout	    ;Room above (The Front Door)
+    ROOM RoomsListTable.EntranceToHadesLayout	;Room below (Entrance to Hades)
 
 TheSecurityGuardUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

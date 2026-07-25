@@ -97,10 +97,10 @@ OnTopOfTheHouseItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 OnTopOfTheHouseDirection:
-	DEFB 14		;Room to the left (Rescue Esmerelda)
+	ROOM RoomsListTable.RescueEsmereldaLayout		;Room to the left (Rescue Esmerelda)
 	DEFB BLOCK	;Room to the right (The Off Licence)
 	DEFB BLOCK	;Room above (The Off Licence)
-	DEFB 38		;Room below (Priests' Hole)
+	ROOM RoomsListTable.PriestsHoleLayout		;Room below (Priests' Hole)
 
 OnTopOfTheHouseUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

@@ -88,9 +88,9 @@ OntheRoofItem:
     DEFB 1,2,5,10,84,40,48,72
 
 OntheRoofDirection:
-	DEFB 48						;Room to the left (Nomen Luni)
-	DEFB 17						;Room to the right (Up on the Battlements)
-	DEFB 18						;Room above (On the Roof)
+	ROOM RoomsListTable.NomenLuniLayout						;Room to the left (Nomen Luni)
+	ROOM RoomsListTable.UpOnTheBattlementsLayout						;Room to the right (Up on the Battlements)
+	ROOM RoomsListTable.OntheRoofLayout						;Room above (On the Roof)
 	DEFB $FF					;Room below (The Off Licence)
 
 OntheRoofUnused:

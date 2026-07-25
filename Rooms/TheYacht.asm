@@ -97,10 +97,10 @@ TheYachtItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheYachtDirection:
-	DEFB 60		;Room to the left (The Bow)
-	DEFB 58		;Room to the right (The Beach)
-	DEFB BLOCK	;Room above (The Off Licence)
-	DEFB BLOCK	;Room below (The Off Licence)
+	ROOM RoomsListTable.TheBowLayout		;Room to the left (The Bow)
+	ROOM RoomsListTable.TheBeachLayout		;Room to the right (The Beach)
+	DEFB BLOCK	                            ;Room above (The Off Licence)
+	DEFB BLOCK	                            ;Room below (The Off Licence)
 
 TheYachtUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

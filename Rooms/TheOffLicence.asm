@@ -89,10 +89,10 @@ TheOffLicenceItem:
     DEFB 24,24,60,126,98,98,98,126
 
 TheOffLicenceDirection:
-    DEFB 1	                        ; Room to the left (The Bridge)
-    DEFB BLOCK	                    ; Room to the right (None)
-    DEFB BLOCK	                    ; Room above (None)
-    DEFB BLOCK	                    ; Room below (None)
+    ROOM RoomsListTable.TheBridgeLayout	    ; Room to the left (The Bridge)
+    DEFB BLOCK	                            ; Room to the right (None)
+    DEFB BLOCK	                            ; Room above (None)
+    DEFB BLOCK	                            ; Room below (None)
 
 TheOffLicenceUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

@@ -97,10 +97,10 @@ ABitOfTreeItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 ABitOfTreeDirection:
-	DEFB 37		;Room to the left (Orangery)
-	DEFB 35		;Room to the right (Master Bedroom)
-	DEFB 42		;Room above (Under the Roof)
-	DEFB 30		;Room below (The Banyan Tree)
+	ROOM RoomsListTable.OrangeryLayout		;Room to the left (Orangery)
+	ROOM RoomsListTable.MastreBedRoomLayout		;Room to the right (Master Bedroom)
+	ROOM RoomsListTable.UnderTheRoofLayout		;Room above (Under the Roof)
+	ROOM RoomsListTable.TheBanyanTreeLayout		;Room below (The Banyan Tree)
 
 ABitOfTreeUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

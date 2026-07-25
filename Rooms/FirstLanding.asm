@@ -97,10 +97,10 @@ FirstLandingItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 FirstLandingDirection:
-	DEFB 29				;Room to the left (The Nightmare Room)
-	DEFB 27				;Room to the right (The Chapel)
-	DEFB 34				;Room above (Top Landing)
-	DEFB 22				;Room below (To the Kitchens    Main Stairway)
+	ROOM RoomsListTable.TheNightmareRoomLayout				;Room to the left (The Nightmare Room)
+	ROOM RoomsListTable.TheChapelLayout				;Room to the right (The Chapel)
+	ROOM RoomsListTable.TopLandingLayout				;Room above (Top Landing)
+	ROOM RoomsListTable.TotheKitchensMainStairwayLayout				;Room below (To the Kitchens    Main Stairway)
 
 FirstLandingUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

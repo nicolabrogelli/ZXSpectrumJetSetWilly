@@ -97,9 +97,9 @@ TheBeachItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheBeachDirection:
-	DEFB 59		;Room to the left (The Yacht)
-	DEFB 51		;Room to the right (Tool  Shed)
-	DEFB 58		;Room above (The Beach)
+	ROOM RoomsListTable.TheYachtLayout		;Room to the left (The Yacht)
+	ROOM RoomsListTable.ToolShedLayout		;Room to the right (Tool  Shed)
+	ROOM RoomsListTable.TheBeachLayout		;Room above (The Beach)
 	DEFB BLOCK	;Room below (The Off Licence)
 
 TheBeachUnused:

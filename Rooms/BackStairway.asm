@@ -97,10 +97,10 @@ BackStairwayItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 BackStairwayDirection:
-	DEFB 53		;Room to the left (Back Door)
-	DEFB 25		;Room to the right (Cold Store)
-	DEFB 54		;Room above (West  Wing)
-	DEFB 49		;Room below (The Wine Cellar)
+	ROOM RoomsListTable.BackDoorLayout		;Room to the left (Back Door)
+	ROOM RoomsListTable.ColdStoreLayout		;Room to the right (Cold Store)
+	ROOM RoomsListTable.WestWingLayout		;Room above (West  Wing)
+	ROOM RoomsListTable.TheWineCellarLayout		;Room below (The Wine Cellar)
 
 BackStairwayUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

@@ -97,10 +97,10 @@ ToolShedItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 ToolShedDirection:
-	DEFB 58		;Room to the left (The Beach)
-	DEFB 49		;Room to the right (The Wine Cellar)
-	DEFB 53		;Room above (Back Door)
-	DEFB BLOCK	;Room below (The Off Licence)
+	ROOM RoomsListTable.TheBeachLayout		;Room to the left (The Beach)
+	ROOM RoomsListTable.TheWineCellarLayout	;Room to the right (The Wine Cellar)
+	ROOM RoomsListTable.BackDoorLayout		;Room above (Back Door)
+	DEFB BLOCK	                            ;Room below (The Off Licence)
 
 ToolShedUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

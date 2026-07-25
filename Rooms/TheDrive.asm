@@ -97,10 +97,10 @@ TheDriveItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheDriveDirection:
-    DEFB 5	                                ;Room to the left (The Security Guard)
-    DEFB 3	                                ;Room to the right  (Gfx_At the Foot of the MegaTree)
-    DEFB 6	                                ;Room above (Entrance to Hades)
-    DEFB 45                                 ;Room below (Under the Drive)
+    ROOM RoomsListTable.TheSecurityGuardLayout          ;Room to the left (The Security Guard)
+    ROOM RoomsListTable.AtTheFootTheMegaTreeLayout	    ;Room to the right  (Gfx_At the Foot of the MegaTree)
+    ROOM RoomsListTable.EntranceToHadesLayout	        ;Room above (Entrance to Hades)
+    ROOM RoomsListTable.UnderTheDriveLayout             ;Room below (Under the Drive)
 
 TheDriveUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

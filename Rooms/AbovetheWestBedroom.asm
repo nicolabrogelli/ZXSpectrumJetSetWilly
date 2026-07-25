@@ -98,9 +98,9 @@ AbovetheWestBedroomItem:
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 AbovetheWestBedroomDirection:
 	DEFB BLOCK	;Room to the left (The Off Licence)
-	DEFB 56		;Room to the right (West Wing Roof)
+	ROOM RoomsListTable.WestWingRoofLayout		;Room to the right (West Wing Roof)
 	DEFB BLOCK	;Room above (The Off Licence)
-	DEFB 55		;Room below (West Bedroom)
+	ROOM RoomsListTable.WestBedroomLayout		;Room below (West Bedroom)
 
 AbovetheWestBedroomUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

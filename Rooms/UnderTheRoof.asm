@@ -97,10 +97,10 @@ UnderTheRoofItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 UnderTheRoofDirection:
-	DEFB 43			;Room to the left (Conservatory Roof)
-	DEFB 41			;Room to the right (The Attic)
-	DEFB 48			;Room above (Nomen Luni)
-	DEFB 36			;Room below (A bit of tree)
+	ROOM RoomsListTable.ConservatoryRoofLayout			;Room to the left (Conservatory Roof)
+	ROOM RoomsListTable.TheAtticLayout			        ;Room to the right (The Attic)
+	ROOM RoomsListTable.NomenLuniLayout			        ;Room above (Nomen Luni)
+	ROOM RoomsListTable.ABitOfTreeLayout			    ;Room below (A bit of tree)
 
 UnderTheRoofUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

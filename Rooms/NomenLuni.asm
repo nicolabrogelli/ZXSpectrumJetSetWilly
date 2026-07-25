@@ -98,9 +98,9 @@ NomenLuniItem:
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 NomenLuniDirection:
 	DEFB BLOCK	;Room to the left (The Off Licence)
-	DEFB 18		;Room to the right (On the Roof)
+	ROOM RoomsListTable.OntheRoofLayout		;Room to the right (On the Roof)
 	DEFB BLOCK	;Room above (The Off Licence)
-	DEFB 42		;Room below (Under the Roof)
+	ROOM RoomsListTable.UnderTheRoofLayout		;Room below (Under the Roof)
 
 NomenLuniUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

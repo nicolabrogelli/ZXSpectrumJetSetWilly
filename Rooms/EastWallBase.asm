@@ -97,10 +97,10 @@ EastWallBaseItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 EastWallBaseDirection:
-	DEFB 27					;Room to the left (The Chapel)
+	ROOM RoomsListTable.TheChapelLayout					;Room to the left (The Chapel)
 	DEFB BLOCK				;Room to the right (The Off Licence)
-	DEFB 32					;Room above (Halfway up the East Wall)
-	DEFB 20					;Room below (Ballroom East)
+	ROOM RoomsListTable.HalfwayUpTheEastWallLayout					;Room above (Halfway up the East Wall)
+	ROOM RoomsListTable.BallRoomEastLayout					;Room below (Ballroom East)
 
 EastWallBaseUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

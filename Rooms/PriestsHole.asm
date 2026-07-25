@@ -97,10 +97,10 @@ PriestsHoleItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 PriestsHoleDirection:
-	DEFB 39		;Room to the left (Emergency Generator)
+	ROOM RoomsListTable.EmergencyGeneratorLayout		;Room to the left (Emergency Generator)
 	DEFB BLOCK	;Room to the right (The Off Licence)
-	DEFB 60		;Room above (The Bow)
-	DEFB 32 	;Room below (Halfway up the East Wall)
+	ROOM RoomsListTable.TheBowLayout		;Room above (The Bow)
+	ROOM RoomsListTable.HalfwayUpTheEastWallLayout 	;Room below (Halfway up the East Wall)
 
 PriestsHoleUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

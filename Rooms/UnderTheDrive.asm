@@ -84,10 +84,10 @@ UnderTheDriveItem:
     DEFB 129,100,205,15,97,218,51,26
 
 UnderTheDriveDirection:
-	DEFB 6						;Room to the left (Entrance to Hades)
-	DEFB 46						;Room to the right (Tree Root)
-	DEFB 4						;Room above (The Drive)
-	DEFB $FF					;Room below (The Off Licence)
+	ROOM RoomsListTable.EntranceToHadesLayout			    ;Room to the left (Entrance to Hades)
+	ROOM RoomsListTable.TreeRootLayout						;Room to the right (Tree Root)
+	ROOM RoomsListTable.TheDriveLayout						;Room above (The Drive)
+	DEFB BLOCK                          					;Room below (The Off Licence)
 
 UnderTheDriveUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

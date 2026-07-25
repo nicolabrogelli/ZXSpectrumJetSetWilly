@@ -97,10 +97,10 @@ TheBanyanTreeItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheBanyanTreeDirection:
-	DEFB 31				;Room to the left (Swimming Pool)
-	DEFB 29				;Room to the right (The Nightmare Room)
-	DEFB 36				;Room above (A bit of tree)
-	DEFB 24				;Room below (West of Kitchen)
+	ROOM RoomsListTable.SwimmingPoolLayout				;Room to the left (Swimming Pool)
+	ROOM RoomsListTable.TheNightmareRoomLayout				;Room to the right (The Nightmare Room)
+	ROOM RoomsListTable.ABitOfTreeLayout				;Room above (A bit of tree)
+	ROOM RoomsListTable.WestOfKitchenLayout				;Room below (West of Kitchen)
 
 TheBanyanTreeUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

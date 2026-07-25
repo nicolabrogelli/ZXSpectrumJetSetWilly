@@ -97,9 +97,9 @@ BallRoomEastItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 BallRoomEastDirection:
-    DEFB 21	        ;Room to the left (Ballroom West)
-    DEFB 11	        ;Room to the right (The Hall)
-    DEFB 26	        ;Room above (East Wall Base)
+    ROOM RoomsListTable.BallRoomWestLayout	        ;Room to the left (Ballroom West)
+    ROOM RoomsListTable.TheHallLayout	        ;Room to the right (The Hall)
+    ROOM RoomsListTable.EastWallBaseLayout	        ;Room above (East Wall Base)
     DEFB BLOCK	        ;Room below (The Off Licence)
 
 BallRoomEastUnused:

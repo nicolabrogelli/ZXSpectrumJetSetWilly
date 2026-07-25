@@ -88,10 +88,10 @@ WeMustPerformQuirkafleegItem:
     DEFB 24,36,24,44,94,94,231,102
 
 WeMustPerformQuirkafleegDirection:
-	DEFB 16					;Room to the left (We must perform a Quirkafleeg)
-	DEFB 14					;Room to the right (Rescue Esmerelda)
-	DEFB $FF				;Room above (The Off Licence)
-	DEFB $FF				;Room below (The Off Licence)
+	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout			;Room to the left (We must perform a Quirkafleeg)
+	ROOM RoomsListTable.RescueEsmereldaLayout					;Room to the right (Rescue Esmerelda)
+	DEFB BLOCK				                                    ;Room above (The Off Licence)
+	DEFB BLOCK				                                    ;Room below (The Off Licence)
 
 WeMustPerformQuirkafleegUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

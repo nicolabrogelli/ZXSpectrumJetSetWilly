@@ -97,10 +97,10 @@ TheChapelItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheChapelDirection:
-	DEFB 28				;Room to the left (First Landing)
-	DEFB 26				;Room to the right (East Wall Base)
-	DEFB 33				;Room above (The Bathroom)
-	DEFB 21				;Room below (Ballroom West)
+	ROOM RoomsListTable.FirstLandingLayout				;Room to the left (First Landing)
+	ROOM RoomsListTable.EastWallBaseLayout				;Room to the right (East Wall Base)
+	ROOM RoomsListTable.TheBathroomLayout				;Room above (The Bathroom)
+	ROOM RoomsListTable.BallRoomWestLayout				;Room below (Ballroom West)
 
 TheChapelUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

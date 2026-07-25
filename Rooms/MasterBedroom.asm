@@ -94,10 +94,10 @@ MastreBedRoomItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 MastreBedRoomDirection:
-    DEFB 36	                               ;Room to the left (A bit of tree)
-    DEFB 34                                ;Room to the right (Top Landing)
-    DEFB 41                                ;Room above  (The Attic)
-    DEFB 29                                ;Room below (The Nightmare Room)
+    ROOM RoomsListTable.ABitOfTreeLayout	                               ;Room to the left (A bit of tree)
+    ROOM RoomsListTable.TopLandingLayout                                ;Room to the right (Top Landing)
+    ROOM RoomsListTable.TheAtticLayout                                ;Room above  (The Attic)
+    ROOM RoomsListTable.TheNightmareRoomLayout                                ;Room below (The Nightmare Room)
 
 MastreBedRoomUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

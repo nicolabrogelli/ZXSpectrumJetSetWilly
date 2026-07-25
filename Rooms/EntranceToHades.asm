@@ -88,8 +88,8 @@ EntranceToHadesItem:
     DEFB 0,0,0,0,0,0,0,0
 
 EntranceToHadesDirection:
-    DEFB 14                        ;Room to the left (Rescue Esmerelda)
-    DEFB 5	                       ;Room to the right (The Security Guard)
+    ROOM RoomsListTable.RescueEsmereldaLayout                        ;Room to the left (Rescue Esmerelda)
+    ROOM RoomsListTable.TheSecurityGuardLayout	                       ;Room to the right (The Security Guard)
     DEFB BLOCK                       ;Room above (The Off Licence)
     DEFB BLOCK                       ;Room below (The Off Licence)
 

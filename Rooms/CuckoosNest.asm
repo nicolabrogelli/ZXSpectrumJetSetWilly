@@ -97,10 +97,10 @@ CuckoosNestItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 CuckoosNestDirection:
-	DEFB 8		;Room to the left (Inside the MegaTrunk)
+	ROOM RoomsListTable.InsideTheMegaTrunkLayout		;Room to the left (Inside the MegaTrunk)
 	DEFB BLOCK	;Room to the right (The Off Licence)
 	DEFB BLOCK	;Room above (The Off Licence)
-	DEFB 2		;Room below (Under the MegaTree)
+	ROOM RoomsListTable.UnderTheMegaTreeLayout		;Room below (Under the MegaTree)
 
 CuckoosNestUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

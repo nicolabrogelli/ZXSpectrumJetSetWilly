@@ -98,9 +98,9 @@ BackDoorItem:
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 BackDoorDirection:
 	DEFB BLOCK	;Room to the left (The Off Licence)
-	DEFB 52		;Room to the right (Back Stairway)
-	DEFB 55		;Room above (West Bedroom)
-	DEFB 51		;Room below (Tool  Shed)
+	ROOM RoomsListTable.BackStairwayLayout		;Room to the right (Back Stairway)
+	ROOM RoomsListTable.WestBedroomLayout		;Room above (West Bedroom)
+	ROOM RoomsListTable.ToolShedLayout		;Room below (Tool  Shed)
 
 BackDoorUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

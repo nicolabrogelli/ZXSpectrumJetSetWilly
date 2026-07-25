@@ -97,9 +97,9 @@ EmergencyGeneratorItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 EmergencyGeneratorDirection:
-	DEFB 40		;Room to the left (Dr Jones will never believe this)
-	DEFB 38		;Room to the right (Priests' Hole)
-	DEFB 14		;Room above (Rescue Esmerelda)
+	ROOM RoomsListTable.DrJonesWillNeverBelieveThisLayout		;Room to the left (Dr Jones will never believe this)
+	ROOM RoomsListTable.PriestsHoleLayout		;Room to the right (Priests' Hole)
+	ROOM RoomsListTable.RescueEsmereldaLayout		;Room above (Rescue Esmerelda)
 	DEFB BLOCK	;Room below (The Off Licence)
 
 EmergencyGeneratorUnused:

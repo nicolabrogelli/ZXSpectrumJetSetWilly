@@ -97,10 +97,10 @@ TheFrontDoorItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheFrontDoorDirection:
-	DEFB 11									;Room to the left (The Hall)
-	DEFB 9									;Room to the right (On a Branch Over the Drive)
-	DEFB 0									;Room above (The Off Licence)
-	DEFB 5									;Room below (The Security Guard)
+	ROOM RoomsListTable.TheHallLayout				    ;Room to the left (The Hall)
+	ROOM RoomsListTable.OnABranchOverTheDriveLayout		;Room to the right (On a Branch Over the Drive)
+	ROOM RoomsListTable.TheOffLicenceLayout				;Room above (The Off Licence)
+	ROOM RoomsListTable.TheSecurityGuardLayout			;Room below (The Security Guard)
 
 TheFrontDoorUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

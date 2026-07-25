@@ -97,10 +97,10 @@ WestOfKitchenItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 WestOfKitchenDirection:
-	DEFB 25						;Room to the left (Cold Store)
-	DEFB 23						;Room to the right (The Kitchen)
-	DEFB 30						;Room above (The Banyan Tree)
-	DEFB BLOCK					;Room below (The Off Licence)
+	ROOM RoomsListTable.ColdStoreLayout						    ;Room to the left (Cold Store)
+	ROOM RoomsListTable.TheKitchenLayout						;Room to the right (The Kitchen)
+	ROOM RoomsListTable.TheBanyanTreeLayout						;Room above (The Banyan Tree)
+	DEFB BLOCK					                                ;Room below (The Off Licence)
 
 WestOfKitchenUnused:
     DEFB 0                        ; Padding byte to keep Enemy1 offset at 240

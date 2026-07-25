@@ -97,10 +97,10 @@ TheNightmareRoomItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheNightmareRoomDirection:
-	DEFB 30				;Room to the left (The Banyan Tree)
-	DEFB 28				;Room to the right (First Landing)
-	DEFB BLOCK			;Room above (The Off Licence)
-	DEFB BLOCK			;Room below (The Off Licence)
+	ROOM RoomsListTable.TheBanyanTreeLayout				;Room to the left (The Banyan Tree)
+	ROOM RoomsListTable.FirstLandingLayout				;Room to the right (First Landing)
+	DEFB BLOCK			                                ;Room above (The Off Licence)
+	DEFB BLOCK			                                ;Room below (The Off Licence)
 
 TheNightmareRoomUnused:
     DEFB $15                          ; Padding byte to keep Enemy1 offset at 240

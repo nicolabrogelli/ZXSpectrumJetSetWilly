@@ -88,10 +88,10 @@ UpOnTheBattlementsItem:
     DEFB 24,36,24,44,94,94,231,102
 
 UpOnTheBattlementsDirection:
-	DEFB 18		;Room to the left (On the Roof)
-	DEFB 16		;Room to the right (We must perform a Quirkafleeg)
-	DEFB $FF	;Room above (The Off Licence)
-	DEFB $FF	;Room below (The Off Licence)
+	ROOM RoomsListTable.OntheRoofLayout		                ;Room to the left (On the Roof)
+	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout		;Room to the right (We must perform a Quirkafleeg)
+	DEFB BLOCK	                                            ;Room above (The Off Licence)
+	DEFB BLOCK	                                            ;Room below (The Off Licence)
 
 UpOnTheBattlementsUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

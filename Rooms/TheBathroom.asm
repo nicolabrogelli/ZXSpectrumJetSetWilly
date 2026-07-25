@@ -92,10 +92,10 @@ TheBathroomItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheBathroomDirection:
-    DEFB 34	                                ;Room to the left (Top Landing)
-    DEFB 32	                                ;Room to the right (Halfway up the East Wall)
-    DEFB 39	                                ;Room above (Emergency Generator)
-    DEFB 27                                 ;Room below (The Chapel)
+    ROOM RoomsListTable.TopLandingLayout	                                ;Room to the left (Top Landing)
+    ROOM RoomsListTable.HalfwayUpTheEastWallLayout	                                ;Room to the right (Halfway up the East Wall)
+    ROOM RoomsListTable.EmergencyGeneratorLayout	                                ;Room above (Emergency Generator)
+    ROOM RoomsListTable.TheChapelLayout                                 ;Room below (The Chapel)
 
 TheBathroomUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

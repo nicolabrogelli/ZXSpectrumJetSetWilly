@@ -97,10 +97,10 @@ OrangeryItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 OrangeryDirection:
-	DEFB 56				;Room to the left (West Wing Roof)
-	DEFB 36				;Room to the right (A bit of tree)
-	DEFB 43				;Room above (Conservatory Roof)
-	DEFB 31				;Room below (Swimming Pool)
+	ROOM RoomsListTable.WestWingRoofLayout				;Room to the left (West Wing Roof)
+	ROOM RoomsListTable.ABitOfTreeLayout				;Room to the right (A bit of tree)
+	ROOM RoomsListTable.ConservatoryRoofLayout				;Room above (Conservatory Roof)
+	ROOM RoomsListTable.SwimmingPoolLayout				;Room below (Swimming Pool)
 
 OrangeryUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

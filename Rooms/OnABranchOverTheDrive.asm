@@ -97,10 +97,10 @@ OnABranchOverTheDriveItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 OnABranchOverTheDriveDirection:
-	DEFB 10									;Room to the left (The Front Door)
-	DEFB 8									;Room to the right (Inside the MegaTrunk)
-	DEFB 13									;Room above (Out on a limb)
-	DEFB 4									;Room below (The Drive)
+	ROOM RoomsListTable.TheFrontDoorLayout									;Room to the left (The Front Door)
+	ROOM RoomsListTable.InsideTheMegaTrunkLayout									;Room to the right (Inside the MegaTrunk)
+	ROOM RoomsListTable.OutALimbLayout									;Room above (Out on a limb)
+	ROOM RoomsListTable.TheDriveLayout									;Room below (The Drive)
 
 OnABranchOverTheDriveUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

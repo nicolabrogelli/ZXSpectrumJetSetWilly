@@ -97,10 +97,10 @@ TreeTopItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TreeTopDirection:
-	DEFB 13	    								;Room to the left (Out on a limb)
-	DEFB BLOCK									;Room to the right (The Off Licence)
-	DEFB BLOCK									;Room above (The Off Licence)
-	DEFB 8		    							;Room below (Inside the MegaTrunk)
+	ROOM RoomsListTable.OutALimbLayout	    		;Room to the left (Out on a limb)
+	DEFB BLOCK									    ;Room to the right (The Off Licence)
+	DEFB BLOCK									    ;Room above (The Off Licence)
+	ROOM RoomsListTable.InsideTheMegaTrunkLayout	;Room below (Inside the MegaTrunk)
 
 TreeTopUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

@@ -97,10 +97,10 @@ TheAtticItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheAtticDirection:
-	DEFB 42		;Room to the left (Under the Roof)
-	DEFB 40		;Room to the right (Dr Jones will never believe this)
+	ROOM RoomsListTable.UnderTheRoofLayout		;Room to the left (Under the Roof)
+	ROOM RoomsListTable.DrJonesWillNeverBelieveThisLayout		;Room to the right (Dr Jones will never believe this)
 	DEFB BLOCK	;Room above (The Off Licence)
-	DEFB 34		;Room below (Top Landing)
+	ROOM RoomsListTable.TopLandingLayout		;Room below (Top Landing)
 
 TheAtticUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

@@ -97,10 +97,10 @@ WatchTowerItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 WatchTowerDirection:
-	DEFB BLOCK	;Room to the left (The Off Licence)
-	DEFB BLOCK	;Room to the right (The Off Licence)
-	DEFB BLOCK	;Room above (The Off Licence)
-	DEFB 16		;Room below (We must perform a Quirkafleeg)
+	DEFB BLOCK	                                            ;Room to the left (The Off Licence)
+	DEFB BLOCK	                                            ;Room to the right (The Off Licence)
+	DEFB BLOCK	                                            ;Room above (The Off Licence)
+	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout		;Room below (We must perform a Quirkafleeg)
 
 WatchTowerUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

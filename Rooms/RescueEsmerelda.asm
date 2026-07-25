@@ -89,10 +89,10 @@ RescueEsmereldaItem:
     DEFB 255,73,73,73,73,73,73,255
 
 RescueEsmereldaDirection:
-	DEFB 15						    ; Room to the left (I'm sure I've seen this before..)
-	DEFB 44						    ; Room to the right (On top of the house)
-	DEFB 20						    ; Room above (Ballroom East)
-	DEFB 39						    ; Room below (Emergency Generator)
+	ROOM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout						    ; Room to the left (I'm sure I've seen this before..)
+	ROOM RoomsListTable.OnTopOfTheHouseLayout						    ; Room to the right (On top of the house)
+	ROOM RoomsListTable.BallRoomEastLayout						    ; Room above (Ballroom East)
+	ROOM RoomsListTable.EmergencyGeneratorLayout						    ; Room below (Emergency Generator)
 
 RescueEsmereldaUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

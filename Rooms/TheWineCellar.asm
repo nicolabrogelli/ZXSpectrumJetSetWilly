@@ -97,10 +97,10 @@ TheWineCellarItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheWineCellarDirection:
-	DEFB 51		;Room to the left (Tool  Shed)
-	DEFB 19		;Room to the right (The Forgotten Abbey)
-	DEFB 52		;Room above (Back Stairway)
-	DEFB BLOCK	;Room below (The Off Licence)
+	ROOM RoomsListTable.ToolShedLayout		    ;Room to the left (Tool  Shed)
+	ROOM RoomsListTable.TheForgottenAbbeyLayout	;Room to the right (The Forgotten Abbey)
+	ROOM RoomsListTable.BackStairwayLayout		;Room above (Back Stairway)
+	DEFB BLOCK	                                ;Room below (The Off Licence)
 
 TheWineCellarUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

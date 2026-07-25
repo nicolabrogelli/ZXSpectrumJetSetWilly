@@ -97,10 +97,10 @@ WestWingItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 WestWingDirection:
-	DEFB 55			;Room to the left (West Bedroom)
-	DEFB 31			;Room to the right (Swimming Pool)
-	DEFB 56			;Room above (West Wing Roof)
-	DEFB 52			;Room below (Back Stairway)
+	ROOM RoomsListTable.WestBedroomLayout			;Room to the left (West Bedroom)
+	ROOM RoomsListTable.SwimmingPoolLayout			;Room to the right (Swimming Pool)
+	ROOM RoomsListTable.WestWingRoofLayout			;Room above (West Wing Roof)
+	ROOM RoomsListTable.BackStairwayLayout			;Room below (Back Stairway)
 
 WestWingUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

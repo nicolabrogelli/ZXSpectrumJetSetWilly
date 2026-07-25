@@ -97,10 +97,10 @@ TotheKitchensMainStairwayItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TotheKitchensMainStairwayDirection:
-	DEFB 23					;Room to the left (The Kitchen)
-	DEFB 21					;Room to the right (Ballroom West)
-	DEFB 28					;Room above (First Landing)
-	DEFB BLOCK				;Room below (The Off Licence)
+	ROOM RoomsListTable.TheKitchenLayout					;Room to the left (The Kitchen)
+	ROOM RoomsListTable.BallRoomWestLayout					;Room to the right (Ballroom West)
+	ROOM RoomsListTable.FirstLandingLayout					;Room above (First Landing)
+	DEFB BLOCK				                                ;Room below (The Off Licence)
 
 TotheKitchensMainStairwayUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

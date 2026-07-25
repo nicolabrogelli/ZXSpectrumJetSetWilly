@@ -69,6 +69,9 @@ BLOCK:          EQU $FF
     ENDM
 
 
+    MACRO ROOM room_sublabel
+        db (room_sublabel - RoomsListTable) / 2
+    ENDM
 
 
 

@@ -98,9 +98,9 @@ ConservatoryRoofItem:
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 ConservatoryRoofDirection:
 	DEFB BLOCK		;Room to the left (The Off Licence)
-	DEFB 42			;Room to the right (Under the Roof)
+	ROOM RoomsListTable.UnderTheRoofLayout			;Room to the right (Under the Roof)
 	DEFB BLOCK		;Room above (The Off Licence)
-	DEFB 37			;Room below (Orangery)
+	ROOM RoomsListTable.OrangeryLayout			;Room below (Orangery)
 
 ConservatoryRoofUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

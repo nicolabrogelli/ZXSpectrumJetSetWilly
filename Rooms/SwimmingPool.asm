@@ -97,10 +97,10 @@ SwimmingPoolItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 SwimmingPoolDirection:
-	DEFB 54				;Room to the left (West  Wing)
-	DEFB 30				;Room to the right (The Banyan Tree)
-	DEFB 37				;Room above (Orangery)
-	DEFB 25				;Room below (Cold Store)
+	ROOM RoomsListTable.WestWingLayout				;Room to the left (West  Wing)
+	ROOM RoomsListTable.TheBanyanTreeLayout				;Room to the right (The Banyan Tree)
+	ROOM RoomsListTable.OrangeryLayout				;Room above (Orangery)
+	ROOM RoomsListTable.ColdStoreLayout				;Room below (Cold Store)
 
 SwimmingPoolUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

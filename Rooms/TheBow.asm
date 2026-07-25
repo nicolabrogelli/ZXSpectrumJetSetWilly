@@ -98,7 +98,7 @@ TheBowItem:
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheBowDirection:
 	DEFB BLOCK	;Room to the left (The Off Licence)
-	DEFB 59		;Room to the right (The Yacht)
+	ROOM RoomsListTable.TheYachtLayout		;Room to the right (The Yacht)
 	DEFB BLOCK	;Room above (The Off Licence)
 	DEFB BLOCK	;Room below (The Off Licence)
 

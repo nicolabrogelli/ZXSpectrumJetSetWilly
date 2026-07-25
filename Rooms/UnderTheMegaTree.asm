@@ -97,10 +97,10 @@ UnderTheMegaTreeItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 UnderTheMegaTreeDirection:
-    DEFB 3	                                ;Room to the left (Gfx_At the Foot of the MegaTree)
-    DEFB 1	                                ;Room to the right (The Bridge)
-    DEFB 7                                  ;Room above (CuckoosNest)
-    DEFB BLOCK                               ;Room below (None)
+    ROOM RoomsListTable.AtTheFootTheMegaTreeLayout	    ;Room to the left (Gfx_At the Foot of the MegaTree)
+    ROOM RoomsListTable.TheBridgeLayout	                ;Room to the right (The Bridge)
+    ROOM RoomsListTable.CuckoosNestLayout               ;Room above (CuckoosNest)
+    DEFB BLOCK                                          ;Room below (None)
 
 UnderTheMegaTreeUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

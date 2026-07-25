@@ -97,10 +97,10 @@ HalfwayUpTheEastWallItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 HalfwayUpTheEastWallDirection:
-	DEFB 33			;Room to the left (The Bathroom)
+	ROOM RoomsListTable.TheBathroomLayout			;Room to the left (The Bathroom)
 	DEFB BLOCK		;Room to the right (The Off Licence)
-	DEFB 38			;Room above (Priests' Hole)
-	DEFB 26			;Room below (East Wall Base)
+	ROOM RoomsListTable.PriestsHoleLayout			;Room above (Priests' Hole)
+	ROOM RoomsListTable.EastWallBaseLayout			;Room below (East Wall Base)
 
 HalfwayUpTheEastWallUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

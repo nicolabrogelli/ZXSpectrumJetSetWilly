@@ -97,10 +97,10 @@ TopLandingItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TopLandingDirection:
-	DEFB 35			;Room to the left (Master Bedroom)
-	DEFB 33			;Room to the right (The Bathroom)
-	DEFB 40			;Room above (Dr Jones will never believe this)
-	DEFB 28			;Room below (First Landing)
+	ROOM RoomsListTable.MastreBedRoomLayout			        ;Room to the left (Master Bedroom)
+	ROOM RoomsListTable.TheBathroomLayout			        ;Room to the right (The Bathroom)
+	ROOM RoomsListTable.DrJonesWillNeverBelieveThisLayout	;Room above (Dr Jones will never believe this)
+	ROOM RoomsListTable.FirstLandingLayout			        ;Room below (First Landing)
 
 TopLandingUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

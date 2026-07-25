@@ -97,10 +97,10 @@ TreeRootItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TreeRootDirection:
-	DEFB 45				;Room to the left (Under the Drive)
-	DEFB 47				;Room to the right ([)
-	DEFB 3				;Room above (At the Foot of the MegaTree)
-	DEFB BLOCK			;Room below (The Off Licence)
+	ROOM RoomsListTable.UnderTheDriveLayout			;Room to the left (Under the Drive)
+	ROOM RoomsListTable.NotUsedLayout				;Room to the right ([)
+	ROOM RoomsListTable.AtTheFootTheMegaTreeLayout	;Room above (At the Foot of the MegaTree)
+	DEFB BLOCK			                            ;Room below (The Off Licence)
 
 TreeRootUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

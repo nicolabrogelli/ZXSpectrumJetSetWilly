@@ -97,9 +97,9 @@ ColdStoreItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 ColdStoreDirection:
-	DEFB 52						;Room to the left (Back Stairway)
-	DEFB 24						;Room to the right (West of Kitchen)
-	DEFB 31						;Room above (Swimming Pool)
+	ROOM RoomsListTable.BackStairwayLayout						;Room to the left (Back Stairway)
+	ROOM RoomsListTable.WestOfKitchenLayout						;Room to the right (West of Kitchen)
+	ROOM RoomsListTable.SwimmingPoolLayout						;Room above (Swimming Pool)
 	DEFB BLOCK					;Room below (The Off Licence)
 
 ColdStoreUnused:

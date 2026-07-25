@@ -97,9 +97,9 @@ AtTheFootTheMegaTreeItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 AtTheFootTheMegaTreeDirection:
-    DEFB 4	                                ;Room to the left (The Drive)
-    DEFB 2	                                ;Room to the right (Under the MegaTree)
-    DEFB 8	                                ;Room above (Inside the MegaTrunk)
+    ROOM RoomsListTable.TheDriveLayout	                                ;Room to the left (The Drive)
+    ROOM RoomsListTable.UnderTheMegaTreeLayout	                                ;Room to the right (Under the MegaTree)
+    ROOM RoomsListTable.InsideTheMegaTrunkLayout	                                ;Room above (Inside the MegaTrunk)
     DEFB BLOCK                                ;Room below (None)
 
 AtTheFootTheMegaTreeUnused:

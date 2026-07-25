@@ -97,9 +97,9 @@ DrJonesWillNeverBelieveThisItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 DrJonesWillNeverBelieveThisDirection:
-	DEFB 41		;Room to the left (The Attic)
-	DEFB 39		;Room to the right (Emergency Generator)
-	DEFB 16		;Room above (We must perform a Quirkafleeg)
+	ROOM RoomsListTable.TheAtticLayout		;Room to the left (The Attic)
+	ROOM RoomsListTable.EmergencyGeneratorLayout		;Room to the right (Emergency Generator)
+	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout		;Room above (We must perform a Quirkafleeg)
 	DEFB BLOCK	;Room below (The Off Licence)
 
 DrJonesWillNeverBelieveThisUnused:
