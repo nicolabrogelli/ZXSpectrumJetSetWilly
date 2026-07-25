@@ -154,6 +154,24 @@ ItemsTable:
     ITEM RoomsListTable.WatchTowerLayout, 24, 9, YELLOW, 0 
     ITEM RoomsListTable.WatchTowerLayout, 25, 8, MAGENTA, 0 
 
+    ; Stanza 56 (West Wing Roof)
+    ITEM RoomsListTable.WestWingRoofLayout, 6, 10, YELLOW, 0        
+    ITEM RoomsListTable.WestWingRoofLayout, 9, 14, MAGENTA, 0 
+    ITEM RoomsListTable.WestWingRoofLayout, 18, 13, MAGENTA, 0     
+    ITEM RoomsListTable.WestWingRoofLayout, 27, 11, CYAN, 0   
+
+    ; Stanza 57 (Above the West Bedroom)
+    ITEM RoomsListTable.AbovetheWestBedroomLayout, 23, 9, MAGENTA, 0    
+
+    ; Stanza 58 (The Beach)
+    ITEM RoomsListTable.TheBeachLayout, 22, 13, CYAN, 0        
+
+    ; Stanza 59 (The Yacht)
+    ITEM RoomsListTable.TheYachtLayout, 13, 14, MAGENTA, 0        
+
+    ; Stanza 60 (The Bow)
+    ITEM RoomsListTable.TheBowLayout, 26, 8, MAGENTA, 0      
+
     db $FF                        ; Fine tabella
 
 ; -------------------------------------------------------------------
@@ -879,7 +897,7 @@ DetermineCurrentRoomID:
 
 .not_thewinecellar:
     ; ---------------------------------------------------------------
-    ; Confronto con TheWineCellar
+    ; Confronto con WatchTowerLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
     ld   de, WatchTowerLayout
@@ -892,16 +910,142 @@ DetermineCurrentRoomID:
 
 .not_watchtower:
     ; ---------------------------------------------------------------
-    ; Confronto con TheWineCellar
+    ; Confronto con ToolShedLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
     ld   de, ToolShedLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_toolshed
 
     ld   a, 51               ; Room ID = 51
     jp   .set_room    
+
+.not_toolshed:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con BackStairwayLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, BackStairwayLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_backstairway
+
+    ld   a, 52               ; Room ID = 52
+    jp   .set_room
+
+.not_backstairway:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con BackDoorLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, BackDoorLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_backdoor
+
+    ld   a, 53               ; Room ID = 53
+    jp   .set_room
+
+.not_backdoor:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con WestWingLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WestWingLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_westwing
+
+    ld   a, 54               ; Room ID = 54
+    jp   .set_room
+
+.not_westwing:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con WestBedroomLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WestBedroomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_westbedroom
+
+    ld   a, 55               ; Room ID = 55
+    jp   .set_room
+
+.not_westbedroom:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con WestWingRoofLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WestWingRoofLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_westwingroof
+
+    ld   a, 56               ; Room ID = 56
+    jp   .set_room
+
+.not_westwingroof:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con AbovetheWestBedroomLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, AbovetheWestBedroomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_abovethewestbedroom
+
+    ld   a, 57               ; Room ID = 57
+    jp   .set_room
+
+.not_abovethewestbedroom:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheBeachLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheBeachLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_thebeach
+
+    ld   a, 58               ; Room ID = 58
+    jp   .set_room
+
+.not_thebeach:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheYachtLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheYachtLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_theyacht
+
+    ld   a, 59               ; Room ID = 59
+    jp   .set_room
+
+.not_theyacht:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheBowLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheBowLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+
+    ld   a, 60               ; Room ID = 60
+    jp   .set_room
 
 
 .unknown:

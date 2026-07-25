@@ -89,7 +89,7 @@ TheBeachBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheBeachReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB NONE, NONE, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheBeachItem:
@@ -107,13 +107,13 @@ TheBeachUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBeachEnemy1:
-    DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB 0, 0, 0, 0, 0
 TheBeachEnemy2:
-    DEFB $C0, 6, 104, 48, 96 
+    DEFB 0, 0, 0, 0, 0
 TheBeachEnemy3:
-    DEFB $80, 13, 120, 72, 184 
+    DEFB 0, 0, 0, 0, 0
 TheBeachEnemy4:
-    DEFB $C0, 41, 200, 32, 80 
+    DEFB 0, 0, 0, 0, 0
 TheBeachEnemy5:
     DEFB 0, 0, 0, 0, 0
 TheBeachEnemy6:
@@ -124,7 +124,7 @@ TheBeachEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheBeachPosWilly:
-    db 100, 80                     ; Posizione di Willy
+    db 100, 70                     ; Posizione di Willy
     
 TheBeachEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

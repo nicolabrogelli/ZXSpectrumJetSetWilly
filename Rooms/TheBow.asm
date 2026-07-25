@@ -89,7 +89,7 @@ TheBowBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheBowReserved:
-    DEFB CYAN, CYAN, NONE, NONE     ; Enemy colors
+    DEFB YELLOW, MAGENTA, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheBowItem:
@@ -107,7 +107,7 @@ TheBowUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBowEnemy1:
-    DEFB $80, 3, 176, 24, 235         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 3, 176, 24, 235         
 TheBowEnemy2:
     DEFB $80, 27, 136, 104, 235 
 TheBowEnemy3:

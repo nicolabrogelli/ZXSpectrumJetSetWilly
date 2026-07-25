@@ -89,7 +89,7 @@ TheYachtBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheYachtReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB MAGENTA, RED, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheYachtItem:
@@ -107,13 +107,13 @@ TheYachtUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheYachtEnemy1:
-    DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, 1, 32, 104, 112         
 TheYachtEnemy2:
-    DEFB $C0, 6, 104, 48, 96 
+    DEFB $C0, 40, 168, 64, 104 
 TheYachtEnemy3:
-    DEFB $80, 13, 120, 72, 184 
+    DEFB 0, 0, 0, 0, 0
 TheYachtEnemy4:
-    DEFB $C0, 41, 200, 32, 80 
+    DEFB 0, 0, 0, 0, 0
 TheYachtEnemy5:
     DEFB 0, 0, 0, 0, 0
 TheYachtEnemy6:
@@ -124,7 +124,7 @@ TheYachtEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheYachtPosWilly:
-    db 100, 101                     ; Posizione di Willy
+    db 60, 101                     ; Posizione di Willy
     
 TheYachtEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
