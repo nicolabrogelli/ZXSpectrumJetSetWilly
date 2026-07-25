@@ -64,10 +64,10 @@ TheOffLicenceNasty:
     DEFB 5,248,136,158,189,189,158,136,248  ; Nastry
 
 TheOffLicenceRamp:                          ; Ramp Solid
-    DEFB 7,3,0,12,0,48,0,192,0              
+    DEFB 7,3,0,12,0,48,0,192,0              ; Ramp Solid
 
 TheOffLicenceConveyor:                      ; Conveyor Solid
-    DEFB 67,51,255,51,0,255,0,170,0
+    DEFB 67,51,255,51,0,255,0,170,0                      ; Conveyor Solid
 
 TheOffLicenceConveyorData:
     DEFB 0
@@ -89,20 +89,20 @@ TheOffLicenceItem:
     DEFB 24,24,60,126,98,98,98,126
 
 TheOffLicenceDirection:
-    DEFB 1	                        ; Room to the left (The Bridge)
-    DEFB BLOCK	                    ; Room to the right (None)
-    DEFB BLOCK	                    ; Room above (None)
-    DEFB BLOCK	                    ; Room below (None)
+    ROOM RoomsListTable.TheBridgeLayout	    ; Room to the left (The Bridge)
+    DEFB BLOCK	                            ; Room to the right (None)
+    DEFB BLOCK	                            ; Room above (None)
+    DEFB BLOCK	                            ; Room below (None)
 
 TheOffLicenceUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 TheOffLicenceEnemy1:
-    DEFB $80, 3, 140, 56, 230       ; [Radar (41056) - horizontal], Guardinan = 12, Starts X=140, Y=56, Limit X=230
+    DEFB $80, RADAR, 140, 56, 230       
 TheOffLicenceEnemy2:
-    DEFB $C0, 6, 60, 0, 104         ; [Face (41132) - vertical], Guardinan = 44, Starts X=60, Y=56, Limit Y=106
+    DEFB $C0, FACCIA, 60, 0, 104         
 TheOffLicenceEnemy3:
-    DEFB $C0, 9, 80, 8, 104         ; [Ball (41040) - vertical], Guardinan = 10, Starts X=80, Y=8, Limit Y=104
+    DEFB $C0, PALLA, 80, 8, 104         
 TheOffLicenceEnemy4:
     DEFB 0, 0, 0, 0, 0              
 TheOffLicenceEnemy5:

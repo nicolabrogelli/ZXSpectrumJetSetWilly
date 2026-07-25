@@ -53,23 +53,23 @@ TheSecurityGuardTile:
     DEFM "       The Security Guard       "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-TheSecurityGuardBackground:
+TheSecurityGuardBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	            ;Background
 
 TheSecurityGuardFloor:
-    DEFB 4,255,255,170,85,170,85,170,85	    ;Floor Solid
+    DEFB 4,255,255,170,85,170,85,170,85       ; Floor Solid
 
 TheSecurityGuardWall:
-    DEFB 13,14,198,149,176,54,134,192,237	;Wall Solid
+    DEFB 13,14,198,149,176,54,134,192,237   ; Wall Solid
 
 TheSecurityGuardNasty:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Nasty
+    DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
 
 TheSecurityGuardRamp:
-    DEFB 7,224,64,32,16,14,4,2,1	        ;Ramp Solid
+    DEFB 7,224,64,32,16,14,4,2,1              ; Ramp Solid
 
 TheSecurityGuardConveyor:
-    DEFB 66,111,0,183,0,170,85,170,85	    ;Conveyor
+    DEFB 66,111,0,183,0,170,85,170,85                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TheSecurityGuardConveyorData:
@@ -89,7 +89,7 @@ TheSecurityGuardBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheSecurityGuardReserved:
-    DEFB RED, GREEN, YELLOW, RED                         ; Enemy colors: all WHITE (7)
+    DEFB RED, GREEN, YELLOW, RED     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheSecurityGuardItem:
@@ -97,23 +97,23 @@ TheSecurityGuardItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheSecurityGuardDirection:
-    DEFB 19	                                ;Room to the left (The Forgotten Abbey)
-    DEFB 4	                                ;Room to the right (The Drive)
-    DEFB 10	                                ;Room above (The Front Door)
-    DEFB 6	                                ;Room below (Entrance to Hades)
+    ROOM RoomsListTable.TheForgottenAbbeyLayout ;Room to the left (The Forgotten Abbey)
+    ROOM RoomsListTable.TheDriveLayout	        ;Room to the right (The Drive)
+    ROOM RoomsListTable.TheFrontDoorLayout	    ;Room above (The Front Door)
+    ROOM RoomsListTable.EntranceToHadesLayout	;Room below (Entrance to Hades)
 
 TheSecurityGuardUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheSecurityGuardEnemy1:
-    DEFB $C0, 11, 88, 40, 104          ; [Soldato (40976) - horizontal], Guardian = 2, Starts X=88, Y=40, Limit X=104
+    DEFB $C0, SOLDATO, 88, 40, 104          
 TheSecurityGuardEnemy2:
-    DEFB $D0, 11, 113, 44, 104         ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=113, Y=44, Limit X=104
+    DEFB $D0, SOLDATO, 113, 44, 104      
 TheSecurityGuardEnemy3:
-    DEFB $E0, 11, 136, 44, 104         ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=136, Y=44, Limit X=104
+    DEFB $E0, SOLDATO, 136, 44, 104      
 TheSecurityGuardEnemy4:
-    DEFB $F0, 11, 184, 48, 96          ; [Soldato (40992) - horizontal], Guardina = 3, Starts X=184, Y=48, Limit X=96
+    DEFB $F0, SOLDATO, 184, 48, 96          
 TheSecurityGuardEnemy5:
     DEFB 0, 0, 0, 0, 0
 TheSecurityGuardEnemy6:
@@ -124,7 +124,7 @@ TheSecurityGuardEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheSecurityGuardPosWilly:
-    db 200, 101                         ; Posizione di Willy
+    db 200, 104                     ; Posizione di Willy
 
 TheSecurityGuardEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

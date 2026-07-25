@@ -25,40 +25,152 @@
 ; -------------------------------------------------------------------
 ItemsTable:
     ; Stanza 0 (The Off Licence)
-    db 0, 30, 4, YELLOW, 0              ; Oggetto 1 alla colonna X=30,  riga Y=4, YELLOW, (Stato: 0=attivo)    
-    db 0, 29, 4, CYAN, 0                ; Oggetto 2 alla colonna X=29,  riga Y=4, CYAN, (Stato: 0=attivo)      
-    db 0, 28, 4, GREEN, 0               ; Oggetto 4 alla colonna X=28,  riga Y=4, GREEN, (Stato: 0=attivo)      
-    db 0, 27, 4, MAGENTA, 0             ; Oggetto 5 alla colonna X=27,  riga Y=4, GREEN, (Stato: 0=attivo)   
-    db 0, 26, 4, YELLOW, 0              ; Oggetto 6 alla colonna X=26,  riga Y=4, YELLOW, (Stato: 0=attivo)      
-    db 0, 25, 4, CYAN, 0                ; Oggetto 7 alla colonna X=25,  riga Y=4, CYAN, (Stato: 0=attivo)   
-    db 0, 24, 4, GREEN, 0               ; Oggetto 8 alla colonna X=24,  riga Y=4, GREEN, (Stato: 0=attivo)      
-    db 0, 23, 4, MAGENTA, 0             ; Oggetto 9 alla colonna X=23,  riga Y=4, MAGENTA, (Stato: 0=attivo)   
-    db 0, 22, 4, YELLOW, 0              ; Oggetto 10 alla colonna X=22, riga Y=4, YELLOW, (Stato: 0=attivo)      
-    db 0, 21, 4, CYAN, 0                ; Oggetto 11 alla colonna X=21, riga Y=4, CYAN, (Stato: 0=attivo)   
-    db 0, 20, 4, GREEN, 0               ; Oggetto 12 alla colonna X=20, riga Y=4, GREEN, (Stato: 0=attivo)      
-    db 0, 19, 4, MAGENTA, 0             ; Oggetto 13 alla colonna X=19, riga Y=4, MAGENTA, (Stato: 0=attivo)  
+    ITEM RoomsListTable.TheOffLicenceLayout, 30, 4, YELLOW, 0              ; Oggetto 1 alla colonna X=30,  riga Y=4, YELLOW, (Stato: 0=attivo)    
+    ITEM RoomsListTable.TheOffLicenceLayout, 29, 4, CYAN, 0                ; Oggetto 2 alla colonna X=29,  riga Y=4, CYAN, (Stato: 0=attivo)      
+    ITEM RoomsListTable.TheOffLicenceLayout, 28, 4, GREEN, 0               ; Oggetto 4 alla colonna X=28,  riga Y=4, GREEN, (Stato: 0=attivo)      
+    ITEM RoomsListTable.TheOffLicenceLayout, 27, 4, MAGENTA, 0             ; Oggetto 5 alla colonna X=27,  riga Y=4, GREEN, (Stato: 0=attivo)   
+    ITEM RoomsListTable.TheOffLicenceLayout, 26, 4, YELLOW, 0              ; Oggetto 6 alla colonna X=26,  riga Y=4, YELLOW, (Stato: 0=attivo)      
+    ITEM RoomsListTable.TheOffLicenceLayout, 25, 4, CYAN, 0                ; Oggetto 7 alla colonna X=25,  riga Y=4, CYAN, (Stato: 0=attivo)   
+    ITEM RoomsListTable.TheOffLicenceLayout, 24, 4, GREEN, 0               ; Oggetto 8 alla colonna X=24,  riga Y=4, GREEN, (Stato: 0=attivo)      
+    ITEM RoomsListTable.TheOffLicenceLayout, 23, 4, MAGENTA, 0             ; Oggetto 9 alla colonna X=23,  riga Y=4, MAGENTA, (Stato: 0=attivo)   
+    ITEM RoomsListTable.TheOffLicenceLayout, 22, 4, YELLOW, 0              ; Oggetto 10 alla colonna X=22, riga Y=4, YELLOW, (Stato: 0=attivo)      
+    ITEM RoomsListTable.TheOffLicenceLayout, 21, 4, CYAN, 0                ; Oggetto 11 alla colonna X=21, riga Y=4, CYAN, (Stato: 0=attivo)   
+    ITEM RoomsListTable.TheOffLicenceLayout, 20, 4, GREEN, 0               ; Oggetto 12 alla colonna X=20, riga Y=4, GREEN, (Stato: 0=attivo)      
+    ITEM RoomsListTable.TheOffLicenceLayout, 19, 4, MAGENTA, 0             ; Oggetto 13 alla colonna X=19, riga Y=4, MAGENTA, (Stato: 0=attivo)  
     
     ; Stanza 1 (The Bridge)
     
     ; Stanza 2 (Under the MegaTree)
-    db 2, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)  
+    ITEM RoomsListTable.UnderTheMegaTreeLayout, 22, 0, MAGENTA, 0             ; Oggetto 1 alla colonna X=22, riga Y=0, MAGENTA, (Stato: 0=attivo)  
 
     ; Stanza 3 (Gfx_At The Foot TheMega Tree)
-    db 3, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)  
-    db 3, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)  
-    db 3, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)  
+    ITEM RoomsListTable.AtTheFootTheMegaTreeLayout, 1, 11, MAGENTA, 0             ; Oggetto 1 alla colonna X=1, riga Y=11, MAGENTA, (Stato: 0=attivo)  
+    ITEM RoomsListTable.AtTheFootTheMegaTreeLayout, 4, 10, GREEN, 0               ; Oggetto 3 alla colonna X=4, riga Y=10, GREEN, (Stato: 0=attivo)  
+    ITEM RoomsListTable.AtTheFootTheMegaTreeLayout, 7, 11, CYAN, 0                ; Oggetto 3 alla colonna X=7, riga Y=11, CYAN, (Stato: 0=attivo)  
 
     ; Stanza 5 (The Drive)
 
     ; Stanza 6 (The Security Guard)
 
     ; Stanza 7 (Cuckoo's Nest)
-    db 7, 15, 7, MAGENTA, 0              ; Oggetto 1 alla colonna X=7, riga Y=15, YELLOW, (Stato: 0=attivo)
+    ITEM RoomsListTable.CuckoosNestLayout, 15, 7, MAGENTA, 0              ; Oggetto 1 alla colonna X=7, riga Y=15, YELLOW, (Stato: 0=attivo)
+
+    ; Stanza 10 (The Front Door)
+    ITEM RoomsListTable.TheFrontDoorLayout, 11, 4, 43, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+
+    ; Stanza 12 (Tree Top)
+    ITEM RoomsListTable.TreeTopLayout, 16, 3, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.TreeTopLayout, 19, 13, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.TreeTopLayout, 22, 4, CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+
+    ; Stanza 13 (Out on a Limb)
+    ITEM RoomsListTable.OutALimbLayout, 2, 6, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.OutALimbLayout, 5, 1, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    
+    ; Stanza 15 (I'm sure I've seen this before..)
+    ITEM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout, 31, 4, (BLUE * 8) + MAGENTA, 0    ; Oggetto 1 alla colonna X=31, riga Y=4, Paper = BLUE (1), Ink = MAGENTA (3), (Stato: 0=attivo)
+
+    ; Stanza 17 (Up On The Battlements)
+    ITEM RoomsListTable.UpOnTheBattlementsLayout, 31, 4, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    
+    ; Stanza 19 (The Forgotten Abbey)
+    ITEM RoomsListTable.TheForgottenAbbeyLayout, 2, 3, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+
+    ; Stanza 21 ( Ballroom West )
+    ITEM RoomsListTable.BallRoomWestLayout, 17, 12, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.BallRoomWestLayout, 18, 12, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.BallRoomWestLayout, 20, 12, CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.BallRoomWestLayout, 22, 12, YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.BallRoomWestLayout, 23, 12, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.BallRoomWestLayout, 25, 12, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.BallRoomWestLayout, 27, 12, CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+
+    ; Stanza 22 (To the Kitchens Main Stairway)
+    ITEM RoomsListTable.TotheKitchensMainStairwayLayout, 2, 9, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.TotheKitchensMainStairwayLayout, 9, 6, (BLUE * 8) + MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+
+    ; Stanza 25 (Cold Store)
+    ITEM RoomsListTable.ColdStoreLayout, 3, 2, (BLUE * 8) + MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.ColdStoreLayout, 8, 5, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.ColdStoreLayout, 5, 8, (BLUE * 8) + CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.ColdStoreLayout, 5, 11, (BLUE * 8) + YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+
+    ; Stanza 27 (The Chapel)
+    ITEM RoomsListTable.TheChapelLayout, 29, 6, MAGENTA, 0            ; Oggetto 3 alla colonna X=24, riga Y=11, YELLOW, (Stato: 0=attivo)
+
+    ; Stanza 28 (First Landing)
+    ;ITEM RoomsListTable.FirstLandingLayout, 20, 13, YELLOW, 0           ; Oggetto 1 alla colonna X=20, riga Y=13, YELLOW, (Stato: 0=attivo)
+
+    ; Stanza 30 (The Bany Tree)
+    ITEM RoomsListTable.TheBanyanTreeLayout, 8, 14, MAGENTA, 0
+
+    ; Stanza 31 (Swimming Pool)
+    ITEM RoomsListTable.SwimmingPoolLayout, 4, 11, MAGENTA, 0
 
     ; Stanza 33 (The Bathroom)
-    db 33, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
+    ITEM RoomsListTable.TheBathroomLayout, 23, 13, CYAN, 0              ; Oggetto 1 alla colonna X=23, riga Y=13, CYAN, (Stato: 0=attivo)
+
+    ; Stanza 34 (Top Landing)
+    ITEM RoomsListTable.TopLandingLayout, 2, 9, MAGENTA, 0
 
     ; Stanza 35 (Master Bedroom)
+
+    ; Stanza 36 (A Bit of Tree)
+
+    ; Stanza 37 (Orangery)
+    ITEM RoomsListTable.OrangeryLayout, 28, 1, MAGENTA, 0
+    ITEM RoomsListTable.OrangeryLayout, 16, 6, GREEN, 0
+    ITEM RoomsListTable.OrangeryLayout, 6, 13, CYAN, 0
+
+    ; Stanza 38 (Priest's Hole)
+    ITEM RoomsListTable.PriestsHoleLayout, 9, 2, MAGENTA, 0
+
+    ; Stanza 40 (Dr Jones will never believe this)
+    ITEM RoomsListTable.DrJonesWillNeverBelieveThisLayout, 19, 7, MAGENTA, 0
+
+    ; Stanza 43 (Conservatory Roof)
+    ITEM RoomsListTable.ConservatoryRoofLayout, 22, 8, YELLOW, 0
+    ITEM RoomsListTable.ConservatoryRoofLayout, 25, 8, GREEN, 0
+    ITEM RoomsListTable.ConservatoryRoofLayout, 28, 8, CYAN, 0
+    ITEM RoomsListTable.ConservatoryRoofLayout, 31, 8, MAGENTA, 0
+
+    ; Stanza 44 (On top of the house)
+    ITEM RoomsListTable.OnTopOfTheHouseLayout, 18, 4, RED, 0    
+
+    ; Stanza 46 (Tree Root)
+    ITEM RoomsListTable.TreeRootLayout, 29, 4, GREEN, 0    
+
+    ; Stanza 49 (The Wine Cellar)
+    ITEM RoomsListTable.TheWineCellarLayout, 28, 4, MAGENTA, 0    
+    ITEM RoomsListTable.TheWineCellarLayout, 28, 7, GREEN, 0   
+    ITEM RoomsListTable.TheWineCellarLayout, 28, 10, MAGENTA, 0
+    ITEM RoomsListTable.TheWineCellarLayout, 4, 7, GREEN, 0   
+    ITEM RoomsListTable.TheWineCellarLayout, 2, 10, YELLOW, 0   
+    ITEM RoomsListTable.TheWineCellarLayout, 4, 13, YELLOW, 0  
+
+    ; Stanza 50 (Watch Tower)
+    ITEM RoomsListTable.WatchTowerLayout, 10, 9, CYAN, 0        
+    ITEM RoomsListTable.WatchTowerLayout, 20, 9, CYAN, 0 
+    ITEM RoomsListTable.WatchTowerLayout, 24, 9, YELLOW, 0 
+    ITEM RoomsListTable.WatchTowerLayout, 25, 8, MAGENTA, 0 
+
+    ; Stanza 56 (West Wing Roof)
+    ITEM RoomsListTable.WestWingRoofLayout, 6, 10, YELLOW, 0        
+    ITEM RoomsListTable.WestWingRoofLayout, 9, 14, MAGENTA, 0 
+    ITEM RoomsListTable.WestWingRoofLayout, 18, 13, MAGENTA, 0     
+    ITEM RoomsListTable.WestWingRoofLayout, 27, 11, CYAN, 0   
+
+    ; Stanza 57 (Above the West Bedroom)
+    ITEM RoomsListTable.AbovetheWestBedroomLayout, 23, 9, MAGENTA, 0    
+
+    ; Stanza 58 (The Beach)
+    ITEM RoomsListTable.TheBeachLayout, 22, 13, CYAN, 0        
+
+    ; Stanza 59 (The Yacht)
+    ITEM RoomsListTable.TheYachtLayout, 13, 14, MAGENTA, 0        
+
+    ; Stanza 60 (The Bow)
+    ITEM RoomsListTable.TheBowLayout, 26, 8, MAGENTA, 0      
 
     db $FF                        ; Fine tabella
 
@@ -86,6 +198,9 @@ ItemsTable:
 ;   10 = The Front Door
 ;   11 = The Hall
 ;   12 = Tree Top
+;   27 = The Chapel
+;   28 = First Landing
+;   29 = The Nightmare Room
 ;   33 = The Bathroom
 ;   35 = Master Bedroom
 ;
@@ -373,10 +488,192 @@ DetermineCurrentRoomID:
     sbc  hl, de
     jr   nz, .not_theforgottenabbey
 
-    ld   a, 189              ; Room ID = 19
+    ld   a, 19               ; Room ID = 19
     jp   .set_room
 
-.not_theforgottenabbey
+.not_theforgottenabbey:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con BallRoomEastLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, BallRoomEastLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_ballroomeast
+
+    ld   a, 20               ; Room ID = 20
+    jp   .set_room
+
+.not_ballroomeast:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con BallRoomWestLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, BallRoomWestLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_ballroomwest
+
+    ld   a, 21               ; Room ID = 21
+    jp   .set_room
+
+.not_ballroomwest:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TotheKitchensMainStairwayLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TotheKitchensMainStairwayLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_tothekitchen
+
+    ld   a, 22               ; Room ID = 22
+    jp   .set_room
+
+.not_tothekitchen
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheKitchenLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheKitchenLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .notthekitchen
+
+    ld   a, 23               ; Room ID = 23
+    jp   .set_room
+
+.notthekitchen
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheKitchenLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WestOfKitchenLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .notwestofkitchen
+
+    ld   a, 24               ; Room ID = 24
+    jp   .set_room
+
+.notwestofkitchen
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheKitchenLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, ColdStoreLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .notcoldstore
+
+    ld   a, 25               ; Room ID = 25
+    jp   .set_room
+
+.notcoldstore
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheKitchenLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, EastWallBaseLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .noteastwallbase
+
+    ld   a, 26               ; Room ID = 26
+    jp   .set_room
+
+.noteastwallbase
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheChapelLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheChapelLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_thechapel
+
+    ld   a, 27               ; Room ID = 27
+    jp   .set_room
+
+.not_thechapel:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con FirstLandingLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, FirstLandingLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_firstlanding
+
+    ld   a, 28               ; Room ID = 28
+    jp   .set_room
+
+.not_firstlanding:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheNightmareRoomLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheNightmareRoomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_thenightmareroom
+
+    ld   a, 29               ; Room ID = 29
+    jp   .set_room
+
+.not_thenightmareroom:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheBanyanTreeLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheBanyanTreeLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_thebanyantree
+
+    ld   a, 30               ; Room ID = 30
+    jp   .set_room
+
+.not_thebanyantree:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con SwimmingPoolLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, SwimmingPoolLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_swimmingpool
+
+    ld   a, 31               ; Room ID = 31
+    jp   .set_room
+
+.not_swimmingpool:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con HalfwayUpTheEastWallLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, HalfwayUpTheEastWallLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_halfwayupeastwall
+
+    ld   a, 32               ; Room ID = 32
+    jp   .set_room
+
+.not_halfwayupeastwall:
 
     ; ---------------------------------------------------------------
     ; Confronto con TheBathroomLayout
@@ -392,6 +689,19 @@ DetermineCurrentRoomID:
 
 .not_thebathroom:
     ; ---------------------------------------------------------------
+    ; Confronto con TopLandingLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TopLandingLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_toplanding
+
+    ld   a, 34               ; Room ID = 34
+    jp   .set_room
+
+.not_toplanding:
+    ; ---------------------------------------------------------------
     ; Confronto con MastreBedRoomLayout
     ; ---------------------------------------------------------------
     ld   hl, (room_ptr)
@@ -403,7 +713,124 @@ DetermineCurrentRoomID:
     ld   a, 35               ; Room ID = 35
     jp   .set_room
 
-.not_masterbed
+.not_masterbed:
+    ; ---------------------------------------------------------------
+    ; Confronto con ABitOfTreeLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, ABitOfTreeLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_abitoftree
+
+    ld   a, 36               ; Room ID = 36
+    jp   .set_room
+
+.not_abitoftree:
+    ; ---------------------------------------------------------------
+    ; Confronto con OrangeryLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, OrangeryLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_orangery
+
+    ld   a, 37               ; Room ID = 37
+    jp   .set_room
+
+.not_orangery:
+    ; ---------------------------------------------------------------
+    ; Confronto con PriestsHoleLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, PriestsHoleLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_priestshole
+
+    ld   a, 38               ; Room ID = 38
+    jp   .set_room
+
+.not_priestshole:
+    ; ---------------------------------------------------------------
+    ; Confronto con EmergencyGeneratorLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, EmergencyGeneratorLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_emergencygenerator
+
+    ld   a, 39               ; Room ID = 39
+    jp   .set_room
+
+.not_emergencygenerator:
+    ; ---------------------------------------------------------------
+    ; Confronto con DrJonesWillNeverBelieveThisLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, DrJonesWillNeverBelieveThisLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_drjoneswillneverbelievethis
+
+    ld   a, 40               ; Room ID = 40
+    jp   .set_room
+
+.not_drjoneswillneverbelievethis:
+    ; ---------------------------------------------------------------
+    ; Confronto con TheAtticLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheAtticLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_theattic
+
+    ld   a, 41               ; Room ID = 41
+    jp   .set_room
+
+.not_theattic:
+    ; ---------------------------------------------------------------
+    ; Confronto con UnderTheRoofLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, UnderTheRoofLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_undertheroof
+
+    ld   a, 42               ; Room ID = 42
+    jp   .set_room
+
+.not_undertheroof:
+    ; ---------------------------------------------------------------
+    ; Confronto con ConservatoryRoofLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, ConservatoryRoofLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_conservatoryroof
+
+    ld   a, 43               ; Room ID = 43
+    jp   .set_room
+
+.not_conservatoryroof:
+    ; ---------------------------------------------------------------
+    ; Confronto con OnTopOfTheHouseLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, OnTopOfTheHouseLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_ontopofthehouse
+
+    ld   a, 44               ; Room ID = 44
+    jp   .set_room
+
+.not_ontopofthehouse:
     ; ---------------------------------------------------------------
     ; Confronto con UnderTheDrive
     ; ---------------------------------------------------------------
@@ -411,10 +838,215 @@ DetermineCurrentRoomID:
     ld   de, UnderTheDriveLayout
     or   a
     sbc  hl, de
-    jr   nz, .unknown
+    jr   nz, .not_underthedrive
 
     ld   a, 45               ; Room ID = 45
     jp   .set_room
+
+.not_underthedrive:
+    ; ---------------------------------------------------------------
+    ; Confronto con TreeRootLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TreeRootLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_theroout
+
+    ld   a, 46               ; Room ID = 46
+    jp   .set_room
+
+.not_theroout:
+    ; ---------------------------------------------------------------
+    ; Confronto con NotUsedLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, NotUsedLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_used
+
+    ld   a, 47               ; Room ID = 47
+    jp   .set_room
+
+.not_used:
+    ; ---------------------------------------------------------------
+    ; Confronto con NomenLumi
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, NomenLuniLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_nomenlumi
+
+    ld   a, 48               ; Room ID = 48
+    jp   .set_room
+
+.not_nomenlumi:
+    ; ---------------------------------------------------------------
+    ; Confronto con TheWineCellar
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheWineCellarLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_thewinecellar
+
+    ld   a, 49               ; Room ID = 49
+    jp   .set_room
+
+.not_thewinecellar:
+    ; ---------------------------------------------------------------
+    ; Confronto con WatchTowerLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WatchTowerLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_watchtower
+
+    ld   a, 50               ; Room ID = 50
+    jp   .set_room
+
+.not_watchtower:
+    ; ---------------------------------------------------------------
+    ; Confronto con ToolShedLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, ToolShedLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_toolshed
+
+    ld   a, 51               ; Room ID = 51
+    jp   .set_room    
+
+.not_toolshed:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con BackStairwayLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, BackStairwayLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_backstairway
+
+    ld   a, 52               ; Room ID = 52
+    jp   .set_room
+
+.not_backstairway:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con BackDoorLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, BackDoorLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_backdoor
+
+    ld   a, 53               ; Room ID = 53
+    jp   .set_room
+
+.not_backdoor:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con WestWingLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WestWingLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_westwing
+
+    ld   a, 54               ; Room ID = 54
+    jp   .set_room
+
+.not_westwing:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con WestBedroomLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WestBedroomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_westbedroom
+
+    ld   a, 55               ; Room ID = 55
+    jp   .set_room
+
+.not_westbedroom:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con WestWingRoofLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, WestWingRoofLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_westwingroof
+
+    ld   a, 56               ; Room ID = 56
+    jp   .set_room
+
+.not_westwingroof:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con AbovetheWestBedroomLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, AbovetheWestBedroomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_abovethewestbedroom
+
+    ld   a, 57               ; Room ID = 57
+    jp   .set_room
+
+.not_abovethewestbedroom:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheBeachLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheBeachLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_thebeach
+
+    ld   a, 58               ; Room ID = 58
+    jp   .set_room
+
+.not_thebeach:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheYachtLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheYachtLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .not_theyacht
+
+    ld   a, 59               ; Room ID = 59
+    jp   .set_room
+
+.not_theyacht:
+
+    ; ---------------------------------------------------------------
+    ; Confronto con TheBowLayout
+    ; ---------------------------------------------------------------
+    ld   hl, (room_ptr)
+    ld   de, TheBowLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .unknown
+
+    ld   a, 60               ; Room ID = 60
+    jp   .set_room
+
 
 .unknown:
 

@@ -305,7 +305,7 @@ Enemy_LoadRoom:
 ; -------------------------------------------------------------------
 ; Cancella tutti i nemici attivi ripristinando lo sfondo statico
 ; -------------------------------------------------------------------
-EraseRoomEnemies:
+Enemy_EraseRoom:
     push hl
     push de
     push bc
@@ -342,7 +342,7 @@ EraseRoomEnemies:
 ; -------------------------------------------------------------------
 ; Disegna tutti i nemici attivi
 ; -------------------------------------------------------------------
-DrawRoomEnemies:
+Enemy_DrawRoom:
     push hl
     push de
     push bc
@@ -359,38 +359,92 @@ DrawRoomEnemies:
     
     ; Determina quale sprite usare basato sul tipo (Offset 1, Bit 5-0)
     ld   a, (ix+1)         ; Tipo
-    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore)
+    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca, 22=Frate, 23..26=FaceHell, 27=PinzaGiaccio, 28=Ruota, 29=Saliera, 30=Gelato, 31=Pinguino, 32=Muro, 33=Diavoletto, 34=Vecchia, 35=Piede, 36=Chip, 37=Ipnosi, 38=SwissArmyKife, 39=Botte, 40=Onda)
     
-    cp   0
+    cp   LAMETTA
     jp   z, .got_lametta
-    cp   1
+    cp   SEGA
     jp   z, .got_sega
-    cp   2
+    cp   UCCELLO
     jp   z, .got_uccello
-    cp   3
+    cp   RADAR
     jp   z, .got_radar
-    cp   4
+    cp   UOVO
     jp   z, .got_uovo
-    cp   5
+    cp   UFO
     jp   z, .got_ufo
-    cp   6
+    cp   FACCIA
     jp   z, .got_faccia
-    cp   7
+    cp   SCIMMIA
     jp   z, .got_scimmia
-    cp   8
+    cp   ROBOT
     jp   z, .got_robot
-    cp   9
+    cp   PALLA
     jp   z, .got_palla
-    cp   10
+    cp   DOUBLE_BALL
     jp   z, .got_doubleball
-    cp   11
+    cp   SOLDATO
     jp   z, .got_soldato
-    cp   12
+    cp   MAIALE
     jp   z, .got_maiale
-    cp   13
+    cp   CANGURO
     jp   z, .got_canguro
-    cp   14
+    cp   FIORE
     jp   z, .got_fiore
+    cp   FACCIA_PALLA
+    jp   z, .got_facciapalla
+    cp   CANDELABRO
+    jp   z, .got_candelabro
+    cp   FRECCIA
+    jp   z, .got_freccia
+    cp   TRONCHESE
+    jp   z, .got_tronchese
+    cp   PERISCOPIO
+    jp   z, .got_periscopio
+    cp   NONNINO
+    jp   z, .got_nonnino
+    cp   PARRUCCA
+    jp   z, .got_parrucca
+    cp   FRATE
+    jp   z, .got_frate
+    cp   FACE_HL
+    jp   z, .got_facehell_hl
+    cp   FACE_HR
+    jp   z, .got_facehell_hr
+    cp   FACE_LL
+    jp   z, .got_facehell_ll
+    cp   FACE_LR
+    jp   z, .got_facehell_lr
+    cp   PINZA_GHIACCIO
+    jp   z, .got_pinzagiaccio
+    cp   RUOTA
+    jp   z, .got_ruota
+    cp   SALIERA
+    jp   z, .got_saliera
+    cp   GELATO
+    jp   z, .got_gelato
+    cp   PINGUINO
+    jp   z, .got_pinguino
+    cp   MURO
+    jp   z, .got_muro
+    cp   DIAVOLETTO
+    jp   z, .got_diavoletto
+    cp   VECCHIA
+    jp   z, .got_vecchia
+    cp   PIEDE
+    jp   z, .got_piede
+    cp   CHIP
+    jp   z, .got_chip
+    cp   IPNOSI
+    jp   z, .got_ipnosi
+    cp   SWISSARMKIFE
+    jp   z, .got_swissarmyknife
+    cp   BOTTE
+    jp   z, .got_botte
+    cp   ONDA
+    jp   z, .got_onda
+    cp   PALAZZO
+    jp   z, .got_palazzo
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -484,6 +538,114 @@ DrawRoomEnemies:
     ld   hl, FioreSprite
     jp   .got_sprite
 
+.got_facciapalla:
+    ld   hl, FacciaPallaSprite
+    jp   .got_sprite
+
+.got_candelabro:
+    ld   hl, CandelabroSprite
+    jp   .got_sprite
+
+.got_freccia:
+    ld   a, (ix+6)         ; Direction (1=Left, 2=Right)
+    cp   1
+    ld   hl, FrecciaSpriteLeft
+    jp   z, .got_sprite
+    ld   hl, FrecciaSpriteRight
+    jp   .got_sprite
+
+.got_tronchese:
+    ld   hl, TroncheseSprite
+    jp   .got_sprite
+
+.got_periscopio:
+    ld   a, (ix+6)         ; Direction (1=Left, 2=Right)
+    cp   1
+    ld   hl, PeriscopioSprite
+    jp   z, .got_sprite
+    ld   hl, PeriscopioSprite + 128
+    jp   .got_sprite
+
+.got_nonnino:
+    ld   hl, NonninoSprite
+    jp   .got_sprite
+
+.got_parrucca:
+    ld   hl, ParruccaSprite
+    jp   .got_sprite
+
+.got_frate:
+    ld   a, (ix+6)         ; Direction (1=Left, 2=Right)
+    cp   1
+    ld   hl, FrateSprite
+    jp   z, .got_sprite
+    ld   hl, FrateSprite + 128
+    jp   .got_sprite
+
+.got_pinzagiaccio:
+    ld   hl, PinzaGiaccioSprite
+    jp   .got_sprite
+
+.got_ruota:
+    ld   hl, RuotaSprite
+    jp   .got_sprite
+
+.got_saliera:
+    ld   hl, SalieraSprite
+    jp   .got_sprite
+
+.got_gelato:
+    ld   hl, GelatoSprite
+    jp   .got_sprite
+
+.got_pinguino:
+    ld   a, (ix+6)         ; Direction (1=Left, 2=Right)
+    cp   1                 ; Left?
+    ld   hl, PinguinoSprite       ; If Left, use the first 4 frames
+    jp   z, .got_sprite
+    ld   hl, PinguinoSprite + 128 ; If Right, use the other 4 frames
+    jp   .got_sprite
+
+.got_muro:
+    ld   hl, MuroSprite
+    jp   .got_sprite
+
+.got_diavoletto:
+    ld   hl, DiavolettoSprite
+    jp   .got_sprite
+
+.got_vecchia:
+    ld   hl, VecchiaSprite
+    jp   .got_sprite
+
+.got_piede:
+    ld   hl, PiedeSprite
+    jp   .got_sprite
+
+.got_chip:
+    ld   hl, ChipSprite
+    jp   .got_sprite
+
+.got_ipnosi:
+    ld   hl, IpnosiSprite
+    jp   .got_sprite
+
+.got_swissarmyknife:
+    ld   hl, SwissArmyKife
+    jp   .got_sprite
+
+.got_botte:
+    ld   hl, BotteSprite
+    jp   .got_sprite
+
+.got_onda:
+    ld   hl, OndaSprite
+    jp   .got_sprite
+
+.got_palazzo:
+    ld   hl, PalazzoSprite
+    jp   .got_sprite
+
 
 .got_sprite:
     ; Calcola il frame dell'animazione: Anim State * 32
@@ -526,6 +688,42 @@ DrawRoomEnemies:
     pop  de
     pop  hl
     ret
+
+.got_facehell_hl:
+    ld   hl, FaceHellHL
+    jr   .got_static_sprite
+
+.got_facehell_hr:
+    ld   hl, FaceHellHR
+    jr   .got_static_sprite
+
+.got_facehell_ll:
+    ld   hl, FaceHellLL
+    jr   .got_static_sprite
+
+.got_facehell_lr:
+    ld   hl, FaceHellLR
+    jr   .got_static_sprite
+
+.got_static_sprite:
+    ; Disegna alla coordinata corrente senza aggiungere l'animazione
+    ld   c, (ix+2)         ; C = Current X (Offset 2)
+    ld   b, (ix+3)         ; B = Current Y (Offset 3)
+    
+    push ix                ; Salva slot pointer
+    push hl
+    pop  ix                ; IX = sprite data pointer
+    call Gfx_DrawPixelSprite16x16
+    pop  ix                ; Ripristina slot pointer
+    
+    ; Applica gli attributi colore per la posizione corrente
+    ld   c, (ix+2)         ; C = Current X
+    ld   b, (ix+3)         ; B = Current Y
+    ld   a, (ix+10)        ; A = Color (Offset 10)
+    call Gfx_SetEnemyColorAttributes
+    
+    pop  bc                ; Ripristina contatore ciclo
+    jp   .next
 
 ; -------------------------------------------------------------------
 ; Aggiorna le posizioni dei nemici attivi per il prossimo frame
@@ -585,6 +783,14 @@ Enemy_Update:
     cp   13                ; Tipo 13 = Canguro?
     jr   z, .canguro_anim
     cp   11                ; Tipo 11 = Soldato?
+    jr   z, .soldato_anim
+    cp   16                ; Tipo 16 = Candelabro?
+    jr   z, .soldato_anim
+    cp   20                ; Tipo 20 = Nonnino?
+    jr   z, .soldato_anim
+    cp   21                ; Tipo 21 = Parrucca?
+    jr   z, .soldato_anim
+    cp   29                ; Tipo 29 = Saliera?
     jr   z, .soldato_anim
     
     ld   a, (ix+7)         ; Anim State (Offset 7)
@@ -691,12 +897,6 @@ Enemy_Update:
     add  ix, de            ; Prossimo slot (11 byte)
     dec  b
     jp   nz, .loop
-    
-    pop  ix
-    pop  bc
-    pop  de
-    pop  hl
-    ret
     
     pop  ix
     pop  bc

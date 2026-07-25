@@ -58,16 +58,16 @@ UnderTheDriveWall:
 UnderTheDriveNasty:
     DEFB 4,24,24,20,34,34,85,17,40  ; Nastry
 
-UnderTheDriveRamp:                          ; Ramp Solid
-    DEFB 7,128,64,160,80,168,84,170,85              
+UnderTheDriveRamp:                          
+    DEFB 7,128,64,160,80,168,84,170,85              ; Ramp Solid
 
-UnderTheDriveConveyor:                      ; Conveyor Solid
-    DEFB 2,224,170,248,0,255,255,102,102
+UnderTheDriveConveyor:                     
+    DEFB 2,224,170,248,0,255,255,102,102                      ; Conveyor Solid
 
 UnderTheDriveConveyorData:
     DEFB 0
     DEFW 24402
-    DEFB 0
+    DEFB 14
 
 UnderTheDriveRampData:
     DEFB 0
@@ -78,28 +78,28 @@ UnderTheDriveBorderColor:
     DEFB 4
 
 UnderTheDriveReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB YELLOW, CYAN, MAGENTA, NONE     ; Enemy colors
 
 UnderTheDriveItem:
     DEFB 129,100,205,15,97,218,51,26
 
 UnderTheDriveDirection:
-	DEFB 6						;Room to the left (Entrance to Hades)
-	DEFB 46						;Room to the right (Tree Root)
-	DEFB 4						;Room above (The Drive)
-	DEFB $FF					;Room below (The Off Licence)
+	ROOM RoomsListTable.EntranceToHadesLayout			    ;Room to the left (Entrance to Hades)
+	ROOM RoomsListTable.TreeRootLayout						;Room to the right (Tree Root)
+	ROOM RoomsListTable.TheDriveLayout						;Room above (The Drive)
+	DEFB BLOCK                          					;Room below (The Off Licence)
 
 UnderTheDriveUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 UnderTheDriveEnemy1:
-    DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, UCCELLO, 96, 88, 232      
 UnderTheDriveEnemy2:
-    DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $C0, FACCIA_PALLA, 144, 0, 64         
 UnderTheDriveEnemy3:
-    DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, ROBOT, 168, 64, 240     
 UnderTheDriveEnemy4:
-    DEFB 0, 0, 0, 0, 0               ; Empty slot
+    DEFB 0, 0, 0, 0, 0              
 UnderTheDriveEnemy5:
     DEFB 0, 0, 0, 0, 0
 UnderTheDriveEnemy6:
@@ -110,6 +110,6 @@ UnderTheDriveEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 UnderTheDrivePosWilly:
-    db 136, 104                   ; Posizione di Willy
+    db 200, 96                     ; Posizione sicura di Willy sul pavimento
 UnderTheDriveEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB 2, 3, 4, 7     ; Colori per nemici 5-8

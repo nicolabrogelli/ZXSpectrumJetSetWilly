@@ -6,8 +6,8 @@
 ; Copia il set dei caratteri dalla ROM alla RAM
 ; -------------------------------------------------------------------
 Gfx_CopyChars:
-    ld hl, $3D00  ; Indirizzo del set di caratteri originale in ROM
-    ld de, $8000  ; Indirizzo nella RAM in cui copiare il set di caratteri
+    ld hl, $3D00  ; Indirizzo del set di caratteri originale in ROM (ASCII 32)
+    ld de, $8100  ; Indirizzo in RAM per ASCII 32..127 ($8000 + 32*8)
     ld bc, 768    ; Numero di byte da copiare (96 caratteri * 8 byte ciascuno)
     ldir          ; Copiare i dati
     ret
@@ -17,10 +17,10 @@ Gfx_CopyChars:
 ; -------------------------------------------------------------------
 Gfx_DefineChars:
     ld hl, Willy             ; Indirizzo dei dati del nuovo carattere
-    ld de, $7F00 + (1 * 8)      ; Indirizzo di ASCII 1 nel nuovo set di caratteri
-    ld bc, 72                   ; Numero di byte da copiare (9 caratteri * 8 byte)
+    ld de, $8008             ; Indirizzo di ASCII 1 nel nuovo set di caratteri ($8000 + 1*8)
+    ld bc, 72                ; Numero di byte da copiare (9 caratteri * 8 byte)
     ldir                        ; Effettua la copia dei caratteri
-    ld hl, $7F00                ; Indirizzo del nuovo set di caratteri in RAM (font start - 256)
+    ld hl, $8000                ; Indirizzo del nuovo set di caratteri in RAM (font base ASCII 0)
     ld ($5C36), hl              ; Aggiornare la variabile di sistema CHARS
     ret
 
@@ -42,6 +42,7 @@ Gfx_At:
 ; -------------------------------------------------------------------
 Gfx_Ink:
     exx
+    and  $07               ; Garantisci colore 0..7
     ld   b, a
     ld   a, (ATTR_T)
     and  $f8
@@ -639,27 +640,155 @@ Gfx_PrintRoomName:
     ret
 
 Gfx_PrintWillyLives:
-    ld   c, 0              ; Colonna 0
+    push hl
+    push bc
+    push de
+    push af
+    
+    ; Primo Willy (Colonna 0, giallo)
+    ld   hl, willy_lives
+    ld   a, (hl)
+    cp   1
+    ld   c, 0
+    jr   c, .erase_1
     ld   a, $40 | YELLOW
     call Gfx_DrawWillyLifeIcon
-    ld   c, 2              ; Colonna 2
+    jr   .check_2
+.erase_1:
+    call Gfx_EraseWillyLifeIcon
+    
+.check_2:
+    ld   a, (willy_lives)
+    cp   2
+    ld   c, 2
+    jr   c, .erase_2
     ld   a, $40 | CYAN
     call Gfx_DrawWillyLifeIcon
-    ld   c, 4              ; Colonna 4
+    jr   .check_3
+.erase_2:
+    call Gfx_EraseWillyLifeIcon
+
+.check_3:
+    ld   a, (willy_lives)
+    cp   3
+    ld   c, 4
+    jr   c, .erase_3
     ld   a, $40 | GREEN
     call Gfx_DrawWillyLifeIcon
-    ld   c, 6              ; Colonna 6
+    jr   .check_4
+.erase_3:
+    call Gfx_EraseWillyLifeIcon
+
+.check_4:
+    ld   a, (willy_lives)
+    cp   4
+    ld   c, 6
+    jr   c, .erase_4
     ld   a, $40 | MAGENTA
     call Gfx_DrawWillyLifeIcon
-    ld   c, 8              ; Colonna 8
+    jr   .check_5
+.erase_4:
+    call Gfx_EraseWillyLifeIcon
+
+.check_5:
+    ld   a, (willy_lives)
+    cp   5
+    ld   c, 8
+    jr   c, .erase_5
     ld   a, $40 | RED
     call Gfx_DrawWillyLifeIcon
-    ld   c, 10             ; Colonna 10
+    jr   .check_6
+.erase_5:
+    call Gfx_EraseWillyLifeIcon
+
+.check_6:
+    ld   a, (willy_lives)
+    cp   6
+    ld   c, 10
+    jr   c, .erase_6
     ld   a, $40 | BLUE
     call Gfx_DrawWillyLifeIcon
-    ld   c, 12             ; Colonna 12
+    jr   .check_7
+.erase_6:
+    call Gfx_EraseWillyLifeIcon
+
+.check_7:
+    ld   a, (willy_lives)
+    cp   7
+    ld   c, 12
+    jr   c, .erase_7
     ld   a, $40 | WHITE
     call Gfx_DrawWillyLifeIcon
+    jr   .done
+.erase_7:
+    call Gfx_EraseWillyLifeIcon
+
+.done:
+    pop  af
+    pop  de
+    pop  bc
+    pop  hl
+    ret
+
+Gfx_EraseWillyLifeIcon:
+    ; Input: C = Colonna (0..31)
+    ld   e, c              ; E = Colonna
+    
+    ; 1. Cancella la testa a Row 20, Colonna E
+    ld   a, e
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    ld   c, a              ; C = X pixel
+    ld   b, 160            ; B = Y pixel (Row 20)
+    call Gfx_ClearPixelSprite8x8
+    
+    ; 2. Cancella il corpo a Row 21, Colonna E
+    ld   b, 168            ; B = Y pixel (Row 21)
+    call Gfx_ClearPixelSprite8x8
+    
+    ; 3. Resetta gli attributi a Row 20 e Row 21 per Colonna E a nero (0)
+    ; AttrAddr = $5A80 + E
+    ld   h, $5a
+    ld   a, $80
+    add  a, e
+    ld   l, a
+    jr   nc, .no_carry1
+    inc  h
+.no_carry1:
+    ld   (hl), 0           ; Scrivi colore testa a 0 (nero)
+    
+    ; AttrAddr = $5AA0 + E
+    ld   h, $5a
+    ld   a, $a0
+    add  a, e
+    ld   l, a
+    jr   nc, .no_carry2
+    inc  h
+.no_carry2:
+    ld   (hl), 0           ; Scrivi colore corpo a 0 (nero)
+    ret
+
+Gfx_ClearPixelSprite8x8:
+    push bc
+    push de
+    push hl
+    
+    ; 1. Calcola indirizzo schermo
+    ld   h, b
+    ld   l, c
+    call Gfx_GetScreenAddr ; HL = indirizzo schermo
+    
+    ld   c, 8          ; 8 linee
+.line_loop:
+    ld   (hl), 0       ; Pulisci la cella dello schermo (imposta a zero)
+    call Gfx_IncScreenLine ; Prossima scanline sullo schermo
+    dec  c
+    jr   nz, .line_loop
+    
+    pop  hl
+    pop  de
+    pop  bc
     ret
 
 Gfx_UpdateItemsCollectedDisplay:
@@ -739,24 +868,70 @@ Gfx_DrawWillyLifeIcon:
     ld   d, a              ; D = Colore
     ld   e, c              ; E = Colonna
     
-    ; 1. Disegna la testa a Row 19, Colonna E
+    ; 0. Cancella la testa e il corpo per evitare artefatti da OR
+    push bc
+    push de
+    ld   a, e
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    ld   c, a              ; C = X pixel
+    ld   b, 160            ; B = Y pixel (Row 20 / head)
+    call Gfx_ClearPixelSprite8x8
+    ld   b, 168            ; B = Y pixel (Row 21 / body)
+    call Gfx_ClearPixelSprite8x8
+    pop  de
+    pop  bc
+    
+    ; 1. Disegna la testa a Row 20, Colonna E
     ; X pixel = E * 8
     ld   a, e
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
     ld   c, a              ; C = X pixel
-    ld   b, 160            ; B = Y pixel (Row 19)
+    ld   b, 160            ; B = Y pixel (Row 20)
     ld   ix, Willy + 0*8   ; IX = head facing right
     call Gfx_DrawPixelSprite8x8
     
-    ; 2. Disegna il corpo a Row 20, Colonna E
-    ld   b, 168            ; B = Y pixel (Row 20)
-    ld   ix, Willy + 1*8   ; IX = body frame 1
+    ; 2. Disegna il corpo a Row 21, Colonna E
+    ld   b, 168            ; B = Y pixel (Row 21)
+    
+    push de                ; SALVA D = Colore, E = Colonna
+    
+    ; Determina il frame del corpo per le icone delle vite
+    IF ENABLE_ANIMATE_LIVES != 0
+    ; Calcola il frame animato dal contatore
+    ld   a, (counter)
+    rrca
+    rrca
+    rrca
+    and  %00000011         ; A = 0..3
+    cp   3
+    jr   nz, .not_3
+    ld   a, 1              ; map 3 to 1 -> cycle is 0, 1, 2, 1
+.not_3:
+    inc  a
+    jr   .calc_ix
+    ELSE
+    ld   a, 1              ; frame statico 1
+    ENDIF
+    
+.calc_ix:
+    ; calcola IX = Willy + A * 8
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    ld   e, a
+    ld   d, 0
+    ld   ix, Willy
+    add  ix, de
     call Gfx_DrawPixelSprite8x8
     
-    ; 3. Imposta l'attributo colore per la testa (Row 19, Colonna E)
-    ; AttrAddr = $5A60 + E
+    pop  de                ; RIPRISTINA D = Colore, E = Colonna
+    
+    ; 3. Imposta l'attributo colore per la testa (Row 20, Colonna E)
+    ; AttrAddr = $5A80 + E
     ld   h, $5a
     ld   a, $80
     add  a, e
@@ -766,8 +941,8 @@ Gfx_DrawWillyLifeIcon:
 .no_carry1:
     ld   (hl), d           ; Scrivi colore testa
     
-    ; 4. Imposta l'attributo colore per il corpo (Row 20, Colonna E)
-    ; AttrAddr = $5A80 + E
+    ; 4. Imposta l'attributo colore per il corpo (Row 21, Colonna E)
+    ; AttrAddr = $5AA0 + E
     ld   h, $5a
     ld   a, $A0
     add  a, e

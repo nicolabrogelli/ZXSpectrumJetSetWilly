@@ -13,8 +13,12 @@ Phys_CheckSolid:
     push de
     push bc
     
-    ; Se Y >= 128, clampiamo a 127 per poter controllare il pavimento (riga 15)
+    ; Se Y < 0 (sopra lo schermo), non è solida
     ld   a, b
+    bit  7, a
+    jr   nz, .not_solid
+    
+    ; Se Y >= 128, clampiamo a 127 per poter controllare il pavimento (riga 15)
     cp   128
     jr   c, .y_ok
     ld   b, 127
@@ -90,6 +94,8 @@ Phys_ApplyGravity:
     
     ; Aggancia sulla rampa!
     ld   b, e               ; B = ramp_Y
+    bit  7, b
+    jp   nz, .ramp_top_exit ; Se B è negativo (bit 7 = 1), Willy è in cima alla rampa al bordo superiore!
     ld   (PlayerPos), bc    ; Salva la posizione Y allineata alla rampa
     
     ; Gestisci il salto mentre siamo sulla rampa
@@ -101,7 +107,7 @@ Phys_ApplyGravity:
     ld   (Audio_jump_sound_note), a
     ld   (Audio_jump_sound_timer), a
     
-    ld   a, JUMP_STRENGTH
+    ld   a, (room_jump_strength)
     ld   (velocity_y), a
     xor  a
     ld   (on_ground), a
@@ -201,6 +207,29 @@ Phys_ApplyGravity:
     jr   nc, .no_step_down
     
 .do_step_down:
+    ; Controlla se il nuovo Y (B + 8) causerebbe collisioni con muri a sinistra o a destra.
+    ; Se sì, annulla lo step down per evitare che Willy sprofondi/entri nei blocchi Wall.
+    ld   a, b
+    add  a, 8
+    push bc
+    ld   b, a              ; B = Y + 8
+    ; C = X (bordo sinistro)
+    call CheckWillyWallCollision
+    pop  bc
+    jr   c, .no_step_down  ; Se collide, non effettuare lo step down
+    
+    ld   a, b
+    add  a, 8
+    push bc
+    ld   b, a              ; B = Y + 8
+    ld   a, c
+    add  a, 7
+    ld   c, a              ; C = X + 7 (bordo destro)
+    call CheckWillyWallCollision
+    pop  bc
+    jr   c, .no_step_down  ; Se collide, non effettuare lo step down
+
+    ; Applica lo step down
     ld   a, b
     add  a, 8
     ld   b, a              ; B = Y + 8
@@ -246,7 +275,7 @@ Phys_ApplyGravity:
     ld   (Audio_jump_sound_note), a
     ld   (Audio_jump_sound_timer), a
     
-    ld   a, JUMP_STRENGTH
+    ld   a, (room_jump_strength)
     ld   (velocity_y), a
     xor  a
     ld   (on_ground), a
@@ -264,11 +293,50 @@ Phys_ApplyGravity:
     inc  a
     ld   (jump_frame), a
     
-    ; Applica gravità frazionaria (0.75 in media)
-    and  3
-    cp   3
+    ; Leggi il preset della gravità
+    ld   b, a                  ; Salva jump_frame in B
+    ld   a, (room_gravity_preset)
+    
+    ; Controlla il preset
+    or   a                     ; cp 0 (Gravità 0.5)
+    jr   z, .grav_0_5
+    dec  a                     ; cp 1 (Gravità 0.75 - Standard)
+    jr   z, .grav_0_75
+    dec  a                     ; cp 2 (Gravità 1.0)
+    jr   z, .grav_1_0
+    dec  a                     ; cp 3 (Gravità 0.25)
+    jr   z, .grav_0_25
+    dec  a                     ; cp 4 (Gravità 0.0)
     jr   z, .skip_gravity
     
+    ; Default a 0.75 se valore sconosciuto
+    jr   .grav_0_75
+
+.grav_0_5:
+    ld   a, b                  ; Ripristina jump_frame
+    and  1
+    jr   nz, .skip_gravity     ; Salta se bit 0 è impostato (media 0.5)
+    jr   .apply_gravity
+
+.grav_0_75:
+    ld   a, b                  ; Ripristina jump_frame
+    and  3
+    cp   3
+    jr   z, .skip_gravity      ; Salta se frame è 3 (media 0.75)
+    jr   .apply_gravity
+
+.grav_0_25:
+    ld   a, b                  ; Ripristina jump_frame
+    and  3
+    cp   3
+    jr   nz, .skip_gravity     ; Salta se frame non è 3 (media 0.25)
+    jr   .apply_gravity
+
+.grav_1_0:
+    ; Non saltare mai la gravità
+    jr   .apply_gravity
+
+.apply_gravity:
     ld   a, (velocity_y)
     sub  1
     jr   .clamp_fall_speed
@@ -295,13 +363,51 @@ Phys_ApplyGravity:
     sub d                 ; A = PlayerY - velocity_y
     ld  b, a              ; B = new PlayerY
 
-    ; Controlla se stiamo cadendo (velocity_y <= 0)
     ld  a, (velocity_y)
     bit 7, a              ; Se negativo, bit 7 = 1
     jr  nz, .falling_checks
     or  a                 ; Se zero
     jr  z, .falling_checks
-    jp  .no_collision_checks ; Se stiamo salendo, non controlliamo collisioni
+    
+    ; Se stiamo salendo, controlla la collisione della testa con il soffitto (muri Wall)
+    ; In questo punto, bc contiene: C = PlayerX, B = new PlayerY
+    push bc
+    
+    ; Controlla se la testa a sinistra (PlayerX, new_Y) colpisce un Wall
+    call CheckWallCell
+    jr   c, .ceiling_collision
+    
+    ; Controlla se la testa a destra (PlayerX + 7, new_Y) colpisce un Wall
+    ld   a, c
+    add  a, 7
+    ld   c, a              ; C = PlayerX + 7
+    call CheckWallCell
+    jr   c, .ceiling_collision
+    
+    pop  bc
+    jp   .no_collision_checks
+    
+.ceiling_collision:
+    pop  bc                 ; Ripristina bc originale (C = PlayerX, B = new PlayerY)
+    
+    ; Calcola la coordinata Y clampata appena sotto il soffitto.
+    ; Il muro colpito è a riga r = new_Y / 8.
+    ; Il limite Y consentito è riga r + 1, cioè Y = (r + 1) * 8.
+    ld   a, b              ; A = new_Y
+    srl  a
+    srl  a
+    srl  a                 ; A = r (0..15)
+    inc  a                 ; r + 1
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8 (Y clampato)
+    
+    ld   b, a              ; B = Y clampato
+    
+    ; Ferma la velocità verso l'alto (inizia la caduta)
+    xor  a
+    ld   (velocity_y), a
+    jp   .save_pos
     
 .falling_checks:
     ; --- CONTROLLO ATTERRAGGIO SU RAMPA ---
@@ -338,6 +444,11 @@ Phys_ApplyGravity:
     ; Atterrato sulla rampa!
     pop  bc                 ; BC ha C = PlayerX, B = new_Y
     ld   b, h               ; B = ramp_Y
+    
+    ; Controlla se ramp_Y è negativo (bordo superiore dello schermo)
+    bit  7, b
+    jr   nz, .ramp_top_exit ; Se B è negativo (bit 7 = 1), Willy è in cima alla rampa al bordo superiore!
+    
     ld   (PlayerPos), bc
     ld   a, 1
     ld   (on_ground), a
@@ -347,6 +458,14 @@ Phys_ApplyGravity:
     ld   (jump_dir), a
     ld   (jump_frame), a
     jp   .end
+
+.ramp_top_exit:
+    xor  a
+    ld   (velocity_y), a
+    ld   (jump_start_y), a
+    ld   (jump_dir), a
+    ld   (jump_frame), a
+    jr   .save_pos          ; Esegui controllo transizione di stanza verso l'alto!
     
 .no_ramp_landing:
     pop  bc
@@ -442,7 +561,7 @@ Phys_ApplyGravity:
     jr   z, .no_up_transition
     
     ; C'è una stanza sopra!
-    ld   b, 112            ; Posiziona Willy in fondo alla nuova stanza
+    ld   b, 96             ; Posiziona Willy a Y=96 (sopra il pavimento a riga 14 della nuova stanza)
     jp   TriggerRoomChange
     
 .no_up_transition:
@@ -468,7 +587,7 @@ Phys_ApplyGravity:
     jr   z, .no_down_transition
     
     ; C'è una stanza sotto!
-    ld   b, 0              ; Posiziona Willy in cima alla nuova stanza
+    ld   b, 4              ; Posiziona Willy a Y=4 (in cima alla nuova stanza, evita re-triggering di Y<=0)
     jp   TriggerRoomChange
     
 .no_down_transition:
@@ -539,10 +658,6 @@ CheckCollision:
     ret
 
 ; -------------------------------------------------------------------
-; Controlla se la coordinata pixel (X, Y) si trova su un conveyor o rampa
-; Input: C = X, B = Y
-; Output: Carry flag impostato se solida, altrimenti resettato
-; -------------------------------------------------------------------
 CheckConveyorOrRampCell:
     push hl
     push de
@@ -567,74 +682,38 @@ CheckConveyorOrRampCell:
     ; --- CONTROLLO CONVEYOR ---
     ld   a, (conveyor_len)
     or   a
-    jr   z, .check_ramp    ; Se non c'è conveyor, controlla rampa
+    jr   z, .not_solid     ; Se non c'è conveyor, fine
     
     ; Controlla se Row corrisponde
     ld   a, (conveyor_row)
     cp   d
-    jr   nz, .check_ramp   ; Row diversa, controlla rampa
+    jr   nz, .not_solid    ; Row diversa
     
     ; Controlla se Col è compresa: c >= conveyor_col e c < conveyor_col + conveyor_len
     ld   a, (conveyor_col)
     cp   e
     jr   z, .is_conveyor   ; c == conveyor_col -> solido!
     jr   c, .c_greater     ; c > conveyor_col -> controlla limite superiore
-    jr   .check_ramp       ; c < conveyor_col
+    jr   .not_solid        ; c < conveyor_col
 .c_greater:
     ld   b, a              ; B = conveyor_col
     ld   a, (conveyor_len)
     add  a, b              ; A = conveyor_col + conveyor_len
     cp   e
-    jr   z, .check_ramp    ; c == len (fuori)
-    jr   c, .check_ramp    ; c > len (fuori)
+    jr   z, .not_solid     ; c == len (fuori)
+    jr   c, .not_solid     ; c > len (fuori)
 .is_conveyor:
-    jr   .solid
-
-.check_ramp:
-    ; --- CONTROLLO RAMP ---
-    ld   a, (ramp_len)
-    or   a
-    jr   z, .not_solid     ; Se non c'è rampa, fine
-    
-    ld   a, (ramp_row)     ; A = RampRowStart
-    cp   d                 ; compare with player row D
-    jr   c, .not_solid     ; if RampRowStart < D, skip!
-    
-    sub  d                 ; A = RampRowStart - D
-    ld   b, a              ; B = distance from start row (0..ramp_len-1)
-    ld   a, (ramp_len)
-    cp   b
-    jr   z, .not_solid     ; if B == ramp_len, too high!
-    jr   c, .not_solid     ; if B > ramp_len, too high!
-    
-    ; Calcola ExpectedCol:
-    ld   a, (ramp_dir)
-    or   a
-    jr   z, .r_left
-.r_right:
-    ld   a, (ramp_col)
-    add  a, b              ; A = ramp_col + B
-    jr   .compare_col
-.r_left:
-    ld   a, (ramp_col)
-    sub  b                 ; A = ramp_col - B
-.compare_col:
-    cp   e                 ; Compare with player col E
-    jr   nz, .not_solid    ; If not equal, not on ramp!
-    jr   .solid            ; Se corrisponde, è solido!
+    pop  bc
+    pop  de
+    pop  hl
+    scf                    ; Set carry (solido)
+    ret
     
 .not_solid:
     pop  bc
     pop  de
     pop  hl
     or   a                 ; Clear carry
-    ret
-    
-.solid:
-    pop  bc
-    pop  de
-    pop  hl
-    scf                    ; Set carry
     ret
 
 ; -------------------------------------------------------------------
@@ -1122,6 +1201,7 @@ GetRampY:
     add  a, a              ; *8
     add  a, e              ; A = (ramp_col + ramp_len) * 8 = X_right_boundary
     ld   h, a              ; H = X_right_boundary
+    jr   c, .no_right_bound_check_right
     
     ld   a, c              ; A = PlayerX
     cp   e
@@ -1134,7 +1214,15 @@ GetRampY:
     sub  h                 ; A = PlayerX - X_right_boundary
     cp   8
     jp   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary + 8, fuori
+    jr   .on_platform_right
     
+.no_right_bound_check_right:
+    ld   a, c              ; A = PlayerX
+    cp   e
+    jp   c, .out_of_ramp   ; Se PlayerX < X_left, fuori
+    jr   .on_ramp_slope    ; Se >= X_left, è sicuramente sulla pendenza rampa (non può superare 256)
+    
+.on_platform_right:
     ; Piattaforma adiacente! Restituisci PlayerY = (ramp_row - ramp_len + 1) * 8 - 16
     ld   a, (ramp_row)
     ld   hl, ramp_len
@@ -1155,11 +1243,9 @@ GetRampY:
     sub  16                ; A = ramp_row * 8 - 16
     add  a, e              ; A = ramp_row * 8 - 16 + X_left
     sub  c                 ; A = A - PlayerX
-    
-    ; Calcola la quota della piattaforma:
-    ; platform_Y = (ramp_row - ramp_len + 1) * 8 - 16
     ld   d, a              ; D = calculated Y
     
+    ; H = platform_Y + 16 (confronto sicuro con offset +16)
     ld   a, (ramp_row)
     ld   hl, ramp_len
     sub  (hl)
@@ -1167,13 +1253,17 @@ GetRampY:
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    sub  16                ; A = platform_Y
+    ld   h, a              ; H = platform_Y + 16
     
-    cp   d                 ; Compara platform_Y con calculated Y
-    jr   c, .no_clamp      ; Se platform_Y < calculated Y, non limitare
+    ld   a, d              ; A = calculated Y
+    add  a, 16             ; A = calculated Y + 16
+    cp   h                 ; Compare (calculated Y + 16) con (platform_Y + 16)
+    jr   nc, .no_clamp     ; Se calculated Y >= platform_Y, non limitare
     
     ; Altrimenti, limita a platform_Y
-    scf                    ; Set carry (dentro rampa)
+    ld   a, h
+    sub  16                ; A = platform_Y
+    scf
     ret
     
 .no_clamp:
@@ -1183,10 +1273,12 @@ GetRampY:
     
 .dir_left:
     ; Rampa sale a sinistra (up-left)
-    ld   hl, ramp_len
     ld   a, (ramp_col)
-    sub  (hl)
-    inc  a                 ; A = ramp_col - ramp_len + 1
+    inc  a                 ; A = ramp_col + 1
+    ld   hl, ramp_len
+    cp   (hl)              ; Compare (ramp_col + 1) con ramp_len
+    jp   c, .out_of_ramp   ; Se ramp_len > ramp_col + 1, evita underflow!
+    sub  (hl)              ; A = ramp_col - ramp_len + 1
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
@@ -1198,11 +1290,14 @@ GetRampY:
     add  a, a              ; *8
     add  a, 8              ; A = (ramp_col + 1) * 8 (X_right_boundary)
     ld   h, a              ; H = X_right_boundary
+    jr   c, .no_right_bound_check_left
     
     ld   a, c              ; A = PlayerX
     cp   h
     jp   nc, .out_of_ramp  ; Se PlayerX >= X_right_boundary, fuori
     
+.no_right_bound_check_left:
+    ld   a, c              ; A = PlayerX
     cp   e
     jr   nc, .on_ramp_slope_left ; Se PlayerX >= X_left, pendenza rampa
     
@@ -1238,11 +1333,9 @@ GetRampY:
     sub  16                ; A = ramp_row * 8 - 16
     sub  d                 ; A = ramp_row * 8 - 16 - X_start
     add  a, c              ; A = A + PlayerX
-    
-    ; Calcola la quota della piattaforma:
-    ; platform_Y = (ramp_row - ramp_len + 1) * 8 - 16
     ld   d, a              ; D = calculated Y
     
+    ; H = platform_Y + 16 (confronto sicuro con offset +16)
     ld   a, (ramp_row)
     ld   hl, ramp_len
     sub  (hl)
@@ -1250,11 +1343,16 @@ GetRampY:
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
+    ld   h, a              ; H = platform_Y + 16
+    
+    ld   a, d              ; A = calculated Y
+    add  a, 16             ; A = calculated Y + 16
+    cp   h                 ; Compare (calculated Y + 16) con (platform_Y + 16)
+    jr   nc, .no_clamp_left ; Se calculated Y >= platform_Y, non limitare
+    
+    ; Altrimenti, limita a platform_Y
+    ld   a, h
     sub  16                ; A = platform_Y
-    
-    cp   d
-    jr   c, .no_clamp_left
-    
     scf
     ret
     
@@ -1265,4 +1363,154 @@ GetRampY:
 
 .out_of_ramp:
     or   a                 ; Clear carry
+    ret
+
+; -------------------------------------------------------------------
+; Carica le impostazioni di salto e gravità specifiche per la stanza corrente
+; Legge il byte di configurazione ad offset OFFSET_PHYSICS_SETTINGS (239).
+; Se è 0, applica le impostazioni di default (Jump = 6, Gravity = 1).
+; Altrimenti, decodifica il formato %GGGGJJJJ (Jump = JJJJ, Gravity Preset = GGGG).
+; -------------------------------------------------------------------
+Phys_LoadRoomSettings:
+    push hl
+    push de
+    push af
+
+    ld   hl, (room_ptr)
+    ld   de, OFFSET_PHYSICS_SETTINGS
+    add  hl, de
+    ld   a, (hl)
+    or   a
+    jr   nz, .custom_settings
+    
+    ld   a, 6
+    ld   (room_jump_strength), a
+    ld   a, 1
+    ld   (room_gravity_preset), a
+    jr   .done
+    
+.custom_settings:
+    push af
+    and  $0f                  ; Maschera i 4 bit inferiori (JJJJ)
+    ld   (room_jump_strength), a
+    pop  af
+    srl  a
+    srl  a
+    srl  a
+    srl  a                  ; Sposta i 4 bit superiori in quelli inferiori (GGGG)
+    ld   (room_gravity_preset), a
+
+.done:
+    pop  af
+    pop  de
+    pop  hl
+    ret
+
+; -------------------------------------------------------------------
+; Verifica se c'è una cella Nasty (tipo 3) alle coordinate pixel (X, Y)
+; Input: C = X, B = Y
+; Output: Carry flag impostato se è Nasty, altrimenti resettato
+; -------------------------------------------------------------------
+CheckNastyCell:
+    push hl
+    push de
+    push bc
+    
+    ; 1. Controlla se Y (in B) è fuori dalla griglia di layout
+    ld   a, b
+    cp   128
+    jr   nc, .not_nasty
+    
+    ; 2. Calcola riga di layout: r = Y / 8
+    srl  a
+    srl  a
+    srl  a                 ; A = r (0..15)
+    
+    ; 3. Calcola colonna di layout: c = X / 8 (in C)
+    ld   e, a              ; E = r
+    ld   a, c
+    srl  a
+    srl  a
+    srl  a                 ; A = c (0..31)
+    ld   c, a              ; C = c
+    ld   a, e              ; A = r
+    
+    call GetCellFromUnpacked ; A = cell type
+    
+    ; Controlla se è Nasty (3)
+    cp   3
+    jr   z, .is_nasty
+    
+.not_nasty:
+    pop  bc
+    pop  de
+    pop  hl
+    or   a                 ; Clear carry
+    ret
+    
+.is_nasty:
+    pop  bc
+    pop  de
+    pop  hl
+    scf                    ; Set carry
+    ret
+
+; -------------------------------------------------------------------
+; Controlla la collisione di Willy con le celle Nasty (tipo 3)
+; Controlla 6 punti strategici della bounding box di Willy (16x8 pixel)
+; Output: Carry flag impostato se c'è collisione, altrimenti resettato
+; -------------------------------------------------------------------
+Phys_CheckNastyCollision:
+    push bc
+    
+    ld   bc, (PlayerPos)   ; B = Y, C = X
+    
+    ; Punto 1: Top-Left (X, Y)
+    call CheckNastyCell
+    jr   c, .collision
+    
+    ; Punto 2: Top-Right (X + 7, Y)
+    ld   a, c
+    add  a, 7
+    ld   c, a
+    call CheckNastyCell
+    jr   c, .collision
+    
+    ; Punto 3: Mid-Left (X, Y + 7)
+    ld   bc, (PlayerPos)
+    ld   a, b
+    add  a, 7
+    ld   b, a
+    call CheckNastyCell
+    jr   c, .collision
+    
+    ; Punto 4: Mid-Right (X + 7, Y + 7)
+    ld   a, c
+    add  a, 7
+    ld   c, a
+    call CheckNastyCell
+    jr   c, .collision
+    
+    ; Punto 5: Bottom-Left (X, Y + 15)
+    ld   bc, (PlayerPos)
+    ld   a, b
+    add  a, 15
+    ld   b, a
+    call CheckNastyCell
+    jr   c, .collision
+    
+    ; Punto 6: Bottom-Right (X + 7, Y + 15)
+    ld   a, c
+    add  a, 7
+    ld   c, a
+    call CheckNastyCell
+    jr   c, .collision
+    
+    pop  bc
+    or   a                 ; Clear carry
+    ret
+    
+.collision:
+    pop  bc
+    scf                    ; Set carry
     ret

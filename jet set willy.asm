@@ -8,6 +8,7 @@
     org  0x5dad
 
     ; Include files
+    include "settings.asm"
     include "constants.asm"
     include "interrupts.asm"
     include "graphics.asm"
@@ -20,32 +21,36 @@
     include "data/datavariable.asm"
     
 start:
-    ld   sp, $ffff
-    call SetupIM2
+    ld   sp, $fdf0
     jp   Main
-
-    
-
+ 
 ;    org $7F50
 Main:
     ; Inizializza
     xor  a
     ld  (body_state), a
     ld  (items_collected), a
+    ld  a, 1
+    ld  (q_prev), a
+    ld  (a_prev), a
 
     call Gfx_CopyChars
     call Gfx_DefineChars
     
     ld   a, $02
     call OPENCHAN
-    ld   hl, $8000 
+    ld   hl, $8400 
     ld   (UDG), hl
 
     ld   hl, ATTR_P
     ld   (hl), $07
     call CLS
+
+    call SetupIM2
 LoadRoomAndRestart:
+    ld   sp, $fdf0             ; Ripristina lo stack pointer per evitare stack drift/reset
     call DetermineCurrentRoomID
+    call Phys_LoadRoomSettings
     call Gfx_DrawRoom
     call Gfx_DrawConveyorsAndRamps
     call Gfx_PrintRoomName
@@ -67,35 +72,51 @@ LoadRoomAndRestart:
     ld   de, OFFSET_BORDER_COLOR
     add  hl, de
     ld   a, (hl)
+    and  $07               ; Garantisci un valore valido 0..7
     ld   (room_border_color), a
     out  ($fe), a          ; Imposta colore bordo hardware
     
-    ; Aggiorna BORDCR per far sì che la ROM usi lo stesso colore
-    add  a, a
-    add  a, a
-    add  a, a              ; Sposta nei bit 3-5
-    ld   b, a
-    ld   a, (BORDCR)
-    and  $c7               ; Pulisce vecchi bit del bordo
-    or   b                 ; Imposta nuovo colore bordo
-    or   $07               ; Imposta ink a bianco
+    ; Aggiorna BORDCR per la ROM in modo sicuro (Paper = border, Ink = white)
+    rlca
+    rlca
+    rlca                   ; Sposta nei bit 3-5
+    or   $07               ; Ink bianco nei bit 0-2
     ld   (BORDCR), a
 
     call Gfx_PrintPlayer
 
 Main_loop:
+.sync_loop:
     halt
+    ld   hl, (counter)
+    ld   de, (last_frame_counter)
+    or   a
+    sbc  hl, de
+    ld   a, l
+    cp   2
+    jr   c, .sync_loop
+    
+    ld   hl, (counter)
+    ld   (last_frame_counter), hl
     
     call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
+    IF ENABLE_MUSIC != 0
     call Audio_UpdateMusic        ; Aggiorna la musica
+    ENDIF
     
     ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
     call Gfx_DeleteCharAtOldPos
     call Gfx_PrintPlayer
 
-    call EraseRoomEnemies
-    call DrawRoomEnemies
+    call Enemy_EraseRoom
+    call Enemy_DrawRoom
     
+    ; Se l'animazione delle vite è abilitata, aggiorna la visualizzazione delle icone camminanti
+    IF ENABLE_ANIMATE_LIVES != 0
+    call Gfx_PrintWillyLives
+    ENDIF
+
+
     ; 3. Salva le posizioni correnti del player per il prossimo frame
     ld   bc, (PlayerPos)
     ld   (PlayerPosOld), bc
@@ -108,10 +129,52 @@ Main_loop:
     call Enemy_Update
     call Items_CheckCollision
     
-    ; 5. Gestisci la collisione (disegna le raster bar se collide)
+    ; Controlla collisione con Nasties (morte di Willy)
+    IF ENABLE_NASTY_COLLISION_DEATH != 0
+    call Phys_CheckNastyCollision
+    jr   c, .willy_dies
+    ENDIF
+    
+    ; Controlla collisione con guardiani
     call CheckCollision
     jr   nc, .no_collision
     
+    ; C'è collisione con un guardiano!
+    ; Controlla se la morte per collisione con i guardiani è abilitata
+    IF ENABLE_GUARDIAN_COLLISION_DEATH != 0
+    jr   .willy_dies
+    ELSE
+    jr   .draw_raster_bars ; se disabilitato, disegna le raster bar per debug
+    ENDIF
+    
+.willy_dies:
+    ; Decrementa le vite e aggiorna la visualizzazione
+    ld   hl, willy_lives
+    ld   a, (hl)
+    or   a
+    jr   z, .no_lives_dec
+    dec  (hl)
+.no_lives_dec:
+    call Gfx_PrintWillyLives
+
+    ; Gestisci la morte di Willy:
+    ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
+    call Gfx_DeleteCharAtOldPos
+    
+    ; 2. Ripristina la posizione iniziale nella stanza
+    call LoadPositionPlayeinRoom
+    
+    ; 3. Reimposta la fisica di Willy
+    xor  a
+    ld   (velocity_y), a
+    ld   (jump_pressed), a
+    ld   (jump_frame), a
+    ld   (jump_dir), a
+    ld   a, 1
+    ld   (on_ground), a
+    jr   .no_collision ; Salta il disegno delle raster bar poiché Willy è morto
+    
+.draw_raster_bars:
     ; Collisione attiva: disegna le raster bar nel bordo
     ld   a, (counter)
     and  7                 ; Colore iniziale basato sul contatore di frame

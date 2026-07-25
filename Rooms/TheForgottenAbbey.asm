@@ -20,6 +20,10 @@
 ; TheForgottenAbbeyEnemy2       Size   5 Byte, Start Byte 245
 ; TheForgottenAbbeyEnemy3       Size   5 Byte, Start Byte 250
 ; TheForgottenAbbeyEnemy4       Size   5 Byte, Start Byte 255
+; TheForgottenAbbeyEnemy5       Size   5 Byte, Start Byte 260
+; TheForgottenAbbeyEnemy6       Size   5 Byte, Start Byte 265
+; TheForgottenAbbeyEnemy7       Size   5 Byte, Start Byte 270
+; TheForgottenAbbeyEnemy8       Size   5 Byte, Start Byte 275
 ; TheForgottenAbbeyPosWilly     Size   2 Byte, Start Byte 280
 ;
 ;===========================================================================
@@ -47,7 +51,7 @@ TheForgottenAbbeyTile:
     DEFM "      The Forgotten Abbey       "
 
 TheForgottenAbbeyBackground:                    ; Background
-    DEFB 0,0,0,0,0,0,0,0,0
+    DEFB 7,0,0,0,0,0,0,0,0
 
 TheForgottenAbbeyFloor:
     DEFB 4,255,255,242,36,64,2,0,136       ; Floor Solid
@@ -59,10 +63,10 @@ TheForgottenAbbeyNasty:
     DEFB 66,24,60,126,153,153,126,66,60  ; Nastry
 
 TheForgottenAbbeyRamp:                          ; Ramp Solid
-    DEFB 7,128,64,224,48,168,212,34,137             
+    DEFB 7,128,64,224,48,168,212,34,137              ; Ramp Solid
 
 TheForgottenAbbeyConveyor:                      ; Conveyor Solid
-    DEFB 15,112,85,0,187,170,170,170,170
+    DEFB 15,112,85,0,187,170,170,170,170                      ; Conveyor Solid
 
 TheForgottenAbbeyConveyorData:
     DEFB 0
@@ -78,39 +82,39 @@ TheForgottenAbbeyBorderColor:
     DEFB 1
 
 TheForgottenAbbeyReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors: Enemy 1 (GREEN), Enemy 2 (RED), Enemy 3 (CYAN), Enemy 4 (WHITE)
+    DEFB GREEN, YELLOW, RED, WHITE     ; Enemy colors
 
 TheForgottenAbbeyItem:
     DEFB 24,36,219,219,36,24,24,24
 
 TheForgottenAbbeyDirection:
-	DEFB 49						;Room to the left (The Wine Cellar)
-	DEFB 5						;Room to the right (The Security Guard)
-	DEFB $FF					;Room above (The Off Licence)
-	DEFB $FF					;Room below (The Off Licence)
+	ROOM RoomsListTable.TheWineCellarLayout     					;Room to the left (The Wine Cellar - non ancora creata)
+	ROOM RoomsListTable.TheSecurityGuardLayout						;Room to the right (The Security Guard)
+	DEFB BLOCK					                                    ;Room above (None)
+	DEFB BLOCK					                                    ;Room below (None)
 
 
 TheForgottenAbbeyUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 TheForgottenAbbeyEnemy1:
-    DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, FRATE, 32, 40, 160      
 TheForgottenAbbeyEnemy2:
-    DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $80, FRATE, 96, 40, 224        
 TheForgottenAbbeyEnemy3:
-    DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, FRATE, 72, 72, 160       
 TheForgottenAbbeyEnemy4:
-    DEFB 0, 0, 0, 0, 0               ; Empty slot
+    DEFB $80, FRATE, 154, 72, 189         
 TheForgottenAbbeyEnemy5:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, FRATE, 40, 104, 96         
 TheForgottenAbbeyEnemy6:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, FRATE, 88, 104, 144       
 TheForgottenAbbeyEnemy7:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, FRATE, 128, 104, 184         
 TheForgottenAbbeyEnemy8:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, FRATE, 184, 104, 240     
 
 TheForgottenAbbeyPosWilly:
-    db 200, 50                   ; Posizione di Willy
+    db 200, 104                     ; Posizione di Willy
 TheForgottenAbbeyEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB YELLOW, BLUE, GREEN, RED     ; Colori per nemici 5-8

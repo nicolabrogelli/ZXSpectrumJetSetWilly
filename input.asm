@@ -25,7 +25,8 @@ Input_CheckCtrl:
     xor  a
     ld   (current_input_dir), a
 
-    ; ── Sezione 1: tasto Q (cambio stanza) ──────────────────────────
+    IF ENABLE_ROOM_SKIP_KEYS != 0
+    ; ── Sezione 1a: tasto Q (cambio stanza AVANTI) ─────────────────────
     ;
     ; Porta $FB → riga Q, W, E, R, T. Bit 0 = Q.
     ; Se bit 0 = 0, Q è premuto.
@@ -47,17 +48,46 @@ Input_CheckCtrl:
 
     ; NOTA sullo stack:
     ; Input_CheckCtrl è stata invocata con CALL, quindi l'indirizzo di ritorno
-    ; è in cima allo stack. Vogliamo saltare a PerformRoomChange senza
+    ; è in cima allo stack. Vogliamo saltare a PerformRoomChangeNext senza
     ; tornare al chiamante, quindi POP HL scarta quell'indirizzo,
     ; poi JP salta direttamente.
     pop  hl                     ; rimuove indirizzo di ritorno di Input_CheckCtrl
-    jp   PerformRoomChange      ; salta al cambio stanza (non torna qui)
+    jp   PerformRoomChangeNext  ; salta al cambio stanza avanti (non torna qui)
 
 .q_not_pressed:
     xor  a
     ld   (q_prev), a            ; Q rilasciato → azzera debounce
 
 .q_handled:
+
+    ; ── Sezione 1b: tasto A (cambio stanza INDIETRO) ────────────────────
+    ;
+    ; Porta $FD → riga A, S, D, F, G. Bit 0 = A.
+    ; Se bit 0 = 0, A è premuto.
+
+    ld   bc, $fdfe
+    in   a, (c)
+    bit  0, a
+    jr   nz, .a_not_pressed     ; bit 0 = 1 → A non premuto, salta
+
+    ; A è premuto: debounce tramite (a_prev).
+    ld   a, (a_prev)
+    or   a
+    jr   nz, .a_handled         ; era già premuto, niente da fare
+
+    ; ── Primo frame di pressione di A ──
+    ld   a, 1
+    ld   (a_prev), a            ; marca "A era premuto"
+
+    pop  hl                     ; rimuove indirizzo di ritorno di Input_CheckCtrl
+    jp   PerformRoomChangePrev  ; salta al cambio stanza indietro (non torna qui)
+
+.a_not_pressed:
+    xor  a
+    ld   (a_prev), a            ; A rilasciato → azzera debounce
+
+.a_handled:
+    ENDIF
 
     ; ── Sezione 2: movimento (sinistra / destra) ────────────────────
     ;
@@ -174,11 +204,20 @@ checkCtrl_jump:
     ld   (current_input_dir), a
     ret
 
+    IF ENABLE_ROOM_SKIP_KEYS != 0
 ; -------------------------------------------------------------------
-; Esegue il cambio di stanza ciclico alla stanza successiva
+; Esegue il cambio di stanza ciclico alla stanza successiva o precedente
 ; -------------------------------------------------------------------
 PerformRoomChange:
-    ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..45)
+PerformRoomChangeNext:
+    ld   d, 1                      ; 1 = avanti
+    jr   PerformRoomChangeCommon
+
+PerformRoomChangePrev:
+    ld   d, 0                      ; 0 = indietro
+
+PerformRoomChangeCommon:
+    ; 1. Cerca il layout corrente in RoomsListTable per trovare l'indice (0..60)
     ld   hl, RoomsListTable
     ld   bc, (room_ptr)            ; BC = layout corrente
     ld   e, 0                      ; E = contatore indice
@@ -194,25 +233,40 @@ PerformRoomChange:
     inc  hl
     inc  e
     ld   a, e
-    cp   46                        ; 46 stanze totali (indice 0..45)
+    cp   61                        ; 61 stanze totali (indice 0..60)
     jr   c, .loop
     
     ld   e, 0                      ; Se non trovato, riparte da 0
 
 .found:
-    ; 2. Trova il prossimo indice non nullo (ciclando)
+    ; 2. Trova il prossimo / precedente indice non nullo (ciclando)
     ld   c, e                      ; C = indice di partenza
-.next_index_loop:
+.index_loop:
+    bit  0, d
+    jr   z, .go_prev
+
+.go_next:
     ld   a, c
     inc  a
-    cp   46
-    jr   c, .no_wrap
+    cp   61                        ; 61 stanze totali (0..60), fa il wrap a 0 dopo l'ultima stanza
+    jr   c, .no_wrap_next
     xor  a
-.no_wrap:
+.no_wrap_next:
     ld   c, a                      ; C = nuovo indice candidato
-    
-    ; Leggi RoomsListTable[C]
+    jr   .check_candidate
+
+.go_prev:
+    ld   a, c
+    sub  1
+    jr   nc, .no_wrap_prev
+    ld   a, 60                     ; 60 è l'ultimo indice valido
+.no_wrap_prev:
+    ld   c, a                      ; C = nuovo indice candidato
+
+.check_candidate:
+    ; Leggi RoomsListTable[C] senza corrompere C (indice) né D (direzione)
     push hl
+    push de
     ld   hl, RoomsListTable
     ld   e, c
     ld   d, 0
@@ -220,32 +274,42 @@ PerformRoomChange:
     add  hl, de                    ; HL = RoomsListTable + C * 2
     ld   e, (hl)
     inc  hl
-    ld   d, (hl)                   ; DE = RoomsListTable[C]
+    ld   d, (hl)                   ; DE = RoomsListTable[C] (puntatore al layout)
     ld   a, d
     or   e                         ; DE == 0?
-    pop  hl
-    jr   z, .next_index_loop       ; Se è zero, riprova col prossimo
-    
-    ; Trovato! DE = layout
+    jr   nz, .found_candidate
+
+    ; Candidate is NULL (dw 0)
+    pop  de                        ; Ripristina D (direzione) e registro DE
+    pop  hl                        ; Ripristina HL
+    jr   .index_loop               ; Riprova con la stanza successiva/precedente (C e D intatti!)
+
+.found_candidate:
+    ; Trovato! DE = puntatore al layout della stanza
+    pop  af                        ; Scarta lo stack frame temporaneo per DE
+    pop  hl                        ; Ripristina HL
     ld   (room_ptr), de
     
-    ; 4. Pulisci lo schermo e ricarica la stanza
+    ; Azzera transition_active per far caricare a LoadRoomAndRestart
+    ; le coordinate iniziali reali definite nella stanza (OFFSET_POS_WILLY)
+    xor  a
+    ld   (transition_active), a
+    ld   (velocity_y), a
+    
+    ; Pulisci lo schermo e ricarica la stanza
     ld   hl, ATTR_P
     ld   (hl), $07
     call CLS
     
     jp   LoadRoomAndRestart
+    ENDIF
 
 TriggerRoomChange:
     ; Input: A = nuovo room ID, C = Willy X, B = Willy Y
-    ld   (PlayerPos), bc
-    ld   (PlayerPosOld), bc
+    cp   61                        ; Max stanze in RoomsListTable (0..60)
+    ret  nc                        ; Se A >= 61, ignora transizione!
     
-    ; Reset velocity_y
-    ld   hl, velocity_y
-    ld   (hl), 0
-    
-    ; Trova l'indirizzo del layout corrispondente da RoomsListTable
+    push bc
     ld   hl, RoomsListTable
     ld   c, a
     ld   b, 0
@@ -255,6 +319,18 @@ TriggerRoomChange:
     ld   e, (hl)
     inc  hl
     ld   d, (hl)                   ; DE = puntatore al layout della nuova stanza
+    
+    ld   a, d
+    or   e                         ; DE == 0?
+    pop  bc
+    ret  z                         ; Se layout è NULL (stanza non creata), ignora transizione!
+    
+    ld   (PlayerPos), bc
+    ld   (PlayerPosOld), bc
+    
+    ; Reset velocity_y
+    ld   hl, velocity_y
+    ld   (hl), 0
     
     ld   (room_ptr), de            ; Aggiorna room_ptr
     
@@ -267,35 +343,70 @@ TriggerRoomChange:
     ld   (hl), $07
     call CLS
     
-    ; Pulisci lo stack (rimuove il ritorno alla routine chiamante dal Main_loop)
-    pop  hl
+    ; Reset dello stack pointer prima di riavviare la stanza
+    ld   sp, $fdf0
     jp   LoadRoomAndRestart
 
 RoomsListTable:
-    dw TheOffLicenceLayout              ; 0
-    dw TheBridgeLayout                  ; 1
-    dw UnderTheMegaTreeLayout           ; 2
-    dw AtTheFootTheMegaTreeLayout       ; 3
-    dw TheDriveLayout                   ; 4
-    dw TheSecurityGuardLayout           ; 5
-    dw EntranceToHadesLayout            ; 6
-    dw CuckoosNestLayout                ; 7
-    dw InsideTheMegaTrunkLayout         ; 8
-    dw OnABranchOverTheDriveLayout      ; 9
-    dw TheFrontDoorLayout               ; 10
-    dw TheHallLayout                    ; 11
-    dw TreeTopLayout                    ; 12
-    dw OutALimbLayout                   ; 13
-    dw RescueEsmereldaLayout            ; 14
-    dw IAmSureIHaveSeenThiBeforeLayout  ; 15
-    dw WeMustPerformQuirkafleegLayout   ; 16
-    dw UpOnTheBattlementsLayout         ; 17
-    dw OntheRoofLayout                  ; 18
-    dw TheForgottenAbbeyLayout          ; 19
-    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 20-32: padding
-    dw TheBathroomLayout                ; 33
-    dw 0                                ; 34
-    dw MastreBedRoomLayout              ; 35
-    dw 0,0,0,0,0,0,0,0,0                ; 36-44: padding
-    dw UnderTheDriveLayout              ; 45
-    dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0    ; 46 - 60
+.TheOffLicenceLayout:              dw TheOffLicenceLayout              ; 00
+.TheBridgeLayout:                  dw TheBridgeLayout                  ; 01
+.UnderTheMegaTreeLayout:           dw UnderTheMegaTreeLayout           ; 02
+.AtTheFootTheMegaTreeLayout:       dw AtTheFootTheMegaTreeLayout       ; 03
+.TheDriveLayout:                   dw TheDriveLayout                   ; 04
+.TheSecurityGuardLayout:           dw TheSecurityGuardLayout           ; 05
+.EntranceToHadesLayout:            dw EntranceToHadesLayout            ; 06
+.CuckoosNestLayout:                dw CuckoosNestLayout                ; 07
+.InsideTheMegaTrunkLayout:         dw InsideTheMegaTrunkLayout         ; 08
+.OnABranchOverTheDriveLayout:      dw OnABranchOverTheDriveLayout      ; 09
+.TheFrontDoorLayout:               dw TheFrontDoorLayout               ; 10
+.TheHallLayout:                    dw TheHallLayout                    ; 11
+.TreeTopLayout:                    dw TreeTopLayout                    ; 12
+.OutALimbLayout:                   dw OutALimbLayout                   ; 13
+.RescueEsmereldaLayout:            dw RescueEsmereldaLayout            ; 14
+.IAmSureIHaveSeenThiBeforeLayout:  dw IAmSureIHaveSeenThiBeforeLayout  ; 15
+.WeMustPerformQuirkafleegLayout:   dw WeMustPerformQuirkafleegLayout   ; 16
+.UpOnTheBattlementsLayout:         dw UpOnTheBattlementsLayout         ; 17
+.OntheRoofLayout:                  dw OntheRoofLayout                  ; 18
+.TheForgottenAbbeyLayout:          dw TheForgottenAbbeyLayout          ; 19
+.BallRoomEastLayout:               dw BallRoomEastLayout               ; 20
+.BallRoomWestLayout:               dw BallRoomWestLayout               ; 21
+.TotheKitchensMainStairwayLayout:  dw TotheKitchensMainStairwayLayout  ; 22 
+.TheKitchenLayout:                 dw TheKitchenLayout                 ; 23
+.WestOfKitchenLayout:              dw WestOfKitchenLayout              ; 24
+.ColdStoreLayout:                  dw ColdStoreLayout                  ; 25
+.EastWallBaseLayout:               dw EastWallBaseLayout               ; 26
+.TheChapelLayout:                  dw TheChapelLayout                  ; 27
+.FirstLandingLayout:               dw FirstLandingLayout               ; 28
+.TheNightmareRoomLayout:           dw TheNightmareRoomLayout           ; 29
+.TheBanyanTreeLayout               dw TheBanyanTreeLayout              ; 30
+.SwimmingPoolLayout:               dw SwimmingPoolLayout               ; 31
+.HalfwayUpTheEastWallLayout:       dw HalfwayUpTheEastWallLayout       ; 32
+.TheBathroomLayout:                dw TheBathroomLayout                ; 33
+.TopLandingLayout:                 dw TopLandingLayout                 ; 34
+.MastreBedRoomLayout:              dw MastreBedRoomLayout              ; 35
+.ABitOfTreeLayout:                 dw ABitOfTreeLayout                 ; 36
+.OrangeryLayout:                   dw OrangeryLayout                   ; 37
+.PriestsHoleLayout:                dw PriestsHoleLayout                ; 38
+.EmergencyGeneratorLayout:         dw EmergencyGeneratorLayout         ; 39
+.DrJonesWillNeverBelieveThisLayout: dw DrJonesWillNeverBelieveThisLayout ; 40
+.TheAtticLayout:                   dw TheAtticLayout                   ; 41
+.UnderTheRoofLayout:               dw UnderTheRoofLayout               ; 42
+.ConservatoryRoofLayout:           dw ConservatoryRoofLayout           ; 43
+.OnTopOfTheHouseLayout:            dw OnTopOfTheHouseLayout            ; 44
+.UnderTheDriveLayout:              dw UnderTheDriveLayout              ; 45
+.TreeRootLayout:                   dw TreeRootLayout                   ; 46
+.NotUsedLayout:                    dw NotUsedLayout                    ; 47
+.NomenLuniLayout:                  dw NomenLuniLayout                  ; 48
+.TheWineCellarLayout:              dw TheWineCellarLayout              ; 49
+.WatchTowerLayout:                 dw WatchTowerLayout                 ; 50
+.ToolShedLayout:                   dw ToolShedLayout                   ; 51
+.BackStairwayLayout:               dw BackStairwayLayout               ; 52
+.BackDoorLayout:                   dw BackDoorLayout                   ; 53
+.WestWingLayout:                   dw WestWingLayout                   ; 54
+.WestBedroomLayout:                dw WestBedroomLayout                ; 55
+.WestWingRoofLayout:               dw WestWingRoofLayout               ; 56
+.AbovetheWestBedroomLayout:        dw AbovetheWestBedroomLayout        ; 57
+.TheBeachLayout:                   dw TheBeachLayout                   ; 58
+.TheYachtLayout:                   dw TheYachtLayout                   ; 59 
+.TheBowLayout:                     dw TheBowLayout                     ; 60
+

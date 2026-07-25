@@ -67,6 +67,7 @@ Audio_UpdateJumpSound:
 Audio_JumpSoundDelays:
     db 51, 45, 38, 32, 25, 19, 12, 6, 12, 19, 25, 32, 38, 45, 51, 58, 64, 71
 
+    IF ENABLE_MUSIC != 0
 ; -------------------------------------------------------------------
 ; Audio_UpdateMusic
 ;
@@ -109,9 +110,7 @@ Audio_UpdateMusic:
     ; Leggi durata (secondo byte)
     inc  hl
     ld   a, (hl)
-    srl  a                        ; Divide per 8 (velocizza 8x)
-    srl  a
-    srl  a
+    srl  a                        ; Divide per 2 (velocizza 2x, quattro volte più lento rispetto all'inizio)
     jr   nz, .dur_ok
     ld   a, 1
 .dur_ok:
@@ -171,6 +170,10 @@ Audio_MusicSheet:
     db 85, 10, 96, 70, 72, 40, 81, 10, 76, 5, 85, 20, 96, 10, 107, 25
     db 90, 20, 114, 5, 107, 10, 90, 10, 96, 10, 107, 10, 96, 10, 85, 5
     db 90, 10, 107, 20, 68, 65
+    ELSE
+Audio_UpdateMusic:
+    ret
+    ENDIF
 
 ; -------------------------------------------------------------------
 ; Audio_PlayCollectSound

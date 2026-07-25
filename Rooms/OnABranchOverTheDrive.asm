@@ -1,26 +1,31 @@
 ;===========================================================================
 ; OnABranchOverTheDrive.asm  
 ;
-; OnABranchOverTheDriveLayout       Size 128 Byte, Start Byte   0
-; OnABranchOverTheDriveTile         Size  32 Byte, Start Byte 128
-; OnABranchOverTheDriveBackground   Size   9 Byte, Start Byte 160
-; OnABranchOverTheDriveFloor        Size   9 Byte, Start Byte 169
-; OnABranchOverTheDriveWall         Size   9 Byte, Start Byte 178
-; OnABranchOverTheDriveNasty        Size   9 Byte, Start Byte 187
-; OnABranchOverTheDriveRamp         Size   9 Byte, Start Byte 196
-; OnABranchOverTheDriveConveyor     Size   9 Byte, Start Byte 205
-; OnABranchOverTheDriveConveyorData Size   4 Byte, Start Byte 214
-; OnABranchOverTheDriveRampData     Size   4 Byte, Start Byte 218
-; OnABranchOverTheDriveBorderColor  Size   1 Byte, Start Byte 222
-; OnABranchOverTheDriveReserved     Size   4 Byte, Start Byte 223
-; OnABranchOverTheDriveItem		    Size   8 Byte, Start Byte 227
-; OnABranchOverTheDriveDirection    Size   4 Byte, Start Byte 235
-; OnABranchOverTheDriveUnused       Size   1 Byte, Start Byte 239
-; OnABranchOverTheDriveEnemy1		Size   5 Byte, Start Byte 240
-; OnABranchOverTheDriveEnemy2		Size   5 Byte, Start Byte 245
-; OnABranchOverTheDriveEnemy3		Size   5 Byte, Start Byte 250
-; OnABranchOverTheDriveEnemy4		Size   5 Byte, Start Byte 255
-; OnABranchOverTheDrivePosWilly     Size   2 Byte, Start Byte 280
+; OnABranchOverTheDriveLayout           Size 128 Byte, Start Byte   0
+; OnABranchOverTheDriveTile             Size  32 Byte, Start Byte 128
+; OnABranchOverTheDriveBackground       Size   9 Byte, Start Byte 160
+; OnABranchOverTheDriveFloor            Size   9 Byte, Start Byte 169
+; OnABranchOverTheDriveWall             Size   9 Byte, Start Byte 178
+; OnABranchOverTheDriveNasty            Size   9 Byte, Start Byte 187
+; OnABranchOverTheDriveRamp             Size   9 Byte, Start Byte 196
+; OnABranchOverTheDriveConveyor         Size   9 Byte, Start Byte 205
+; OnABranchOverTheDriveConveyorData     Size   4 Byte, Start Byte 214
+; OnABranchOverTheDriveRampData         Size   4 Byte, Start Byte 218
+; OnABranchOverTheDriveBorderColor      Size   1 Byte, Start Byte 222
+; OnABranchOverTheDriveReserved         Size   4 Byte, Start Byte 223
+; OnABranchOverTheDriveItem		        Size   8 Byte, Start Byte 227
+; OnABranchOverTheDriveDirection        Size   4 Byte, Start Byte 235
+; OnABranchOverTheDriveUnused           Size   1 Byte, Start Byte 239
+; OnABranchOverTheDriveEnemy1		    Size   5 Byte, Start Byte 240
+; OnABranchOverTheDriveEnemy2		    Size   5 Byte, Start Byte 245
+; OnABranchOverTheDriveEnemy3		    Size   5 Byte, Start Byte 250
+; OnABranchOverTheDriveEnemy4		    Size   5 Byte, Start Byte 255
+; OnABranchOverTheDriveEnemy5		    Size   5 Byte, Start Byte 260
+; OnABranchOverTheDriveEnemy6		    Size   5 Byte, Start Byte 265
+; OnABranchOverTheDriveEnemy7		    Size   5 Byte, Start Byte 270
+; OnABranchOverTheDriveEnemy8		    Size   5 Byte, Start Byte 275
+; OnABranchOverTheDrivePosWilly         Size   2 Byte, Start Byte 280
+; OnABranchOverTheDriveEnemyColors5_8   Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
@@ -48,23 +53,23 @@ OnABranchOverTheDriveTile:
     DEFM "   On a Branch Over the Drive   "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-OnABranchOverTheDriveBackground:
+OnABranchOverTheDriveBackground:                    ; Background
     DEFB $0F,0,0,0,0,0,0,0,0	            ;Background
 
 OnABranchOverTheDriveFloor:
-    DEFB 10,31,243,225,96,48,44,64,128	    ;Floor Solid
+    DEFB 10,31,243,225,96,48,44,64,128       ; Floor Solid
 
 OnABranchOverTheDriveWall:
-    DEFB 74,9,18,10,31,228,8,8,8	    	;Wall Solid
+    DEFB 74,9,18,10,31,228,8,8,8   ; Wall Solid
 
 OnABranchOverTheDriveNasty:
-    DEFB 12,66,41,84,38,135,35,42,4	    	;Nasty
+    DEFB 12,66,41,84,38,135,35,42,4  ; Nastry
 
 OnABranchOverTheDriveRamp:
-    DEFB 15,5,2,4,8,80,32,64,128	        ;Ramp Solid
+    DEFB 15,5,2,4,8,80,32,64,128              ; Ramp Solid
 
 OnABranchOverTheDriveConveyor:
-    DEFB 255,0,0,0,0,0,0,0,0	            ;Conveyor
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 OnABranchOverTheDriveConveyorData:
@@ -84,7 +89,7 @@ OnABranchOverTheDriveBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 OnABranchOverTheDriveReserved:
-    DEFB 2, 3, 4, 7                         ; Enemy colors: all WHITE (7)
+    DEFB RED, MAGENTA, GREEN, YELLOW     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 OnABranchOverTheDriveItem:
@@ -92,23 +97,23 @@ OnABranchOverTheDriveItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 OnABranchOverTheDriveDirection:
-	DEFB 10									;Room to the left (The Front Door)
-	DEFB 8									;Room to the right (Inside the MegaTrunk)
-	DEFB 13									;Room above (Out on a limb)
-	DEFB 4									;Room below (The Drive)
+	ROOM RoomsListTable.TheFrontDoorLayout									;Room to the left (The Front Door)
+	ROOM RoomsListTable.InsideTheMegaTrunkLayout									;Room to the right (Inside the MegaTrunk)
+	ROOM RoomsListTable.OutALimbLayout									;Room above (Out on a limb)
+	ROOM RoomsListTable.TheDriveLayout									;Room below (The Drive)
 
 OnABranchOverTheDriveUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 OnABranchOverTheDriveEnemy1:
-    DEFB $80, 0, 8, 76, 200         ; Enemy 1 (Uccello), horizontal, Starts X=8, Y=120, Limit X=200
+    DEFB $C0, SCIMMIA, 240, 64, 112   
 OnABranchOverTheDriveEnemy2:
-    DEFB $80, 0, 80, 76, 180         ; Enemy 2 (Uccello), horizontal, Starts X=80, Y=80, Limit X=180
+    DEFB $C0, FACCIA_PALLA, 56, 64, 104    
 OnABranchOverTheDriveEnemy3:
-    DEFB $C0, 4, 120, 16, 76         ; Enemy 3 (Ufo), vertical, Starts X=120, Y=40, Limit Y=130
+    DEFB $C0, DOUBLE_BALL, 112, 0, 56   
 OnABranchOverTheDriveEnemy4:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB $80, TRONCHESE, 128, 40, 240  
 OnABranchOverTheDriveEnemy5:
     DEFB 0, 0, 0, 0, 0
 OnABranchOverTheDriveEnemy6:
@@ -119,6 +124,6 @@ OnABranchOverTheDriveEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 OnABranchOverTheDrivePosWilly:
-    db 200, 30                   ; Posizione di Willy
+    db 200, 40                   ; Posizione di Willy
 OnABranchOverTheDriveEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

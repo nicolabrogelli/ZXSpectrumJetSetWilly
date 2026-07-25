@@ -53,23 +53,23 @@ TheDriveTile:
     DEFM "            The Drive           "	    ;Room name
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-TheDriveBackground:
+TheDriveBackground:                    ; Background
     DEFB $07,0,0,0,0,0,0,0,0	            ;Background
 
 TheDriveFloor:
-    DEFB 6,170,85,170,255,255,85,170,85	    ;Floor Solid
+    DEFB 6,170,85,170,255,255,85,170,85       ; Floor Solid
 
 TheDriveWall:
-    DEFB 13,112,7,119,119,0,59,11,125	    ;Wall Solid
+    DEFB 13,112,7,119,119,0,59,11,125   ; Wall Solid
 
 TheDriveNasty:
-    DEFB 68,20,42,20,9,106,156,8,8	        ;Nasty
+    DEFB 68,20,42,20,9,106,156,8,8  ; Nastry
 
 TheDriveRamp:
-    DEFB 5,192,64,112,112,12,116,119,5	            ;Ramp Solid
+    DEFB 5,192,64,112,112,12,116,119,5              ; Ramp Solid
 
 TheDriveConveyor:
-    DEFB 66,123,0,237,0,170,85,170,85	            ;Conveyor
+    DEFB 66,123,0,237,0,170,85,170,85                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TheDriveConveyorData:
@@ -89,7 +89,7 @@ TheDriveBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheDriveReserved:
-    DEFB MAGENTA, GREEN, YELLOW, CYAN                         ; Enemy colors
+    DEFB MAGENTA, GREEN, YELLOW, CYAN     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheDriveItem:
@@ -97,25 +97,25 @@ TheDriveItem:
 
 ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
 TheDriveDirection:
-    DEFB 5	                                ;Room to the left (The Security Guard)
-    DEFB 3	                                ;Room to the right  (Gfx_At the Foot of the MegaTree)
-    DEFB 6	                                ;Room above (Entrance to Hades)
-    DEFB 45                                 ;Room below (Under the Drive)
+    ROOM RoomsListTable.TheSecurityGuardLayout          ;Room to the left (The Security Guard)
+    ROOM RoomsListTable.AtTheFootTheMegaTreeLayout	    ;Room to the right  (Gfx_At the Foot of the MegaTree)
+    ROOM RoomsListTable.EntranceToHadesLayout	        ;Room above (Entrance to Hades)
+    ROOM RoomsListTable.UnderTheDriveLayout             ;Room below (Under the Drive)
 
 TheDriveUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheDriveEnemy1:
-    DEFB $80, 2, 112, 80, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
+    DEFB $80, UCCELLO, 112, 80, 232         
 TheDriveEnemy2:
-    DEFB $80, 2, 128, 88, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
+    DEFB $80, UCCELLO, 128, 88, 232       
 TheDriveEnemy3:
-    DEFB $80, 2, 40, 64, 232          ; [Uccello (41144) - horizontal], Guardian = 23, Starts X=40, Y=64, Limit X=232
+    DEFB $80, UCCELLO, 40, 64, 232       
 TheDriveEnemy4:
-    DEFB $80, 2, 0, 40, 80            ; [Uccello (41152) - horizontal], Guardian = 24, Starts X=0, Y=40, Limit X=80
+    DEFB $80, UCCELLO, 0, 40, 80       
 TheDriveEnemy5:
-    DEFB $80, 4, 80, 104, 240         ; [Uovo (41248) - horizontal], Guardian = 36, Starts X=80, Y=104, Limit X=240
+    DEFB $80, UOVO, 80, 104, 240        
 TheDriveEnemy6:
     DEFB 0, 0, 0, 0, 0
 TheDriveEnemy7:
@@ -124,7 +124,7 @@ TheDriveEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheDrivePosWilly:
-    db 200, 101                      ; Posizione di Willy
+    db 200, 104                     ; Posizione di Willy
 
 TheDriveEnemyColors5_8:
-    DEFB CYAN, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB CYAN, NONE, NONE, NONE     ; Colori per nemici 5-8

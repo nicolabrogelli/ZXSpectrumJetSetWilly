@@ -1,26 +1,31 @@
 ;===========================================================================
 ; EntranceToHades.asm
 ;
-; EntranceToHadesLayout       Size 128 Byte, Start Byte   0
-; EntranceToHadesTile         Size  32 Byte, Start Byte 128
-; EntranceToHadesBackground   Size   9 Byte, Start Byte 160
-; EntranceToHadesFloor        Size   9 Byte, Start Byte 169
-; EntranceToHadesWall         Size   9 Byte, Start Byte 178
-; EntranceToHadesNasty        Size   9 Byte, Start Byte 187
-; EntranceToHadesRamp         Size   9 Byte, Start Byte 196
-; EntranceToHadesConveyor     Size   9 Byte, Start Byte 205
-; EntranceToHadesConveyorData Size   4 Byte, Start Byte 214
-; EntranceToHadesRampData     Size   4 Byte, Start Byte 218
-; EntranceToHadesBorderColor  Size   1 Byte, Start Byte 222
-; EntranceToHadesReserved     Size   4 Byte, Start Byte 223
-; EntranceToHadesItem         Size   8 Byte, Start Byte 227
-; EntranceToHadesDirection    Size   4 Byte, Start Byte 235
-; EntranceToHadesUnused       Size   1 Byte, Start Byte 239
-; EntranceToHadesEnemy1       Size   5 Byte, Start Byte 240
-; EntranceToHadesEnemy2       Size   5 Byte, Start Byte 245
-; EntranceToHadesEnemy3       Size   5 Byte, Start Byte 250
-; EntranceToHadesEnemy4       Size   5 Byte, Start Byte 255
-; EntranceToHadesPosWilly     Size   2 Byte, Start Byte 280
+; EntranceToHadesLayout             Size 128 Byte, Start Byte   0
+; EntranceToHadesTile               Size  32 Byte, Start Byte 128
+; EntranceToHadesBackground         Size   9 Byte, Start Byte 160
+; EntranceToHadesFloor              Size   9 Byte, Start Byte 169
+; EntranceToHadesWall               Size   9 Byte, Start Byte 178
+; EntranceToHadesNasty              Size   9 Byte, Start Byte 187
+; EntranceToHadesRamp               Size   9 Byte, Start Byte 196
+; EntranceToHadesConveyor           Size   9 Byte, Start Byte 205
+; EntranceToHadesConveyorData       Size   4 Byte, Start Byte 214
+; EntranceToHadesRampData           Size   4 Byte, Start Byte 218
+; EntranceToHadesBorderColor        Size   1 Byte, Start Byte 222
+; EntranceToHadesReserved           Size   4 Byte, Start Byte 223
+; EntranceToHadesItem               Size   8 Byte, Start Byte 227
+; EntranceToHadesDirection          Size   4 Byte, Start Byte 235
+; EntranceToHadesUnused             Size   1 Byte, Start Byte 239
+; EntranceToHadesEnemy1             Size   5 Byte, Start Byte 240
+; EntranceToHadesEnemy2             Size   5 Byte, Start Byte 245
+; EntranceToHadesEnemy3             Size   5 Byte, Start Byte 250
+; EntranceToHadesEnemy4             Size   5 Byte, Start Byte 255
+; EntranceToHadesEnemy5             Size   5 Byte, Start Byte 260
+; EntranceToHadesEnemy6             Size   5 Byte, Start Byte 265
+; EntranceToHadesEnemy7             Size   5 Byte, Start Byte 270
+; EntranceToHadesEnemy8             Size   5 Byte, Start Byte 275
+; EntranceToHadesPosWilly           Size   2 Byte, Start Byte 280
+; EntranceToHadesEnemyColors5_8    Size   4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
@@ -49,7 +54,7 @@ EntranceToHadesBackground:                    ; Background
     DEFB 55,0,0,0,0,0,0,0,0
 
 EntranceToHadesFloor:
-    DEFB 163,160,20,130,80,10,65,40,5      ; Floor Solid
+    DEFB 163,160,20,130,80,10,65,40,5       ; Floor Solid
 
 EntranceToHadesWall:
     DEFB 99,187,187,56,187,187,187,131,187   ; Wall Solid
@@ -58,10 +63,10 @@ EntranceToHadesNasty:
     DEFB 50,191,92,88,48,40,88,72,232  ; Nastry
 
 EntranceToHadesRamp:                          ; Ramp Solid
-    DEFB 7,64,64,16,16,4,4,1,1            
+    DEFB 7,64,64,16,16,4,4,1,1              ; Ramp Solid
 
 EntranceToHadesConveyor:                      ; Conveyor Solid
-    DEFB 255,0,0,0,0,0,0,0,0
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 EntranceToHadesConveyorData:
     DEFB 0
@@ -77,28 +82,28 @@ EntranceToHadesBorderColor:
     DEFB 2                        ; Red border
 
 EntranceToHadesReserved:
-    DEFB 4, 2, 5, 7               ; Enemy colors
+    DEFB RED, RED, RED, RED     ; Enemy colors
 
 EntranceToHadesItem:
     DEFB 0,0,0,0,0,0,0,0
 
 EntranceToHadesDirection:
-    DEFB 14                        ;Room to the left (Rescue Esmerelda)
-    DEFB 5	                       ;Room to the right (The Security Guard)
-    DEFB $FF                       ;Room above (The Off Licence)
-    DEFB $FF                       ;Room below (The Off Licence)
+    ROOM RoomsListTable.RescueEsmereldaLayout                        ;Room to the left (Rescue Esmerelda)
+    ROOM RoomsListTable.TheSecurityGuardLayout	                       ;Room to the right (The Security Guard)
+    DEFB BLOCK                       ;Room above (The Off Licence)
+    DEFB BLOCK                       ;Room below (The Off Licence)
 
 EntranceToHadesUnused:
-    DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
+    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 EntranceToHadesEnemy1:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB $C0, FACE_HL, 32, 0, 88         
 EntranceToHadesEnemy2:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB $C0, FACE_HR, 16, 0, 88         
 EntranceToHadesEnemy3:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB $C0, FACE_LL, 24, 16, 104         
 EntranceToHadesEnemy4:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB 0, 0, 0, 0, 0 
 EntranceToHadesEnemy5:
     DEFB 0, 0, 0, 0, 0
 EntranceToHadesEnemy6:
@@ -109,6 +114,6 @@ EntranceToHadesEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 EntranceToHadesPosWilly:
-    db 136, 30                   ; Willy starting position
+    db 136, 30                     ; Posizione di Willy
 EntranceToHadesEnemyColors5_8:
-    DEFB 2, 3, 4, 7               ; Colori per nemici 5-8
+    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
