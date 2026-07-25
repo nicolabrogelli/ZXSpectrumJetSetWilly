@@ -93,13 +93,13 @@ UnderTheDriveUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 UnderTheDriveEnemy1:
-    DEFB $80, 2, 96, 88, 232        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, UCCELLO, 96, 88, 232      
 UnderTheDriveEnemy2:
-    DEFB $C0, 15, 144, 0, 64         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $C0, FACCIA_PALLA, 144, 0, 64         
 UnderTheDriveEnemy3:
-    DEFB $80, 8, 168, 64, 240         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, ROBOT, 168, 64, 240     
 UnderTheDriveEnemy4:
-    DEFB 0, 0, 0, 0, 0               ; Empty slot
+    DEFB 0, 0, 0, 0, 0              
 UnderTheDriveEnemy5:
     DEFB 0, 0, 0, 0, 0
 UnderTheDriveEnemy6:

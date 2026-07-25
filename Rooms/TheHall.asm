@@ -107,13 +107,13 @@ TheHallUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheHallEnemy1:
-    DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 26, Starts X=40, Y=24, Limit X=240
+    DEFB $80, MAIALE, 40, 24, 240         
 TheHallEnemy2:
-    DEFB $C0, 16, 80, 48, 60          ; [Candelabro (41672) - horizzontal], Guardian = 89, Starts X=40, Y=24, Limit X=240
+    DEFB $C0, CANDELABRO, 80, 48, 60         
 TheHallEnemy3:
-    DEFB $80, 2, 72, 80, 136         ; [Ucello (41720) - horizzontal], Guardian = 26, Starts X=40, Y=24, Limit X=240
+    DEFB $80, UCCELLO, 72, 80, 136        
 TheHallEnemy4:
-    DEFB 0, 0, 0, 0, 0         ; Empty slot
+    DEFB 0, 0, 0, 0, 0        
 TheHallEnemy5:
     DEFB 0, 0, 0, 0, 0
 TheHallEnemy6:

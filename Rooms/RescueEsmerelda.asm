@@ -98,13 +98,13 @@ RescueEsmereldaUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 RescueEsmereldaEnemy1:
-    DEFB $C0, 20, 32, 48, 96        ; [Nonnino (40992) - Horizzontal], Guardian = 4, Starts X=32, Y=49, Limit X=96
+    DEFB $C0, NONNINO, 32, 48, 96     
 RescueEsmereldaEnemy2:
-    DEFB $C0, 20, 96, 40, 104        ; [Nonnino (40976) - Horizzontal], Guardian = 2, Starts X=96, Y=40, Limit X=104
+    DEFB $C0, NONNINO, 96, 40, 104   
 RescueEsmereldaEnemy3:
-    DEFB $C0, 21, 192, 0, 16         ; [Nonnino (41080) - Horizzontal], Guardian = 15, Starts X=192, Y=0, Limit X=16
+    DEFB $C0, PARRUCCA, 192, 0, 16 
 RescueEsmereldaEnemy4:
-    DEFB $80, 2, 40, 32, 72          ; [Uccello (41064) - Horizzontal], Guardian = 13, Starts X=40, Y=32, Limit X=72
+    DEFB $80, UCCELLO, 40, 32, 72  
 RescueEsmereldaEnemy5:
     DEFB 0, 0, 0, 0, 0
 RescueEsmereldaEnemy6:

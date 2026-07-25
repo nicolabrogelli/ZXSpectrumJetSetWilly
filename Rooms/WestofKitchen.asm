@@ -107,13 +107,13 @@ WestOfKitchenUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 WestOfKitchenEnemy1:
-    DEFB $C0, 29, 72, 0, 104
+    DEFB $C0, SALIERA, 72, 0, 104
 WestOfKitchenEnemy2:
-    DEFB $E0, 29, 112, 0, 104         
+    DEFB $E0, SALIERA, 112, 0, 104         
 WestOfKitchenEnemy3:
-    DEFB $C0, 29, 160, 0, 104         
+    DEFB $C0, SALIERA, 160, 0, 104         
 WestOfKitchenEnemy4:
-    DEFB $E0, 29, 216, 0, 104         
+    DEFB $E0, SALIERA, 216, 0, 104         
 WestOfKitchenEnemy5:
     DEFB 0, 0, 0, 0, 0
 WestOfKitchenEnemy6:

@@ -107,9 +107,9 @@ UnderTheRoofUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 UnderTheRoofEnemy1:
-    DEFB $80, 38, 96, 64, 144         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, SWISSARMKIFE, 96, 64, 144         
 UnderTheRoofEnemy2:
-    DEFB $80, 30, 0, 72, 48
+    DEFB $80, GELATO, 0, 72, 48
 UnderTheRoofEnemy3:
     DEFB 0, 0, 0, 0, 0
 UnderTheRoofEnemy4:

@@ -107,9 +107,9 @@ WatchTowerUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 WatchTowerEnemy1:
-    DEFB $80, 14, 88, 72, 144
+    DEFB $80, FIORE, 88, 72, 144
 WatchTowerEnemy2:
-    DEFB $80, 2, 72, 56, 235 
+    DEFB $80, UCCELLO, 72, 56, 235 
 WatchTowerEnemy3:
     DEFB 0, 0, 0, 0, 0
 WatchTowerEnemy4:

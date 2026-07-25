@@ -107,9 +107,9 @@ EastWallBaseUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 EastWallBaseEnemy1:
-    DEFB $C0, 6, 56, 0, 104
+    DEFB $C0, FACCIA, 56, 0, 104
 EastWallBaseEnemy2:
-    DEFB $C0, 32, 24, 0, 96         
+    DEFB $C0, MURO, 24, 0, 96         
 EastWallBaseEnemy3:
     DEFB 0, 0, 0, 0, 0          
 EastWallBaseEnemy4:

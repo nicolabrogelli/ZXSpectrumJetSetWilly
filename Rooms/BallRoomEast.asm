@@ -109,13 +109,13 @@ BallRoomEastUnused:
 BallRoomEastEnemy1:
     DEFB 0, 0, 0, 0, 0
 BallRoomEastEnemy2:
-    DEFB $C0, 6, 40, 48, 87         ; [Face (41296) - vertical], Guardinan = 42, Starts X=60, Y=0, Limit Y=104
+    DEFB $C0, FACCIA, 40, 48, 87  
 BallRoomEastEnemy3:
-    DEFB $E0, 6, 56, 48, 96         ; [Face (41280) - vertical], Guardinan = 40, Starts X=60, Y=0, Limit Y=104
+    DEFB $E0, FACCIA, 56, 48, 96  
 BallRoomEastEnemy4:
-    DEFB $C0, 6, 88, 72, 96         ; [Face (41288) - vertical], Guardinan = 41, Starts X=60, Y=0, Limit Y=104
+    DEFB $C0, FACCIA, 88, 72, 96  
 BallRoomEastEnemy5:
-     DEFB $80, 2, 112, 80, 232        ; [Uccello (41128) - horizzontal], Guardinan = 21, Starts X=60, Y=0, Limit Y=104
+     DEFB $80, UCCELLO, 112, 80, 232  
 BallRoomEastEnemy6:
     DEFB 0, 0, 0, 0, 0
 BallRoomEastEnemy7:

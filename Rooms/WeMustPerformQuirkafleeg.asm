@@ -97,13 +97,13 @@ WeMustPerformQuirkafleegUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 WeMustPerformQuirkafleegEnemy1:
-    DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, UCCELLO, 0, 32, 72
 WeMustPerformQuirkafleegEnemy2:
-    DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB 0, 0, 0, 0, 0     
 WeMustPerformQuirkafleegEnemy3:
-    DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB 0, 0, 0, 0, 0       
 WeMustPerformQuirkafleegEnemy4:
-    DEFB 1, 128, 0, 0, 0             ; Rope (type 1), X-coordinate = 128
+    DEFB 0, 0, 0, 0, 0           
 WeMustPerformQuirkafleegEnemy5:
     DEFB 0, 0, 0, 0, 0
 WeMustPerformQuirkafleegEnemy6:

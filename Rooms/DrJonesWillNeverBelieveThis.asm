@@ -107,9 +107,9 @@ DrJonesWillNeverBelieveThisUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 DrJonesWillNeverBelieveThisEnemy1:
-    DEFB $C0, 7, 80, 56, 96         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, SCIMMIA, 80, 56, 96  
 DrJonesWillNeverBelieveThisEnemy2:
-    DEFB $D0, 15, 144, 64, 104 
+    DEFB $D0, FACCIA_PALLA, 144, 64, 104 
 DrJonesWillNeverBelieveThisEnemy3:
     DEFB 0, 0, 0, 0, 0
 DrJonesWillNeverBelieveThisEnemy4:

@@ -107,9 +107,9 @@ WestBedroomUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 WestBedroomEnemy1:
-    DEFB $C0, 0, 88, 0, 64         
+    DEFB $C0, LAMETTA, 88, 0, 64         
 WestBedroomEnemy2:
-    DEFB $D0, 41, 112, 0, 80 
+    DEFB $D0, PALAZZO, 112, 0, 80 
 WestBedroomEnemy3:
     DEFB 0, 0, 0, 0, 0
 WestBedroomEnemy4:

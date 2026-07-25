@@ -107,7 +107,7 @@ HalfwayUpTheEastWallUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 HalfwayUpTheEastWallEnemy1:
-    DEFB $80, 27, 16, 48, 57         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, PINZA_GHIACCIO, 16, 48, 57   
 HalfwayUpTheEastWallEnemy2:
     DEFB 0, 0, 0, 0, 0
 HalfwayUpTheEastWallEnemy3:

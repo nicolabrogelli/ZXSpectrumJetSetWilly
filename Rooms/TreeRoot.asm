@@ -107,13 +107,13 @@ TreeRootUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TreeRootEnemy1:
-    DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, LAMETTA, 32, 0, 64    
 TreeRootEnemy2:
-    DEFB $C0, 6, 104, 48, 96 
+    DEFB $C0, FACCIA, 104, 48, 96 
 TreeRootEnemy3:
-    DEFB $80, 13, 120, 72, 184 
+    DEFB $80, CANGURO, 120, 72, 184 
 TreeRootEnemy4:
-    DEFB $C0, 41, 200, 32, 80 
+    DEFB $C0, PALAZZO, 200, 32, 80 
 TreeRootEnemy5:
     DEFB 0, 0, 0, 0, 0
 TreeRootEnemy6:

@@ -107,9 +107,9 @@ OrangeryUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 OrangeryEnemy1:
-    DEFB $C0, 37, 160, 0, 96         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, IPNOSI, 160, 0, 96  
 OrangeryEnemy2:
-    DEFB $C0, 15, 72, 64, 104
+    DEFB $C0, FACCIA_PALLA, 72, 64, 104
 OrangeryEnemy3:
     DEFB 0, 0, 0, 0, 0
 OrangeryEnemy4:

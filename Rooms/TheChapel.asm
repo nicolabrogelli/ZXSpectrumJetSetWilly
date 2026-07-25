@@ -107,17 +107,17 @@ TheChapelUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheChapelEnemy1:
-    DEFB $C0, 23, 216, 0, 88         ; FaceHellHL (Top-Right)
+    DEFB $C0, FACE_HL, 216, 0, 88      
 TheChapelEnemy2:
-    DEFB $C0, 24, 200, 0, 88         ; FaceHellHR (Top-Left)
+    DEFB $C0, FACE_HR, 200, 0, 88         
 TheChapelEnemy3:
-    DEFB $C0, 25, 208, 16, 104         ; FaceHellLL (Bottom-Center)       
+    DEFB $C0, FACE_LL, 208, 16, 104      
 TheChapelEnemy4:
-    DEFB $80, 22, 0, 96, 120         
+    DEFB $80, FRATE, 0, 96, 120         
 TheChapelEnemy5:
-     DEFB $C0, 32, 48, 56, 80
+     DEFB $C0, MURO, 48, 56, 80
 TheChapelEnemy6:
-    DEFB $C0, 33, 136, 40, 80   
+    DEFB $C0, DIAVOLETTO, 136, 40, 80   
 TheChapelEnemy7:
     DEFB 0, 0, 0, 0, 0
 TheChapelEnemy8:

@@ -107,7 +107,7 @@ SwimmingPoolUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 SwimmingPoolEnemy1:
-    DEFB $80, 22, 40, 104, 96         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, FRATE, 40, 104, 96    
 SwimmingPoolEnemy2:
     DEFB 0, 0, 0, 0, 0
 SwimmingPoolEnemy3:

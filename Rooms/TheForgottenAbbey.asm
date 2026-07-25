@@ -98,21 +98,21 @@ TheForgottenAbbeyUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 TheForgottenAbbeyEnemy1:
-    DEFB $80, 22, 32, 40, 160        ; Enemy 1 (Frate), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, FRATE, 32, 40, 160      
 TheForgottenAbbeyEnemy2:
-    DEFB $80, 22, 96, 40, 224         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+    DEFB $80, FRATE, 96, 40, 224        
 TheForgottenAbbeyEnemy3:
-    DEFB $80, 22, 72, 72, 160         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, FRATE, 72, 72, 160       
 TheForgottenAbbeyEnemy4:
-    DEFB $80, 22, 154, 72, 189         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, FRATE, 154, 72, 189         
 TheForgottenAbbeyEnemy5:
-    DEFB $80, 22, 40, 104, 96         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, FRATE, 40, 104, 96         
 TheForgottenAbbeyEnemy6:
-    DEFB $80, 22, 88, 104, 144         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, FRATE, 88, 104, 144       
 TheForgottenAbbeyEnemy7:
-    DEFB $80, 22, 128, 104, 184         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, FRATE, 128, 104, 184         
 TheForgottenAbbeyEnemy8:
-    DEFB $80, 22, 184, 104, 240         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+    DEFB $80, FRATE, 184, 104, 240     
 
 TheForgottenAbbeyPosWilly:
     db 200, 104                     ; Posizione di Willy

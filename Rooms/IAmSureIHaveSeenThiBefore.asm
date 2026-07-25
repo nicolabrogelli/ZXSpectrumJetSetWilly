@@ -98,15 +98,15 @@ IAmSureIHaveSeenThiBeforeUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 IAmSureIHaveSeenThiBeforeEnemy1:
-    DEFB $C0, 11, 40, 48, 96          ; [Soldato (40992) - vertical], Guardian = 4, Starts X=40, Y=48, Limit X=96
+    DEFB $C0, SOLDATO, 40, 48, 96   
 IAmSureIHaveSeenThiBeforeEnemy2:
-    DEFB $D0, 11, 88, 44, 104          ; [Soldato (40984) - vertical], Guardina = 3, Starts X=88, Y=44, Limit X=104
+    DEFB $D0, SOLDATO, 88, 44, 104    
 IAmSureIHaveSeenThiBeforeEnemy3:
-    DEFB $E0, 11, 152, 32, 96          ; [Soldato (41000) - vertical], Guardina = 5, Starts X=152, Y=32, Limit X=96
+    DEFB $E0, SOLDATO, 152, 32, 96   
 IAmSureIHaveSeenThiBeforeEnemy4:
-    DEFB $F0, 11, 200, 48, 96          ; [Soldato (40992) - vertical], Guardina = 2, Starts X=200, Y=48, Limit X=96
+    DEFB $F0, SOLDATO, 200, 48, 96  
 IAmSureIHaveSeenThiBeforeEnemy5:
-    DEFB $80, 2, 0, 32, 72            ; [Uccello (40992) - veritcal], Guardina = 13, Starts X=0, Y=32, Limit X=72
+    DEFB $80, UCCELLO, 0, 32, 72  
 IAmSureIHaveSeenThiBeforeEnemy6:
     DEFB 0, 0, 0, 0, 0
 IAmSureIHaveSeenThiBeforeEnemy7:

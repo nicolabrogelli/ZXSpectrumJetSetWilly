@@ -107,19 +107,19 @@ TheNightmareRoomUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheNightmareRoomEnemy1:
-    DEFB $C0, 34, 64, 0, 80         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, VECCHIA, 64, 0, 80         
 TheNightmareRoomEnemy2:
-    DEFB $D0, 34, 88, 0, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $D0, VECCHIA, 88, 0, 104         
 TheNightmareRoomEnemy3:
-    DEFB $E0, 35, 112, 0, 96         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $E0, PIEDE, 112, 0, 96         
 TheNightmareRoomEnemy4:
-    DEFB $F0, 34, 136, 8, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $F0, VECCHIA, 136, 8, 104         
 TheNightmareRoomEnemy5:
-    DEFB $C0, 34, 160, 0, 80         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, VECCHIA, 160, 0, 80         
 TheNightmareRoomEnemy6:
-    DEFB $D0, 34, 184, 0, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $D0, VECCHIA, 184, 0, 104         
 TheNightmareRoomEnemy7:
-    DEFB $E0, 34, 224, 0, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $E0, VECCHIA, 224, 0, 104       
 TheNightmareRoomEnemy8:
     DEFB 0, 0, 0, 0, 0
 

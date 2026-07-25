@@ -97,13 +97,13 @@ OntheRoofUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 OntheRoofEnemy1:
-    DEFB $80, 13, 112, 104, 192        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+    DEFB $80, CANGURO, 112, 104, 192  
 OntheRoofEnemy2:
     DEFB 0, 0, 0, 0, 0  
 OntheRoofEnemy3:
     DEFB 0, 0, 0, 0, 0  
 OntheRoofEnemy4:
-    DEFB 0, 0, 0, 0, 0               ; Empty slot
+    DEFB 0, 0, 0, 0, 0           
 OntheRoofEnemy5:
     DEFB 0, 0, 0, 0, 0
 OntheRoofEnemy6:

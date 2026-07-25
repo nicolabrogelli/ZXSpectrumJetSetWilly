@@ -109,19 +109,19 @@ TotheKitchensMainStairwayUnused:
 TotheKitchensMainStairwayEnemy1:
     DEFB 0, 0, 0, 0, 0
 TotheKitchensMainStairwayEnemy2:
-    DEFB $80, 3, 104, 24, 168          ; [Radar (41688) - horizzontal], Guardinan = 42, Starts X=60, Y=0, Limit Y=104
+    DEFB $80, RADAR, 104, 24, 168         
 TotheKitchensMainStairwayEnemy3:
     DEFB 0, 0, 0, 0, 0                  
 TotheKitchensMainStairwayEnemy4:
-    DEFB $80, 10, 16, 72, 48           ; [Double Ball (41704) - horizzontal], Guardinan = 41, Starts X=60, Y=0, Limit Y=104
+    DEFB $80, DOUBLE_BALL, 16, 72, 48          
 TotheKitchensMainStairwayEnemy5:
-    DEFB $80, 4, 0, 96, 240            ; [Uovo (41712) - horizzontal], Guardinan = 21, Starts X=60, Y=0, Limit Y=104
+    DEFB $80, UOVO, 0, 96, 240            
 TotheKitchensMainStairwayEnemy6:
-    DEFB $80, 2, 72, 80, 136           ; [Uccello (41720) - horizzontal], Guardinan = 21, Starts X=60, Y=0, Limit Y=104  
+    DEFB $80, UCCELLO, 72, 80, 136         
 TotheKitchensMainStairwayEnemy7:
-    DEFB $80, 27, 0, 24, 88
+    DEFB $80, PINZA_GHIACCIO, 0, 24, 88
 TotheKitchensMainStairwayEnemy8:
-    DEFB $80, 28, 96, 48, 192
+    DEFB $80, RUOTA, 96, 48, 192
 
 TotheKitchensMainStairwayPosWilly:
     db 100, 95                     ; Posizione di Willy

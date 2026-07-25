@@ -97,13 +97,13 @@ UpOnTheBattlementsUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 UpOnTheBattlementsEnemy1:
-    DEFB $C0, 11, 40, 40, 104           ; [Soldato (40976) - vertical], Guardian = 2, Starts X=88, Y=40, Limit X=104
+    DEFB $C0, SOLDATO, 40, 40, 104        
 UpOnTheBattlementsEnemy2:
-    DEFB $D0, 11, 88, 44, 104          ; [Soldato (40984) - vertical], Guardina = 3, Starts X=113, Y=44, Limit X=104
+    DEFB $D0, SOLDATO, 88, 44, 104          
 UpOnTheBattlementsEnemy3:
-    DEFB $E0, 11, 152, 48, 96          ; [Soldato (40992) - vertical], Guardina = 4, Starts X=136, Y=44, Limit X=104
+    DEFB $E0, SOLDATO, 152, 48, 96       
 UpOnTheBattlementsEnemy4:
-    DEFB $F0, 11, 200, 32, 96          ; [Soldato (41000) - vertical], Guardina = 5, Starts X=184, Y=48, Limit X=96
+    DEFB $F0, SOLDATO, 200, 32, 96        
 UpOnTheBattlementsEnemy5:
     DEFB 0, 0, 0, 0, 0
 UpOnTheBattlementsEnemy6:

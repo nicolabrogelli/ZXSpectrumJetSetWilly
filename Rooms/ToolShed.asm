@@ -107,11 +107,11 @@ ToolShedUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 ToolShedEnemy1:
-    DEFB $80, 18, 56, 48, 136         
+    DEFB $80, TRONCHESE, 56, 48, 136         
 ToolShedEnemy2:
-    DEFB $80, 38, 56, 72, 160 
+    DEFB $80, SWISSARMKIFE, 56, 72, 160 
 ToolShedEnemy3:
-    DEFB $80, 1, 56, 104, 176 
+    DEFB $80, SEGA, 56, 104, 176 
 ToolShedEnemy4:
     DEFB $0, 0, 0, 0, 0
 ToolShedEnemy5:

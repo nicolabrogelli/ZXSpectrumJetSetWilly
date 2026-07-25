@@ -107,19 +107,19 @@ InsideTheMegaTrunkUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 InsideTheMegaTrunkEnemy1:
-    DEFB $C0, 7, 16, 64, 112         ; Scimmia (41136) - verical], Guardian = 9, Starts X=16, Y=64, Limit X=112
+    DEFB $C0, SCIMMIA, 16, 64, 112         
 InsideTheMegaTrunkEnemy2:
-    DEFB $D0, 7, 40, 64, 112         ; Scimmia (41136) - verical], Guardian = 9, Starts X=40, Y=64, Limit X=112
+    DEFB $D0, SCIMMIA, 40, 64, 112        
 InsideTheMegaTrunkEnemy3:
-    DEFB $C0, 7, 64, 64, 112         ; Scimmia (41136) - verical], Guardian = 9, Starts X=64, Y=64, Limit X=112
+    DEFB $C0, SCIMMIA, 64, 64, 112   
 InsideTheMegaTrunkEnemy4:
-    DEFB $C0, 6, 96, 0, 104          ; Faccia (41312) - verical], Guardian = 44, Starts X=96, Y=0, Limit X=104
+    DEFB $C0, FACCIA, 96, 0, 104   
 InsideTheMegaTrunkEnemy5:
-    DEFB $80, 2, 0, 40, 80           ; Uccello (41152) - horizzontal], Guardian = 24, Starts X=0, Y=40, Limit X=80 
+    DEFB $80, UCCELLO, 0, 40, 80    
 InsideTheMegaTrunkEnemy6:           
-    DEFB $80, 2, 128, 88, 232        ; Uccello (41136) - horizzontal], Guardian = 44, Starts X=128, Y=88, Limit X=232 
+    DEFB $80, UCCELLO, 128, 88, 232    
 InsideTheMegaTrunkEnemy7:
-    DEFB $80, 14, 136, 24, 240         ; Enemy 7 (Fiore)
+    DEFB $80, FIORE, 136, 24, 240         ; Enemy 7 (Fiore)
 InsideTheMegaTrunkEnemy8:
     DEFB 0, 0, 0, 0, 0
 

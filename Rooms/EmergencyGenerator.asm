@@ -107,7 +107,7 @@ EmergencyGeneratorUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 EmergencyGeneratorEnemy1:
-    DEFB $80, 12, 40, 24, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, MAIALE, 40, 24, 240  
 EmergencyGeneratorEnemy2:
     DEFB 0, 0, 0, 0, 0
 EmergencyGeneratorEnemy3:

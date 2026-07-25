@@ -107,9 +107,9 @@ WestWingRoofUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 WestWingRoofEnemy1:
-    DEFB $80, 1, 56, 104, 176         
+    DEFB $80, SEGA, 56, 104, 176         
 WestWingRoofEnemy2:
-    DEFB $80, 2, 104, 96, 232 
+    DEFB $80, UCCELLO, 104, 96, 232 
 WestWingRoofEnemy3:
     DEFB 0, 0, 0, 0, 0
 WestWingRoofEnemy4:

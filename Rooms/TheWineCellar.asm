@@ -107,13 +107,13 @@ TheWineCellarUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheWineCellarEnemy1:
-    DEFB $80, 22, 0, 24, 216         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, FRATE, 0, 24, 216    
 TheWineCellarEnemy2:
-    DEFB $80, 22, 32, 48, 216  
+    DEFB $80, FRATE, 32, 48, 216  
 TheWineCellarEnemy3:
-    DEFB $80, 22, 16, 72, 216 
+    DEFB $80, FRATE, 16, 72, 216 
 TheWineCellarEnemy4:
-    DEFB $80, 1, 56, 104, 176 
+    DEFB $80, SEGA, 56, 104, 176 
 TheWineCellarEnemy5:
     DEFB 0, 0, 0, 0, 0
 TheWineCellarEnemy6:

@@ -107,13 +107,13 @@ TheBanyanTreeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBanyanTreeEnemy1:
-    DEFB $C0, 37, 80, 56, 80         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, IPNOSI, 80, 56, 80         
 TheBanyanTreeEnemy2:
-    DEFB $D0, 33, 104, 40, 80         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $D0, DIAVOLETTO, 104, 40, 80   
 TheBanyanTreeEnemy3:
-    DEFB $D0, 36, 128, 40, 80         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $D0, CHIP, 128, 40, 80   
 TheBanyanTreeEnemy4:
-    DEFB $80, 1, 152, 80, 235 
+    DEFB $80, SEGA, 152, 80, 235 
 TheBanyanTreeEnemy5:
     DEFB 0, 0, 0, 0, 0
 TheBanyanTreeEnemy6:

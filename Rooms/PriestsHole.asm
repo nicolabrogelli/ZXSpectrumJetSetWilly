@@ -107,13 +107,13 @@ PriestsHoleUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 PriestsHoleEnemy1:
-    DEFB $80, 2, 176, 80, 24         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, UCCELLO, 176, 80, 24  
 PriestsHoleEnemy2:
-    DEFB $C0, 23, 48, 0, 88         ; FaceHellHL (Top-Left)
+    DEFB $C0, FACE_HL, 48, 0, 88    
 PriestsHoleEnemy3:
-    DEFB $C0, 24, 32, 0, 88         ; FaceHellHR (Top-Right)
+    DEFB $C0, FACE_HR, 32, 0, 88   
 EntranceToHaPriestsHoleEnemy4desEnemy3:
-    DEFB $C0, 25, 40, 16, 104         ; FaceHellLL (Bottom-Left)
+    DEFB $C0, FACE_LL, 40, 16, 104  
 PriestsHoleEnemy5:
     DEFB 0, 0, 0, 0, 0
 PriestsHoleEnemy6:

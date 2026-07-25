@@ -107,13 +107,13 @@ NomenLuniUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 NomenLuniEnemy1:
-    DEFB $80, 2, 0, 16, 80       
+    DEFB $80, UCCELLO, 0, 16, 80       
 NomenLuniEnemy2:
-    DEFB $80, 3, 144, 24, 176  
+    DEFB $80, RADAR, 144, 24, 176  
 NomenLuniEnemy3:
-    DEFB $C0, 15, 128, 0, 64  
+    DEFB $C0, FACCIA_PALLA, 128, 0, 64  
 NomenLuniEnemy4:
-    DEFB $C0, 7, 176, 56, 96
+    DEFB $C0, SCIMMIA, 176, 56, 96
 NomenLuniEnemy5:
     DEFB 0, 0, 0, 0, 0
 NomenLuniEnemy6:

@@ -107,9 +107,9 @@ TheBowUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBowEnemy1:
-    DEFB $80, 3, 176, 24, 235         
+    DEFB $80, RADAR, 176, 24, 235         
 TheBowEnemy2:
-    DEFB $80, 27, 136, 104, 235 
+    DEFB $80, PINZA_GHIACCIO, 136, 104, 235 
 TheBowEnemy3:
     DEFB 0, 0, 0, 0, 0
 TheBowEnemy4:

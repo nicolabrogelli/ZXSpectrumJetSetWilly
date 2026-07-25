@@ -107,13 +107,13 @@ TheKitchenUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheKitchenEnemy1:
-    DEFB $C0, 29, 24, 8, 104
+    DEFB $C0, SALIERA, 24, 8, 104
 TheKitchenEnemy2:
-    DEFB $E0, 29, 72, 0, 104         ; [Face (41296) - vertical], Guardinan = 42, Starts X=60, Y=0, Limit Y=104
+    DEFB $E0, SALIERA, 72, 0, 104         
 TheKitchenEnemy3:
-    DEFB $C0, 29, 120, 0, 104         ; [Face (41280) - vertical], Guardinan = 40, Starts X=60, Y=0, Limit Y=104
+    DEFB $C0, SALIERA, 120, 0, 104         
 TheKitchenEnemy4:
-    DEFB $E0, 29, 160, 0, 104         ; [Face (41288) - vertical], Guardinan = 41, Starts X=60, Y=0, Limit Y=104
+    DEFB $E0, SALIERA, 160, 0, 104       
 TheKitchenEnemy5:
      DEFB 0, 0, 0, 0, 0
 TheKitchenEnemy6:

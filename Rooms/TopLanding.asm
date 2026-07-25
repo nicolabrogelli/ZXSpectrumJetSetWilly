@@ -107,11 +107,11 @@ TopLandingUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TopLandingEnemy1:
-    DEFB $C0, 0, 48, 16, 104         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, LAMETTA, 48, 16, 104        
 TopLandingEnemy2:
-    DEFB $80, 38, 80, 104, 240
+    DEFB $80, SWISSARMKIFE, 80, 104, 240
 TopLandingEnemy3:
-    DEFB $C0, 39, 96, 16, 48
+    DEFB $C0, BOTTE, 96, 16, 48
 TopLandingEnemy4:
     DEFB 0, 0, 0, 0, 0
 TopLandingEnemy5:

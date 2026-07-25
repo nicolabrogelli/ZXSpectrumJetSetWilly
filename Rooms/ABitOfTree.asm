@@ -107,9 +107,9 @@ ABitOfTreeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 ABitOfTreeEnemy1:
-    DEFB $80, 2, 0, 16, 80         ; [Uccello (41792) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, UCCELLO, 0, 16, 80         
 ABitOfTreeEnemy2:
-    DEFB $C0, 36, 56, 40, 80         ; [Uccello (41792) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $C0, CHIP, 56, 40, 80       
 ABitOfTreeEnemy3:
     DEFB 0, 0, 0, 0, 0
 ABitOfTreeEnemy4:

@@ -107,9 +107,9 @@ AbovetheWestBedroomUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 AbovetheWestBedroomEnemy1:
-    DEFB $C0, 34, 88, 16, 80        
+    DEFB $C0, VECCHIA, 88, 16, 80        
 AbovetheWestBedroomEnemy2:
-    DEFB $D0, 41, 112, 0, 80 
+    DEFB $D0, PALAZZO, 112, 0, 80 
 AbovetheWestBedroomEnemy3:
     DEFB 0, 0, 0, 0, 0
 AbovetheWestBedroomEnemy4:

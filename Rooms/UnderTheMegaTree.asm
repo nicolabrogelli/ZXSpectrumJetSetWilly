@@ -107,11 +107,11 @@ UnderTheMegaTreeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 UnderTheMegaTreeEnemy1:
-    DEFB $80, 13, 8, 104, 200         ; [Canguro (41216) - horizontal], Guardian = 32, Starts X=8, Y=104, Limit X=200
+    DEFB $80, CANGURO, 8, 104, 200        
 UnderTheMegaTreeEnemy2:
-    DEFB $C0, 6, 112, 48, 87          ; [face (41296) - vertical, Guardian = 42, Starts X=112, Y=48, Limit Y=87
+    DEFB $C0, FACCIA, 112, 48, 87      
 UnderTheMegaTreeEnemy3:
-    DEFB $80, 12, 80, 30, 180         ; [Maiale (41168) - horizontal, Guardian = 26, Starts X=80, Y=30, Limit X=180
+    DEFB $80, MAIALE, 80, 30, 180      
 UnderTheMegaTreeEnemy4:
     DEFB 0, 0, 0, 0, 0        
 UnderTheMegaTreeEnemy5:

@@ -107,11 +107,11 @@ BallRoomWestUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 BallRoomWestEnemy1:
-    DEFB $80, 13, 128, 88, 208       ; [Canguro (41224) - horizontal],  Guardian - 33, Starts X=60, Y=0, Limit Y=104  
+    DEFB $80, CANGURO, 128, 88, 208     
 BallRoomWestEnemy2:
-    DEFB $C0, 6, 112, 48, 96         ; [Face (41280) - vertical], Guardinan = 42, Starts X=60, Y=0, Limit Y=104
+    DEFB $C0, FACCIA, 112, 48, 96  
 BallRoomWestEnemy3:
-    DEFB $E0, 6, 48, 48, 87          ; [Face (41296) - vertical], Guardinan = 40, Starts X=60, Y=0, Limit Y=104
+    DEFB $E0, FACCIA, 48, 48, 87   
 BallRoomWestEnemy4:
     DEFB 0, 0, 0, 0, 0       
 BallRoomWestEnemy5:

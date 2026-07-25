@@ -107,13 +107,13 @@ TheSecurityGuardUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheSecurityGuardEnemy1:
-    DEFB $C0, 11, 88, 40, 104          ; [Soldato (40976) - horizontal], Guardian = 2, Starts X=88, Y=40, Limit X=104
+    DEFB $C0, SOLDATO, 88, 40, 104          
 TheSecurityGuardEnemy2:
-    DEFB $D0, 11, 113, 44, 104         ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=113, Y=44, Limit X=104
+    DEFB $D0, SOLDATO, 113, 44, 104      
 TheSecurityGuardEnemy3:
-    DEFB $E0, 11, 136, 44, 104         ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=136, Y=44, Limit X=104
+    DEFB $E0, SOLDATO, 136, 44, 104      
 TheSecurityGuardEnemy4:
-    DEFB $F0, 11, 184, 48, 96          ; [Soldato (40992) - horizontal], Guardina = 3, Starts X=184, Y=48, Limit X=96
+    DEFB $F0, SOLDATO, 184, 48, 96          
 TheSecurityGuardEnemy5:
     DEFB 0, 0, 0, 0, 0
 TheSecurityGuardEnemy6:

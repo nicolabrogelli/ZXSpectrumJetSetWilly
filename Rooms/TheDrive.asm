@@ -107,15 +107,15 @@ TheDriveUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheDriveEnemy1:
-    DEFB $80, 2, 112, 80, 232         ; [Uccello (41128) - horizontal], Guardian = 22, Starts X=112, Y=88, Limit X=232
+    DEFB $80, UCCELLO, 112, 80, 232         
 TheDriveEnemy2:
-    DEFB $80, 2, 128, 88, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
+    DEFB $80, UCCELLO, 128, 88, 232       
 TheDriveEnemy3:
-    DEFB $80, 2, 40, 64, 232          ; [Uccello (41144) - horizontal], Guardian = 23, Starts X=40, Y=64, Limit X=232
+    DEFB $80, UCCELLO, 40, 64, 232       
 TheDriveEnemy4:
-    DEFB $80, 2, 0, 40, 80            ; [Uccello (41152) - horizontal], Guardian = 24, Starts X=0, Y=40, Limit X=80
+    DEFB $80, UCCELLO, 0, 40, 80       
 TheDriveEnemy5:
-    DEFB $80, 4, 80, 104, 240         ; [Uovo (41248) - horizontal], Guardian = 36, Starts X=80, Y=104, Limit X=240
+    DEFB $80, UOVO, 80, 104, 240        
 TheDriveEnemy6:
     DEFB 0, 0, 0, 0, 0
 TheDriveEnemy7:

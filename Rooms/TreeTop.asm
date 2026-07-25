@@ -107,11 +107,11 @@ TreeTopUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TreeTopEnemy1:
-    DEFB $80, 2, 0, 40, 80          ; [Uccello (41152) - horizzontal], Guardian = 6, Starts X=0, Y=40, Limit X=80
+    DEFB $80, UCCELLO, 0, 40, 80       
 TreeTopEnemy2:
-    DEFB $80, 14, 0, 80, 152         ; [Fiore (41328) - horizzontal], Guardian = 6, Starts X=0, Y=80, Limit X=152
+    DEFB $80, FIORE, 0, 80, 152       
 TreeTopEnemy3:
-    DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 6, Starts X=40, Y=24, Limit X=240
+    DEFB $80, MAIALE, 40, 24, 240  
 TreeTopEnemy4:
     DEFB 0, 0, 0, 0, 0         ; Empty slot
 TreeTopEnemy5:

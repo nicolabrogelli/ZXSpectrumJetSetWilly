@@ -136,8 +136,48 @@
   76+ 5DAD
   77+ 5DAD
   78+ 5DAD
-  79+ 5DAD
-  80+ 5DAD
+  79+ 5DAD              LAMETTA:  		EQU 0   ;(Lametta)
+  80+ 5DAD              SEGA: 			EQU 1   ;(Sega)
+  81+ 5DAD              UCCELLO: 		EQU 2   ;(Uccello)
+  82+ 5DAD              RADAR: 			EQU 3   ;(Radar)
+  83+ 5DAD              UOVO: 			EQU 4   ;(Uovo)
+  84+ 5DAD              UFO: 			EQU 5   ;(Ufo)
+  85+ 5DAD              FACCIA:			EQU 6   ;(Faccia)
+  86+ 5DAD              SCIMMIA:		EQU 7   ;(Scimmia)
+  87+ 5DAD              ROBOT:			EQU 8   ;(Robot)
+  88+ 5DAD              PALLA:			EQU 9   ;(Palla)
+  89+ 5DAD              DOUBLE_BALL:	EQU 10  ;(Double Ball)
+  90+ 5DAD              SOLDATO:		EQU 11  ;(Soldato)
+  91+ 5DAD              MAIALE:			EQU 12  ;(Maiale)
+  92+ 5DAD              CANGURO:		EQU 13  ;(Canguro)
+  93+ 5DAD              FIORE:			EQU 14  ;(Fiore)
+  94+ 5DAD              FACCIA_PALLA: 	EQU 15  ;(Faccia Palla)
+  95+ 5DAD              CANDELABRO:		EQU 16  ;(Candelabro)
+  96+ 5DAD              FRECCIA:		EQU 17  ;(Freccia)
+  97+ 5DAD              TRONCHESE:		EQU 18  ;(Tronchese)
+  98+ 5DAD              PERISCOPIO:		EQU 19  ;(Periscopio)
+  99+ 5DAD              NONNINO:		EQU 20  ;(Nonnino)
+ 100+ 5DAD              PARRUCCA:		EQU 21  ;(Parrucca)
+ 101+ 5DAD              FRATE:			EQU 22  ;(Frate)
+ 102+ 5DAD              FACE_HL:		EQU 23  ;(FaceHellHL - Top-Left)
+ 103+ 5DAD              FACE_HR:		EQU 24  ;(FaceHellHR - Top-Right)
+ 104+ 5DAD              FACE_LL:		EQU 25  ;(FaceHellLL - Bottom-Left)
+ 105+ 5DAD              FACE_LR:		EQU 26  ;(FaceHellLR - Bottom-Right)
+ 106+ 5DAD              PINZA_GHIACCIO:	EQU 27  ;(PinzaGiaccioSprite)
+ 107+ 5DAD              RUOTA:			EQU 28  ;(RuotaSprite)
+ 108+ 5DAD              SALIERA:		EQU 29  ;(SalieraSprite)
+ 109+ 5DAD              GELATO:			EQU 30  ;(GelatoSprite)
+ 110+ 5DAD              PINGUINO:		EQU 31  ;(PinguinoSprite)
+ 111+ 5DAD              MURO:			EQU 32  ;(MuroSprite)
+ 112+ 5DAD              DIAVOLETTO:		EQU 33  ;(DiavolettoSprite)
+ 113+ 5DAD              VECCHIA:		EQU 34  ;(VecchiaSprite)
+ 114+ 5DAD              PIEDE:			EQU 35  ;(PiedeSprite)
+ 115+ 5DAD              CHIP:			EQU 36  ;(ChipSprite)
+ 116+ 5DAD              IPNOSI:			EQU 37  ;(IpnosiSprite)
+ 117+ 5DAD              SWISSARMKIFE:	EQU 38  ;(SwissArmyKife)
+ 118+ 5DAD              BOTTE:			EQU 39  ;(BotteSprite)
+ 119+ 5DAD              ONDA:			EQU 40  ;(OndaSprite)
+ 120+ 5DAD              PALAZZO:		EQU 41  ;(PalazzoSprite)
 # file closed: constants.asm
   13  5DAD                  include "interrupts.asm"
 # file opened: interrupts.asm
@@ -4518,89 +4558,89 @@
  361+ 7021 DD 7E 01         ld   a, (ix+1)         ; Tipo
  362+ 7024 E6 3F            and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca, 22=Frate, 23..26=FaceHell, 27=PinzaGiaccio, 28=Ruota, 29=Saliera, 30=Gelato, 31=Pinguino, 32=Muro, 33=Diavoletto, 34=Vecchia, 35=Piede, 36=Chip, 37=Ipnosi, 38=SwissArmyKife, 39=Botte, 40=Onda)
  363+ 7026
- 364+ 7026 FE 00            cp   0
+ 364+ 7026 FE 00            cp   LAMETTA
  365+ 7028 CA FE 70         jp   z, .got_lametta
- 366+ 702B FE 01            cp   1
+ 366+ 702B FE 01            cp   SEGA
  367+ 702D CA 0F 71         jp   z, .got_sega
- 368+ 7030 FE 02            cp   2
+ 368+ 7030 FE 02            cp   UCCELLO
  369+ 7032 CA 20 71         jp   z, .got_uccello
- 370+ 7035 FE 03            cp   3
+ 370+ 7035 FE 03            cp   RADAR
  371+ 7037 CA 31 71         jp   z, .got_radar
- 372+ 703A FE 04            cp   4
+ 372+ 703A FE 04            cp   UOVO
  373+ 703C CA 37 71         jp   z, .got_uovo
- 374+ 703F FE 05            cp   5
+ 374+ 703F FE 05            cp   UFO
  375+ 7041 CA 48 71         jp   z, .got_ufo
- 376+ 7044 FE 06            cp   6
+ 376+ 7044 FE 06            cp   FACCIA
  377+ 7046 CA 4E 71         jp   z, .got_faccia
- 378+ 7049 FE 07            cp   7
+ 378+ 7049 FE 07            cp   SCIMMIA
  379+ 704B CA 54 71         jp   z, .got_scimmia
- 380+ 704E FE 08            cp   8
+ 380+ 704E FE 08            cp   ROBOT
  381+ 7050 CA 5A 71         jp   z, .got_robot
- 382+ 7053 FE 09            cp   9
+ 382+ 7053 FE 09            cp   PALLA
  383+ 7055 CA 60 71         jp   z, .got_palla
- 384+ 7058 FE 0A            cp   10
+ 384+ 7058 FE 0A            cp   DOUBLE_BALL
  385+ 705A CA 66 71         jp   z, .got_doubleball
- 386+ 705D FE 0B            cp   11
+ 386+ 705D FE 0B            cp   SOLDATO
  387+ 705F CA 77 71         jp   z, .got_soldato
- 388+ 7062 FE 0C            cp   12
+ 388+ 7062 FE 0C            cp   MAIALE
  389+ 7064 CA 7D 71         jp   z, .got_maiale
- 390+ 7067 FE 0D            cp   13
+ 390+ 7067 FE 0D            cp   CANGURO
  391+ 7069 CA 8E 71         jp   z, .got_canguro
- 392+ 706C FE 0E            cp   14
+ 392+ 706C FE 0E            cp   FIORE
  393+ 706E CA 9F 71         jp   z, .got_fiore
- 394+ 7071 FE 0F            cp   15
+ 394+ 7071 FE 0F            cp   FACCIA_PALLA
  395+ 7073 CA A5 71         jp   z, .got_facciapalla
- 396+ 7076 FE 10            cp   16
+ 396+ 7076 FE 10            cp   CANDELABRO
  397+ 7078 CA AB 71         jp   z, .got_candelabro
- 398+ 707B FE 11            cp   17
+ 398+ 707B FE 11            cp   FRECCIA
  399+ 707D CA B1 71         jp   z, .got_freccia
- 400+ 7080 FE 12            cp   18
+ 400+ 7080 FE 12            cp   TRONCHESE
  401+ 7082 CA C2 71         jp   z, .got_tronchese
- 402+ 7085 FE 13            cp   19
+ 402+ 7085 FE 13            cp   PERISCOPIO
  403+ 7087 CA C8 71         jp   z, .got_periscopio
- 404+ 708A FE 14            cp   20
+ 404+ 708A FE 14            cp   NONNINO
  405+ 708C CA D9 71         jp   z, .got_nonnino
- 406+ 708F FE 15            cp   21
+ 406+ 708F FE 15            cp   PARRUCCA
  407+ 7091 CA DF 71         jp   z, .got_parrucca
- 408+ 7094 FE 16            cp   22
+ 408+ 7094 FE 16            cp   FRATE
  409+ 7096 CA E5 71         jp   z, .got_frate
- 410+ 7099 FE 17            cp   23
+ 410+ 7099 FE 17            cp   FACE_HL
  411+ 709B CA 93 72         jp   z, .got_facehell_hl
- 412+ 709E FE 18            cp   24
+ 412+ 709E FE 18            cp   FACE_HR
  413+ 70A0 CA 98 72         jp   z, .got_facehell_hr
- 414+ 70A3 FE 19            cp   25
+ 414+ 70A3 FE 19            cp   FACE_LL
  415+ 70A5 CA 9D 72         jp   z, .got_facehell_ll
- 416+ 70A8 FE 1A            cp   26
+ 416+ 70A8 FE 1A            cp   FACE_LR
  417+ 70AA CA A2 72         jp   z, .got_facehell_lr
- 418+ 70AD FE 1B            cp   27
+ 418+ 70AD FE 1B            cp   PINZA_GHIACCIO
  419+ 70AF CA F6 71         jp   z, .got_pinzagiaccio
- 420+ 70B2 FE 1C            cp   28
+ 420+ 70B2 FE 1C            cp   RUOTA
  421+ 70B4 CA FC 71         jp   z, .got_ruota
- 422+ 70B7 FE 1D            cp   29
+ 422+ 70B7 FE 1D            cp   SALIERA
  423+ 70B9 CA 02 72         jp   z, .got_saliera
- 424+ 70BC FE 1E            cp   30
+ 424+ 70BC FE 1E            cp   GELATO
  425+ 70BE CA 08 72         jp   z, .got_gelato
- 426+ 70C1 FE 1F            cp   31
+ 426+ 70C1 FE 1F            cp   PINGUINO
  427+ 70C3 CA 0E 72         jp   z, .got_pinguino
- 428+ 70C6 FE 20            cp   32
+ 428+ 70C6 FE 20            cp   MURO
  429+ 70C8 CA 1F 72         jp   z, .got_muro
- 430+ 70CB FE 21            cp   33
+ 430+ 70CB FE 21            cp   DIAVOLETTO
  431+ 70CD CA 25 72         jp   z, .got_diavoletto
- 432+ 70D0 FE 22            cp   34
+ 432+ 70D0 FE 22            cp   VECCHIA
  433+ 70D2 CA 2B 72         jp   z, .got_vecchia
- 434+ 70D5 FE 23            cp   35
+ 434+ 70D5 FE 23            cp   PIEDE
  435+ 70D7 CA 31 72         jp   z, .got_piede
- 436+ 70DA FE 24            cp   36
+ 436+ 70DA FE 24            cp   CHIP
  437+ 70DC CA 37 72         jp   z, .got_chip
- 438+ 70DF FE 25            cp   37
+ 438+ 70DF FE 25            cp   IPNOSI
  439+ 70E1 CA 3D 72         jp   z, .got_ipnosi
- 440+ 70E4 FE 26            cp   38
+ 440+ 70E4 FE 26            cp   SWISSARMKIFE
  441+ 70E6 CA 43 72         jp   z, .got_swissarmyknife
- 442+ 70E9 FE 27            cp   39
+ 442+ 70E9 FE 27            cp   BOTTE
  443+ 70EB CA 49 72         jp   z, .got_botte
- 444+ 70EE FE 28            cp   40
+ 444+ 70EE FE 28            cp   ONDA
  445+ 70F0 CA 4F 72         jp   z, .got_onda
- 446+ 70F3 FE 29            cp   41
+ 446+ 70F3 FE 29            cp   PALAZZO
  447+ 70F5 CA 55 72         jp   z, .got_palazzo
  448+ 70F8
  449+ 70F8                  ; Fallback in caso di tipo sconosciuto
@@ -8727,23 +8767,23 @@
   89++84E7 62 62 62 7E
   90++84EB
   91++84EB              TheOffLicenceDirection:
-  92++84EB                  ROOM RoomsListTable.TheBridgeLayout	                        ; Room to the left (The Bridge)
+  92++84EB                  ROOM RoomsListTable.TheBridgeLayout	    ; Room to the left (The Bridge)
   92++84EB 01          >        db (RoomsListTable.TheBridgeLayout - RoomsListTable) / 2
-  93++84EC FF               DEFB BLOCK	                    ; Room to the right (None)
-  94++84ED FF               DEFB BLOCK	                    ; Room above (None)
-  95++84EE FF               DEFB BLOCK	                    ; Room below (None)
+  93++84EC FF               DEFB BLOCK	                            ; Room to the right (None)
+  94++84ED FF               DEFB BLOCK	                            ; Room above (None)
+  95++84EE FF               DEFB BLOCK	                            ; Room below (None)
   96++84EF
   97++84EF              TheOffLicenceUnused:
   98++84EF 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   99++84F0
  100++84F0              TheOffLicenceEnemy1:
- 101++84F0 80 03 8C 38      DEFB $80, 3, 140, 56, 230       ; [Radar (41056) - horizontal], Guardinan = 12, Starts X=140, Y=56, Limit X=230
+ 101++84F0 80 03 8C 38      DEFB $80, RADAR, 140, 56, 230
  101++84F4 E6
  102++84F5              TheOffLicenceEnemy2:
- 103++84F5 C0 06 3C 00      DEFB $C0, 6, 60, 0, 104         ; [Face (41132) - vertical], Guardinan = 44, Starts X=60, Y=0, Limit Y=104
+ 103++84F5 C0 06 3C 00      DEFB $C0, FACCIA, 60, 0, 104
  103++84F9 68
  104++84FA              TheOffLicenceEnemy3:
- 105++84FA C0 09 50 08      DEFB $C0, 9, 80, 8, 104         ; [Ball (41040) - vertical], Guardinan = 10, Starts X=80, Y=8, Limit Y=104
+ 105++84FA C0 09 50 08      DEFB $C0, PALLA, 80, 8, 104
  105++84FE 68
  106++84FF              TheOffLicenceEnemy4:
  107++84FF 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -8903,25 +8943,25 @@
   96++8609
   97++8609              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   98++8609              TheBridgeDirection:
-  99++8609                  ROOM RoomsListTable.UnderTheMegaTreeLayout	                                ; Room to the left (Under the MegaTree)
+  99++8609                  ROOM RoomsListTable.UnderTheMegaTreeLayout	                            ; Room to the left (Under the MegaTree)
   99++8609 02          >        db (RoomsListTable.UnderTheMegaTreeLayout - RoomsListTable) / 2
  100++860A                  ROOM RoomsListTable.TheOffLicenceLayout	                                ; Room to the right (The Off Licence)
  100++860A 00          >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2
- 101++860B FF               DEFB BLOCK                              ; Room above (None)
- 102++860C FF               DEFB BLOCK                              ; Room below (None)
+ 101++860B FF               DEFB BLOCK                                                              ; Room above (None)
+ 102++860C FF               DEFB BLOCK                                                              ; Room below (None)
  103++860D
  104++860D              TheBridgeUnused:
  105++860D 15               DEFB $15                          ; Padding byte to keep Enemy1 offset at 240
  106++860E
  107++860E              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  108++860E              TheBridgeEnemy1:
- 109++860E 80 02 00 50      DEFB $80, 2, 0, 80, 80              ; [Uccello (41120) - horizontal], Guardian = 20, Starts X=0, Y=80, Limit X=80
+ 109++860E 80 02 00 50      DEFB $80, UCCELLO, 0, 80, 80
  109++8612 50
  110++8613              TheBridgeEnemy2:
- 111++8613 80 02 70 50      DEFB $80, 2, 112, 80, 232           ; [Uccello (41128) - horizontal], Guardian = 21, Starts X=112, Y=80, Limit X=232
+ 111++8613 80 02 70 50      DEFB $80, UCCELLO, 112, 80, 232
  111++8617 E8
  112++8618              TheBridgeEnemy3:
- 113++8618 C0 05 60 00      DEFB $C0, 5, 96, 0, 96              ; [Ufo (41072) - vertical], Guardinan = 14, Starts X=96, Y=0, Limit Y=96
+ 113++8618 C0 05 60 00      DEFB $C0, UFO, 96, 0, 96
  113++861C 60
  114++861D              TheBridgeEnemy4:
  115++861D 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -9083,26 +9123,26 @@
   97++8727
   98++8727              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++8727              UnderTheMegaTreeDirection:
- 100++8727                  ROOM RoomsListTable.AtTheFootTheMegaTreeLayout	                                ;Room to the left (Gfx_At the Foot of the MegaTree)
+ 100++8727                  ROOM RoomsListTable.AtTheFootTheMegaTreeLayout	    ;Room to the left (Gfx_At the Foot of the MegaTree)
  100++8727 03          >        db (RoomsListTable.AtTheFootTheMegaTreeLayout - RoomsListTable) / 2
- 101++8728                  ROOM RoomsListTable.TheBridgeLayout	                                ;Room to the right (The Bridge)
+ 101++8728                  ROOM RoomsListTable.TheBridgeLayout	                ;Room to the right (The Bridge)
  101++8728 01          >        db (RoomsListTable.TheBridgeLayout - RoomsListTable) / 2
- 102++8729                  ROOM RoomsListTable.CuckoosNestLayout                                  ;Room above (CuckoosNest)
+ 102++8729                  ROOM RoomsListTable.CuckoosNestLayout               ;Room above (CuckoosNest)
  102++8729 07          >        db (RoomsListTable.CuckoosNestLayout - RoomsListTable) / 2
- 103++872A FF               DEFB BLOCK                               ;Room below (None)
+ 103++872A FF               DEFB BLOCK                                          ;Room below (None)
  104++872B
  105++872B              UnderTheMegaTreeUnused:
  106++872B 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++872C
  108++872C              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++872C              UnderTheMegaTreeEnemy1:
- 110++872C 80 0D 08 68      DEFB $80, 13, 8, 104, 200         ; [Canguro (41216) - horizontal], Guardian = 32, Starts X=8, Y=104, Limit X=200
+ 110++872C 80 0D 08 68      DEFB $80, CANGURO, 8, 104, 200
  110++8730 C8
  111++8731              UnderTheMegaTreeEnemy2:
- 112++8731 C0 06 70 30      DEFB $C0, 6, 112, 48, 87          ; [face (41296) - vertical, Guardian = 42, Starts X=112, Y=48, Limit Y=87
+ 112++8731 C0 06 70 30      DEFB $C0, FACCIA, 112, 48, 87
  112++8735 57
  113++8736              UnderTheMegaTreeEnemy3:
- 114++8736 80 0C 50 1E      DEFB $80, 12, 80, 30, 180         ; [Maiale (41168) - horizontal, Guardian = 26, Starts X=80, Y=30, Limit X=180
+ 114++8736 80 0C 50 1E      DEFB $80, MAIALE, 80, 30, 180
  114++873A B4
  115++873B              UnderTheMegaTreeEnemy4:
  116++873B 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -9276,16 +9316,16 @@
  107++884A
  108++884A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++884A              AtTheFootTheMegaTreeEnemy1:
- 110++884A C0 07 10 20      DEFB $C0, 7, 16, 32, 88         ; [Scimmia (41008) - vertical], Guardian = 6, Starts X=16, Y=32, Limit X=88
+ 110++884A C0 07 10 20      DEFB $C0, SCIMMIA, 16, 32, 88
  110++884E 58
  111++884F              AtTheFootTheMegaTreeEnemy2:
- 112++884F C0 07 28 10      DEFB $C0, 7, 40, 16, 80         ; [Scimmia (41016) - vertical], Guardian = 7, Starts X=40, Y=16, Limit X=80
+ 112++884F C0 07 28 10      DEFB $C0, SCIMMIA, 40, 16, 80
  112++8853 50
  113++8854              AtTheFootTheMegaTreeEnemy3:
- 114++8854 C0 07 40 13      DEFB $C0, 7, 64, 19, 88         ; [Scimmia (41024) - vertical], Guardian = 8, Starts X=64, Y=19, Limit X=88
+ 114++8854 C0 07 40 13      DEFB $C0, SCIMMIA, 64, 19, 88
  114++8858 58
  115++8859              AtTheFootTheMegaTreeEnemy4:
- 116++8859 80 01 20 68      DEFB $80, 1, 32, 104, 112       ; [Sega (41384) - vertical], Guardian = 53, Starts X=32, Y=104, Limit X=112
+ 116++8859 80 01 20 68      DEFB $80, SEGA, 32, 104, 112
  116++885D 70
  117++885E              AtTheFootTheMegaTreeEnemy5:
  118++885E 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -9443,13 +9483,13 @@
   97++8963
   98++8963              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++8963              TheDriveDirection:
- 100++8963                  ROOM RoomsListTable.TheSecurityGuardLayout	                                ;Room to the left (The Security Guard)
+ 100++8963                  ROOM RoomsListTable.TheSecurityGuardLayout          ;Room to the left (The Security Guard)
  100++8963 05          >        db (RoomsListTable.TheSecurityGuardLayout - RoomsListTable) / 2
- 101++8964                  ROOM RoomsListTable.AtTheFootTheMegaTreeLayout	                                ;Room to the right  (Gfx_At the Foot of the MegaTree)
+ 101++8964                  ROOM RoomsListTable.AtTheFootTheMegaTreeLayout	    ;Room to the right  (Gfx_At the Foot of the MegaTree)
  101++8964 03          >        db (RoomsListTable.AtTheFootTheMegaTreeLayout - RoomsListTable) / 2
- 102++8965                  ROOM RoomsListTable.EntranceToHadesLayout	                                ;Room above (Entrance to Hades)
+ 102++8965                  ROOM RoomsListTable.EntranceToHadesLayout	        ;Room above (Entrance to Hades)
  102++8965 06          >        db (RoomsListTable.EntranceToHadesLayout - RoomsListTable) / 2
- 103++8966                  ROOM RoomsListTable.UnderTheDriveLayout                                 ;Room below (Under the Drive)
+ 103++8966                  ROOM RoomsListTable.UnderTheDriveLayout             ;Room below (Under the Drive)
  103++8966 2D          >        db (RoomsListTable.UnderTheDriveLayout - RoomsListTable) / 2
  104++8967
  105++8967              TheDriveUnused:
@@ -9457,19 +9497,19 @@
  107++8968
  108++8968              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8968              TheDriveEnemy1:
- 110++8968 80 02 70 50      DEFB $80, 2, 112, 80, 232         ; [Uccello (41128) - horizontal], Guardian = 22, Starts X=112, Y=88, Limit X=232
+ 110++8968 80 02 70 50      DEFB $80, UCCELLO, 112, 80, 232
  110++896C E8
  111++896D              TheDriveEnemy2:
- 112++896D 80 02 80 58      DEFB $80, 2, 128, 88, 232         ; [Uccello (41136) - horizontal], Guardian = 22, Starts X=128, Y=88, Limit X=232
+ 112++896D 80 02 80 58      DEFB $80, UCCELLO, 128, 88, 232
  112++8971 E8
  113++8972              TheDriveEnemy3:
- 114++8972 80 02 28 40      DEFB $80, 2, 40, 64, 232          ; [Uccello (41144) - horizontal], Guardian = 23, Starts X=40, Y=64, Limit X=232
+ 114++8972 80 02 28 40      DEFB $80, UCCELLO, 40, 64, 232
  114++8976 E8
  115++8977              TheDriveEnemy4:
- 116++8977 80 02 00 28      DEFB $80, 2, 0, 40, 80            ; [Uccello (41152) - horizontal], Guardian = 24, Starts X=0, Y=40, Limit X=80
+ 116++8977 80 02 00 28      DEFB $80, UCCELLO, 0, 40, 80
  116++897B 50
  117++897C              TheDriveEnemy5:
- 118++897C 80 04 50 68      DEFB $80, 4, 80, 104, 240         ; [Uovo (41248) - horizontal], Guardian = 36, Starts X=80, Y=104, Limit X=240
+ 118++897C 80 04 50 68      DEFB $80, UOVO, 80, 104, 240
  118++8980 F0
  119++8981              TheDriveEnemy6:
  120++8981 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -9624,13 +9664,13 @@
   97++8A81
   98++8A81              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++8A81              TheSecurityGuardDirection:
- 100++8A81                  ROOM RoomsListTable.TheForgottenAbbeyLayout	                                ;Room to the left (The Forgotten Abbey)
+ 100++8A81                  ROOM RoomsListTable.TheForgottenAbbeyLayout ;Room to the left (The Forgotten Abbey)
  100++8A81 13          >        db (RoomsListTable.TheForgottenAbbeyLayout - RoomsListTable) / 2
- 101++8A82                  ROOM RoomsListTable.TheDriveLayout	                                ;Room to the right (The Drive)
+ 101++8A82                  ROOM RoomsListTable.TheDriveLayout	        ;Room to the right (The Drive)
  101++8A82 04          >        db (RoomsListTable.TheDriveLayout - RoomsListTable) / 2
- 102++8A83                  ROOM RoomsListTable.TheFrontDoorLayout	                                ;Room above (The Front Door)
+ 102++8A83                  ROOM RoomsListTable.TheFrontDoorLayout	    ;Room above (The Front Door)
  102++8A83 0A          >        db (RoomsListTable.TheFrontDoorLayout - RoomsListTable) / 2
- 103++8A84                  ROOM RoomsListTable.EntranceToHadesLayout	                                ;Room below (Entrance to Hades)
+ 103++8A84                  ROOM RoomsListTable.EntranceToHadesLayout	;Room below (Entrance to Hades)
  103++8A84 06          >        db (RoomsListTable.EntranceToHadesLayout - RoomsListTable) / 2
  104++8A85
  105++8A85              TheSecurityGuardUnused:
@@ -9638,16 +9678,16 @@
  107++8A86
  108++8A86              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8A86              TheSecurityGuardEnemy1:
- 110++8A86 C0 0B 58 28      DEFB $C0, 11, 88, 40, 104          ; [Soldato (40976) - horizontal], Guardian = 2, Starts X=88, Y=40, Limit X=104
+ 110++8A86 C0 0B 58 28      DEFB $C0, SOLDATO, 88, 40, 104
  110++8A8A 68
  111++8A8B              TheSecurityGuardEnemy2:
- 112++8A8B D0 0B 71 2C      DEFB $D0, 11, 113, 44, 104         ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=113, Y=44, Limit X=104
+ 112++8A8B D0 0B 71 2C      DEFB $D0, SOLDATO, 113, 44, 104
  112++8A8F 68
  113++8A90              TheSecurityGuardEnemy3:
- 114++8A90 E0 0B 88 2C      DEFB $E0, 11, 136, 44, 104         ; [Soldato (40984) - horizontal], Guardina = 3, Starts X=136, Y=44, Limit X=104
+ 114++8A90 E0 0B 88 2C      DEFB $E0, SOLDATO, 136, 44, 104
  114++8A94 68
  115++8A95              TheSecurityGuardEnemy4:
- 116++8A95 F0 0B B8 30      DEFB $F0, 11, 184, 48, 96          ; [Soldato (40992) - horizontal], Guardina = 3, Starts X=184, Y=48, Limit X=96
+ 116++8A95 F0 0B B8 30      DEFB $F0, SOLDATO, 184, 48, 96
  116++8A99 60
  117++8A9A              TheSecurityGuardEnemy5:
  118++8A9A 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -9807,16 +9847,16 @@
   97++8BA3 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   98++8BA4
   99++8BA4              EntranceToHadesEnemy1:
- 100++8BA4 C0 17 20 00      DEFB $C0, 23, 32, 0, 88         ; FaceHellHL (Top-Left)
+ 100++8BA4 C0 17 20 00      DEFB $C0, FACE_HL, 32, 0, 88
  100++8BA8 58
  101++8BA9              EntranceToHadesEnemy2:
- 102++8BA9 C0 18 10 00      DEFB $C0, 24, 16, 0, 88         ; FaceHellHR (Top-Right)
+ 102++8BA9 C0 18 10 00      DEFB $C0, FACE_HR, 16, 0, 88
  102++8BAD 58
  103++8BAE              EntranceToHadesEnemy3:
- 104++8BAE C0 19 18 10      DEFB $C0, 25, 24, 16, 104         ; FaceHellLL (Bottom-Left)
+ 104++8BAE C0 19 18 10      DEFB $C0, FACE_LL, 24, 16, 104
  104++8BB2 68
  105++8BB3              EntranceToHadesEnemy4:
- 106++8BB3 00 00 00 00      DEFB 0, 0, 0, 0, 0 ;DEFB $C0, 26, 76, 16, 104         ; FaceHellLR (Bottom-Right)
+ 106++8BB3 00 00 00 00      DEFB 0, 0, 0, 0, 0
  106++8BB7 00
  107++8BB8              EntranceToHadesEnemy5:
  108++8BB8 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -9985,13 +10025,13 @@
  107++8CC2
  108++8CC2              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8CC2              CuckoosNestEnemy1:
- 110++8CC2 80 04 60 40      DEFB $80, 4, 96, 64, 144         ; [Uovo (41272) - horizontal], Guardian = 39, Starts X=96, Y=64, Limit X=144
+ 110++8CC2 80 04 60 40      DEFB $80, UOVO, 96, 64, 144
  110++8CC6 90
  111++8CC7              CuckoosNestEnemy2:
- 112++8CC7 80 01 00 58      DEFB $80, 1, 0, 88, 88           ; [Sega (41384) - vertical], Guardian = 53, Starts X=0, Y=88, Limit X=88
+ 112++8CC7 80 01 00 58      DEFB $80, SEGA, 0, 88, 88
  112++8CCB 58
  113++8CCC              CuckoosNestEnemy3:
- 114++8CCC 00 00 00 00      DEFB 0, 0, 0, 0, 0 ; DEFB $80, 17, 0, 82, 240         ; Enemy 3 (Freccia), horizontal, Starts X=0, Y=82, Limit X=240
+ 114++8CCC 00 00 00 00      DEFB 0, 0, 0, 0, 0
  114++8CD0 00
  115++8CD1              CuckoosNestEnemy4:
  116++8CD1 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
@@ -10166,25 +10206,25 @@
  107++8DE0
  108++8DE0              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8DE0              InsideTheMegaTrunkEnemy1:
- 110++8DE0 C0 07 10 40      DEFB $C0, 7, 16, 64, 112         ; Scimmia (41136) - verical], Guardian = 9, Starts X=16, Y=64, Limit X=112
+ 110++8DE0 C0 07 10 40      DEFB $C0, SCIMMIA, 16, 64, 112
  110++8DE4 70
  111++8DE5              InsideTheMegaTrunkEnemy2:
- 112++8DE5 D0 07 28 40      DEFB $D0, 7, 40, 64, 112         ; Scimmia (41136) - verical], Guardian = 9, Starts X=40, Y=64, Limit X=112
+ 112++8DE5 D0 07 28 40      DEFB $D0, SCIMMIA, 40, 64, 112
  112++8DE9 70
  113++8DEA              InsideTheMegaTrunkEnemy3:
- 114++8DEA C0 07 40 40      DEFB $C0, 7, 64, 64, 112         ; Scimmia (41136) - verical], Guardian = 9, Starts X=64, Y=64, Limit X=112
+ 114++8DEA C0 07 40 40      DEFB $C0, SCIMMIA, 64, 64, 112
  114++8DEE 70
  115++8DEF              InsideTheMegaTrunkEnemy4:
- 116++8DEF C0 06 60 00      DEFB $C0, 6, 96, 0, 104          ; Faccia (41312) - verical], Guardian = 44, Starts X=96, Y=0, Limit X=104
+ 116++8DEF C0 06 60 00      DEFB $C0, FACCIA, 96, 0, 104
  116++8DF3 68
  117++8DF4              InsideTheMegaTrunkEnemy5:
- 118++8DF4 80 02 00 28      DEFB $80, 2, 0, 40, 80           ; Uccello (41152) - horizzontal], Guardian = 24, Starts X=0, Y=40, Limit X=80
+ 118++8DF4 80 02 00 28      DEFB $80, UCCELLO, 0, 40, 80
  118++8DF8 50
  119++8DF9              InsideTheMegaTrunkEnemy6:
- 120++8DF9 80 02 80 58      DEFB $80, 2, 128, 88, 232        ; Uccello (41136) - horizzontal], Guardian = 44, Starts X=128, Y=88, Limit X=232
+ 120++8DF9 80 02 80 58      DEFB $80, UCCELLO, 128, 88, 232
  120++8DFD E8
  121++8DFE              InsideTheMegaTrunkEnemy7:
- 122++8DFE 80 0E 88 18      DEFB $80, 14, 136, 24, 240         ; Enemy 7 (Fiore)
+ 122++8DFE 80 0E 88 18      DEFB $80, FIORE, 136, 24, 240         ; Enemy 7 (Fiore)
  122++8E02 F0
  123++8E03              InsideTheMegaTrunkEnemy8:
  124++8E03 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -10347,16 +10387,16 @@
  107++8EFE
  108++8EFE              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8EFE              OnABranchOverTheDriveEnemy1:
- 110++8EFE C0 07 F0 40      DEFB $C0, 7, 240, 64, 112         ; [Scimmia (41032) - vertical], Guardian = 9, Starts X=240, Y=64, Limit X=112
+ 110++8EFE C0 07 F0 40      DEFB $C0, SCIMMIA, 240, 64, 112
  110++8F02 70
  111++8F03              OnABranchOverTheDriveEnemy2:
- 112++8F03 C0 0F 38 40      DEFB $C0, 15, 56, 64, 104         ; [FacciaPalla (41176) - vertical], Guardian = 27, Starts X=56, Y=64, Limit X=104
+ 112++8F03 C0 0F 38 40      DEFB $C0, FACCIA_PALLA, 56, 64, 104
  112++8F07 68
  113++8F08              OnABranchOverTheDriveEnemy3:
- 114++8F08 C0 0A 70 00      DEFB $C0, 10, 112, 0, 56          ; [DoubleBall (41456) - vertical], Guardian = 62, Starts X=112, Y=0, Limit X=56
+ 114++8F08 C0 0A 70 00      DEFB $C0, DOUBLE_BALL, 112, 0, 56
  114++8F0C 38
  115++8F0D              OnABranchOverTheDriveEnemy4:
- 116++8F0D 80 12 80 28      DEFB $80, 18, 128, 40, 240         ; [Tronchese (41448) - vertical], Guardian = 62, Starts X=128, Y=40, Limit X=240
+ 116++8F0D 80 12 80 28      DEFB $80, TRONCHESE, 128, 40, 240
  116++8F11 F0
  117++8F12              OnABranchOverTheDriveEnemy5:
  118++8F12 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -10513,13 +10553,13 @@
   97++9017
   98++9017              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++9017              TheFrontDoorDirection:
- 100++9017              	ROOM RoomsListTable.TheHallLayout									;Room to the left (The Hall)
+ 100++9017              	ROOM RoomsListTable.TheHallLayout				    ;Room to the left (The Hall)
  100++9017 0B          >        db (RoomsListTable.TheHallLayout - RoomsListTable) / 2
- 101++9018              	ROOM RoomsListTable.OnABranchOverTheDriveLayout									;Room to the right (On a Branch Over the Drive)
+ 101++9018              	ROOM RoomsListTable.OnABranchOverTheDriveLayout		;Room to the right (On a Branch Over the Drive)
  101++9018 09          >        db (RoomsListTable.OnABranchOverTheDriveLayout - RoomsListTable) / 2
- 102++9019              	ROOM RoomsListTable.TheOffLicenceLayout									;Room above (The Off Licence)
+ 102++9019              	ROOM RoomsListTable.TheOffLicenceLayout				;Room above (The Off Licence)
  102++9019 00          >        db (RoomsListTable.TheOffLicenceLayout - RoomsListTable) / 2
- 103++901A              	ROOM RoomsListTable.TheSecurityGuardLayout									;Room below (The Security Guard)
+ 103++901A              	ROOM RoomsListTable.TheSecurityGuardLayout			;Room below (The Security Guard)
  103++901A 05          >        db (RoomsListTable.TheSecurityGuardLayout - RoomsListTable) / 2
  104++901B
  105++901B              TheFrontDoorUnused:
@@ -10693,28 +10733,28 @@
   97++9135
   98++9135              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++9135              TheHallDirection:
- 100++9135                  ROOM RoomsListTable.BallRoomEastLayout	                        ;Room to the left (Ballroom East)
+ 100++9135                  ROOM RoomsListTable.BallRoomEastLayout	;Room to the left (Ballroom East)
  100++9135 14          >        db (RoomsListTable.BallRoomEastLayout - RoomsListTable) / 2
- 101++9136                  ROOM RoomsListTable.TheFrontDoorLayout	                        ;Room to the right (The Front Door)
+ 101++9136                  ROOM RoomsListTable.TheFrontDoorLayout	;Room to the right (The Front Door)
  101++9136 0A          >        db (RoomsListTable.TheFrontDoorLayout - RoomsListTable) / 2
- 102++9137 FF               DEFB BLOCK	                        ;Room above (The Off Licence)
- 103++9138 FF               DEFB BLOCK	                        ;Room below (The Off Licence)
+ 102++9137 FF               DEFB BLOCK	                            ;Room above (The Off Licence)
+ 103++9138 FF               DEFB BLOCK	                            ;Room below (The Off Licence)
  104++9139
  105++9139              TheHallUnused:
  106++9139 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++913A
  108++913A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++913A              TheHallEnemy1:
- 110++913A 80 0C 28 18      DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 26, Starts X=40, Y=24, Limit X=240
+ 110++913A 80 0C 28 18      DEFB $80, MAIALE, 40, 24, 240
  110++913E F0
  111++913F              TheHallEnemy2:
- 112++913F C0 10 50 30      DEFB $C0, 16, 80, 48, 60          ; [Candelabro (41672) - horizzontal], Guardian = 89, Starts X=40, Y=24, Limit X=240
+ 112++913F C0 10 50 30      DEFB $C0, CANDELABRO, 80, 48, 60
  112++9143 3C
  113++9144              TheHallEnemy3:
- 114++9144 80 02 48 50      DEFB $80, 2, 72, 80, 136         ; [Ucello (41720) - horizzontal], Guardian = 26, Starts X=40, Y=24, Limit X=240
+ 114++9144 80 02 48 50      DEFB $80, UCCELLO, 72, 80, 136
  114++9148 88
  115++9149              TheHallEnemy4:
- 116++9149 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 116++9149 00 00 00 00      DEFB 0, 0, 0, 0, 0
  116++914D 00
  117++914E              TheHallEnemy5:
  118++914E 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -10872,11 +10912,11 @@
   97++9253
   98++9253              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++9253              TreeTopDirection:
- 100++9253              	ROOM RoomsListTable.OutALimbLayout	    								;Room to the left (Out on a limb)
+ 100++9253              	ROOM RoomsListTable.OutALimbLayout	    		;Room to the left (Out on a limb)
  100++9253 0D          >        db (RoomsListTable.OutALimbLayout - RoomsListTable) / 2
- 101++9254 FF           	DEFB BLOCK									;Room to the right (The Off Licence)
- 102++9255 FF           	DEFB BLOCK									;Room above (The Off Licence)
- 103++9256              	ROOM RoomsListTable.InsideTheMegaTrunkLayout		    							;Room below (Inside the MegaTrunk)
+ 101++9254 FF           	DEFB BLOCK									    ;Room to the right (The Off Licence)
+ 102++9255 FF           	DEFB BLOCK									    ;Room above (The Off Licence)
+ 103++9256              	ROOM RoomsListTable.InsideTheMegaTrunkLayout	;Room below (Inside the MegaTrunk)
  103++9256 08          >        db (RoomsListTable.InsideTheMegaTrunkLayout - RoomsListTable) / 2
  104++9257
  105++9257              TreeTopUnused:
@@ -10884,13 +10924,13 @@
  107++9258
  108++9258              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++9258              TreeTopEnemy1:
- 110++9258 80 02 00 28      DEFB $80, 2, 0, 40, 80          ; [Uccello (41152) - horizzontal], Guardian = 6, Starts X=0, Y=40, Limit X=80
+ 110++9258 80 02 00 28      DEFB $80, UCCELLO, 0, 40, 80
  110++925C 50
  111++925D              TreeTopEnemy2:
- 112++925D 80 0E 00 50      DEFB $80, 14, 0, 80, 152         ; [Fiore (41328) - horizzontal], Guardian = 6, Starts X=0, Y=80, Limit X=152
+ 112++925D 80 0E 00 50      DEFB $80, FIORE, 0, 80, 152
  112++9261 98
  113++9262              TreeTopEnemy3:
- 114++9262 80 0C 28 18      DEFB $80, 12, 40, 24, 240         ; [Maiale (41168) - horizzontal], Guardian = 6, Starts X=40, Y=24, Limit X=240
+ 114++9262 80 0C 28 18      DEFB $80, MAIALE, 40, 24, 240
  114++9266 F0
  115++9267              TreeTopEnemy4:
  116++9267 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
@@ -11054,16 +11094,16 @@
   98++9375 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   99++9376
  100++9376              OutALimbEnemy1:
- 101++9376 80 02 70 38      DEFB $80, 2, 112, 56, 184        ; [Uccello (41160) - Horizzontal], Guardian = 45, Starts X=112, Y=56, Limit X=84
+ 101++9376 80 02 70 38      DEFB $80, UCCELLO, 112, 56, 184
  101++937A B8
  102++937B              OutALimbEnemy2:
- 103++937B C0 06 60 00      DEFB $C0, 6, 96, 0, 104          ; [Faccia (41320) - vertical], Guardian = 25, Starts X=96, Y=0, Limit X=104
+ 103++937B C0 06 60 00      DEFB $C0, FACCIA, 96, 0, 104
  103++937F 68
  104++9380              OutALimbEnemy3:
- 105++9380 80 01 98 50      DEFB $80, 1, 152, 80, 240         ; [Sega (41664) - vertical], Guardian = 88, Starts X=152, Y=80, Limit X=240
+ 105++9380 80 01 98 50      DEFB $80, SEGA, 152, 80, 240
  105++9384 F0
  106++9385              OutALimbEnemy4:
- 107++9385 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
+ 107++9385 00 00 00 00      DEFB 0, 0, 0, 0, 0
  107++9389 00
  108++938A              OutALimbEnemy5:
  109++938A 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -11225,16 +11265,16 @@
   98++9493 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   99++9494
  100++9494              RescueEsmereldaEnemy1:
- 101++9494 C0 14 20 30      DEFB $C0, 20, 32, 48, 96        ; [Nonnino (40992) - Horizzontal], Guardian = 4, Starts X=32, Y=49, Limit X=96
+ 101++9494 C0 14 20 30      DEFB $C0, NONNINO, 32, 48, 96
  101++9498 60
  102++9499              RescueEsmereldaEnemy2:
- 103++9499 C0 14 60 28      DEFB $C0, 20, 96, 40, 104        ; [Nonnino (40976) - Horizzontal], Guardian = 2, Starts X=96, Y=40, Limit X=104
+ 103++9499 C0 14 60 28      DEFB $C0, NONNINO, 96, 40, 104
  103++949D 68
  104++949E              RescueEsmereldaEnemy3:
- 105++949E C0 15 C0 00      DEFB $C0, 21, 192, 0, 16         ; [Nonnino (41080) - Horizzontal], Guardian = 15, Starts X=192, Y=0, Limit X=16
+ 105++949E C0 15 C0 00      DEFB $C0, PARRUCCA, 192, 0, 16
  105++94A2 10
  106++94A3              RescueEsmereldaEnemy4:
- 107++94A3 80 02 28 20      DEFB $80, 2, 40, 32, 72          ; [Uccello (41064) - Horizzontal], Guardian = 13, Starts X=40, Y=32, Limit X=72
+ 107++94A3 80 02 28 20      DEFB $80, UCCELLO, 40, 32, 72
  107++94A7 48
  108++94A8              RescueEsmereldaEnemy5:
  109++94A8 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -11394,19 +11434,19 @@
   98++95B1 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   99++95B2
  100++95B2              IAmSureIHaveSeenThiBeforeEnemy1:
- 101++95B2 C0 0B 28 30      DEFB $C0, 11, 40, 48, 96          ; [Soldato (40992) - vertical], Guardian = 4, Starts X=40, Y=48, Limit X=96
+ 101++95B2 C0 0B 28 30      DEFB $C0, SOLDATO, 40, 48, 96
  101++95B6 60
  102++95B7              IAmSureIHaveSeenThiBeforeEnemy2:
- 103++95B7 D0 0B 58 2C      DEFB $D0, 11, 88, 44, 104          ; [Soldato (40984) - vertical], Guardina = 3, Starts X=88, Y=44, Limit X=104
+ 103++95B7 D0 0B 58 2C      DEFB $D0, SOLDATO, 88, 44, 104
  103++95BB 68
  104++95BC              IAmSureIHaveSeenThiBeforeEnemy3:
- 105++95BC E0 0B 98 20      DEFB $E0, 11, 152, 32, 96          ; [Soldato (41000) - vertical], Guardina = 5, Starts X=152, Y=32, Limit X=96
+ 105++95BC E0 0B 98 20      DEFB $E0, SOLDATO, 152, 32, 96
  105++95C0 60
  106++95C1              IAmSureIHaveSeenThiBeforeEnemy4:
- 107++95C1 F0 0B C8 30      DEFB $F0, 11, 200, 48, 96          ; [Soldato (40992) - vertical], Guardina = 2, Starts X=200, Y=48, Limit X=96
+ 107++95C1 F0 0B C8 30      DEFB $F0, SOLDATO, 200, 48, 96
  107++95C5 60
  108++95C6              IAmSureIHaveSeenThiBeforeEnemy5:
- 109++95C6 80 02 00 20      DEFB $80, 2, 0, 32, 72            ; [Uccello (40992) - veritcal], Guardina = 13, Starts X=0, Y=32, Limit X=72
+ 109++95C6 80 02 00 20      DEFB $80, UCCELLO, 0, 32, 72
  109++95CA 48
  110++95CB              IAmSureIHaveSeenThiBeforeEnemy6:
  111++95CB 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -11551,27 +11591,27 @@
   88++96C7 5E 5E E7 66
   89++96CB
   90++96CB              WeMustPerformQuirkafleegDirection:
-  91++96CB              	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout					;Room to the left (We must perform a Quirkafleeg)
+  91++96CB              	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout			;Room to the left (We must perform a Quirkafleeg)
   91++96CB 10          >        db (RoomsListTable.WeMustPerformQuirkafleegLayout - RoomsListTable) / 2
   92++96CC              	ROOM RoomsListTable.RescueEsmereldaLayout					;Room to the right (Rescue Esmerelda)
   92++96CC 0E          >        db (RoomsListTable.RescueEsmereldaLayout - RoomsListTable) / 2
-  93++96CD FF           	DEFB $FF				;Room above (The Off Licence)
-  94++96CE FF           	DEFB $FF				;Room below (The Off Licence)
+  93++96CD FF           	DEFB BLOCK				                                    ;Room above (The Off Licence)
+  94++96CE FF           	DEFB BLOCK				                                    ;Room below (The Off Licence)
   95++96CF
   96++96CF              WeMustPerformQuirkafleegUnused:
   97++96CF 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   98++96D0
   99++96D0              WeMustPerformQuirkafleegEnemy1:
- 100++96D0 80 03 8C 38      DEFB $80, 3, 140, 56, 230        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
- 100++96D4 E6
+ 100++96D0 80 02 00 20      DEFB $80, UCCELLO, 0, 32, 72
+ 100++96D4 48
  101++96D5              WeMustPerformQuirkafleegEnemy2:
- 102++96D5 C0 06 3C 38      DEFB $C0, 6, 60, 56, 106         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
- 102++96D9 6A
+ 102++96D5 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 102++96D9 00
  103++96DA              WeMustPerformQuirkafleegEnemy3:
- 104++96DA C0 09 50 10      DEFB $C0, 9, 80, 16, 106         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
- 104++96DE 6A
+ 104++96DA 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 104++96DE 00
  105++96DF              WeMustPerformQuirkafleegEnemy4:
- 106++96DF 01 80 00 00      DEFB 1, 128, 0, 0, 0             ; Rope (type 1), X-coordinate = 128
+ 106++96DF 00 00 00 00      DEFB 0, 0, 0, 0, 0
  106++96E3 00
  107++96E4              WeMustPerformQuirkafleegEnemy5:
  108++96E4 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -11719,27 +11759,27 @@
   88++97E5 5E 5E E7 66
   89++97E9
   90++97E9              UpOnTheBattlementsDirection:
-  91++97E9              	ROOM RoomsListTable.OntheRoofLayout		;Room to the left (On the Roof)
+  91++97E9              	ROOM RoomsListTable.OntheRoofLayout		                ;Room to the left (On the Roof)
   91++97E9 12          >        db (RoomsListTable.OntheRoofLayout - RoomsListTable) / 2
   92++97EA              	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout		;Room to the right (We must perform a Quirkafleeg)
   92++97EA 10          >        db (RoomsListTable.WeMustPerformQuirkafleegLayout - RoomsListTable) / 2
-  93++97EB FF           	DEFB $FF	;Room above (The Off Licence)
-  94++97EC FF           	DEFB $FF	;Room below (The Off Licence)
+  93++97EB FF           	DEFB BLOCK	                                            ;Room above (The Off Licence)
+  94++97EC FF           	DEFB BLOCK	                                            ;Room below (The Off Licence)
   95++97ED
   96++97ED              UpOnTheBattlementsUnused:
   97++97ED 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   98++97EE
   99++97EE              UpOnTheBattlementsEnemy1:
- 100++97EE C0 0B 28 28      DEFB $C0, 11, 40, 40, 104           ; [Soldato (40976) - vertical], Guardian = 2, Starts X=88, Y=40, Limit X=104
+ 100++97EE C0 0B 28 28      DEFB $C0, SOLDATO, 40, 40, 104
  100++97F2 68
  101++97F3              UpOnTheBattlementsEnemy2:
- 102++97F3 D0 0B 58 2C      DEFB $D0, 11, 88, 44, 104          ; [Soldato (40984) - vertical], Guardina = 3, Starts X=113, Y=44, Limit X=104
+ 102++97F3 D0 0B 58 2C      DEFB $D0, SOLDATO, 88, 44, 104
  102++97F7 68
  103++97F8              UpOnTheBattlementsEnemy3:
- 104++97F8 E0 0B 98 30      DEFB $E0, 11, 152, 48, 96          ; [Soldato (40992) - vertical], Guardina = 4, Starts X=136, Y=44, Limit X=104
+ 104++97F8 E0 0B 98 30      DEFB $E0, SOLDATO, 152, 48, 96
  104++97FC 60
  105++97FD              UpOnTheBattlementsEnemy4:
- 106++97FD F0 0B C8 20      DEFB $F0, 11, 200, 32, 96          ; [Soldato (41000) - vertical], Guardina = 5, Starts X=184, Y=48, Limit X=96
+ 106++97FD F0 0B C8 20      DEFB $F0, SOLDATO, 200, 32, 96
  106++9801 60
  107++9802              UpOnTheBattlementsEnemy5:
  108++9802 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -11899,7 +11939,7 @@
   97++990B 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   98++990C
   99++990C              OntheRoofEnemy1:
- 100++990C 80 0D 70 68      DEFB $80, 13, 112, 104, 192        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+ 100++990C 80 0D 70 68      DEFB $80, CANGURO, 112, 104, 192
  100++9910 C0
  101++9911              OntheRoofEnemy2:
  102++9911 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -11908,7 +11948,7 @@
  104++9916 00 00 00 00      DEFB 0, 0, 0, 0, 0
  104++991A 00
  105++991B              OntheRoofEnemy4:
- 106++991B 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
+ 106++991B 00 00 00 00      DEFB 0, 0, 0, 0, 0
  106++991F 00
  107++9920              OntheRoofEnemy5:
  108++9920 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -12068,28 +12108,28 @@
   98++9A29 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   99++9A2A
  100++9A2A              TheForgottenAbbeyEnemy1:
- 101++9A2A 80 16 20 28      DEFB $80, 22, 32, 40, 160        ; Enemy 1 (Frate), horizontal, Starts X=40, Y=128, Limit X=180
+ 101++9A2A 80 16 20 28      DEFB $80, FRATE, 32, 40, 160
  101++9A2E A0
  102++9A2F              TheForgottenAbbeyEnemy2:
- 103++9A2F 80 16 60 28      DEFB $80, 22, 96, 40, 224         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+ 103++9A2F 80 16 60 28      DEFB $80, FRATE, 96, 40, 224
  103++9A33 E0
  104++9A34              TheForgottenAbbeyEnemy3:
- 105++9A34 80 16 48 48      DEFB $80, 22, 72, 72, 160         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+ 105++9A34 80 16 48 48      DEFB $80, FRATE, 72, 72, 160
  105++9A38 A0
  106++9A39              TheForgottenAbbeyEnemy4:
- 107++9A39 80 16 9A 48      DEFB $80, 22, 154, 72, 189         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+ 107++9A39 80 16 9A 48      DEFB $80, FRATE, 154, 72, 189
  107++9A3D BD
  108++9A3E              TheForgottenAbbeyEnemy5:
- 109++9A3E 80 16 28 68      DEFB $80, 22, 40, 104, 96         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+ 109++9A3E 80 16 28 68      DEFB $80, FRATE, 40, 104, 96
  109++9A42 60
  110++9A43              TheForgottenAbbeyEnemy6:
- 111++9A43 80 16 58 68      DEFB $80, 22, 88, 104, 144         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+ 111++9A43 80 16 58 68      DEFB $80, FRATE, 88, 104, 144
  111++9A47 90
  112++9A48              TheForgottenAbbeyEnemy7:
- 113++9A48 80 16 80 68      DEFB $80, 22, 128, 104, 184         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+ 113++9A48 80 16 80 68      DEFB $80, FRATE, 128, 104, 184
  113++9A4C B8
  114++9A4D              TheForgottenAbbeyEnemy8:
- 115++9A4D 80 16 B8 68      DEFB $80, 22, 184, 104, 240         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+ 115++9A4D 80 16 B8 68      DEFB $80, FRATE, 184, 104, 240
  115++9A51 F0
  116++9A52
  117++9A52              TheForgottenAbbeyPosWilly:
@@ -12250,16 +12290,16 @@
  110++9B48 00 00 00 00      DEFB 0, 0, 0, 0, 0
  110++9B4C 00
  111++9B4D              BallRoomEastEnemy2:
- 112++9B4D C0 06 28 30      DEFB $C0, 6, 40, 48, 87         ; [Face (41296) - vertical], Guardinan = 42, Starts X=60, Y=0, Limit Y=104
+ 112++9B4D C0 06 28 30      DEFB $C0, FACCIA, 40, 48, 87
  112++9B51 57
  113++9B52              BallRoomEastEnemy3:
- 114++9B52 E0 06 38 30      DEFB $E0, 6, 56, 48, 96         ; [Face (41280) - vertical], Guardinan = 40, Starts X=60, Y=0, Limit Y=104
+ 114++9B52 E0 06 38 30      DEFB $E0, FACCIA, 56, 48, 96
  114++9B56 60
  115++9B57              BallRoomEastEnemy4:
- 116++9B57 C0 06 58 48      DEFB $C0, 6, 88, 72, 96         ; [Face (41288) - vertical], Guardinan = 41, Starts X=60, Y=0, Limit Y=104
+ 116++9B57 C0 06 58 48      DEFB $C0, FACCIA, 88, 72, 96
  116++9B5B 60
  117++9B5C              BallRoomEastEnemy5:
- 118++9B5C 80 02 70 50       DEFB $80, 2, 112, 80, 232        ; [Uccello (41128) - horizzontal], Guardinan = 21, Starts X=60, Y=0, Limit Y=104
+ 118++9B5C 80 02 70 50       DEFB $80, UCCELLO, 112, 80, 232
  118++9B60 E8
  119++9B61              BallRoomEastEnemy6:
  120++9B61 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -12427,13 +12467,13 @@
  107++9C66
  108++9C66              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++9C66              BallRoomWestEnemy1:
- 110++9C66 80 0D 80 58      DEFB $80, 13, 128, 88, 208       ; [Canguro (41224) - horizontal],  Guardian - 33, Starts X=60, Y=0, Limit Y=104
+ 110++9C66 80 0D 80 58      DEFB $80, CANGURO, 128, 88, 208
  110++9C6A D0
  111++9C6B              BallRoomWestEnemy2:
- 112++9C6B C0 06 70 30      DEFB $C0, 6, 112, 48, 96         ; [Face (41280) - vertical], Guardinan = 42, Starts X=60, Y=0, Limit Y=104
+ 112++9C6B C0 06 70 30      DEFB $C0, FACCIA, 112, 48, 96
  112++9C6F 60
  113++9C70              BallRoomWestEnemy3:
- 114++9C70 E0 06 30 30      DEFB $E0, 6, 48, 48, 87          ; [Face (41296) - vertical], Guardinan = 40, Starts X=60, Y=0, Limit Y=104
+ 114++9C70 E0 06 30 30      DEFB $E0, FACCIA, 48, 48, 87
  114++9C74 57
  115++9C75              BallRoomWestEnemy4:
  116++9C75 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -12600,7 +12640,7 @@
  101++9D80 15          >        db (RoomsListTable.BallRoomWestLayout - RoomsListTable) / 2
  102++9D81              	ROOM RoomsListTable.FirstLandingLayout					;Room above (First Landing)
  102++9D81 1C          >        db (RoomsListTable.FirstLandingLayout - RoomsListTable) / 2
- 103++9D82 FF           	DEFB BLOCK				;Room below (The Off Licence)
+ 103++9D82 FF           	DEFB BLOCK				                                ;Room below (The Off Licence)
  104++9D83
  105++9D83              TotheKitchensMainStairwayUnused:
  106++9D83 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
@@ -12610,25 +12650,25 @@
  110++9D84 00 00 00 00      DEFB 0, 0, 0, 0, 0
  110++9D88 00
  111++9D89              TotheKitchensMainStairwayEnemy2:
- 112++9D89 80 03 68 18      DEFB $80, 3, 104, 24, 168          ; [Radar (41688) - horizzontal], Guardinan = 42, Starts X=60, Y=0, Limit Y=104
+ 112++9D89 80 03 68 18      DEFB $80, RADAR, 104, 24, 168
  112++9D8D A8
  113++9D8E              TotheKitchensMainStairwayEnemy3:
  114++9D8E 00 00 00 00      DEFB 0, 0, 0, 0, 0
  114++9D92 00
  115++9D93              TotheKitchensMainStairwayEnemy4:
- 116++9D93 80 0A 10 48      DEFB $80, 10, 16, 72, 48           ; [Double Ball (41704) - horizzontal], Guardinan = 41, Starts X=60, Y=0, Limit Y=104
+ 116++9D93 80 0A 10 48      DEFB $80, DOUBLE_BALL, 16, 72, 48
  116++9D97 30
  117++9D98              TotheKitchensMainStairwayEnemy5:
- 118++9D98 80 04 00 60      DEFB $80, 4, 0, 96, 240            ; [Uovo (41712) - horizzontal], Guardinan = 21, Starts X=60, Y=0, Limit Y=104
+ 118++9D98 80 04 00 60      DEFB $80, UOVO, 0, 96, 240
  118++9D9C F0
  119++9D9D              TotheKitchensMainStairwayEnemy6:
- 120++9D9D 80 02 48 50      DEFB $80, 2, 72, 80, 136           ; [Uccello (41720) - horizzontal], Guardinan = 21, Starts X=60, Y=0, Limit Y=104
+ 120++9D9D 80 02 48 50      DEFB $80, UCCELLO, 72, 80, 136
  120++9DA1 88
  121++9DA2              TotheKitchensMainStairwayEnemy7:
- 122++9DA2 80 1B 00 18      DEFB $80, 27, 0, 24, 88
+ 122++9DA2 80 1B 00 18      DEFB $80, PINZA_GHIACCIO, 0, 24, 88
  122++9DA6 58
  123++9DA7              TotheKitchensMainStairwayEnemy8:
- 124++9DA7 80 1C 60 30      DEFB $80, 28, 96, 48, 192
+ 124++9DA7 80 1C 60 30      DEFB $80, RUOTA, 96, 48, 192
  124++9DAB C0
  125++9DAC
  126++9DAC              TotheKitchensMainStairwayPosWilly:
@@ -12774,28 +12814,28 @@
   97++9E9D
   98++9E9D              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++9E9D              TheKitchenDirection:
- 100++9E9D              	ROOM RoomsListTable.WestOfKitchenLayout		;Room to the left (West of Kitchen)
+ 100++9E9D              	ROOM RoomsListTable.WestOfKitchenLayout		            ;Room to the left (West of Kitchen)
  100++9E9D 18          >        db (RoomsListTable.WestOfKitchenLayout - RoomsListTable) / 2
  101++9E9E              	ROOM RoomsListTable.TotheKitchensMainStairwayLayout		;Room to the right (To the Kitchens    Main Stairway)
  101++9E9E 16          >        db (RoomsListTable.TotheKitchensMainStairwayLayout - RoomsListTable) / 2
- 102++9E9F FF           	DEFB BLOCK	;Room above (The Off Licence)
- 103++9EA0 FF           	DEFB BLOCK	;Room below (The Off Licence)
+ 102++9E9F FF           	DEFB BLOCK	                                            ;Room above (The Off Licence)
+ 103++9EA0 FF           	DEFB BLOCK	                                            ;Room below (The Off Licence)
  104++9EA1
  105++9EA1              TheKitchenUnused:
  106++9EA1 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++9EA2
  108++9EA2              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++9EA2              TheKitchenEnemy1:
- 110++9EA2 C0 1D 18 08      DEFB $C0, 29, 24, 8, 104
+ 110++9EA2 C0 1D 18 08      DEFB $C0, SALIERA, 24, 8, 104
  110++9EA6 68
  111++9EA7              TheKitchenEnemy2:
- 112++9EA7 E0 1D 48 00      DEFB $E0, 29, 72, 0, 104         ; [Face (41296) - vertical], Guardinan = 42, Starts X=60, Y=0, Limit Y=104
+ 112++9EA7 E0 1D 48 00      DEFB $E0, SALIERA, 72, 0, 104
  112++9EAB 68
  113++9EAC              TheKitchenEnemy3:
- 114++9EAC C0 1D 78 00      DEFB $C0, 29, 120, 0, 104         ; [Face (41280) - vertical], Guardinan = 40, Starts X=60, Y=0, Limit Y=104
+ 114++9EAC C0 1D 78 00      DEFB $C0, SALIERA, 120, 0, 104
  114++9EB0 68
  115++9EB1              TheKitchenEnemy4:
- 116++9EB1 E0 1D A0 00      DEFB $E0, 29, 160, 0, 104         ; [Face (41288) - vertical], Guardinan = 41, Starts X=60, Y=0, Limit Y=104
+ 116++9EB1 E0 1D A0 00      DEFB $E0, SALIERA, 160, 0, 104
  116++9EB5 68
  117++9EB6              TheKitchenEnemy5:
  118++9EB6 00 00 00 00       DEFB 0, 0, 0, 0, 0
@@ -12953,29 +12993,29 @@
   97++9FBB
   98++9FBB              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++9FBB              WestOfKitchenDirection:
- 100++9FBB              	ROOM RoomsListTable.ColdStoreLayout						;Room to the left (Cold Store)
+ 100++9FBB              	ROOM RoomsListTable.ColdStoreLayout						    ;Room to the left (Cold Store)
  100++9FBB 19          >        db (RoomsListTable.ColdStoreLayout - RoomsListTable) / 2
  101++9FBC              	ROOM RoomsListTable.TheKitchenLayout						;Room to the right (The Kitchen)
  101++9FBC 17          >        db (RoomsListTable.TheKitchenLayout - RoomsListTable) / 2
  102++9FBD              	ROOM RoomsListTable.TheBanyanTreeLayout						;Room above (The Banyan Tree)
  102++9FBD 1E          >        db (RoomsListTable.TheBanyanTreeLayout - RoomsListTable) / 2
- 103++9FBE FF           	DEFB BLOCK					;Room below (The Off Licence)
+ 103++9FBE FF           	DEFB BLOCK					                                ;Room below (The Off Licence)
  104++9FBF
  105++9FBF              WestOfKitchenUnused:
  106++9FBF 00               DEFB 0                        ; Padding byte to keep Enemy1 offset at 240
  107++9FC0
  108++9FC0              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++9FC0              WestOfKitchenEnemy1:
- 110++9FC0 C0 1D 48 00      DEFB $C0, 29, 72, 0, 104
+ 110++9FC0 C0 1D 48 00      DEFB $C0, SALIERA, 72, 0, 104
  110++9FC4 68
  111++9FC5              WestOfKitchenEnemy2:
- 112++9FC5 E0 1D 70 00      DEFB $E0, 29, 112, 0, 104
+ 112++9FC5 E0 1D 70 00      DEFB $E0, SALIERA, 112, 0, 104
  112++9FC9 68
  113++9FCA              WestOfKitchenEnemy3:
- 114++9FCA C0 1D A0 00      DEFB $C0, 29, 160, 0, 104
+ 114++9FCA C0 1D A0 00      DEFB $C0, SALIERA, 160, 0, 104
  114++9FCE 68
  115++9FCF              WestOfKitchenEnemy4:
- 116++9FCF E0 1D D8 00      DEFB $E0, 29, 216, 0, 104
+ 116++9FCF E0 1D D8 00      DEFB $E0, SALIERA, 216, 0, 104
  116++9FD3 68
  117++9FD4              WestOfKitchenEnemy5:
  118++9FD4 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -13146,16 +13186,16 @@
  107++A0DE
  108++A0DE              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A0DE              ColdStoreEnemy1:
- 110++A0DE 80 1F 00 68      DEFB $80, 31, 0, 104, 192
+ 110++A0DE 80 1F 00 68      DEFB $80, PINGUINO, 0, 104, 192
  110++A0E2 C0
  111++A0E3              ColdStoreEnemy2:
- 112++A0E3 80 1E 00 48      DEFB $80, 30, 0, 72, 40
+ 112++A0E3 80 1E 00 48      DEFB $80, GELATO, 0, 72, 40
  112++A0E7 28
  113++A0E8              ColdStoreEnemy3:
- 114++A0E8 80 1F 00 30      DEFB $80, 31, 0, 48, 48
+ 114++A0E8 80 1F 00 30      DEFB $80, PINGUINO, 0, 48, 48
  114++A0EC 30
  115++A0ED              ColdStoreEnemy4:
- 116++A0ED 80 1E 00 18      DEFB $80, 30, 0, 24, 72
+ 116++A0ED 80 1E 00 18      DEFB $80, GELATO, 0, 24, 72
  116++A0F1 48
  117++A0F2              ColdStoreEnemy5:
  118++A0F2 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -13326,10 +13366,10 @@
  107++A1FC
  108++A1FC              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A1FC              EastWallBaseEnemy1:
- 110++A1FC C0 06 38 00      DEFB $C0, 6, 56, 0, 104
+ 110++A1FC C0 06 38 00      DEFB $C0, FACCIA, 56, 0, 104
  110++A200 68
  111++A201              EastWallBaseEnemy2:
- 112++A201 C0 20 18 00      DEFB $C0, 32, 24, 0, 96
+ 112++A201 C0 20 18 00      DEFB $C0, MURO, 24, 0, 96
  112++A205 60
  113++A206              EastWallBaseEnemy3:
  114++A206 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -13507,22 +13547,22 @@
  107++A31A
  108++A31A              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A31A              TheChapelEnemy1:
- 110++A31A C0 17 D8 00      DEFB $C0, 23, 216, 0, 88         ; FaceHellHL (Top-Right)
+ 110++A31A C0 17 D8 00      DEFB $C0, FACE_HL, 216, 0, 88
  110++A31E 58
  111++A31F              TheChapelEnemy2:
- 112++A31F C0 18 C8 00      DEFB $C0, 24, 200, 0, 88         ; FaceHellHR (Top-Left)
+ 112++A31F C0 18 C8 00      DEFB $C0, FACE_HR, 200, 0, 88
  112++A323 58
  113++A324              TheChapelEnemy3:
- 114++A324 C0 19 D0 10      DEFB $C0, 25, 208, 16, 104         ; FaceHellLL (Bottom-Center)
+ 114++A324 C0 19 D0 10      DEFB $C0, FACE_LL, 208, 16, 104
  114++A328 68
  115++A329              TheChapelEnemy4:
- 116++A329 80 16 00 60      DEFB $80, 22, 0, 96, 120
+ 116++A329 80 16 00 60      DEFB $80, FRATE, 0, 96, 120
  116++A32D 78
  117++A32E              TheChapelEnemy5:
- 118++A32E C0 20 30 38       DEFB $C0, 32, 48, 56, 80
+ 118++A32E C0 20 30 38       DEFB $C0, MURO, 48, 56, 80
  118++A332 50
  119++A333              TheChapelEnemy6:
- 120++A333 C0 21 88 28      DEFB $C0, 33, 136, 40, 80
+ 120++A333 C0 21 88 28      DEFB $C0, DIAVOLETTO, 136, 40, 80
  120++A337 50
  121++A338              TheChapelEnemy7:
  122++A338 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -13688,7 +13728,7 @@
  107++A438
  108++A438              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A438              FirstLandingEnemy1:
- 110++A438 80 16 C0 60      DEFB $80, 22, 192, 96, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++A438 80 16 C0 60      DEFB $80, FRATE, 192, 96, 240
  110++A43C F0
  111++A43D              FirstLandingEnemy2:
  112++A43D 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -13859,33 +13899,33 @@
  100++A551 1E          >        db (RoomsListTable.TheBanyanTreeLayout - RoomsListTable) / 2
  101++A552              	ROOM RoomsListTable.FirstLandingLayout				;Room to the right (First Landing)
  101++A552 1C          >        db (RoomsListTable.FirstLandingLayout - RoomsListTable) / 2
- 102++A553 FF           	DEFB BLOCK			;Room above (The Off Licence)
- 103++A554 FF           	DEFB BLOCK			;Room below (The Off Licence)
+ 102++A553 FF           	DEFB BLOCK			                                ;Room above (The Off Licence)
+ 103++A554 FF           	DEFB BLOCK			                                ;Room below (The Off Licence)
  104++A555
  105++A555              TheNightmareRoomUnused:
  106++A555 15               DEFB $15                          ; Padding byte to keep Enemy1 offset at 240
  107++A556
  108++A556              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A556              TheNightmareRoomEnemy1:
- 110++A556 C0 22 40 00      DEFB $C0, 34, 64, 0, 80         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++A556 C0 22 40 00      DEFB $C0, VECCHIA, 64, 0, 80
  110++A55A 50
  111++A55B              TheNightmareRoomEnemy2:
- 112++A55B D0 22 58 00      DEFB $D0, 34, 88, 0, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 112++A55B D0 22 58 00      DEFB $D0, VECCHIA, 88, 0, 104
  112++A55F 68
  113++A560              TheNightmareRoomEnemy3:
- 114++A560 E0 23 70 00      DEFB $E0, 35, 112, 0, 96         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 114++A560 E0 23 70 00      DEFB $E0, PIEDE, 112, 0, 96
  114++A564 60
  115++A565              TheNightmareRoomEnemy4:
- 116++A565 F0 22 88 08      DEFB $F0, 34, 136, 8, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 116++A565 F0 22 88 08      DEFB $F0, VECCHIA, 136, 8, 104
  116++A569 68
  117++A56A              TheNightmareRoomEnemy5:
- 118++A56A C0 22 A0 00      DEFB $C0, 34, 160, 0, 80         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 118++A56A C0 22 A0 00      DEFB $C0, VECCHIA, 160, 0, 80
  118++A56E 50
  119++A56F              TheNightmareRoomEnemy6:
- 120++A56F D0 22 B8 00      DEFB $D0, 34, 184, 0, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 120++A56F D0 22 B8 00      DEFB $D0, VECCHIA, 184, 0, 104
  120++A573 68
  121++A574              TheNightmareRoomEnemy7:
- 122++A574 E0 22 E0 00      DEFB $E0, 34, 224, 0, 104         ; [Vecchia (41520) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 122++A574 E0 22 E0 00      DEFB $E0, VECCHIA, 224, 0, 104
  122++A578 68
  123++A579              TheNightmareRoomEnemy8:
  124++A579 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -14048,16 +14088,16 @@
  107++A674
  108++A674              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A674              TheBanyanTreeEnemy1:
- 110++A674 C0 25 50 38      DEFB $C0, 37, 80, 56, 80         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++A674 C0 25 50 38      DEFB $C0, IPNOSI, 80, 56, 80
  110++A678 50
  111++A679              TheBanyanTreeEnemy2:
- 112++A679 D0 21 68 28      DEFB $D0, 33, 104, 40, 80         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 112++A679 D0 21 68 28      DEFB $D0, DIAVOLETTO, 104, 40, 80
  112++A67D 50
  113++A67E              TheBanyanTreeEnemy3:
- 114++A67E D0 24 80 28      DEFB $D0, 36, 128, 40, 80         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 114++A67E D0 24 80 28      DEFB $D0, CHIP, 128, 40, 80
  114++A682 50
  115++A683              TheBanyanTreeEnemy4:
- 116++A683 80 01 98 50      DEFB $80, 1, 152, 80, 235
+ 116++A683 80 01 98 50      DEFB $80, SEGA, 152, 80, 235
  116++A687 EB
  117++A688              TheBanyanTreeEnemy5:
  118++A688 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -14229,7 +14269,7 @@
  107++A792
  108++A792              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A792              SwimmingPoolEnemy1:
- 110++A792 80 16 28 68      DEFB $80, 22, 40, 104, 96         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++A792 80 16 28 68      DEFB $80, FRATE, 40, 104, 96
  110++A796 60
  111++A797              SwimmingPoolEnemy2:
  112++A797 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -14409,7 +14449,7 @@
  107++A8B0
  108++A8B0              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A8B0              HalfwayUpTheEastWallEnemy1:
- 110++A8B0 80 1B 10 30      DEFB $80, 27, 16, 48, 57         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++A8B0 80 1B 10 30      DEFB $80, PINZA_GHIACCIO, 16, 48, 57
  110++A8B4 39
  111++A8B5              HalfwayUpTheEastWallEnemy2:
  112++A8B5 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -14585,16 +14625,16 @@
  102++A9CE
  103++A9CE              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  104++A9CE              TheBathroomEnemy1:
- 105++A9CE 80 0A 08 17      DEFB $80, 10, 8, 23, 200         ; DoubleBall 1 (Uccello), horizontal, Starts X=8, Y=96, Limit X=200
+ 105++A9CE 80 0A 08 17      DEFB $80, DOUBLE_BALL, 8, 23, 200
  105++A9D2 C8
  106++A9D3              TheBathroomEnemy2:
- 107++A9D3 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty
+ 107++A9D3 00 00 00 00      DEFB 0, 0, 0, 0, 0
  107++A9D7 00
  108++A9D8              TheBathroomEnemy3:
- 109++A9D8 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty
+ 109++A9D8 00 00 00 00      DEFB 0, 0, 0, 0, 0
  109++A9DC 00
  110++A9DD              TheBathroomEnemy4:
- 111++A9DD 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 111++A9DD 00 00 00 00      DEFB 0, 0, 0, 0, 0
  111++A9E1 00
  112++A9E2              TheBathroomEnemy5:
  113++A9E2 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -14751,13 +14791,13 @@
   97++AAE7
   98++AAE7              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++AAE7              TopLandingDirection:
- 100++AAE7              	ROOM RoomsListTable.MastreBedRoomLayout			;Room to the left (Master Bedroom)
+ 100++AAE7              	ROOM RoomsListTable.MastreBedRoomLayout			        ;Room to the left (Master Bedroom)
  100++AAE7 23          >        db (RoomsListTable.MastreBedRoomLayout - RoomsListTable) / 2
- 101++AAE8              	ROOM RoomsListTable.TheBathroomLayout			;Room to the right (The Bathroom)
+ 101++AAE8              	ROOM RoomsListTable.TheBathroomLayout			        ;Room to the right (The Bathroom)
  101++AAE8 21          >        db (RoomsListTable.TheBathroomLayout - RoomsListTable) / 2
- 102++AAE9              	ROOM RoomsListTable.DrJonesWillNeverBelieveThisLayout			;Room above (Dr Jones will never believe this)
+ 102++AAE9              	ROOM RoomsListTable.DrJonesWillNeverBelieveThisLayout	;Room above (Dr Jones will never believe this)
  102++AAE9 28          >        db (RoomsListTable.DrJonesWillNeverBelieveThisLayout - RoomsListTable) / 2
- 103++AAEA              	ROOM RoomsListTable.FirstLandingLayout			;Room below (First Landing)
+ 103++AAEA              	ROOM RoomsListTable.FirstLandingLayout			        ;Room below (First Landing)
  103++AAEA 1C          >        db (RoomsListTable.FirstLandingLayout - RoomsListTable) / 2
  104++AAEB
  105++AAEB              TopLandingUnused:
@@ -14765,13 +14805,13 @@
  107++AAEC
  108++AAEC              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++AAEC              TopLandingEnemy1:
- 110++AAEC C0 00 30 10      DEFB $C0, 0, 48, 16, 104         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++AAEC C0 00 30 10      DEFB $C0, LAMETTA, 48, 16, 104
  110++AAF0 68
  111++AAF1              TopLandingEnemy2:
- 112++AAF1 80 26 50 68      DEFB $80, 38, 80, 104, 240
+ 112++AAF1 80 26 50 68      DEFB $80, SWISSARMKIFE, 80, 104, 240
  112++AAF5 F0
  113++AAF6              TopLandingEnemy3:
- 114++AAF6 C0 27 60 10      DEFB $C0, 39, 96, 16, 48
+ 114++AAF6 C0 27 60 10      DEFB $C0, BOTTE, 96, 16, 48
  114++AAFA 30
  115++AAFB              TopLandingEnemy4:
  116++AAFB 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -15123,10 +15163,10 @@
  107++AD28
  108++AD28              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++AD28              ABitOfTreeEnemy1:
- 110++AD28 80 02 00 10      DEFB $80, 2, 0, 16, 80         ; [Uccello (41792) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++AD28 80 02 00 10      DEFB $80, UCCELLO, 0, 16, 80
  110++AD2C 50
  111++AD2D              ABitOfTreeEnemy2:
- 112++AD2D C0 24 38 28      DEFB $C0, 36, 56, 40, 80         ; [Uccello (41792) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 112++AD2D C0 24 38 28      DEFB $C0, CHIP, 56, 40, 80
  112++AD31 50
  113++AD32              ABitOfTreeEnemy3:
  114++AD32 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -15304,10 +15344,10 @@
  107++AE46
  108++AE46              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++AE46              OrangeryEnemy1:
- 110++AE46 C0 25 A0 00      DEFB $C0, 37, 160, 0, 96         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++AE46 C0 25 A0 00      DEFB $C0, IPNOSI, 160, 0, 96
  110++AE4A 60
  111++AE4B              OrangeryEnemy2:
- 112++AE4B C0 0F 48 40      DEFB $C0, 15, 72, 64, 104
+ 112++AE4B C0 0F 48 40      DEFB $C0, FACCIA_PALLA, 72, 64, 104
  112++AE4F 68
  113++AE50              OrangeryEnemy3:
  114++AE50 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -15484,16 +15524,16 @@
  107++AF64
  108++AF64              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++AF64              PriestsHoleEnemy1:
- 110++AF64 80 02 B0 50      DEFB $80, 2, 176, 80, 24         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++AF64 80 02 B0 50      DEFB $80, UCCELLO, 176, 80, 24
  110++AF68 18
  111++AF69              PriestsHoleEnemy2:
- 112++AF69 C0 17 30 00      DEFB $C0, 23, 48, 0, 88         ; FaceHellHL (Top-Left)
+ 112++AF69 C0 17 30 00      DEFB $C0, FACE_HL, 48, 0, 88
  112++AF6D 58
  113++AF6E              PriestsHoleEnemy3:
- 114++AF6E C0 18 20 00      DEFB $C0, 24, 32, 0, 88         ; FaceHellHR (Top-Right)
+ 114++AF6E C0 18 20 00      DEFB $C0, FACE_HR, 32, 0, 88
  114++AF72 58
  115++AF73              EntranceToHaPriestsHoleEnemy4desEnemy3:
- 116++AF73 C0 19 28 10      DEFB $C0, 25, 40, 16, 104         ; FaceHellLL (Bottom-Left)
+ 116++AF73 C0 19 28 10      DEFB $C0, FACE_LL, 40, 16, 104
  116++AF77 68
  117++AF78              PriestsHoleEnemy5:
  118++AF78 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -15664,7 +15704,7 @@
  107++B082
  108++B082              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++B082              EmergencyGeneratorEnemy1:
- 110++B082 80 0C 28 18      DEFB $80, 12, 40, 24, 240         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++B082 80 0C 28 18      DEFB $80, MAIALE, 40, 24, 240
  110++B086 F0
  111++B087              EmergencyGeneratorEnemy2:
  112++B087 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -15844,10 +15884,10 @@
  107++B1A0
  108++B1A0              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++B1A0              DrJonesWillNeverBelieveThisEnemy1:
- 110++B1A0 C0 07 50 38      DEFB $C0, 7, 80, 56, 96         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++B1A0 C0 07 50 38      DEFB $C0, SCIMMIA, 80, 56, 96
  110++B1A4 60
  111++B1A5              DrJonesWillNeverBelieveThisEnemy2:
- 112++B1A5 D0 0F 90 40      DEFB $D0, 15, 144, 64, 104
+ 112++B1A5 D0 0F 90 40      DEFB $D0, FACCIA_PALLA, 144, 64, 104
  112++B1A9 68
  113++B1AA              DrJonesWillNeverBelieveThisEnemy3:
  114++B1AA 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -16024,7 +16064,7 @@
  107++B2BE
  108++B2BE              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++B2BE              TheAtticEnemy1:
- 110++B2BE 80 26 60 40      DEFB $80, 38, 96, 64, 144         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++B2BE 80 26 60 40      DEFB $80, SWISSARMKIFE, 96, 64, 144
  110++B2C2 90
  111++B2C3              TheAtticEnemy2:
  112++B2C3 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -16193,11 +16233,11 @@
   99++B3D7              UnderTheRoofDirection:
  100++B3D7              	ROOM RoomsListTable.ConservatoryRoofLayout			;Room to the left (Conservatory Roof)
  100++B3D7 2B          >        db (RoomsListTable.ConservatoryRoofLayout - RoomsListTable) / 2
- 101++B3D8              	ROOM RoomsListTable.TheAtticLayout			;Room to the right (The Attic)
+ 101++B3D8              	ROOM RoomsListTable.TheAtticLayout			        ;Room to the right (The Attic)
  101++B3D8 29          >        db (RoomsListTable.TheAtticLayout - RoomsListTable) / 2
- 102++B3D9              	ROOM RoomsListTable.NomenLuniLayout			;Room above (Nomen Luni)
+ 102++B3D9              	ROOM RoomsListTable.NomenLuniLayout			        ;Room above (Nomen Luni)
  102++B3D9 30          >        db (RoomsListTable.NomenLuniLayout - RoomsListTable) / 2
- 103++B3DA              	ROOM RoomsListTable.ABitOfTreeLayout			;Room below (A bit of tree)
+ 103++B3DA              	ROOM RoomsListTable.ABitOfTreeLayout			    ;Room below (A bit of tree)
  103++B3DA 24          >        db (RoomsListTable.ABitOfTreeLayout - RoomsListTable) / 2
  104++B3DB
  105++B3DB              UnderTheRoofUnused:
@@ -16205,10 +16245,10 @@
  107++B3DC
  108++B3DC              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++B3DC              UnderTheRoofEnemy1:
- 110++B3DC 80 26 60 40      DEFB $80, 38, 96, 64, 144         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++B3DC 80 26 60 40      DEFB $80, SWISSARMKIFE, 96, 64, 144
  110++B3E0 90
  111++B3E1              UnderTheRoofEnemy2:
- 112++B3E1 80 1E 00 48      DEFB $80, 30, 0, 72, 48
+ 112++B3E1 80 1E 00 48      DEFB $80, GELATO, 0, 72, 48
  112++B3E5 30
  113++B3E6              UnderTheRoofEnemy3:
  114++B3E6 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -16384,10 +16424,10 @@
  107++B4FA
  108++B4FA              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++B4FA              ConservatoryRoofEnemy1:
- 110++B4FA 80 1B 88 58      DEFB $80, 27, 136, 88, 235         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++B4FA 80 1B 88 58      DEFB $80, PINZA_GHIACCIO, 136, 88, 235
  110++B4FE EB
  111++B4FF              ConservatoryRoofEnemy2:
- 112++B4FF 80 12 80 28      DEFB $80, 18, 128, 40, 235
+ 112++B4FF 80 12 80 28      DEFB $80, TRONCHESE, 128, 40, 235
  112++B503 EB
  113++B504              ConservatoryRoofEnemy3:
  114++B504 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -16563,7 +16603,7 @@
  107++B618
  108++B618              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++B618              OnTopOfTheHouseEnemy1:
- 110++B618 C0 28 A0 00      DEFB $C0, 40, 160, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++B618 C0 28 A0 00      DEFB $C0, ONDA, 160, 0, 64
  110++B61C 40
  111++B61D              OnTopOfTheHouseEnemy2:
  112++B61D 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -16717,28 +16757,28 @@
   84++B72D 61 DA 33 1A
   85++B731
   86++B731              UnderTheDriveDirection:
-  87++B731              	ROOM RoomsListTable.EntranceToHadesLayout						;Room to the left (Entrance to Hades)
+  87++B731              	ROOM RoomsListTable.EntranceToHadesLayout			    ;Room to the left (Entrance to Hades)
   87++B731 06          >        db (RoomsListTable.EntranceToHadesLayout - RoomsListTable) / 2
   88++B732              	ROOM RoomsListTable.TreeRootLayout						;Room to the right (Tree Root)
   88++B732 2E          >        db (RoomsListTable.TreeRootLayout - RoomsListTable) / 2
   89++B733              	ROOM RoomsListTable.TheDriveLayout						;Room above (The Drive)
   89++B733 04          >        db (RoomsListTable.TheDriveLayout - RoomsListTable) / 2
-  90++B734 FF           	DEFB $FF					;Room below (The Off Licence)
+  90++B734 FF           	DEFB BLOCK                          					;Room below (The Off Licence)
   91++B735
   92++B735              UnderTheDriveUnused:
   93++B735 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   94++B736
   95++B736              UnderTheDriveEnemy1:
-  96++B736 80 02 60 58      DEFB $80, 2, 96, 88, 232        ; Enemy 1 (Radar), horizontal, Starts X=40, Y=128, Limit X=180
+  96++B736 80 02 60 58      DEFB $80, UCCELLO, 96, 88, 232
   96++B73A E8
   97++B73B              UnderTheDriveEnemy2:
-  98++B73B C0 0F 90 00      DEFB $C0, 15, 144, 0, 64         ; Enemy 2 (Face), vertical, Starts X=100, Y=80, Limit Y=130
+  98++B73B C0 0F 90 00      DEFB $C0, FACCIA_PALLA, 144, 0, 64
   98++B73F 40
   99++B740              UnderTheDriveEnemy3:
- 100++B740 80 08 A8 40      DEFB $80, 8, 168, 64, 240         ; Enemy 3 (Ball), vertical, Starts X=60, Y=40, Limit Y=130
+ 100++B740 80 08 A8 40      DEFB $80, ROBOT, 168, 64, 240
  100++B744 F0
  101++B745              UnderTheDriveEnemy4:
- 102++B745 00 00 00 00      DEFB 0, 0, 0, 0, 0               ; Empty slot
+ 102++B745 00 00 00 00      DEFB 0, 0, 0, 0, 0
  102++B749 00
  103++B74A              UnderTheDriveEnemy5:
  104++B74A 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -16895,29 +16935,29 @@
   97++B84F
   98++B84F              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++B84F              TreeRootDirection:
- 100++B84F              	ROOM RoomsListTable.UnderTheDriveLayout				;Room to the left (Under the Drive)
+ 100++B84F              	ROOM RoomsListTable.UnderTheDriveLayout			;Room to the left (Under the Drive)
  100++B84F 2D          >        db (RoomsListTable.UnderTheDriveLayout - RoomsListTable) / 2
  101++B850              	ROOM RoomsListTable.NotUsedLayout				;Room to the right ([)
  101++B850 2F          >        db (RoomsListTable.NotUsedLayout - RoomsListTable) / 2
- 102++B851              	ROOM RoomsListTable.AtTheFootTheMegaTreeLayout				;Room above (At the Foot of the MegaTree)
+ 102++B851              	ROOM RoomsListTable.AtTheFootTheMegaTreeLayout	;Room above (At the Foot of the MegaTree)
  102++B851 03          >        db (RoomsListTable.AtTheFootTheMegaTreeLayout - RoomsListTable) / 2
- 103++B852 FF           	DEFB BLOCK			;Room below (The Off Licence)
+ 103++B852 FF           	DEFB BLOCK			                            ;Room below (The Off Licence)
  104++B853
  105++B853              TreeRootUnused:
  106++B853 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++B854
  108++B854              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++B854              TreeRootEnemy1:
- 110++B854 C0 00 20 00      DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++B854 C0 00 20 00      DEFB $C0, LAMETTA, 32, 0, 64
  110++B858 40
  111++B859              TreeRootEnemy2:
- 112++B859 C0 06 68 30      DEFB $C0, 6, 104, 48, 96
+ 112++B859 C0 06 68 30      DEFB $C0, FACCIA, 104, 48, 96
  112++B85D 60
  113++B85E              TreeRootEnemy3:
- 114++B85E 80 0D 78 48      DEFB $80, 13, 120, 72, 184
+ 114++B85E 80 0D 78 48      DEFB $80, CANGURO, 120, 72, 184
  114++B862 B8
  115++B863              TreeRootEnemy4:
- 116++B863 C0 29 C8 20      DEFB $C0, 41, 200, 32, 80
+ 116++B863 C0 29 C8 20      DEFB $C0, PALAZZO, 200, 32, 80
  116++B867 50
  117++B868              TreeRootEnemy5:
  118++B868 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -17088,13 +17128,13 @@
  107++B972
  108++B972              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++B972              NotUsedEnemy1:
- 110++B972 C0 00 20 00      DEFB $C0, 0, 32, 0, 64         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++B972 C0 00 20 00      DEFB $C0, LAMETTA, 32, 0, 64
  110++B976 40
  111++B977              NotUsedEnemy2:
- 112++B977 C0 06 68 30      DEFB $C0, 6, 104, 48, 96
+ 112++B977 C0 06 68 30      DEFB $C0, FACCIA, 104, 48, 96
  112++B97B 60
  113++B97C              NotUsedEnemy3:
- 114++B97C 80 0D 78 48      DEFB $80, 13, 120, 72, 184
+ 114++B97C 80 0D 78 48      DEFB $80, CANGURO, 120, 72, 184
  114++B980 B8
  115++B981              NotUsedEnemy4:
  116++B981 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -17267,16 +17307,16 @@
  107++BA90
  108++BA90              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++BA90              NomenLuniEnemy1:
- 110++BA90 80 02 00 10      DEFB $80, 2, 0, 16, 80
+ 110++BA90 80 02 00 10      DEFB $80, UCCELLO, 0, 16, 80
  110++BA94 50
  111++BA95              NomenLuniEnemy2:
- 112++BA95 80 03 90 18      DEFB $80, 3, 144, 24, 176
+ 112++BA95 80 03 90 18      DEFB $80, RADAR, 144, 24, 176
  112++BA99 B0
  113++BA9A              NomenLuniEnemy3:
- 114++BA9A C0 0F 80 00      DEFB $C0, 15, 128, 0, 64
+ 114++BA9A C0 0F 80 00      DEFB $C0, FACCIA_PALLA, 128, 0, 64
  114++BA9E 40
  115++BA9F              NomenLuniEnemy4:
- 116++BA9F C0 07 B0 38      DEFB $C0, 7, 176, 56, 96
+ 116++BA9F C0 07 B0 38      DEFB $C0, SCIMMIA, 176, 56, 96
  116++BAA3 60
  117++BAA4              NomenLuniEnemy5:
  118++BAA4 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -17434,29 +17474,29 @@
   97++BBA9
   98++BBA9              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++BBA9              TheWineCellarDirection:
- 100++BBA9              	ROOM RoomsListTable.ToolShedLayout		;Room to the left (Tool  Shed)
+ 100++BBA9              	ROOM RoomsListTable.ToolShedLayout		    ;Room to the left (Tool  Shed)
  100++BBA9 33          >        db (RoomsListTable.ToolShedLayout - RoomsListTable) / 2
- 101++BBAA              	ROOM RoomsListTable.TheForgottenAbbeyLayout		;Room to the right (The Forgotten Abbey)
+ 101++BBAA              	ROOM RoomsListTable.TheForgottenAbbeyLayout	;Room to the right (The Forgotten Abbey)
  101++BBAA 13          >        db (RoomsListTable.TheForgottenAbbeyLayout - RoomsListTable) / 2
  102++BBAB              	ROOM RoomsListTable.BackStairwayLayout		;Room above (Back Stairway)
  102++BBAB 34          >        db (RoomsListTable.BackStairwayLayout - RoomsListTable) / 2
- 103++BBAC FF           	DEFB BLOCK	;Room below (The Off Licence)
+ 103++BBAC FF           	DEFB BLOCK	                                ;Room below (The Off Licence)
  104++BBAD
  105++BBAD              TheWineCellarUnused:
  106++BBAD 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++BBAE
  108++BBAE              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++BBAE              TheWineCellarEnemy1:
- 110++BBAE 80 16 00 18      DEFB $80, 22, 0, 24, 216         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+ 110++BBAE 80 16 00 18      DEFB $80, FRATE, 0, 24, 216
  110++BBB2 D8
  111++BBB3              TheWineCellarEnemy2:
- 112++BBB3 80 16 20 30      DEFB $80, 22, 32, 48, 216
+ 112++BBB3 80 16 20 30      DEFB $80, FRATE, 32, 48, 216
  112++BBB7 D8
  113++BBB8              TheWineCellarEnemy3:
- 114++BBB8 80 16 10 48      DEFB $80, 22, 16, 72, 216
+ 114++BBB8 80 16 10 48      DEFB $80, FRATE, 16, 72, 216
  114++BBBC D8
  115++BBBD              TheWineCellarEnemy4:
- 116++BBBD 80 01 38 68      DEFB $80, 1, 56, 104, 176
+ 116++BBBD 80 01 38 68      DEFB $80, SEGA, 56, 104, 176
  116++BBC1 B0
  117++BBC2              TheWineCellarEnemy5:
  118++BBC2 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -17614,9 +17654,9 @@
   97++BCC7
   98++BCC7              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++BCC7              WatchTowerDirection:
- 100++BCC7 FF           	DEFB BLOCK	;Room to the left (The Off Licence)
- 101++BCC8 FF           	DEFB BLOCK	;Room to the right (The Off Licence)
- 102++BCC9 FF           	DEFB BLOCK	;Room above (The Off Licence)
+ 100++BCC7 FF           	DEFB BLOCK	                                            ;Room to the left (The Off Licence)
+ 101++BCC8 FF           	DEFB BLOCK	                                            ;Room to the right (The Off Licence)
+ 102++BCC9 FF           	DEFB BLOCK	                                            ;Room above (The Off Licence)
  103++BCCA              	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout		;Room below (We must perform a Quirkafleeg)
  103++BCCA 10          >        db (RoomsListTable.WeMustPerformQuirkafleegLayout - RoomsListTable) / 2
  104++BCCB
@@ -17625,10 +17665,10 @@
  107++BCCC
  108++BCCC              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++BCCC              WatchTowerEnemy1:
- 110++BCCC 80 0E 58 48      DEFB $80, 14, 88, 72, 144
+ 110++BCCC 80 0E 58 48      DEFB $80, FIORE, 88, 72, 144
  110++BCD0 90
  111++BCD1              WatchTowerEnemy2:
- 112++BCD1 80 02 48 38      DEFB $80, 2, 72, 56, 235
+ 112++BCD1 80 02 48 38      DEFB $80, UCCELLO, 72, 56, 235
  112++BCD5 EB
  113++BCD6              WatchTowerEnemy3:
  114++BCD6 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -17794,24 +17834,24 @@
   99++BDE5              ToolShedDirection:
  100++BDE5              	ROOM RoomsListTable.TheBeachLayout		;Room to the left (The Beach)
  100++BDE5 3A          >        db (RoomsListTable.TheBeachLayout - RoomsListTable) / 2
- 101++BDE6              	ROOM RoomsListTable.TheWineCellarLayout		;Room to the right (The Wine Cellar)
+ 101++BDE6              	ROOM RoomsListTable.TheWineCellarLayout	;Room to the right (The Wine Cellar)
  101++BDE6 31          >        db (RoomsListTable.TheWineCellarLayout - RoomsListTable) / 2
  102++BDE7              	ROOM RoomsListTable.BackDoorLayout		;Room above (Back Door)
  102++BDE7 35          >        db (RoomsListTable.BackDoorLayout - RoomsListTable) / 2
- 103++BDE8 FF           	DEFB BLOCK	;Room below (The Off Licence)
+ 103++BDE8 FF           	DEFB BLOCK	                            ;Room below (The Off Licence)
  104++BDE9
  105++BDE9              ToolShedUnused:
  106++BDE9 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++BDEA
  108++BDEA              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++BDEA              ToolShedEnemy1:
- 110++BDEA 80 12 38 30      DEFB $80, 18, 56, 48, 136
+ 110++BDEA 80 12 38 30      DEFB $80, TRONCHESE, 56, 48, 136
  110++BDEE 88
  111++BDEF              ToolShedEnemy2:
- 112++BDEF 80 26 38 48      DEFB $80, 38, 56, 72, 160
+ 112++BDEF 80 26 38 48      DEFB $80, SWISSARMKIFE, 56, 72, 160
  112++BDF3 A0
  113++BDF4              ToolShedEnemy3:
- 114++BDF4 80 01 38 68      DEFB $80, 1, 56, 104, 176
+ 114++BDF4 80 01 38 68      DEFB $80, SEGA, 56, 104, 176
  114++BDF8 B0
  115++BDF9              ToolShedEnemy4:
  116++BDF9 00 00 00 00      DEFB $0, 0, 0, 0, 0
@@ -17986,13 +18026,13 @@
  107++BF08
  108++BF08              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++BF08              BackStairwayEnemy1:
- 110++BF08 80 04 50 68      DEFB $80, 4, 80, 104, 235
+ 110++BF08 80 04 50 68      DEFB $80, UOVO, 80, 104, 235
  110++BF0C EB
  111++BF0D              BackStairwayEnemy2:
- 112++BF0D 80 1C 60 30      DEFB $80, 28, 96, 48, 192
+ 112++BF0D 80 1C 60 30      DEFB $80, RUOTA, 96, 48, 192
  112++BF11 C0
  113++BF12              BackStairwayEnemy3:
- 114++BF12 C0 0F 18 00      DEFB $C0, 15, 24, 0, 64
+ 114++BF12 C0 0F 18 00      DEFB $C0, FACCIA_PALLA, 24, 0, 64
  114++BF16 40
  115++BF17              BackStairwayEnemy4:
  116++BF17 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -18347,13 +18387,13 @@
  107++C144
  108++C144              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++C144              WestWingEnemy1:
- 110++C144 C0 20 70 00      DEFB $C0, 32, 112, 0, 96
+ 110++C144 C0 20 70 00      DEFB $C0, MURO, 112, 0, 96
  110++C148 60
  111++C149              WestWingEnemy2:
- 112++C149 D0 10 20 28      DEFB $D0, 16, 32, 40, 56
+ 112++C149 D0 10 20 28      DEFB $D0, CANDELABRO, 32, 40, 56
  112++C14D 38
  113++C14E              WestWingEnemy3:
- 114++C14E 80 02 00 50      DEFB $80, 2, 0, 80, 80
+ 114++C14E 80 02 00 50      DEFB $80, UCCELLO, 0, 80, 80
  114++C152 50
  115++C153              WestWingEnemy4:
  116++C153 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -18514,12 +18554,12 @@
   97++C25D
   98++C25D              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
   99++C25D              WestBedroomDirection:
- 100++C25D FF           	DEFB BLOCK	;Room to the left (The Off Licence)
- 101++C25E              	ROOM RoomsListTable.WestWingLayout		;Room to the right (West  Wing)
+ 100++C25D FF           	DEFB BLOCK	                                        ;Room to the left (The Off Licence)
+ 101++C25E              	ROOM RoomsListTable.WestWingLayout		            ;Room to the right (West  Wing)
  101++C25E 36          >        db (RoomsListTable.WestWingLayout - RoomsListTable) / 2
  102++C25F              	ROOM RoomsListTable.AbovetheWestBedroomLayout		;Room above (Above the West Bedroom)
  102++C25F 39          >        db (RoomsListTable.AbovetheWestBedroomLayout - RoomsListTable) / 2
- 103++C260              	ROOM RoomsListTable.BackDoorLayout		;Room below (Back Door)
+ 103++C260              	ROOM RoomsListTable.BackDoorLayout		            ;Room below (Back Door)
  103++C260 35          >        db (RoomsListTable.BackDoorLayout - RoomsListTable) / 2
  104++C261
  105++C261              WestBedroomUnused:
@@ -18527,10 +18567,10 @@
  107++C262
  108++C262              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++C262              WestBedroomEnemy1:
- 110++C262 C0 00 58 00      DEFB $C0, 0, 88, 0, 64
+ 110++C262 C0 00 58 00      DEFB $C0, LAMETTA, 88, 0, 64
  110++C266 40
  111++C267              WestBedroomEnemy2:
- 112++C267 D0 29 70 00      DEFB $D0, 41, 112, 0, 80
+ 112++C267 D0 29 70 00      DEFB $D0, PALAZZO, 112, 0, 80
  112++C26B 50
  113++C26C              WestBedroomEnemy3:
  114++C26C 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -18696,10 +18736,10 @@
   99++C37B              WestWingRoofDirection:
  100++C37B              	ROOM RoomsListTable.AbovetheWestBedroomLayout		;Room to the left (Above the West Bedroom)
  100++C37B 39          >        db (RoomsListTable.AbovetheWestBedroomLayout - RoomsListTable) / 2
- 101++C37C              	ROOM RoomsListTable.OrangeryLayout		;Room to the right (Orangery)
+ 101++C37C              	ROOM RoomsListTable.OrangeryLayout		            ;Room to the right (Orangery)
  101++C37C 25          >        db (RoomsListTable.OrangeryLayout - RoomsListTable) / 2
- 102++C37D FF           	DEFB BLOCK	;Room above (The Off Licence)
- 103++C37E              	ROOM RoomsListTable.WestWingLayout		;Room below (West  Wing)
+ 102++C37D FF           	DEFB BLOCK	                                        ;Room above (The Off Licence)
+ 103++C37E              	ROOM RoomsListTable.WestWingLayout		            ;Room below (West  Wing)
  103++C37E 36          >        db (RoomsListTable.WestWingLayout - RoomsListTable) / 2
  104++C37F
  105++C37F              WestWingRoofUnused:
@@ -18707,10 +18747,10 @@
  107++C380
  108++C380              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++C380              WestWingRoofEnemy1:
- 110++C380 80 01 38 68      DEFB $80, 1, 56, 104, 176
+ 110++C380 80 01 38 68      DEFB $80, SEGA, 56, 104, 176
  110++C384 B0
  111++C385              WestWingRoofEnemy2:
- 112++C385 80 02 68 60      DEFB $80, 2, 104, 96, 232
+ 112++C385 80 02 68 60      DEFB $80, UCCELLO, 104, 96, 232
  112++C389 E8
  113++C38A              WestWingRoofEnemy3:
  114++C38A 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -18886,10 +18926,10 @@
  107++C49E
  108++C49E              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++C49E              AbovetheWestBedroomEnemy1:
- 110++C49E C0 22 58 10      DEFB $C0, 34, 88, 16, 80
+ 110++C49E C0 22 58 10      DEFB $C0, VECCHIA, 88, 16, 80
  110++C4A2 50
  111++C4A3              AbovetheWestBedroomEnemy2:
- 112++C4A3 D0 29 70 00      DEFB $D0, 41, 112, 0, 80
+ 112++C4A3 D0 29 70 00      DEFB $D0, PALAZZO, 112, 0, 80
  112++C4A7 50
  113++C4A8              AbovetheWestBedroomEnemy3:
  114++C4A8 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -19237,18 +19277,18 @@
  100++C6D5 3C          >        db (RoomsListTable.TheBowLayout - RoomsListTable) / 2
  101++C6D6              	ROOM RoomsListTable.TheBeachLayout		;Room to the right (The Beach)
  101++C6D6 3A          >        db (RoomsListTable.TheBeachLayout - RoomsListTable) / 2
- 102++C6D7 FF           	DEFB BLOCK	;Room above (The Off Licence)
- 103++C6D8 FF           	DEFB BLOCK	;Room below (The Off Licence)
+ 102++C6D7 FF           	DEFB BLOCK	                            ;Room above (The Off Licence)
+ 103++C6D8 FF           	DEFB BLOCK	                            ;Room below (The Off Licence)
  104++C6D9
  105++C6D9              TheYachtUnused:
  106++C6D9 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
  107++C6DA
  108++C6DA              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++C6DA              TheYachtEnemy1:
- 110++C6DA 80 01 20 68      DEFB $80, 1, 32, 104, 112
+ 110++C6DA 80 01 20 68      DEFB $80, SEGA, 32, 104, 112
  110++C6DE 70
  111++C6DF              TheYachtEnemy2:
- 112++C6DF C0 28 A8 40      DEFB $C0, 40, 168, 64, 104
+ 112++C6DF C0 28 A8 40      DEFB $C0, ONDA, 168, 64, 104
  112++C6E3 68
  113++C6E4              TheYachtEnemy3:
  114++C6E4 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -19423,10 +19463,10 @@
  107++C7F8
  108++C7F8              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++C7F8              TheBowEnemy1:
- 110++C7F8 80 03 B0 18      DEFB $80, 3, 176, 24, 235
+ 110++C7F8 80 03 B0 18      DEFB $80, RADAR, 176, 24, 235
  110++C7FC EB
  111++C7FD              TheBowEnemy2:
- 112++C7FD 80 1B 88 68      DEFB $80, 27, 136, 104, 235
+ 112++C7FD 80 1B 88 68      DEFB $80, PINZA_GHIACCIO, 136, 104, 235
  112++C801 EB
  113++C802              TheBowEnemy3:
  114++C802 00 00 00 00      DEFB 0, 0, 0, 0, 0

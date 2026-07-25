@@ -107,9 +107,9 @@ ConservatoryRoofUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 ConservatoryRoofEnemy1:
-    DEFB $80, 27, 136, 88, 235         ; [Frate (41496) - horizontal], Guardian = 67, Starts X=16, Y=32, Limit X=88
+    DEFB $80, PINZA_GHIACCIO, 136, 88, 235  
 ConservatoryRoofEnemy2:
-    DEFB $80, 18, 128, 40, 235
+    DEFB $80, TRONCHESE, 128, 40, 235
 ConservatoryRoofEnemy3:
     DEFB 0, 0, 0, 0, 0
 ConservatoryRoofEnemy4:

@@ -107,9 +107,9 @@ TheYachtUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheYachtEnemy1:
-    DEFB $80, 1, 32, 104, 112         
+    DEFB $80, SEGA, 32, 104, 112         
 TheYachtEnemy2:
-    DEFB $C0, 40, 168, 64, 104 
+    DEFB $C0, ONDA, 168, 64, 104 
 TheYachtEnemy3:
     DEFB 0, 0, 0, 0, 0
 TheYachtEnemy4:

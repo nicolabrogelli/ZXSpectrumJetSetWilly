@@ -98,13 +98,13 @@ OutALimbUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 OutALimbEnemy1:
-    DEFB $80, 2, 112, 56, 184        ; [Uccello (41160) - Horizzontal], Guardian = 45, Starts X=112, Y=56, Limit X=84
+    DEFB $80, UCCELLO, 112, 56, 184  
 OutALimbEnemy2:
-    DEFB $C0, 6, 96, 0, 104          ; [Faccia (41320) - vertical], Guardian = 25, Starts X=96, Y=0, Limit X=104
+    DEFB $C0, FACCIA, 96, 0, 104   
 OutALimbEnemy3:
-    DEFB $80, 1, 152, 80, 240         ; [Sega (41664) - vertical], Guardian = 88, Starts X=152, Y=80, Limit X=240
+    DEFB $80, SEGA, 152, 80, 240    
 OutALimbEnemy4:
-    DEFB 0, 0, 0, 0, 0               ; Empty slot
+    DEFB 0, 0, 0, 0, 0              
 OutALimbEnemy5:
     DEFB 0, 0, 0, 0, 0
 OutALimbEnemy6:

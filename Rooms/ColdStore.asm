@@ -107,13 +107,13 @@ ColdStoreUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 ColdStoreEnemy1:
-    DEFB $80, 31, 0, 104, 192
+    DEFB $80, PINGUINO, 0, 104, 192
 ColdStoreEnemy2:
-    DEFB $80, 30, 0, 72, 40         
+    DEFB $80, GELATO, 0, 72, 40         
 ColdStoreEnemy3:
-    DEFB $80, 31, 0, 48, 48         
+    DEFB $80, PINGUINO, 0, 48, 48         
 ColdStoreEnemy4:
-    DEFB $80, 30, 0, 24, 72         
+    DEFB $80, GELATO, 0, 24, 72         
 ColdStoreEnemy5:
     DEFB 0, 0, 0, 0, 0 
 ColdStoreEnemy6:

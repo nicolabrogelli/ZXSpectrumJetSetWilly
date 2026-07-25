@@ -107,11 +107,11 @@ WestWingUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 WestWingEnemy1:
-    DEFB $C0, 32, 112, 0, 96       
+    DEFB $C0, MURO, 112, 0, 96       
 WestWingEnemy2:
-    DEFB $D0, 16, 32, 40, 56 
+    DEFB $D0, CANDELABRO, 32, 40, 56 
 WestWingEnemy3:
-    DEFB $80, 2, 0, 80, 80 
+    DEFB $80, UCCELLO, 0, 80, 80 
 WestWingEnemy4:
     DEFB 0, 0, 0, 0, 0
 WestWingEnemy5:

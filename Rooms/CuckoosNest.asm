@@ -107,11 +107,11 @@ CuckoosNestUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 CuckoosNestEnemy1:
-    DEFB $80, 4, 96, 64, 144         ; [Uovo (41272) - horizontal], Guardian = 39, Starts X=96, Y=64, Limit X=144
+    DEFB $80, UOVO, 96, 64, 144    
 CuckoosNestEnemy2:
-    DEFB $80, 1, 0, 88, 88           ; [Sega (41384) - vertical], Guardian = 53, Starts X=0, Y=88, Limit X=88
+    DEFB $80, SEGA, 0, 88, 88   
 CuckoosNestEnemy3:
-    DEFB 0, 0, 0, 0, 0 ; DEFB $80, 17, 0, 82, 240         ; Enemy 3 (Freccia), horizontal, Starts X=0, Y=82, Limit X=240
+    DEFB 0, 0, 0, 0, 0  
 CuckoosNestEnemy4:
     DEFB 0, 0, 0, 0, 0               ; Empty slot
 CuckoosNestEnemy5:

@@ -107,11 +107,11 @@ BackStairwayUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 BackStairwayEnemy1:
-    DEFB $80, 4, 80, 104, 235         
+    DEFB $80, UOVO, 80, 104, 235         
 BackStairwayEnemy2:
-    DEFB $80, 28, 96, 48, 192 
+    DEFB $80, RUOTA, 96, 48, 192 
 BackStairwayEnemy3:
-    DEFB $C0, 15, 24, 0, 64 
+    DEFB $C0, FACCIA_PALLA, 24, 0, 64 
 BackStairwayEnemy4:
     DEFB 0, 0, 0, 0, 0
 BackStairwayEnemy5:
