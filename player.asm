@@ -85,7 +85,14 @@ MovePlayer:
 movePlayer_left:
 
     ; Calcola nuova posizione: X - speed
+    ld   a, (on_ground)
+    or   a
+    jr   z, .air_left
     ld   a, (player_speed)
+    jr   .speed_left_ok
+.air_left:
+    ld   a, (player_air_speed)
+.speed_left_ok:
     ld   e, a
 
     ld   a, c
@@ -107,9 +114,6 @@ movePlayer_left:
     jr   c, save_x
 
     ; Applica movimento
-    ld   a, (player_speed)
-    ld   e, a
-
     ld   a, c
     sub  e
     ld   c, a
@@ -155,7 +159,14 @@ movePlayer_right:
 
 .continue_right:
     ; Prova movimento X + speed
+    ld   a, (on_ground)
+    or   a
+    jr   z, .air_right
     ld   a, (player_speed)
+    jr   .speed_right_ok
+.air_right:
+    ld   a, (player_air_speed)
+.speed_right_ok:
     ld   e, a
 
     ld   a, c
@@ -181,9 +192,6 @@ movePlayer_right:
     jr   c, save_x
 
     ; Applica movimento
-    ld   a, (player_speed)
-    ld   e, a
-
     ld   a, c
     add  a, e
     ld   c, a

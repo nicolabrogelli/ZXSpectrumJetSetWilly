@@ -54,6 +54,7 @@ room_ptr:           dw TheOffLicenceLayout;
 enemy_update_rate:  db 1
 enemy_update_timer: db 0
 player_speed:       db 3
+player_air_speed:   db 2
 transition_active:  db 0
 Audio_jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
 Audio_jump_sound_timer:   db 0
