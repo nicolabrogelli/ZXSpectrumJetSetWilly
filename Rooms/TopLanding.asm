@@ -31,22 +31,22 @@
 
 ; Room layout for Room  (Top Landing)
 TopLandingLayout:           
-	DEFB 170,170,170,170,170,170,170,170	;Room layout
-	DEFB 170,170,170,170,170,170,170,170
-	DEFB 160,0,0,0,0,0,0,10
-	DEFB 160,0,0,0,0,0,0,0
-	DEFB 165,80,85,5,85,85,0,0
-	DEFB 160,0,0,0,0,0,170,170
-	DEFB 160,0,0,0,0,0,0,10
-	DEFB 160,0,0,0,0,0,0,10
-	DEFB 165,80,85,5,85,0,0,10
-	DEFB 160,0,0,0,0,0,0,10
-	DEFB 160,0,0,0,0,0,0,10
-	DEFB 160,0,0,0,0,0,0,10
-	DEFB 165,80,85,5,64,0,0,10
-	DEFB 0,0,0,0,0,0,0,0
-	DEFB 0,0,0,0,0,0,0,0
-	DEFB 85,85,85,85,85,5,85,85
+    DEFB 170,170,170,170,170,170,170,170	;Room layout
+    DEFB 170,170,170,170,170,170,170,170
+    DEFB 160,0,0,0,0,0,0,10
+    DEFB 160,0,0,0,0,0,0,0
+    DEFB 165,80,85,5,85,85,0,0
+    DEFB 160,0,0,0,0,0,170,170
+    DEFB 160,0,0,0,0,0,0,10
+    DEFB 160,0,0,0,0,0,0,10
+    DEFB 165,80,85,5,85,0,0,10
+    DEFB 160,0,0,0,0,0,0,10
+    DEFB 160,0,0,0,0,0,0,10
+    DEFB 160,0,0,0,0,0,0,10
+    DEFB 165,80,85,5,64,0,0,10
+    DEFB 0,0,0,0,0,0,0,0
+    DEFB 0,0,0,0,0,0,0,0
+    DEFB 85,85,85,85,85,5,85,85
 	
 TopLandingTile:
 ;The next 32 bytes are copied to 32896 and specify the room name.
@@ -69,7 +69,7 @@ TopLandingRamp:
     DEFB 7,7,2,60,8,112,32,192,128           ; Ramp Solid
 
 TopLandingConveyor:
-    DEFB 7,0,0,0,0,0,0,0,0                      ; Conveyor Solid
+    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TopLandingConveyorData:
@@ -109,7 +109,7 @@ TopLandingUnused:
 TopLandingEnemy1:
     DEFB $C0, LAMETTA, 48, 16, 104        
 TopLandingEnemy2:
-    DEFB $80, SWISSARMKIFE, 80, 104, 240
+    DEFB $80, SWISSARMKIFE, 80, 104, 235
 TopLandingEnemy3:
     DEFB $C0, BOTTE, 96, 16, 48
 TopLandingEnemy4:

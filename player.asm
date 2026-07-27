@@ -91,7 +91,11 @@ movePlayer_left:
     ld   a, (player_speed)
     jr   .speed_left_ok
 .air_left:
-    ld   a, (player_air_speed)
+    ld   a, 2
+    ld   hl, jump_frame
+    bit  0, (hl)
+    jr   z, .speed_left_ok
+    inc  a                      ; Alterna 2 e 3 px per frame (Media = 2.5 px/frame)
 .speed_left_ok:
     ld   e, a
 
@@ -165,7 +169,11 @@ movePlayer_right:
     ld   a, (player_speed)
     jr   .speed_right_ok
 .air_right:
-    ld   a, (player_air_speed)
+    ld   a, 2
+    ld   hl, jump_frame
+    bit  0, (hl)
+    jr   z, .speed_right_ok
+    inc  a                      ; Alterna 2 e 3 px per frame (Media = 2.5 px/frame)
 .speed_right_ok:
     ld   e, a
 
