@@ -35,10 +35,8 @@ IM2_TABLE   = $FE00
 IM2_VECTOR  = $FDFD
 SCREEN_LINE = $4860
 
-; Fisica (Derivata dai parametri geometrici)
-MAX_FALL_SPEED: EQU 12
-JUMP_STRENGTH:  EQU 6
-GRAVITY:        EQU 1
+; Note: La fisica (MAX_FALL_SPEED, JUMP_STRENGTH, GRAVITY, DEFAULT_GRAVITY_PRESET)
+; è ora configurata in physics_config.asm
 
 ; Limiti schermo del Player
 PLAYER_MIN_X:    EQU 5

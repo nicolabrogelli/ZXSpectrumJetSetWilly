@@ -47,7 +47,8 @@ TopLandingLayout:
     DEFB 0,0,0,0,0,0,0,0
     DEFB 0,0,0,0,0,0,0,0
     DEFB 85,85,85,85,85,5,85,85
-	
+	;DEFB 85,85,5,85,85,85,85,85
+
 TopLandingTile:
 ;The next 32 bytes are copied to 32896 and specify the room name.
     DEFM "          Top Landing           "   ;Room name

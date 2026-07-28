@@ -72,3 +72,4 @@ RoomsStart:
     include "data/datasprite.asm"
 
 items_grid:
+    .512 db 0

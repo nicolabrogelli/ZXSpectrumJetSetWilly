@@ -28,8 +28,14 @@ jump_frame:     db $00
 current_input_dir: db $00
 q_prev:         db $01
 a_prev:         db $01
-room_jump_strength:  db 6
-room_gravity_preset: db 1
+w_warp_state:   db $00
+w_warp_d1:      db $00
+w_warp_d2:      db $00
+w_key_prev:     db $00
+enter_key_prev: db $00
+digit_key_prev: db $ff
+room_jump_strength:  db DEFAULT_JUMP_STRENGTH
+room_gravity_preset: db DEFAULT_GRAVITY_PRESET
 
 ; Buffer e contatori
 counter:        dw 0

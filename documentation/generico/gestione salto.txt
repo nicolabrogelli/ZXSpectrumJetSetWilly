@@ -22,11 +22,8 @@
     ──────
   ### Opzione 2: Modifica globale per tutte le stanze (Default)
 
-  Se vuoi ridurre la lunghezza del salto in tutto il gioco per tutte le stanze che non hanno un valore personalizzato:
+  Tutti i parametri di fisica globale del salto sono centralizzati in physics_config.asm:
 
-  1. In constants.asm alla linea 39:
-    JUMP_STRENGTH:  EQU 5              ; Modifica da 6 a 5 (o 4)
-
-  2. In physics.asm alla linea 1365 ( Phys_LoadRoomSettings ):
-    ld   a, 5                          ; Modifica da 6 a 5 per il default di stanza
-    ld   (room_jump_strength), a
+  1. In physics_config.asm:
+    DEFAULT_JUMP_STRENGTH EQU 5          ; Modifica da 6 a 5 (o 4) per ridurre l'altezza globale
+    DEFAULT_GRAVITY_PRESET EQU 1         ; Preset gravità globale (0=0.5, 1=0.75, 2=1.0)

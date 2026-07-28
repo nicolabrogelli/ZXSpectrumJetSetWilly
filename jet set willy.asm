@@ -9,6 +9,7 @@
 
     ; Include files
     include "settings.asm"
+    include "physics_config.asm"
     include "constants.asm"
     include "interrupts.asm"
     include "graphics.asm"
@@ -18,7 +19,6 @@
     include "enemy.asm"
     include "items.asm"
     include "audio.asm"
-    include "data/datavariable.asm"
     
 start:
     ld   sp, $fdf0
@@ -30,6 +30,11 @@ Main:
     xor  a
     ld  (body_state), a
     ld  (items_collected), a
+    ld  (w_warp_state), a
+    ld  (w_key_prev), a
+    ld  (enter_key_prev), a
+    ld  a, $ff
+    ld  (digit_key_prev), a
     ld  a, 1
     ld  (q_prev), a
     ld  (a_prev), a
@@ -205,5 +210,6 @@ Main_loop:
   
 
     include "resources.asm"
+    include "data/datavariable.asm"
     
     SAVESNA "jet set willy.sna", start

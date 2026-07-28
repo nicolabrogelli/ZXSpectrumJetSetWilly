@@ -87,6 +87,7 @@ Input_CheckCtrl:
     ld   (a_prev), a            ; A rilasciato → azzera debounce
 
 .a_handled:
+    call Input_CheckWarpKeys
     ENDIF
 
     ; ── Sezione 2: movimento (sinistra / destra) ────────────────────
@@ -302,6 +303,214 @@ PerformRoomChangeCommon:
     call CLS
     
     jp   LoadRoomAndRestart
+
+; -------------------------------------------------------------------
+; Sezione 1c: Selezione diretta della stanza via W + numero stanza + Enter
+; -------------------------------------------------------------------
+Input_CheckWarpKeys:
+    ; 1. Controlla pressione tasto W (Porta $FBFE, Bit 1)
+    ld   bc, $fbfe
+    in   a, (c)
+    bit  1, a
+    jr   nz, .w_not_pressed
+
+    ; Tasto W è premuto
+    ld   a, (w_key_prev)
+    or   a
+    jr   nz, .w_handled          ; Era già premuto nel frame precedente
+
+    ; Primo frame di pressione di W!
+    ld   a, 1
+    ld   (w_key_prev), a
+    ld   (w_warp_state), a       ; Imposta stato = 1 (in attesa del 1° digit)
+    jr   .w_handled
+
+.w_not_pressed:
+    xor  a
+    ld   (w_key_prev), a
+
+.w_handled:
+    ; 2. Se non siamo in modalità warp (w_warp_state == 0), esci
+    ld   a, (w_warp_state)
+    or   a
+    ret  z
+
+    ; 3. Controlla tasti numerici (0..9)
+    call ScanDigitKeys          ; Ritorna A = 0..9 se un tasto numerico è giù, o 0xFF
+    cp   $ff
+    jr   z, .no_digit_pressed
+
+    ; Un tasto numerico è giù
+    ld   b, a                   ; B = cifra (0..9)
+    ld   a, (digit_key_prev)
+    cp   b
+    jr   z, .digit_handled      ; Era già giù nel frame precedente
+
+    ; Primo frame di pressione del tasto numerico B!
+    ld   a, b
+    ld   (digit_key_prev), a    ; Salva per debounce
+
+    ld   a, (w_warp_state)
+    cp   1
+    jr   nz, .check_state_2
+    ; Stato 1 -> Salva 1° digit, imposta stato = 2
+    ld   a, b
+    ld   (w_warp_d1), a
+    ld   a, 2
+    ld   (w_warp_state), a
+    jr   .digit_handled
+
+.check_state_2:
+    ; Stato 2 o 3 -> Salva 2° digit, imposta stato = 3
+    ld   a, b
+    ld   (w_warp_d2), a
+    ld   a, 3
+    ld   (w_warp_state), a
+    jr   .digit_handled
+
+.no_digit_pressed:
+    ld   a, $ff
+    ld   (digit_key_prev), a
+
+.digit_handled:
+    ; 4. Controlla tasto ENTER (Porta $BFFE, Bit 0)
+    ld   bc, $bffe
+    in   a, (c)
+    bit  0, a
+    jr   nz, .enter_not_pressed
+
+    ; Tasto Enter è premuto
+    ld   a, (enter_key_prev)
+    or   a
+    jr   nz, .enter_handled
+
+    ; Primo frame di pressione del tasto Enter!
+    ld   a, 1
+    ld   (enter_key_prev), a
+
+    ld   a, (w_warp_state)
+    cp   2
+    jr   z, .enter_state_2      ; 1 digit inserito (es. W5 + Enter)
+    cp   3
+    jr   z, .enter_state_3      ; 2 digit inseriti (es. W28 + Enter)
+
+    ; Enter premuto in stato 1 (nessun digit) -> resetta stato warp
+    xor  a
+    ld   (w_warp_state), a
+    jr   .enter_handled
+
+.enter_state_2:
+    ; 1 digit: room_id = w_warp_d1
+    ld   a, (w_warp_d1)
+    jp   PerformDirectRoomJump
+
+.enter_state_3:
+    ; 2 digit: room_id = (w_warp_d1 * 10) + w_warp_d2
+    ld   a, (w_warp_d1)
+    ld   b, a
+    add  a, a                    ; * 2
+    add  a, a                    ; * 4
+    add  a, b                    ; * 5
+    add  a, a                    ; * 10
+    ld   b, a
+    ld   a, (w_warp_d2)
+    add  a, b                    ; A = (d1 * 10) + d2
+    jp   PerformDirectRoomJump
+
+.enter_not_pressed:
+    xor  a
+    ld   (enter_key_prev), a
+
+.enter_handled:
+    ret
+
+; -------------------------------------------------------------------
+; Esegue il salto diretto alla stanza specificata nel registro A (0..60)
+; -------------------------------------------------------------------
+PerformDirectRoomJump:
+    cp   61                        ; Max 61 stanze in RoomsListTable (0..60)
+    jr   nc, .invalid_room
+
+    ld   c, a
+    ld   b, 0
+    ld   hl, RoomsListTable
+    add  hl, bc
+    add  hl, bc                    ; HL = RoomsListTable + A * 2
+
+    ld   e, (hl)
+    inc  hl
+    ld   d, (hl)                   ; DE = RoomsListTable[A]
+
+    ld   a, d
+    or   e                         ; DE == 0? (Layout nullo)
+    jr   z, .invalid_room
+
+    ; Stanza valida trovata!
+    ld   (room_ptr), de
+    xor  a
+    ld   (w_warp_state), a
+    ld   (transition_active), a
+    ld   (velocity_y), a
+
+    ld   hl, ATTR_P
+    ld   (hl), $07
+    call CLS
+
+    ld   sp, $fdf0
+    jp   LoadRoomAndRestart
+
+.invalid_room:
+    xor  a
+    ld   (w_warp_state), a
+    ret
+
+; -------------------------------------------------------------------
+; Legge i tasti numerici 0..9.
+; Output: A = 0..9 se un tasto numerico è premuto, oppure A = $FF.
+; -------------------------------------------------------------------
+ScanDigitKeys:
+    ; Porta $F7FE -> Tasti 1, 2, 3, 4, 5 (bit 0..4)
+    ld   bc, $f7fe
+    in   a, (c)
+    bit  0, a
+    jr   z, .d1
+    bit  1, a
+    jr   z, .d2
+    bit  2, a
+    jr   z, .d3
+    bit  3, a
+    jr   z, .d4
+    bit  4, a
+    jr   z, .d5
+
+    ; Porta $EFFE -> Tasti 0, 9, 8, 7, 6 (bit 0..4)
+    ld   bc, $effe
+    in   a, (c)
+    bit  0, a
+    jr   z, .d0
+    bit  1, a
+    jr   z, .d9
+    bit  2, a
+    jr   z, .d8
+    bit  3, a
+    jr   z, .d7
+    bit  4, a
+    jr   z, .d6
+
+    ld   a, $ff
+    ret
+
+.d0: ld   a, 0 : ret
+.d1: ld   a, 1 : ret
+.d2: ld   a, 2 : ret
+.d3: ld   a, 3 : ret
+.d4: ld   a, 4 : ret
+.d5: ld   a, 5 : ret
+.d6: ld   a, 6 : ret
+.d7: ld   a, 7 : ret
+.d8: ld   a, 8 : ret
+.d9: ld   a, 9 : ret
+
     ENDIF
 
 TriggerRoomChange:

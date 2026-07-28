@@ -494,28 +494,28 @@ Phys_ApplyGravity:
     jr   .no_collision_checks
 
 .check_landing:
-    ; Abbiamo toccato una cella solida!
+    ; Abbiamo toccato una cella solida durante la caduta!
     ld   a, b
     srl  a
     srl  a
-    srl  a                 ; A = r (0..15)
+    srl  a                 ; A = r (0..15), riga di layout della tile
     
     ld   e, a              ; E = r
-    inc  a                 ; A = r + 1 (permetti tolleranza fino al fondo della cella per entrate orizzontali)
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    ld   d, a              ; D = (r + 1) * 8 = limite superiore + 8
+    add  a, 3              ; Tolleranza di 3 pixel sulla superficie superiore della tile
+    ld   d, a              ; D = r * 8 + 3 (limite per l'aggancio della superficie)
     
-    ; Vecchio Y + 16
+    ; Posizione precedente dei piedi: Vecchio Y + 16
     ld   a, (PlayerPos+1)  ; A = Vecchio Y
     add  a, 16             ; A = Vecchio Y + 16
     
-    cp   d                 ; Confronta Vecchio Y + 16 con (r + 1) * 8
-    jr   z, .do_landing    ; Se ==, atterra
-    jr   c, .do_landing    ; Se <, atterra (eravamo sopra o dentro la cella)
+    cp   d                 ; Confronta Vecchio Y + 16 con (r * 8 + 3)
+    jr   z, .do_landing    ; Se == (entro i primi 3px dalla superficie), atterra
+    jr   c, .do_landing    ; Se < (era sopra la superficie prima di cadere), atterra
     
-    jr   .no_collision_checks
+    jr   .no_collision_checks ; Se era nella metà inferiore della tile (proveniva da sotto), NON atterrare! ; Se era sotto la superficie (proveniva da sotto), NON atterrare!
 
 .do_landing:
     ; Atterra sulla riga di layout E!
@@ -1383,9 +1383,9 @@ Phys_LoadRoomSettings:
     or   a
     jr   nz, .custom_settings
     
-    ld   a, 6
+    ld   a, DEFAULT_JUMP_STRENGTH
     ld   (room_jump_strength), a
-    ld   a, 1
+    ld   a, DEFAULT_GRAVITY_PRESET
     ld   (room_gravity_preset), a
     jr   .done
     
