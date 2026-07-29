@@ -115,7 +115,7 @@ TotheKitchensMainStairwayEnemy3:
 TotheKitchensMainStairwayEnemy4:
     DEFB $80, DOUBLE_BALL, 16, 72, 48          
 TotheKitchensMainStairwayEnemy5:
-    DEFB $80, UOVO, 0, 96, 240            
+    DEFB $80, UOVO, 0, 96, 235            
 TotheKitchensMainStairwayEnemy6:
     DEFB $80, UCCELLO, 72, 80, 136         
 TotheKitchensMainStairwayEnemy7:

@@ -107,11 +107,11 @@ InsideTheMegaTrunkUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 InsideTheMegaTrunkEnemy1:
-    DEFB $C0, SCIMMIA, 16, 64, 112         
+    DEFB 0, 0, 0, 0, 0 ; $C0, SCIMMIA, 16, 64, 112         
 InsideTheMegaTrunkEnemy2:
-    DEFB $D0, SCIMMIA, 40, 64, 112        
+    DEFB 0, 0, 0, 0, 0 ; $D0, SCIMMIA, 40, 64, 112        
 InsideTheMegaTrunkEnemy3:
-    DEFB $C0, SCIMMIA, 64, 64, 112   
+    DEFB 0, 0, 0, 0, 0 ; $C0, SCIMMIA, 64, 64, 112   
 InsideTheMegaTrunkEnemy4:
     DEFB $C0, FACCIA, 96, 0, 104   
 InsideTheMegaTrunkEnemy5:
