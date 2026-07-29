@@ -16953,7 +16953,7 @@
  124++BBD5 00
  125++BBD6
  126++BBD6              TheWineCellarPosWilly:
- 127++BBD6 B4 65            db 180, 101                     ; Posizione di Willy
+ 127++BBD6 14 14            db 20, 20                     ; Posizione di Willy
  128++BBD8
  129++BBD8              TheWineCellarEnemyColors5_8:
  130++BBD8 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
