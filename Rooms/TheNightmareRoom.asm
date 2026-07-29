@@ -103,21 +103,21 @@ TheNightmareRoomDirection:
 	DEFB BLOCK			                                ;Room below (The Off Licence)
 
 TheNightmareRoomUnused:
-    DEFB $15                          ; Padding byte to keep Enemy1 offset at 240
+    DEFB $00                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheNightmareRoomEnemy1:
     DEFB $C0, VECCHIA, 64, 0, 80         
 TheNightmareRoomEnemy2:
-    DEFB $D0, VECCHIA, 88, 0, 104         
+    DEFB 0, 0, 0, 0, 0; $D0, VECCHIA, 88, 0, 104         
 TheNightmareRoomEnemy3:
     DEFB $E0, PIEDE, 112, 0, 96         
 TheNightmareRoomEnemy4:
-    DEFB $F0, VECCHIA, 136, 8, 104         
+    DEFB 0, 0, 0, 0, 0; $F0, VECCHIA, 136, 8, 104         
 TheNightmareRoomEnemy5:
     DEFB $C0, VECCHIA, 160, 0, 80         
 TheNightmareRoomEnemy6:
-    DEFB $D0, VECCHIA, 184, 0, 104         
+    DEFB 0, 0, 0, 0, 0; $D0, VECCHIA, 184, 0, 104         
 TheNightmareRoomEnemy7:
     DEFB $E0, VECCHIA, 224, 0, 104       
 TheNightmareRoomEnemy8:
@@ -127,4 +127,4 @@ TheNightmareRoomPosWilly:
     db 200, 104                     ; Posizione di Willy
     
 TheNightmareRoomEnemyColors5_8:
-    DEFB CYAN, MAGENTA, NONE, NONE     ; Colori per nemici 5-8
+    DEFB CYAN, MAGENTA, WHITE, NONE     ; Colori per nemici 5-8

@@ -101,6 +101,9 @@ ItemsTable:
     ; Stanza 28 (First Landing)
     ;ITEM RoomsListTable.FirstLandingLayout, 20, 13, YELLOW, 0           ; Oggetto 1 alla colonna X=20, riga Y=13, YELLOW, (Stato: 0=attivo)
 
+    ; Stanza 29 (The Nightmare Room)
+    ITEM RoomsListTable.TheNightmareRoomLayout, 26, 9, MAGENTA, 0           ; Oggetto 1 alla colonna X=20, riga Y=13, YELLOW, (Stato: 0=attivo)
+
     ; Stanza 30 (The Bany Tree)
     ITEM RoomsListTable.TheBanyanTreeLayout, 8, 14, MAGENTA, 0
 
