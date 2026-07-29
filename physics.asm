@@ -308,6 +308,10 @@ Phys_ApplyGravity:
     jr   z, .grav_0_25
     dec  a                     ; cp 4 (Gravità 0.0)
     jr   z, .skip_gravity
+    dec  a                     ; cp 5 (Gravità 0.875 - Intermedia tra 0.75 e 1.0)
+    jr   z, .grav_0_85
+    dec  a                     ; cp 6 (Gravità 0.625 - Intermedia tra 0.5 e 0.75)
+    jr   z, .grav_0_65
     
     ; Default a 0.75 se valore sconosciuto
     jr   .grav_0_75
@@ -323,6 +327,22 @@ Phys_ApplyGravity:
     and  3
     cp   3
     jr   z, .skip_gravity      ; Salta se frame è 3 (media 0.75)
+    jr   .apply_gravity
+
+.grav_0_85:
+    ld   a, b                  ; Ripristina jump_frame
+    and  7
+    cp   5
+    jr   z, .skip_gravity      ; Salta se frame % 8 è 5 (media 0.875 -> altezza ~23.5px con Salto 6)
+    jr   .apply_gravity
+
+.grav_0_65:
+    ld   a, b                  ; Ripristina jump_frame
+    and  7
+    cp   3
+    jr   z, .skip_gravity
+    cp   7
+    jr   z, .skip_gravity      ; Salta se frame % 8 è 3 o 7 (media 0.75 alternata)
     jr   .apply_gravity
 
 .grav_0_25:

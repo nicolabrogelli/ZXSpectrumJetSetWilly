@@ -103,7 +103,7 @@ TheBowDirection:
 	DEFB BLOCK	;Room below (The Off Licence)
 
 TheBowUnused:
-    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
+    DEFB $56                          ; Salto 6, Gravità Intermedia (0.875) -> Altezza ~23.5px
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBowEnemy1:

@@ -6,6 +6,8 @@
       •  0  = Gravità 0.5 (leggera)
       •  1  = Gravità 0.75 (standard JSW)
       •  2  = Gravità 1.0 (pesante)
+      •  5  = Gravità 0.875 (intermedia tra 0.75 e 1.0 - perfetta per bilanciare i salti)
+      •  6  = Gravità 0.625 (intermedia tra 0.5 e 0.75)
 
 
   Esempio di modifica nel file della stanza:

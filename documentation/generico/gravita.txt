@@ -33,3 +33,41 @@
   Phys_LoadRoomSettings .
   • jet set willy.asm - Integrato il caricamento dinamico della fisica della stanza all'avvio o
   transizione di livello.
+
+
+///
+
+
+Nel sistema di fisica di questo progetto, il byte alla posizione 239 del file della stanza (TheBowUnused) utilizza la struttura bit a bit %GGGGJJJJ (in esadecimale $GJ):
+  • JJJJ (i 4 bit inferiori) = Forza/Velocità iniziale del salto:
+      • 6 = Forza di default (troppo alto per la stanza)
+      • 5 = Forza corta (quella usata in $15, risultata di poco troppo bassa)
+  • GGGG (i 4 bit superiori) = Preset della Gravità:
+      • 0 = Gravità leggera (0.5 pixel/frame)
+      • 1 = Gravità standard (0.75 pixel/frame)
+      • 2 = Gravità pesante (1.0 pixel/frame)
+
+  ──────
+  ### Valori consigliati da provare in TheBow.asm
+
+  Poiché con la gravità standard (GGGG = 1) il valore 5 è leggermente corto (~18 pixel di picco) e il valore 6 è troppo alto (~27 pixel di picco), puoi combinare una diversa forza di salto con una diversa gravità per ottenere altezza
+  intermedia:
+
+  #### 1. $26 (Consigliato: Salto=6, Gravità=2 / Pesante)
+
+  • Formato: %00100110 → DEFB $26
+  • Comportamento: Mantiene la spinta iniziale di salto a 6, ma applica la gravità pesante 1.0 (spinta verso il basso ad ogni frame).
+  • Altezza raggiunta: circa 21 pixel (perfetta via di mezzo tra 18px e 27px).
+
+  #### 2. $05 (Alternativa: Salto=5, Gravità=0 / Leggera)
+
+  • Formato: %00000101 → DEFB $05
+  • Comportamento: Utilizza il salto 5 ma con gravità leggera 0.5 (frena la salita solo un frame ogni due).
+  • Altezza raggiunta: circa 24 pixel con una parabola più "morbida" a mezz'aria.
+  ──────
+  ### Come applicare la modifica in rooms/TheBow.asm
+
+  Apri TheBow.asm e modifica la riga:
+
+    TheBowUnused:
+        DEFB $26                          ; Salto 6 con gravità 1.0 (altezza media ~21px)
