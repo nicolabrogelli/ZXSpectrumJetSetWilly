@@ -100,19 +100,19 @@ TheForgottenAbbeyUnused:
 TheForgottenAbbeyEnemy1:
     DEFB $80, FRATE, 32, 40, 160      
 TheForgottenAbbeyEnemy2:
-    DEFB $80, FRATE, 96, 40, 224        
+    DEFB 0, 0, 0, 0, 0; $80, FRATE, 96, 40, 224        
 TheForgottenAbbeyEnemy3:
     DEFB $80, FRATE, 72, 72, 160       
 TheForgottenAbbeyEnemy4:
-    DEFB $80, FRATE, 154, 72, 189         
+    DEFB 0, 0, 0, 0, 0; $80, FRATE, 154, 72, 189         
 TheForgottenAbbeyEnemy5:
     DEFB $80, FRATE, 40, 104, 96         
 TheForgottenAbbeyEnemy6:
-    DEFB $80, FRATE, 88, 104, 144       
+    DEFB 0, 0, 0, 0, 0; $80, FRATE, 88, 104, 144       
 TheForgottenAbbeyEnemy7:
     DEFB $80, FRATE, 128, 104, 184         
 TheForgottenAbbeyEnemy8:
-    DEFB $80, FRATE, 184, 104, 240     
+    DEFB 0, 0, 0, 0, 0; $80, FRATE, 184, 104, 240     
 
 TheForgottenAbbeyPosWilly:
     db 200, 104                     ; Posizione di Willy

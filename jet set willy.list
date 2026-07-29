@@ -11551,26 +11551,26 @@
  101++9A2A 80 16 20 28      DEFB $80, FRATE, 32, 40, 160
  101++9A2E A0
  102++9A2F              TheForgottenAbbeyEnemy2:
- 103++9A2F 80 16 60 28      DEFB $80, FRATE, 96, 40, 224
- 103++9A33 E0
+ 103++9A2F 00 00 00 00      DEFB 0, 0, 0, 0, 0; $80, FRATE, 96, 40, 224
+ 103++9A33 00
  104++9A34              TheForgottenAbbeyEnemy3:
  105++9A34 80 16 48 48      DEFB $80, FRATE, 72, 72, 160
  105++9A38 A0
  106++9A39              TheForgottenAbbeyEnemy4:
- 107++9A39 80 16 9A 48      DEFB $80, FRATE, 154, 72, 189
- 107++9A3D BD
+ 107++9A39 00 00 00 00      DEFB 0, 0, 0, 0, 0; $80, FRATE, 154, 72, 189
+ 107++9A3D 00
  108++9A3E              TheForgottenAbbeyEnemy5:
  109++9A3E 80 16 28 68      DEFB $80, FRATE, 40, 104, 96
  109++9A42 60
  110++9A43              TheForgottenAbbeyEnemy6:
- 111++9A43 80 16 58 68      DEFB $80, FRATE, 88, 104, 144
- 111++9A47 90
+ 111++9A43 00 00 00 00      DEFB 0, 0, 0, 0, 0; $80, FRATE, 88, 104, 144
+ 111++9A47 00
  112++9A48              TheForgottenAbbeyEnemy7:
  113++9A48 80 16 80 68      DEFB $80, FRATE, 128, 104, 184
  113++9A4C B8
  114++9A4D              TheForgottenAbbeyEnemy8:
- 115++9A4D 80 16 B8 68      DEFB $80, FRATE, 184, 104, 240
- 115++9A51 F0
+ 115++9A4D 00 00 00 00      DEFB 0, 0, 0, 0, 0; $80, FRATE, 184, 104, 240
+ 115++9A51 00
  116++9A52
  117++9A52              TheForgottenAbbeyPosWilly:
  118++9A52 C8 68            db 200, 104                     ; Posizione di Willy
@@ -16898,7 +16898,7 @@
   81++BB98              TheWineCellarRampData:
   82++BB98 01               DEFB 1	                                ;Direction (up to the right)
   83++BB99 D8 5F            DEFW 24536                              ;Location in the attribute buffer at 24064: (14,7)
-  84++BB9B 03               DEFB 3	                                ;Length
+  84++BB9B 02               DEFB 2	                                ;Length
   85++BB9C
   86++BB9C              ;The next byte is copied to 32990 and specifies the border colour.
   87++BB9C              TheWineCellarBorderColor:

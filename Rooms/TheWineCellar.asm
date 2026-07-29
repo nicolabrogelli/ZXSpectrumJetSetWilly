@@ -81,7 +81,7 @@ TheWineCellarConveyorData:
 TheWineCellarRampData:
     DEFB 1	                                ;Direction (up to the right)
     DEFW 24536                              ;Location in the attribute buffer at 24064: (14,7)
-    DEFB 3	                                ;Length
+    DEFB 2	                                ;Length
 
 ;The next byte is copied to 32990 and specifies the border colour.
 TheWineCellarBorderColor:
