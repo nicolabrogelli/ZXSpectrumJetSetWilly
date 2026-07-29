@@ -74,7 +74,7 @@ TheWineCellarConveyor:
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TheWineCellarConveyorData:
     DEFB 1	                                ;Direction (right)
-    DEFW 24475	                                ;Location in the attribute buffer at 24064: (15,12)
+    DEFW 24507	                                ;Location in the attribute buffer at 24064: row 13, col 27
     DEFB 5	                                ;Length
 
 ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.

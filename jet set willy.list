@@ -16891,7 +16891,7 @@
   74++BB94              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
   75++BB94              TheWineCellarConveyorData:
   76++BB94 01               DEFB 1	                                ;Direction (right)
-  77++BB95 9B 5F            DEFW 24475	                                ;Location in the attribute buffer at 24064: (15,12)
+  77++BB95 BB 5F            DEFW 24507	                                ;Location in the attribute buffer at 24064: row 13, col 27
   78++BB97 05               DEFB 5	                                ;Length
   79++BB98
   80++BB98              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
