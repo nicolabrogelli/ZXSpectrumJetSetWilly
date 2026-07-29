@@ -14985,7 +14985,7 @@
  124++AF8B 00
  125++AF8C
  126++AF8C              PriestsHolePosWilly:
- 127++AF8C 19 19            db 25, 25                     ; Posizione di Willy
+ 127++AF8C 19 17            db 25, 23                     ; Posizione di Willy
  128++AF8E
  129++AF8E              PriestsHoleEnemyColors5_8:
  130++AF8E 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -17067,7 +17067,7 @@
   75++BCB2              WatchTowerConveyorData:
   76++BCB2 01               DEFB 1	                                ;Direction (right)
   77++BCB3 8C 5E            DEFW 24204	                                ;Location in the attribute buffer at 24064: (15,12)
-  78++BCB5 02               DEFB 2	                                ;Length
+  78++BCB5 08               DEFB 8	                                ;Length
   79++BCB6
   80++BCB6              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
   81++BCB6              WatchTowerRampData:
