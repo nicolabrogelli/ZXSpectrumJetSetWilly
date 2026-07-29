@@ -13143,8 +13143,8 @@
  107++A438
  108++A438              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A438              FirstLandingEnemy1:
- 110++A438 80 16 C0 60      DEFB $80, FRATE, 192, 96, 240
- 110++A43C F0
+ 110++A438 80 16 C0 60      DEFB $80, FRATE, 192, 96, 235
+ 110++A43C EB
  111++A43D              FirstLandingEnemy2:
  112++A43D 00 00 00 00      DEFB 0, 0, 0, 0, 0
  112++A441 00
