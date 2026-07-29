@@ -99,16 +99,25 @@ Input_CheckCtrl:
     ld  bc, $dffe
     in  a, (c)                  ; legge riga $FE
 
-    ; Se Willy è sul conveyor nella stanza The Off Licence (room 0),
-    ; impedisci lo spostamento da sinistra a destra (disabilita tasto destra P / bit 0).
+    ; Se Willy è su un conveyor in qualsiasi stanza,
+    ; impedisci lo spostamento nella direzione opposta a quella del conveyor.
     push af
-    ld   a, (current_room)
-    or   a                      ; Room 0 = The Off Licence
-    jr   nz, .no_block_conveyor
     call CheckWillyOnConveyor
     jr   nc, .no_block_conveyor
     pop  af
+    ld   b, a                   ; Salva stato dei tasti in B
+    ld   a, (conveyor_dir)
+    or   a                      ; 0 = conveyor va a sinistra, non-0 = va a destra
+    jr   nz, .conveyor_block_left
+    ; Conveyor va a sinistra: disabilita tasto destra (P / bit 0)
+    ld   a, b
     or   $01                    ; Forza bit 0 (destra) a 1 (non premuto)
+    push af
+    jr   .no_block_conveyor
+.conveyor_block_left:
+    ; Conveyor va a destra: disabilita tasto sinistra (O / bit 1)
+    ld   a, b
+    or   $02                    ; Forza bit 1 (sinistra) a 1 (non premuto)
     push af
 .no_block_conveyor:
     pop  af

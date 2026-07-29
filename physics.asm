@@ -795,6 +795,8 @@ Phys_ApplyConveyor:
     jr   z, .move_left
     
 .move_right:
+    ld   a, 2
+    ld   (direction), a    ; Imposta direzione Willy a destra (2)
     ld   a, c
     add  a, 1              ; trascina di 1 pixel a destra per frame
     cp   PLAYER_MAX_X
@@ -803,6 +805,8 @@ Phys_ApplyConveyor:
     jr   .store_x
     
 .move_left:
+    ld   a, 1
+    ld   (direction), a    ; Imposta direzione Willy a sinistra (1)
     ld   a, c
     sub  1                 ; trascina di 1 pixel a sinistra per frame
     cp   PLAYER_MIN_X
