@@ -537,9 +537,14 @@ TriggerRoomChange:
     ld   (PlayerPos), bc
     ld   (PlayerPosOld), bc
     
-    ; Reset velocity_y
-    ld   hl, velocity_y
-    ld   (hl), 0
+    ; Reset completo della fisica del player per la nuova stanza
+    xor  a
+    ld   (velocity_y), a
+    ld   (jump_start_y), a         ; Reset del punto di partenza del salto!
+    ld   (jump_pressed), a
+    ld   (jump_frame), a
+    ld   (jump_dir), a
+    ld   (on_ground), a            ; Imposta a 0 (mezz'aria / caduta)
     
     ld   (room_ptr), de            ; Aggiorna room_ptr
     

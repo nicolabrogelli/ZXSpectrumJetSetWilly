@@ -469,6 +469,20 @@ Phys_ApplyGravity:
     
 .no_ramp_landing:
     pop  bc
+    ; Se Willy sta cadendo oltre il bordo inferiore (new_Y >= 113) e c'è una stanza sotto,
+    ; salta il controllo del terreno a riga 15 ed esegui la transizione verso la nuova stanza!
+    ld   a, b              ; B = new_Y
+    cp   113
+    jr   c, .check_floor_collision
+    
+    ld   hl, (room_ptr)
+    ld   de, 238           ; Offset per stanza sotto
+    add  hl, de
+    ld   a, (hl)           ; A = ID stanza sotto
+    cp   $FF
+    jr   nz, .no_collision_checks
+
+.check_floor_collision:
     ; --- CONTROLLO COLLISIONE CON IL TERRENO DURANTE LA CADUTA ---
     ; Controlliamo solo al piede effettivo (Y + 16) per evitare che Willy atterri su blocchi orizzontali di lato
     ld   a, b
