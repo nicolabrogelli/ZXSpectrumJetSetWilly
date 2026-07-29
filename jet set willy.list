@@ -12107,7 +12107,7 @@
  116++9D93 80 0A 10 48      DEFB $80, DOUBLE_BALL, 16, 72, 48
  116++9D97 30
  117++9D98              TotheKitchensMainStairwayEnemy5:
- 118++9D98 80 04 00 60      DEFB $80, UOVO, 0, 96, 235
+ 118++9D98 80 04 05 60      DEFB $80, UOVO, 5, 96, 235
  118++9D9C EB
  119++9D9D              TotheKitchensMainStairwayEnemy6:
  120++9D9D 80 02 48 50      DEFB $80, UCCELLO, 72, 80, 136
