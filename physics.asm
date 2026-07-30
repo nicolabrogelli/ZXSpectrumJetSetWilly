@@ -1221,6 +1221,242 @@ GetCellFromUnpacked:
     ret
 
 ; -------------------------------------------------------------------
+; Phys_CheckRampOnRoomChange
+; Controlla se nella nuova stanza (DE = room layout ptr) c'è una rampa
+; allineata con la posizione d'ingresso di Willy (C = PlayerX, B = PlayerY).
+; Output: Se allineato, modifica B = ramp_Y e C = PlayerX e imposta on_ground = 1.
+; -------------------------------------------------------------------
+Phys_CheckRampOnRoomChange:
+    push hl
+    push de
+    push bc
+    
+    ; Offsets per RampData: DE + 218
+    ld   hl, 218
+    add  hl, de            ; HL = RampData pointer (nella nuova stanza)
+    
+    ld   a, (hl)           ; A = Direction (0 = up-left, 1 = up-right)
+    ld   (ramp_dir), a
+    inc  hl
+    ld   e, (hl)
+    inc  hl
+    ld   d, (hl)           ; DE = Location
+    inc  hl
+    ld   a, (hl)           ; A = Length
+    ld   (ramp_len), a
+    
+    ; Controlla se DE (Location) è 0 o Length è 0
+    ld   a, d
+    or   e
+    jp   z, .no_ramp_change
+    ld   a, (ramp_len)
+    or   a
+    jp   z, .no_ramp_change
+    
+    ; Calcola Row e Col: Offset = DE - 24064
+    ld   hl, -24064
+    add  hl, de            ; HL = Offset
+    ld   d, h
+    ld   e, l
+    
+    ld   a, e
+    and  31
+    ld   (ramp_col), a     ; Col Start
+    
+    srl  h : rr l
+    srl  h : rr l
+    srl  h : rr l
+    srl  h : rr l
+    srl  h : rr l
+    ld   a, l
+    ld   (ramp_row), a     ; Row Start
+    
+    pop  bc                ; BC ha C = PlayerX, B = PlayerY
+    push bc
+    
+    ; Calcola ramp_Y per PlayerX (in C) nella nuova stanza
+    call GetRampY          ; Output: Carry SET se X è nel range rampa, A = ramp_Y
+    jr   c, .on_ramp_x_ok
+    
+    ; PlayerX (in C) è fuori dal range orizzontale della rampa.
+    ; Verifichiamo se C è vicino all'estremità della rampa (tolleranza 16 pixel).
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .prox_dir_left
+
+.prox_dir_right:
+    ; Rampa sale a destra (up-right)
+    ; X_left = ramp_col * 8
+    ld   a, (ramp_col)
+    add  a, a : add a, a : add a, a ; *8
+    ld   e, a              ; E = X_left
+    ld   a, c              ; A = PlayerX
+    cp   e
+    jr   nc, .check_prox_right_bound
+    
+    ; PlayerX < X_left
+    ld   a, e
+    sub  c                 ; A = X_left - PlayerX
+    cp   17                ; Diff <= 16 px?
+    jp   nc, .no_ramp_change
+    pop  bc
+    ld   c, e
+    push bc
+    jr   .retest_ramp_y
+
+.check_prox_right_bound:
+    ld   a, (ramp_len)
+    add  a, a : add a, a : add a, a ; *8
+    add  a, e              ; A = X_right_boundary
+    ld   d, a              ; D = X_right_boundary
+    ld   a, c              ; A = PlayerX
+    sub  d                 ; A = PlayerX - X_right_boundary
+    cp   17                ; Diff <= 16 px?
+    jp   nc, .no_ramp_change
+    pop  bc
+    ld   c, d
+    dec  c
+    push bc
+    jr   .retest_ramp_y
+
+.prox_dir_left:
+    ; Rampa sale a sinistra (up-left)
+    ; X_left = (ramp_col - ramp_len + 1) * 8
+    ld   a, (ramp_col)
+    inc  a
+    ld   hl, ramp_len
+    sub  (hl)
+    add  a, a : add a, a : add a, a ; *8
+    ld   e, a              ; E = X_left
+    
+    ld   a, c              ; A = PlayerX
+    cp   e
+    jr   nc, .check_prox_left_bound
+    
+    ; PlayerX < X_left
+    ld   a, e
+    sub  c                 ; A = X_left - PlayerX
+    cp   17                ; Diff <= 16 px?
+    jp   nc, .no_ramp_change
+    pop  bc
+    ld   c, e
+    push bc
+    jr   .retest_ramp_y
+
+.check_prox_left_bound:
+    ld   a, (ramp_col)
+    add  a, a : add a, a : add a, a ; *8
+    add  a, 8              ; A = X_right_boundary
+    ld   d, a              ; D = X_right_boundary
+    ld   a, c              ; A = PlayerX
+    sub  d                 ; A = PlayerX - X_right_boundary
+    cp   17                ; Diff <= 16 px?
+    jp   nc, .no_ramp_change
+    pop  bc
+    ld   c, d
+    dec  c
+    push bc
+    jr   .retest_ramp_y
+
+.retest_ramp_y:
+    pop  bc
+    push bc
+    call GetRampY
+    jp   nc, .no_ramp_change
+
+.on_ramp_x_ok:
+    ; C'è una rampa a PlayerX! Confronta PlayerY (in B) con ramp_Y (in A)
+    ld   e, a              ; E = ramp_Y
+    ld   a, b              ; A = PlayerY
+    sub  e                 ; A = PlayerY - ramp_Y
+    bit  7, a
+    jr   z, .abs_change
+    neg
+.abs_change:
+    cp   16                ; Tolleranza 16 pixel per cambi stanza verticali
+    jp   nc, .no_ramp_change
+    
+    ; Controllo bordo inferiore (ramp_Y >= 104)
+    ld   a, e              ; A = ramp_Y
+    cp   104
+    jr   nc, .adj_bottom
+    
+    ; Controllo bordo superiore (ramp_Y <= 4 o negativo)
+    bit  7, a
+    jr   nz, .adj_top
+    cp   5
+    jr   c, .adj_top
+    jr   .apply_ramp_align
+
+.adj_bottom:
+    ; ramp_Y >= 104 (bordo inferiore). Sposta X lungo la pendenza verso l'alto.
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .adj_bot_left
+.adj_bot_right:
+    pop  bc
+    ld   a, c
+    add  a, 8
+    ld   c, a
+    push bc
+    jr   .recalc_ramp_y
+.adj_bot_left:
+    pop  bc
+    ld   a, c
+    sub  8
+    ld   c, a
+    push bc
+    jr   .recalc_ramp_y
+
+.adj_top:
+    ; ramp_Y <= 4 (bordo superiore). Sposta X lungo la pendenza verso il basso.
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .adj_top_left
+.adj_top_right:
+    pop  bc
+    ld   a, c
+    sub  8
+    ld   c, a
+    push bc
+    jr   .recalc_ramp_y
+.adj_top_left:
+    pop  bc
+    ld   a, c
+    add  a, 8
+    ld   c, a
+    push bc
+
+.recalc_ramp_y:
+    call GetRampY
+    jp   nc, .no_ramp_change
+    ld   e, a              ; E = nuovo ramp_Y safe
+    
+    ; Controlla se ancora ai bordi
+    cp   104
+    jr   nc, .adj_bottom
+    bit  7, a
+    jr   nz, .adj_top
+    cp   5
+    jr   c, .adj_top
+
+.apply_ramp_align:
+    pop  bc
+    ld   b, e              ; B = ramp_Y
+    push bc
+    
+    ld   a, 1
+    ld   (on_ground), a    ; Imposta Willy a terra sulla rampa
+    xor  a
+    ld   (ramp_entry_guard), a
+    
+.no_ramp_change:
+    pop  bc
+    pop  de
+    pop  hl
+    ret
+
+; -------------------------------------------------------------------
 ; GetRampY
 ; Calcola la coordinata Y teorica di Willy se si trova sulla rampa
 ; Input: C = PlayerX

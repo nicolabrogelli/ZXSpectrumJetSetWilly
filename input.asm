@@ -543,20 +543,30 @@ TriggerRoomChange:
     pop  bc
     ret  z                         ; Se layout è NULL (stanza non creata), ignora transizione!
     
-    ld   (PlayerPos), bc
-    ld   (PlayerPosOld), bc
+    ; Reset completo della fisica del player per la nuova stanza
+    xor  a
+    ld   (velocity_y), a
+    ld   (jump_start_y), a         ; Reset del punto di partenza del salto!
+    ld   (jump_pressed), a
+    ld   (jump_frame), a
+    ld   (jump_dir), a
+    ld   (on_ground), a            ; Imposta a 0 (mezz'aria / caduta)
 
     ; Se l'ingresso è orizzontale, evita che il primo tratto della
     ; schermata venga interpretato come atterraggio sulla rampa adiacente.
-    ; Le transizioni verticali conservano invece la guardia disattivata.
+    ; Le transizioni verticali applicano l'allineamento della rampa se presente.
     ld   a, c
     cp   PLAYER_MIN_X
     jr   z, .set_ramp_guard_from_left
     cp   PLAYER_MAX_X
     jr   z, .set_ramp_guard_from_right
+    
+    ; Transizione verticale!
     xor  a
     ld   (ramp_entry_guard), a
+    call Phys_CheckRampOnRoomChange ; Se allineato, modifica B (PlayerY) e C (PlayerX) e imposta on_ground = 1
     jr   .ramp_guard_done
+    
 .set_ramp_guard_from_left:
     ld   a, 1
     ld   (ramp_entry_guard), a
@@ -573,15 +583,8 @@ TriggerRoomChange:
     ld   (ramp_entry_guard_x), a
 .ramp_guard_done:
     
-    ; Reset completo della fisica del player per la nuova stanza
-    xor  a
-    ld   (velocity_y), a
-    ld   (jump_start_y), a         ; Reset del punto di partenza del salto!
-    ld   (jump_pressed), a
-    ld   (jump_frame), a
-    ld   (jump_dir), a
-    ld   (on_ground), a            ; Imposta a 0 (mezz'aria / caduta)
-    
+    ld   (PlayerPos), bc           ; Salva le coordinate aggiornate da Phys_CheckRampOnRoomChange
+    ld   (PlayerPosOld), bc
     ld   (room_ptr), de            ; Aggiorna room_ptr
     
     ; Imposta il flag di transizione per non caricare la posizione di default
