@@ -9843,7 +9843,7 @@
  110++8CC2 80 04 60 40      DEFB $80, UOVO, 96, 64, 144
  110++8CC6 90
  111++8CC7              CuckoosNestEnemy2:
- 112++8CC7 80 01 00 58      DEFB $80, SEGA, 0, 88, 88
+ 112++8CC7 B0 01 00 58      DEFB $B0, SEGA, 0, 88, 88
  112++8CCB 58
  113++8CCC              CuckoosNestEnemy3:
  114++8CCC 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -10036,7 +10036,7 @@
  118++8DF4 80 02 00 28      DEFB $80, UCCELLO, 0, 40, 80
  118++8DF8 50
  119++8DF9              InsideTheMegaTrunkEnemy6:
- 120++8DF9 80 02 80 58      DEFB $80, UCCELLO, 128, 88, 232
+ 120++8DF9 B0 02 80 58      DEFB $B0, UCCELLO, 128, 88, 232
  120++8DFD E8
  121++8DFE              InsideTheMegaTrunkEnemy7:
  122++8DFE 80 0E 88 18      DEFB $80, FIORE, 136, 24, 240         ; Enemy 7 (Fiore)
