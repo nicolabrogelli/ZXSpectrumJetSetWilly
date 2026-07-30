@@ -11751,134 +11751,135 @@
   40++9A8C 00 00 00 00
   41++9A90 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
   41++9A94 00 00 00 00
-  42++9A98 00 00 15 55      DEFB 0,0,21,85,85,85,85,85
-  42++9A9C 55 55 55 55
-  43++9AA0 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
-  43++9AA4 00 00 00 00
-  44++9AA8 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
-  44++9AAC 00 00 00 00
-  45++9AB0 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
-  45++9AB4 00 00 00 00
-  46++9AB8 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
-  46++9ABC 00 00 00 00
-  47++9AC0 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
-  47++9AC4 00 00 00 00
-  48++9AC8 AA AA AA AA      DEFB 170,170,170,170,170,170,170,170
-  48++9ACC AA AA AA AA
-  49++9AD0 AA AA AA AA      DEFB 170,170,170,170,170,170,170,170
-  49++9AD4 AA AA AA AA
-  50++9AD8
-  51++9AD8              BallRoomEastTile:
-  52++9AD8              ;The next 32 bytes are copied to 32896 and specify the room name.
-  53++9AD8 20 20 20 20      DEFM "         Ballroom East          "	    ;Room name
-  53++9ADC 20 20 20 20
-  53++9AE0 20 42 61 6C
-  53++9AE4 6C 72 6F 6F
-  53++9AE8 6D 20 45 61
-  53++9AEC 73 74 20 20
-  53++9AF0 20 20 20 20
-  53++9AF4 20 20 20 20
-  54++9AF8
-  55++9AF8              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++9AF8              BallRoomEastBackground:                    ; Background
-  57++9AF8 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
-  57++9AFC 00 00 00 00
-  57++9B00 00
-  58++9B01
-  59++9B01              BallRoomEastFloor:
-  60++9B01 06 AA 55 22      DEFB 6,170,85,34,68,34,68,34,68       ; Floor Solid
-  60++9B05 44 22 44 22
-  60++9B09 44
-  61++9B0A
-  62++9B0A              BallRoomEastWall:
-  63++9B0A 0F 44 44 FF      DEFB 15,68,68,255,17,17,255,85,170   ; Wall Solid
-  63++9B0E 11 11 FF 55
-  63++9B12 AA
-  64++9B13
-  65++9B13              BallRoomEastNasty:
-  66++9B13 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
-  66++9B17 00 00 00 00
-  66++9B1B 00
-  67++9B1C
-  68++9B1C              BallRoomEastRamp:
-  69++9B1C FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0              ; Ramp Solid
-  69++9B20 00 00 00 00
-  69++9B24 00
-  70++9B25
-  71++9B25              BallRoomEastConveyor:
-  72++9B25 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
-  72++9B29 00 00 00 00
-  72++9B2D 00
-  73++9B2E
-  74++9B2E              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  75++9B2E              BallRoomEastConveyorData:
-  76++9B2E 00               DEFB 0	                                ;Direction (right)
-  77++9B2F 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
-  78++9B31 00               DEFB 0	                                ;Length
-  79++9B32
-  80++9B32              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  81++9B32              BallRoomEastRampData:
-  82++9B32 00               DEFB 0	                                ;Direction (up to the right)
-  83++9B33 00 00            DEFW 0                                  ;Location in the attribute buffer at 24064: (14,7)
-  84++9B35 00               DEFB 0	                                ;Length
-  85++9B36
-  86++9B36              ;The next byte is copied to 32990 and specifies the border colour.
-  87++9B36              BallRoomEastBorderColor:
-  88++9B36 02               DEFB 2	                                ;Border colour
-  89++9B37
-  90++9B37              ;The next two bytes are copied to 32991, but are not used.
-  91++9B37              BallRoomEastReserved:
-  92++9B37 00 03 05 06      DEFB NONE, MAGENTA, CYAN, YELLOW     ; Enemy colors
-  93++9B3B
-  94++9B3B              ;The next eight bytes are copied to 32993 and define the item graphic.
-  95++9B3B              BallRoomEastItem:
-  96++9B3B 81 81 42 24      DEFB 129,129,66,36,24,24,24,231	                ;Item graphic (unused)
-  96++9B3F 18 18 18 E7
-  97++9B43
-  98++9B43              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  99++9B43              BallRoomEastDirection:
- 100++9B43                  ROOM RoomsListTable.BallRoomWestLayout	        ;Room to the left (Ballroom West)
- 100++9B43 15          >        db (RoomsListTable.BallRoomWestLayout - RoomsListTable) / 2
- 101++9B44                  ROOM RoomsListTable.TheHallLayout	        ;Room to the right (The Hall)
- 101++9B44 0B          >        db (RoomsListTable.TheHallLayout - RoomsListTable) / 2
- 102++9B45                  ROOM RoomsListTable.EastWallBaseLayout	        ;Room above (East Wall Base)
- 102++9B45 1A          >        db (RoomsListTable.EastWallBaseLayout - RoomsListTable) / 2
- 103++9B46 FF               DEFB BLOCK	        ;Room below (The Off Licence)
- 104++9B47
- 105++9B47              BallRoomEastUnused:
- 106++9B47 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
- 107++9B48
- 108++9B48              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 109++9B48              BallRoomEastEnemy1:
- 110++9B48 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 110++9B4C 00
- 111++9B4D              BallRoomEastEnemy2:
- 112++9B4D C0 06 28 30      DEFB $C0, FACCIA, 40, 48, 87
- 112++9B51 57
- 113++9B52              BallRoomEastEnemy3:
- 114++9B52 E0 06 38 30      DEFB $E0, FACCIA, 56, 48, 96
- 114++9B56 60
- 115++9B57              BallRoomEastEnemy4:
- 116++9B57 C0 06 58 48      DEFB $C0, FACCIA, 88, 72, 96
- 116++9B5B 60
- 117++9B5C              BallRoomEastEnemy5:
- 118++9B5C 80 02 70 50       DEFB $80, UCCELLO, 112, 80, 232
- 118++9B60 E8
- 119++9B61              BallRoomEastEnemy6:
- 120++9B61 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 120++9B65 00
- 121++9B66              BallRoomEastEnemy7:
- 122++9B66 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 122++9B6A 00
- 123++9B6B              BallRoomEastEnemy8:
- 124++9B6B 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 124++9B6F 00
- 125++9B70
- 126++9B70              BallRoomEastPosWilly:
- 127++9B70 C8 5F            db 200, 95                     ; Posizione di Willy
- 128++9B72
- 129++9B72              BallRoomEastEnemyColors5_8:
- 130++9B72 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE     ; Colori per nemici 5-8
+  42++9A98                  ;DEFB 0,0,21,85,85,85,85,85
+  43++9A98 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  43++9A9C 00 00 00 00
+  44++9AA0 00 00 15 55      DEFB 0,0,21,85,85,85,85,85
+  44++9AA4 55 55 55 55
+  45++9AA8 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  45++9AAC 00 00 00 00
+  46++9AB0 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  46++9AB4 00 00 00 00
+  47++9AB8 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  47++9ABC 00 00 00 00
+  48++9AC0 00 00 10 00      DEFB 0,0,16,0,0,0,0,0
+  48++9AC4 00 00 00 00
+  49++9AC8 AA AA AA AA      DEFB 170,170,170,170,170,170,170,170
+  49++9ACC AA AA AA AA
+  50++9AD0 AA AA AA AA      DEFB 170,170,170,170,170,170,170,170
+  50++9AD4 AA AA AA AA
+  51++9AD8
+  52++9AD8              BallRoomEastTile:
+  53++9AD8              ;The next 32 bytes are copied to 32896 and specify the room name.
+  54++9AD8 20 20 20 20      DEFM "         Ballroom East          "	    ;Room name
+  54++9ADC 20 20 20 20
+  54++9AE0 20 42 61 6C
+  54++9AE4 6C 72 6F 6F
+  54++9AE8 6D 20 45 61
+  54++9AEC 73 74 20 20
+  54++9AF0 20 20 20 20
+  54++9AF4 20 20 20 20
+  55++9AF8
+  56++9AF8              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  57++9AF8              BallRoomEastBackground:                    ; Background
+  58++9AF8 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+  58++9AFC 00 00 00 00
+  58++9B00 00
+  59++9B01
+  60++9B01              BallRoomEastFloor:
+  61++9B01 06 AA 55 22      DEFB 6,170,85,34,68,34,68,34,68       ; Floor Solid
+  61++9B05 44 22 44 22
+  61++9B09 44
+  62++9B0A
+  63++9B0A              BallRoomEastWall:
+  64++9B0A 0F 44 44 FF      DEFB 15,68,68,255,17,17,255,85,170   ; Wall Solid
+  64++9B0E 11 11 FF 55
+  64++9B12 AA
+  65++9B13
+  66++9B13              BallRoomEastNasty:
+  67++9B13 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
+  67++9B17 00 00 00 00
+  67++9B1B 00
+  68++9B1C
+  69++9B1C              BallRoomEastRamp:
+  70++9B1C FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0              ; Ramp Solid
+  70++9B20 00 00 00 00
+  70++9B24 00
+  71++9B25
+  72++9B25              BallRoomEastConveyor:
+  73++9B25 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
+  73++9B29 00 00 00 00
+  73++9B2D 00
+  74++9B2E
+  75++9B2E              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  76++9B2E              BallRoomEastConveyorData:
+  77++9B2E 00               DEFB 0	                                ;Direction (right)
+  78++9B2F 00 00            DEFW 0	                                ;Location in the attribute buffer at 24064: (15,12)
+  79++9B31 00               DEFB 0	                                ;Length
+  80++9B32
+  81++9B32              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  82++9B32              BallRoomEastRampData:
+  83++9B32 00               DEFB 0	                                ;Direction (up to the right)
+  84++9B33 00 00            DEFW 0                                  ;Location in the attribute buffer at 24064: (14,7)
+  85++9B35 00               DEFB 0	                                ;Length
+  86++9B36
+  87++9B36              ;The next byte is copied to 32990 and specifies the border colour.
+  88++9B36              BallRoomEastBorderColor:
+  89++9B36 02               DEFB 2	                                ;Border colour
+  90++9B37
+  91++9B37              ;The next two bytes are copied to 32991, but are not used.
+  92++9B37              BallRoomEastReserved:
+  93++9B37 00 03 05 06      DEFB NONE, MAGENTA, CYAN, YELLOW     ; Enemy colors
+  94++9B3B
+  95++9B3B              ;The next eight bytes are copied to 32993 and define the item graphic.
+  96++9B3B              BallRoomEastItem:
+  97++9B3B 81 81 42 24      DEFB 129,129,66,36,24,24,24,231	                ;Item graphic (unused)
+  97++9B3F 18 18 18 E7
+  98++9B43
+  99++9B43              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+ 100++9B43              BallRoomEastDirection:
+ 101++9B43                  ROOM RoomsListTable.BallRoomWestLayout	        ;Room to the left (Ballroom West)
+ 101++9B43 15          >        db (RoomsListTable.BallRoomWestLayout - RoomsListTable) / 2
+ 102++9B44                  ROOM RoomsListTable.TheHallLayout	        ;Room to the right (The Hall)
+ 102++9B44 0B          >        db (RoomsListTable.TheHallLayout - RoomsListTable) / 2
+ 103++9B45                  ROOM RoomsListTable.EastWallBaseLayout	        ;Room above (East Wall Base)
+ 103++9B45 1A          >        db (RoomsListTable.EastWallBaseLayout - RoomsListTable) / 2
+ 104++9B46 FF               DEFB BLOCK	        ;Room below (The Off Licence)
+ 105++9B47
+ 106++9B47              BallRoomEastUnused:
+ 107++9B47 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
+ 108++9B48
+ 109++9B48              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 110++9B48              BallRoomEastEnemy1:
+ 111++9B48 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 111++9B4C 00
+ 112++9B4D              BallRoomEastEnemy2:
+ 113++9B4D C0 06 28 30      DEFB $C0, FACCIA, 40, 48, 87
+ 113++9B51 57
+ 114++9B52              BallRoomEastEnemy3:
+ 115++9B52 E0 06 38 30      DEFB $E0, FACCIA, 56, 48, 96
+ 115++9B56 60
+ 116++9B57              BallRoomEastEnemy4:
+ 117++9B57 C0 06 58 48      DEFB $C0, FACCIA, 88, 72, 96
+ 117++9B5B 60
+ 118++9B5C              BallRoomEastEnemy5:
+ 119++9B5C 80 02 70 50       DEFB $80, UCCELLO, 112, 80, 232
+ 119++9B60 E8
+ 120++9B61              BallRoomEastEnemy6:
+ 121++9B61 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 121++9B65 00
+ 122++9B66              BallRoomEastEnemy7:
+ 123++9B66 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 123++9B6A 00
+ 124++9B6B              BallRoomEastEnemy8:
+ 125++9B6B 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 125++9B6F 00
+ 126++9B70
+ 127++9B70              BallRoomEastPosWilly:
+ 128++9B70 C8 5F            db 200, 95                     ; Posizione di Willy
+ 129++9B72
+ 130++9B72              BallRoomEastEnemyColors5_8:
+ 131++9B72 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/BallRoomEast.asm
   31+ 9B76                  include "rooms/BallRoomWest.asm"                ; ID 21
 # file opened: rooms/BallRoomWest.asm
