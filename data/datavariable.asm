@@ -65,6 +65,7 @@ transition_active:  db 0
 ramp_entry_guard:  db 0   ; Guardia aggancio rampa dopo ingresso orizzontale
 ramp_entry_guard_x: db 0  ; X oltre il quale la guardia viene rimossa
 ramp_entry_guard_dir: db 0 ; 1=ingresso da sinistra, 2=ingresso da destra
+willy_on_ramp:         db 0 ; 1 = Willy posizionato su rampa (debug)
 Audio_jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
 Audio_jump_sound_timer:   db 0
     IF ENABLE_MUSIC != 0

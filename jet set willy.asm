@@ -142,14 +142,28 @@ Main_loop:
     
     ; Controlla collisione con guardiani
     call CheckCollision
-    jr   nc, .no_collision
+    jr   c, .guardian_collision_found
     
+    ; Nessuna collisione con guardiani. Controlla se Willy è su rampa per debug raster bar
+    IF ENABLE_RAMP_DEBUG_BARS != 0
+    ld   a, (willy_on_ramp)
+    or   a
+    jr   nz, .draw_raster_bars
+    ENDIF
+    
+    jr   .no_collision
+
+.guardian_collision_found:
     ; C'è collisione con un guardiano!
     ; Controlla se la morte per collisione con i guardiani è abilitata
     IF ENABLE_GUARDIAN_COLLISION_DEATH != 0
     jr   .willy_dies
     ELSE
-    jr   .draw_raster_bars ; se disabilitato, disegna le raster bar per debug
+        IF ENABLE_GUARDIAN_DEBUG_BARS != 0
+        jr   .draw_raster_bars ; disegna le raster bar per debug se abilitate
+        ELSE
+        jr   .no_collision
+        ENDIF
     ENDIF
     
 .willy_dies:

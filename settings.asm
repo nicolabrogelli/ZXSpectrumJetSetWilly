@@ -16,9 +16,16 @@ ENABLE_MUSIC EQU 0
 
 ; --- Morte per collisione con i guardiani (nemici) ---
 ; 1 = Abilita la morte e il decremento delle vite alla collisione con i guardiani
-; 0 = Disabilita la morte (disegna le raster bar di debug sul bordo)
+; 0 = Disabilita la morte
     IFNDEF ENABLE_GUARDIAN_COLLISION_DEATH
 ENABLE_GUARDIAN_COLLISION_DEATH EQU 0
+    ENDIF
+
+; --- Bande colorate di debug per collisione con i guardiani ---
+; 1 = Abilita le bande colorate (raster bar) sul bordo alla collisione con i guardiani (quando la morte è disabilitata)
+; 0 = Disabilita le bande colorate di debug per i guardiani
+    IFNDEF ENABLE_GUARDIAN_DEBUG_BARS
+ENABLE_GUARDIAN_DEBUG_BARS EQU 0
     ENDIF
 
 ; --- Morte per collisione con gli elementi Nasty (tiles pericolose) ---
@@ -40,4 +47,11 @@ ENABLE_ANIMATE_LIVES EQU 0
 ; 0 = Disabilita i tasti Q e A
     IFNDEF ENABLE_ROOM_SKIP_KEYS
 ENABLE_ROOM_SKIP_KEYS EQU 1
+    ENDIF
+
+; --- Bande colorate di debug per Willy su rampa ---
+; 1 = Abilita le bande colorate (raster bar) sul bordo quando Willy si trova posizionato su una rampa
+; 0 = Disabilita le bande colorate di debug per le rampe
+    IFNDEF ENABLE_RAMP_DEBUG_BARS
+ENABLE_RAMP_DEBUG_BARS EQU 1
     ENDIF

@@ -69,6 +69,10 @@ Phys_CheckSolid:
 ; Applica gravità e gestisce salto
 ; -------------------------------------------------------------------
 Phys_ApplyGravity:
+    IF ENABLE_RAMP_DEBUG_BARS != 0
+    xor  a
+    ld   (willy_on_ramp), a
+    ENDIF
     ld  bc, (PlayerPos)
     ld  a, b              ; B = PlayerY (pixel)
     
@@ -97,6 +101,10 @@ Phys_ApplyGravity:
     bit  7, b
     jp   nz, .ramp_top_exit ; Se B è negativo (bit 7 = 1), Willy è in cima alla rampa al bordo superiore!
     ld   (PlayerPos), bc    ; Salva la posizione Y allineata alla rampa
+    IF ENABLE_RAMP_DEBUG_BARS != 0
+    ld   a, 1
+    ld   (willy_on_ramp), a
+    ENDIF
     
     ; Gestisci il salto mentre siamo sulla rampa
     ld   a, (jump_pressed)
@@ -472,6 +480,9 @@ Phys_ApplyGravity:
     ld   (PlayerPos), bc
     ld   a, 1
     ld   (on_ground), a
+    IF ENABLE_RAMP_DEBUG_BARS != 0
+    ld   (willy_on_ramp), a
+    ENDIF
     xor  a
     ld   (velocity_y), a
     ld   (jump_start_y), a  ; Reset jump Y
