@@ -10033,10 +10033,10 @@
  116++8DEF C0 06 60 00      DEFB $C0, FACCIA, 96, 0, 104
  116++8DF3 68
  117++8DF4              InsideTheMegaTrunkEnemy5:
- 118++8DF4 80 02 00 28      DEFB $80, UCCELLO, 0, 40, 80
+ 118++8DF4 A0 02 00 28      DEFB $A0, UCCELLO, 0, 40, 80
  118++8DF8 50
  119++8DF9              InsideTheMegaTrunkEnemy6:
- 120++8DF9 B0 02 80 58      DEFB $B0, UCCELLO, 128, 88, 232
+ 120++8DF9 A0 02 80 58      DEFB $A0, UCCELLO, 128, 88, 232
  120++8DFD E8
  121++8DFE              InsideTheMegaTrunkEnemy7:
  122++8DFE 80 0E 88 18      DEFB $80, FIORE, 136, 24, 240         ; Enemy 7 (Fiore)

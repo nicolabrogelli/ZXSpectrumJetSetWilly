@@ -115,9 +115,9 @@ InsideTheMegaTrunkEnemy3:
 InsideTheMegaTrunkEnemy4:
     DEFB $C0, FACCIA, 96, 0, 104   
 InsideTheMegaTrunkEnemy5:
-    DEFB $80, UCCELLO, 0, 40, 80    
+    DEFB $A0, UCCELLO, 0, 40, 80    
 InsideTheMegaTrunkEnemy6:           
-    DEFB $B0, UCCELLO, 128, 88, 232    
+    DEFB $A0, UCCELLO, 128, 88, 232    
 InsideTheMegaTrunkEnemy7:
     DEFB $80, FIORE, 136, 24, 240         ; Enemy 7 (Fiore)
 InsideTheMegaTrunkEnemy8:
