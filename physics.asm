@@ -832,9 +832,24 @@ Phys_ApplyConveyor:
     add  a, 1              ; trascina di 1 pixel a destra per frame
     cp   PLAYER_MAX_X
     jr   c, .store_x
+    jr   z, .store_x
+    
+    ; Controlla se c'è una stanza a destra
+    ld   hl, (room_ptr)
+    ld   de, 236           ; Offset per stanza a destra
+    add  hl, de
+    ld   a, (hl)           ; A = ID stanza a destra
+    cp   $FF
+    jr   z, .no_right_conveyor_transition
+    
+    ; C'è una stanza a destra!
+    ld   c, PLAYER_MIN_X   ; Posiziona Willy a sinistra della nuova stanza
+    jp   TriggerRoomChange ; Salta alla transizione
+    
+.no_right_conveyor_transition:
     ld   a, PLAYER_MAX_X
     jr   .store_x
-    
+
 .move_left:
     ld   a, 1
     ld   (direction), a    ; Imposta direzione Willy a sinistra (1)
@@ -842,6 +857,20 @@ Phys_ApplyConveyor:
     sub  1                 ; trascina di 1 pixel a sinistra per frame
     cp   PLAYER_MIN_X
     jr   nc, .store_x
+    
+    ; Controlla se c'è una stanza a sinistra
+    ld   hl, (room_ptr)
+    ld   de, 235           ; Offset per stanza a sinistra
+    add  hl, de
+    ld   a, (hl)           ; A = ID stanza a sinistra
+    cp   $FF
+    jr   z, .no_left_conveyor_transition
+    
+    ; C'è una stanza a sinistra!
+    ld   c, PLAYER_MAX_X   ; Posiziona Willy a destra della nuova stanza
+    jp   TriggerRoomChange ; Salta alla transizione (non ritorna qui)
+    
+.no_left_conveyor_transition:
     ld   a, PLAYER_MIN_X
     
 .store_x:
