@@ -1246,7 +1246,7 @@ GetRampY:
     jp   c, .out_of_ramp   ; Se PlayerX < X_left, fuori
     
     cp   h
-    jr   c, .on_ramp_slope ; Se PlayerX < X_right_boundary, pendenza rampa
+    jp   c, .on_ramp_slope ; Se PlayerX < X_right_boundary, pendenza rampa
     
     ; Controlla se è sulla cella della piattaforma adiacente in cima: [X_right_boundary, X_right_boundary + 7]
     sub  h                 ; A = PlayerX - X_right_boundary
@@ -1258,7 +1258,7 @@ GetRampY:
     ld   a, c              ; A = PlayerX
     cp   e
     jp   c, .out_of_ramp   ; Se PlayerX < X_left, fuori
-    jr   .on_ramp_slope    ; Se >= X_left, è sicuramente sulla pendenza rampa (non può superare 256)
+    jp   .on_ramp_slope    ; Se >= X_left, è sicuramente sulla pendenza rampa (non può superare 256)
     
 .on_platform_right:
     ; Piattaforma adiacente! Restituisci PlayerY = (ramp_row - ramp_len + 1) * 8 - 16
@@ -1270,8 +1270,7 @@ GetRampY:
     add  a, a              ; *4
     add  a, a              ; *8
     sub  16                ; A = Row * 8 - 16
-    scf                    ; Set carry (dentro rampa/piattaforma)
-    ret
+    jp   .return_ramp_y
     
 .on_ramp_slope:
     ld   a, (ramp_row)
@@ -1301,13 +1300,11 @@ GetRampY:
     ; Altrimenti, limita a platform_Y
     ld   a, h
     sub  16                ; A = platform_Y
-    scf
-    ret
+    jp   .return_ramp_y
     
 .no_clamp:
     ld   a, d              ; Ripristina A = calculated Y
-    scf                    ; Set carry
-    ret
+    jp   .return_ramp_y
     
 .dir_left:
     ; Rampa sale a sinistra (up-left)
@@ -1354,8 +1351,7 @@ GetRampY:
     add  a, a              ; *4
     add  a, a              ; *8
     sub  16                ; A = Row * 8 - 16
-    scf                    ; Set carry
-    ret
+    jp   .return_ramp_y
     
 .on_ramp_slope_left:
     ld   a, (ramp_col)
@@ -1391,12 +1387,65 @@ GetRampY:
     ; Altrimenti, limita a platform_Y
     ld   a, h
     sub  16                ; A = platform_Y
-    scf
-    ret
+    jp   .return_ramp_y
     
 .no_clamp_left:
     ld   a, d
-    scf
+    jp   .return_ramp_y
+
+.return_ramp_y:
+    ; A contiene la coordinata ramp_Y calcolata per PlayerX (in C).
+    ; Verifichiamo se la guardia ingresso orizzontale è ancora attiva.
+    push bc
+    ld   b, a                  ; B = ramp_Y
+    ld   a, (ramp_entry_guard)
+    or   a
+    jr   z, .guard_clear_exit  ; Se la guardia è 0, restituisci normalmente A = ramp_Y, Carry SET
+
+    ; La guardia è attiva!
+    ld   a, (ramp_entry_guard_dir)
+    cp   1
+    jr   z, .check_x_left
+
+.check_x_right:
+    ld   a, c                  ; A = PlayerX
+    ld   hl, ramp_entry_guard_x
+    cp   (hl)                  ; PlayerX - ramp_entry_guard_x
+    jr   c, .deactivate_guard  ; Se PlayerX < ramp_entry_guard_x, Willy è uscito dalla zona di guardia -> disattiva
+    jr   .check_alignment
+
+.check_x_left:
+    ld   a, c                  ; A = PlayerX
+    ld   hl, ramp_entry_guard_x
+    cp   (hl)                  ; PlayerX - ramp_entry_guard_x
+    jr   nc, .deactivate_guard ; Se PlayerX >= ramp_entry_guard_x, Willy è uscito dalla zona di guardia -> disattiva
+
+.check_alignment:
+    ; Willy si trova nella zona d'ingresso (es. X < 16 o X >= 232).
+    ; Verifichiamo se Willy è GIÀ ALLINEATO alla rampa (stava camminando/atterrando su di essa).
+    ; Confrontiamo (PlayerPos+1) (PlayerY) con B (ramp_Y).
+    ld   a, (PlayerPos+1)      ; A = PlayerY
+    sub  b                     ; A = PlayerY - ramp_Y
+    bit  7, a
+    jr   z, .diff_positive
+    neg
+.diff_positive:
+    cp   12                    ; Se |PlayerY - ramp_Y| < 12, Willy è allineato alla rampa!
+    jr   c, .deactivate_guard  ; È sulla rampa che prosegue -> disattiva guardia e permetti di proseguire!
+
+    ; Willy NON è allineato (es. sta camminando sul pavimento sotto la rampa).
+    pop  bc
+    or   a                     ; Reset carry (ignora rampa!)
+    ret
+
+.deactivate_guard:
+    xor  a
+    ld   (ramp_entry_guard), a
+
+.guard_clear_exit:
+    ld   a, b                  ; A = ramp_Y
+    pop  bc
+    scf                        ; Set carry (rampa valida!)
     ret
 
 .out_of_ramp:

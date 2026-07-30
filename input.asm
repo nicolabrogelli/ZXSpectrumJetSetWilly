@@ -545,6 +545,33 @@ TriggerRoomChange:
     
     ld   (PlayerPos), bc
     ld   (PlayerPosOld), bc
+
+    ; Se l'ingresso è orizzontale, evita che il primo tratto della
+    ; schermata venga interpretato come atterraggio sulla rampa adiacente.
+    ; Le transizioni verticali conservano invece la guardia disattivata.
+    ld   a, c
+    cp   PLAYER_MIN_X
+    jr   z, .set_ramp_guard_from_left
+    cp   PLAYER_MAX_X
+    jr   z, .set_ramp_guard_from_right
+    xor  a
+    ld   (ramp_entry_guard), a
+    jr   .ramp_guard_done
+.set_ramp_guard_from_left:
+    ld   a, 1
+    ld   (ramp_entry_guard), a
+    ld   (ramp_entry_guard_dir), a
+    ld   a, PLAYER_MIN_X + 16
+    ld   (ramp_entry_guard_x), a
+    jr   .ramp_guard_done
+.set_ramp_guard_from_right:
+    ld   a, 1
+    ld   (ramp_entry_guard), a
+    ld   a, 2
+    ld   (ramp_entry_guard_dir), a
+    ld   a, PLAYER_MAX_X - 16
+    ld   (ramp_entry_guard_x), a
+.ramp_guard_done:
     
     ; Reset completo della fisica del player per la nuova stanza
     xor  a
