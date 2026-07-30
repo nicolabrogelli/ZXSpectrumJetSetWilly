@@ -109,7 +109,7 @@ TreeTopUnused:
 TreeTopEnemy1:
     DEFB $80, UCCELLO, 0, 40, 80       
 TreeTopEnemy2:
-    DEFB $80, FIORE, 0, 80, 152       
+    DEFB $A0, FIORE, 0, 80, 152       
 TreeTopEnemy3:
     DEFB $80, MAIALE, 40, 24, 240  
 TreeTopEnemy4:
