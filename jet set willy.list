@@ -10906,7 +10906,7 @@
   95++9374 09          >        db (RoomsListTable.OnABranchOverTheDriveLayout - RoomsListTable) / 2
   96++9375
   97++9375              OutALimbUnused:
-  98++9375 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
+  98++9375 16               DEFB $16                          ; Salto = 6 (standard JSW), Gravità = 0.75 (Standard) - Permette di raggiungere la foglia verde a Y=1
   99++9376
  100++9376              OutALimbEnemy1:
  101++9376 80 02 70 38      DEFB $80, UCCELLO, 112, 56, 184

@@ -95,7 +95,7 @@ OutALimbDirection:
     ROOM RoomsListTable.OnABranchOverTheDriveLayout		;Room below (None)
 
 OutALimbUnused:
-    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
+    DEFB $16                          ; Salto = 6 (standard JSW), Gravità = 0.75 (Standard) - Permette di raggiungere la foglia verde a Y=1
 
 OutALimbEnemy1:
     DEFB $80, UCCELLO, 112, 56, 184  
