@@ -543,6 +543,8 @@ TriggerRoomChange:
     pop  bc
     ret  z                         ; Se layout è NULL (stanza non creata), ignora transizione!
     
+    ld   (room_ptr), de            ; Aggiorna room_ptr con la nuova stanza prima delle verifiche rampa!
+    
     ; Reset completo della fisica del player per la nuova stanza
     xor  a
     ld   (velocity_y), a

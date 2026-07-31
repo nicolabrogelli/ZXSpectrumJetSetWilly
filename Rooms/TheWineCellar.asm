@@ -103,7 +103,7 @@ TheWineCellarDirection:
 	DEFB BLOCK	                                ;Room below (The Off Licence)
 
 TheWineCellarUnused:
-    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
+    DEFB $00                        ; Fisica stanza: %0001 (Gravità standard 0.75) e %0111 (Salto 7 - ~36px/4.5 tile)
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheWineCellarEnemy1:

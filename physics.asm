@@ -449,6 +449,11 @@ Phys_ApplyGravity:
     
     ld   h, a               ; H = ramp_Y
     
+    ; Se ramp_Y è negativo (bit 7 = 1, la rampa svetta oltre la cima dello schermo Y < 0),
+    ; Willy (old_Y >= 0) è sicuramente SOTTO la rampa -> passa oltre ed evita agganci errati.
+    bit  7, h
+    jp   nz, .no_ramp_landing
+    
     ; Controlla se il salto è iniziato da sotto la rampa
     ld   a, (jump_start_y)
     or   a
@@ -1549,13 +1554,16 @@ GetRampY:
     jp   .return_ramp_y
     
 .on_ramp_slope:
+    ld   a, c              ; A = PlayerX
+    sub  e                 ; A = dx (PlayerX - X_left)
+    ld   d, a              ; D = dx
+    
     ld   a, (ramp_row)
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    sub  16                ; A = ramp_row * 8 - 16
-    add  a, e              ; A = ramp_row * 8 - 16 + X_left
-    sub  c                 ; A = A - PlayerX
+    sub  16                ; A = ramp_row * 8 - 16 (base Y)
+    sub  d                 ; A = (ramp_row * 8 - 16) - dx
     ld   d, a              ; D = calculated Y
     
     ; H = platform_Y + 16 (confronto sicuro con offset +16)
@@ -1634,15 +1642,18 @@ GetRampY:
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    ld   d, a              ; D = X_start
+    ld   d, a              ; D = X_start (ramp_col * 8)
+    
+    ld   a, d              ; A = X_start
+    sub  c                 ; A = dx (X_start - PlayerX)
+    ld   e, a              ; E = dx
     
     ld   a, (ramp_row)
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    sub  16                ; A = ramp_row * 8 - 16
-    sub  d                 ; A = ramp_row * 8 - 16 - X_start
-    add  a, c              ; A = A + PlayerX
+    sub  16                ; A = ramp_row * 8 - 16 (base Y)
+    sub  e                 ; A = (ramp_row * 8 - 16) - dx
     ld   d, a              ; D = calculated Y
     
     ; H = platform_Y + 16 (confronto sicuro con offset +16)
