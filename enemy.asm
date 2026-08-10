@@ -359,7 +359,7 @@ Enemy_DrawRoom:
     
     ; Determina quale sprite usare basato sul tipo (Offset 1, Bit 5-0)
     ld   a, (ix+1)         ; Tipo
-    and  $3F               ; Tipo (0=Lametta, 1=Sega, 2=Uccello, 3=Radar, 4=Uovo, 5=Ufo, 6=Faccia, 7=Scimmia, 8=Robot, 9=Palla, 10=DoubleBall, 11=Soldato, 12=Maiale, 13=Canguro, 14=Fiore, 15=FacciaPalla, 16=Candelabro, 17=Freccia, 18=Tronchese, 19=Periscopio, 20=Nonnino, 21=Parrucca, 22=Frate, 23..26=FaceHell, 27=PinzaGiaccio, 28=Ruota, 29=Saliera, 30=Gelato, 31=Pinguino, 32=Muro, 33=Diavoletto, 34=Vecchia, 35=Piede, 36=Chip, 37=Ipnosi, 38=SwissArmyKife, 39=Botte, 40=Onda)
+    and  $3F               
     
     cp   LAMETTA
     jp   z, .got_lametta

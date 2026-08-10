@@ -109,7 +109,7 @@ CuckoosNestUnused:
 CuckoosNestEnemy1:
     DEFB $80, UOVO, 96, 64, 144    
 CuckoosNestEnemy2:
-    DEFB $80, SEGA, 0, 88, 88   
+    DEFB $B0, SEGA, 0, 88, 88   
 CuckoosNestEnemy3:
     DEFB 0, 0, 0, 0, 0  
 CuckoosNestEnemy4:

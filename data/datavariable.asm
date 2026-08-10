@@ -28,8 +28,14 @@ jump_frame:     db $00
 current_input_dir: db $00
 q_prev:         db $01
 a_prev:         db $01
-room_jump_strength:  db 6
-room_gravity_preset: db 1
+w_warp_state:   db $00
+w_warp_d1:      db $00
+w_warp_d2:      db $00
+w_key_prev:     db $00
+enter_key_prev: db $00
+digit_key_prev: db $ff
+room_jump_strength:  db DEFAULT_JUMP_STRENGTH
+room_gravity_preset: db DEFAULT_GRAVITY_PRESET
 
 ; Buffer e contatori
 counter:        dw 0
@@ -54,7 +60,12 @@ room_ptr:           dw TheOffLicenceLayout;
 enemy_update_rate:  db 1
 enemy_update_timer: db 0
 player_speed:       db 3
+player_air_speed:   db 2
 transition_active:  db 0
+ramp_entry_guard:  db 0   ; Guardia aggancio rampa dopo ingresso orizzontale
+ramp_entry_guard_x: db 0  ; X oltre il quale la guardia viene rimossa
+ramp_entry_guard_dir: db 0 ; 1=ingresso da sinistra, 2=ingresso da destra
+willy_on_ramp:         db 0 ; 1 = Willy posizionato su rampa (debug)
 Audio_jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
 Audio_jump_sound_timer:   db 0
     IF ENABLE_MUSIC != 0

@@ -83,9 +83,27 @@ MovePlayer:
 ; MOVIMENTO SINISTRA
 ; ===============================================================
 movePlayer_left:
+    ; Impedisci lo spostamento a sinistra se Willy è sul conveyor ed il conveyor va a destra.
+    call CheckWillyOnConveyor
+    jr   nc, .continue_left
+    ld   a, (conveyor_dir)
+    or   a
+    ret  nz                     ; Se è sul conveyor e va a destra, ritorna senza muovere
 
+.continue_left:
     ; Calcola nuova posizione: X - speed
+    ld   a, (on_ground)
+    or   a
+    jr   z, .air_left
     ld   a, (player_speed)
+    jr   .speed_left_ok
+.air_left:
+    ld   a, 2
+    ld   hl, jump_frame
+    bit  0, (hl)
+    jr   z, .speed_left_ok
+    inc  a                      ; Alterna 2 e 3 px per frame (Media = 2.5 px/frame)
+.speed_left_ok:
     ld   e, a
 
     ld   a, c
@@ -107,9 +125,6 @@ movePlayer_left:
     jr   c, save_x
 
     ; Applica movimento
-    ld   a, (player_speed)
-    ld   e, a
-
     ld   a, c
     sub  e
     ld   c, a
@@ -146,16 +161,27 @@ movePlayer_left:
 ; MOVIMENTO DESTRA
 ; ===============================================================
 movePlayer_right:
-    ; Impedisci lo spostamento a destra se Willy è sul conveyor nella stanza The Off Licence (room 0).
-    ld   a, (current_room)
-    or   a                      ; Room 0 = The Off Licence
-    jr   nz, .continue_right
+    ; Impedisci lo spostamento a destra se Willy è sul conveyor ed il conveyor va a sinistra.
     call CheckWillyOnConveyor
-    ret  c                      ; Se è sul conveyor, ritorna immediatamente senza muovere
+    jr   nc, .continue_right
+    ld   a, (conveyor_dir)
+    or   a
+    ret  z                      ; Se è sul conveyor e va a sinistra, ritorna senza muovere
 
 .continue_right:
     ; Prova movimento X + speed
+    ld   a, (on_ground)
+    or   a
+    jr   z, .air_right
     ld   a, (player_speed)
+    jr   .speed_right_ok
+.air_right:
+    ld   a, 2
+    ld   hl, jump_frame
+    bit  0, (hl)
+    jr   z, .speed_right_ok
+    inc  a                      ; Alterna 2 e 3 px per frame (Media = 2.5 px/frame)
+.speed_right_ok:
     ld   e, a
 
     ld   a, c
@@ -181,9 +207,6 @@ movePlayer_right:
     jr   c, save_x
 
     ; Applica movimento
-    ld   a, (player_speed)
-    ld   e, a
-
     ld   a, c
     add  a, e
     ld   c, a

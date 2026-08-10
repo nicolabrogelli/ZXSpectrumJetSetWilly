@@ -74,14 +74,14 @@ TheWineCellarConveyor:
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 TheWineCellarConveyorData:
     DEFB 1	                                ;Direction (right)
-    DEFW 24475	                                ;Location in the attribute buffer at 24064: (15,12)
+    DEFW 24507	                                ;Location in the attribute buffer at 24064: row 13, col 27
     DEFB 5	                                ;Length
 
 ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
 TheWineCellarRampData:
     DEFB 1	                                ;Direction (up to the right)
     DEFW 24536                              ;Location in the attribute buffer at 24064: (14,7)
-    DEFB 3	                                ;Length
+    DEFB 2	                                ;Length
 
 ;The next byte is copied to 32990 and specifies the border colour.
 TheWineCellarBorderColor:
@@ -103,7 +103,7 @@ TheWineCellarDirection:
 	DEFB BLOCK	                                ;Room below (The Off Licence)
 
 TheWineCellarUnused:
-    DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
+    DEFB $00                        ; Fisica stanza: %0001 (Gravità standard 0.75) e %0111 (Salto 7 - ~36px/4.5 tile)
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheWineCellarEnemy1:
@@ -124,7 +124,7 @@ TheWineCellarEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheWineCellarPosWilly:
-    db 180, 101                     ; Posizione di Willy
+    db 20, 20                     ; Posizione di Willy
     
 TheWineCellarEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

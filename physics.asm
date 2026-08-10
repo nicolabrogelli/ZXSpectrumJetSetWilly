@@ -69,6 +69,10 @@ Phys_CheckSolid:
 ; Applica gravità e gestisce salto
 ; -------------------------------------------------------------------
 Phys_ApplyGravity:
+    IF ENABLE_RAMP_DEBUG_BARS != 0
+    xor  a
+    ld   (willy_on_ramp), a
+    ENDIF
     ld  bc, (PlayerPos)
     ld  a, b              ; B = PlayerY (pixel)
     
@@ -97,6 +101,10 @@ Phys_ApplyGravity:
     bit  7, b
     jp   nz, .ramp_top_exit ; Se B è negativo (bit 7 = 1), Willy è in cima alla rampa al bordo superiore!
     ld   (PlayerPos), bc    ; Salva la posizione Y allineata alla rampa
+    IF ENABLE_RAMP_DEBUG_BARS != 0
+    ld   a, 1
+    ld   (willy_on_ramp), a
+    ENDIF
     
     ; Gestisci il salto mentre siamo sulla rampa
     ld   a, (jump_pressed)
@@ -308,6 +316,10 @@ Phys_ApplyGravity:
     jr   z, .grav_0_25
     dec  a                     ; cp 4 (Gravità 0.0)
     jr   z, .skip_gravity
+    dec  a                     ; cp 5 (Gravità 0.875 - Intermedia tra 0.75 e 1.0)
+    jr   z, .grav_0_85
+    dec  a                     ; cp 6 (Gravità 0.625 - Intermedia tra 0.5 e 0.75)
+    jr   z, .grav_0_65
     
     ; Default a 0.75 se valore sconosciuto
     jr   .grav_0_75
@@ -323,6 +335,22 @@ Phys_ApplyGravity:
     and  3
     cp   3
     jr   z, .skip_gravity      ; Salta se frame è 3 (media 0.75)
+    jr   .apply_gravity
+
+.grav_0_85:
+    ld   a, b                  ; Ripristina jump_frame
+    and  7
+    cp   5
+    jr   z, .skip_gravity      ; Salta se frame % 8 è 5 (media 0.875 -> altezza ~23.5px con Salto 6)
+    jr   .apply_gravity
+
+.grav_0_65:
+    ld   a, b                  ; Ripristina jump_frame
+    and  7
+    cp   3
+    jr   z, .skip_gravity
+    cp   7
+    jr   z, .skip_gravity      ; Salta se frame % 8 è 3 o 7 (media 0.75 alternata)
     jr   .apply_gravity
 
 .grav_0_25:
@@ -421,6 +449,11 @@ Phys_ApplyGravity:
     
     ld   h, a               ; H = ramp_Y
     
+    ; Se ramp_Y è negativo (bit 7 = 1, la rampa svetta oltre la cima dello schermo Y < 0),
+    ; Willy (old_Y >= 0) è sicuramente SOTTO la rampa -> passa oltre ed evita agganci errati.
+    bit  7, h
+    jp   nz, .no_ramp_landing
+    
     ; Controlla se il salto è iniziato da sotto la rampa
     ld   a, (jump_start_y)
     or   a
@@ -452,6 +485,9 @@ Phys_ApplyGravity:
     ld   (PlayerPos), bc
     ld   a, 1
     ld   (on_ground), a
+    IF ENABLE_RAMP_DEBUG_BARS != 0
+    ld   (willy_on_ramp), a
+    ENDIF
     xor  a
     ld   (velocity_y), a
     ld   (jump_start_y), a  ; Reset jump Y
@@ -469,6 +505,20 @@ Phys_ApplyGravity:
     
 .no_ramp_landing:
     pop  bc
+    ; Se Willy sta cadendo oltre il bordo inferiore (new_Y >= 113) e c'è una stanza sotto,
+    ; salta il controllo del terreno a riga 15 ed esegui la transizione verso la nuova stanza!
+    ld   a, b              ; B = new_Y
+    cp   113
+    jr   c, .check_floor_collision
+    
+    ld   hl, (room_ptr)
+    ld   de, 238           ; Offset per stanza sotto
+    add  hl, de
+    ld   a, (hl)           ; A = ID stanza sotto
+    cp   $FF
+    jr   nz, .no_collision_checks
+
+.check_floor_collision:
     ; --- CONTROLLO COLLISIONE CON IL TERRENO DURANTE LA CADUTA ---
     ; Controlliamo solo al piede effettivo (Y + 16) per evitare che Willy atterri su blocchi orizzontali di lato
     ld   a, b
@@ -494,28 +544,28 @@ Phys_ApplyGravity:
     jr   .no_collision_checks
 
 .check_landing:
-    ; Abbiamo toccato una cella solida!
+    ; Abbiamo toccato una cella solida durante la caduta!
     ld   a, b
     srl  a
     srl  a
-    srl  a                 ; A = r (0..15)
+    srl  a                 ; A = r (0..15), riga di layout della tile
     
     ld   e, a              ; E = r
-    inc  a                 ; A = r + 1 (permetti tolleranza fino al fondo della cella per entrate orizzontali)
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    ld   d, a              ; D = (r + 1) * 8 = limite superiore + 8
+    add  a, 3              ; Tolleranza di 3 pixel sulla superficie superiore della tile
+    ld   d, a              ; D = r * 8 + 3 (limite per l'aggancio della superficie)
     
-    ; Vecchio Y + 16
+    ; Posizione precedente dei piedi: Vecchio Y + 16
     ld   a, (PlayerPos+1)  ; A = Vecchio Y
     add  a, 16             ; A = Vecchio Y + 16
     
-    cp   d                 ; Confronta Vecchio Y + 16 con (r + 1) * 8
-    jr   z, .do_landing    ; Se ==, atterra
-    jr   c, .do_landing    ; Se <, atterra (eravamo sopra o dentro la cella)
+    cp   d                 ; Confronta Vecchio Y + 16 con (r * 8 + 3)
+    jr   z, .do_landing    ; Se == (entro i primi 3px dalla superficie), atterra
+    jr   c, .do_landing    ; Se < (era sopra la superficie prima di cadere), atterra
     
-    jr   .no_collision_checks
+    jr   .no_collision_checks ; Se era nella metà inferiore della tile (proveniva da sotto), NON atterrare! ; Se era sotto la superficie (proveniva da sotto), NON atterrare!
 
 .do_landing:
     ; Atterra sulla riga di layout E!
@@ -781,18 +831,51 @@ Phys_ApplyConveyor:
     jr   z, .move_left
     
 .move_right:
+    ld   a, 2
+    ld   (direction), a    ; Imposta direzione Willy a destra (2)
     ld   a, c
     add  a, 1              ; trascina di 1 pixel a destra per frame
     cp   PLAYER_MAX_X
     jr   c, .store_x
+    jr   z, .store_x
+    
+    ; Controlla se c'è una stanza a destra
+    ld   hl, (room_ptr)
+    ld   de, 236           ; Offset per stanza a destra
+    add  hl, de
+    ld   a, (hl)           ; A = ID stanza a destra
+    cp   $FF
+    jr   z, .no_right_conveyor_transition
+    
+    ; C'è una stanza a destra!
+    ld   c, PLAYER_MIN_X   ; Posiziona Willy a sinistra della nuova stanza
+    jp   TriggerRoomChange ; Salta alla transizione
+    
+.no_right_conveyor_transition:
     ld   a, PLAYER_MAX_X
     jr   .store_x
-    
+
 .move_left:
+    ld   a, 1
+    ld   (direction), a    ; Imposta direzione Willy a sinistra (1)
     ld   a, c
     sub  1                 ; trascina di 1 pixel a sinistra per frame
     cp   PLAYER_MIN_X
     jr   nc, .store_x
+    
+    ; Controlla se c'è una stanza a sinistra
+    ld   hl, (room_ptr)
+    ld   de, 235           ; Offset per stanza a sinistra
+    add  hl, de
+    ld   a, (hl)           ; A = ID stanza a sinistra
+    cp   $FF
+    jr   z, .no_left_conveyor_transition
+    
+    ; C'è una stanza a sinistra!
+    ld   c, PLAYER_MAX_X   ; Posiziona Willy a destra della nuova stanza
+    jp   TriggerRoomChange ; Salta alla transizione (non ritorna qui)
+    
+.no_left_conveyor_transition:
     ld   a, PLAYER_MIN_X
     
 .store_x:
@@ -1172,6 +1255,242 @@ GetCellFromUnpacked:
     ret
 
 ; -------------------------------------------------------------------
+; Phys_CheckRampOnRoomChange
+; Controlla se nella nuova stanza (DE = room layout ptr) c'è una rampa
+; allineata con la posizione d'ingresso di Willy (C = PlayerX, B = PlayerY).
+; Output: Se allineato, modifica B = ramp_Y e C = PlayerX e imposta on_ground = 1.
+; -------------------------------------------------------------------
+Phys_CheckRampOnRoomChange:
+    push hl
+    push de
+    push bc
+    
+    ; Offsets per RampData: DE + 218
+    ld   hl, 218
+    add  hl, de            ; HL = RampData pointer (nella nuova stanza)
+    
+    ld   a, (hl)           ; A = Direction (0 = up-left, 1 = up-right)
+    ld   (ramp_dir), a
+    inc  hl
+    ld   e, (hl)
+    inc  hl
+    ld   d, (hl)           ; DE = Location
+    inc  hl
+    ld   a, (hl)           ; A = Length
+    ld   (ramp_len), a
+    
+    ; Controlla se DE (Location) è 0 o Length è 0
+    ld   a, d
+    or   e
+    jp   z, .no_ramp_change
+    ld   a, (ramp_len)
+    or   a
+    jp   z, .no_ramp_change
+    
+    ; Calcola Row e Col: Offset = DE - 24064
+    ld   hl, -24064
+    add  hl, de            ; HL = Offset
+    ld   d, h
+    ld   e, l
+    
+    ld   a, e
+    and  31
+    ld   (ramp_col), a     ; Col Start
+    
+    srl  h : rr l
+    srl  h : rr l
+    srl  h : rr l
+    srl  h : rr l
+    srl  h : rr l
+    ld   a, l
+    ld   (ramp_row), a     ; Row Start
+    
+    pop  bc                ; BC ha C = PlayerX, B = PlayerY
+    push bc
+    
+    ; Calcola ramp_Y per PlayerX (in C) nella nuova stanza
+    call GetRampY          ; Output: Carry SET se X è nel range rampa, A = ramp_Y
+    jr   c, .on_ramp_x_ok
+    
+    ; PlayerX (in C) è fuori dal range orizzontale della rampa.
+    ; Verifichiamo se C è vicino all'estremità della rampa (tolleranza 16 pixel).
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .prox_dir_left
+
+.prox_dir_right:
+    ; Rampa sale a destra (up-right)
+    ; X_left = ramp_col * 8
+    ld   a, (ramp_col)
+    add  a, a : add a, a : add a, a ; *8
+    ld   e, a              ; E = X_left
+    ld   a, c              ; A = PlayerX
+    cp   e
+    jr   nc, .check_prox_right_bound
+    
+    ; PlayerX < X_left
+    ld   a, e
+    sub  c                 ; A = X_left - PlayerX
+    cp   17                ; Diff <= 16 px?
+    jp   nc, .no_ramp_change
+    pop  bc
+    ld   c, e
+    push bc
+    jr   .retest_ramp_y
+
+.check_prox_right_bound:
+    ld   a, (ramp_len)
+    add  a, a : add a, a : add a, a ; *8
+    add  a, e              ; A = X_right_boundary
+    ld   d, a              ; D = X_right_boundary
+    ld   a, c              ; A = PlayerX
+    sub  d                 ; A = PlayerX - X_right_boundary
+    cp   17                ; Diff <= 16 px?
+    jp   nc, .no_ramp_change
+    pop  bc
+    ld   c, d
+    dec  c
+    push bc
+    jr   .retest_ramp_y
+
+.prox_dir_left:
+    ; Rampa sale a sinistra (up-left)
+    ; X_left = (ramp_col - ramp_len + 1) * 8
+    ld   a, (ramp_col)
+    inc  a
+    ld   hl, ramp_len
+    sub  (hl)
+    add  a, a : add a, a : add a, a ; *8
+    ld   e, a              ; E = X_left
+    
+    ld   a, c              ; A = PlayerX
+    cp   e
+    jr   nc, .check_prox_left_bound
+    
+    ; PlayerX < X_left
+    ld   a, e
+    sub  c                 ; A = X_left - PlayerX
+    cp   17                ; Diff <= 16 px?
+    jp   nc, .no_ramp_change
+    pop  bc
+    ld   c, e
+    push bc
+    jr   .retest_ramp_y
+
+.check_prox_left_bound:
+    ld   a, (ramp_col)
+    add  a, a : add a, a : add a, a ; *8
+    add  a, 8              ; A = X_right_boundary
+    ld   d, a              ; D = X_right_boundary
+    ld   a, c              ; A = PlayerX
+    sub  d                 ; A = PlayerX - X_right_boundary
+    cp   17                ; Diff <= 16 px?
+    jp   nc, .no_ramp_change
+    pop  bc
+    ld   c, d
+    dec  c
+    push bc
+    jr   .retest_ramp_y
+
+.retest_ramp_y:
+    pop  bc
+    push bc
+    call GetRampY
+    jp   nc, .no_ramp_change
+
+.on_ramp_x_ok:
+    ; C'è una rampa a PlayerX! Confronta PlayerY (in B) con ramp_Y (in A)
+    ld   e, a              ; E = ramp_Y
+    ld   a, b              ; A = PlayerY
+    sub  e                 ; A = PlayerY - ramp_Y
+    bit  7, a
+    jr   z, .abs_change
+    neg
+.abs_change:
+    cp   16                ; Tolleranza 16 pixel per cambi stanza verticali
+    jp   nc, .no_ramp_change
+    
+    ; Controllo bordo inferiore (ramp_Y >= 104)
+    ld   a, e              ; A = ramp_Y
+    cp   104
+    jr   nc, .adj_bottom
+    
+    ; Controllo bordo superiore (ramp_Y <= 4 o negativo)
+    bit  7, a
+    jr   nz, .adj_top
+    cp   5
+    jr   c, .adj_top
+    jr   .apply_ramp_align
+
+.adj_bottom:
+    ; ramp_Y >= 104 (bordo inferiore). Sposta X lungo la pendenza verso l'alto.
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .adj_bot_left
+.adj_bot_right:
+    pop  bc
+    ld   a, c
+    add  a, 8
+    ld   c, a
+    push bc
+    jr   .recalc_ramp_y
+.adj_bot_left:
+    pop  bc
+    ld   a, c
+    sub  8
+    ld   c, a
+    push bc
+    jr   .recalc_ramp_y
+
+.adj_top:
+    ; ramp_Y <= 4 (bordo superiore). Sposta X lungo la pendenza verso il basso.
+    ld   a, (ramp_dir)
+    or   a
+    jr   z, .adj_top_left
+.adj_top_right:
+    pop  bc
+    ld   a, c
+    sub  8
+    ld   c, a
+    push bc
+    jr   .recalc_ramp_y
+.adj_top_left:
+    pop  bc
+    ld   a, c
+    add  a, 8
+    ld   c, a
+    push bc
+
+.recalc_ramp_y:
+    call GetRampY
+    jp   nc, .no_ramp_change
+    ld   e, a              ; E = nuovo ramp_Y safe
+    
+    ; Controlla se ancora ai bordi
+    cp   104
+    jr   nc, .adj_bottom
+    bit  7, a
+    jr   nz, .adj_top
+    cp   5
+    jr   c, .adj_top
+
+.apply_ramp_align:
+    pop  bc
+    ld   b, e              ; B = ramp_Y
+    push bc
+    
+    ld   a, 1
+    ld   (on_ground), a    ; Imposta Willy a terra sulla rampa
+    xor  a
+    ld   (ramp_entry_guard), a
+    
+.no_ramp_change:
+    pop  bc
+    pop  de
+    pop  hl
+    ret
+
+; -------------------------------------------------------------------
 ; GetRampY
 ; Calcola la coordinata Y teorica di Willy se si trova sulla rampa
 ; Input: C = PlayerX
@@ -1208,7 +1527,7 @@ GetRampY:
     jp   c, .out_of_ramp   ; Se PlayerX < X_left, fuori
     
     cp   h
-    jr   c, .on_ramp_slope ; Se PlayerX < X_right_boundary, pendenza rampa
+    jp   c, .on_ramp_slope ; Se PlayerX < X_right_boundary, pendenza rampa
     
     ; Controlla se è sulla cella della piattaforma adiacente in cima: [X_right_boundary, X_right_boundary + 7]
     sub  h                 ; A = PlayerX - X_right_boundary
@@ -1220,7 +1539,7 @@ GetRampY:
     ld   a, c              ; A = PlayerX
     cp   e
     jp   c, .out_of_ramp   ; Se PlayerX < X_left, fuori
-    jr   .on_ramp_slope    ; Se >= X_left, è sicuramente sulla pendenza rampa (non può superare 256)
+    jp   .on_ramp_slope    ; Se >= X_left, è sicuramente sulla pendenza rampa (non può superare 256)
     
 .on_platform_right:
     ; Piattaforma adiacente! Restituisci PlayerY = (ramp_row - ramp_len + 1) * 8 - 16
@@ -1232,17 +1551,19 @@ GetRampY:
     add  a, a              ; *4
     add  a, a              ; *8
     sub  16                ; A = Row * 8 - 16
-    scf                    ; Set carry (dentro rampa/piattaforma)
-    ret
+    jp   .return_ramp_y
     
 .on_ramp_slope:
+    ld   a, c              ; A = PlayerX
+    sub  e                 ; A = dx (PlayerX - X_left)
+    ld   d, a              ; D = dx
+    
     ld   a, (ramp_row)
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    sub  16                ; A = ramp_row * 8 - 16
-    add  a, e              ; A = ramp_row * 8 - 16 + X_left
-    sub  c                 ; A = A - PlayerX
+    sub  16                ; A = ramp_row * 8 - 16 (base Y)
+    sub  d                 ; A = (ramp_row * 8 - 16) - dx
     ld   d, a              ; D = calculated Y
     
     ; H = platform_Y + 16 (confronto sicuro con offset +16)
@@ -1263,13 +1584,11 @@ GetRampY:
     ; Altrimenti, limita a platform_Y
     ld   a, h
     sub  16                ; A = platform_Y
-    scf
-    ret
+    jp   .return_ramp_y
     
 .no_clamp:
     ld   a, d              ; Ripristina A = calculated Y
-    scf                    ; Set carry
-    ret
+    jp   .return_ramp_y
     
 .dir_left:
     ; Rampa sale a sinistra (up-left)
@@ -1316,23 +1635,25 @@ GetRampY:
     add  a, a              ; *4
     add  a, a              ; *8
     sub  16                ; A = Row * 8 - 16
-    scf                    ; Set carry
-    ret
+    jp   .return_ramp_y
     
 .on_ramp_slope_left:
     ld   a, (ramp_col)
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    ld   d, a              ; D = X_start
+    ld   d, a              ; D = X_start (ramp_col * 8)
+    
+    ld   a, d              ; A = X_start
+    sub  c                 ; A = dx (X_start - PlayerX)
+    ld   e, a              ; E = dx
     
     ld   a, (ramp_row)
     add  a, a              ; *2
     add  a, a              ; *4
     add  a, a              ; *8
-    sub  16                ; A = ramp_row * 8 - 16
-    sub  d                 ; A = ramp_row * 8 - 16 - X_start
-    add  a, c              ; A = A + PlayerX
+    sub  16                ; A = ramp_row * 8 - 16 (base Y)
+    sub  e                 ; A = (ramp_row * 8 - 16) - dx
     ld   d, a              ; D = calculated Y
     
     ; H = platform_Y + 16 (confronto sicuro con offset +16)
@@ -1353,12 +1674,65 @@ GetRampY:
     ; Altrimenti, limita a platform_Y
     ld   a, h
     sub  16                ; A = platform_Y
-    scf
-    ret
+    jp   .return_ramp_y
     
 .no_clamp_left:
     ld   a, d
-    scf
+    jp   .return_ramp_y
+
+.return_ramp_y:
+    ; A contiene la coordinata ramp_Y calcolata per PlayerX (in C).
+    ; Verifichiamo se la guardia ingresso orizzontale è ancora attiva.
+    push bc
+    ld   b, a                  ; B = ramp_Y
+    ld   a, (ramp_entry_guard)
+    or   a
+    jr   z, .guard_clear_exit  ; Se la guardia è 0, restituisci normalmente A = ramp_Y, Carry SET
+
+    ; La guardia è attiva!
+    ld   a, (ramp_entry_guard_dir)
+    cp   1
+    jr   z, .check_x_left
+
+.check_x_right:
+    ld   a, c                  ; A = PlayerX
+    ld   hl, ramp_entry_guard_x
+    cp   (hl)                  ; PlayerX - ramp_entry_guard_x
+    jr   c, .deactivate_guard  ; Se PlayerX < ramp_entry_guard_x, Willy è uscito dalla zona di guardia -> disattiva
+    jr   .check_alignment
+
+.check_x_left:
+    ld   a, c                  ; A = PlayerX
+    ld   hl, ramp_entry_guard_x
+    cp   (hl)                  ; PlayerX - ramp_entry_guard_x
+    jr   nc, .deactivate_guard ; Se PlayerX >= ramp_entry_guard_x, Willy è uscito dalla zona di guardia -> disattiva
+
+.check_alignment:
+    ; Willy si trova nella zona d'ingresso (es. X < 16 o X >= 232).
+    ; Verifichiamo se Willy è GIÀ ALLINEATO alla rampa (stava camminando/atterrando su di essa).
+    ; Confrontiamo (PlayerPos+1) (PlayerY) con B (ramp_Y).
+    ld   a, (PlayerPos+1)      ; A = PlayerY
+    sub  b                     ; A = PlayerY - ramp_Y
+    bit  7, a
+    jr   z, .diff_positive
+    neg
+.diff_positive:
+    cp   12                    ; Se |PlayerY - ramp_Y| < 12, Willy è allineato alla rampa!
+    jr   c, .deactivate_guard  ; È sulla rampa che prosegue -> disattiva guardia e permetti di proseguire!
+
+    ; Willy NON è allineato (es. sta camminando sul pavimento sotto la rampa).
+    pop  bc
+    or   a                     ; Reset carry (ignora rampa!)
+    ret
+
+.deactivate_guard:
+    xor  a
+    ld   (ramp_entry_guard), a
+
+.guard_clear_exit:
+    ld   a, b                  ; A = ramp_Y
+    pop  bc
+    scf                        ; Set carry (rampa valida!)
     ret
 
 .out_of_ramp:
@@ -1383,9 +1757,9 @@ Phys_LoadRoomSettings:
     or   a
     jr   nz, .custom_settings
     
-    ld   a, 6
+    ld   a, DEFAULT_JUMP_STRENGTH
     ld   (room_jump_strength), a
-    ld   a, 1
+    ld   a, DEFAULT_GRAVITY_PRESET
     ld   (room_gravity_preset), a
     jr   .done
     

@@ -107,7 +107,7 @@ FirstLandingUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 FirstLandingEnemy1:
-    DEFB $80, FRATE, 192, 96, 240  
+    DEFB $80, FRATE, 192, 96, 235  
 FirstLandingEnemy2:
     DEFB 0, 0, 0, 0, 0
 FirstLandingEnemy3:

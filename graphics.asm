@@ -854,7 +854,10 @@ Gfx_UpdateItemsCollectedDisplay:
     ret
 
 status_line:
-    db "Items collected 000 Time  7:30am"
+    db "Items collected 000 "
+
+status_line_time:
+    db "Time  7:30am"
 
 status_line_attrs:
     db 65, 66, 67, 68, 69, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 70, 69, 68, 67, 66, 65

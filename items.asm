@@ -66,6 +66,10 @@ ItemsTable:
     ; Stanza 13 (Out on a Limb)
     ITEM RoomsListTable.OutALimbLayout, 2, 6, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
     ITEM RoomsListTable.OutALimbLayout, 5, 1, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+
+    ; Stanza 14 (Resecue Esmeralda)
+    ITEM RoomsListTable.RescueEsmereldaLayout, 26, 3, MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.RescueEsmereldaLayout, 26, 2, GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
     
     ; Stanza 15 (I'm sure I've seen this before..)
     ITEM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout, 31, 4, (BLUE * 8) + MAGENTA, 0    ; Oggetto 1 alla colonna X=31, riga Y=4, Paper = BLUE (1), Ink = MAGENTA (3), (Stato: 0=attivo)
@@ -100,6 +104,9 @@ ItemsTable:
 
     ; Stanza 28 (First Landing)
     ;ITEM RoomsListTable.FirstLandingLayout, 20, 13, YELLOW, 0           ; Oggetto 1 alla colonna X=20, riga Y=13, YELLOW, (Stato: 0=attivo)
+
+    ; Stanza 29 (The Nightmare Room)
+    ITEM RoomsListTable.TheNightmareRoomLayout, 26, 9, MAGENTA, 0           ; Oggetto 1 alla colonna X=20, riga Y=13, YELLOW, (Stato: 0=attivo)
 
     ; Stanza 30 (The Bany Tree)
     ITEM RoomsListTable.TheBanyanTreeLayout, 8, 14, MAGENTA, 0
