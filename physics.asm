@@ -74,7 +74,6 @@ Phys_ApplyGravity:
     ld   (willy_on_ramp), a
     ENDIF
     ld  bc, (PlayerPos)
-    ld  a, b              ; B = PlayerY (pixel)
     
     ; --- CONTROLLO RAMPA PER IL MOVIMENTO ---
     ld   a, (on_ground)
@@ -267,6 +266,8 @@ Phys_ApplyGravity:
     xor  a
     ld   (on_ground), a
     ld   (velocity_y), a   ; Inizia la caduta con velocità 0
+    ld   a, (PlayerPos+1)  ; A = PlayerY
+    ld   (jump_start_y), a ; Salva la quota Y di inizio caduta per i controlli di provenienza rampa
     jp   .in_air
     
 .still_on_ground:
