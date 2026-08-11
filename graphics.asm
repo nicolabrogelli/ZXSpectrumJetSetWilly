@@ -637,6 +637,10 @@ Gfx_PrintRoomName:
 
     ; Disegna i 7 Willy in basso a sinistra (Row 19, 20)
     call Gfx_PrintWillyLives
+
+    IF ENABLE_SHOW_ROOM_STATUS != 0
+    call Gfx_PrintRoomStatus
+    ENDIF
     ret
 
 Gfx_PrintWillyLives:
@@ -862,6 +866,122 @@ status_line_time:
 status_line_attrs:
     db 65, 66, 67, 68, 69, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 70, 69, 68, 67, 66, 65
 
+status_room:
+    db "Room: "
+status_room_end:
+status_room_len EQU status_room_end - status_room
+
+; -------------------------------------------------------------------
+; Disegna lo status della stanza (status_room + numero stanza) nell'ultima riga (Riga 23)
+; -------------------------------------------------------------------
+    IF ENABLE_SHOW_ROOM_STATUS != 0
+Gfx_PrintRoomStatus:
+    push af
+    push bc
+    push de
+    push hl
+
+    ld   c, 0              ; C = colonna iniziale (0..31)
+
+    ; 1. Stampa la stringa status_room ("Room: ")
+    ld   hl, status_room
+    ld   b, status_room_len
+.print_label_loop:
+    push bc
+    ld   a, (hl)           ; A = carattere ASCII
+    push hl
+    call Gfx_DrawCharVRAM_Row23
+    pop  hl
+    inc  hl
+    pop  bc
+    inc  c                 ; Prossima colonna
+    djnz .print_label_loop
+
+    ; 2. Converti (current_room) in 2 cifre ASCII e stampale
+    ld   a, (current_room)
+    ld   b, 0              ; B = decine
+.loop_tens:
+    cp   10
+    jr   c, .done_tens
+    sub  10
+    inc  b
+    jr   .loop_tens
+.done_tens:
+    ld   e, a              ; E = unità
+
+    ; Stampa cifra decine
+    ld   a, b
+    add  a, '0'
+    push de
+    call Gfx_DrawCharVRAM_Row23
+    pop  de
+    inc  c
+
+    ; Stampa cifra unità
+    ld   a, e
+    add  a, '0'
+    call Gfx_DrawCharVRAM_Row23
+
+    pop  hl
+    pop  de
+    pop  bc
+    pop  af
+    ret
+
+; -------------------------------------------------------------------
+; Disegna un carattere ASCII A alla colonna C (0..31) di Riga 23 direttamente in VRAM
+; -------------------------------------------------------------------
+Gfx_DrawCharVRAM_Row23:
+    ld   h, a              ; Salva il carattere ASCII in H
+    ld   a, c
+    cp   32
+    ret  nc                ; Se C >= 32, ignora ed evita la corruzione di memoria!
+
+    push bc
+    push de
+    push hl
+
+    ; 1. Indirizzo del font per il carattere ASCII (in H) in ROM Sinclair ($3D00 + (A - 32) * 8)
+    ld   a, h              ; Ripristina carattere ASCII in A
+    sub  32                ; A = A - 32
+    ld   l, a
+    ld   h, 0
+    add  hl, hl            ; *2
+    add  hl, hl            ; *4
+    add  hl, hl            ; *8
+    ld   de, $3d00         ; Indirizzo corretto del font 8x8 in ROM Sinclair ($3D00)
+    add  hl, de            ; HL = indirizzo pattern font 8x8 in ROM Sinclair ($3D00)
+
+    ; 2. Imposta l'attributo colore a Riga 23, Colonna C ($5A60 + C)
+    push hl                ; Salva indirizzo pattern font
+    ld   l, c
+    ld   h, 0
+    ld   de, $5a60
+    add  hl, de            ; HL = indirizzo attributi ($5A60 + C)
+    ld   (hl), $46         ; Attributo: BRIGHT 1 + PAPER BLACK + INK YELLOW ($46)
+    pop  hl                ; Ripristina indirizzo pattern font in HL
+
+    ; 3. Indirizzo VRAM Riga 23, Colonna C
+    ; Low byte VRAM: $E0 | C
+    ld   a, c
+    or   $e0
+    ld   e, a              ; E = Low byte VRAM ($E0 | C)
+
+    ; Copia gli 8 byte di pattern nelle 8 linee di VRAM ($5000, $5100, ..., $5700)
+    ld   d, $50            ; D = High byte iniziale VRAM ($50)
+    ld   b, 8              ; B = 8 linee di pixel
+.loop_vram_lines:
+    ld   a, (hl)           ; Leggi byte dal font ROM
+    ld   (de), a           ; Scrivi direttamente in VRAM bitmap
+    inc  hl                ; Prossimo byte del font
+    inc  d                 ; Prossima linea schermo ($50 -> $51 -> ... -> $57)
+    djnz .loop_vram_lines
+
+    pop  hl
+    pop  de
+    pop  bc
+    ret
+    ENDIF
 ; -------------------------------------------------------------------
 ; Disegna riga/pavimento sotto i piedi degli sprite (Riga 18, Y = 144)
 ; -------------------------------------------------------------------
