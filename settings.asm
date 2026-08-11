@@ -62,10 +62,3 @@ ENABLE_ROOM_SKIP_KEYS EQU 1
     IFNDEF ENABLE_RAMP_DEBUG_BARS
 ENABLE_RAMP_DEBUG_BARS EQU 1
     ENDIF
-
-; --- Visualizzazione dello status della stanza (Label status_room + Numero Stanza) ---
-; 1 = Abilita la visualizzazione della stringa status_room e numero stanza nell'ultima riga a schermo
-; 0 = Disabilita la visualizzazione dello status della stanza
-    IFNDEF ENABLE_SHOW_ROOM_STATUS
-ENABLE_SHOW_ROOM_STATUS EQU 1
-    ENDIF
