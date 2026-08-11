@@ -11,6 +11,7 @@
     include "settings.asm"
     include "physics_config.asm"
     include "constants.asm"
+    include "macro.asm"
     include "interrupts.asm"
     include "graphics.asm"
     include "player.asm"
@@ -104,7 +105,10 @@ Main_loop:
     ld   hl, (counter)
     ld   (last_frame_counter), hl
     
+    IF ENABLE_EFFECTS != 0
     call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
+    ENDIF
+    
     IF ENABLE_MUSIC != 0
     call Audio_UpdateMusic        ; Aggiorna la musica
     ENDIF

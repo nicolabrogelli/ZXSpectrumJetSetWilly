@@ -1,20 +1,22 @@
 |SLD.data.version|1
 ||K|KEYWORDS|WPMEM,LOGPOINT,ASSERTION
 jet set willy.asm|6||0|-1|-1|Z|pages.size:16384,pages.count:4,slots.count:4,slots.adr:0,16384,32768,49152
-settings.asm|14||0|-1|0|D|ENABLE_MUSIC
-settings.asm|14||0|-1|0|L|,ENABLE_MUSIC,,+equ,+used
-settings.asm|21||0|-1|0|D|ENABLE_GUARDIAN_COLLISION_DEATH
-settings.asm|21||0|-1|0|L|,ENABLE_GUARDIAN_COLLISION_DEATH,,+equ,+used
-settings.asm|28||0|-1|0|D|ENABLE_GUARDIAN_DEBUG_BARS
-settings.asm|28||0|-1|0|L|,ENABLE_GUARDIAN_DEBUG_BARS,,+equ,+used
-settings.asm|35||0|-1|0|D|ENABLE_NASTY_COLLISION_DEATH
-settings.asm|35||0|-1|0|L|,ENABLE_NASTY_COLLISION_DEATH,,+equ,+used
-settings.asm|42||0|-1|0|D|ENABLE_ANIMATE_LIVES
-settings.asm|42||0|-1|0|L|,ENABLE_ANIMATE_LIVES,,+equ,+used
-settings.asm|49||0|-1|1|D|ENABLE_ROOM_SKIP_KEYS
-settings.asm|49||0|-1|1|L|,ENABLE_ROOM_SKIP_KEYS,,+equ,+used
-settings.asm|56||0|-1|1|D|ENABLE_RAMP_DEBUG_BARS
-settings.asm|56||0|-1|1|L|,ENABLE_RAMP_DEBUG_BARS,,+equ,+used
+settings.asm|14||0|-1|1|D|ENABLE_EFFECTS
+settings.asm|14||0|-1|1|L|,ENABLE_EFFECTS,,+equ,+used
+settings.asm|21||0|-1|0|D|ENABLE_MUSIC
+settings.asm|21||0|-1|0|L|,ENABLE_MUSIC,,+equ,+used
+settings.asm|28||0|-1|0|D|ENABLE_GUARDIAN_COLLISION_DEATH
+settings.asm|28||0|-1|0|L|,ENABLE_GUARDIAN_COLLISION_DEATH,,+equ,+used
+settings.asm|35||0|-1|0|D|ENABLE_GUARDIAN_DEBUG_BARS
+settings.asm|35||0|-1|0|L|,ENABLE_GUARDIAN_DEBUG_BARS,,+equ,+used
+settings.asm|42||0|-1|0|D|ENABLE_NASTY_COLLISION_DEATH
+settings.asm|42||0|-1|0|L|,ENABLE_NASTY_COLLISION_DEATH,,+equ,+used
+settings.asm|49||0|-1|0|D|ENABLE_ANIMATE_LIVES
+settings.asm|49||0|-1|0|L|,ENABLE_ANIMATE_LIVES,,+equ,+used
+settings.asm|56||0|-1|1|D|ENABLE_ROOM_SKIP_KEYS
+settings.asm|56||0|-1|1|L|,ENABLE_ROOM_SKIP_KEYS,,+equ,+used
+settings.asm|63||0|-1|1|D|ENABLE_RAMP_DEBUG_BARS
+settings.asm|63||0|-1|1|L|,ENABLE_RAMP_DEBUG_BARS,,+equ,+used
 physics_config.asm|17||0|-1|6|D|DEFAULT_JUMP_STRENGTH
 physics_config.asm|17||0|-1|6|L|,DEFAULT_JUMP_STRENGTH,,+equ,+used
 physics_config.asm|21||0|-1|6|D|JUMP_STRENGTH
@@ -99,90 +101,90 @@ constants.asm|60||0|-1|282|D|OFFSET_COLORS_5_8
 constants.asm|60||0|-1|282|L|,OFFSET_COLORS_5_8,,+equ,+used
 constants.asm|62||0|-1|255|D|BLOCK
 constants.asm|62||0|-1|255|L|,BLOCK,,+equ,+used
-constants.asm|77||0|-1|0|D|LAMETTA
-constants.asm|77||0|-1|0|L|,LAMETTA,,+equ,+used
-constants.asm|78||0|-1|1|D|SEGA
-constants.asm|78||0|-1|1|L|,SEGA,,+equ,+used
-constants.asm|79||0|-1|2|D|UCCELLO
-constants.asm|79||0|-1|2|L|,UCCELLO,,+equ,+used
-constants.asm|80||0|-1|3|D|RADAR
-constants.asm|80||0|-1|3|L|,RADAR,,+equ,+used
-constants.asm|81||0|-1|4|D|UOVO
-constants.asm|81||0|-1|4|L|,UOVO,,+equ,+used
-constants.asm|82||0|-1|5|D|UFO
-constants.asm|82||0|-1|5|L|,UFO,,+equ,+used
-constants.asm|83||0|-1|6|D|FACCIA
-constants.asm|83||0|-1|6|L|,FACCIA,,+equ,+used
-constants.asm|84||0|-1|7|D|SCIMMIA
-constants.asm|84||0|-1|7|L|,SCIMMIA,,+equ,+used
-constants.asm|85||0|-1|8|D|ROBOT
-constants.asm|85||0|-1|8|L|,ROBOT,,+equ,+used
-constants.asm|86||0|-1|9|D|PALLA
-constants.asm|86||0|-1|9|L|,PALLA,,+equ,+used
-constants.asm|87||0|-1|10|D|DOUBLE_BALL
-constants.asm|87||0|-1|10|L|,DOUBLE_BALL,,+equ,+used
-constants.asm|88||0|-1|11|D|SOLDATO
-constants.asm|88||0|-1|11|L|,SOLDATO,,+equ,+used
-constants.asm|89||0|-1|12|D|MAIALE
-constants.asm|89||0|-1|12|L|,MAIALE,,+equ,+used
-constants.asm|90||0|-1|13|D|CANGURO
-constants.asm|90||0|-1|13|L|,CANGURO,,+equ,+used
-constants.asm|91||0|-1|14|D|FIORE
-constants.asm|91||0|-1|14|L|,FIORE,,+equ,+used
-constants.asm|92||0|-1|15|D|FACCIA_PALLA
-constants.asm|92||0|-1|15|L|,FACCIA_PALLA,,+equ,+used
-constants.asm|93||0|-1|16|D|CANDELABRO
-constants.asm|93||0|-1|16|L|,CANDELABRO,,+equ,+used
-constants.asm|94||0|-1|17|D|FRECCIA
-constants.asm|94||0|-1|17|L|,FRECCIA,,+equ,+used
-constants.asm|95||0|-1|18|D|TRONCHESE
-constants.asm|95||0|-1|18|L|,TRONCHESE,,+equ,+used
-constants.asm|96||0|-1|19|D|PERISCOPIO
-constants.asm|96||0|-1|19|L|,PERISCOPIO,,+equ,+used
-constants.asm|97||0|-1|20|D|NONNINO
-constants.asm|97||0|-1|20|L|,NONNINO,,+equ,+used
-constants.asm|98||0|-1|21|D|PARRUCCA
-constants.asm|98||0|-1|21|L|,PARRUCCA,,+equ,+used
-constants.asm|99||0|-1|22|D|FRATE
-constants.asm|99||0|-1|22|L|,FRATE,,+equ,+used
-constants.asm|100||0|-1|23|D|FACE_HL
-constants.asm|100||0|-1|23|L|,FACE_HL,,+equ,+used
-constants.asm|101||0|-1|24|D|FACE_HR
-constants.asm|101||0|-1|24|L|,FACE_HR,,+equ,+used
-constants.asm|102||0|-1|25|D|FACE_LL
-constants.asm|102||0|-1|25|L|,FACE_LL,,+equ,+used
-constants.asm|103||0|-1|26|D|FACE_LR
-constants.asm|103||0|-1|26|L|,FACE_LR,,+equ,+used
-constants.asm|104||0|-1|27|D|PINZA_GHIACCIO
-constants.asm|104||0|-1|27|L|,PINZA_GHIACCIO,,+equ,+used
-constants.asm|105||0|-1|28|D|RUOTA
-constants.asm|105||0|-1|28|L|,RUOTA,,+equ,+used
-constants.asm|106||0|-1|29|D|SALIERA
-constants.asm|106||0|-1|29|L|,SALIERA,,+equ,+used
-constants.asm|107||0|-1|30|D|GELATO
-constants.asm|107||0|-1|30|L|,GELATO,,+equ,+used
-constants.asm|108||0|-1|31|D|PINGUINO
-constants.asm|108||0|-1|31|L|,PINGUINO,,+equ,+used
-constants.asm|109||0|-1|32|D|MURO
-constants.asm|109||0|-1|32|L|,MURO,,+equ,+used
-constants.asm|110||0|-1|33|D|DIAVOLETTO
-constants.asm|110||0|-1|33|L|,DIAVOLETTO,,+equ,+used
-constants.asm|111||0|-1|34|D|VECCHIA
-constants.asm|111||0|-1|34|L|,VECCHIA,,+equ,+used
-constants.asm|112||0|-1|35|D|PIEDE
-constants.asm|112||0|-1|35|L|,PIEDE,,+equ,+used
-constants.asm|113||0|-1|36|D|CHIP
-constants.asm|113||0|-1|36|L|,CHIP,,+equ,+used
-constants.asm|114||0|-1|37|D|IPNOSI
-constants.asm|114||0|-1|37|L|,IPNOSI,,+equ,+used
-constants.asm|115||0|-1|38|D|SWISSARMKIFE
-constants.asm|115||0|-1|38|L|,SWISSARMKIFE,,+equ,+used
-constants.asm|116||0|-1|39|D|BOTTE
-constants.asm|116||0|-1|39|L|,BOTTE,,+equ,+used
-constants.asm|117||0|-1|40|D|ONDA
-constants.asm|117||0|-1|40|L|,ONDA,,+equ,+used
-constants.asm|118||0|-1|41|D|PALAZZO
-constants.asm|118||0|-1|41|L|,PALAZZO,,+equ,+used
+constants.asm|65||0|-1|0|D|LAMETTA
+constants.asm|65||0|-1|0|L|,LAMETTA,,+equ,+used
+constants.asm|66||0|-1|1|D|SEGA
+constants.asm|66||0|-1|1|L|,SEGA,,+equ,+used
+constants.asm|67||0|-1|2|D|UCCELLO
+constants.asm|67||0|-1|2|L|,UCCELLO,,+equ,+used
+constants.asm|68||0|-1|3|D|RADAR
+constants.asm|68||0|-1|3|L|,RADAR,,+equ,+used
+constants.asm|69||0|-1|4|D|UOVO
+constants.asm|69||0|-1|4|L|,UOVO,,+equ,+used
+constants.asm|70||0|-1|5|D|UFO
+constants.asm|70||0|-1|5|L|,UFO,,+equ,+used
+constants.asm|71||0|-1|6|D|FACCIA
+constants.asm|71||0|-1|6|L|,FACCIA,,+equ,+used
+constants.asm|72||0|-1|7|D|SCIMMIA
+constants.asm|72||0|-1|7|L|,SCIMMIA,,+equ,+used
+constants.asm|73||0|-1|8|D|ROBOT
+constants.asm|73||0|-1|8|L|,ROBOT,,+equ,+used
+constants.asm|74||0|-1|9|D|PALLA
+constants.asm|74||0|-1|9|L|,PALLA,,+equ,+used
+constants.asm|75||0|-1|10|D|DOUBLE_BALL
+constants.asm|75||0|-1|10|L|,DOUBLE_BALL,,+equ,+used
+constants.asm|76||0|-1|11|D|SOLDATO
+constants.asm|76||0|-1|11|L|,SOLDATO,,+equ,+used
+constants.asm|77||0|-1|12|D|MAIALE
+constants.asm|77||0|-1|12|L|,MAIALE,,+equ,+used
+constants.asm|78||0|-1|13|D|CANGURO
+constants.asm|78||0|-1|13|L|,CANGURO,,+equ,+used
+constants.asm|79||0|-1|14|D|FIORE
+constants.asm|79||0|-1|14|L|,FIORE,,+equ,+used
+constants.asm|80||0|-1|15|D|FACCIA_PALLA
+constants.asm|80||0|-1|15|L|,FACCIA_PALLA,,+equ,+used
+constants.asm|81||0|-1|16|D|CANDELABRO
+constants.asm|81||0|-1|16|L|,CANDELABRO,,+equ,+used
+constants.asm|82||0|-1|17|D|FRECCIA
+constants.asm|82||0|-1|17|L|,FRECCIA,,+equ,+used
+constants.asm|83||0|-1|18|D|TRONCHESE
+constants.asm|83||0|-1|18|L|,TRONCHESE,,+equ,+used
+constants.asm|84||0|-1|19|D|PERISCOPIO
+constants.asm|84||0|-1|19|L|,PERISCOPIO,,+equ,+used
+constants.asm|85||0|-1|20|D|NONNINO
+constants.asm|85||0|-1|20|L|,NONNINO,,+equ,+used
+constants.asm|86||0|-1|21|D|PARRUCCA
+constants.asm|86||0|-1|21|L|,PARRUCCA,,+equ,+used
+constants.asm|87||0|-1|22|D|FRATE
+constants.asm|87||0|-1|22|L|,FRATE,,+equ,+used
+constants.asm|88||0|-1|23|D|FACE_HL
+constants.asm|88||0|-1|23|L|,FACE_HL,,+equ,+used
+constants.asm|89||0|-1|24|D|FACE_HR
+constants.asm|89||0|-1|24|L|,FACE_HR,,+equ,+used
+constants.asm|90||0|-1|25|D|FACE_LL
+constants.asm|90||0|-1|25|L|,FACE_LL,,+equ,+used
+constants.asm|91||0|-1|26|D|FACE_LR
+constants.asm|91||0|-1|26|L|,FACE_LR,,+equ,+used
+constants.asm|92||0|-1|27|D|PINZA_GHIACCIO
+constants.asm|92||0|-1|27|L|,PINZA_GHIACCIO,,+equ,+used
+constants.asm|93||0|-1|28|D|RUOTA
+constants.asm|93||0|-1|28|L|,RUOTA,,+equ,+used
+constants.asm|94||0|-1|29|D|SALIERA
+constants.asm|94||0|-1|29|L|,SALIERA,,+equ,+used
+constants.asm|95||0|-1|30|D|GELATO
+constants.asm|95||0|-1|30|L|,GELATO,,+equ,+used
+constants.asm|96||0|-1|31|D|PINGUINO
+constants.asm|96||0|-1|31|L|,PINGUINO,,+equ,+used
+constants.asm|97||0|-1|32|D|MURO
+constants.asm|97||0|-1|32|L|,MURO,,+equ,+used
+constants.asm|98||0|-1|33|D|DIAVOLETTO
+constants.asm|98||0|-1|33|L|,DIAVOLETTO,,+equ,+used
+constants.asm|99||0|-1|34|D|VECCHIA
+constants.asm|99||0|-1|34|L|,VECCHIA,,+equ,+used
+constants.asm|100||0|-1|35|D|PIEDE
+constants.asm|100||0|-1|35|L|,PIEDE,,+equ,+used
+constants.asm|101||0|-1|36|D|CHIP
+constants.asm|101||0|-1|36|L|,CHIP,,+equ,+used
+constants.asm|102||0|-1|37|D|IPNOSI
+constants.asm|102||0|-1|37|L|,IPNOSI,,+equ,+used
+constants.asm|103||0|-1|38|D|SWISSARMKIFE
+constants.asm|103||0|-1|38|L|,SWISSARMKIFE,,+equ,+used
+constants.asm|104||0|-1|39|D|BOTTE
+constants.asm|104||0|-1|39|L|,BOTTE,,+equ,+used
+constants.asm|105||0|-1|40|D|ONDA
+constants.asm|105||0|-1|40|L|,ONDA,,+equ,+used
+constants.asm|106||0|-1|41|D|PALAZZO
+constants.asm|106||0|-1|41|L|,PALAZZO,,+equ,+used
 interrupts.asm|8||0|1|23981|F|SetupIM2
 interrupts.asm|8||0|1|23981|L|,SetupIM2,,+used
 interrupts.asm|9||0|1|23981|T|
@@ -5603,149 +5605,149 @@ audio.asm|208||0|1|32461|T|
 audio.asm|210||0|1|32463|T|
 audio.asm|211||0|1|32464|T|
 audio.asm|212||0|1|32465|T|
-jet set willy.asm|23||0|1|32466|F|start
-jet set willy.asm|23||0|1|32466|L|,start,
-jet set willy.asm|24||0|1|32466|T|
-jet set willy.asm|25||0|1|32469|T|
-jet set willy.asm|28||0|1|32472|F|Main
-jet set willy.asm|28||0|1|32472|L|,Main,,+used
-jet set willy.asm|30||0|1|32472|T|
-jet set willy.asm|31||0|1|32473|T|
-jet set willy.asm|32||0|1|32476|T|
-jet set willy.asm|33||0|1|32479|T|
-jet set willy.asm|34||0|1|32482|T|
-jet set willy.asm|35||0|1|32485|T|
-jet set willy.asm|36||0|1|32488|T|
-jet set willy.asm|37||0|1|32490|T|
-jet set willy.asm|38||0|1|32493|T|
-jet set willy.asm|39||0|1|32495|T|
-jet set willy.asm|40||0|1|32498|T|
-jet set willy.asm|42||0|1|32501|T|
-jet set willy.asm|43||0|1|32504|T|
-jet set willy.asm|45||0|1|32507|T|
-jet set willy.asm|46||0|1|32509|T|
-jet set willy.asm|47||0|1|32512|T|
-jet set willy.asm|48||0|1|32515|T|
-jet set willy.asm|50||0|1|32518|T|
-jet set willy.asm|51||0|1|32521|T|
-jet set willy.asm|52||0|1|32523|T|
-jet set willy.asm|54||0|1|32526|T|
-jet set willy.asm|55||0|1|32529|F|LoadRoomAndRestart
-jet set willy.asm|55||0|1|32529|L|,LoadRoomAndRestart,,+used
-jet set willy.asm|56||0|1|32529|T|
-jet set willy.asm|57||0|1|32532|T|
-jet set willy.asm|58||0|1|32535|T|
-jet set willy.asm|59||0|1|32538|T|
-jet set willy.asm|60||0|1|32541|T|
-jet set willy.asm|61||0|1|32544|T|
-jet set willy.asm|62||0|1|32547|T|
-jet set willy.asm|63||0|1|32550|T|
-jet set willy.asm|65||0|1|32553|T|
-jet set willy.asm|66||0|1|32556|T|
-jet set willy.asm|67||0|1|32557|T|
-jet set willy.asm|68||0|1|32559|T|
-jet set willy.asm|69||0|1|32562|T|
-jet set willy.asm|70||0|1|32564|F|LoadRoomAndRestart.skip_player_pos
-jet set willy.asm|70||0|1|32564|L|,LoadRoomAndRestart,skip_player_pos,+local,+used
-jet set willy.asm|71||0|1|32564|T|
-jet set willy.asm|72||0|1|32565|T|
-jet set willy.asm|73||0|1|32568|F|LoadRoomAndRestart.after_player_pos
-jet set willy.asm|73||0|1|32568|L|,LoadRoomAndRestart,after_player_pos,+local,+used
-jet set willy.asm|76||0|1|32568|T|
-jet set willy.asm|77||0|1|32571|T|
-jet set willy.asm|78||0|1|32574|T|
-jet set willy.asm|79||0|1|32575|T|
-jet set willy.asm|80||0|1|32576|T|
-jet set willy.asm|81||0|1|32578|T|
-jet set willy.asm|82||0|1|32581|T|
-jet set willy.asm|85||0|1|32583|T|
-jet set willy.asm|86||0|1|32584|T|
-jet set willy.asm|87||0|1|32585|T|
-jet set willy.asm|88||0|1|32586|T|
-jet set willy.asm|89||0|1|32588|T|
-jet set willy.asm|91||0|1|32591|T|
-jet set willy.asm|93||0|1|32594|F|Main_loop
-jet set willy.asm|93||0|1|32594|L|,Main_loop,,+used
-jet set willy.asm|94||0|1|32594|F|Main_loop.sync_loop
-jet set willy.asm|94||0|1|32594|L|,Main_loop,sync_loop,+local,+used
-jet set willy.asm|95||0|1|32594|T|
-jet set willy.asm|96||0|1|32595|T|
-jet set willy.asm|97||0|1|32598|T|
-jet set willy.asm|98||0|1|32602|T|
-jet set willy.asm|99||0|1|32603|T|
-jet set willy.asm|100||0|1|32605|T|
-jet set willy.asm|101||0|1|32606|T|
-jet set willy.asm|102||0|1|32608|T|
-jet set willy.asm|104||0|1|32610|T|
-jet set willy.asm|105||0|1|32613|T|
-jet set willy.asm|107||0|1|32616|T|
-jet set willy.asm|113||0|1|32619|T|
-jet set willy.asm|114||0|1|32622|T|
-jet set willy.asm|116||0|1|32625|T|
-jet set willy.asm|117||0|1|32628|T|
-jet set willy.asm|126||0|1|32631|T|
-jet set willy.asm|127||0|1|32635|T|
-jet set willy.asm|130||0|1|32639|T|
-jet set willy.asm|131||0|1|32642|T|
-jet set willy.asm|132||0|1|32645|T|
-jet set willy.asm|133||0|1|32648|T|
-jet set willy.asm|134||0|1|32651|T|
-jet set willy.asm|135||0|1|32654|T|
-jet set willy.asm|144||0|1|32657|T|
-jet set willy.asm|145||0|1|32660|T|
-jet set willy.asm|149||0|1|32662|T|
-jet set willy.asm|150||0|1|32665|T|
-jet set willy.asm|151||0|1|32666|T|
-jet set willy.asm|154||0|1|32668|T|
-jet set willy.asm|156||0|1|32670|F|Main_loop.guardian_collision_found
-jet set willy.asm|156||0|1|32670|L|,Main_loop,guardian_collision_found,+local,+used
-jet set willy.asm|165||0|1|32670|T|
-jet set willy.asm|169||0|1|32672|F|Main_loop.willy_dies
-jet set willy.asm|169||0|1|32672|L|,Main_loop,willy_dies,+local
-jet set willy.asm|171||0|1|32672|T|
-jet set willy.asm|172||0|1|32675|T|
-jet set willy.asm|173||0|1|32676|T|
-jet set willy.asm|174||0|1|32677|T|
-jet set willy.asm|175||0|1|32679|T|
-jet set willy.asm|176||0|1|32680|F|Main_loop.no_lives_dec
-jet set willy.asm|176||0|1|32680|L|,Main_loop,no_lives_dec,+local,+used
-jet set willy.asm|177||0|1|32680|T|
-jet set willy.asm|181||0|1|32683|T|
-jet set willy.asm|184||0|1|32686|T|
-jet set willy.asm|187||0|1|32689|T|
-jet set willy.asm|188||0|1|32690|T|
-jet set willy.asm|189||0|1|32693|T|
-jet set willy.asm|190||0|1|32696|T|
-jet set willy.asm|191||0|1|32699|T|
-jet set willy.asm|192||0|1|32702|T|
-jet set willy.asm|193||0|1|32704|T|
-jet set willy.asm|194||0|1|32707|T|
-jet set willy.asm|196||0|1|32709|F|Main_loop.draw_raster_bars
-jet set willy.asm|196||0|1|32709|L|,Main_loop,draw_raster_bars,+local,+used
-jet set willy.asm|198||0|1|32709|T|
-jet set willy.asm|199||0|1|32712|T|
-jet set willy.asm|200||0|1|32714|T|
-jet set willy.asm|201||0|1|32716|F|Main_loop.raster_loop
-jet set willy.asm|201||0|1|32716|L|,Main_loop,raster_loop,+local,+used
-jet set willy.asm|202||0|1|32716|T|
-jet set willy.asm|203||0|1|32718|T|
-jet set willy.asm|204||0|1|32719|T|
-jet set willy.asm|205||0|1|32721|T|
-jet set willy.asm|206||0|1|32723|F|Main_loop.delay
-jet set willy.asm|206||0|1|32723|L|,Main_loop,delay,+local,+used
-jet set willy.asm|207||0|1|32723|T|
-jet set willy.asm|208||0|1|32724|T|
-jet set willy.asm|209||0|1|32726|T|
-jet set willy.asm|212||0|1|32728|T|
-jet set willy.asm|213||0|1|32731|T|
-jet set willy.asm|214||0|1|32733|T|
-jet set willy.asm|216||0|1|32735|F|Main_loop.no_collision
-jet set willy.asm|216||0|1|32735|L|,Main_loop,no_collision,+local,+used
-jet set willy.asm|218||0|1|32735|T|
-jet set willy.asm|219||0|1|32738|T|
-jet set willy.asm|221||0|1|32740|F|Main_loop.no_collision_change
-jet set willy.asm|221||0|1|32740|L|,Main_loop,no_collision_change,+local,+used
-jet set willy.asm|222||0|1|32740|T|
+jet set willy.asm|24||0|1|32466|F|start
+jet set willy.asm|24||0|1|32466|L|,start,
+jet set willy.asm|25||0|1|32466|T|
+jet set willy.asm|26||0|1|32469|T|
+jet set willy.asm|29||0|1|32472|F|Main
+jet set willy.asm|29||0|1|32472|L|,Main,,+used
+jet set willy.asm|31||0|1|32472|T|
+jet set willy.asm|32||0|1|32473|T|
+jet set willy.asm|33||0|1|32476|T|
+jet set willy.asm|34||0|1|32479|T|
+jet set willy.asm|35||0|1|32482|T|
+jet set willy.asm|36||0|1|32485|T|
+jet set willy.asm|37||0|1|32488|T|
+jet set willy.asm|38||0|1|32490|T|
+jet set willy.asm|39||0|1|32493|T|
+jet set willy.asm|40||0|1|32495|T|
+jet set willy.asm|41||0|1|32498|T|
+jet set willy.asm|43||0|1|32501|T|
+jet set willy.asm|44||0|1|32504|T|
+jet set willy.asm|46||0|1|32507|T|
+jet set willy.asm|47||0|1|32509|T|
+jet set willy.asm|48||0|1|32512|T|
+jet set willy.asm|49||0|1|32515|T|
+jet set willy.asm|51||0|1|32518|T|
+jet set willy.asm|52||0|1|32521|T|
+jet set willy.asm|53||0|1|32523|T|
+jet set willy.asm|55||0|1|32526|T|
+jet set willy.asm|56||0|1|32529|F|LoadRoomAndRestart
+jet set willy.asm|56||0|1|32529|L|,LoadRoomAndRestart,,+used
+jet set willy.asm|57||0|1|32529|T|
+jet set willy.asm|58||0|1|32532|T|
+jet set willy.asm|59||0|1|32535|T|
+jet set willy.asm|60||0|1|32538|T|
+jet set willy.asm|61||0|1|32541|T|
+jet set willy.asm|62||0|1|32544|T|
+jet set willy.asm|63||0|1|32547|T|
+jet set willy.asm|64||0|1|32550|T|
+jet set willy.asm|66||0|1|32553|T|
+jet set willy.asm|67||0|1|32556|T|
+jet set willy.asm|68||0|1|32557|T|
+jet set willy.asm|69||0|1|32559|T|
+jet set willy.asm|70||0|1|32562|T|
+jet set willy.asm|71||0|1|32564|F|LoadRoomAndRestart.skip_player_pos
+jet set willy.asm|71||0|1|32564|L|,LoadRoomAndRestart,skip_player_pos,+local,+used
+jet set willy.asm|72||0|1|32564|T|
+jet set willy.asm|73||0|1|32565|T|
+jet set willy.asm|74||0|1|32568|F|LoadRoomAndRestart.after_player_pos
+jet set willy.asm|74||0|1|32568|L|,LoadRoomAndRestart,after_player_pos,+local,+used
+jet set willy.asm|77||0|1|32568|T|
+jet set willy.asm|78||0|1|32571|T|
+jet set willy.asm|79||0|1|32574|T|
+jet set willy.asm|80||0|1|32575|T|
+jet set willy.asm|81||0|1|32576|T|
+jet set willy.asm|82||0|1|32578|T|
+jet set willy.asm|83||0|1|32581|T|
+jet set willy.asm|86||0|1|32583|T|
+jet set willy.asm|87||0|1|32584|T|
+jet set willy.asm|88||0|1|32585|T|
+jet set willy.asm|89||0|1|32586|T|
+jet set willy.asm|90||0|1|32588|T|
+jet set willy.asm|92||0|1|32591|T|
+jet set willy.asm|94||0|1|32594|F|Main_loop
+jet set willy.asm|94||0|1|32594|L|,Main_loop,,+used
+jet set willy.asm|95||0|1|32594|F|Main_loop.sync_loop
+jet set willy.asm|95||0|1|32594|L|,Main_loop,sync_loop,+local,+used
+jet set willy.asm|96||0|1|32594|T|
+jet set willy.asm|97||0|1|32595|T|
+jet set willy.asm|98||0|1|32598|T|
+jet set willy.asm|99||0|1|32602|T|
+jet set willy.asm|100||0|1|32603|T|
+jet set willy.asm|101||0|1|32605|T|
+jet set willy.asm|102||0|1|32606|T|
+jet set willy.asm|103||0|1|32608|T|
+jet set willy.asm|105||0|1|32610|T|
+jet set willy.asm|106||0|1|32613|T|
+jet set willy.asm|109||0|1|32616|T|
+jet set willy.asm|117||0|1|32619|T|
+jet set willy.asm|118||0|1|32622|T|
+jet set willy.asm|120||0|1|32625|T|
+jet set willy.asm|121||0|1|32628|T|
+jet set willy.asm|130||0|1|32631|T|
+jet set willy.asm|131||0|1|32635|T|
+jet set willy.asm|134||0|1|32639|T|
+jet set willy.asm|135||0|1|32642|T|
+jet set willy.asm|136||0|1|32645|T|
+jet set willy.asm|137||0|1|32648|T|
+jet set willy.asm|138||0|1|32651|T|
+jet set willy.asm|139||0|1|32654|T|
+jet set willy.asm|148||0|1|32657|T|
+jet set willy.asm|149||0|1|32660|T|
+jet set willy.asm|153||0|1|32662|T|
+jet set willy.asm|154||0|1|32665|T|
+jet set willy.asm|155||0|1|32666|T|
+jet set willy.asm|158||0|1|32668|T|
+jet set willy.asm|160||0|1|32670|F|Main_loop.guardian_collision_found
+jet set willy.asm|160||0|1|32670|L|,Main_loop,guardian_collision_found,+local,+used
+jet set willy.asm|169||0|1|32670|T|
+jet set willy.asm|173||0|1|32672|F|Main_loop.willy_dies
+jet set willy.asm|173||0|1|32672|L|,Main_loop,willy_dies,+local
+jet set willy.asm|175||0|1|32672|T|
+jet set willy.asm|176||0|1|32675|T|
+jet set willy.asm|177||0|1|32676|T|
+jet set willy.asm|178||0|1|32677|T|
+jet set willy.asm|179||0|1|32679|T|
+jet set willy.asm|180||0|1|32680|F|Main_loop.no_lives_dec
+jet set willy.asm|180||0|1|32680|L|,Main_loop,no_lives_dec,+local,+used
+jet set willy.asm|181||0|1|32680|T|
+jet set willy.asm|185||0|1|32683|T|
+jet set willy.asm|188||0|1|32686|T|
+jet set willy.asm|191||0|1|32689|T|
+jet set willy.asm|192||0|1|32690|T|
+jet set willy.asm|193||0|1|32693|T|
+jet set willy.asm|194||0|1|32696|T|
+jet set willy.asm|195||0|1|32699|T|
+jet set willy.asm|196||0|1|32702|T|
+jet set willy.asm|197||0|1|32704|T|
+jet set willy.asm|198||0|1|32707|T|
+jet set willy.asm|200||0|1|32709|F|Main_loop.draw_raster_bars
+jet set willy.asm|200||0|1|32709|L|,Main_loop,draw_raster_bars,+local,+used
+jet set willy.asm|202||0|1|32709|T|
+jet set willy.asm|203||0|1|32712|T|
+jet set willy.asm|204||0|1|32714|T|
+jet set willy.asm|205||0|1|32716|F|Main_loop.raster_loop
+jet set willy.asm|205||0|1|32716|L|,Main_loop,raster_loop,+local,+used
+jet set willy.asm|206||0|1|32716|T|
+jet set willy.asm|207||0|1|32718|T|
+jet set willy.asm|208||0|1|32719|T|
+jet set willy.asm|209||0|1|32721|T|
+jet set willy.asm|210||0|1|32723|F|Main_loop.delay
+jet set willy.asm|210||0|1|32723|L|,Main_loop,delay,+local,+used
+jet set willy.asm|211||0|1|32723|T|
+jet set willy.asm|212||0|1|32724|T|
+jet set willy.asm|213||0|1|32726|T|
+jet set willy.asm|216||0|1|32728|T|
+jet set willy.asm|217||0|1|32731|T|
+jet set willy.asm|218||0|1|32733|T|
+jet set willy.asm|220||0|1|32735|F|Main_loop.no_collision
+jet set willy.asm|220||0|1|32735|L|,Main_loop,no_collision,+local,+used
+jet set willy.asm|222||0|1|32735|T|
+jet set willy.asm|223||0|1|32738|T|
+jet set willy.asm|225||0|1|32740|F|Main_loop.no_collision_change
+jet set willy.asm|225||0|1|32740|L|,Main_loop,no_collision_change,+local,+used
+jet set willy.asm|226||0|1|32740|T|
 resources.asm|9||0|2|33792|F|RoomsStart
 resources.asm|9||0|2|33792|L|,RoomsStart,
 rooms/TheOffLicence.asm|33||0|2|33792|F|TheOffLicenceLayout

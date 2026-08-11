@@ -20,55 +20,62 @@
    7+ 5DAD              ; (es. -DENABLE_MUSIC=0 -DENABLE_ROOM_SKIP_KEYS=0).
    8+ 5DAD              ;===========================================================================
    9+ 5DAD
-  10+ 5DAD              ; --- Musica di sottofondo ---
-  11+ 5DAD              ; 1 = Musica abilitata
-  12+ 5DAD              ; 0 = Musica disabilitata
-  13+ 5DAD                  IFNDEF ENABLE_MUSIC
-  14+ 5DAD              ENABLE_MUSIC EQU 0
+  10+ 5DAD              ; --- Effetti di sottofondo ---
+  11+ 5DAD              ; 1 = Effetti abilitati
+  12+ 5DAD              ; 0 = Effetti disabilitati
+  13+ 5DAD                  IFNDEF ENABLE_EFFECTS
+  14+ 5DAD              ENABLE_EFFECTS EQU 1
   15+ 5DAD                  ENDIF
   16+ 5DAD
-  17+ 5DAD              ; --- Morte per collisione con i guardiani (nemici) ---
-  18+ 5DAD              ; 1 = Abilita la morte e il decremento delle vite alla collisione con i guardiani
-  19+ 5DAD              ; 0 = Disabilita la morte
-  20+ 5DAD                  IFNDEF ENABLE_GUARDIAN_COLLISION_DEATH
-  21+ 5DAD              ENABLE_GUARDIAN_COLLISION_DEATH EQU 0
+  17+ 5DAD              ; --- Musica di sottofondo ---
+  18+ 5DAD              ; 1 = Musica abilitata
+  19+ 5DAD              ; 0 = Musica disabilitata
+  20+ 5DAD                  IFNDEF ENABLE_MUSIC
+  21+ 5DAD              ENABLE_MUSIC EQU 0
   22+ 5DAD                  ENDIF
   23+ 5DAD
-  24+ 5DAD              ; --- Bande colorate di debug per collisione con i guardiani ---
-  25+ 5DAD              ; 1 = Abilita le bande colorate (raster bar) sul bordo alla collisione con i guardiani (quando la morte è disabilitata)
-  26+ 5DAD              ; 0 = Disabilita le bande colorate di debug per i guardiani
-  27+ 5DAD                  IFNDEF ENABLE_GUARDIAN_DEBUG_BARS
-  28+ 5DAD              ENABLE_GUARDIAN_DEBUG_BARS EQU 0
+  24+ 5DAD              ; --- Morte per collisione con i guardiani (nemici) ---
+  25+ 5DAD              ; 1 = Abilita la morte e il decremento delle vite alla collisione con i guardiani
+  26+ 5DAD              ; 0 = Disabilita la morte
+  27+ 5DAD                  IFNDEF ENABLE_GUARDIAN_COLLISION_DEATH
+  28+ 5DAD              ENABLE_GUARDIAN_COLLISION_DEATH EQU 0
   29+ 5DAD                  ENDIF
   30+ 5DAD
-  31+ 5DAD              ; --- Morte per collisione con gli elementi Nasty (tiles pericolose) ---
-  32+ 5DAD              ; 1 = Abilita la morte e il decremento delle vite al tocco delle Nasty tiles
-  33+ 5DAD              ; 0 = Disabilita il controllo di morte sulle Nasty tiles
-  34+ 5DAD                  IFNDEF ENABLE_NASTY_COLLISION_DEATH
-  35+ 5DAD              ENABLE_NASTY_COLLISION_DEATH EQU 0
+  31+ 5DAD              ; --- Bande colorate di debug per collisione con i guardiani ---
+  32+ 5DAD              ; 1 = Abilita le bande colorate (raster bar) sul bordo alla collisione con i guardiani (quando la morte è disabilitata)
+  33+ 5DAD              ; 0 = Disabilita le bande colorate di debug per i guardiani
+  34+ 5DAD                  IFNDEF ENABLE_GUARDIAN_DEBUG_BARS
+  35+ 5DAD              ENABLE_GUARDIAN_DEBUG_BARS EQU 0
   36+ 5DAD                  ENDIF
   37+ 5DAD
-  38+ 5DAD              ; --- Animazione delle icone delle vite ---
-  39+ 5DAD              ; 1 = Abilita l'animazione camminante per le icone delle vite in basso a schermo
-  40+ 5DAD              ; 0 = Icone delle vite statiche
-  41+ 5DAD                  IFNDEF ENABLE_ANIMATE_LIVES
-  42+ 5DAD              ENABLE_ANIMATE_LIVES EQU 0
+  38+ 5DAD              ; --- Morte per collisione con gli elementi Nasty (tiles pericolose) ---
+  39+ 5DAD              ; 1 = Abilita la morte e il decremento delle vite al tocco delle Nasty tiles
+  40+ 5DAD              ; 0 = Disabilita il controllo di morte sulle Nasty tiles
+  41+ 5DAD                  IFNDEF ENABLE_NASTY_COLLISION_DEATH
+  42+ 5DAD              ENABLE_NASTY_COLLISION_DEATH EQU 0
   43+ 5DAD                  ENDIF
   44+ 5DAD
-  45+ 5DAD              ; --- Tasti di navigazione rapida tra le stanze (Q / A) ---
-  46+ 5DAD              ; 1 = Abilita i tasti Q (stanza successiva) e A (stanza precedente) per scorrere tra le stanze
-  47+ 5DAD              ; 0 = Disabilita i tasti Q e A
-  48+ 5DAD                  IFNDEF ENABLE_ROOM_SKIP_KEYS
-  49+ 5DAD              ENABLE_ROOM_SKIP_KEYS EQU 1
+  45+ 5DAD              ; --- Animazione delle icone delle vite ---
+  46+ 5DAD              ; 1 = Abilita l'animazione camminante per le icone delle vite in basso a schermo
+  47+ 5DAD              ; 0 = Icone delle vite statiche
+  48+ 5DAD                  IFNDEF ENABLE_ANIMATE_LIVES
+  49+ 5DAD              ENABLE_ANIMATE_LIVES EQU 0
   50+ 5DAD                  ENDIF
   51+ 5DAD
-  52+ 5DAD              ; --- Bande colorate di debug per Willy su rampa ---
-  53+ 5DAD              ; 1 = Abilita le bande colorate (raster bar) sul bordo quando Willy si trova posizionato su una rampa
-  54+ 5DAD              ; 0 = Disabilita le bande colorate di debug per le rampe
-  55+ 5DAD                  IFNDEF ENABLE_RAMP_DEBUG_BARS
-  56+ 5DAD              ENABLE_RAMP_DEBUG_BARS EQU 1
+  52+ 5DAD              ; --- Tasti di navigazione rapida tra le stanze (Q / A) ---
+  53+ 5DAD              ; 1 = Abilita i tasti Q (stanza successiva) e A (stanza precedente) per scorrere tra le stanze
+  54+ 5DAD              ; 0 = Disabilita i tasti Q e A
+  55+ 5DAD                  IFNDEF ENABLE_ROOM_SKIP_KEYS
+  56+ 5DAD              ENABLE_ROOM_SKIP_KEYS EQU 1
   57+ 5DAD                  ENDIF
   58+ 5DAD
+  59+ 5DAD              ; --- Bande colorate di debug per Willy su rampa ---
+  60+ 5DAD              ; 1 = Abilita le bande colorate (raster bar) sul bordo quando Willy si trova posizionato su una rampa
+  61+ 5DAD              ; 0 = Disabilita le bande colorate di debug per le rampe
+  62+ 5DAD                  IFNDEF ENABLE_RAMP_DEBUG_BARS
+  63+ 5DAD              ENABLE_RAMP_DEBUG_BARS EQU 1
+  64+ 5DAD                  ENDIF
+  65+ 5DAD
 # file closed: settings.asm
   12  5DAD                  include "physics_config.asm"
 # file opened: physics_config.asm
@@ -183,63 +190,63 @@
   61+ 5DAD
   62+ 5DAD              BLOCK:          EQU $FF
   63+ 5DAD
-  64+ 5DAD              ; Macro per inserire un oggetto calcolando l'ID della stanza a tempo di compilazione dall'offset in RoomsListTable
-  65+ 5DAD                  MACRO ITEM room_sublabel, x, y, color, state
-  66+ 5DAD ~                    db (room_sublabel - RoomsListTable) / 2, x, y, color, state
-  67+ 5DAD                  ENDM
-  68+ 5DAD
-  69+ 5DAD
-  70+ 5DAD                  MACRO ROOM room_sublabel
-  71+ 5DAD ~                    db (room_sublabel - RoomsListTable) / 2
-  72+ 5DAD                  ENDM
-  73+ 5DAD
-  74+ 5DAD
-  75+ 5DAD
-  76+ 5DAD
-  77+ 5DAD              LAMETTA:  		EQU 0   ;(Lametta)
-  78+ 5DAD              SEGA: 			EQU 1   ;(Sega)
-  79+ 5DAD              UCCELLO: 		EQU 2   ;(Uccello)
-  80+ 5DAD              RADAR: 			EQU 3   ;(Radar)
-  81+ 5DAD              UOVO: 			EQU 4   ;(Uovo)
-  82+ 5DAD              UFO: 			EQU 5   ;(Ufo)
-  83+ 5DAD              FACCIA:			EQU 6   ;(Faccia)
-  84+ 5DAD              SCIMMIA:		EQU 7   ;(Scimmia)
-  85+ 5DAD              ROBOT:			EQU 8   ;(Robot)
-  86+ 5DAD              PALLA:			EQU 9   ;(Palla)
-  87+ 5DAD              DOUBLE_BALL:	EQU 10  ;(Double Ball)
-  88+ 5DAD              SOLDATO:		EQU 11  ;(Soldato)
-  89+ 5DAD              MAIALE:			EQU 12  ;(Maiale)
-  90+ 5DAD              CANGURO:		EQU 13  ;(Canguro)
-  91+ 5DAD              FIORE:			EQU 14  ;(Fiore)
-  92+ 5DAD              FACCIA_PALLA: 	EQU 15  ;(Faccia Palla)
-  93+ 5DAD              CANDELABRO:		EQU 16  ;(Candelabro)
-  94+ 5DAD              FRECCIA:		EQU 17  ;(Freccia)
-  95+ 5DAD              TRONCHESE:		EQU 18  ;(Tronchese)
-  96+ 5DAD              PERISCOPIO:		EQU 19  ;(Periscopio)
-  97+ 5DAD              NONNINO:		EQU 20  ;(Nonnino)
-  98+ 5DAD              PARRUCCA:		EQU 21  ;(Parrucca)
-  99+ 5DAD              FRATE:			EQU 22  ;(Frate)
- 100+ 5DAD              FACE_HL:		EQU 23  ;(FaceHellHL - Top-Left)
- 101+ 5DAD              FACE_HR:		EQU 24  ;(FaceHellHR - Top-Right)
- 102+ 5DAD              FACE_LL:		EQU 25  ;(FaceHellLL - Bottom-Left)
- 103+ 5DAD              FACE_LR:		EQU 26  ;(FaceHellLR - Bottom-Right)
- 104+ 5DAD              PINZA_GHIACCIO:	EQU 27  ;(PinzaGiaccioSprite)
- 105+ 5DAD              RUOTA:			EQU 28  ;(RuotaSprite)
- 106+ 5DAD              SALIERA:		EQU 29  ;(SalieraSprite)
- 107+ 5DAD              GELATO:			EQU 30  ;(GelatoSprite)
- 108+ 5DAD              PINGUINO:		EQU 31  ;(PinguinoSprite)
- 109+ 5DAD              MURO:			EQU 32  ;(MuroSprite)
- 110+ 5DAD              DIAVOLETTO:		EQU 33  ;(DiavolettoSprite)
- 111+ 5DAD              VECCHIA:		EQU 34  ;(VecchiaSprite)
- 112+ 5DAD              PIEDE:			EQU 35  ;(PiedeSprite)
- 113+ 5DAD              CHIP:			EQU 36  ;(ChipSprite)
- 114+ 5DAD              IPNOSI:			EQU 37  ;(IpnosiSprite)
- 115+ 5DAD              SWISSARMKIFE:	EQU 38  ;(SwissArmyKife)
- 116+ 5DAD              BOTTE:			EQU 39  ;(BotteSprite)
- 117+ 5DAD              ONDA:			EQU 40  ;(OndaSprite)
- 118+ 5DAD              PALAZZO:		EQU 41  ;(PalazzoSprite)
+  64+ 5DAD
+  65+ 5DAD              LAMETTA:  		EQU 0   ;(Lametta)
+  66+ 5DAD              SEGA: 			EQU 1   ;(Sega)
+  67+ 5DAD              UCCELLO: 		EQU 2   ;(Uccello)
+  68+ 5DAD              RADAR: 			EQU 3   ;(Radar)
+  69+ 5DAD              UOVO: 			EQU 4   ;(Uovo)
+  70+ 5DAD              UFO: 			EQU 5   ;(Ufo)
+  71+ 5DAD              FACCIA:			EQU 6   ;(Faccia)
+  72+ 5DAD              SCIMMIA:		EQU 7   ;(Scimmia)
+  73+ 5DAD              ROBOT:			EQU 8   ;(Robot)
+  74+ 5DAD              PALLA:			EQU 9   ;(Palla)
+  75+ 5DAD              DOUBLE_BALL:	EQU 10  ;(Double Ball)
+  76+ 5DAD              SOLDATO:		EQU 11  ;(Soldato)
+  77+ 5DAD              MAIALE:			EQU 12  ;(Maiale)
+  78+ 5DAD              CANGURO:		EQU 13  ;(Canguro)
+  79+ 5DAD              FIORE:			EQU 14  ;(Fiore)
+  80+ 5DAD              FACCIA_PALLA: 	EQU 15  ;(Faccia Palla)
+  81+ 5DAD              CANDELABRO:		EQU 16  ;(Candelabro)
+  82+ 5DAD              FRECCIA:		EQU 17  ;(Freccia)
+  83+ 5DAD              TRONCHESE:		EQU 18  ;(Tronchese)
+  84+ 5DAD              PERISCOPIO:		EQU 19  ;(Periscopio)
+  85+ 5DAD              NONNINO:		EQU 20  ;(Nonnino)
+  86+ 5DAD              PARRUCCA:		EQU 21  ;(Parrucca)
+  87+ 5DAD              FRATE:			EQU 22  ;(Frate)
+  88+ 5DAD              FACE_HL:		EQU 23  ;(FaceHellHL - Top-Left)
+  89+ 5DAD              FACE_HR:		EQU 24  ;(FaceHellHR - Top-Right)
+  90+ 5DAD              FACE_LL:		EQU 25  ;(FaceHellLL - Bottom-Left)
+  91+ 5DAD              FACE_LR:		EQU 26  ;(FaceHellLR - Bottom-Right)
+  92+ 5DAD              PINZA_GHIACCIO:	EQU 27  ;(PinzaGiaccioSprite)
+  93+ 5DAD              RUOTA:			EQU 28  ;(RuotaSprite)
+  94+ 5DAD              SALIERA:		EQU 29  ;(SalieraSprite)
+  95+ 5DAD              GELATO:			EQU 30  ;(GelatoSprite)
+  96+ 5DAD              PINGUINO:		EQU 31  ;(PinguinoSprite)
+  97+ 5DAD              MURO:			EQU 32  ;(MuroSprite)
+  98+ 5DAD              DIAVOLETTO:		EQU 33  ;(DiavolettoSprite)
+  99+ 5DAD              VECCHIA:		EQU 34  ;(VecchiaSprite)
+ 100+ 5DAD              PIEDE:			EQU 35  ;(PiedeSprite)
+ 101+ 5DAD              CHIP:			EQU 36  ;(ChipSprite)
+ 102+ 5DAD              IPNOSI:			EQU 37  ;(IpnosiSprite)
+ 103+ 5DAD              SWISSARMKIFE:	EQU 38  ;(SwissArmyKife)
+ 104+ 5DAD              BOTTE:			EQU 39  ;(BotteSprite)
+ 105+ 5DAD              ONDA:			EQU 40  ;(OndaSprite)
+ 106+ 5DAD              PALAZZO:		EQU 41  ;(PalazzoSprite)
 # file closed: constants.asm
-  14  5DAD                  include "interrupts.asm"
+  14  5DAD                  include "macro.asm"
+# file opened: macro.asm
+   1+ 5DAD              ; Macro per inserire un oggetto calcolando l'ID della stanza a tempo di compilazione dall'offset in RoomsListTable
+   2+ 5DAD                  MACRO ITEM room_sublabel, x, y, color, state
+   3+ 5DAD ~                    db (room_sublabel - RoomsListTable) / 2, x, y, color, state
+   4+ 5DAD                  ENDM
+   5+ 5DAD
+   6+ 5DAD
+   7+ 5DAD                  MACRO ROOM room_sublabel
+   8+ 5DAD ~                    db (room_sublabel - RoomsListTable) / 2
+   9+ 5DAD                  ENDM
+# file closed: macro.asm
+  15  5DAD                  include "interrupts.asm"
 # file opened: interrupts.asm
    1+ 5DAD              ;===========================================================================
    2+ 5DAD              ; interrupts.asm
@@ -291,7 +298,7 @@
   48+ 5DD8 FB               ei
   49+ 5DD9 ED 4D            reti
 # file closed: interrupts.asm
-  15  5DDB                  include "graphics.asm"
+  16  5DDB                  include "graphics.asm"
 # file opened: graphics.asm
    1+ 5DDB              ;===========================================================================
    2+ 5DDB              ; graphics.asm
@@ -1936,7 +1943,7 @@
 1628+ 6506 C9               ret
 1629+ 6507
 # file closed: graphics.asm
-  16  6507                  include "player.asm"
+  17  6507                  include "player.asm"
 # file opened: player.asm
    1+ 6507              ;===========================================================================z
    2+ 6507              ; player.asm
@@ -2256,7 +2263,7 @@
  316+ 660A C9               ret
  317+ 660B
 # file closed: player.asm
-  17  660B                  include "input.asm"
+  18  660B                  include "input.asm"
 # file opened: input.asm
    1+ 660B              ;===========================================================================
    2+ 660B              ; input.asm
@@ -2936,7 +2943,7 @@
  666+ 6947 08 C7        .TheBowLayout:                     dw TheBowLayout                     ; 60
  667+ 6949
 # file closed: input.asm
-  18  6949                  include "physics.asm"
+  19  6949                  include "physics.asm"
 # file opened: physics.asm
    1+ 6949              ;===========================================================================
    2+ 6949              ; physics.asm
@@ -4843,7 +4850,7 @@
 1890+ 71B8 C9               ret
 1891+ 71B9
 # file closed: physics.asm
-  19  71B9                  include "enemy.asm"
+  20  71B9                  include "enemy.asm"
 # file opened: enemy.asm
    1+ 71B9              ;===========================================================================
    2+ 71B9              ; enemy.asm
@@ -5839,7 +5846,7 @@
  905+ 7749 C9               ret
  906+ 774A
 # file closed: enemy.asm
-  20  774A                  include "items.asm"
+  21  774A                  include "items.asm"
 # file opened: items.asm
    1+ 774A              ;===========================================================================
    2+ 774A              ; items.asm
@@ -8060,7 +8067,7 @@
 2065+ 7E63 C9               ret
 2066+ 7E64
 # file closed: items.asm
-  21  7E64                  include "audio.asm"
+  22  7E64                  include "audio.asm"
 # file opened: audio.asm
    1+ 7E64              ;===========================================================================
    2+ 7E64              ; audio.asm
@@ -8280,211 +8287,214 @@
  212+ 7ED1 C9               ret
  213+ 7ED2
 # file closed: audio.asm
-  22  7ED2
-  23  7ED2              start:
-  24  7ED2 31 F0 FD         ld   sp, $fdf0
-  25  7ED5 C3 D8 7E         jp   Main
-  26  7ED8
-  27  7ED8              ;    org $7F50
-  28  7ED8              Main:
-  29  7ED8                  ; Inizializza
-  30  7ED8 AF               xor  a
-  31  7ED9 32 2C E6         ld  (body_state), a
-  32  7EDC 32 30 E6         ld  (items_collected), a
-  33  7EDF 32 3E E6         ld  (w_warp_state), a
-  34  7EE2 32 41 E6         ld  (w_key_prev), a
-  35  7EE5 32 42 E6         ld  (enter_key_prev), a
-  36  7EE8 3E FF            ld  a, $ff
-  37  7EEA 32 43 E6         ld  (digit_key_prev), a
-  38  7EED 3E 01            ld  a, 1
-  39  7EEF 32 3C E6         ld  (q_prev), a
-  40  7EF2 32 3D E6         ld  (a_prev), a
-  41  7EF5
-  42  7EF5 CD DB 5D         call Gfx_CopyChars
-  43  7EF8 CD E7 5D         call Gfx_DefineChars
-  44  7EFB
-  45  7EFB 3E 02            ld   a, $02
-  46  7EFD CD 01 16         call OPENCHAN
-  47  7F00 21 00 84         ld   hl, $8400
-  48  7F03 22 7B 5C         ld   (UDG), hl
-  49  7F06
-  50  7F06 21 8D 5C         ld   hl, ATTR_P
-  51  7F09 36 07            ld   (hl), $07
-  52  7F0B CD AF 0D         call CLS
-  53  7F0E
-  54  7F0E CD AD 5D         call SetupIM2
-  55  7F11              LoadRoomAndRestart:
-  56  7F11 31 F0 FD         ld   sp, $fdf0             ; Ripristina lo stack pointer per evitare stack drift/reset
-  57  7F14 CD C7 78         call DetermineCurrentRoomID
-  58  7F17 CD 1B 71         call Phys_LoadRoomSettings
-  59  7F1A CD 84 62         call Gfx_DrawRoom
-  60  7F1D CD 3A 64         call Gfx_DrawConveyorsAndRamps
-  61  7F20 CD 61 60         call Gfx_PrintRoomName
-  62  7F23 CD A1 7C         call Items_DrawRoom
-  63  7F26 CD 11 72         call Enemy_LoadRoom
-  64  7F29
-  65  7F29 3A AB E9         ld   a, (transition_active)
-  66  7F2C B7               or   a
-  67  7F2D 20 05            jr   nz, .skip_player_pos
-  68  7F2F CD F8 65         call LoadPositionPlayeinRoom
-  69  7F32 18 04            jr   .after_player_pos
-  70  7F34              .skip_player_pos:
-  71  7F34 AF               xor  a
-  72  7F35 32 AB E9         ld   (transition_active), a
-  73  7F38              .after_player_pos:
-  74  7F38
-  75  7F38                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
-  76  7F38 2A A5 E9         ld   hl, (room_ptr)
-  77  7F3B 11 DE 00         ld   de, OFFSET_BORDER_COLOR
-  78  7F3E 19               add  hl, de
-  79  7F3F 7E               ld   a, (hl)
-  80  7F40 E6 07            and  $07               ; Garantisci un valore valido 0..7
-  81  7F42 32 32 E6         ld   (room_border_color), a
-  82  7F45 D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
-  83  7F47
-  84  7F47                  ; Aggiorna BORDCR per la ROM in modo sicuro (Paper = border, Ink = white)
-  85  7F47 07               rlca
-  86  7F48 07               rlca
-  87  7F49 07               rlca                   ; Sposta nei bit 3-5
-  88  7F4A F6 07            or   $07               ; Ink bianco nei bit 0-2
-  89  7F4C 32 48 5C         ld   (BORDCR), a
-  90  7F4F
-  91  7F4F CD F5 5F         call Gfx_PrintPlayer
-  92  7F52
-  93  7F52              Main_loop:
-  94  7F52              .sync_loop:
-  95  7F52 76               halt
-  96  7F53 2A 46 E6         ld   hl, (counter)
-  97  7F56 ED 5B 49 E6      ld   de, (last_frame_counter)
-  98  7F5A B7               or   a
-  99  7F5B ED 52            sbc  hl, de
- 100  7F5D 7D               ld   a, l
- 101  7F5E FE 02            cp   2
- 102  7F60 38 F0            jr   c, .sync_loop
- 103  7F62
- 104  7F62 2A 46 E6         ld   hl, (counter)
- 105  7F65 22 49 E6         ld   (last_frame_counter), hl
- 106  7F68
- 107  7F68 CD 64 7E         call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
- 108  7F6B                  IF ENABLE_MUSIC != 0
- 109  7F6B ~                call Audio_UpdateMusic        ; Aggiorna la musica
+  23  7ED2
+  24  7ED2              start:
+  25  7ED2 31 F0 FD         ld   sp, $fdf0
+  26  7ED5 C3 D8 7E         jp   Main
+  27  7ED8
+  28  7ED8              ;    org $7F50
+  29  7ED8              Main:
+  30  7ED8                  ; Inizializza
+  31  7ED8 AF               xor  a
+  32  7ED9 32 2C E6         ld  (body_state), a
+  33  7EDC 32 30 E6         ld  (items_collected), a
+  34  7EDF 32 3E E6         ld  (w_warp_state), a
+  35  7EE2 32 41 E6         ld  (w_key_prev), a
+  36  7EE5 32 42 E6         ld  (enter_key_prev), a
+  37  7EE8 3E FF            ld  a, $ff
+  38  7EEA 32 43 E6         ld  (digit_key_prev), a
+  39  7EED 3E 01            ld  a, 1
+  40  7EEF 32 3C E6         ld  (q_prev), a
+  41  7EF2 32 3D E6         ld  (a_prev), a
+  42  7EF5
+  43  7EF5 CD DB 5D         call Gfx_CopyChars
+  44  7EF8 CD E7 5D         call Gfx_DefineChars
+  45  7EFB
+  46  7EFB 3E 02            ld   a, $02
+  47  7EFD CD 01 16         call OPENCHAN
+  48  7F00 21 00 84         ld   hl, $8400
+  49  7F03 22 7B 5C         ld   (UDG), hl
+  50  7F06
+  51  7F06 21 8D 5C         ld   hl, ATTR_P
+  52  7F09 36 07            ld   (hl), $07
+  53  7F0B CD AF 0D         call CLS
+  54  7F0E
+  55  7F0E CD AD 5D         call SetupIM2
+  56  7F11              LoadRoomAndRestart:
+  57  7F11 31 F0 FD         ld   sp, $fdf0             ; Ripristina lo stack pointer per evitare stack drift/reset
+  58  7F14 CD C7 78         call DetermineCurrentRoomID
+  59  7F17 CD 1B 71         call Phys_LoadRoomSettings
+  60  7F1A CD 84 62         call Gfx_DrawRoom
+  61  7F1D CD 3A 64         call Gfx_DrawConveyorsAndRamps
+  62  7F20 CD 61 60         call Gfx_PrintRoomName
+  63  7F23 CD A1 7C         call Items_DrawRoom
+  64  7F26 CD 11 72         call Enemy_LoadRoom
+  65  7F29
+  66  7F29 3A AB E9         ld   a, (transition_active)
+  67  7F2C B7               or   a
+  68  7F2D 20 05            jr   nz, .skip_player_pos
+  69  7F2F CD F8 65         call LoadPositionPlayeinRoom
+  70  7F32 18 04            jr   .after_player_pos
+  71  7F34              .skip_player_pos:
+  72  7F34 AF               xor  a
+  73  7F35 32 AB E9         ld   (transition_active), a
+  74  7F38              .after_player_pos:
+  75  7F38
+  76  7F38                  ; Leggi il colore del bordo dalla stanza corrente e impostalo
+  77  7F38 2A A5 E9         ld   hl, (room_ptr)
+  78  7F3B 11 DE 00         ld   de, OFFSET_BORDER_COLOR
+  79  7F3E 19               add  hl, de
+  80  7F3F 7E               ld   a, (hl)
+  81  7F40 E6 07            and  $07               ; Garantisci un valore valido 0..7
+  82  7F42 32 32 E6         ld   (room_border_color), a
+  83  7F45 D3 FE            out  ($fe), a          ; Imposta colore bordo hardware
+  84  7F47
+  85  7F47                  ; Aggiorna BORDCR per la ROM in modo sicuro (Paper = border, Ink = white)
+  86  7F47 07               rlca
+  87  7F48 07               rlca
+  88  7F49 07               rlca                   ; Sposta nei bit 3-5
+  89  7F4A F6 07            or   $07               ; Ink bianco nei bit 0-2
+  90  7F4C 32 48 5C         ld   (BORDCR), a
+  91  7F4F
+  92  7F4F CD F5 5F         call Gfx_PrintPlayer
+  93  7F52
+  94  7F52              Main_loop:
+  95  7F52              .sync_loop:
+  96  7F52 76               halt
+  97  7F53 2A 46 E6         ld   hl, (counter)
+  98  7F56 ED 5B 49 E6      ld   de, (last_frame_counter)
+  99  7F5A B7               or   a
+ 100  7F5B ED 52            sbc  hl, de
+ 101  7F5D 7D               ld   a, l
+ 102  7F5E FE 02            cp   2
+ 103  7F60 38 F0            jr   c, .sync_loop
+ 104  7F62
+ 105  7F62 2A 46 E6         ld   hl, (counter)
+ 106  7F65 22 49 E6         ld   (last_frame_counter), hl
+ 107  7F68
+ 108  7F68                  IF ENABLE_EFFECTS != 0
+ 109  7F68 CD 64 7E         call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
  110  7F6B                  ENDIF
  111  7F6B
- 112  7F6B                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
- 113  7F6B CD 48 60         call Gfx_DeleteCharAtOldPos
- 114  7F6E CD F5 5F         call Gfx_PrintPlayer
- 115  7F71
- 116  7F71 CD 3B 73         call Enemy_EraseRoom
- 117  7F74 CD 6F 73         call Enemy_DrawRoom
- 118  7F77
- 119  7F77                  ; Se l'animazione delle vite è abilitata, aggiorna la visualizzazione delle icone camminanti
- 120  7F77                  IF ENABLE_ANIMATE_LIVES != 0
- 121  7F77 ~                call Gfx_PrintWillyLives
- 122  7F77                  ENDIF
- 123  7F77
- 124  7F77
- 125  7F77                  ; 3. Salva le posizioni correnti del player per il prossimo frame
- 126  7F77 ED 4B 26 E6      ld   bc, (PlayerPos)
- 127  7F7B ED 43 28 E6      ld   (PlayerPosOld), bc
- 128  7F7F
- 129  7F7F                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
- 130  7F7F CD 0B 66         call Input_CheckCtrl
- 131  7F82 CD 07 65         call MovePlayer
- 132  7F85 CD 82 69         call Phys_ApplyGravity
- 133  7F88 CD F6 6C         call Phys_ApplyConveyor
- 134  7F8B CD 29 76         call Enemy_Update
- 135  7F8E CD EA 7D         call Items_CheckCollision
- 136  7F91
- 137  7F91                  ; Controlla collisione con Nasties (morte di Willy)
- 138  7F91                  IF ENABLE_NASTY_COLLISION_DEATH != 0
- 139  7F91 ~                call Phys_CheckNastyCollision
- 140  7F91 ~                jr   c, .willy_dies
- 141  7F91                  ENDIF
- 142  7F91
- 143  7F91                  ; Controlla collisione con guardiani
- 144  7F91 CD 75 6C         call CheckCollision
- 145  7F94 38 08            jr   c, .guardian_collision_found
- 146  7F96
- 147  7F96                  ; Nessuna collisione con guardiani. Controlla se Willy è su rampa per debug raster bar
- 148  7F96                  IF ENABLE_RAMP_DEBUG_BARS != 0
- 149  7F96 3A AF E9         ld   a, (willy_on_ramp)
- 150  7F99 B7               or   a
- 151  7F9A 20 29            jr   nz, .draw_raster_bars
- 152  7F9C                  ENDIF
- 153  7F9C
- 154  7F9C 18 41            jr   .no_collision
- 155  7F9E
- 156  7F9E              .guardian_collision_found:
- 157  7F9E                  ; C'è collisione con un guardiano!
- 158  7F9E                  ; Controlla se la morte per collisione con i guardiani è abilitata
- 159  7F9E                  IF ENABLE_GUARDIAN_COLLISION_DEATH != 0
- 160  7F9E ~                jr   .willy_dies
- 161  7F9E                  ELSE
- 162  7F9E                      IF ENABLE_GUARDIAN_DEBUG_BARS != 0
- 163  7F9E ~                    jr   .draw_raster_bars ; disegna le raster bar per debug se abilitate
- 164  7F9E                      ELSE
- 165  7F9E 18 3F                jr   .no_collision
- 166  7FA0                      ENDIF
- 167  7FA0                  ENDIF
- 168  7FA0
- 169  7FA0              .willy_dies:
- 170  7FA0                  ; Decrementa le vite e aggiorna la visualizzazione
- 171  7FA0 21 33 E6         ld   hl, willy_lives
- 172  7FA3 7E               ld   a, (hl)
- 173  7FA4 B7               or   a
- 174  7FA5 28 01            jr   z, .no_lives_dec
- 175  7FA7 35               dec  (hl)
- 176  7FA8              .no_lives_dec:
- 177  7FA8 CD 9B 60         call Gfx_PrintWillyLives
- 178  7FAB
- 179  7FAB                  ; Gestisci la morte di Willy:
- 180  7FAB                  ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
- 181  7FAB CD 48 60         call Gfx_DeleteCharAtOldPos
- 182  7FAE
- 183  7FAE                  ; 2. Ripristina la posizione iniziale nella stanza
- 184  7FAE CD F8 65         call LoadPositionPlayeinRoom
- 185  7FB1
- 186  7FB1                  ; 3. Reimposta la fisica di Willy
- 187  7FB1 AF               xor  a
- 188  7FB2 32 34 E6         ld   (velocity_y), a
- 189  7FB5 32 36 E6         ld   (jump_pressed), a
- 190  7FB8 32 3A E6         ld   (jump_frame), a
- 191  7FBB 32 39 E6         ld   (jump_dir), a
- 192  7FBE 3E 01            ld   a, 1
- 193  7FC0 32 35 E6         ld   (on_ground), a
- 194  7FC3 18 1A            jr   .no_collision ; Salta il disegno delle raster bar poiché Willy è morto
- 195  7FC5
- 196  7FC5              .draw_raster_bars:
- 197  7FC5                  ; Collisione attiva: disegna le raster bar nel bordo
- 198  7FC5 3A 46 E6         ld   a, (counter)
- 199  7FC8 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
- 200  7FCA 06 1E            ld   b, 30             ; Numero di righe della barra raster
- 201  7FCC              .raster_loop:
- 202  7FCC D3 FE            out  ($fe), a
- 203  7FCE 3C               inc  a
- 204  7FCF E6 07            and  7
- 205  7FD1 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
- 206  7FD3              .delay:
- 207  7FD3 0D               dec  c
- 208  7FD4 20 FD            jr   nz, .delay
- 209  7FD6 10 F4            djnz .raster_loop
- 210  7FD8
- 211  7FD8                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
- 212  7FD8 3A 32 E6         ld   a, (room_border_color)
- 213  7FDB D3 FE            out  ($fe), a
- 214  7FDD 18 05            jr   .no_collision_change
- 215  7FDF
- 216  7FDF              .no_collision:
- 217  7FDF                  ; Nessuna collisione: mantieni il bordo al colore della stanza
- 218  7FDF 3A 32 E6         ld   a, (room_border_color)
- 219  7FE2 D3 FE            out  ($fe), a
- 220  7FE4
- 221  7FE4              .no_collision_change:
- 222  7FE4 C3 52 7F         jp   Main_loop
- 223  7FE7
- 224  7FE7
- 225  7FE7
- 226  7FE7                  include "resources.asm"
+ 112  7F6B                  IF ENABLE_MUSIC != 0
+ 113  7F6B ~                call Audio_UpdateMusic        ; Aggiorna la musica
+ 114  7F6B                  ENDIF
+ 115  7F6B
+ 116  7F6B                  ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
+ 117  7F6B CD 48 60         call Gfx_DeleteCharAtOldPos
+ 118  7F6E CD F5 5F         call Gfx_PrintPlayer
+ 119  7F71
+ 120  7F71 CD 3B 73         call Enemy_EraseRoom
+ 121  7F74 CD 6F 73         call Enemy_DrawRoom
+ 122  7F77
+ 123  7F77                  ; Se l'animazione delle vite è abilitata, aggiorna la visualizzazione delle icone camminanti
+ 124  7F77                  IF ENABLE_ANIMATE_LIVES != 0
+ 125  7F77 ~                call Gfx_PrintWillyLives
+ 126  7F77                  ENDIF
+ 127  7F77
+ 128  7F77
+ 129  7F77                  ; 3. Salva le posizioni correnti del player per il prossimo frame
+ 130  7F77 ED 4B 26 E6      ld   bc, (PlayerPos)
+ 131  7F7B ED 43 28 E6      ld   (PlayerPosOld), bc
+ 132  7F7F
+ 133  7F7F                  ; 4. Aggiorna le posizioni dei personaggi per il prossimo frame
+ 134  7F7F CD 0B 66         call Input_CheckCtrl
+ 135  7F82 CD 07 65         call MovePlayer
+ 136  7F85 CD 82 69         call Phys_ApplyGravity
+ 137  7F88 CD F6 6C         call Phys_ApplyConveyor
+ 138  7F8B CD 29 76         call Enemy_Update
+ 139  7F8E CD EA 7D         call Items_CheckCollision
+ 140  7F91
+ 141  7F91                  ; Controlla collisione con Nasties (morte di Willy)
+ 142  7F91                  IF ENABLE_NASTY_COLLISION_DEATH != 0
+ 143  7F91 ~                call Phys_CheckNastyCollision
+ 144  7F91 ~                jr   c, .willy_dies
+ 145  7F91                  ENDIF
+ 146  7F91
+ 147  7F91                  ; Controlla collisione con guardiani
+ 148  7F91 CD 75 6C         call CheckCollision
+ 149  7F94 38 08            jr   c, .guardian_collision_found
+ 150  7F96
+ 151  7F96                  ; Nessuna collisione con guardiani. Controlla se Willy è su rampa per debug raster bar
+ 152  7F96                  IF ENABLE_RAMP_DEBUG_BARS != 0
+ 153  7F96 3A AF E9         ld   a, (willy_on_ramp)
+ 154  7F99 B7               or   a
+ 155  7F9A 20 29            jr   nz, .draw_raster_bars
+ 156  7F9C                  ENDIF
+ 157  7F9C
+ 158  7F9C 18 41            jr   .no_collision
+ 159  7F9E
+ 160  7F9E              .guardian_collision_found:
+ 161  7F9E                  ; C'è collisione con un guardiano!
+ 162  7F9E                  ; Controlla se la morte per collisione con i guardiani è abilitata
+ 163  7F9E                  IF ENABLE_GUARDIAN_COLLISION_DEATH != 0
+ 164  7F9E ~                jr   .willy_dies
+ 165  7F9E                  ELSE
+ 166  7F9E                      IF ENABLE_GUARDIAN_DEBUG_BARS != 0
+ 167  7F9E ~                    jr   .draw_raster_bars ; disegna le raster bar per debug se abilitate
+ 168  7F9E                      ELSE
+ 169  7F9E 18 3F                jr   .no_collision
+ 170  7FA0                      ENDIF
+ 171  7FA0                  ENDIF
+ 172  7FA0
+ 173  7FA0              .willy_dies:
+ 174  7FA0                  ; Decrementa le vite e aggiorna la visualizzazione
+ 175  7FA0 21 33 E6         ld   hl, willy_lives
+ 176  7FA3 7E               ld   a, (hl)
+ 177  7FA4 B7               or   a
+ 178  7FA5 28 01            jr   z, .no_lives_dec
+ 179  7FA7 35               dec  (hl)
+ 180  7FA8              .no_lives_dec:
+ 181  7FA8 CD 9B 60         call Gfx_PrintWillyLives
+ 182  7FAB
+ 183  7FAB                  ; Gestisci la morte di Willy:
+ 184  7FAB                  ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
+ 185  7FAB CD 48 60         call Gfx_DeleteCharAtOldPos
+ 186  7FAE
+ 187  7FAE                  ; 2. Ripristina la posizione iniziale nella stanza
+ 188  7FAE CD F8 65         call LoadPositionPlayeinRoom
+ 189  7FB1
+ 190  7FB1                  ; 3. Reimposta la fisica di Willy
+ 191  7FB1 AF               xor  a
+ 192  7FB2 32 34 E6         ld   (velocity_y), a
+ 193  7FB5 32 36 E6         ld   (jump_pressed), a
+ 194  7FB8 32 3A E6         ld   (jump_frame), a
+ 195  7FBB 32 39 E6         ld   (jump_dir), a
+ 196  7FBE 3E 01            ld   a, 1
+ 197  7FC0 32 35 E6         ld   (on_ground), a
+ 198  7FC3 18 1A            jr   .no_collision ; Salta il disegno delle raster bar poiché Willy è morto
+ 199  7FC5
+ 200  7FC5              .draw_raster_bars:
+ 201  7FC5                  ; Collisione attiva: disegna le raster bar nel bordo
+ 202  7FC5 3A 46 E6         ld   a, (counter)
+ 203  7FC8 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+ 204  7FCA 06 1E            ld   b, 30             ; Numero di righe della barra raster
+ 205  7FCC              .raster_loop:
+ 206  7FCC D3 FE            out  ($fe), a
+ 207  7FCE 3C               inc  a
+ 208  7FCF E6 07            and  7
+ 209  7FD1 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+ 210  7FD3              .delay:
+ 211  7FD3 0D               dec  c
+ 212  7FD4 20 FD            jr   nz, .delay
+ 213  7FD6 10 F4            djnz .raster_loop
+ 214  7FD8
+ 215  7FD8                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+ 216  7FD8 3A 32 E6         ld   a, (room_border_color)
+ 217  7FDB D3 FE            out  ($fe), a
+ 218  7FDD 18 05            jr   .no_collision_change
+ 219  7FDF
+ 220  7FDF              .no_collision:
+ 221  7FDF                  ; Nessuna collisione: mantieni il bordo al colore della stanza
+ 222  7FDF 3A 32 E6         ld   a, (room_border_color)
+ 223  7FE2 D3 FE            out  ($fe), a
+ 224  7FE4
+ 225  7FE4              .no_collision_change:
+ 226  7FE4 C3 52 7F         jp   Main_loop
+ 227  7FE7
+ 228  7FE7
+ 229  7FE7
+ 230  7FE7                  include "resources.asm"
 # file opened: resources.asm
    1+ 7FE7              ;===========================================================================
    2+ 7FE7              ; resources.asm
@@ -21819,7 +21829,7 @@
   75+ E625 00          > db 0
   76+ E626
 # file closed: resources.asm
- 227  E626                  include "data/datavariable.asm"
+ 231  E626                  include "data/datavariable.asm"
 # file opened: data/datavariable.asm
    1+ E626              ; -------------------------------------------------------------------
    2+ E626              ; Variabili
@@ -22742,6 +22752,6 @@
   74+ E9B2                  ENDIF
   75+ E9B2
 # file closed: data/datavariable.asm
- 228  E9B2
- 229  E9B2                  SAVESNA "jet set willy.sna", start
+ 232  E9B2
+ 233  E9B2                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm

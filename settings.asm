@@ -7,6 +7,13 @@
 ; (es. -DENABLE_MUSIC=0 -DENABLE_ROOM_SKIP_KEYS=0).
 ;===========================================================================
 
+; --- Effetti di sottofondo ---
+; 1 = Effetti abilitati
+; 0 = Effetti disabilitati
+    IFNDEF ENABLE_EFFECTS
+ENABLE_EFFECTS EQU 1
+    ENDIF
+
 ; --- Musica di sottofondo ---
 ; 1 = Musica abilitata
 ; 0 = Musica disabilitata
