@@ -62,3 +62,10 @@ ENABLE_ROOM_SKIP_KEYS EQU 1
     IFNDEF ENABLE_RAMP_DEBUG_BARS
 ENABLE_RAMP_DEBUG_BARS EQU 1
     ENDIF
+
+; --- Visualizzazione del numero della stanza nell'ultima riga dello schermo ---
+; 1 = Abilita la visualizzazione di "Room: " e il numero della stanza nell'ultima riga (Riga 23)
+; 0 = Disabilita la visualizzazione del numero della stanza
+    IFNDEF ENABLE_ROOM_NUMBER
+ENABLE_ROOM_NUMBER EQU 1
+    ENDIF

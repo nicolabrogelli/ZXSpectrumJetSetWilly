@@ -7,7 +7,7 @@
 ; -------------------------------------------------------------------
 Gfx_CopyChars:
     ld hl, $3D00  ; Indirizzo del set di caratteri originale in ROM (ASCII 32)
-    ld de, $8100  ; Indirizzo in RAM per ASCII 32..127 ($8000 + 32*8)
+    ld de, $F100  ; Indirizzo in RAM per ASCII 32..127 ($F000 + 32*8)
     ld bc, 768    ; Numero di byte da copiare (96 caratteri * 8 byte ciascuno)
     ldir          ; Copiare i dati
     ret
@@ -17,10 +17,10 @@ Gfx_CopyChars:
 ; -------------------------------------------------------------------
 Gfx_DefineChars:
     ld hl, Willy             ; Indirizzo dei dati del nuovo carattere
-    ld de, $8008             ; Indirizzo di ASCII 1 nel nuovo set di caratteri ($8000 + 1*8)
+    ld de, $F008             ; Indirizzo di ASCII 1 nel nuovo set di caratteri ($F000 + 1*8)
     ld bc, 72                ; Numero di byte da copiare (9 caratteri * 8 byte)
     ldir                        ; Effettua la copia dei caratteri
-    ld hl, $8000                ; Indirizzo del nuovo set di caratteri in RAM (font base ASCII 0)
+    ld hl, $F000                ; Indirizzo del nuovo set di caratteri in RAM (font base ASCII 0)
     ld ($5C36), hl              ; Aggiornare la variabile di sistema CHARS
     ret
 
@@ -637,6 +637,10 @@ Gfx_PrintRoomName:
 
     ; Disegna i 7 Willy in basso a sinistra (Row 19, 20)
     call Gfx_PrintWillyLives
+
+    IF ENABLE_ROOM_NUMBER != 0
+    call Gfx_PrintRoomNumber
+    ENDIF
     ret
 
 Gfx_PrintWillyLives:
@@ -861,6 +865,131 @@ status_line_time:
 
 status_line_attrs:
     db 65, 66, 67, 68, 69, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 70, 69, 68, 67, 66, 65
+
+; -------------------------------------------------------------------
+; Disegna lo status della stanza ("Room: " + numero stanza) nell'ultima riga (Riga 23)
+; -------------------------------------------------------------------
+    IF ENABLE_ROOM_NUMBER != 0
+Gfx_PrintRoomNumber:
+    push af
+    push bc
+    push de
+    push hl
+
+    ld   c, 0              ; C = colonna iniziale (0..31)
+
+    ; 1. Stampa la stringa label_room_str ("Room: ")
+    ld   hl, label_room_str
+    ld   b, 6              ; 6 caratteri ("Room: ")
+.print_label_loop:
+    push bc
+    ld   a, (hl)           ; A = carattere ASCII
+    push hl
+    call Gfx_DrawCharVRAM_Row23
+    pop  hl
+    inc  hl
+    pop  bc
+    inc  c                 ; Prossima colonna
+    djnz .print_label_loop
+
+    ; 2. Converti (current_room) in 2 cifre ASCII e stampale
+    ld   a, (current_room)
+    ld   b, 0              ; B = decine
+.loop_tens:
+    cp   10
+    jr   c, .done_tens
+    sub  10
+    inc  b
+    jr   .loop_tens
+.done_tens:
+    ld   e, a              ; E = unità
+
+    ; Stampa cifra decine
+    ld   a, b
+    add  a, '0'
+    push de
+    call Gfx_DrawCharVRAM_Row23
+    pop  de
+    inc  c
+
+    ; Stampa cifra unità
+    ld   a, e
+    add  a, '0'
+    call Gfx_DrawCharVRAM_Row23
+
+    pop  hl
+    pop  de
+    pop  bc
+    pop  af
+    ret
+
+; -------------------------------------------------------------------
+; Disegna un carattere ASCII A alla colonna C (0..31) di Riga 23 direttamente in VRAM
+; -------------------------------------------------------------------
+Gfx_DrawCharVRAM_Row23:
+    push af
+    push bc
+    push de
+    push hl
+
+    ; C = colonna (0..31), A = carattere ASCII
+    ld   b, a              ; B = salva carattere ASCII
+    ld   a, c
+    cp   32
+    jr   nc, .exit_draw_char ; Se C >= 32, ignora per sicurezza!
+
+    ; Check dei limiti ASCII (32..127) per non accedere a RAM fuori dal font
+    ld   a, b              ; A = carattere ASCII
+    cp   32
+    jr   c, .exit_draw_char ; Se CHAR < 32 (non stampabile), ignora!
+    cp   128
+    jr   nc, .exit_draw_char ; Se CHAR >= 128 (fuori dal font RAM), ignora!
+
+    ; 1. Indirizzo del font in RAM ($F100 + (ASCII - 32) * 8)
+    sub  32                ; A = ASCII - 32
+    ld   l, a
+    ld   h, 0
+    add  hl, hl            ; *2
+    add  hl, hl            ; *4
+    add  hl, hl            ; *8
+    ld   de, $F100         ; Indirizzo base del font 8x8 in RAM ($F100)
+    add  hl, de            ; HL = indirizzo pattern font 8x8 in RAM ($F100)
+
+    ; 2. Imposta l'attributo colore a Riga 23, Colonna C ($5A60 + C)
+    push hl                ; Salva indirizzo pattern font
+    ld   l, c
+    ld   h, 0
+    ld   de, $5a60
+    add  hl, de            ; HL = indirizzo attributi ($5A60 + C)
+    ld   (hl), $46         ; Attributo: BRIGHT 1 + PAPER BLACK + INK YELLOW ($46)
+    pop  hl                ; Ripristina indirizzo pattern font in HL
+
+    ; 3. Indirizzo VRAM Riga 23, Colonna C
+    ; Low byte VRAM: $E0 | C
+    ld   a, c
+    or   $e0
+    ld   e, a              ; E = Low byte VRAM ($E0 | C)
+
+    ; Copia gli 8 byte di pattern nelle 8 linee di VRAM ($5000, $5100, ..., $5700)
+    ld   d, $50            ; D = High byte iniziale VRAM ($50)
+    ld   b, 8              ; B = 8 linee di pixel
+.loop_vram_lines:
+    ld   a, (hl)           ; Leggi byte dal font ROM
+    ld   (de), a           ; Scrivi direttamente in VRAM bitmap
+    inc  hl                ; Prossimo byte del font
+    inc  d                 ; Prossima linea schermo ($50 -> $51 -> ... -> $57)
+    djnz .loop_vram_lines
+
+.exit_draw_char:
+    pop  hl
+    pop  de
+    pop  bc
+    pop  af
+    ret
+
+label_room_str:
+    db "Room: "
+    ENDIF
 
 ; -------------------------------------------------------------------
 ; Disegna riga/pavimento sotto i piedi degli sprite (Riga 18, Y = 144)
