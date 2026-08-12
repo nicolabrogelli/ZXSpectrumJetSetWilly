@@ -582,33 +582,39 @@ Gfx_UpdatePlayer:
     ; Durante il tempo di sicurezza, forza il ridisegno ad ogni frame per permettere il lampeggio
     ld   a, (willy_safety_timer)
     or   a
-    jr   nz, .player_changed
+    jr   nz, .player_moved
     
     ; 1. Controlla se la posizione o l'animazione sono cambiate
     ld   bc, (PlayerPos)            ; C = PlayerX, B = PlayerY
     ld   de, (player_drawn_pos)     ; E = Drawn X, D = Drawn Y
     ld   a, b
     cp   d
-    jr   nz, .player_changed
+    jr   nz, .player_moved
     ld   a, c
     cp   e
-    jr   nz, .player_changed
+    jr   nz, .player_moved
     
     ld   a, (direction)
     ld   hl, player_old_dir
     cp   (hl)
-    jr   nz, .player_changed
+    jr   nz, .player_moved
     
     ld   a, (body_state)
     ld   hl, player_old_body
     cp   (hl)
-    jr   z, .player_no_change       ; Nessun cambiamento, salta cancella & disegna!
+    jr   nz, .player_moved
 
-.player_changed:
-    ; 2. Cancella lo sprite dalla posizione precedentemente disegnata
+    ; Willy non si è mosso. Ma se un nemico lo ha sovrascritto, ridisegnalo senza prima cancellarlo!
+    ld   a, (willy_needs_redraw)
+    or   a
+    jr   nz, .redraw_overlay_only
+    jr   .player_no_change
+
+.player_moved:
+    ; 2. Cancella lo sprite dalla posizione precedentemente disegnata solo se Willy si è mosso
     ld   a, (player_drawn_pos+1)
     cp   $FF
-    jr   z, .skip_erase
+    jr   z, .redraw_overlay_only
     
     ld   bc, (player_drawn_pos)
     call Gfx_ErasePixelSprite8x8    ; Cancella testa
@@ -618,7 +624,7 @@ Gfx_UpdatePlayer:
     ld   b, a
     call Gfx_ErasePixelSprite8x8    ; Cancella corpo
 
-.skip_erase:
+.redraw_overlay_only:
     ; Durante il timer di sicurezza, fa lampeggiare lo sprite
     ld   a, (willy_safety_timer)
     or   a
@@ -640,6 +646,9 @@ Gfx_UpdatePlayer:
     ld   (player_old_dir), a
     ld   a, (body_state)
     ld   (player_old_body), a
+    
+    xor  a
+    ld   (willy_needs_redraw), a
 
 .player_no_change:
     pop  hl

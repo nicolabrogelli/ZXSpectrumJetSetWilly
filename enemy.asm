@@ -280,6 +280,37 @@ Enemy_LoadRoom:
     ret
 
 ; -------------------------------------------------------------------
+; Controlla se la posizione (C = X, B = Y) del nemico si sovrappone a Willy
+; -------------------------------------------------------------------
+CheckEnemyWillyOverlap:
+    ld   a, (player_drawn_pos+1)
+    cp   $FF
+    ret  z                  ; Se Willy non è disegnato, esci
+    
+    ; 1. Controllo X: (EnemyX & $F8) - (WillyX & $F8) + 16 <= 24
+    ld   a, (player_drawn_pos)
+    and  $F8
+    ld   e, a               ; E = WillyX & $F8
+    ld   a, c
+    and  $F8                ; A = EnemyX & $F8
+    sub  e                  ; A = (EnemyX & $F8) - (WillyX & $F8)
+    add  a, 16
+    cp   25
+    ret  nc                 ; Fuori portata X
+    
+    ; 2. Controllo Y: WillyY - EnemyY + 15 <= 30
+    ld   a, (player_drawn_pos+1) ; A = WillyY
+    sub  b                  ; A = WillyY - EnemyY
+    add  a, 15
+    cp   31
+    ret  nc                 ; Fuori portata Y
+    
+    ; Sovrapposizione confermata! Segnala che Willy deve essere ridisegnato
+    ld   a, 1
+    ld   (willy_needs_redraw), a
+    ret
+
+; -------------------------------------------------------------------
 ; Aggiorna e disegna i nemici in modo atomico (cancella + disegna per singolo nemico)
 ; -------------------------------------------------------------------
 Enemy_EraseRoom:
@@ -318,6 +349,11 @@ Enemy_RenderRoom:
     jr   z, .skip_slot     ; Nessuna modifica in questo frame, salta!
 
 .do_erase_slot:
+    ; Controlla se la VECCHIA posizione del guardiano sovrascrive Willy
+    ld   c, (ix+8)         ; C = Old X
+    ld   b, (ix+9)         ; B = Old Y
+    call CheckEnemyWillyOverlap
+
     ; Cancella il nemico nella VECCHIA posizione
     ld   c, (ix+8)         ; C = Old X
     ld   b, (ix+9)         ; B = Old Y
@@ -330,6 +366,11 @@ Enemy_RenderRoom:
     ; Ridisegna IMMEDIATAMENTE il nemico nella NUOVA posizione
     call Enemy_DrawSingleSlot
     
+    ; Controlla se la NUOVA posizione del guardiano si sovrappone a Willy
+    ld   c, (ix+2)         ; C = Current X
+    ld   b, (ix+3)         ; B = Current Y
+    call CheckEnemyWillyOverlap
+
     ; Salva le coordinate effettivamente disegnate
     ld   a, (ix+2)
     ld   (ix+8), a

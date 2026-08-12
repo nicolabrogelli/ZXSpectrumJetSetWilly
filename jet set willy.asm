@@ -115,9 +115,11 @@ Main_loop:
     ld   (willy_safety_timer), a
 .no_safety_dec:
 
-    ; 1. Rendering atomico dei personaggi subito dopo HALT (mentre il raggio è nel bordo superiore)
-    call Gfx_UpdatePlayer
+    ; 1. Rendering atomico nemici ed estrazione sovrapposizioni
     call Enemy_RenderRoom
+    
+    ; 2. Rendering del giocatore (ridisegna Willy in primo piano se mosso o se coperto da un guardiano)
+    call Gfx_UpdatePlayer
     
     ; 2. Aggiornamento audio
     IF ENABLE_EFFECTS != 0

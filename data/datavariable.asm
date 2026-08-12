@@ -70,6 +70,7 @@ player_old_dir:        db $ff
 player_old_body:       db $ff
 enemy_was_updated:     db 1
 willy_safety_timer:    db 0
+willy_needs_redraw:    db 0
 willy_on_ramp:         db 0 ; 1 = Willy posizionato su rampa (debug)
 Audio_jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
 Audio_jump_sound_timer:   db 0
