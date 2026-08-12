@@ -107,6 +107,14 @@ Main_loop:
     ld   hl, (counter)
     ld   (last_frame_counter), hl
     
+    ; Aggiorna il timer di sicurezza (invulnerabilità post-morte)
+    ld   a, (willy_safety_timer)
+    or   a
+    jr   z, .no_safety_dec
+    dec  a
+    ld   (willy_safety_timer), a
+.no_safety_dec:
+
     ; 1. Rendering atomico dei personaggi subito dopo HALT (mentre il raggio è nel bordo superiore)
     call Gfx_UpdatePlayer
     call Enemy_RenderRoom
@@ -192,7 +200,7 @@ Main_loop:
     halt
     djnz .death_pause
 
-    ; 4. Reimposta la fisica di Willy
+    ; 4. Reimposta la fisica di Willy e imposta il timer di sicurezza al respawn
     xor  a
     ld   (velocity_y), a
     ld   (jump_pressed), a
@@ -200,6 +208,9 @@ Main_loop:
     ld   (jump_dir), a
     ld   a, 1
     ld   (on_ground), a
+    
+    ld   a, RESPAWN_SAFETY_TIME
+    ld   (willy_safety_timer), a
 
     ; 5. Ridisegna completamente la stanza e riposiziona Willy
     jp   LoadRoomAndRestart

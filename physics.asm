@@ -661,6 +661,14 @@ Phys_ApplyGravity:
 ; Output: Carry flag impostato se collisione, altrimenti resettato
 ; -------------------------------------------------------------------
 CheckCollision:
+    ; Se il timer di sicurezza al respawn post-morte è attivo (> 0), ignora le collisioni con i guardiani
+    ld   a, (willy_safety_timer)
+    or   a
+    jr   z, .start_check
+    or   a                 ; Clear carry flag (nessuna collisione)
+    ret
+
+.start_check:
     push hl
     push de
     push bc

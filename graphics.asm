@@ -579,6 +579,11 @@ Gfx_UpdatePlayer:
     push de
     push hl
     
+    ; Durante il tempo di sicurezza, forza il ridisegno ad ogni frame per permettere il lampeggio
+    ld   a, (willy_safety_timer)
+    or   a
+    jr   nz, .player_changed
+    
     ; 1. Controlla se la posizione o l'animazione sono cambiate
     ld   bc, (PlayerPos)            ; C = PlayerX, B = PlayerY
     ld   de, (player_drawn_pos)     ; E = Drawn X, D = Drawn Y
@@ -614,9 +619,20 @@ Gfx_UpdatePlayer:
     call Gfx_ErasePixelSprite8x8    ; Cancella corpo
 
 .skip_erase:
+    ; Durante il timer di sicurezza, fa lampeggiare lo sprite
+    ld   a, (willy_safety_timer)
+    or   a
+    jr   z, .do_print
+    
+    ld   a, (counter)
+    and  4
+    jr   z, .skip_print_blink       ; Nelle fasi "off" del lampeggio, non ridisegnare
+
+.do_print:
     ; 3. Disegna il player nella nuova posizione
     call Gfx_PrintPlayer
-    
+
+.skip_print_blink:
     ; 4. Registra lo stato disegnato a schermo
     ld   bc, (PlayerPos)
     ld   (player_drawn_pos), bc
