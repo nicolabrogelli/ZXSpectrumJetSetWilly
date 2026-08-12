@@ -572,17 +572,86 @@ Gfx_PrintPlayer:
     ret
 
 ; -------------------------------------------------------------------
-; Cancella il player alle vecchie coordinate pixel
+; Aggiorna il player a schermo cancellandolo e ridisegnandolo solo se mosso o animato
 ; -------------------------------------------------------------------
-Gfx_DeleteCharAtOldPos:
-    ld   bc, (PlayerPosOld) ; C = PlayerXOld, B = PlayerYOld
-    call Gfx_ErasePixelSprite8x8 ; Cancella testa
+Gfx_UpdatePlayer:
+    push bc
+    push de
+    push hl
     
-    ld   bc, (PlayerPosOld)
+    ; 1. Controlla se la posizione o l'animazione sono cambiate
+    ld   bc, (PlayerPos)            ; C = PlayerX, B = PlayerY
+    ld   de, (player_drawn_pos)     ; E = Drawn X, D = Drawn Y
+    ld   a, b
+    cp   d
+    jr   nz, .player_changed
+    ld   a, c
+    cp   e
+    jr   nz, .player_changed
+    
+    ld   a, (direction)
+    ld   hl, player_old_dir
+    cp   (hl)
+    jr   nz, .player_changed
+    
+    ld   a, (body_state)
+    ld   hl, player_old_body
+    cp   (hl)
+    jr   z, .player_no_change       ; Nessun cambiamento, salta cancella & disegna!
+
+.player_changed:
+    ; 2. Cancella lo sprite dalla posizione precedentemente disegnata
+    ld   a, (player_drawn_pos+1)
+    cp   $FF
+    jr   z, .skip_erase
+    
+    ld   bc, (player_drawn_pos)
+    call Gfx_ErasePixelSprite8x8    ; Cancella testa
+    ld   bc, (player_drawn_pos)
     ld   a, b
     add  a, 8
     ld   b, a
-    call Gfx_ErasePixelSprite8x8 ; Cancella corpo
+    call Gfx_ErasePixelSprite8x8    ; Cancella corpo
+
+.skip_erase:
+    ; 3. Disegna il player nella nuova posizione
+    call Gfx_PrintPlayer
+    
+    ; 4. Registra lo stato disegnato a schermo
+    ld   bc, (PlayerPos)
+    ld   (player_drawn_pos), bc
+    ld   a, (direction)
+    ld   (player_old_dir), a
+    ld   a, (body_state)
+    ld   (player_old_body), a
+
+.player_no_change:
+    pop  hl
+    pop  de
+    pop  bc
+    ret
+
+; -------------------------------------------------------------------
+; Cancella il player alle coordinate correntemente disegnate
+; -------------------------------------------------------------------
+Gfx_DeleteCharAtOldPos:
+    push bc
+    ld   a, (player_drawn_pos+1)
+    cp   $FF
+    jr   z, .skip_del
+    
+    ld   bc, (player_drawn_pos)
+    call Gfx_ErasePixelSprite8x8    ; Cancella testa
+    ld   bc, (player_drawn_pos)
+    ld   a, b
+    add  a, 8
+    ld   b, a
+    call Gfx_ErasePixelSprite8x8    ; Cancella corpo
+    
+    ld   a, $FF
+    ld   (player_drawn_pos+1), a    ; Resetta posizione disegnata
+.skip_del:
+    pop  bc
     ret
 
 ; -------------------------------------------------------------------

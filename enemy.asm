@@ -257,33 +257,10 @@ Enemy_LoadRoom:
     ld   (de), a           ; Offset 7: Anim State
     inc  de
     
-    ; Imposta Old X = Current X
-    push hl
-    push de
-    pop  hl
-    dec  hl
-    dec  hl
-    dec  hl
-    dec  hl
-    dec  hl
-    dec  hl                ; HL points to RAM Offset 2 (Current X)
-    ld   a, (hl)
-    pop  hl
+    ; Imposta Old X = $FF, Old Y = $FF per forzare il rendering iniziale
+    ld   a, $FF
     ld   (de), a           ; Offset 8: Old X
     inc  de
-    
-    ; Imposta Old Y = Current Y
-    push hl
-    push de
-    pop  hl
-    dec  hl
-    dec  hl
-    dec  hl
-    dec  hl
-    dec  hl
-    dec  hl                ; HL points to RAM Offset 3 (Current Y)
-    ld   a, (hl)
-    pop  hl
     ld   (de), a           ; Offset 9: Old Y
     inc  de
 
@@ -303,9 +280,11 @@ Enemy_LoadRoom:
     ret
 
 ; -------------------------------------------------------------------
-; Cancella tutti i nemici attivi ripristinando lo sfondo statico
+; Aggiorna e disegna i nemici in modo atomico (cancella + disegna per singolo nemico)
 ; -------------------------------------------------------------------
 Enemy_EraseRoom:
+Enemy_DrawRoom:
+Enemy_RenderRoom:
     push hl
     push de
     push bc
@@ -313,25 +292,61 @@ Enemy_EraseRoom:
     
     ld   ix, ActiveEnemies
     ld   b, 8              ; 8 slot
-.loop:
+.render_loop:
     ld   a, (ix+0)         ; Flags
     and  $80               ; Active?
-    jr   z, .next
+    jr   z, .next_render
     
     push bc                ; Salva contatore ciclo
-    ld   c, (ix+8)         ; C = Old X (Offset 8)
-    ld   b, (ix+9)         ; B = Old Y (Offset 9)
+    
+    ; 1. Se Old X == $FF (nuova stanza), salta cancellazione e disegna direttamente
+    ld   a, (ix+8)         ; Old X
+    cp   $FF
+    jr   z, .do_draw_slot
+    
+    ; 2. Controlla se la posizione è cambiata o se l'animazione si è aggiornata
+    ld   a, (ix+8)         ; Old X
+    cp   (ix+2)            ; Current X
+    jr   nz, .do_erase_slot
+    ld   a, (ix+9)         ; Old Y
+    cp   (ix+3)            ; Current Y
+    jr   nz, .do_erase_slot
+    
+    ; Posizione identica. Controlla se l'aggiornamento nemici ha modificato lo stato
+    ld   a, (enemy_was_updated)
+    or   a
+    jr   z, .skip_slot     ; Nessuna modifica in questo frame, salta!
+
+.do_erase_slot:
+    ; Cancella il nemico nella VECCHIA posizione
+    ld   c, (ix+8)         ; C = Old X
+    ld   b, (ix+9)         ; B = Old Y
     call Gfx_ErasePixelSprite16x16
     ld   c, (ix+8)         ; C = Old X
     ld   b, (ix+9)         ; B = Old Y
     call Gfx_RestoreEnemyColorAttributes
+
+.do_draw_slot:
+    ; Ridisegna IMMEDIATAMENTE il nemico nella NUOVA posizione
+    call Enemy_DrawSingleSlot
+    
+    ; Salva le coordinate effettivamente disegnate
+    ld   a, (ix+2)
+    ld   (ix+8), a
+    ld   a, (ix+3)
+    ld   (ix+9), a
+
+.skip_slot:
     pop  bc
     
-.next:
+.next_render:
     ld   de, 11
     add  ix, de            ; Prossimo slot (11 byte)
     dec  b
-    jr   nz, .loop
+    jr   nz, .render_loop
+    
+    xor  a
+    ld   (enemy_was_updated), a
     
     pop  ix
     pop  bc
@@ -340,22 +355,12 @@ Enemy_EraseRoom:
     ret
 
 ; -------------------------------------------------------------------
-; Disegna tutti i nemici attivi
+; Disegna un singolo nemico specificato da IX
 ; -------------------------------------------------------------------
-Enemy_DrawRoom:
-    push hl
-    push de
+Enemy_DrawSingleSlot:
     push bc
-    push ix
-    
-    ld   ix, ActiveEnemies
-    ld   b, 8              ; 8 slot
-.loop:
-    ld   a, (ix+0)         ; Flags
-    and  $80               ; Active?
-    jp   z, .next
-    
-    push bc                ; Salva contatore ciclo
+    push de
+    push hl
     
     ; Determina quale sprite usare basato sul tipo (Offset 1, Bit 5-0)
     ld   a, (ix+1)         ; Tipo
@@ -675,18 +680,9 @@ Enemy_DrawRoom:
     ld   a, (ix+10)        ; A = Color (Offset 10)
     call Gfx_SetEnemyColorAttributes
     
-    pop  bc                ; Ripristina contatore ciclo
-    
-.next:
-    ld   de, 11
-    add  ix, de            ; Prossimo slot (11 byte)
-    dec  b
-    jp   nz, .loop
-    
-    pop  ix
-    pop  bc
-    pop  de
     pop  hl
+    pop  de
+    pop  bc
     ret
 
 .got_facehell_hl:
@@ -722,8 +718,10 @@ Enemy_DrawRoom:
     ld   a, (ix+10)        ; A = Color (Offset 10)
     call Gfx_SetEnemyColorAttributes
     
-    pop  bc                ; Ripristina contatore ciclo
-    jp   .next
+    pop  hl
+    pop  de
+    pop  bc
+    ret
 
 ; -------------------------------------------------------------------
 ; Aggiorna le posizioni dei nemici attivi per il prossimo frame
@@ -764,6 +762,9 @@ Enemy_Update:
     jr   .do_update
     
 .do_update:
+    ld   a, 1
+    ld   (enemy_was_updated), a
+    
     ld   ix, ActiveEnemies
     ld   b, 8              ; 8 slot
 .loop:
@@ -771,13 +772,7 @@ Enemy_Update:
     and  $80               ; Active?
     jp   z, .next
     
-    ; 1. Salva la posizione corrente in Old X/Y per la cancellazione nel prossimo frame
-    ld   a, (ix+2)         ; Current X (Offset 2)
-    ld   (ix+8), a         ; Old X = Current X (Offset 8)
-    ld   a, (ix+3)         ; Current Y (Offset 3)
-    ld   (ix+9), a         ; Old Y = Current Y (Offset 9)
-    
-    ; 2. Aggiorna Anim State
+    ; 1. Aggiorna Anim State
     ld   a, (ix+1)         ; Sprite Type (Offset 1)
     and  $3F               ; Tipo
     cp   13                ; Tipo 13 = Canguro?

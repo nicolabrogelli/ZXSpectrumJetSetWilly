@@ -89,6 +89,8 @@ LoadRoomAndRestart:
     or   $07               ; Ink bianco nei bit 0-2
     ld   (BORDCR), a
 
+    ld   a, $ff
+    ld   (player_drawn_pos+1), a
     call Gfx_PrintPlayer
 
 Main_loop:
@@ -105,6 +107,11 @@ Main_loop:
     ld   hl, (counter)
     ld   (last_frame_counter), hl
     
+    ; 1. Rendering atomico dei personaggi subito dopo HALT (mentre il raggio è nel bordo superiore)
+    call Gfx_UpdatePlayer
+    call Enemy_RenderRoom
+    
+    ; 2. Aggiornamento audio
     IF ENABLE_EFFECTS != 0
     call Audio_UpdateJumpSound    ; Aggiorna l'effetto sonoro del salto
     ENDIF
@@ -112,13 +119,6 @@ Main_loop:
     IF ENABLE_MUSIC != 0
     call Audio_UpdateMusic        ; Aggiorna la musica
     ENDIF
-    
-    ; 1. Cancella e disegna i personaggi (back-to-back per minimizzare il flickering)
-    call Gfx_DeleteCharAtOldPos
-    call Gfx_PrintPlayer
-
-    call Enemy_EraseRoom
-    call Enemy_DrawRoom
     
     ; Se l'animazione delle vite è abilitata, aggiorna la visualizzazione delle icone camminanti
     IF ENABLE_ANIMATE_LIVES != 0
