@@ -673,18 +673,18 @@ CheckCollision:
     and  $80               ; Active?
     jr   z, .next
     
-    ; 1. Controllo orizzontale: PlayerX - EnemyX + 7 in [0, 22]
+    ; 1. Controllo orizzontale con margini di tolleranza (Hitbox Inset)
     ld   a, (PlayerPos)    ; A = PlayerX
     sub  (ix+2)            ; A = PlayerX - EnemyX (Offset 2: Current X)
-    add  a, 7              ; A = PlayerX - EnemyX + 7
-    cp   23                ; Se >= 23, nessuna collisione con questo
+    add  a, COLLISION_OFFSET_X
+    cp   COLLISION_THRESHOLD_X
     jr   nc, .next
     
-    ; 2. Controllo verticale: PlayerY - EnemyY + 15 in [0, 30]
+    ; 2. Controllo verticale con margini di tolleranza (Hitbox Inset)
     ld   a, (PlayerPos+1)  ; A = PlayerY
     sub  (ix+3)            ; A = PlayerY - EnemyY (Offset 3: Current Y)
-    add  a, 15             ; A = PlayerY - EnemyY + 15
-    cp   31                ; Se >= 31, nessuna collisione con questo
+    add  a, COLLISION_OFFSET_Y
+    cp   COLLISION_THRESHOLD_Y
     jr   nc, .next
     
     ; Collisione avvenuta!

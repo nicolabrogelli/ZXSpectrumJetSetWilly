@@ -11,7 +11,7 @@
 ; 1 = Effetti abilitati
 ; 0 = Effetti disabilitati
     IFNDEF ENABLE_EFFECTS
-ENABLE_EFFECTS EQU 1
+ENABLE_EFFECTS EQU 0
     ENDIF
 
 ; --- Musica di sottofondo ---
@@ -25,14 +25,14 @@ ENABLE_MUSIC EQU 0
 ; 1 = Abilita la morte e il decremento delle vite alla collisione con i guardiani
 ; 0 = Disabilita la morte
     IFNDEF ENABLE_GUARDIAN_COLLISION_DEATH
-ENABLE_GUARDIAN_COLLISION_DEATH EQU 0
+ENABLE_GUARDIAN_COLLISION_DEATH EQU 1
     ENDIF
 
 ; --- Bande colorate di debug per collisione con i guardiani ---
 ; 1 = Abilita le bande colorate (raster bar) sul bordo alla collisione con i guardiani (quando la morte è disabilitata)
 ; 0 = Disabilita le bande colorate di debug per i guardiani
     IFNDEF ENABLE_GUARDIAN_DEBUG_BARS
-ENABLE_GUARDIAN_DEBUG_BARS EQU 0
+ENABLE_GUARDIAN_DEBUG_BARS EQU 1
     ENDIF
 
 ; --- Morte per collisione con gli elementi Nasty (tiles pericolose) ---
@@ -60,7 +60,7 @@ ENABLE_ROOM_SKIP_KEYS EQU 1
 ; 1 = Abilita le bande colorate (raster bar) sul bordo quando Willy si trova posizionato su una rampa
 ; 0 = Disabilita le bande colorate di debug per le rampe
     IFNDEF ENABLE_RAMP_DEBUG_BARS
-ENABLE_RAMP_DEBUG_BARS EQU 1
+ENABLE_RAMP_DEBUG_BARS EQU 0
     ENDIF
 
 ; --- Visualizzazione del numero della stanza nell'ultima riga dello schermo ---

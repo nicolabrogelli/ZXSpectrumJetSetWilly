@@ -42,3 +42,23 @@ MAX_FALL_SPEED EQU 12
     IFNDEF GRAVITY
 GRAVITY EQU 1
     ENDIF
+
+; --- Tolleranza Hitbox Collisioni Guardiani (Inset Margins) ---
+; Definisce il margine di rientro in pixel per escludere i bordi trasparenti degli sprite.
+;   0 = Hitbox rigida originale 8x16 vs 16x16
+;   1 = Tolleranza leggera (1px per lato)
+;   2 = Tolleranza consigliata (2px per lato, evita morte su bordi vuoti)
+    IFNDEF COLLISION_INSET_X
+COLLISION_INSET_X EQU 2
+    ENDIF
+
+    IFNDEF COLLISION_INSET_Y
+COLLISION_INSET_Y EQU 2
+    ENDIF
+
+COLLISION_OFFSET_X:    EQU (7 - (2 * COLLISION_INSET_X))
+COLLISION_THRESHOLD_X: EQU (23 - (4 * COLLISION_INSET_X))
+
+COLLISION_OFFSET_Y:    EQU (15 - (2 * COLLISION_INSET_Y))
+COLLISION_THRESHOLD_Y: EQU (31 - (4 * COLLISION_INSET_Y))
+
