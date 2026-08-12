@@ -6226,11 +6226,11 @@
   98+ 78EC                  ITEM RoomsListTable.ColdStoreLayout, 8, 5, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
   98+ 78EC 19 08 05 0C >        db (RoomsListTable.ColdStoreLayout - RoomsListTable) / 2, 8, 5, (BLUE * 8) + GREEN, 0
   98+ 78F0 00          >
-  99+ 78F1                  ITEM RoomsListTable.ColdStoreLayout, 5, 8, (BLUE * 8) + CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-  99+ 78F1 19 05 08 0D >        db (RoomsListTable.ColdStoreLayout - RoomsListTable) / 2, 5, 8, (BLUE * 8) + CYAN, 0
+  99+ 78F1                  ITEM RoomsListTable.ColdStoreLayout, 6, 8, (BLUE * 8) + CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+  99+ 78F1 19 06 08 0D >        db (RoomsListTable.ColdStoreLayout - RoomsListTable) / 2, 6, 8, (BLUE * 8) + CYAN, 0
   99+ 78F5 00          >
- 100+ 78F6                  ITEM RoomsListTable.ColdStoreLayout, 5, 11, (BLUE * 8) + YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
- 100+ 78F6 19 05 0B 0E >        db (RoomsListTable.ColdStoreLayout - RoomsListTable) / 2, 5, 11, (BLUE * 8) + YELLOW, 0
+ 100+ 78F6                  ITEM RoomsListTable.ColdStoreLayout, 6, 11, (BLUE * 8) + YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+ 100+ 78F6 19 06 0B 0E >        db (RoomsListTable.ColdStoreLayout - RoomsListTable) / 2, 6, 11, (BLUE * 8) + YELLOW, 0
  100+ 78FA 00          >
  101+ 78FB
  102+ 78FB                  ; Stanza 27 (The Chapel)

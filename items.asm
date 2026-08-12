@@ -96,8 +96,8 @@ ItemsTable:
     ; Stanza 25 (Cold Store)
     ITEM RoomsListTable.ColdStoreLayout, 3, 2, (BLUE * 8) + MAGENTA, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
     ITEM RoomsListTable.ColdStoreLayout, 8, 5, (BLUE * 8) + GREEN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-    ITEM RoomsListTable.ColdStoreLayout, 5, 8, (BLUE * 8) + CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
-    ITEM RoomsListTable.ColdStoreLayout, 5, 11, (BLUE * 8) + YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.ColdStoreLayout, 6, 8, (BLUE * 8) + CYAN, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
+    ITEM RoomsListTable.ColdStoreLayout, 6, 11, (BLUE * 8) + YELLOW, 0                 ; Oggetto 1 alla colonna X=11, riga Y=4, Paper = CYAN (5), Ink = MAGENTA (3), (Stato: 0=attivo)
 
     ; Stanza 27 (The Chapel)
     ITEM RoomsListTable.TheChapelLayout, 29, 6, MAGENTA, 0            ; Oggetto 3 alla colonna X=24, riga Y=11, YELLOW, (Stato: 0=attivo)
