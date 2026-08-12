@@ -1,6 +1,0 @@
-1. Non funziona il passggio dalla stanza Top Landing e First Landing. Il probelma sembra localizzato nella gestione
-   delle priorrità tra passaggio di stanza e gestione della scala. Se infatti accorcio la scala o sposto la "porta"
-   il passaggio alla stanza successiva funziona. L'obbiettivo è effettare la fix e non spostare la porta.
-   
-2. Il passaggio tra la stanza The Forgotten Abbey e The Winw Cellar avviene correttamente ma al contrario se Willy
-   monta sopra la tail Conveyor Willy si blocca appena cambia la stanza.
