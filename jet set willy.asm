@@ -171,23 +171,28 @@ Main_loop:
     ENDIF
     
 .willy_dies:
-    ; Decrementa le vite e aggiorna la visualizzazione
+    ; 1. Decrementa le vite
     ld   hl, willy_lives
     ld   a, (hl)
     or   a
     jr   z, .no_lives_dec
     dec  (hl)
 .no_lives_dec:
-    call Gfx_PrintWillyLives
 
-    ; Gestisci la morte di Willy:
-    ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
-    call Gfx_DeleteCharAtOldPos
-    
-    ; 2. Ripristina la posizione iniziale nella stanza
-    call LoadPositionPlayeinRoom
-    
-    ; 3. Reimposta la fisica di Willy
+    ; 2. Cancella lo schermo a nero (imposta bordo e schermo a nero)
+    xor  a
+    out  ($fe), a              ; Imposta colore bordo hardware a nero
+    ld   hl, ATTR_P
+    ld   (hl), a               ; Paper = Nero, Ink = Nero ($00)
+    call CLS                   ; Pulisce il display RAM e imposta gli attributi a nero
+
+    ; 3. Pausa a schermo nero (~0.5 secondi)
+    ld   b, 25
+.death_pause:
+    halt
+    djnz .death_pause
+
+    ; 4. Reimposta la fisica di Willy
     xor  a
     ld   (velocity_y), a
     ld   (jump_pressed), a
@@ -195,7 +200,9 @@ Main_loop:
     ld   (jump_dir), a
     ld   a, 1
     ld   (on_ground), a
-    jr   .no_collision ; Salta il disegno delle raster bar poiché Willy è morto
+
+    ; 5. Ridisegna completamente la stanza e riposiziona Willy
+    jp   LoadRoomAndRestart
     
 .draw_raster_bars:
     ; Collisione attiva: disegna le raster bar nel bordo

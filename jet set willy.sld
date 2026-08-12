@@ -9,8 +9,8 @@ settings.asm|28||0|-1|1|D|ENABLE_GUARDIAN_COLLISION_DEATH
 settings.asm|28||0|-1|1|L|,ENABLE_GUARDIAN_COLLISION_DEATH,,+equ,+used
 settings.asm|35||0|-1|1|D|ENABLE_GUARDIAN_DEBUG_BARS
 settings.asm|35||0|-1|1|L|,ENABLE_GUARDIAN_DEBUG_BARS,,+equ
-settings.asm|42||0|-1|0|D|ENABLE_NASTY_COLLISION_DEATH
-settings.asm|42||0|-1|0|L|,ENABLE_NASTY_COLLISION_DEATH,,+equ,+used
+settings.asm|42||0|-1|1|D|ENABLE_NASTY_COLLISION_DEATH
+settings.asm|42||0|-1|1|L|,ENABLE_NASTY_COLLISION_DEATH,,+equ,+used
 settings.asm|49||0|-1|0|D|ENABLE_ANIMATE_LIVES
 settings.asm|49||0|-1|0|L|,ENABLE_ANIMATE_LIVES,,+equ,+used
 settings.asm|56||0|-1|1|D|ENABLE_ROOM_SKIP_KEYS
@@ -739,7 +739,7 @@ graphics.asm|630||0|1|24734|T|
 graphics.asm|631||0|1|24735|T|
 graphics.asm|632||0|1|24736|T|
 graphics.asm|637||0|1|24737|F|Gfx_DeleteCharAtOldPos
-graphics.asm|637||0|1|24737|L|,Gfx_DeleteCharAtOldPos,,+used
+graphics.asm|637||0|1|24737|L|,Gfx_DeleteCharAtOldPos,
 graphics.asm|638||0|1|24737|T|
 graphics.asm|639||0|1|24738|T|
 graphics.asm|640||0|1|24741|T|
@@ -3931,7 +3931,7 @@ physics.asm|1829||0|1|29265|T|
 physics.asm|1830||0|1|29266|T|
 physics.asm|1831||0|1|29267|T|
 physics.asm|1838||0|1|29268|F|Phys_CheckNastyCollision
-physics.asm|1838||0|1|29268|L|,Phys_CheckNastyCollision,
+physics.asm|1838||0|1|29268|L|,Phys_CheckNastyCollision,,+used
 physics.asm|1839||0|1|29268|T|
 physics.asm|1841||0|1|29269|T|
 physics.asm|1844||0|1|29273|T|
@@ -5848,58 +5848,67 @@ jet set willy.asm|136||0|2|32857|T|
 jet set willy.asm|137||0|2|32860|T|
 jet set willy.asm|138||0|2|32863|T|
 jet set willy.asm|139||0|2|32866|T|
-jet set willy.asm|148||0|2|32869|T|
-jet set willy.asm|149||0|2|32872|T|
-jet set willy.asm|158||0|2|32874|T|
-jet set willy.asm|160||0|2|32876|F|Main_loop.guardian_collision_found
-jet set willy.asm|160||0|2|32876|L|,Main_loop,guardian_collision_found,+local,+used
-jet set willy.asm|164||0|2|32876|T|
-jet set willy.asm|173||0|2|32878|F|Main_loop.willy_dies
-jet set willy.asm|173||0|2|32878|L|,Main_loop,willy_dies,+local,+used
-jet set willy.asm|175||0|2|32878|T|
-jet set willy.asm|176||0|2|32881|T|
-jet set willy.asm|177||0|2|32882|T|
-jet set willy.asm|178||0|2|32883|T|
-jet set willy.asm|179||0|2|32885|T|
-jet set willy.asm|180||0|2|32886|F|Main_loop.no_lives_dec
-jet set willy.asm|180||0|2|32886|L|,Main_loop,no_lives_dec,+local,+used
-jet set willy.asm|181||0|2|32886|T|
-jet set willy.asm|185||0|2|32889|T|
-jet set willy.asm|188||0|2|32892|T|
-jet set willy.asm|191||0|2|32895|T|
-jet set willy.asm|192||0|2|32896|T|
-jet set willy.asm|193||0|2|32899|T|
-jet set willy.asm|194||0|2|32902|T|
-jet set willy.asm|195||0|2|32905|T|
-jet set willy.asm|196||0|2|32908|T|
-jet set willy.asm|197||0|2|32910|T|
-jet set willy.asm|198||0|2|32913|T|
-jet set willy.asm|200||0|2|32915|F|Main_loop.draw_raster_bars
-jet set willy.asm|200||0|2|32915|L|,Main_loop,draw_raster_bars,+local
-jet set willy.asm|202||0|2|32915|T|
-jet set willy.asm|203||0|2|32918|T|
-jet set willy.asm|204||0|2|32920|T|
-jet set willy.asm|205||0|2|32922|F|Main_loop.raster_loop
-jet set willy.asm|205||0|2|32922|L|,Main_loop,raster_loop,+local,+used
-jet set willy.asm|206||0|2|32922|T|
-jet set willy.asm|207||0|2|32924|T|
-jet set willy.asm|208||0|2|32925|T|
+jet set willy.asm|143||0|2|32869|T|
+jet set willy.asm|144||0|2|32872|T|
+jet set willy.asm|148||0|2|32874|T|
+jet set willy.asm|149||0|2|32877|T|
+jet set willy.asm|158||0|2|32879|T|
+jet set willy.asm|160||0|2|32881|F|Main_loop.guardian_collision_found
+jet set willy.asm|160||0|2|32881|L|,Main_loop,guardian_collision_found,+local,+used
+jet set willy.asm|164||0|2|32881|T|
+jet set willy.asm|173||0|2|32883|F|Main_loop.willy_dies
+jet set willy.asm|173||0|2|32883|L|,Main_loop,willy_dies,+local,+used
+jet set willy.asm|175||0|2|32883|T|
+jet set willy.asm|176||0|2|32886|T|
+jet set willy.asm|177||0|2|32887|T|
+jet set willy.asm|178||0|2|32888|T|
+jet set willy.asm|179||0|2|32890|T|
+jet set willy.asm|180||0|2|32891|F|Main_loop.no_lives_dec
+jet set willy.asm|180||0|2|32891|L|,Main_loop,no_lives_dec,+local,+used
+jet set willy.asm|183||0|2|32891|T|
+jet set willy.asm|184||0|2|32892|T|
+jet set willy.asm|185||0|2|32894|T|
+jet set willy.asm|186||0|2|32897|T|
+jet set willy.asm|187||0|2|32898|T|
+jet set willy.asm|190||0|2|32901|T|
+jet set willy.asm|191||0|2|32903|F|Main_loop.death_pause
+jet set willy.asm|191||0|2|32903|L|,Main_loop,death_pause,+local,+used
+jet set willy.asm|192||0|2|32903|T|
+jet set willy.asm|193||0|2|32904|T|
+jet set willy.asm|196||0|2|32906|T|
+jet set willy.asm|197||0|2|32907|T|
+jet set willy.asm|198||0|2|32910|T|
+jet set willy.asm|199||0|2|32913|T|
+jet set willy.asm|200||0|2|32916|T|
+jet set willy.asm|201||0|2|32919|T|
+jet set willy.asm|202||0|2|32921|T|
+jet set willy.asm|205||0|2|32924|T|
+jet set willy.asm|207||0|2|32927|F|Main_loop.draw_raster_bars
+jet set willy.asm|207||0|2|32927|L|,Main_loop,draw_raster_bars,+local
 jet set willy.asm|209||0|2|32927|T|
-jet set willy.asm|210||0|2|32929|F|Main_loop.delay
-jet set willy.asm|210||0|2|32929|L|,Main_loop,delay,+local,+used
-jet set willy.asm|211||0|2|32929|T|
-jet set willy.asm|212||0|2|32930|T|
-jet set willy.asm|213||0|2|32932|T|
-jet set willy.asm|216||0|2|32934|T|
-jet set willy.asm|217||0|2|32937|T|
-jet set willy.asm|218||0|2|32939|T|
-jet set willy.asm|220||0|2|32941|F|Main_loop.no_collision
-jet set willy.asm|220||0|2|32941|L|,Main_loop,no_collision,+local,+used
-jet set willy.asm|222||0|2|32941|T|
-jet set willy.asm|223||0|2|32944|T|
-jet set willy.asm|225||0|2|32946|F|Main_loop.no_collision_change
-jet set willy.asm|225||0|2|32946|L|,Main_loop,no_collision_change,+local,+used
-jet set willy.asm|226||0|2|32946|T|
+jet set willy.asm|210||0|2|32930|T|
+jet set willy.asm|211||0|2|32932|T|
+jet set willy.asm|212||0|2|32934|F|Main_loop.raster_loop
+jet set willy.asm|212||0|2|32934|L|,Main_loop,raster_loop,+local,+used
+jet set willy.asm|213||0|2|32934|T|
+jet set willy.asm|214||0|2|32936|T|
+jet set willy.asm|215||0|2|32937|T|
+jet set willy.asm|216||0|2|32939|T|
+jet set willy.asm|217||0|2|32941|F|Main_loop.delay
+jet set willy.asm|217||0|2|32941|L|,Main_loop,delay,+local,+used
+jet set willy.asm|218||0|2|32941|T|
+jet set willy.asm|219||0|2|32942|T|
+jet set willy.asm|220||0|2|32944|T|
+jet set willy.asm|223||0|2|32946|T|
+jet set willy.asm|224||0|2|32949|T|
+jet set willy.asm|225||0|2|32951|T|
+jet set willy.asm|227||0|2|32953|F|Main_loop.no_collision
+jet set willy.asm|227||0|2|32953|L|,Main_loop,no_collision,+local,+used
+jet set willy.asm|229||0|2|32953|T|
+jet set willy.asm|230||0|2|32956|T|
+jet set willy.asm|232||0|2|32958|F|Main_loop.no_collision_change
+jet set willy.asm|232||0|2|32958|L|,Main_loop,no_collision_change,+local,+used
+jet set willy.asm|233||0|2|32958|T|
 resources.asm|9||0|2|33792|F|RoomsStart
 resources.asm|9||0|2|33792|L|,RoomsStart,
 rooms/TheOffLicence.asm|33||0|2|33792|F|TheOffLicenceLayout

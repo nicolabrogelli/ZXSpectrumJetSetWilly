@@ -52,7 +52,7 @@
   39+ 5DAD              ; 1 = Abilita la morte e il decremento delle vite al tocco delle Nasty tiles
   40+ 5DAD              ; 0 = Disabilita il controllo di morte sulle Nasty tiles
   41+ 5DAD                  IFNDEF ENABLE_NASTY_COLLISION_DEATH
-  42+ 5DAD              ENABLE_NASTY_COLLISION_DEATH EQU 0
+  42+ 5DAD              ENABLE_NASTY_COLLISION_DEATH EQU 1
   43+ 5DAD                  ENDIF
   44+ 5DAD
   45+ 5DAD              ; --- Animazione delle icone delle vite ---
@@ -8628,103 +8628,110 @@
  140  8065
  141  8065                  ; Controlla collisione con Nasties (morte di Willy)
  142  8065                  IF ENABLE_NASTY_COLLISION_DEATH != 0
- 143  8065 ~                call Phys_CheckNastyCollision
- 144  8065 ~                jr   c, .willy_dies
- 145  8065                  ENDIF
- 146  8065
- 147  8065                  ; Controlla collisione con guardiani
- 148  8065 CD 55 6D         call CheckCollision
- 149  8068 38 02            jr   c, .guardian_collision_found
- 150  806A
- 151  806A                  ; Nessuna collisione con guardiani. Controlla se Willy è su rampa per debug raster bar
- 152  806A                  IF ENABLE_RAMP_DEBUG_BARS != 0
- 153  806A ~                ld   a, (willy_on_ramp)
- 154  806A ~                or   a
- 155  806A ~                jr   nz, .draw_raster_bars
- 156  806A                  ENDIF
- 157  806A
- 158  806A 18 41            jr   .no_collision
- 159  806C
- 160  806C              .guardian_collision_found:
- 161  806C                  ; C'è collisione con un guardiano!
- 162  806C                  ; Controlla se la morte per collisione con i guardiani è abilitata
- 163  806C                  IF ENABLE_GUARDIAN_COLLISION_DEATH != 0
- 164  806C 18 00            jr   .willy_dies
- 165  806E                  ELSE
- 166  806E ~                    IF ENABLE_GUARDIAN_DEBUG_BARS != 0
- 167  806E ~                    jr   .draw_raster_bars ; disegna le raster bar per debug se abilitate
- 168  806E ~                    ELSE
- 169  806E ~                    jr   .no_collision
- 170  806E ~                    ENDIF
- 171  806E                  ENDIF
- 172  806E
- 173  806E              .willy_dies:
- 174  806E                  ; Decrementa le vite e aggiorna la visualizzazione
- 175  806E 21 33 E6         ld   hl, willy_lives
- 176  8071 7E               ld   a, (hl)
- 177  8072 B7               or   a
- 178  8073 28 01            jr   z, .no_lives_dec
- 179  8075 35               dec  (hl)
- 180  8076              .no_lives_dec:
- 181  8076 CD 05 61         call Gfx_PrintWillyLives
- 182  8079
- 183  8079                  ; Gestisci la morte di Willy:
- 184  8079                  ; 1. Cancella la sprite del player dalla sua posizione attuale a schermo
- 185  8079 CD A1 60         call Gfx_DeleteCharAtOldPos
- 186  807C
- 187  807C                  ; 2. Ripristina la posizione iniziale nella stanza
- 188  807C CD DF 66         call LoadPositionPlayeinRoom
- 189  807F
- 190  807F                  ; 3. Reimposta la fisica di Willy
- 191  807F AF               xor  a
- 192  8080 32 34 E6         ld   (velocity_y), a
- 193  8083 32 36 E6         ld   (jump_pressed), a
- 194  8086 32 3A E6         ld   (jump_frame), a
- 195  8089 32 39 E6         ld   (jump_dir), a
- 196  808C 3E 01            ld   a, 1
- 197  808E 32 35 E6         ld   (on_ground), a
- 198  8091 18 1A            jr   .no_collision ; Salta il disegno delle raster bar poiché Willy è morto
- 199  8093
- 200  8093              .draw_raster_bars:
- 201  8093                  ; Collisione attiva: disegna le raster bar nel bordo
- 202  8093 3A 46 E6         ld   a, (counter)
- 203  8096 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
- 204  8098 06 1E            ld   b, 30             ; Numero di righe della barra raster
- 205  809A              .raster_loop:
- 206  809A D3 FE            out  ($fe), a
- 207  809C 3C               inc  a
- 208  809D E6 07            and  7
- 209  809F 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
- 210  80A1              .delay:
- 211  80A1 0D               dec  c
- 212  80A2 20 FD            jr   nz, .delay
- 213  80A4 10 F4            djnz .raster_loop
- 214  80A6
- 215  80A6                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
- 216  80A6 3A 32 E6         ld   a, (room_border_color)
- 217  80A9 D3 FE            out  ($fe), a
- 218  80AB 18 05            jr   .no_collision_change
- 219  80AD
- 220  80AD              .no_collision:
- 221  80AD                  ; Nessuna collisione: mantieni il bordo al colore della stanza
- 222  80AD 3A 32 E6         ld   a, (room_border_color)
- 223  80B0 D3 FE            out  ($fe), a
- 224  80B2
- 225  80B2              .no_collision_change:
- 226  80B2 C3 2F 80         jp   Main_loop
- 227  80B5
- 228  80B5
- 229  80B5
- 230  80B5                  include "resources.asm"
+ 143  8065 CD 54 72         call Phys_CheckNastyCollision
+ 144  8068 38 09            jr   c, .willy_dies
+ 145  806A                  ENDIF
+ 146  806A
+ 147  806A                  ; Controlla collisione con guardiani
+ 148  806A CD 55 6D         call CheckCollision
+ 149  806D 38 02            jr   c, .guardian_collision_found
+ 150  806F
+ 151  806F                  ; Nessuna collisione con guardiani. Controlla se Willy è su rampa per debug raster bar
+ 152  806F                  IF ENABLE_RAMP_DEBUG_BARS != 0
+ 153  806F ~                ld   a, (willy_on_ramp)
+ 154  806F ~                or   a
+ 155  806F ~                jr   nz, .draw_raster_bars
+ 156  806F                  ENDIF
+ 157  806F
+ 158  806F 18 48            jr   .no_collision
+ 159  8071
+ 160  8071              .guardian_collision_found:
+ 161  8071                  ; C'è collisione con un guardiano!
+ 162  8071                  ; Controlla se la morte per collisione con i guardiani è abilitata
+ 163  8071                  IF ENABLE_GUARDIAN_COLLISION_DEATH != 0
+ 164  8071 18 00            jr   .willy_dies
+ 165  8073                  ELSE
+ 166  8073 ~                    IF ENABLE_GUARDIAN_DEBUG_BARS != 0
+ 167  8073 ~                    jr   .draw_raster_bars ; disegna le raster bar per debug se abilitate
+ 168  8073 ~                    ELSE
+ 169  8073 ~                    jr   .no_collision
+ 170  8073 ~                    ENDIF
+ 171  8073                  ENDIF
+ 172  8073
+ 173  8073              .willy_dies:
+ 174  8073                  ; 1. Decrementa le vite
+ 175  8073 21 33 E6         ld   hl, willy_lives
+ 176  8076 7E               ld   a, (hl)
+ 177  8077 B7               or   a
+ 178  8078 28 01            jr   z, .no_lives_dec
+ 179  807A 35               dec  (hl)
+ 180  807B              .no_lives_dec:
+ 181  807B
+ 182  807B                  ; 2. Cancella lo schermo a nero (imposta bordo e schermo a nero)
+ 183  807B AF               xor  a
+ 184  807C D3 FE            out  ($fe), a              ; Imposta colore bordo hardware a nero
+ 185  807E 21 8D 5C         ld   hl, ATTR_P
+ 186  8081 77               ld   (hl), a               ; Paper = Nero, Ink = Nero ($00)
+ 187  8082 CD AF 0D         call CLS                   ; Pulisce il display RAM e imposta gli attributi a nero
+ 188  8085
+ 189  8085                  ; 3. Pausa a schermo nero (~0.5 secondi)
+ 190  8085 06 19            ld   b, 25
+ 191  8087              .death_pause:
+ 192  8087 76               halt
+ 193  8088 10 FD            djnz .death_pause
+ 194  808A
+ 195  808A                  ; 4. Reimposta la fisica di Willy
+ 196  808A AF               xor  a
+ 197  808B 32 34 E6         ld   (velocity_y), a
+ 198  808E 32 36 E6         ld   (jump_pressed), a
+ 199  8091 32 3A E6         ld   (jump_frame), a
+ 200  8094 32 39 E6         ld   (jump_dir), a
+ 201  8097 3E 01            ld   a, 1
+ 202  8099 32 35 E6         ld   (on_ground), a
+ 203  809C
+ 204  809C                  ; 5. Ridisegna completamente la stanza e riposiziona Willy
+ 205  809C C3 E9 7F         jp   LoadRoomAndRestart
+ 206  809F
+ 207  809F              .draw_raster_bars:
+ 208  809F                  ; Collisione attiva: disegna le raster bar nel bordo
+ 209  809F 3A 46 E6         ld   a, (counter)
+ 210  80A2 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+ 211  80A4 06 1E            ld   b, 30             ; Numero di righe della barra raster
+ 212  80A6              .raster_loop:
+ 213  80A6 D3 FE            out  ($fe), a
+ 214  80A8 3C               inc  a
+ 215  80A9 E6 07            and  7
+ 216  80AB 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+ 217  80AD              .delay:
+ 218  80AD 0D               dec  c
+ 219  80AE 20 FD            jr   nz, .delay
+ 220  80B0 10 F4            djnz .raster_loop
+ 221  80B2
+ 222  80B2                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+ 223  80B2 3A 32 E6         ld   a, (room_border_color)
+ 224  80B5 D3 FE            out  ($fe), a
+ 225  80B7 18 05            jr   .no_collision_change
+ 226  80B9
+ 227  80B9              .no_collision:
+ 228  80B9                  ; Nessuna collisione: mantieni il bordo al colore della stanza
+ 229  80B9 3A 32 E6         ld   a, (room_border_color)
+ 230  80BC D3 FE            out  ($fe), a
+ 231  80BE
+ 232  80BE              .no_collision_change:
+ 233  80BE C3 2F 80         jp   Main_loop
+ 234  80C1
+ 235  80C1
+ 236  80C1
+ 237  80C1                  include "resources.asm"
 # file opened: resources.asm
-   1+ 80B5              ;===========================================================================
-   2+ 80B5              ; resources.asm
-   3+ 80B5              ;
-   4+ 80B5              ; Gestione delle risorse statiche non modificabili del gioco.
-   5+ 80B5              ; Contiene le stanze (livelli) e le sprite dei personaggi.
-   6+ 80B5              ;===========================================================================
-   7+ 80B5
-   8+ 80B5                  org $8400
+   1+ 80C1              ;===========================================================================
+   2+ 80C1              ; resources.asm
+   3+ 80C1              ;
+   4+ 80C1              ; Gestione delle risorse statiche non modificabili del gioco.
+   5+ 80C1              ; Contiene le stanze (livelli) e le sprite dei personaggi.
+   6+ 80C1              ;===========================================================================
+   7+ 80C1
+   8+ 80C1                  org $8400
    9+ 8400              RoomsStart:
   10+ 8400                  include "rooms/TheOffLicence.asm"               ; ID 00
 # file opened: rooms/TheOffLicence.asm
@@ -22050,7 +22057,7 @@
   75+ E625 00          > db 0
   76+ E626
 # file closed: resources.asm
- 231  E626                  include "data/datavariable.asm"
+ 238  E626                  include "data/datavariable.asm"
 # file opened: data/datavariable.asm
    1+ E626              ; -------------------------------------------------------------------
    2+ E626              ; Variabili
@@ -22977,6 +22984,6 @@
   78+ E9B7                  ENDIF
   79+ E9B7
 # file closed: data/datavariable.asm
- 232  E9B7
- 233  E9B7                  SAVESNA "jet set willy.sna", start
+ 239  E9B7
+ 240  E9B7                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm
