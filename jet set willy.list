@@ -1365,12 +1365,12 @@
 1024+ 62B9 11 00 F1         ld   de, $F100         ; Indirizzo base del font 8x8 in RAM ($F100)
 1025+ 62BC 19               add  hl, de            ; HL = indirizzo pattern font 8x8 in RAM ($F100)
 1026+ 62BD
-1027+ 62BD                  ; 2. Imposta l'attributo colore a Riga 23, Colonna C ($5A60 + C)
+1027+ 62BD                  ; 2. Imposta l'attributo colore a Riga 23, Colonna C ($5AE0 + C)
 1028+ 62BD E5               push hl                ; Salva indirizzo pattern font
 1029+ 62BE 69               ld   l, c
 1030+ 62BF 26 00            ld   h, 0
-1031+ 62C1 11 60 5A         ld   de, $5a60
-1032+ 62C4 19               add  hl, de            ; HL = indirizzo attributi ($5A60 + C)
+1031+ 62C1 11 E0 5A         ld   de, $5ae0
+1032+ 62C4 19               add  hl, de            ; HL = indirizzo attributi Riga 23 ($5AE0 + C)
 1033+ 62C5 36 46            ld   (hl), $46         ; Attributo: BRIGHT 1 + PAPER BLACK + INK YELLOW ($46)
 1034+ 62C7 E1               pop  hl                ; Ripristina indirizzo pattern font in HL
 1035+ 62C8

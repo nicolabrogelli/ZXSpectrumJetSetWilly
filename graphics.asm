@@ -1024,12 +1024,12 @@ Gfx_DrawCharVRAM_Row23:
     ld   de, $F100         ; Indirizzo base del font 8x8 in RAM ($F100)
     add  hl, de            ; HL = indirizzo pattern font 8x8 in RAM ($F100)
 
-    ; 2. Imposta l'attributo colore a Riga 23, Colonna C ($5A60 + C)
+    ; 2. Imposta l'attributo colore a Riga 23, Colonna C ($5AE0 + C)
     push hl                ; Salva indirizzo pattern font
     ld   l, c
     ld   h, 0
-    ld   de, $5a60
-    add  hl, de            ; HL = indirizzo attributi ($5A60 + C)
+    ld   de, $5ae0
+    add  hl, de            ; HL = indirizzo attributi Riga 23 ($5AE0 + C)
     ld   (hl), $46         ; Attributo: BRIGHT 1 + PAPER BLACK + INK YELLOW ($46)
     pop  hl                ; Ripristina indirizzo pattern font in HL
 
