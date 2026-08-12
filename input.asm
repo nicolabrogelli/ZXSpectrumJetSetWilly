@@ -544,7 +544,12 @@ TriggerRoomChange:
     ret  z                         ; Se layout è NULL (stanza non creata), ignora transizione!
     
     ld   (room_ptr), de            ; Aggiorna room_ptr con la nuova stanza prima delle verifiche rampa!
-    
+
+    ; Ricorda se Willy era a terra: entrando dal basso l'aggancio alla rampa
+    ; vale solo se ci stava camminando sopra (rampa che continua tra le stanze)
+    ld   a, (on_ground)
+    ld   (room_change_grounded), a
+
     ; Reset completo della fisica del player per la nuova stanza
     xor  a
     ld   (velocity_y), a
@@ -566,6 +571,16 @@ TriggerRoomChange:
     ; Transizione verticale!
     xor  a
     ld   (ramp_entry_guard), a
+    ; Ingresso dal basso (B nella metà inferiore): aggancia la rampa solo se
+    ; Willy ci stava camminando sopra. Se arriva in salto, niente calamita:
+    ; sarà la fisica normale a farlo atterrare sulla rampa se ci ricade sopra.
+    ld   a, b
+    cp   48
+    jr   c, .vert_ramp_check       ; Ingresso dall'alto (B=4): comportamento invariato
+    ld   a, (room_change_grounded)
+    or   a
+    jr   z, .ramp_guard_done       ; Era in volo: nessun aggancio alla rampa
+.vert_ramp_check:
     call Phys_CheckRampOnRoomChange ; Se allineato, modifica B (PlayerY) e C (PlayerX) e imposta on_ground = 1
     jr   .ramp_guard_done
     

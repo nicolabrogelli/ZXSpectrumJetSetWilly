@@ -65,6 +65,7 @@ transition_active:  db 0
 ramp_entry_guard:  db 0   ; Guardia aggancio rampa dopo ingresso orizzontale
 ramp_entry_guard_x: db 0  ; X oltre il quale la guardia viene rimossa
 ramp_entry_guard_dir: db 0 ; 1=ingresso da sinistra, 2=ingresso da destra
+room_change_grounded: db 0 ; on_ground al momento del cambio stanza (per l'aggancio rampa)
 player_drawn_pos:      db $ff, $ff
 player_old_dir:        db $ff
 player_old_body:       db $ff

@@ -465,7 +465,10 @@ Phys_ApplyGravity:
     jp   nc, .no_ramp_landing ; Se jump_start_y > ramp_Y (numerico Y > H), eravamo sotto la rampa -> passa oltre
     
 .jump_start_ok:
-    ld   a, d               ; A = old_Y
+    ; NOTA: D conteneva old_Y ma GetRampY lo clobbera (ld d,a con la Y calcolata),
+    ; quindi il confronto D vs H era sempre "uguale" e Willy atterrava sulla
+    ; rampa anche arrivando da sotto. Ricarica old_Y dalla memoria.
+    ld   a, (PlayerPos+1)   ; A = old_Y
     cp   h
     jr   z, .check_new_y
     jp   nc, .no_ramp_landing ; Se old_Y > ramp_Y (era sotto la rampa), non atterra
@@ -1419,14 +1422,17 @@ Phys_CheckRampOnRoomChange:
     cp   16                ; Tolleranza 16 pixel per cambi stanza verticali
     jp   nc, .no_ramp_change
     
-    ; Controllo bordo inferiore (ramp_Y >= 104)
+    ; Controllo bordo superiore (ramp_Y negativo = rampa oltre la cima):
+    ; va verificato PRIMA del bordo inferiore, perché in unsigned un valore
+    ; negativo (128..255) supera anche il confronto con 104 e finirebbe in
+    ; .adj_bottom spostando X in salita fuori dalla rampa.
     ld   a, e              ; A = ramp_Y
-    cp   104
-    jr   nc, .adj_bottom
-    
-    ; Controllo bordo superiore (ramp_Y <= 4 o negativo)
     bit  7, a
     jr   nz, .adj_top
+
+    ; Controllo bordo inferiore (ramp_Y >= 104)
+    cp   104
+    jr   nc, .adj_bottom
     cp   5
     jr   c, .adj_top
     jr   .apply_ramp_align
@@ -1474,12 +1480,13 @@ Phys_CheckRampOnRoomChange:
     call GetRampY
     jp   nc, .no_ramp_change
     ld   e, a              ; E = nuovo ramp_Y safe
-    
-    ; Controlla se ancora ai bordi
-    cp   104
-    jr   nc, .adj_bottom
+
+    ; Controlla se ancora ai bordi (il segno PRIMA del confronto con 104,
+    ; come sopra: un ramp_Y negativo deve andare in .adj_top)
     bit  7, a
     jr   nz, .adj_top
+    cp   104
+    jr   nc, .adj_bottom
     cp   5
     jr   c, .adj_top
 
