@@ -9046,30 +9046,36 @@
  302  8234 32 3E E6         ld   (a_prev), a
  303  8237 32 35 E6         ld   (on_ground), a
  304  823A
- 305  823A                  ; Ripristina tutti gli item in ItemsTable al valore 0 (non raccolti)
- 306  823A CD 7C 7E         call ResetItemsTable
- 307  823D
- 308  823D                  ; Inizializza la tabella dei punti di ingresso per tutte le stanze (0..60)
- 309  823D CD 11 67         call InitRoomEntryPositions
- 310  8240
- 311  8240                  ; Ripristina la stanza iniziale (Stanza 0: The Off Licence)
- 312  8240 21 00 84         ld   hl, TheOffLicenceLayout
- 313  8243 22 A6 E9         ld   (room_ptr), hl
- 314  8246
- 315  8246 C9               ret
- 316  8247
- 317  8247
- 318  8247
- 319  8247                  include "resources.asm"
+ 305  823A                  ; Ripristina la stringa di testo dello status line a schermo a "000"
+ 306  823A 3E 30            ld   a, '0'
+ 307  823C 32 53 62         ld   (status_line + 16), a
+ 308  823F 32 54 62         ld   (status_line + 17), a
+ 309  8242 32 55 62         ld   (status_line + 18), a
+ 310  8245
+ 311  8245                  ; Ripristina tutti gli item in ItemsTable al valore 0 (non raccolti)
+ 312  8245 CD 7C 7E         call ResetItemsTable
+ 313  8248
+ 314  8248                  ; Inizializza la tabella dei punti di ingresso per tutte le stanze (0..60)
+ 315  8248 CD 11 67         call InitRoomEntryPositions
+ 316  824B
+ 317  824B                  ; Ripristina la stanza iniziale (Stanza 0: The Off Licence)
+ 318  824B 21 00 84         ld   hl, TheOffLicenceLayout
+ 319  824E 22 A6 E9         ld   (room_ptr), hl
+ 320  8251
+ 321  8251 C9               ret
+ 322  8252
+ 323  8252
+ 324  8252
+ 325  8252                  include "resources.asm"
 # file opened: resources.asm
-   1+ 8247              ;===========================================================================
-   2+ 8247              ; resources.asm
-   3+ 8247              ;
-   4+ 8247              ; Gestione delle risorse statiche non modificabili del gioco.
-   5+ 8247              ; Contiene le stanze (livelli) e le sprite dei personaggi.
-   6+ 8247              ;===========================================================================
-   7+ 8247
-   8+ 8247                  org $8400
+   1+ 8252              ;===========================================================================
+   2+ 8252              ; resources.asm
+   3+ 8252              ;
+   4+ 8252              ; Gestione delle risorse statiche non modificabili del gioco.
+   5+ 8252              ; Contiene le stanze (livelli) e le sprite dei personaggi.
+   6+ 8252              ;===========================================================================
+   7+ 8252
+   8+ 8252                  org $8400
    9+ 8400              RoomsStart:
   10+ 8400                  include "rooms/TheOffLicence.asm"               ; ID 00
 # file opened: rooms/TheOffLicence.asm
@@ -22395,7 +22401,7 @@
   75+ E625 00          > db 0
   76+ E626
 # file closed: resources.asm
- 320  E626                  include "data/datavariable.asm"
+ 326  E626                  include "data/datavariable.asm"
 # file opened: data/datavariable.asm
    1+ E626              ; -------------------------------------------------------------------
    2+ E626              ; Variabili
@@ -23448,6 +23454,6 @@
   83+ EA35                  ENDIF
   84+ EA35
 # file closed: data/datavariable.asm
- 321  EA35
- 322  EA35                  SAVESNA "jet set willy.sna", start
+ 327  EA35
+ 328  EA35                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm

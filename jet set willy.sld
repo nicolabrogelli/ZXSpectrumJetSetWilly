@@ -6141,10 +6141,14 @@ jet set willy.asm|301||0|2|33329|T|
 jet set willy.asm|302||0|2|33332|T|
 jet set willy.asm|303||0|2|33335|T|
 jet set willy.asm|306||0|2|33338|T|
-jet set willy.asm|309||0|2|33341|T|
-jet set willy.asm|312||0|2|33344|T|
-jet set willy.asm|313||0|2|33347|T|
-jet set willy.asm|315||0|2|33350|T|
+jet set willy.asm|307||0|2|33340|T|
+jet set willy.asm|308||0|2|33343|T|
+jet set willy.asm|309||0|2|33346|T|
+jet set willy.asm|312||0|2|33349|T|
+jet set willy.asm|315||0|2|33352|T|
+jet set willy.asm|318||0|2|33355|T|
+jet set willy.asm|319||0|2|33358|T|
+jet set willy.asm|321||0|2|33361|T|
 resources.asm|9||0|2|33792|F|RoomsStart
 resources.asm|9||0|2|33792|L|,RoomsStart,
 rooms/TheOffLicence.asm|33||0|2|33792|F|TheOffLicenceLayout

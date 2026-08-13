@@ -302,6 +302,12 @@ ResetFullGameState:
     ld   (a_prev), a
     ld   (on_ground), a
 
+    ; Ripristina la stringa di testo dello status line a schermo a "000"
+    ld   a, '0'
+    ld   (status_line + 16), a
+    ld   (status_line + 17), a
+    ld   (status_line + 18), a
+
     ; Ripristina tutti gli item in ItemsTable al valore 0 (non raccolti)
     call ResetItemsTable
 
