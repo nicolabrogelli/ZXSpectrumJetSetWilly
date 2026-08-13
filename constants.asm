@@ -11,6 +11,8 @@ ATTR_T:     EQU $5c8f
 BORDCR:     EQU $5c48
 UDG:        EQU $5c7b
 
+INITIAL_LIVES: EQU 7
+
 ; Colori
 NONE:   EQU $00
 BLUE:   EQU $01

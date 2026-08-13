@@ -27,19 +27,6 @@ start:
  
 ;    org $7F50
 Main:
-    ; Inizializza
-    xor  a
-    ld  (body_state), a
-    ld  (items_collected), a
-    ld  (w_warp_state), a
-    ld  (w_key_prev), a
-    ld  (enter_key_prev), a
-    ld  a, $ff
-    ld  (digit_key_prev), a
-    ld  a, 1
-    ld  (q_prev), a
-    ld  (a_prev), a
-
     call Gfx_CopyChars
     call Gfx_DefineChars
     
@@ -53,7 +40,7 @@ Main:
     call CLS
 
     call SetupIM2
-    call InitRoomEntryPositions    ; Inizializza tabella punti di ingresso per tutte le stanze (0..60)
+    call ResetFullGameState
 
 LoadRoomAndRestart:
     ld   sp, $fdf0             ; Ripristina lo stack pointer per evitare stack drift/reset
@@ -164,21 +151,21 @@ Main_loop:
     IF ENABLE_RAMP_DEBUG_BARS != 0
     ld   a, (willy_on_ramp)
     or   a
-    jr   nz, .draw_raster_bars
+    jp   nz, .draw_raster_bars
     ENDIF
     
-    jr   .no_collision
+    jp   .no_collision
 
 .guardian_collision_found:
     ; C'è collisione con un guardiano!
     ; Controlla se la morte per collisione con i guardiani è abilitata
     IF ENABLE_GUARDIAN_COLLISION_DEATH != 0
-    jr   .willy_dies
+    jp   .willy_dies
     ELSE
         IF ENABLE_GUARDIAN_DEBUG_BARS != 0
-        jr   .draw_raster_bars ; disegna le raster bar per debug se abilitate
+        jp   .draw_raster_bars ; disegna le raster bar per debug se abilitate
         ELSE
-        jr   .no_collision
+        jp   .no_collision
         ENDIF
     ENDIF
     
@@ -187,9 +174,9 @@ Main_loop:
     ld   hl, willy_lives
     ld   a, (hl)
     or   a
-    jr   z, .no_lives_dec
+    jr   z, .trigger_game_over
     dec  (hl)
-.no_lives_dec:
+    jr   z, .trigger_game_over
 
     ; 2. Cancella lo schermo a nero (imposta bordo e schermo a nero)
     xor  a
@@ -198,7 +185,7 @@ Main_loop:
     ld   (hl), a               ; Paper = Nero, Ink = Nero ($00)
     call CLS                   ; Pulisce il display RAM e imposta gli attributi a nero
 
-    ; 3. Pausa a schermo nero (~0.5 secondi)
+    ; 3. Pausa a schermo nero (~0.5 secondi per respawn normale)
     ld   b, 25
 .death_pause:
     halt
@@ -235,7 +222,27 @@ Main_loop:
 
     ; 6. Ridisegna completamente la stanza e riposiziona Willy nel punto di ingresso
     jp   LoadRoomAndRestart
-    
+
+.trigger_game_over:
+    ; 1. Cancella bordo e schermo a nero
+    xor  a
+    out  ($fe), a
+    ld   hl, ATTR_P
+    ld   (hl), a
+    call CLS
+
+    ; 2. Pausa a schermo nero per circa 1 secondo (~50 frame a 50Hz)
+    ld   b, 50
+.game_over_pause:
+    halt
+    djnz .game_over_pause
+
+    ; 3. Ripristina integralmente lo stato iniziale della partita (vite, item, stanze)
+    call ResetFullGameState
+
+    ; 4. Avvia la nuova partita dal primo livello (Stanza 0: The Off Licence)
+    jp   LoadRoomAndRestart
+
 .draw_raster_bars:
     ; Collisione attiva: disegna le raster bar nel bordo
     ld   a, (counter)
@@ -263,6 +270,49 @@ Main_loop:
     
 .no_collision_change:
     jp   Main_loop
+
+; -------------------------------------------------------------------
+; ResetFullGameState
+; Ripristina tutti i dati ed i parametri allo stato iniziale
+; per l'avvio di una nuova partita dopo il Game Over.
+; -------------------------------------------------------------------
+ResetFullGameState:
+    ; Ripristina il numero di vite iniziali
+    ld   a, INITIAL_LIVES
+    ld   (willy_lives), a
+
+    ; Azzeramento conteggio item raccolti e dello stato fisica/input
+    xor  a
+    ld   (items_collected), a
+    ld   (body_state), a
+    ld   (w_warp_state), a
+    ld   (w_key_prev), a
+    ld   (enter_key_prev), a
+    ld   (velocity_y), a
+    ld   (jump_pressed), a
+    ld   (coyote_timer), a
+    ld   (jump_frame), a
+    ld   (jump_dir), a
+    ld   (transition_active), a
+    ld   (willy_safety_timer), a
+    ld   a, $ff
+    ld   (digit_key_prev), a
+    ld   a, 1
+    ld   (q_prev), a
+    ld   (a_prev), a
+    ld   (on_ground), a
+
+    ; Ripristina tutti gli item in ItemsTable al valore 0 (non raccolti)
+    call ResetItemsTable
+
+    ; Inizializza la tabella dei punti di ingresso per tutte le stanze (0..60)
+    call InitRoomEntryPositions
+
+    ; Ripristina la stanza iniziale (Stanza 0: The Off Licence)
+    ld   hl, TheOffLicenceLayout
+    ld   (room_ptr), hl
+
+    ret
 
   
 

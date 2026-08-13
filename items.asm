@@ -1104,6 +1104,25 @@ DetermineCurrentRoomID:
 ;
 ; Ogni record cache occupa 5 byte.
 ; -------------------------------------------------------------------
+; ResetItemsTable
+; Ripristina il flag di raccolta (byte 4) di ciascun record in ItemsTable
+; a 0 (non raccolto) per azzerare lo stato di tutti gli item in tutti i livelli.
+; -------------------------------------------------------------------
+ResetItemsTable:
+    ld   hl, ItemsTable
+.reset_loop:
+    ld   a, (hl)
+    cp   $FF
+    ret  z
+    inc  hl                        ; +1 (X)
+    inc  hl                        ; +2 (Y)
+    inc  hl                        ; +3 (Color)
+    inc  hl                        ; +4 (Collected flag)
+    ld   (hl), 0                   ; Imposta collected flag a 0 (non raccolto)
+    inc  hl                        ; Prossimo record
+    jr   .reset_loop
+
+; -------------------------------------------------------------------
 Items_DrawRoom:
 
     ; Salva tutti i registri utilizzati
