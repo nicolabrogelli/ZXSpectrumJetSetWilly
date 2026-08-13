@@ -605,7 +605,24 @@ TriggerRoomChange:
     ld   (PlayerPos), bc           ; Salva le coordinate aggiornate da Phys_CheckRampOnRoomChange
     ld   (PlayerPosOld), bc
     ld   (room_ptr), de            ; Aggiorna room_ptr
-    
+
+    ; Memorizza il punto di ingresso (bc: C=X, B=Y) per la nuova stanza in room_entry_positions
+    push bc
+    push de
+    call DetermineCurrentRoomID    ; A = ID della nuova stanza (0..60)
+    ld   hl, room_entry_positions
+    ld   e, a
+    ld   d, 0
+    add  hl, de
+    add  hl, de                    ; HL = room_entry_positions + (new_room_id * 2)
+    pop  de
+    pop  bc
+    ld   a, c
+    ld   (hl), a                   ; Salva X di ingresso per la stanza
+    inc  hl
+    ld   a, b
+    ld   (hl), a                   ; Salva Y di ingresso per la stanza
+
     ; Imposta il flag di transizione per non caricare la posizione di default
     ld   a, 1
     ld   (transition_active), a

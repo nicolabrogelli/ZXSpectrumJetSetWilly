@@ -314,3 +314,42 @@ LoadPositionPlayeinRoom:
     ld   (PlayerPosOld), bc
 
     ret
+
+; -------------------------------------------------------------------
+; InitRoomEntryPositions
+; Popola la tabella room_entry_positions (61 stanze) con le coordinate
+; di default (OFFSET_POS_WILLY) di ciascuna stanza all'avvio del gioco.
+; -------------------------------------------------------------------
+InitRoomEntryPositions:
+    ld   hl, RoomsListTable
+    ld   de, room_entry_positions
+    ld   b, 61                     ; 61 stanze (0..60)
+.loop:
+    push bc
+    push de
+    ld   e, (hl)
+    inc  hl
+    ld   d, (hl)                   ; DE = puntatore alla struttura stanza
+    inc  hl
+    push hl                        ; Salva posizione corrente in RoomsListTable
+
+    ; Calcola indirizzo di OFFSET_POS_WILLY (+280)
+    ld   hl, OFFSET_POS_WILLY
+    add  hl, de                    ; HL = layout + 280
+    ld   c, (hl)                   ; C = X iniziale
+    inc  hl
+    ld   b, (hl)                   ; B = Y iniziale
+
+    pop  hl
+    pop  de                        ; DE = room_entry_positions + (i * 2)
+    ld   a, c
+    ld   (de), a                   ; X
+    inc  de
+    ld   a, b
+    ld   (de), a                   ; Y
+    inc  de
+
+    pop  bc
+    djnz .loop
+    ret
+

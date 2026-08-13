@@ -53,6 +53,8 @@ Main:
     call CLS
 
     call SetupIM2
+    call InitRoomEntryPositions    ; Inizializza tabella punti di ingresso per tutte le stanze (0..60)
+
 LoadRoomAndRestart:
     ld   sp, $fdf0             ; Ripristina lo stack pointer per evitare stack drift/reset
     call DetermineCurrentRoomID
@@ -215,7 +217,23 @@ Main_loop:
     ld   a, RESPAWN_SAFETY_TIME
     ld   (willy_safety_timer), a
 
-    ; 5. Ridisegna completamente la stanza e riposiziona Willy
+    ; 5. Riposiziona Willy nel punto di ingresso dell'ultima stanza raggiunta
+    call DetermineCurrentRoomID    ; A = ID stanza corrente (0..60)
+    ld   hl, room_entry_positions
+    ld   e, a
+    ld   d, 0
+    add  hl, de
+    add  hl, de                    ; HL = room_entry_positions + (current_room * 2)
+    ld   c, (hl)                   ; C = X ingresso
+    inc  hl
+    ld   b, (hl)                   ; B = Y ingresso
+    ld   (PlayerPos), bc           ; Imposta le coordinate di respawn al punto di ingresso
+    ld   (PlayerPosOld), bc
+
+    ld   a, 1
+    ld   (transition_active), a    ; Evita sovrascrittura con OFFSET_POS_WILLY in LoadRoomAndRestart
+
+    ; 6. Ridisegna completamente la stanza e riposiziona Willy nel punto di ingresso
     jp   LoadRoomAndRestart
     
 .draw_raster_bars:
