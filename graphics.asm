@@ -740,7 +740,9 @@ Gfx_PrintRoomName:
 ; -------------------------------------------------------------------
 ; Gfx_DrawGameOverScreen
 ; Disegna la schermata di Game Over per la stanza corrente:
-; - Pulisce lo schermo a nero (rimuove piattaforme, tiles, Willy, nemici, item).
+; - Pulisce lo schermo a nero (rimuove piattaforme, tiles, nemici, item).
+; - Disegna Willy immobile al centro sopra BotteSprite (Y=96, X=120).
+; - Disegna BotteSprite immobile al centro sopra il Nome Stanza (Y=112, X=120).
 ; - Mantiene visibile il Nome della Stanza corrente (riga 16) in giallo.
 ; - Mantiene visibile la riga di stato con item ed orario corrente (riga 18).
 ; -------------------------------------------------------------------
@@ -749,6 +751,7 @@ Gfx_DrawGameOverScreen:
     push bc
     push de
     push hl
+    push ix
 
     ; 1. Bordo hardware e schermo a nero
     xor  a
@@ -757,7 +760,33 @@ Gfx_DrawGameOverScreen:
     ld   (hl), a               ; Paper/Ink = 0 (Nero)
     call CLS                   ; Pulisce tutti i pixel e gli attributi a nero
 
-    ; 2. Stampa il Nome della Stanza a riga 16
+    ; 2. Disegna Willy (immobile, rivolto a destra) a X=124, Y=96
+    ; 2a. Testa di Willy (8x8) a X=124, Y=96
+    ld   bc, $607c             ; B = Y = 96 ($60), C = X = 124 ($7C)
+    ld   ix, Willy + (0 * 8)   ; HEAD_GRAPH_RIGHT
+    call Gfx_DrawPixelSprite8x8
+
+    ; 2b. Corpo di Willy (8x8) a X=124, Y=104
+    ld   bc, $687c             ; B = Y = 104 ($68), C = X = 124 ($7C)
+    ld   ix, Willy + (1 * 8)   ; Body right frame 0
+    call Gfx_DrawPixelSprite8x8
+
+    ; 2c. Imposta attributi colore di Willy (Bianco Brillante) a X=124, Y=96
+    ld   bc, $607c             ; B = Y = 96, C = X = 124
+    ld   a, WHITE | $40        ; Bianco Brillante
+    call Gfx_SetEnemyColorAttributes
+
+    ; 3. Disegna BotteSprite (immobile, colore Rosso) a X=120, Y=112
+    ld   bc, $7078             ; B = Y = 112 ($70), C = X = 120 ($78)
+    ld   ix, BotteSprite       ; Frame 1 di BotteSprite
+    call Gfx_DrawPixelSprite16x16
+
+    ; 3b. Imposta attributi colore per BotteSprite (Rosso Brillante) a X=120, Y=112
+    ld   bc, $7078             ; B = Y = 112, C = X = 120
+    ld   a, RED | $40          ; Rosso Brillante
+    call Gfx_SetEnemyColorAttributes
+
+    ; 4. Stampa il Nome della Stanza a riga 16
     ld   a, 22                 ; Codice di controllo AT (22)
     rst  $10
     ld   a, 16                 ; Riga 16
@@ -774,7 +803,7 @@ Gfx_DrawGameOverScreen:
     ld   b, 32
     call Gfx_PrintString
 
-    ; 3. Stampa la riga di stato a riga 18
+    ; 5. Stampa la riga di stato a riga 18
     ld   a, 22                 ; Codice di controllo AT (22)
     rst  $10
     ld   a, 18                 ; Riga 18
@@ -786,12 +815,13 @@ Gfx_DrawGameOverScreen:
     ld   b, 32                 ; B = 32 caratteri
     call Gfx_PrintString
 
-    ; 4. Applica i colori agli attributi di riga 18 ($5A40)
+    ; 6. Applica i colori agli attributi di riga 18 ($5A40)
     ld   hl, status_line_attrs
     ld   de, $5a40             ; Indirizzo attributi riga 18
     ld   bc, 32
     ldir
 
+    pop  ix
     pop  hl
     pop  de
     pop  bc
