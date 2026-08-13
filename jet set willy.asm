@@ -337,6 +337,7 @@ ResetFullGameState:
     ld   (time_hours), a
     xor  a
     ld   (time_minutes), a
+    ld   (time_period), a       ; 0 = AM
     ld   (game_objective_completed), a
     ld   hl, (counter)
     ld   (time_last_counter), hl
@@ -355,7 +356,7 @@ ResetFullGameState:
 ; Utilizza il contatore hardware di interrupt a 50Hz (counter) per
 ; garantire l'esattezza del tempo indipendentemente dalla velocità del loop.
 ; (50 tick/sec * 40 sec = 2000 tick hardware a 50Hz).
-; Se l'orologio raggiunge le 12:00 AM (o 01:00 AM) senza che l'obiettivo
+; Se l'orologio raggiunge le 12:00 AM (mezzanotte) senza che l'obiettivo
 ; sia completato, scatena immediatamente il Game Over.
 ; -------------------------------------------------------------------
 Time_UpdateClock:
@@ -365,15 +366,15 @@ Time_UpdateClock:
     or   a
     sbc  hl, de                 ; HL = tick hardware a 50Hz trascorsi
 
-    ; Controlla se sono trascorsi 2000 tick a 50Hz (50 * 40 sec = 2000 tick = 40.0 secondi reali esatti)
-    ld   de, 2000
+    ; Controlla se sono trascorsi i tick necessari per 1 minuto di gioco (CLOCK_TICKS_PER_MINUTE)
+    ld   de, CLOCK_TICKS_PER_MINUTE
     or   a
     sbc  hl, de
-    ret  c                      ; Se meno di 2000 tick (40.0 sec) trascorsi, ritorna
+    ret  c                      ; Se non sono trascorsi abbastanza tick, ritorna
 
-    ; 2000 tick trascorsi: aggiorna time_last_counter aggiungendo 2000
+    ; Tick trascorsi: aggiorna time_last_counter aggiungendo CLOCK_TICKS_PER_MINUTE
     ld   hl, (time_last_counter)
-    ld   de, 2000
+    ld   de, CLOCK_TICKS_PER_MINUTE
     add  hl, de
     ld   (time_last_counter), hl
 
@@ -388,9 +389,20 @@ Time_UpdateClock:
     ld   (time_minutes), a
     ld   a, (time_hours)
     inc  a
+    cp   12
+    jr   z, .toggle_period      ; 11 -> 12: l'ora passa a 12 e il periodo (AM/PM) commuta
     cp   13
     jr   c, .hours_ok
-    ld   a, 1                   ; Dopo le 12 passa a 1 AM
+    ld   a, 1                   ; 12 -> 13: l'ora passa a 1 (es. 12:59 PM -> 01:00 PM)
+    jr   .hours_ok
+
+.toggle_period:
+    push af                     ; Salva A (valore 12)
+    ld   a, (time_period)
+    xor  1                       ; Commuta 0 (AM) <-> 1 (PM)
+    ld   (time_period), a
+    pop  af                     ; Ripristina A = 12
+
 .hours_ok:
     ld   (time_hours), a
 
@@ -405,12 +417,14 @@ Time_UpdateClock:
     or   a
     ret  nz                     ; Obiettivo completato -> nessun Game Over temporale!
 
-    ; Se non completato, controlla se l'orologio ha raggiunto le 12:00 AM (o 01:00 AM)
+    ; Controlla se l'orologio ha raggiunto le 12:00 AM (mezzanotte)
+    ld   a, (time_period)
+    or   a
+    ret  nz                     ; Se è PM (1), la partita continua sempre! (es. 12:00 PM è mezzogiorno)
+
     ld   a, (time_hours)
     cp   12
-    jr   z, .time_limit_reached
-    cp   1                      ; 01:00 AM
-    jr   z, .time_limit_reached
+    jr   z, .time_limit_reached ; 12:00 AM (mezzanotte) -> Game Over!
     ret
 
 .time_limit_reached:

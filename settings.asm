@@ -77,3 +77,17 @@ ENABLE_ROOM_NUMBER EQU 1
 ENABLE_GAME_OVER_RESTART EQU 0
     ENDIF
 
+; --- Velocità dell'orologio di gioco (Test rapido) ---
+; 1 = Modalità Test rapido (1 secondo reale = 1 minuto di gioco, 50 tick IM2 a 50Hz)
+; 0 = Modalità Normale (40 secondi reali = 1 minuto di gioco, 2000 tick IM2 a 50Hz)
+    IFNDEF ENABLE_FAST_CLOCK_TEST
+ENABLE_FAST_CLOCK_TEST EQU 1
+    ENDIF
+
+    IF ENABLE_FAST_CLOCK_TEST != 0
+CLOCK_TICKS_PER_MINUTE EQU 50    ; Test rapido: 1 secondo reale = 1 minuto di gioco
+    ELSE
+CLOCK_TICKS_PER_MINUTE EQU 2000  ; Normale: 40 secondi reali = 1 minuto di gioco
+    ENDIF
+
+

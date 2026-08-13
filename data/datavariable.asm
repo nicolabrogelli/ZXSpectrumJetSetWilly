@@ -79,6 +79,7 @@ willy_on_ramp:         db 0 ; 1 = Willy posizionato su rampa (debug)
 ; Gestione Tempo di Gioco (Orologio)
 time_hours:                 db 7     ; Ora iniziale: 07:00 AM
 time_minutes:               db 0     ; Minuti iniziali: 0
+time_period:                db 0     ; 0 = AM, 1 = PM
 time_last_counter:          dw 0     ; Tick hardware IM2 (50Hz) dell'ultimo scatto minuto
 game_objective_completed:   db 0     ; 1 = Obiettivo completato, 0 = Non completato
 

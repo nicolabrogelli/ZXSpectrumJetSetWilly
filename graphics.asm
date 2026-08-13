@@ -1006,8 +1006,15 @@ Gfx_UpdateTimeDisplay:
     add  a, '0'
     ld   (status_line + 29), a  ; Unità dei minuti
 
-    ; Suffisso "am"
+    ; Suffisso "am" / "pm"
+    ld   a, (time_period)
+    or   a
+    jr   nz, .is_pm
     ld   a, 'a'
+    jr   .suffix_done
+.is_pm:
+    ld   a, 'p'
+.suffix_done:
     ld   (status_line + 30), a
     ld   a, 'm'
     ld   (status_line + 31), a
