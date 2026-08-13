@@ -951,11 +951,95 @@ Gfx_UpdateItemsCollectedDisplay:
     pop  af
     ret
 
+; -------------------------------------------------------------------
+; Gfx_UpdateTimeDisplay
+; Formatta e visualizza l'orologio di gioco ("Time  7:00am")
+; nella riga di stato (Riga 18)
+; -------------------------------------------------------------------
+Gfx_UpdateTimeDisplay:
+    push af
+    push bc
+    push de
+    push hl
+
+    ; Formatta le ore (time_hours: 1..12)
+    ld   a, (time_hours)
+    cp   10
+    jr   c, .single_digit_hour
+    
+    ; Due cifre (10, 11, 12)
+    ld   a, '1'
+    ld   (status_line + 25), a
+    ld   a, (time_hours)
+    sub  10
+    add  a, '0'
+    ld   (status_line + 26), a
+    jr   .hours_done
+
+.single_digit_hour:
+    ld   a, ' '
+    ld   (status_line + 25), a
+    ld   a, (time_hours)
+    add  a, '0'
+    ld   (status_line + 26), a
+
+.hours_done:
+    ; Due punti (:)
+    ld   a, ':'
+    ld   (status_line + 27), a
+
+    ; Formatta i minuti (time_minutes: 0..59)
+    ld   a, (time_minutes)
+    ld   c, 0
+.loop10_min:
+    cp   10
+    jr   c, .done10_min
+    sub  10
+    inc  c
+    jr   .loop10_min
+.done10_min:
+    ld   e, a                   ; E = unità dei minuti
+    ld   a, c
+    add  a, '0'
+    ld   (status_line + 28), a  ; Decine dei minuti
+    ld   a, e
+    add  a, '0'
+    ld   (status_line + 29), a  ; Unità dei minuti
+
+    ; Suffisso "am"
+    ld   a, 'a'
+    ld   (status_line + 30), a
+    ld   a, 'm'
+    ld   (status_line + 31), a
+
+    ; Ristampa la riga di stato a riga 18
+    ld   a, 22                  ; AT (22)
+    rst  $10
+    ld   a, 18                  ; Riga 18
+    rst  $10
+    ld   a, 0                   ; Colonna 0
+    rst  $10
+    
+    ld   hl, status_line
+    ld   b, 32
+    call Gfx_PrintString
+
+    ld   hl, status_line_attrs
+    ld   de, $5a40              ; Indirizzo attributi Riga 18
+    ld   bc, 32
+    ldir
+
+    pop  hl
+    pop  de
+    pop  bc
+    pop  af
+    ret
+
 status_line:
     db "Items collected 000 "
 
 status_line_time:
-    db "Time  7:30am"
+    db "Time  7:00am"
 
 status_line_attrs:
     db 65, 66, 67, 68, 69, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 70, 69, 68, 67, 66, 65

@@ -109,6 +109,9 @@ Main_loop:
     
     ; 2. Rendering del giocatore (ridisegna Willy in primo piano se mosso o se coperto da un guardiano)
     call Gfx_UpdatePlayer
+
+    ; 3. Scorrimento dell'orologio di gioco (1 min di gioco = 40 sec reali)
+    call Time_UpdateClock
     
     ; 2. Aggiornamento audio
     IF ENABLE_EFFECTS != 0
@@ -181,7 +184,7 @@ Main_loop:
 
 .check_game_over:
     IF ENABLE_GAME_OVER_RESTART != 0
-    jp   .trigger_game_over
+    jp   TriggerGameOver
     ELSE
     ld   a, 1
     ld   (willy_lives), a
@@ -234,26 +237,6 @@ Main_loop:
     ; 6. Ridisegna completamente la stanza e riposiziona Willy nel punto di ingresso
     jp   LoadRoomAndRestart
 
-.trigger_game_over:
-    ; 1. Cancella bordo e schermo a nero
-    xor  a
-    out  ($fe), a
-    ld   hl, ATTR_P
-    ld   (hl), a
-    call CLS
-
-    ; 2. Pausa a schermo nero per circa 1 secondo (~50 frame a 50Hz)
-    ld   b, 50
-.game_over_pause:
-    halt
-    djnz .game_over_pause
-
-    ; 3. Ripristina integralmente lo stato iniziale della partita (vite, item, stanze)
-    call ResetFullGameState
-
-    ; 4. Avvia la nuova partita dal primo livello (Stanza 0: The Off Licence)
-    jp   LoadRoomAndRestart
-
 .draw_raster_bars:
     ; Collisione attiva: disegna le raster bar nel bordo
     ld   a, (counter)
@@ -281,6 +264,30 @@ Main_loop:
     
 .no_collision_change:
     jp   Main_loop
+
+; -------------------------------------------------------------------
+; TriggerGameOver
+; Scatena la sequenza di Game Over (schermata nera 1s, reset, restart)
+; -------------------------------------------------------------------
+TriggerGameOver:
+    ; 1. Cancella bordo e schermo a nero
+    xor  a
+    out  ($fe), a
+    ld   hl, ATTR_P
+    ld   (hl), a
+    call CLS
+
+    ; 2. Pausa a schermo nero per circa 1 secondo (~50 frame a 50Hz)
+    ld   b, 50
+.game_over_pause:
+    halt
+    djnz .game_over_pause
+
+    ; 3. Ripristina integralmente lo stato iniziale della partita (vite, item, stanze, tempo)
+    call ResetFullGameState
+
+    ; 4. Avvia la nuova partita dal primo livello (Stanza 0: The Off Licence)
+    jp   LoadRoomAndRestart
 
 ; -------------------------------------------------------------------
 ; ResetFullGameState
@@ -325,11 +332,91 @@ ResetFullGameState:
     ; Inizializza la tabella dei punti di ingresso per tutte le stanze (0..60)
     call InitRoomEntryPositions
 
+    ; Ripristina l'orologio di gioco alle 07:00 AM ed azzera i tick hardware
+    ld   a, 7
+    ld   (time_hours), a
+    xor  a
+    ld   (time_minutes), a
+    ld   (game_objective_completed), a
+    ld   hl, (counter)
+    ld   (time_last_counter), hl
+    call Gfx_UpdateTimeDisplay
+
     ; Ripristina la stanza iniziale (Stanza 0: The Off Licence)
     ld   hl, TheOffLicenceLayout
     ld   (room_ptr), hl
 
     ret
+
+; -------------------------------------------------------------------
+; Time_UpdateClock
+; Gestisce lo scorrimento del tempo durante il gioco.
+; 1 minuto di gioco corrisponde a 40.0 secondi reali esatti.
+; Utilizza il contatore hardware di interrupt a 50Hz (counter) per
+; garantire l'esattezza del tempo indipendentemente dalla velocità del loop.
+; (50 tick/sec * 40 sec = 2000 tick hardware a 50Hz).
+; Se l'orologio raggiunge le 12:00 AM (o 01:00 AM) senza che l'obiettivo
+; sia completato, scatena immediatamente il Game Over.
+; -------------------------------------------------------------------
+Time_UpdateClock:
+    ; Calcola la differenza tra il contatore IM2 a 50Hz ed il contatore dell'ultimo scatto
+    ld   hl, (counter)
+    ld   de, (time_last_counter)
+    or   a
+    sbc  hl, de                 ; HL = tick hardware a 50Hz trascorsi
+
+    ; Controlla se sono trascorsi 2000 tick a 50Hz (50 * 40 sec = 2000 tick = 40.0 secondi reali esatti)
+    ld   de, 2000
+    or   a
+    sbc  hl, de
+    ret  c                      ; Se meno di 2000 tick (40.0 sec) trascorsi, ritorna
+
+    ; 2000 tick trascorsi: aggiorna time_last_counter aggiungendo 2000
+    ld   hl, (time_last_counter)
+    ld   de, 2000
+    add  hl, de
+    ld   (time_last_counter), hl
+
+    ; Incrementa di 1 minuto il tempo di gioco
+    ld   a, (time_minutes)
+    inc  a
+    cp   60
+    jr   c, .minutes_ok
+
+    ; 60 minuti trascorsi: azzera i minuti ed incrementa l'ora
+    xor  a
+    ld   (time_minutes), a
+    ld   a, (time_hours)
+    inc  a
+    cp   13
+    jr   c, .hours_ok
+    ld   a, 1                   ; Dopo le 12 passa a 1 AM
+.hours_ok:
+    ld   (time_hours), a
+
+.minutes_ok:
+    ld   (time_minutes), a
+
+    ; Aggiorna l'orologio sul display dell'HUD (riga 18)
+    call Gfx_UpdateTimeDisplay
+
+    ; Controlla se l'obiettivo di gioco è stato completato (priorità assoluta)
+    ld   a, (game_objective_completed)
+    or   a
+    ret  nz                     ; Obiettivo completato -> nessun Game Over temporale!
+
+    ; Se non completato, controlla se l'orologio ha raggiunto le 12:00 AM (o 01:00 AM)
+    ld   a, (time_hours)
+    cp   12
+    jr   z, .time_limit_reached
+    cp   1                      ; 01:00 AM
+    jr   z, .time_limit_reached
+    ret
+
+.time_limit_reached:
+    ; Limite di tempo raggiunto senza aver completato l'obiettivo!
+    ; Scatena immediatamente il Game Over temporale!
+    jp   TriggerGameOver
 
   
 

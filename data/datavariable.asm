@@ -75,6 +75,13 @@ enemy_was_updated:     db 1
 willy_safety_timer:    db 0
 willy_needs_redraw:    db 0
 willy_on_ramp:         db 0 ; 1 = Willy posizionato su rampa (debug)
+
+; Gestione Tempo di Gioco (Orologio)
+time_hours:                 db 7     ; Ora iniziale: 07:00 AM
+time_minutes:               db 0     ; Minuti iniziali: 0
+time_last_counter:          dw 0     ; Tick hardware IM2 (50Hz) dell'ultimo scatto minuto
+game_objective_completed:   db 0     ; 1 = Obiettivo completato, 0 = Non completato
+
 Audio_jump_sound_note:    db 18   ; 18 = inactive (0..17 are active notes)
 Audio_jump_sound_timer:   db 0
     IF ENABLE_MUSIC != 0
