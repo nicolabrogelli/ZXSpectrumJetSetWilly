@@ -737,6 +737,67 @@ Gfx_PrintRoomName:
     ENDIF
     ret
 
+; -------------------------------------------------------------------
+; Gfx_DrawGameOverScreen
+; Disegna la schermata di Game Over per la stanza corrente:
+; - Pulisce lo schermo a nero (rimuove piattaforme, tiles, Willy, nemici, item).
+; - Mantiene visibile il Nome della Stanza corrente (riga 16) in giallo.
+; - Mantiene visibile la riga di stato con item ed orario corrente (riga 18).
+; -------------------------------------------------------------------
+Gfx_DrawGameOverScreen:
+    push af
+    push bc
+    push de
+    push hl
+
+    ; 1. Bordo hardware e schermo a nero
+    xor  a
+    out  ($fe), a              ; Bordo a nero
+    ld   hl, ATTR_P
+    ld   (hl), a               ; Paper/Ink = 0 (Nero)
+    call CLS                   ; Pulisce tutti i pixel e gli attributi a nero
+
+    ; 2. Stampa il Nome della Stanza a riga 16
+    ld   a, 22                 ; Codice di controllo AT (22)
+    rst  $10
+    ld   a, 16                 ; Riga 16
+    rst  $10
+    ld   a, 0                  ; Colonna 0
+    rst  $10
+    
+    ld   a, YELLOW             ; Inchiostro Giallo
+    call Gfx_Ink
+    
+    ld   hl, (room_ptr)        ; HL = indirizzo stanza corrente
+    ld   de, 128               ; Offset del nome stanza (32 byte)
+    add  hl, de
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; 3. Stampa la riga di stato a riga 18
+    ld   a, 22                 ; Codice di controllo AT (22)
+    rst  $10
+    ld   a, 18                 ; Riga 18
+    rst  $10
+    ld   a, 0                  ; Colonna 0
+    rst  $10
+    
+    ld   hl, status_line       ; HL = indirizzo stringa di stato
+    ld   b, 32                 ; B = 32 caratteri
+    call Gfx_PrintString
+
+    ; 4. Applica i colori agli attributi di riga 18 ($5A40)
+    ld   hl, status_line_attrs
+    ld   de, $5a40             ; Indirizzo attributi riga 18
+    ld   bc, 32
+    ldir
+
+    pop  hl
+    pop  de
+    pop  bc
+    pop  af
+    ret
+
 Gfx_PrintWillyLives:
     push hl
     push bc

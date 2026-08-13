@@ -267,26 +267,37 @@ Main_loop:
 
 ; -------------------------------------------------------------------
 ; TriggerGameOver
-; Scatena la sequenza di Game Over (schermata nera 1s, reset, restart)
+; Scatena la schermata di Game Over per la stanza corrente.
+; - Pulisce gli elementi di gioco della stanza (piattaforme, nemici, Willy, item).
+; - Mantiene visibile il Nome della Stanza corrente e la Riga di Stato (Item ed Orario).
+; - Rimane in attesa della pressione del tasto ENTER.
+; - Premendo ENTER, ripristina integralmente la partita ed avvia la nuova
+;   sessione dal primo livello (Stanza 0: The Off Licence) alle 07:00 AM.
 ; -------------------------------------------------------------------
 TriggerGameOver:
-    ; 1. Cancella bordo e schermo a nero
-    xor  a
-    out  ($fe), a
-    ld   hl, ATTR_P
-    ld   (hl), a
-    call CLS
+    ; 1. Disegna la schermata di Game Over per la stanza corrente
+    call Gfx_DrawGameOverScreen
 
-    ; 2. Pausa a schermo nero per circa 1 secondo (~50 frame a 50Hz)
-    ld   b, 50
-.game_over_pause:
+    ; 2. Attende il rilascio del tasto ENTER se era già premuto
+.wait_enter_release:
     halt
-    djnz .game_over_pause
+    ld   a, $bf
+    in   a, ($fe)
+    rra
+    jr   nc, .wait_enter_release
 
-    ; 3. Ripristina integralmente lo stato iniziale della partita (vite, item, stanze, tempo)
+    ; 3. Rimane completamente fermo in attesa della pressione del tasto ENTER
+.wait_enter_press:
+    halt
+    ld   a, $bf
+    in   a, ($fe)
+    rra
+    jr   c, .wait_enter_press
+
+    ; 4. Ripristina integralmente lo stato iniziale della partita (vite, item, stanze, tempo)
     call ResetFullGameState
 
-    ; 4. Avvia la nuova partita dal primo livello (Stanza 0: The Off Licence)
+    ; 5. Avvia la nuova partita dal primo livello (Stanza 0: The Off Licence)
     jp   LoadRoomAndRestart
 
 ; -------------------------------------------------------------------

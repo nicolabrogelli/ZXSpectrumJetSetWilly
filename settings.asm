@@ -74,7 +74,7 @@ ENABLE_ROOM_NUMBER EQU 1
 ; 1 = Abilita la schermata di Game Over e il riavvio completo dal primo livello quando le vite finiscono
 ; 0 = Disabilita il riavvio (Willy respawna normalmente mantenendo 1 vita senza azzerare la partita)
     IFNDEF ENABLE_GAME_OVER_RESTART
-ENABLE_GAME_OVER_RESTART EQU 0
+ENABLE_GAME_OVER_RESTART EQU 1
     ENDIF
 
 ; --- Velocità dell'orologio di gioco (Test rapido) ---
