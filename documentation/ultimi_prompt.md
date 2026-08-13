@@ -227,5 +227,23 @@ Come puoi vededere nell'immagine @[documentation/errori/errore1.bmp] una volta t
 Molto meglio ma il piede si ferma all'altezza della testa di Willy, invece deve scendere ancora fino alla parte alta della botte
 ```
 
+---
+
+## Prompt 11: Correzione fusione sprite Willy e PiedeSprite
+
+```markdown
+perfetto rimane un problema lo sprite del piede non si visualizza correttamente come puoi vedere nell'immagine @[documentation/errori/errore2.bmp]
+```
+
+---
+
+## Prompt 12: Correzione bava/accumulo pixel durante la discesa del PiedeSprite
+
+```markdown
+Allora nella fase finale ora il piede si vede ma durante tutta la fase di disce lo sprite è confuso, come puoi vedere dal video @[documentation/errori/2026-08-13 23-35-43.mp4]
+```
+
+
+
 
 

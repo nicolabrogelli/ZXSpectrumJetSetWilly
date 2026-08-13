@@ -738,6 +738,36 @@ Gfx_PrintRoomName:
     ret
 
 ; -------------------------------------------------------------------
+; Gfx_Clear16x16_Black
+; Azzera (pulisce a nero) un blocco di 16x16 pixel alla coordinata (C, B)
+; Input: C = X, B = Y
+; -------------------------------------------------------------------
+Gfx_Clear16x16_Black:
+    push bc
+    push de
+    push hl
+    
+    ld   h, b
+    ld   l, c
+    call Gfx_GetScreenAddr      ; HL = indirizzo schermo per (X, Y)
+    
+    ld   c, 16                  ; 16 scanline
+.clear_loop:
+    xor  a
+    ld   (hl), a
+    inc  hl
+    ld   (hl), a
+    dec  hl
+    call Gfx_IncScreenLine
+    dec  c
+    jr   nz, .clear_loop
+    
+    pop  hl
+    pop  de
+    pop  bc
+    ret
+
+; -------------------------------------------------------------------
 ; Gfx_Clear2Scanlines_Black
 ; Azzera 2 scanline di 16 pixel alla coordinata (X=120, Y=B)
 ; Input: B = Y
@@ -864,19 +894,17 @@ Gfx_DrawGameOverScreen:
 .foot_descent_loop:
     push bc                    ; Salva B = Y corrente
     
-    ; 7a. Cancella le 2 scanline lasciate in alto dalla posizione precedente
+    ; 7a. Cancella l'intero blocco 16x16 della posizione precedente (Y - 2) se Y > 0
     ld   a, b
     or   a
     jr   z, .skip_clear_prev
     sub  2                     ; Y precedente (passo 2 pixel)
     ld   b, a
-    call Gfx_Clear2Scanlines_Black
+    ld   c, 120                ; X = 120
+    call Gfx_Clear16x16_Black
     
-    ; Pulisce gli attributi lasciati indietro dalla riga precedente
+    ; Pulisce l'attributo della riga lasciata indietro (Row = (Y - 2) / 8)
     ld   a, b
-    cp   8
-    jr   c, .skip_attr_clear
-    sub  8
     srl  a
     srl  a
     srl  a                     ; A = Row da azzerare
@@ -893,12 +921,22 @@ Gfx_DrawGameOverScreen:
     ld   (hl), a               ; Col 15 = 0
     inc  hl
     ld   (hl), a               ; Col 16 = 0
-.skip_attr_clear:
 
 .skip_clear_prev:
     pop  bc                    ; Ripristina B = Y corrente
     push bc
 
+    ; Quando il Piede raggiunge Y = 96, cancella lo sprite di Willy a (124, 96) prima di disegnare il Piede
+    ld   a, b
+    cp   96
+    jr   nz, .draw_foot
+    push bc
+    ld   c, 120
+    ld   b, 96
+    call Gfx_Clear16x16_Black
+    pop  bc
+
+.draw_foot:
     ; 7b. Disegna PiedeSprite alla coordinata corrente (X=120, Y)
     ld   c, 120
     ld   ix, PiedeSprite
