@@ -174,10 +174,21 @@ Main_loop:
     ld   hl, willy_lives
     ld   a, (hl)
     or   a
-    jr   z, .trigger_game_over
+    jr   z, .check_game_over
     dec  (hl)
-    jr   z, .trigger_game_over
+    jr   z, .check_game_over
+    jr   .normal_respawn
 
+.check_game_over:
+    IF ENABLE_GAME_OVER_RESTART != 0
+    jp   .trigger_game_over
+    ELSE
+    ld   a, 1
+    ld   (willy_lives), a
+    jr   .normal_respawn
+    ENDIF
+
+.normal_respawn:
     ; 2. Cancella lo schermo a nero (imposta bordo e schermo a nero)
     xor  a
     out  ($fe), a              ; Imposta colore bordo hardware a nero

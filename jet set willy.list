@@ -83,6 +83,13 @@
   70+ 5DAD              ENABLE_ROOM_NUMBER EQU 1
   71+ 5DAD                  ENDIF
   72+ 5DAD
+  73+ 5DAD              ; --- Riavvio del gioco al Game Over quando Willy esaurisce tutte le vite ---
+  74+ 5DAD              ; 1 = Abilita la schermata di Game Over e il riavvio completo dal primo livello quando le vite finiscono
+  75+ 5DAD              ; 0 = Disabilita il riavvio (Willy respawna normalmente mantenendo 1 vita senza azzerare la partita)
+  76+ 5DAD                  IFNDEF ENABLE_GAME_OVER_RESTART
+  77+ 5DAD              ENABLE_GAME_OVER_RESTART EQU 0
+  78+ 5DAD                  ENDIF
+  79+ 5DAD
 # file closed: settings.asm
   12  5DAD                  include "physics_config.asm"
 # file opened: physics_config.asm
@@ -8784,7 +8791,7 @@
   40  80D9 CD AF 0D         call CLS
   41  80DC
   42  80DC CD AD 5D         call SetupIM2
-  43  80DF CD 00 82         call ResetFullGameState
+  43  80DF CD 09 82         call ResetFullGameState
   44  80E2
   45  80E2              LoadRoomAndRestart:
   46  80E2 31 F0 FD         ld   sp, $fdf0             ; Ripristina lo stack pointer per evitare stack drift/reset
@@ -8898,7 +8905,7 @@
  154  8172 ~                jp   nz, .draw_raster_bars
  155  8172                  ENDIF
  156  8172
- 157  8172 C3 F8 81         jp   .no_collision
+ 157  8172 C3 01 82         jp   .no_collision
  158  8175
  159  8175              .guardian_collision_found:
  160  8175                  ; C'è collisione con un guardiano!
@@ -8918,164 +8925,175 @@
  174  8178 21 33 E6         ld   hl, willy_lives
  175  817B 7E               ld   a, (hl)
  176  817C B7               or   a
- 177  817D 28 4A            jr   z, .trigger_game_over
+ 177  817D 28 05            jr   z, .check_game_over
  178  817F 35               dec  (hl)
- 179  8180 28 47            jr   z, .trigger_game_over
- 180  8182
- 181  8182                  ; 2. Cancella lo schermo a nero (imposta bordo e schermo a nero)
- 182  8182 AF               xor  a
- 183  8183 D3 FE            out  ($fe), a              ; Imposta colore bordo hardware a nero
- 184  8185 21 8D 5C         ld   hl, ATTR_P
- 185  8188 77               ld   (hl), a               ; Paper = Nero, Ink = Nero ($00)
- 186  8189 CD AF 0D         call CLS                   ; Pulisce il display RAM e imposta gli attributi a nero
- 187  818C
- 188  818C                  ; 3. Pausa a schermo nero (~0.5 secondi per respawn normale)
- 189  818C 06 19            ld   b, 25
- 190  818E              .death_pause:
- 191  818E 76               halt
- 192  818F 10 FD            djnz .death_pause
- 193  8191
- 194  8191                  ; 4. Reimposta la fisica di Willy e imposta il timer di sicurezza al respawn
- 195  8191 AF               xor  a
- 196  8192 32 34 E6         ld   (velocity_y), a
- 197  8195 32 36 E6         ld   (jump_pressed), a
- 198  8198 32 38 E6         ld   (coyote_timer), a
- 199  819B 32 3B E6         ld   (jump_frame), a
- 200  819E 32 3A E6         ld   (jump_dir), a
- 201  81A1 3E 01            ld   a, 1
- 202  81A3 32 35 E6         ld   (on_ground), a
- 203  81A6
- 204  81A6 3E 32            ld   a, RESPAWN_SAFETY_TIME
- 205  81A8 32 30 EA         ld   (willy_safety_timer), a
- 206  81AB
- 207  81AB                  ; 5. Riposiziona Willy nel punto di ingresso dell'ultima stanza raggiunta
- 208  81AB CD A2 7A         call DetermineCurrentRoomID    ; A = ID stanza corrente (0..60)
- 209  81AE 21 AD E9         ld   hl, room_entry_positions
- 210  81B1 5F               ld   e, a
- 211  81B2 16 00            ld   d, 0
- 212  81B4 19               add  hl, de
- 213  81B5 19               add  hl, de                    ; HL = room_entry_positions + (current_room * 2)
- 214  81B6 4E               ld   c, (hl)                   ; C = X ingresso
- 215  81B7 23               inc  hl
- 216  81B8 46               ld   b, (hl)                   ; B = Y ingresso
- 217  81B9 ED 43 26 E6      ld   (PlayerPos), bc           ; Imposta le coordinate di respawn al punto di ingresso
- 218  81BD ED 43 28 E6      ld   (PlayerPosOld), bc
- 219  81C1
- 220  81C1 3E 01            ld   a, 1
- 221  81C3 32 AC E9         ld   (transition_active), a    ; Evita sovrascrittura con OFFSET_POS_WILLY in LoadRoomAndRestart
- 222  81C6
- 223  81C6                  ; 6. Ridisegna completamente la stanza e riposiziona Willy nel punto di ingresso
- 224  81C6 C3 E2 80         jp   LoadRoomAndRestart
- 225  81C9
- 226  81C9              .trigger_game_over:
- 227  81C9                  ; 1. Cancella bordo e schermo a nero
- 228  81C9 AF               xor  a
- 229  81CA D3 FE            out  ($fe), a
- 230  81CC 21 8D 5C         ld   hl, ATTR_P
- 231  81CF 77               ld   (hl), a
- 232  81D0 CD AF 0D         call CLS
- 233  81D3
- 234  81D3                  ; 2. Pausa a schermo nero per circa 1 secondo (~50 frame a 50Hz)
- 235  81D3 06 32            ld   b, 50
- 236  81D5              .game_over_pause:
- 237  81D5 76               halt
- 238  81D6 10 FD            djnz .game_over_pause
- 239  81D8
- 240  81D8                  ; 3. Ripristina integralmente lo stato iniziale della partita (vite, item, stanze)
- 241  81D8 CD 00 82         call ResetFullGameState
- 242  81DB
- 243  81DB                  ; 4. Avvia la nuova partita dal primo livello (Stanza 0: The Off Licence)
- 244  81DB C3 E2 80         jp   LoadRoomAndRestart
- 245  81DE
- 246  81DE              .draw_raster_bars:
- 247  81DE                  ; Collisione attiva: disegna le raster bar nel bordo
- 248  81DE 3A 47 E6         ld   a, (counter)
- 249  81E1 E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
- 250  81E3 06 1E            ld   b, 30             ; Numero di righe della barra raster
- 251  81E5              .raster_loop:
- 252  81E5 D3 FE            out  ($fe), a
- 253  81E7 3C               inc  a
- 254  81E8 E6 07            and  7
- 255  81EA 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
- 256  81EC              .delay:
- 257  81EC 0D               dec  c
- 258  81ED 20 FD            jr   nz, .delay
- 259  81EF 10 F4            djnz .raster_loop
- 260  81F1
- 261  81F1                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
- 262  81F1 3A 32 E6         ld   a, (room_border_color)
- 263  81F4 D3 FE            out  ($fe), a
- 264  81F6 18 05            jr   .no_collision_change
- 265  81F8
- 266  81F8              .no_collision:
- 267  81F8                  ; Nessuna collisione: mantieni il bordo al colore della stanza
- 268  81F8 3A 32 E6         ld   a, (room_border_color)
- 269  81FB D3 FE            out  ($fe), a
- 270  81FD
- 271  81FD              .no_collision_change:
- 272  81FD C3 28 81         jp   Main_loop
- 273  8200
- 274  8200              ; -------------------------------------------------------------------
- 275  8200              ; ResetFullGameState
- 276  8200              ; Ripristina tutti i dati ed i parametri allo stato iniziale
- 277  8200              ; per l'avvio di una nuova partita dopo il Game Over.
- 278  8200              ; -------------------------------------------------------------------
- 279  8200              ResetFullGameState:
- 280  8200                  ; Ripristina il numero di vite iniziali
- 281  8200 3E 07            ld   a, INITIAL_LIVES
- 282  8202 32 33 E6         ld   (willy_lives), a
- 283  8205
- 284  8205                  ; Azzeramento conteggio item raccolti e dello stato fisica/input
- 285  8205 AF               xor  a
- 286  8206 32 30 E6         ld   (items_collected), a
- 287  8209 32 2C E6         ld   (body_state), a
- 288  820C 32 3F E6         ld   (w_warp_state), a
- 289  820F 32 42 E6         ld   (w_key_prev), a
- 290  8212 32 43 E6         ld   (enter_key_prev), a
- 291  8215 32 34 E6         ld   (velocity_y), a
- 292  8218 32 36 E6         ld   (jump_pressed), a
- 293  821B 32 38 E6         ld   (coyote_timer), a
- 294  821E 32 3B E6         ld   (jump_frame), a
- 295  8221 32 3A E6         ld   (jump_dir), a
- 296  8224 32 AC E9         ld   (transition_active), a
- 297  8227 32 30 EA         ld   (willy_safety_timer), a
- 298  822A 3E FF            ld   a, $ff
- 299  822C 32 44 E6         ld   (digit_key_prev), a
- 300  822F 3E 01            ld   a, 1
- 301  8231 32 3D E6         ld   (q_prev), a
- 302  8234 32 3E E6         ld   (a_prev), a
- 303  8237 32 35 E6         ld   (on_ground), a
- 304  823A
- 305  823A                  ; Ripristina la stringa di testo dello status line a schermo a "000"
- 306  823A 3E 30            ld   a, '0'
- 307  823C 32 53 62         ld   (status_line + 16), a
- 308  823F 32 54 62         ld   (status_line + 17), a
- 309  8242 32 55 62         ld   (status_line + 18), a
- 310  8245
- 311  8245                  ; Ripristina tutti gli item in ItemsTable al valore 0 (non raccolti)
- 312  8245 CD 7C 7E         call ResetItemsTable
- 313  8248
- 314  8248                  ; Inizializza la tabella dei punti di ingresso per tutte le stanze (0..60)
- 315  8248 CD 11 67         call InitRoomEntryPositions
- 316  824B
- 317  824B                  ; Ripristina la stanza iniziale (Stanza 0: The Off Licence)
- 318  824B 21 00 84         ld   hl, TheOffLicenceLayout
- 319  824E 22 A6 E9         ld   (room_ptr), hl
- 320  8251
- 321  8251 C9               ret
- 322  8252
- 323  8252
- 324  8252
- 325  8252                  include "resources.asm"
+ 179  8180 28 02            jr   z, .check_game_over
+ 180  8182 18 07            jr   .normal_respawn
+ 181  8184
+ 182  8184              .check_game_over:
+ 183  8184                  IF ENABLE_GAME_OVER_RESTART != 0
+ 184  8184 ~                jp   .trigger_game_over
+ 185  8184                  ELSE
+ 186  8184 3E 01            ld   a, 1
+ 187  8186 32 33 E6         ld   (willy_lives), a
+ 188  8189 18 00            jr   .normal_respawn
+ 189  818B                  ENDIF
+ 190  818B
+ 191  818B              .normal_respawn:
+ 192  818B                  ; 2. Cancella lo schermo a nero (imposta bordo e schermo a nero)
+ 193  818B AF               xor  a
+ 194  818C D3 FE            out  ($fe), a              ; Imposta colore bordo hardware a nero
+ 195  818E 21 8D 5C         ld   hl, ATTR_P
+ 196  8191 77               ld   (hl), a               ; Paper = Nero, Ink = Nero ($00)
+ 197  8192 CD AF 0D         call CLS                   ; Pulisce il display RAM e imposta gli attributi a nero
+ 198  8195
+ 199  8195                  ; 3. Pausa a schermo nero (~0.5 secondi per respawn normale)
+ 200  8195 06 19            ld   b, 25
+ 201  8197              .death_pause:
+ 202  8197 76               halt
+ 203  8198 10 FD            djnz .death_pause
+ 204  819A
+ 205  819A                  ; 4. Reimposta la fisica di Willy e imposta il timer di sicurezza al respawn
+ 206  819A AF               xor  a
+ 207  819B 32 34 E6         ld   (velocity_y), a
+ 208  819E 32 36 E6         ld   (jump_pressed), a
+ 209  81A1 32 38 E6         ld   (coyote_timer), a
+ 210  81A4 32 3B E6         ld   (jump_frame), a
+ 211  81A7 32 3A E6         ld   (jump_dir), a
+ 212  81AA 3E 01            ld   a, 1
+ 213  81AC 32 35 E6         ld   (on_ground), a
+ 214  81AF
+ 215  81AF 3E 32            ld   a, RESPAWN_SAFETY_TIME
+ 216  81B1 32 30 EA         ld   (willy_safety_timer), a
+ 217  81B4
+ 218  81B4                  ; 5. Riposiziona Willy nel punto di ingresso dell'ultima stanza raggiunta
+ 219  81B4 CD A2 7A         call DetermineCurrentRoomID    ; A = ID stanza corrente (0..60)
+ 220  81B7 21 AD E9         ld   hl, room_entry_positions
+ 221  81BA 5F               ld   e, a
+ 222  81BB 16 00            ld   d, 0
+ 223  81BD 19               add  hl, de
+ 224  81BE 19               add  hl, de                    ; HL = room_entry_positions + (current_room * 2)
+ 225  81BF 4E               ld   c, (hl)                   ; C = X ingresso
+ 226  81C0 23               inc  hl
+ 227  81C1 46               ld   b, (hl)                   ; B = Y ingresso
+ 228  81C2 ED 43 26 E6      ld   (PlayerPos), bc           ; Imposta le coordinate di respawn al punto di ingresso
+ 229  81C6 ED 43 28 E6      ld   (PlayerPosOld), bc
+ 230  81CA
+ 231  81CA 3E 01            ld   a, 1
+ 232  81CC 32 AC E9         ld   (transition_active), a    ; Evita sovrascrittura con OFFSET_POS_WILLY in LoadRoomAndRestart
+ 233  81CF
+ 234  81CF                  ; 6. Ridisegna completamente la stanza e riposiziona Willy nel punto di ingresso
+ 235  81CF C3 E2 80         jp   LoadRoomAndRestart
+ 236  81D2
+ 237  81D2              .trigger_game_over:
+ 238  81D2                  ; 1. Cancella bordo e schermo a nero
+ 239  81D2 AF               xor  a
+ 240  81D3 D3 FE            out  ($fe), a
+ 241  81D5 21 8D 5C         ld   hl, ATTR_P
+ 242  81D8 77               ld   (hl), a
+ 243  81D9 CD AF 0D         call CLS
+ 244  81DC
+ 245  81DC                  ; 2. Pausa a schermo nero per circa 1 secondo (~50 frame a 50Hz)
+ 246  81DC 06 32            ld   b, 50
+ 247  81DE              .game_over_pause:
+ 248  81DE 76               halt
+ 249  81DF 10 FD            djnz .game_over_pause
+ 250  81E1
+ 251  81E1                  ; 3. Ripristina integralmente lo stato iniziale della partita (vite, item, stanze)
+ 252  81E1 CD 09 82         call ResetFullGameState
+ 253  81E4
+ 254  81E4                  ; 4. Avvia la nuova partita dal primo livello (Stanza 0: The Off Licence)
+ 255  81E4 C3 E2 80         jp   LoadRoomAndRestart
+ 256  81E7
+ 257  81E7              .draw_raster_bars:
+ 258  81E7                  ; Collisione attiva: disegna le raster bar nel bordo
+ 259  81E7 3A 47 E6         ld   a, (counter)
+ 260  81EA E6 07            and  7                 ; Colore iniziale basato sul contatore di frame
+ 261  81EC 06 1E            ld   b, 30             ; Numero di righe della barra raster
+ 262  81EE              .raster_loop:
+ 263  81EE D3 FE            out  ($fe), a
+ 264  81F0 3C               inc  a
+ 265  81F1 E6 07            and  7
+ 266  81F3 0E 96            ld   c, 150            ; Delay per regolare l'altezza delle bande
+ 267  81F5              .delay:
+ 268  81F5 0D               dec  c
+ 269  81F6 20 FD            jr   nz, .delay
+ 270  81F8 10 F4            djnz .raster_loop
+ 271  81FA
+ 272  81FA                  ; Ripristina il bordo al colore della stanza dopo il disegno delle barre
+ 273  81FA 3A 32 E6         ld   a, (room_border_color)
+ 274  81FD D3 FE            out  ($fe), a
+ 275  81FF 18 05            jr   .no_collision_change
+ 276  8201
+ 277  8201              .no_collision:
+ 278  8201                  ; Nessuna collisione: mantieni il bordo al colore della stanza
+ 279  8201 3A 32 E6         ld   a, (room_border_color)
+ 280  8204 D3 FE            out  ($fe), a
+ 281  8206
+ 282  8206              .no_collision_change:
+ 283  8206 C3 28 81         jp   Main_loop
+ 284  8209
+ 285  8209              ; -------------------------------------------------------------------
+ 286  8209              ; ResetFullGameState
+ 287  8209              ; Ripristina tutti i dati ed i parametri allo stato iniziale
+ 288  8209              ; per l'avvio di una nuova partita dopo il Game Over.
+ 289  8209              ; -------------------------------------------------------------------
+ 290  8209              ResetFullGameState:
+ 291  8209                  ; Ripristina il numero di vite iniziali
+ 292  8209 3E 07            ld   a, INITIAL_LIVES
+ 293  820B 32 33 E6         ld   (willy_lives), a
+ 294  820E
+ 295  820E                  ; Azzeramento conteggio item raccolti e dello stato fisica/input
+ 296  820E AF               xor  a
+ 297  820F 32 30 E6         ld   (items_collected), a
+ 298  8212 32 2C E6         ld   (body_state), a
+ 299  8215 32 3F E6         ld   (w_warp_state), a
+ 300  8218 32 42 E6         ld   (w_key_prev), a
+ 301  821B 32 43 E6         ld   (enter_key_prev), a
+ 302  821E 32 34 E6         ld   (velocity_y), a
+ 303  8221 32 36 E6         ld   (jump_pressed), a
+ 304  8224 32 38 E6         ld   (coyote_timer), a
+ 305  8227 32 3B E6         ld   (jump_frame), a
+ 306  822A 32 3A E6         ld   (jump_dir), a
+ 307  822D 32 AC E9         ld   (transition_active), a
+ 308  8230 32 30 EA         ld   (willy_safety_timer), a
+ 309  8233 3E FF            ld   a, $ff
+ 310  8235 32 44 E6         ld   (digit_key_prev), a
+ 311  8238 3E 01            ld   a, 1
+ 312  823A 32 3D E6         ld   (q_prev), a
+ 313  823D 32 3E E6         ld   (a_prev), a
+ 314  8240 32 35 E6         ld   (on_ground), a
+ 315  8243
+ 316  8243                  ; Ripristina la stringa di testo dello status line a schermo a "000"
+ 317  8243 3E 30            ld   a, '0'
+ 318  8245 32 53 62         ld   (status_line + 16), a
+ 319  8248 32 54 62         ld   (status_line + 17), a
+ 320  824B 32 55 62         ld   (status_line + 18), a
+ 321  824E
+ 322  824E                  ; Ripristina tutti gli item in ItemsTable al valore 0 (non raccolti)
+ 323  824E CD 7C 7E         call ResetItemsTable
+ 324  8251
+ 325  8251                  ; Inizializza la tabella dei punti di ingresso per tutte le stanze (0..60)
+ 326  8251 CD 11 67         call InitRoomEntryPositions
+ 327  8254
+ 328  8254                  ; Ripristina la stanza iniziale (Stanza 0: The Off Licence)
+ 329  8254 21 00 84         ld   hl, TheOffLicenceLayout
+ 330  8257 22 A6 E9         ld   (room_ptr), hl
+ 331  825A
+ 332  825A C9               ret
+ 333  825B
+ 334  825B
+ 335  825B
+ 336  825B                  include "resources.asm"
 # file opened: resources.asm
-   1+ 8252              ;===========================================================================
-   2+ 8252              ; resources.asm
-   3+ 8252              ;
-   4+ 8252              ; Gestione delle risorse statiche non modificabili del gioco.
-   5+ 8252              ; Contiene le stanze (livelli) e le sprite dei personaggi.
-   6+ 8252              ;===========================================================================
-   7+ 8252
-   8+ 8252                  org $8400
+   1+ 825B              ;===========================================================================
+   2+ 825B              ; resources.asm
+   3+ 825B              ;
+   4+ 825B              ; Gestione delle risorse statiche non modificabili del gioco.
+   5+ 825B              ; Contiene le stanze (livelli) e le sprite dei personaggi.
+   6+ 825B              ;===========================================================================
+   7+ 825B
+   8+ 825B                  org $8400
    9+ 8400              RoomsStart:
   10+ 8400                  include "rooms/TheOffLicence.asm"               ; ID 00
 # file opened: rooms/TheOffLicence.asm
@@ -22401,7 +22419,7 @@
   75+ E625 00          > db 0
   76+ E626
 # file closed: resources.asm
- 326  E626                  include "data/datavariable.asm"
+ 337  E626                  include "data/datavariable.asm"
 # file opened: data/datavariable.asm
    1+ E626              ; -------------------------------------------------------------------
    2+ E626              ; Variabili
@@ -23454,6 +23472,6 @@
   83+ EA35                  ENDIF
   84+ EA35
 # file closed: data/datavariable.asm
- 327  EA35
- 328  EA35                  SAVESNA "jet set willy.sna", start
+ 338  EA35
+ 339  EA35                  SAVESNA "jet set willy.sna", start
 # file closed: jet set willy.asm
