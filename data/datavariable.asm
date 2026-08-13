@@ -22,6 +22,7 @@ velocity_y:     db $00
 on_ground:      db $01
 jump_pressed:   db $00
 jump_prev:      db $00
+coyote_timer:   db $00
 jump_start_y:   db $00
 jump_dir:       db $00
 jump_frame:     db $00

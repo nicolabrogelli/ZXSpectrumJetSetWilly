@@ -25,7 +25,7 @@ ENABLE_MUSIC EQU 0
 ; 1 = Abilita la morte e il decremento delle vite alla collisione con i guardiani
 ; 0 = Disabilita la morte
     IFNDEF ENABLE_GUARDIAN_COLLISION_DEATH
-ENABLE_GUARDIAN_COLLISION_DEATH EQU 0
+ENABLE_GUARDIAN_COLLISION_DEATH EQU 1
     ENDIF
 
 ; --- Bande colorate di debug per collisione con i guardiani ---
@@ -39,7 +39,7 @@ ENABLE_GUARDIAN_DEBUG_BARS EQU 1
 ; 1 = Abilita la morte e il decremento delle vite al tocco delle Nasty tiles
 ; 0 = Disabilita il controllo di morte sulle Nasty tiles
     IFNDEF ENABLE_NASTY_COLLISION_DEATH
-ENABLE_NASTY_COLLISION_DEATH EQU 0
+ENABLE_NASTY_COLLISION_DEATH EQU 1
     ENDIF
 
 ; --- Animazione delle icone delle vite ---

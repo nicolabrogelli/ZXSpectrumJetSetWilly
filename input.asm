@@ -183,8 +183,9 @@ checkCtrl_jump:
     jr  nz, .end
     ; Primo frame di pressione:
     ld  a, 1
-    ld  (jump_pressed), a       ; segnala "salto appena scattato"
     ld  (jump_prev), a          ; marca come già premuto (debounce)
+    ld  a, JUMP_BUFFER_FRAMES
+    ld  (jump_pressed), a       ; imposta buffer di salto
     set 2, d                    ; imposta bit 2 di D = "salto attivo"
 
 .end:
@@ -555,6 +556,7 @@ TriggerRoomChange:
     ld   (velocity_y), a
     ld   (jump_start_y), a         ; Reset del punto di partenza del salto!
     ld   (jump_pressed), a
+    ld   (coyote_timer), a
     ld   (jump_frame), a
     ld   (jump_dir), a
     ld   (on_ground), a            ; Imposta a 0 (mezz'aria / caduta)

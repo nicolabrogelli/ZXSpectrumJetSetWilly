@@ -72,4 +72,18 @@ COLLISION_THRESHOLD_Y: EQU (31 - (4 * COLLISION_INSET_Y))
 RESPAWN_SAFETY_TIME EQU 50
     ENDIF
 
+; --- Coyote Time (Tempo Coyote per Salto da Bordo) ---
+; Numero di frame nei quali Willy può ancora saltare dopo essere scivolato oltre il bordo di una piattaforma.
+    IFNDEF COYOTE_TIME_FRAMES
+COYOTE_TIME_FRAMES EQU 4
+    ENDIF
+
+; --- Buffer Pre-Salto (Jump Buffer) ---
+; Numero di frame nei quali l'input del salto (tasto Z) viene conservato
+; se premuto poco prima di toccare terra (evita il tasto "sordo").
+    IFNDEF JUMP_BUFFER_FRAMES
+JUMP_BUFFER_FRAMES EQU 5
+    ENDIF
+
+
 

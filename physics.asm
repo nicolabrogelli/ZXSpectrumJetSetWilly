@@ -75,6 +75,39 @@ Phys_ApplyGravity:
     ENDIF
     ld  bc, (PlayerPos)
     
+    ; --- PRE-CONTROLLO SALTO (EDGE JUMP / COYOTE TIME / JUMP BUFFER) ---
+    ; Se jump_pressed > 0 E (on_ground != 0 OPPURE coyote_timer > 0), ESEGUI IL SALTO SUBITO!
+    ld   a, (jump_pressed)
+    or   a
+    jr   z, .no_early_jump
+
+    ld   a, (on_ground)
+    or   a
+    jr   nz, .do_early_jump
+
+    ld   a, (coyote_timer)
+    or   a
+    jr   z, .no_early_jump
+
+.do_early_jump:
+    xor  a
+    ld   (Audio_jump_sound_note), a
+    ld   (Audio_jump_sound_timer), a
+    ld   (coyote_timer), a
+
+    ld   a, (room_jump_strength)
+    ld   (velocity_y), a
+    xor  a
+    ld   (on_ground), a
+    ld   (jump_pressed), a
+    ld   (jump_frame), a
+    ld   a, b                    ; B = PlayerY
+    ld   (jump_start_y), a
+    ld   a, (current_input_dir)
+    ld   (jump_dir), a
+    jp   .in_air
+
+.no_early_jump:
     ; --- CONTROLLO RAMPA PER IL MOVIMENTO ---
     ld   a, (on_ground)
     or   a
@@ -266,6 +299,8 @@ Phys_ApplyGravity:
     xor  a
     ld   (on_ground), a
     ld   (velocity_y), a   ; Inizia la caduta con velocità 0
+    ld   a, COYOTE_TIME_FRAMES
+    ld   (coyote_timer), a ; Inizializza tempo coyote per consentire il salto da bordo!
     ld   a, (PlayerPos+1)  ; A = PlayerY
     ld   (jump_start_y), a ; Salva la quota Y di inizio caduta per i controlli di provenienza rampa
     jp   .in_air
@@ -655,7 +690,29 @@ Phys_ApplyGravity:
     ld   (PlayerPos), bc
 
 .end:
+    ld   a, (on_ground)
+    or   a
+    jr   z, .in_air_decay
+    
+    ; Se a terra (on_ground == 1), azzera il coyote timer
     xor  a
+    ld   (coyote_timer), a
+    ret
+
+.in_air_decay:
+    ; Decrementa coyote_timer se > 0
+    ld   a, (coyote_timer)
+    or   a
+    jr   z, .check_jump_buffer
+    dec  a
+    ld   (coyote_timer), a
+
+.check_jump_buffer:
+    ; Decrementa jump_pressed se > 0
+    ld   a, (jump_pressed)
+    or   a
+    ret  z
+    dec  a
     ld   (jump_pressed), a
     ret
 

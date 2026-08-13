@@ -206,6 +206,7 @@ Main_loop:
     xor  a
     ld   (velocity_y), a
     ld   (jump_pressed), a
+    ld   (coyote_timer), a
     ld   (jump_frame), a
     ld   (jump_dir), a
     ld   a, 1
