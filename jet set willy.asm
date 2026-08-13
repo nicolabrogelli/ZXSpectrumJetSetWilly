@@ -198,6 +198,9 @@ Main_loop:
     ld   hl, ATTR_P
     ld   (hl), a               ; Paper = Nero, Ink = Nero ($00)
     call CLS                   ; Pulisce il display RAM e imposta gli attributi a nero
+    ld   (hl), $07             ; Ripristina ATTR_P a $07 (Inchiostro Bianco, Sfondo Nero)
+    ld   a, $07
+    ld   (ATTR_T), a           ; Ripristina ATTR_T a $07
 
     ; 3. Pausa a schermo nero (~0.5 secondi per respawn normale)
     ld   b, 25
@@ -269,13 +272,14 @@ Main_loop:
 ; TriggerGameOver
 ; Scatena la schermata di Game Over per la stanza corrente.
 ; - Pulisce gli elementi di gioco della stanza (piattaforme, nemici, Willy, item).
+; - Esegue l'animazione del Piede (discesa fluida ed atterraggio sotto BotteSprite).
+; - Fa comparire la scritta GAME OVER al centro dello schermo dopo la pausa ed anima i suoi colori.
 ; - Mantiene visibile il Nome della Stanza corrente e la Riga di Stato (Item ed Orario).
-; - Rimane in attesa della pressione del tasto ENTER.
 ; - Premendo ENTER, ripristina integralmente la partita ed avvia la nuova
 ;   sessione dal primo livello (Stanza 0: The Off Licence) alle 07:00 AM.
 ; -------------------------------------------------------------------
 TriggerGameOver:
-    ; 1. Disegna la schermata di Game Over per la stanza corrente
+    ; 1. Disegna la schermata di Game Over ed esegue l'animazione del Piede e della scritta GAME OVER
     call Gfx_DrawGameOverScreen
 
     ; 2. Attende il rilascio del tasto ENTER se era già premuto
@@ -286,9 +290,30 @@ TriggerGameOver:
     rra
     jr   nc, .wait_enter_release
 
-    ; 3. Rimane completamente fermo in attesa della pressione del tasto ENTER
+    ; 3. Attesa della pressione del tasto ENTER con animazione ciclo colore su GAME OVER (Riga 5, Col 11)
+    ld   c, 0                  ; C = contatore frame per animazione colore
 .wait_enter_press:
     halt
+
+    ; Animazione ciclo colore per GAME OVER (Riga 5, Colonna 11..19, $58AB)
+    inc  c
+    ld   a, c
+    srl  a
+    srl  a                     ; Cambia colore ogni 4 frame (~80ms)
+    and  7
+    ld   e, a
+    ld   d, 0
+    ld   hl, game_over_color_table
+    add  hl, de
+    ld   a, (hl)               ; A = nuovo colore attributo
+    ld   hl, $58ab             ; Indirizzo attributi riga 5, col 11 ($5800 + 5*32 + 11 = $58AB)
+    ld   b, 9
+.color_cycle_loop:
+    ld   (hl), a
+    inc  hl
+    djnz .color_cycle_loop
+
+    ; Controlla se il tasto ENTER è premuto
     ld   a, $bf
     in   a, ($fe)
     rra
@@ -306,6 +331,12 @@ TriggerGameOver:
 ; per l'avvio di una nuova partita dopo il Game Over.
 ; -------------------------------------------------------------------
 ResetFullGameState:
+    ; Ripristina gli attributi schermo di default (Inchiostro Bianco, Sfondo Nero)
+    ld   hl, ATTR_P
+    ld   (hl), $07
+    ld   a, $07
+    ld   (ATTR_T), a
+
     ; Ripristina il numero di vite iniziali
     ld   a, INITIAL_LIVES
     ld   (willy_lives), a

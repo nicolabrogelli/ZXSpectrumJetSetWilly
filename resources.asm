@@ -5,7 +5,6 @@
 ; Contiene le stanze (livelli) e le sprite dei personaggi.
 ;===========================================================================
 
-    org $8400
 RoomsStart:
     include "rooms/TheOffLicence.asm"               ; ID 00
     include "rooms/TheBridge.asm"                   ; ID 01

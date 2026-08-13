@@ -738,13 +738,48 @@ Gfx_PrintRoomName:
     ret
 
 ; -------------------------------------------------------------------
+; Gfx_Clear2Scanlines_Black
+; Azzera 2 scanline di 16 pixel alla coordinata (X=120, Y=B)
+; Input: B = Y
+; -------------------------------------------------------------------
+Gfx_Clear2Scanlines_Black:
+    push bc
+    push de
+    push hl
+
+    ld   c, 120
+    ld   h, b
+    ld   l, c
+    call Gfx_GetScreenAddr      ; HL = indirizzo schermo per (X=120, Y=B)
+
+    xor  a
+    ld   (hl), a
+    inc  hl
+    ld   (hl), a
+    dec  hl
+    call Gfx_IncScreenLine
+    ld   (hl), a
+    inc  hl
+    ld   (hl), a
+
+    pop  hl
+    pop  de
+    pop  bc
+    ret
+
+game_over_str:
+    db "GAME OVER"
+
+game_over_color_table:
+    db $42, $46, $47, $45, $44, $43, $46, $42
+
+; -------------------------------------------------------------------
 ; Gfx_DrawGameOverScreen
-; Disegna la schermata di Game Over per la stanza corrente:
-; - Pulisce lo schermo a nero (rimuove piattaforme, tiles, nemici, item).
-; - Disegna Willy immobile al centro sopra BotteSprite (Y=96, X=120).
-; - Disegna BotteSprite immobile al centro sopra il Nome Stanza (Y=112, X=120).
-; - Mantiene visibile il Nome della Stanza corrente (riga 16) in giallo.
-; - Mantiene visibile la riga di stato con item ed orario corrente (riga 18).
+; Esegue la sequenza animata di Game Over:
+; 1. Pulisce lo schermo a nero, mostra Willy (Y=96), BotteSprite (Y=112, Rosso), Nome Stanza (riga 16) e Status Line (riga 18).
+; 2. Animazione di discesa fluida di PiedeSprite dall'alto (Y=0) fino a fermarsi sopra Willy (Y=80), prima del bordo alto della Botte.
+; 3. Breve pausa con PiedeSprite fermo sopra Willy.
+; 4. Stampa la scritta GAME OVER al centro dello schermo (riga 5) solo dopo la pausa.
 ; -------------------------------------------------------------------
 Gfx_DrawGameOverScreen:
     push af
@@ -759,6 +794,9 @@ Gfx_DrawGameOverScreen:
     ld   hl, ATTR_P
     ld   (hl), a               ; Paper/Ink = 0 (Nero)
     call CLS                   ; Pulisce tutti i pixel e gli attributi a nero
+    ld   (hl), $07             ; Ripristina ATTR_P a $07 (Inchiostro Bianco, Sfondo Nero)
+    ld   a, $07
+    ld   (ATTR_T), a           ; Ripristina ATTR_T a $07
 
     ; 2. Disegna Willy (immobile, rivolto a destra) a X=124, Y=96
     ; 2a. Testa di Willy (8x8) a X=124, Y=96
@@ -820,6 +858,96 @@ Gfx_DrawGameOverScreen:
     ld   de, $5a40             ; Indirizzo attributi riga 18
     ld   bc, 32
     ldir
+
+    ; 7. Animazione: Discesa fluida di PiedeSprite dall'alto (Y=0) fino a Y=96 (alla parte alta della Botte)
+    ld   b, 0                  ; B = Y iniziale (0)
+.foot_descent_loop:
+    push bc                    ; Salva B = Y corrente
+    
+    ; 7a. Cancella le 2 scanline lasciate in alto dalla posizione precedente
+    ld   a, b
+    or   a
+    jr   z, .skip_clear_prev
+    sub  2                     ; Y precedente (passo 2 pixel)
+    ld   b, a
+    call Gfx_Clear2Scanlines_Black
+    
+    ; Pulisce gli attributi lasciati indietro dalla riga precedente
+    ld   a, b
+    cp   8
+    jr   c, .skip_attr_clear
+    sub  8
+    srl  a
+    srl  a
+    srl  a                     ; A = Row da azzerare
+    ld   l, a
+    ld   h, 0
+    add  hl, hl                ; * 2
+    add  hl, hl                ; * 4
+    add  hl, hl                ; * 8
+    add  hl, hl                ; * 16
+    add  hl, hl                ; * 32
+    ld   de, $580f             ; $5800 + 15
+    add  hl, de
+    xor  a
+    ld   (hl), a               ; Col 15 = 0
+    inc  hl
+    ld   (hl), a               ; Col 16 = 0
+.skip_attr_clear:
+
+.skip_clear_prev:
+    pop  bc                    ; Ripristina B = Y corrente
+    push bc
+
+    ; 7b. Disegna PiedeSprite alla coordinata corrente (X=120, Y)
+    ld   c, 120
+    ld   ix, PiedeSprite
+    call Gfx_DrawPixelSprite16x16
+
+    ; 7c. Imposta colore Giallo Brillante per PiedeSprite
+    ld   c, 120
+    ld   a, YELLOW | $40
+    call Gfx_SetEnemyColorAttributes
+
+    ; 7d. Pausa per movimento fluido a 50Hz
+    halt
+
+    pop  bc                    ; B = Y corrente
+    ld   a, b
+    add  a, 2                  ; Avanza di 2 pixel
+    ld   b, a
+    cp   98                    ; Si ferma a Y = 96 (incluso, il ciclo termina quando B=98)
+    jr   c, .foot_descent_loop
+
+    ; 8. Breve pausa con PiedeSprite fermato sulla parte alta della Botte (~0.7s)
+    ld   b, 35
+.pause_after_foot:
+    halt
+    djnz .pause_after_foot
+
+    ; 9. Solo DOPO la pausa, fa comparire GAME OVER al centro dello schermo a riga 5, colonna 11
+    ld   a, 22                 ; AT (22)
+    rst  $10
+    ld   a, 5                  ; Riga 5
+    rst  $10
+    ld   a, 11                 ; Colonna 11
+    rst  $10
+    
+    ld   a, RED                ; Inchiostro Rosso
+    call Gfx_Ink
+
+    ld   hl, game_over_str
+    ld   b, 9
+    call Gfx_PrintString
+
+    ; Imposta attributo iniziale per GAME OVER (Rosso Brillante)
+    ld   hl, $58ab             ; Riga 5, Colonna 11 ($5800 + 5*32 + 11 = $58AB)
+    ld   b, 9
+    ld   a, RED | $40
+.init_go_attr:
+    ld   (hl), a
+    inc  hl
+    djnz .init_go_attr
 
     pop  ix
     pop  hl
