@@ -10003,7 +10003,7 @@
  468  878A CD 26 66         call Gfx_UpdateTimeDisplay
  469  878D
  470  878D                  ; Ripristina la stanza iniziale (Stanza 0: The Off Licence)
- 471  878D 21 F3 87         ld   hl, TheOffLicenceLayout
+ 471  878D 21 D1 AC         ld   hl, TheBathroomLayout; TheOffLicenceLayout
  472  8790 22 99 ED         ld   (room_ptr), hl
  473  8793
  474  8793 C9               ret
@@ -24333,7 +24333,7 @@
   58+ ED96 00          > db 0
   58+ ED97 00          > db 0
   59+ ED98 00           num_room_items:     db 0
-  60+ ED99 F3 87        room_ptr:           dw TheOffLicenceLayout;
+  60+ ED99 D1 AC        room_ptr:           dw TheBathroomLayout ;TheOffLicenceLayout;
   61+ ED9B 01           enemy_update_rate:  db 1
   62+ ED9C 00           enemy_update_timer: db 0
   63+ ED9D 03           player_speed:       db 3

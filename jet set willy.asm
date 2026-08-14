@@ -468,7 +468,7 @@ ResetFullGameState:
     call Gfx_UpdateTimeDisplay
 
     ; Ripristina la stanza iniziale (Stanza 0: The Off Licence)
-    ld   hl, TheOffLicenceLayout
+    ld   hl, TheBathroomLayout; TheOffLicenceLayout
     ld   (room_ptr), hl
 
     ret
