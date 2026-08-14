@@ -62,16 +62,16 @@ OntheRoofWall:
 OntheRoofNasty:
     DEFB 70,85,153,221,204,85,153,221,204  ; Nastry
 
-OntheRoofRamp:                          ; Ramp Solid
+OntheRoofRamp:                          
     DEFB 7,0,0,0,0,0,0,0,0              ; Ramp Solid
 
-OntheRoofConveyor:                      ; Conveyor Solid
+OntheRoofConveyor:                      
     DEFB 10,240,240,240,255,255,0,0,255                      ; Conveyor Solid
 
 OntheRoofConveyorData:
     DEFB 1
     DEFW 24558
-    DEFB 8
+    DEFB 0
 
 OntheRoofRampData:
     DEFB 0
@@ -89,9 +89,9 @@ OntheRoofItem:
 
 OntheRoofDirection:
 	ROOM RoomsListTable.NomenLuniLayout						;Room to the left (Nomen Luni)
-	ROOM RoomsListTable.UpOnTheBattlementsLayout						;Room to the right (Up on the Battlements)
-	ROOM RoomsListTable.OntheRoofLayout						;Room above (On the Roof)
-	DEFB $FF					;Room below (The Off Licence)
+	ROOM RoomsListTable.UpOnTheBattlementsLayout			;Room to the right (Up on the Battlements)
+	DEFB BLOCK                          					;Room above (On the Roof)
+	DEFB BLOCK					                            ;Room below (The Off Licence)
 
 OntheRoofUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

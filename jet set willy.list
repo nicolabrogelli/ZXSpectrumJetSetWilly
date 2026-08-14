@@ -13362,12 +13362,12 @@
   63++9CCE CC 55 99 DD
   63++9CD2 CC
   64++9CD3
-  65++9CD3              OntheRoofRamp:                          ; Ramp Solid
+  65++9CD3              OntheRoofRamp:
   66++9CD3 07 00 00 00      DEFB 7,0,0,0,0,0,0,0,0              ; Ramp Solid
   66++9CD7 00 00 00 00
   66++9CDB 00
   67++9CDC
-  68++9CDC              OntheRoofConveyor:                      ; Conveyor Solid
+  68++9CDC              OntheRoofConveyor:
   69++9CDC 0A F0 F0 F0      DEFB 10,240,240,240,255,255,0,0,255                      ; Conveyor Solid
   69++9CE0 FF FF 00 00
   69++9CE4 FF
@@ -13375,7 +13375,7 @@
   71++9CE5              OntheRoofConveyorData:
   72++9CE5 01               DEFB 1
   73++9CE6 EE 5F            DEFW 24558
-  74++9CE8 08               DEFB 8
+  74++9CE8 00               DEFB 0
   75++9CE9
   76++9CE9              OntheRoofRampData:
   77++9CE9 00               DEFB 0
@@ -13395,11 +13395,10 @@
   90++9CFA              OntheRoofDirection:
   91++9CFA              	ROOM RoomsListTable.NomenLuniLayout						;Room to the left (Nomen Luni)
   91++9CFA 30          >        db (RoomsListTable.NomenLuniLayout - RoomsListTable) / 2
-  92++9CFB              	ROOM RoomsListTable.UpOnTheBattlementsLayout						;Room to the right (Up on the Battlements)
+  92++9CFB              	ROOM RoomsListTable.UpOnTheBattlementsLayout			;Room to the right (Up on the Battlements)
   92++9CFB 11          >        db (RoomsListTable.UpOnTheBattlementsLayout - RoomsListTable) / 2
-  93++9CFC              	ROOM RoomsListTable.OntheRoofLayout						;Room above (On the Roof)
-  93++9CFC 12          >        db (RoomsListTable.OntheRoofLayout - RoomsListTable) / 2
-  94++9CFD FF           	DEFB $FF					;Room below (The Off Licence)
+  93++9CFC FF           	DEFB BLOCK                          					;Room above (On the Roof)
+  94++9CFD FF           	DEFB BLOCK					                            ;Room below (The Off Licence)
   95++9CFE
   96++9CFE              OntheRoofUnused:
   97++9CFE 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240

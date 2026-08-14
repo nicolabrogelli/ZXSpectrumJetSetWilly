@@ -99,7 +99,7 @@ UnderTheMegaTreeItem:
 UnderTheMegaTreeDirection:
     ROOM RoomsListTable.AtTheFootTheMegaTreeLayout	    ;Room to the left (Gfx_At the Foot of the MegaTree)
     ROOM RoomsListTable.TheBridgeLayout	                ;Room to the right (The Bridge)
-    ROOM RoomsListTable.CuckoosNestLayout               ;Room above (CuckoosNest)
+    DEFB BLOCK                                          ;Room above (CuckoosNest)
     DEFB BLOCK                                          ;Room below (None)
 
 UnderTheMegaTreeUnused:
