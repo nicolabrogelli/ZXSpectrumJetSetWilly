@@ -10592,8 +10592,7 @@
  100++8B1A 03          >        db (RoomsListTable.AtTheFootTheMegaTreeLayout - RoomsListTable) / 2
  101++8B1B                  ROOM RoomsListTable.TheBridgeLayout	                ;Room to the right (The Bridge)
  101++8B1B 01          >        db (RoomsListTable.TheBridgeLayout - RoomsListTable) / 2
- 102++8B1C                  ROOM RoomsListTable.CuckoosNestLayout               ;Room above (CuckoosNest)
- 102++8B1C 07          >        db (RoomsListTable.CuckoosNestLayout - RoomsListTable) / 2
+ 102++8B1C FF               DEFB BLOCK                                          ;Room above (CuckoosNest)
  103++8B1D FF               DEFB BLOCK                                          ;Room below (None)
  104++8B1E
  105++8B1E              UnderTheMegaTreeUnused:
@@ -13317,18 +13316,18 @@
   40++9C4B 00 00 0A 40
   41++9C4F 00 00 00 00  	DEFB 0,0,0,0,0,0,10,208
   41++9C53 00 00 0A D0
-  42++9C57 AA 40 00 00  	DEFB 170,64,0,0,0,0,10,170
-  42++9C5B 00 00 0A AA
-  43++9C5F AA C0 00 00  	DEFB 170,192,0,0,0,0,10,170
-  43++9C63 00 00 0A AA
-  44++9C67 AA C0 00 00  	DEFB 170,192,0,0,0,0,10,170
-  44++9C6B 00 00 0A AA
-  45++9C6F AA 90 00 00  	DEFB 170,144,0,0,0,0,10,170
-  45++9C73 00 00 0A AA
-  46++9C77 AA B0 00 00  	DEFB 170,176,0,0,0,0,10,170
-  46++9C7B 00 00 0A AA
-  47++9C7F AA B0 0A 40  	DEFB 170,176,10,64,0,0,10,170
-  47++9C83 00 00 0A AA
+  42++9C57 AA 40 AA 40  	DEFB 170,64,170,64,170,64,10,170
+  42++9C5B AA 40 0A AA
+  43++9C5F AA C0 AA C0  	DEFB 170,192,170,192,170,192,10,170
+  43++9C63 AA C0 0A AA
+  44++9C67 AA C0 AA C0  	DEFB 170,192,170,192,170,192,10,170
+  44++9C6B AA C0 0A AA
+  45++9C6F AA 90 AA 90  	DEFB 170,144,170,144,170,144,10,170
+  45++9C73 AA 90 0A AA
+  46++9C77 AA B0 AA B0  	DEFB 170,176,170,176,170,176,10,170
+  46++9C7B AA B0 0A AA
+  47++9C7F AA B0 AA B0  	DEFB 170,176,170,176,170,176,10,170
+  47++9C83 AA B0 0A AA
   48++9C87 AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
   48++9C8B AA AA AA AA
   49++9C8F
@@ -13404,7 +13403,7 @@
   97++9CFE 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   98++9CFF
   99++9CFF              OntheRoofEnemy1:
- 100++9CFF 80 0D 70 68      DEFB $80, CANGURO, 112, 104, 192
+ 100++9CFF 80 02 0A 14      DEFB $80, UCCELLO, 10, 20, 192
  100++9D03 C0
  101++9D04              OntheRoofEnemy2:
  102++9D04 00 00 00 00      DEFB 0, 0, 0, 0, 0
