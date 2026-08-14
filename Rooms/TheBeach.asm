@@ -31,7 +31,7 @@
 
 ; Room layout for Room  (TheBeach)
 TheBeachLayout:           
-	DEFB 0,0,0,0,0,0,0,0	;Room layout
+	DEFB 0,0,0,0,0,0,0,0	;;Room layout
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
