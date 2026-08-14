@@ -512,11 +512,54 @@ Gfx_ErasePixelSprite16x16:
     ret
 
 ; -------------------------------------------------------------------
-; Disegna il player (testa e corpo) a coordinate pixel
+; Disegna il player (testa e corpo se Willy, oppure MaialeSprite se in TheNightmareRoom)
 ; -------------------------------------------------------------------
 Gfx_PrintPlayer:
     push ix
+    push de
+    push hl
+    push bc
     
+    ; Controlla se la stanza corrente è TheNightmareRoomLayout
+    ld   hl, (room_ptr)
+    ld   de, TheNightmareRoomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .draw_normal_willy
+
+    ; --- RENDERING MAIALESPRITE IN THE NIGHTMARE ROOM ---
+    ld   a, (direction)
+    cp   1                 ; Sinistra?
+    jr   nz, .maiale_right
+
+    ; Maiale a sinistra
+    ld   hl, MaialeSpriteLeft
+    jr   .calc_maiale_frame
+
+.maiale_right:
+    ; Maiale a destra
+    ld   hl, MaialeSpriteRight
+
+.calc_maiale_frame:
+    ld   a, (body_state)   ; 0, 1, 2
+    and  3
+    add  a, a              ; *2
+    add  a, a              ; *4
+    add  a, a              ; *8
+    add  a, a              ; *16
+    add  a, a              ; *32
+    ld   e, a
+    ld   d, 0
+    add  hl, de            ; HL = frame pointer (32 byte per frame 16x16)
+    push hl
+    pop  ix                ; IX = frame pointer
+
+    ld   bc, (PlayerPos)   ; C = PlayerX, B = PlayerY
+    call Gfx_DrawPixelSprite16x16
+    jr   .done_print
+
+.draw_normal_willy:
+    ; --- RENDERING STANDARD WILLY ---
     ; 1. Determina sprite per la testa (sinistra o destra)
     ld   a, (direction)
     cp   1                 ; Sinistra?
@@ -567,7 +610,11 @@ Gfx_PrintPlayer:
     add  a, 8
     ld   b, a              ; B = PlayerY + 8
     call Gfx_DrawPixelSprite8x8 ; Disegna corpo
-    
+
+.done_print:
+    pop  bc
+    pop  hl
+    pop  de
     pop  ix
     ret
 
@@ -616,6 +663,19 @@ Gfx_UpdatePlayer:
     cp   $FF
     jr   z, .redraw_overlay_only
     
+    ; Controlla se la stanza corrente è TheNightmareRoomLayout
+    ld   hl, (room_ptr)
+    ld   de, TheNightmareRoomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .erase_normal_willy
+
+    ; In The Nightmare Room cancella MaialeSprite (16x16)
+    ld   bc, (player_drawn_pos)
+    call Gfx_ErasePixelSprite16x16
+    jr   .redraw_overlay_only
+
+.erase_normal_willy:
     ld   bc, (player_drawn_pos)
     call Gfx_ErasePixelSprite8x8    ; Cancella testa
     ld   bc, (player_drawn_pos)
@@ -661,10 +721,24 @@ Gfx_UpdatePlayer:
 ; -------------------------------------------------------------------
 Gfx_DeleteCharAtOldPos:
     push bc
+    push de
+    push hl
     ld   a, (player_drawn_pos+1)
     cp   $FF
     jr   z, .skip_del
     
+    ; Controlla se la stanza corrente è TheNightmareRoomLayout
+    ld   hl, (room_ptr)
+    ld   de, TheNightmareRoomLayout
+    or   a
+    sbc  hl, de
+    jr   nz, .del_normal_willy
+
+    ld   bc, (player_drawn_pos)
+    call Gfx_ErasePixelSprite16x16
+    jr   .done_del
+
+.del_normal_willy:
     ld   bc, (player_drawn_pos)
     call Gfx_ErasePixelSprite8x8    ; Cancella testa
     ld   bc, (player_drawn_pos)
@@ -672,10 +746,13 @@ Gfx_DeleteCharAtOldPos:
     add  a, 8
     ld   b, a
     call Gfx_ErasePixelSprite8x8    ; Cancella corpo
-    
+
+.done_del:
     ld   a, $FF
     ld   (player_drawn_pos+1), a    ; Resetta posizione disegnata
 .skip_del:
+    pop  hl
+    pop  de
     pop  bc
     ret
 
