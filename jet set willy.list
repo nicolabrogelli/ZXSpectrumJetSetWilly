@@ -15926,7 +15926,7 @@
   86++ACB3
   87++ACB3              ;The next two bytes are copied to 32991, but are not used.
   88++ACB3              MastreBedRoomReserved:
-  89++ACB3 00 00 00 00      DEFB NONE, NONE, NONE, NONE                         ; Enemy colors: all WHITE (7)
+  89++ACB3 07 00 00 00      DEFB WHITE, NONE, NONE, NONE                         ; Enemy colors: all WHITE (7)
   90++ACB7
   91++ACB7              ;The next eight bytes are copied to 32993 and define the item graphic.
   92++ACB7              MastreBedRoomItem:
@@ -15949,8 +15949,8 @@
  104++ACC4
  105++ACC4              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  106++ACC4              MastreBedRoomEnemy1:
- 107++ACC4 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 107++ACC8 00
+ 107++ACC4 80 22 6E 58      DEFB $80, VECCHIA, 110, 88, 110
+ 107++ACC8 6E
  108++ACC9              MastreBedRoomEnemy2:
  109++ACC9 00 00 00 00      DEFB 0, 0, 0, 0, 0
  109++ACCD 00

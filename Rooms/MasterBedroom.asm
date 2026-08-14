@@ -86,7 +86,7 @@ MastreBedRoomBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 MastreBedRoomReserved:
-    DEFB NONE, NONE, NONE, NONE                         ; Enemy colors: all WHITE (7)
+    DEFB WHITE, NONE, NONE, NONE                         ; Enemy colors: all WHITE (7)
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 MastreBedRoomItem:
@@ -104,7 +104,7 @@ MastreBedRoomUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 MastreBedRoomEnemy1:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, VECCHIA, 110, 88, 110  
 MastreBedRoomEnemy2:
     DEFB 0, 0, 0, 0, 0
 MastreBedRoomEnemy3:
