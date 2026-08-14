@@ -46,7 +46,8 @@ TheSecurityGuardLayout:
     DEFB 0,0,168,32,130,168,40,0
     DEFB 0,0,0,0,0,0,0,0
     DEFB 0,0,0,0,0,0,0,42
-    DEFB 160,10,170,170,170,170,170,170
+    ;DEFB 160,10,170,170,170,170,170,170
+    DEFB 170,170,170,170,170,170,170,170
 
 TheSecurityGuardTile:
 ;The next 32 bytes are copied to 32896 and specify the room name.

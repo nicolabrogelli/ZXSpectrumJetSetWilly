@@ -11057,121 +11057,122 @@
   47++8DF5 00 00 00 00
   48++8DF9 00 00 00 00      DEFB 0,0,0,0,0,0,0,42
   48++8DFD 00 00 00 2A
-  49++8E01 A0 0A AA AA      DEFB 160,10,170,170,170,170,170,170
-  49++8E05 AA AA AA AA
-  50++8E09
-  51++8E09              TheSecurityGuardTile:
-  52++8E09              ;The next 32 bytes are copied to 32896 and specify the room name.
-  53++8E09 20 20 20 20      DEFM "       The Security Guard       "	    ;Room name
-  53++8E0D 20 20 20 54
-  53++8E11 68 65 20 53
-  53++8E15 65 63 75 72
-  53++8E19 69 74 79 20
-  53++8E1D 47 75 61 72
-  53++8E21 64 20 20 20
-  53++8E25 20 20 20 20
-  54++8E29
-  55++8E29              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
-  56++8E29              TheSecurityGuardBackground:                    ; Background
-  57++8E29 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
-  57++8E2D 00 00 00 00
-  57++8E31 00
-  58++8E32
-  59++8E32              TheSecurityGuardFloor:
-  60++8E32 04 FF FF AA      DEFB 4,255,255,170,85,170,85,170,85       ; Floor Solid
-  60++8E36 55 AA 55 AA
-  60++8E3A 55
-  61++8E3B
-  62++8E3B              TheSecurityGuardWall:
-  63++8E3B 0D 0E C6 95      DEFB 13,14,198,149,176,54,134,192,237   ; Wall Solid
-  63++8E3F B0 36 86 C0
-  63++8E43 ED
-  64++8E44
-  65++8E44              TheSecurityGuardNasty:
-  66++8E44 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
-  66++8E48 00 00 00 00
-  66++8E4C 00
-  67++8E4D
-  68++8E4D              TheSecurityGuardRamp:
-  69++8E4D 07 E0 40 20      DEFB 7,224,64,32,16,14,4,2,1              ; Ramp Solid
-  69++8E51 10 0E 04 02
-  69++8E55 01
-  70++8E56
-  71++8E56              TheSecurityGuardConveyor:
-  72++8E56 42 6F 00 B7      DEFB 66,111,0,183,0,170,85,170,85                      ; Conveyor Solid
-  72++8E5A 00 AA 55 AA
-  72++8E5E 55
-  73++8E5F
-  74++8E5F              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
-  75++8E5F              TheSecurityGuardConveyorData:
-  76++8E5F 01               DEFB 1	                                ;Direction (right)
-  77++8E60 BD 5F            DEFW 24509	                            ;Location in the attribute buffer at 24064: (15,12)
-  78++8E62 03               DEFB 3	                                ;Length
-  79++8E63
-  80++8E63              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
-  81++8E63              TheSecurityGuardRampData:
-  82++8E63 00               DEFB 0	                                ;Direction (up to the right)
-  83++8E64 E8 5E            DEFW 24296                              ;Location in the attribute buffer at 24064: (14,7)
-  84++8E66 08               DEFB 8	                                ;Length
-  85++8E67
-  86++8E67              ;The next byte is copied to 32990 and specifies the border colour.
-  87++8E67              TheSecurityGuardBorderColor:
-  88++8E67 04               DEFB 4	                                ;Border colour
-  89++8E68
-  90++8E68              ;The next two bytes are copied to 32991, but are not used.
-  91++8E68              TheSecurityGuardReserved:
-  92++8E68 02 04 06 02      DEFB RED, GREEN, YELLOW, RED     ; Enemy colors
-  93++8E6C
-  94++8E6C              ;The next eight bytes are copied to 32993 and define the item graphic.
-  95++8E6C              TheSecurityGuardItem:
-  96++8E6C 40 A0 5C 22      DEFB 64,160,92,34,33,34,20,8	                ;Item graphic (unused)
-  96++8E70 21 22 14 08
-  97++8E74
-  98++8E74              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
-  99++8E74              TheSecurityGuardDirection:
- 100++8E74                  ROOM RoomsListTable.TheForgottenAbbeyLayout ;Room to the left (The Forgotten Abbey)
- 100++8E74 13          >        db (RoomsListTable.TheForgottenAbbeyLayout - RoomsListTable) / 2
- 101++8E75                  ROOM RoomsListTable.TheDriveLayout	        ;Room to the right (The Drive)
- 101++8E75 04          >        db (RoomsListTable.TheDriveLayout - RoomsListTable) / 2
- 102++8E76                  ROOM RoomsListTable.TheFrontDoorLayout	    ;Room above (The Front Door)
- 102++8E76 0A          >        db (RoomsListTable.TheFrontDoorLayout - RoomsListTable) / 2
- 103++8E77                  ROOM RoomsListTable.EntranceToHadesLayout	;Room below (Entrance to Hades)
- 103++8E77 06          >        db (RoomsListTable.EntranceToHadesLayout - RoomsListTable) / 2
- 104++8E78
- 105++8E78              TheSecurityGuardUnused:
- 106++8E78 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
- 107++8E79
- 108++8E79              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 109++8E79              TheSecurityGuardEnemy1:
- 110++8E79 C0 0B 58 28      DEFB $C0, SOLDATO, 88, 40, 104
- 110++8E7D 68
- 111++8E7E              TheSecurityGuardEnemy2:
- 112++8E7E D0 0B 71 2C      DEFB $D0, SOLDATO, 113, 44, 104
- 112++8E82 68
- 113++8E83              TheSecurityGuardEnemy3:
- 114++8E83 E0 0B 88 2C      DEFB $E0, SOLDATO, 136, 44, 104
- 114++8E87 68
- 115++8E88              TheSecurityGuardEnemy4:
- 116++8E88 F0 0B B8 30      DEFB $F0, SOLDATO, 184, 48, 96
- 116++8E8C 60
- 117++8E8D              TheSecurityGuardEnemy5:
- 118++8E8D 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 118++8E91 00
- 119++8E92              TheSecurityGuardEnemy6:
- 120++8E92 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 120++8E96 00
- 121++8E97              TheSecurityGuardEnemy7:
- 122++8E97 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 122++8E9B 00
- 123++8E9C              TheSecurityGuardEnemy8:
- 124++8E9C 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 124++8EA0 00
- 125++8EA1
- 126++8EA1              TheSecurityGuardPosWilly:
- 127++8EA1 C8 68            db 200, 104                     ; Posizione di Willy
- 128++8EA3
- 129++8EA3              TheSecurityGuardEnemyColors5_8:
- 130++8EA3 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
+  49++8E01                  ;DEFB 160,10,170,170,170,170,170,170
+  50++8E01 AA AA AA AA      DEFB 170,170,170,170,170,170,170,170
+  50++8E05 AA AA AA AA
+  51++8E09
+  52++8E09              TheSecurityGuardTile:
+  53++8E09              ;The next 32 bytes are copied to 32896 and specify the room name.
+  54++8E09 20 20 20 20      DEFM "       The Security Guard       "	    ;Room name
+  54++8E0D 20 20 20 54
+  54++8E11 68 65 20 53
+  54++8E15 65 63 75 72
+  54++8E19 69 74 79 20
+  54++8E1D 47 75 61 72
+  54++8E21 64 20 20 20
+  54++8E25 20 20 20 20
+  55++8E29
+  56++8E29              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
+  57++8E29              TheSecurityGuardBackground:                    ; Background
+  58++8E29 07 00 00 00      DEFB $07,0,0,0,0,0,0,0,0	            ;Background
+  58++8E2D 00 00 00 00
+  58++8E31 00
+  59++8E32
+  60++8E32              TheSecurityGuardFloor:
+  61++8E32 04 FF FF AA      DEFB 4,255,255,170,85,170,85,170,85       ; Floor Solid
+  61++8E36 55 AA 55 AA
+  61++8E3A 55
+  62++8E3B
+  63++8E3B              TheSecurityGuardWall:
+  64++8E3B 0D 0E C6 95      DEFB 13,14,198,149,176,54,134,192,237   ; Wall Solid
+  64++8E3F B0 36 86 C0
+  64++8E43 ED
+  65++8E44
+  66++8E44              TheSecurityGuardNasty:
+  67++8E44 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0  ; Nastry
+  67++8E48 00 00 00 00
+  67++8E4C 00
+  68++8E4D
+  69++8E4D              TheSecurityGuardRamp:
+  70++8E4D 07 E0 40 20      DEFB 7,224,64,32,16,14,4,2,1              ; Ramp Solid
+  70++8E51 10 0E 04 02
+  70++8E55 01
+  71++8E56
+  72++8E56              TheSecurityGuardConveyor:
+  73++8E56 42 6F 00 B7      DEFB 66,111,0,183,0,170,85,170,85                      ; Conveyor Solid
+  73++8E5A 00 AA 55 AA
+  73++8E5E 55
+  74++8E5F
+  75++8E5F              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
+  76++8E5F              TheSecurityGuardConveyorData:
+  77++8E5F 01               DEFB 1	                                ;Direction (right)
+  78++8E60 BD 5F            DEFW 24509	                            ;Location in the attribute buffer at 24064: (15,12)
+  79++8E62 03               DEFB 3	                                ;Length
+  80++8E63
+  81++8E63              ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
+  82++8E63              TheSecurityGuardRampData:
+  83++8E63 00               DEFB 0	                                ;Direction (up to the right)
+  84++8E64 E8 5E            DEFW 24296                              ;Location in the attribute buffer at 24064: (14,7)
+  85++8E66 08               DEFB 8	                                ;Length
+  86++8E67
+  87++8E67              ;The next byte is copied to 32990 and specifies the border colour.
+  88++8E67              TheSecurityGuardBorderColor:
+  89++8E67 04               DEFB 4	                                ;Border colour
+  90++8E68
+  91++8E68              ;The next two bytes are copied to 32991, but are not used.
+  92++8E68              TheSecurityGuardReserved:
+  93++8E68 02 04 06 02      DEFB RED, GREEN, YELLOW, RED     ; Enemy colors
+  94++8E6C
+  95++8E6C              ;The next eight bytes are copied to 32993 and define the item graphic.
+  96++8E6C              TheSecurityGuardItem:
+  97++8E6C 40 A0 5C 22      DEFB 64,160,92,34,33,34,20,8	                ;Item graphic (unused)
+  97++8E70 21 22 14 08
+  98++8E74
+  99++8E74              ;The next four bytes are copied to 33001 and specify the rooms to the left, to the right, above and below.
+ 100++8E74              TheSecurityGuardDirection:
+ 101++8E74                  ROOM RoomsListTable.TheForgottenAbbeyLayout ;Room to the left (The Forgotten Abbey)
+ 101++8E74 13          >        db (RoomsListTable.TheForgottenAbbeyLayout - RoomsListTable) / 2
+ 102++8E75                  ROOM RoomsListTable.TheDriveLayout	        ;Room to the right (The Drive)
+ 102++8E75 04          >        db (RoomsListTable.TheDriveLayout - RoomsListTable) / 2
+ 103++8E76                  ROOM RoomsListTable.TheFrontDoorLayout	    ;Room above (The Front Door)
+ 103++8E76 0A          >        db (RoomsListTable.TheFrontDoorLayout - RoomsListTable) / 2
+ 104++8E77                  ROOM RoomsListTable.EntranceToHadesLayout	;Room below (Entrance to Hades)
+ 104++8E77 06          >        db (RoomsListTable.EntranceToHadesLayout - RoomsListTable) / 2
+ 105++8E78
+ 106++8E78              TheSecurityGuardUnused:
+ 107++8E78 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
+ 108++8E79
+ 109++8E79              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 110++8E79              TheSecurityGuardEnemy1:
+ 111++8E79 C0 0B 58 28      DEFB $C0, SOLDATO, 88, 40, 104
+ 111++8E7D 68
+ 112++8E7E              TheSecurityGuardEnemy2:
+ 113++8E7E D0 0B 71 2C      DEFB $D0, SOLDATO, 113, 44, 104
+ 113++8E82 68
+ 114++8E83              TheSecurityGuardEnemy3:
+ 115++8E83 E0 0B 88 2C      DEFB $E0, SOLDATO, 136, 44, 104
+ 115++8E87 68
+ 116++8E88              TheSecurityGuardEnemy4:
+ 117++8E88 F0 0B B8 30      DEFB $F0, SOLDATO, 184, 48, 96
+ 117++8E8C 60
+ 118++8E8D              TheSecurityGuardEnemy5:
+ 119++8E8D 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 119++8E91 00
+ 120++8E92              TheSecurityGuardEnemy6:
+ 121++8E92 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 121++8E96 00
+ 122++8E97              TheSecurityGuardEnemy7:
+ 123++8E97 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 123++8E9B 00
+ 124++8E9C              TheSecurityGuardEnemy8:
+ 125++8E9C 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 125++8EA0 00
+ 126++8EA1
+ 127++8EA1              TheSecurityGuardPosWilly:
+ 128++8EA1 C8 68            db 200, 104                     ; Posizione di Willy
+ 129++8EA3
+ 130++8EA3              TheSecurityGuardEnemyColors5_8:
+ 131++8EA3 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/TheSecurityGuard.asm
   15+ 8EA7                  include "rooms/EntranceToHades.asm"             ; ID 06
 # file opened: rooms/EntranceToHades.asm
