@@ -179,7 +179,11 @@ ItemsTable:
     ; Stanza 60 (The Bow)
     ITEM RoomsListTable.TheBowLayout, 26, 8, MAGENTA, 0      
 
+ItemsTableEnd:
     db $FF                        ; Fine tabella
+
+TOTAL_ITEMS: (ItemsTableEnd - ItemsTable) / 5
+
 
 ; -------------------------------------------------------------------
 ; DetermineCurrentRoomID
@@ -1937,6 +1941,14 @@ Items_CheckCollision:
     inc  a
 
     ld   (items_collected), a
+
+    cp   TOTAL_ITEMS
+    jr   c, .objective_not_completed
+    push af
+    ld   a, 1
+    ld   (game_objective_completed), a
+    pop  af
+.objective_not_completed:
 
     ; ---------------------------------------------------------------
     ; Aggiorna il contatore visualizzato a schermo

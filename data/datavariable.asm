@@ -12,7 +12,7 @@ direction:      db $00
 flags:          db $00
 
 collision_active: db $00
-items_collected:  db $00
+items_collected:  db $00  ; Numero di items raccolti durante il gioco (incrementato alla raccolta)
 sprite_shift:     db $00
 room_border_color: db $00
 willy_lives:                   db 7   ; Numero iniziale di vite di Willy (7)

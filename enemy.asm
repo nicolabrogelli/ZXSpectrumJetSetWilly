@@ -67,6 +67,42 @@ Enemy_LoadRoom:
     
     ; 1. Copia Flags (Byte 0), Type (Byte 1), StartX (Byte 2), StartY (Byte 3)
     ld   a, (hl)           ; A = Flags
+    bit  7, a              ; Il nemico è attivo?
+    jr   z, .store_enemy_flags ; Se non è attivo, memorizza 0
+
+    ; Controlla se siamo nella stanza Master Bedroom
+    push hl
+    push bc
+    ld   hl, (room_ptr)
+    ld   bc, MastreBedRoomLayout
+    or   a
+    sbc  hl, bc
+    pop  bc
+    pop  hl
+    jr   nz, .store_enemy_flags ; Non è Master Bedroom
+
+    ; Siamo nella Master Bedroom: controlla se il tipo di nemico (Byte 1) è VECCHIA
+    inc  hl
+    ld   a, (hl)           ; A = Type
+    dec  hl
+    cp   VECCHIA
+    jr   nz, .store_enemy_flags ; Non è VECCHIA
+
+    ; È la Vecchia nella Master Bedroom! Controlla se tutti gli item sono stati raccolti
+    ld   a, (game_objective_completed)
+    or   a
+    jr   nz, .disable_master_bedroom_vecchia
+    ld   a, (items_collected)
+    cp   TOTAL_ITEMS
+    jr   c, .store_enemy_flags ; Meno di TOTAL_ITEMS -> mantieni attiva
+
+.disable_master_bedroom_vecchia:
+    xor  a                 ; Flags = 0 (disattiva il guardiano)
+    jr   .store_enemy_flags_val
+
+.store_enemy_flags:
+    ld   a, (hl)           ; Ricarica Flags originali da ROM
+.store_enemy_flags_val:
     ld   (de), a           ; Offset 0
     inc  hl
     inc  de
