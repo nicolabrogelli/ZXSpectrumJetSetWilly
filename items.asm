@@ -182,7 +182,7 @@ ItemsTable:
 ItemsTableEnd:
     db $FF                        ; Fine tabella
 
-TOTAL_ITEMS: (ItemsTableEnd - ItemsTable) / 5
+TOTAL_ITEMS: EQU (ItemsTableEnd - ItemsTable) / 5
 
 
 ; -------------------------------------------------------------------

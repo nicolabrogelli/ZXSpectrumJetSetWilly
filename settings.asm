@@ -25,7 +25,7 @@ ENABLE_MUSIC EQU 0
 ; 1 = Abilita la morte e il decremento delle vite alla collisione con i guardiani
 ; 0 = Disabilita la morte
     IFNDEF ENABLE_GUARDIAN_COLLISION_DEATH
-ENABLE_GUARDIAN_COLLISION_DEATH EQU 1
+ENABLE_GUARDIAN_COLLISION_DEATH EQU 0
     ENDIF
 
 ; --- Bande colorate di debug per collisione con i guardiani ---
@@ -81,7 +81,7 @@ ENABLE_GAME_OVER_RESTART EQU 1
 ; 1 = Modalità Test rapido (1 secondo reale = 1 minuto di gioco, 50 tick IM2 a 50Hz)
 ; 0 = Modalità Normale (40 secondi reali = 1 minuto di gioco, 2000 tick IM2 a 50Hz)
     IFNDEF ENABLE_FAST_CLOCK_TEST
-ENABLE_FAST_CLOCK_TEST EQU 1
+ENABLE_FAST_CLOCK_TEST EQU 0
     ENDIF
 
     IF ENABLE_FAST_CLOCK_TEST != 0

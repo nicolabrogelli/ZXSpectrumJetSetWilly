@@ -40,7 +40,9 @@ Main:
     call CLS
 
     call SetupIM2
-    call ResetFullGameState
+
+    ; Mostra la schermata iniziale (Title Screen) all'avvio del gioco
+    jp   ShowTitleScreen
 
 LoadRoomAndRestart:
     ld   sp, $fdf0             ; Ripristina lo stack pointer per evitare stack drift/reset
@@ -269,14 +271,85 @@ Main_loop:
     jp   Main_loop
 
 ; -------------------------------------------------------------------
+; ShowTitleScreen
+; Visualizza la schermata iniziale del gioco (Title Screen).
+; Rimane visibile con animazione ciclica finché il giocatore non preme ENTER.
+; Alla pressione di ENTER, inizializza la partita e avvia il primo livello.
+; -------------------------------------------------------------------
+ShowTitleScreen:
+    ; 1. Disegna la schermata iniziale
+    call Gfx_DrawTitleScreen
+
+    ; 2. Attende il rilascio del tasto ENTER (se era già premuto)
+.wait_title_enter_release:
+    halt
+    ld   a, $bf
+    in   a, ($fe)
+    rra
+    jr   nc, .wait_title_enter_release
+
+    ; 3. Ciclo di attesa pressione ENTER con animazione colore
+    ld   c, 0                  ; C = contatore frame per animazione colore
+.title_loop:
+    halt
+
+    ; Animazione ciclo colore su "PRESS ENTER TO START" (Riga 12, Col 0..31, $5980)
+    inc  c
+    ld   a, c
+    srl  a
+    srl  a
+    srl  a                     ; Cambia colore ogni 8 frame (~160ms)
+    and  7
+    ld   e, a
+    ld   d, 0
+    ld   hl, title_color_table
+    add  hl, de
+    ld   a, (hl)               ; A = nuovo colore
+    ld   hl, $5980             ; Riga 12 ($5800 + 12*32 = $5980)
+    ld   b, 32
+.color_title_loop:
+    ld   (hl), a
+    inc  hl
+    djnz .color_title_loop
+
+    ; Controlla se il tasto ENTER è premuto (Porta $BFFE, Bit 0)
+    ld   a, $bf
+    in   a, ($fe)
+    rra
+    jr   c, .title_loop        ; Carry = 1 (non premuto) -> continua loop
+
+    ; 4. Attende il rilascio del tasto ENTER per evitare doppi scatti
+.wait_title_enter_release_after:
+    halt
+    ld   a, $bf
+    in   a, ($fe)
+    rra
+    jr   nc, .wait_title_enter_release_after
+
+    ; 5. Pulisce completamente l'intero schermo e gli attributi (cancella totalmente il Title Screen)
+    xor  a
+    out  ($fe), a              ; Bordo a nero
+    ld   hl, ATTR_P
+    ld   (hl), a               ; Paper/Ink = 0 (Nero)
+    call CLS                   ; Pulisce integralmente tutta la memoria pixel (6144B) e attributi (768B)
+    ld   (hl), $07             ; Ripristina ATTR_P a $07
+    ld   a, $07
+    ld   (ATTR_T), a           ; Ripristina ATTR_T a $07
+
+    ; 6. Ripristina integralmente lo stato iniziale della partita (vite, item, stanze, tempo)
+    call ResetFullGameState
+
+    ; 7. Avvia il gioco dal primo livello (Stanza 0: The Off Licence)
+    jp   LoadRoomAndRestart
+
+; -------------------------------------------------------------------
 ; TriggerGameOver
 ; Scatena la schermata di Game Over per la stanza corrente.
 ; - Pulisce gli elementi di gioco della stanza (piattaforme, nemici, Willy, item).
 ; - Esegue l'animazione del Piede (discesa fluida ed atterraggio sotto BotteSprite).
 ; - Fa comparire la scritta GAME OVER al centro dello schermo dopo la pausa ed anima i suoi colori.
 ; - Mantiene visibile il Nome della Stanza corrente e la Riga di Stato (Item ed Orario).
-; - Premendo ENTER, ripristina integralmente la partita ed avvia la nuova
-;   sessione dal primo livello (Stanza 0: The Off Licence) alle 07:00 AM.
+; - Premendo ENTER, riporta il giocatore alla schermata iniziale (Title Screen).
 ; -------------------------------------------------------------------
 TriggerGameOver:
     ; 1. Disegna la schermata di Game Over ed esegue l'animazione del Piede e della scritta GAME OVER
@@ -319,11 +392,16 @@ TriggerGameOver:
     rra
     jr   c, .wait_enter_press
 
-    ; 4. Ripristina integralmente lo stato iniziale della partita (vite, item, stanze, tempo)
-    call ResetFullGameState
+    ; 4. Attende il rilascio del tasto ENTER per evitare doppi scatti
+.wait_enter_release_after:
+    halt
+    ld   a, $bf
+    in   a, ($fe)
+    rra
+    jr   nc, .wait_enter_release_after
 
-    ; 5. Avvia la nuova partita dal primo livello (Stanza 0: The Off Licence)
-    jp   LoadRoomAndRestart
+    ; 5. Ritorna alla schermata iniziale (Title Screen)
+    jp   ShowTitleScreen
 
 ; -------------------------------------------------------------------
 ; ResetFullGameState
@@ -331,11 +409,15 @@ TriggerGameOver:
 ; per l'avvio di una nuova partita dopo il Game Over.
 ; -------------------------------------------------------------------
 ResetFullGameState:
-    ; Ripristina gli attributi schermo di default (Inchiostro Bianco, Sfondo Nero)
+    ; Pulisce completamente lo schermo e ripristina gli attributi di default
+    xor  a
+    out  ($fe), a              ; Bordo a nero
     ld   hl, ATTR_P
-    ld   (hl), $07
+    ld   (hl), a               ; Paper/Ink = 0 (Nero)
+    call CLS                   ; Pulisce tutta la memoria pixel (6144B) e attributi (768B)
+    ld   (hl), $07             ; Ripristina ATTR_P a $07 (Inchiostro Bianco, Sfondo Nero)
     ld   a, $07
-    ld   (ATTR_T), a
+    ld   (ATTR_T), a           ; Ripristina ATTR_T a $07
 
     ; Ripristina il numero di vite iniziali
     ld   a, INITIAL_LIVES

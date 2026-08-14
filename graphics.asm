@@ -797,6 +797,313 @@ Gfx_Clear2Scanlines_Black:
     pop  bc
     ret
 
+; ===================================================================
+; TITLE SCREEN DATA & ROUTINE
+; ===================================================================
+
+title_banner_1:
+    db "   * * * JET SET WILLY * * *    "
+title_banner_2:
+    db "   THE SPECTRUM 48K ADVENTURE   "
+title_sep_line:
+    db "--------------------------------"
+title_goal_str:
+    db "  COLLECT ALL ITEMS BEFORE BED  "
+title_press_enter:
+    db " > >  PRESS  ENTER  TO START < <"
+title_controls_hdr:
+    db "           CONTROLS:            "
+title_ctrl_left:
+    db "    O : LEFT        P : RIGHT   "
+title_ctrl_jump:
+    db "    Z : JUMP    ENTER : START   "
+title_copyright:
+    ;db " (C) 2026 SOFTWARE PROJECTS LTD "
+    db "   2026 8BIT SOFTWARE PROJECT   "
+
+title_color_table:
+    db $46, $47, $45, $44, $46, $42, $43, $47   ; Tabella ciclica colori Bright per "PRESS ENTER TO START"
+
+; -------------------------------------------------------------------
+; Gfx_DrawTitleScreen
+; Disegna la schermata iniziale (Title Screen):
+; - Bordo nero e pulizia schermo.
+; - Titolo "JET SET WILLY" e sottotitolo.
+; - Separatori grafici.
+; - Sprite decorativi (Willy a sinistra, Maria a destra).
+; - Obiettivo di gioco.
+; - Messaggio "PRESS ENTER TO START".
+; - Riepilogo controlli (O, P, Z, ENTER).
+; - Copyright.
+; (Tutte le righe sono comprese tra 0 e 20 per evitare errori "Out of screen" della ROM)
+; -------------------------------------------------------------------
+Gfx_DrawTitleScreen:
+    push af
+    push bc
+    push de
+    push hl
+    push ix
+
+    ; 1. Bordo hardware e schermo a nero
+    xor  a
+    out  ($fe), a              ; Bordo a nero
+    ld   hl, ATTR_P
+    ld   (hl), a               ; Paper/Ink = 0 (Nero)
+    call CLS                   ; Pulisce tutti i pixel e gli attributi a nero
+    ld   (hl), $07             ; Ripristina ATTR_P a $07
+    ld   a, $07
+    ld   (ATTR_T), a           ; Ripristina ATTR_T a $07
+
+    ; 2. Stampa riga 1: Titolo principale (Riga 1, Colonna 0)
+    ld   a, 22
+    rst  $10
+    ld   a, 1
+    rst  $10
+    ld   a, 0
+    rst  $10
+    ld   hl, title_banner_1
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; Imposta attributi riga 1 a Giallo Brillante ($5820)
+    ld   hl, $5820
+    ld   b, 32
+    ld   a, YELLOW | $40
+.attr_r1:
+    ld   (hl), a
+    inc  hl
+    djnz .attr_r1
+
+    ; 3. Stampa riga 3: Sottotitolo (Riga 3, Colonna 0)
+    ld   a, 22
+    rst  $10
+    ld   a, 3
+    rst  $10
+    ld   a, 0
+    rst  $10
+    ld   hl, title_banner_2
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; Imposta attributi riga 3 a Ciano Brillante ($5860)
+    ld   hl, $5860
+    ld   b, 32
+    ld   a, CYAN | $40
+.attr_r3:
+    ld   (hl), a
+    inc  hl
+    djnz .attr_r3
+
+    ; 4. Stampa riga 4: Separatore (Riga 4, Colonna 0)
+    ld   a, 22
+    rst  $10
+    ld   a, 4
+    rst  $10
+    ld   a, 0
+    rst  $10
+    ld   hl, title_sep_line
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; Imposta attributi riga 4 a Blu ($5880)
+    ld   hl, $5880
+    ld   b, 32
+    ld   a, BLUE
+.attr_r4:
+    ld   (hl), a
+    inc  hl
+    djnz .attr_r4
+
+    ; 5. Disegna gli sprite al centro dello schermo (Y = 56, corrispondente a righe 7-8):
+    ; 5a. Willy a X = 104, Y = 56 (B = 56, C = 104)
+    ld   bc, $3868             ; B = Y = 56 ($38), C = X = 104 ($68)
+    ld   ix, Willy + (0 * 8)   ; HEAD_GRAPH_RIGHT
+    call Gfx_DrawPixelSprite8x8
+
+    ld   bc, $4068             ; B = Y = 64 ($40), C = X = 104 ($68)
+    ld   ix, Willy + (1 * 8)   ; Body right frame 0
+    call Gfx_DrawPixelSprite8x8
+
+    ld   bc, $3868
+    ld   a, WHITE | $40
+    call Gfx_SetEnemyColorAttributes
+
+    ; 5b. Maria / VecchiaSprite a X = 136, Y = 56 (B = 56, C = 136)
+    ld   bc, $3888             ; B = Y = 56 ($38), C = X = 136 ($88)
+    ld   ix, VecchiaSprite     ; Frame 1
+    call Gfx_DrawPixelSprite16x16
+
+    ld   bc, $3888
+    ld   a, YELLOW | $40
+    call Gfx_SetEnemyColorAttributes
+
+    ; 6. Stampa riga 10: Obiettivo (Riga 10, Colonna 0)
+    ld   a, 22
+    rst  $10
+    ld   a, 10
+    rst  $10
+    ld   a, 0
+    rst  $10
+    ld   hl, title_goal_str
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; Imposta attributi riga 10 a Verde Brillante ($5940)
+    ld   hl, $5940
+    ld   b, 32
+    ld   a, GREEN | $40
+.attr_r10:
+    ld   (hl), a
+    inc  hl
+    djnz .attr_r10
+
+    ; 7. Stampa riga 12: "PRESS ENTER TO START" (Riga 12, Colonna 0)
+    ld   a, 22
+    rst  $10
+    ld   a, 12
+    rst  $10
+    ld   a, 0
+    rst  $10
+    ld   hl, title_press_enter
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; Imposta attributi iniziali riga 12 a Giallo Brillante ($5980)
+    ld   hl, $5980
+    ld   b, 32
+    ld   a, YELLOW | $40
+.attr_r12:
+    ld   (hl), a
+    inc  hl
+    djnz .attr_r12
+
+    ; 8. Stampa riga 14: Separatore (Riga 14, Colonna 0)
+    ld   a, 22
+    rst  $10
+    ld   a, 14
+    rst  $10
+    ld   a, 0
+    rst  $10
+    ld   hl, title_sep_line
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; Imposta attributi riga 14 a Blu ($59C0)
+    ld   hl, $59c0
+    ld   b, 32
+    ld   a, BLUE
+.attr_r14:
+    ld   (hl), a
+    inc  hl
+    djnz .attr_r14
+
+    ; 9. Stampa riga 15: Intestazione Controlli (Riga 15, Colonna 0)
+    ld   a, 22
+    rst  $10
+    ld   a, 15
+    rst  $10
+    ld   a, 0
+    rst  $10
+    ld   hl, title_controls_hdr
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; Imposta attributi riga 15 a Bianco Brillante ($59E0)
+    ld   hl, $59e0
+    ld   b, 32
+    ld   a, WHITE | $40
+.attr_r15:
+    ld   (hl), a
+    inc  hl
+    djnz .attr_r15
+
+    ; 10. Stampa riga 16: Controlli Sinistra / Destra (Riga 16, Colonna 0)
+    ld   a, 22
+    rst  $10
+    ld   a, 16
+    rst  $10
+    ld   a, 0
+    rst  $10
+    ld   hl, title_ctrl_left
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; Imposta attributi riga 16 a Giallo ($5A00)
+    ld   hl, $5a00
+    ld   b, 32
+    ld   a, YELLOW
+.attr_r16:
+    ld   (hl), a
+    inc  hl
+    djnz .attr_r16
+
+    ; 11. Stampa riga 17: Controlli Salto / Start (Riga 17, Colonna 0)
+    ld   a, 22
+    rst  $10
+    ld   a, 17
+    rst  $10
+    ld   a, 0
+    rst  $10
+    ld   hl, title_ctrl_jump
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; Imposta attributi riga 17 a Giallo ($5A20)
+    ld   hl, $5a20
+    ld   b, 32
+    ld   a, YELLOW
+.attr_r17:
+    ld   (hl), a
+    inc  hl
+    djnz .attr_r17
+
+    ; 12. Stampa riga 19: Separatore (Riga 19, Colonna 0)
+    ld   a, 22
+    rst  $10
+    ld   a, 19
+    rst  $10
+    ld   a, 0
+    rst  $10
+    ld   hl, title_sep_line
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; Imposta attributi riga 19 a Blu ($5A60)
+    ld   hl, $5a60
+    ld   b, 32
+    ld   a, BLUE
+.attr_r19:
+    ld   (hl), a
+    inc  hl
+    djnz .attr_r19
+
+    ; 13. Stampa riga 20: Copyright (Riga 20, Colonna 0)
+    ld   a, 22
+    rst  $10
+    ld   a, 20
+    rst  $10
+    ld   a, 0
+    rst  $10
+    ld   hl, title_copyright
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; Imposta attributi riga 20 a Ciano ($5A80)
+    ld   hl, $5a80
+    ld   b, 32
+    ld   a, CYAN
+.attr_r20:
+    ld   (hl), a
+    inc  hl
+    djnz .attr_r20
+
+    pop  ix
+    pop  hl
+    pop  de
+    pop  bc
+    pop  af
+    ret
+
 game_over_str:
     db "GAME OVER"
 
