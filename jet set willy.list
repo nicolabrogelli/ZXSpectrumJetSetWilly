@@ -12688,12 +12688,12 @@
   64++985A C8
   65++985B
   66++985B              RescueEsmereldaRamp:                            ; Ramp Solid
-  67++985B 17 00 00 00      DEFB 23,0,0,0,0,0,0,0,0              ; Ramp Solid
+  67++985B 17 00 00 00      DEFB 23,0,0,0,0,0,0,0,0                     ; Ramp Solid
   67++985F 00 00 00 00
   67++9863 00
   68++9864
   69++9864              RescueEsmereldaConveyor:                        ; Conveyor Solid
-  70++9864 16 F1 AA F8      DEFB 22,241,170,248,170,0,238,0,187                      ; Conveyor Solid
+  70++9864 16 F1 AA F8      DEFB 22,241,170,248,170,0,238,0,187         ; Conveyor Solid
   70++9868 AA 00 EE 00
   70++986C BB
   71++986D
@@ -12981,8 +12981,8 @@
   40++9A0F 00 00 00 00
   41++9A13 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
   41++9A17 00 00 00 00
-  42++9A1B AA 00 00 00  	DEFB 170,0,0,0,0,0,2,170
-  42++9A1F 00 00 02 AA
+  42++9A1B AA 00 28 28  	DEFB 170,0,40,40,0,170,2 ,170
+  42++9A1F 00 AA 02 AA
   43++9A23 AA 40 00 00  	DEFB 170,64,0,0,0,0,2,170
   43++9A27 00 00 02 AA
   44++9A2B AA 40 00 00  	DEFB 170,64,0,0,0,0,2,170
@@ -13032,13 +13032,13 @@
   66++9A9F 11
   67++9AA0
   68++9AA0              WeMustPerformQuirkafleegConveyor:                   ; Conveyor Solid
-  69++9AA0 FF 00 00 00      DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
-  69++9AA4 00 00 00 00
-  69++9AA8 00
+  69++9AA0 42 28 AA 0A      DEFB 66,40,170,10,0,85,85,85,255                       ; Conveyor Solid
+  69++9AA4 00 55 55 55
+  69++9AA8 FF
   70++9AA9
   71++9AA9              WeMustPerformQuirkafleegConveyorData:
   72++9AA9 00               DEFB 0
-  73++9AAA 00 00            DEFW 0
+  73++9AAA 28 5F            DEFW 24360
   74++9AAC 00               DEFB 0
   75++9AAD
   76++9AAD              WeMustPerformQuirkafleegRampData:
@@ -13057,10 +13057,10 @@
   88++9ABA 5E 5E E7 66
   89++9ABE
   90++9ABE              WeMustPerformQuirkafleegDirection:
-  91++9ABE              	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout			;Room to the left (We must perform a Quirkafleeg)
-  91++9ABE 10          >        db (RoomsListTable.WeMustPerformQuirkafleegLayout - RoomsListTable) / 2
-  92++9ABF              	ROOM RoomsListTable.RescueEsmereldaLayout					;Room to the right (Rescue Esmerelda)
-  92++9ABF 0E          >        db (RoomsListTable.RescueEsmereldaLayout - RoomsListTable) / 2
+  91++9ABE              	ROOM RoomsListTable.UpOnTheBattlementsLayout			;Room to the left (We must perform a Quirkafleeg)
+  91++9ABE 11          >        db (RoomsListTable.UpOnTheBattlementsLayout - RoomsListTable) / 2
+  92++9ABF              	ROOM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout					;Room to the right (Rescue Esmerelda)
+  92++9ABF 0F          >        db (RoomsListTable.IAmSureIHaveSeenThiBeforeLayout - RoomsListTable) / 2
   93++9AC0 FF           	DEFB BLOCK				                                    ;Room above (The Off Licence)
   94++9AC1 FF           	DEFB BLOCK				                                    ;Room below (The Off Licence)
   95++9AC2

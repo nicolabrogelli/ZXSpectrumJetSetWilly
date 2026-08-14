@@ -39,7 +39,7 @@ WeMustPerformQuirkafleegLayout:
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
-	DEFB 170,0,0,0,0,0,2,170
+	DEFB 170,0,40,40,0,170,2 ,170
 	DEFB 170,64,0,0,0,0,2,170
 	DEFB 170,64,0,0,0,0,2,170
 	DEFB 170,64,0,0,0,0,2,170
@@ -66,11 +66,11 @@ WeMustPerformQuirkafleegRamp:                       ; Ramp Solid
     DEFB 7,128,64,32,48,168,100,34,17              ; Ramp Solid
 
 WeMustPerformQuirkafleegConveyor:                   ; Conveyor Solid
-    DEFB 255,0,0,0,0,0,0,0,0                      ; Conveyor Solid
+    DEFB 66,40,170,10,0,85,85,85,255                       ; Conveyor Solid
 
 WeMustPerformQuirkafleegConveyorData:
     DEFB 0
-    DEFW 0
+    DEFW 24360
     DEFB 0
 
 WeMustPerformQuirkafleegRampData:
@@ -88,8 +88,8 @@ WeMustPerformQuirkafleegItem:
     DEFB 24,36,24,44,94,94,231,102
 
 WeMustPerformQuirkafleegDirection:
-	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout			;Room to the left (We must perform a Quirkafleeg)
-	ROOM RoomsListTable.RescueEsmereldaLayout					;Room to the right (Rescue Esmerelda)
+	ROOM RoomsListTable.UpOnTheBattlementsLayout			;Room to the left (We must perform a Quirkafleeg)
+	ROOM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout					;Room to the right (Rescue Esmerelda)
 	DEFB BLOCK				                                    ;Room above (The Off Licence)
 	DEFB BLOCK				                                    ;Room below (The Off Licence)
 

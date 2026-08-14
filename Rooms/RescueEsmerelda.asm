@@ -64,10 +64,10 @@ RescueEsmereldaNasty:
     DEFB 85,209,226,196,200,209,226,196,200  ; Nastry
 
 RescueEsmereldaRamp:                            ; Ramp Solid
-    DEFB 23,0,0,0,0,0,0,0,0              ; Ramp Solid
+    DEFB 23,0,0,0,0,0,0,0,0                     ; Ramp Solid
 
 RescueEsmereldaConveyor:                        ; Conveyor Solid
-    DEFB 22,241,170,248,170,0,238,0,187                      ; Conveyor Solid
+    DEFB 22,241,170,248,170,0,238,0,187         ; Conveyor Solid
 
 RescueEsmereldaConveyorData:
     DEFB 1
