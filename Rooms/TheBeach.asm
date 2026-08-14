@@ -124,7 +124,7 @@ TheBeachEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheBeachPosWilly:
-    db 100, 70                     ; Posizione di Willy
+    db 100, 60                     ; Posizione di Willy
     
 TheBeachEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

@@ -17341,44 +17341,44 @@
  100++B58E 29          >        db (RoomsListTable.TheAtticLayout - RoomsListTable) / 2
  101++B58F              	ROOM RoomsListTable.EmergencyGeneratorLayout		;Room to the right (Emergency Generator)
  101++B58F 27          >        db (RoomsListTable.EmergencyGeneratorLayout - RoomsListTable) / 2
- 102++B590              	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout		;Room above (We must perform a Quirkafleeg)
- 102++B590 10          >        db (RoomsListTable.WeMustPerformQuirkafleegLayout - RoomsListTable) / 2
- 103++B591 FF           	DEFB BLOCK	;Room below (The Off Licence)
- 104++B592
- 105++B592              DrJonesWillNeverBelieveThisUnused:
- 106++B592 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
- 107++B593
- 108++B593              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
- 109++B593              DrJonesWillNeverBelieveThisEnemy1:
- 110++B593 C0 07 50 38      DEFB $C0, SCIMMIA, 80, 56, 96
- 110++B597 60
- 111++B598              DrJonesWillNeverBelieveThisEnemy2:
- 112++B598 D0 0F 90 40      DEFB $D0, FACCIA_PALLA, 144, 64, 104
- 112++B59C 68
- 113++B59D              DrJonesWillNeverBelieveThisEnemy3:
- 114++B59D 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 114++B5A1 00
- 115++B5A2              DrJonesWillNeverBelieveThisEnemy4:
- 116++B5A2 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 116++B5A6 00
- 117++B5A7              DrJonesWillNeverBelieveThisEnemy5:
- 118++B5A7 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 118++B5AB 00
- 119++B5AC              DrJonesWillNeverBelieveThisEnemy6:
- 120++B5AC 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 120++B5B0 00
- 121++B5B1              DrJonesWillNeverBelieveThisEnemy7:
- 122++B5B1 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 122++B5B5 00
- 123++B5B6              DrJonesWillNeverBelieveThisEnemy8:
- 124++B5B6 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 124++B5BA 00
- 125++B5BB
- 126++B5BB              DrJonesWillNeverBelieveThisPosWilly:
- 127++B5BB 14 68            db 20, 104                     ; Posizione sicura di Willy sul pavimento
- 128++B5BD
- 129++B5BD              DrJonesWillNeverBelieveThisEnemyColors5_8:
- 130++B5BD 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
+ 102++B590              	;ROOM RoomsListTable.WeMustPerformQuirkafleegLayout		;Room above (We must perform a Quirkafleeg)
+ 103++B590 FF           	DEFB BLOCK
+ 104++B591 FF               DEFB BLOCK	;Room below (The Off Licence)
+ 105++B592
+ 106++B592              DrJonesWillNeverBelieveThisUnused:
+ 107++B592 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
+ 108++B593
+ 109++B593              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
+ 110++B593              DrJonesWillNeverBelieveThisEnemy1:
+ 111++B593 C0 07 50 38      DEFB $C0, SCIMMIA, 80, 56, 96
+ 111++B597 60
+ 112++B598              DrJonesWillNeverBelieveThisEnemy2:
+ 113++B598 D0 0F 90 40      DEFB $D0, FACCIA_PALLA, 144, 64, 104
+ 113++B59C 68
+ 114++B59D              DrJonesWillNeverBelieveThisEnemy3:
+ 115++B59D 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 115++B5A1 00
+ 116++B5A2              DrJonesWillNeverBelieveThisEnemy4:
+ 117++B5A2 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 117++B5A6 00
+ 118++B5A7              DrJonesWillNeverBelieveThisEnemy5:
+ 119++B5A7 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 119++B5AB 00
+ 120++B5AC              DrJonesWillNeverBelieveThisEnemy6:
+ 121++B5AC 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 121++B5B0 00
+ 122++B5B1              DrJonesWillNeverBelieveThisEnemy7:
+ 123++B5B1 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 123++B5B5 00
+ 124++B5B6              DrJonesWillNeverBelieveThisEnemy8:
+ 125++B5B6 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 125++B5BA 00
+ 126++B5BB
+ 127++B5BB              DrJonesWillNeverBelieveThisPosWilly:
+ 128++B5BB 14 68            db 20, 104                     ; Posizione sicura di Willy sul pavimento
+ 129++B5BD
+ 130++B5BD              DrJonesWillNeverBelieveThisEnemyColors5_8:
+ 131++B5BD 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
 # file closed: rooms/DrJonesWillNeverBelieveThis.asm
   50+ B5C1                  include "rooms/TheAttic.asm"                    ; ID 41
 # file opened: rooms/TheAttic.asm
@@ -20457,7 +20457,7 @@
   31++C8BF
   32++C8BF              ; Room layout for Room  (TheBeach)
   33++C8BF              TheBeachLayout:
-  34++C8BF 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0	;Room layout
+  34++C8BF 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0	;;Room layout
   34++C8C3 00 00 00 00
   35++C8C7 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
   35++C8CB 00 00 00 00
@@ -20597,7 +20597,7 @@
  124++C9D6 00
  125++C9D7
  126++C9D7              TheBeachPosWilly:
- 127++C9D7 64 46            db 100, 70                     ; Posizione di Willy
+ 127++C9D7 64 3C            db 100, 60                     ; Posizione di Willy
  128++C9D9
  129++C9D9              TheBeachEnemyColors5_8:
  130++C9D9 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

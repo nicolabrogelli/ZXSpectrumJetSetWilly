@@ -99,8 +99,9 @@ DrJonesWillNeverBelieveThisItem:
 DrJonesWillNeverBelieveThisDirection:
 	ROOM RoomsListTable.TheAtticLayout		;Room to the left (The Attic)
 	ROOM RoomsListTable.EmergencyGeneratorLayout		;Room to the right (Emergency Generator)
-	ROOM RoomsListTable.WeMustPerformQuirkafleegLayout		;Room above (We must perform a Quirkafleeg)
-	DEFB BLOCK	;Room below (The Off Licence)
+	;ROOM RoomsListTable.WeMustPerformQuirkafleegLayout		;Room above (We must perform a Quirkafleeg)
+	DEFB BLOCK
+    DEFB BLOCK	;Room below (The Off Licence)
 
 DrJonesWillNeverBelieveThisUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
