@@ -347,7 +347,7 @@ CheckEnemyWillyOverlap:
     ret
 
 ; -------------------------------------------------------------------
-; Aggiorna e disegna i nemici in modo atomico (cancella + disegna per singolo nemico)
+; Aggiorna e disegna i nemici in due passate (prima cancella tutti i vecchi, poi disegna tutti i nuovi)
 ; -------------------------------------------------------------------
 Enemy_EraseRoom:
 Enemy_DrawRoom:
@@ -357,21 +357,22 @@ Enemy_RenderRoom:
     push bc
     push ix
     
+    ; ---------------------------------------------------------------
+    ; PASSATA 1: Cancella la vecchia posizione di tutti i nemici che si sono mossi o aggiornati
+    ; ---------------------------------------------------------------
     ld   ix, ActiveEnemies
     ld   b, 8              ; 8 slot
-.render_loop:
+.erase_loop:
     ld   a, (ix+0)         ; Flags
     and  $80               ; Active?
-    jr   z, .next_render
+    jr   z, .next_erase
     
-    push bc                ; Salva contatore ciclo
-    
-    ; 1. Se Old X == $FF (nuova stanza), salta cancellazione e disegna direttamente
+    ; Se Old X == $FF (nuova stanza o non ancora disegnato), non c'è nulla da cancellare
     ld   a, (ix+8)         ; Old X
     cp   $FF
-    jr   z, .do_draw_slot
+    jr   z, .next_erase
     
-    ; 2. Controlla se la posizione è cambiata o se l'animazione si è aggiornata
+    ; Controlla se la posizione è cambiata o se l'animazione/stato si è aggiornato
     ld   a, (ix+8)         ; Old X
     cp   (ix+2)            ; Current X
     jr   nz, .do_erase_slot
@@ -379,12 +380,13 @@ Enemy_RenderRoom:
     cp   (ix+3)            ; Current Y
     jr   nz, .do_erase_slot
     
-    ; Posizione identica. Controlla se l'aggiornamento nemici ha modificato lo stato
     ld   a, (enemy_was_updated)
     or   a
-    jr   z, .skip_slot     ; Nessuna modifica in questo frame, salta!
+    jr   z, .next_erase    ; Nessuna modifica in questo frame, non cancellare!
 
 .do_erase_slot:
+    push bc                ; Salva contatore ciclo
+    
     ; Controlla se la VECCHIA posizione del guardiano sovrascrive Willy
     ld   c, (ix+8)         ; C = Old X
     ld   b, (ix+9)         ; B = Old Y
@@ -398,8 +400,45 @@ Enemy_RenderRoom:
     ld   b, (ix+9)         ; B = Old Y
     call Gfx_RestoreEnemyColorAttributes
 
+    pop  bc
+
+.next_erase:
+    ld   de, 11
+    add  ix, de            ; Prossimo slot (11 byte)
+    dec  b
+    jr   nz, .erase_loop
+
+    ; ---------------------------------------------------------------
+    ; PASSATA 2: Disegna la nuova posizione di tutti i nemici
+    ; ---------------------------------------------------------------
+    ld   ix, ActiveEnemies
+    ld   b, 8              ; 8 slot
+.draw_loop:
+    ld   a, (ix+0)         ; Flags
+    and  $80               ; Active?
+    jr   z, .next_draw
+    
+    ; Se Old X == $FF, deve essere disegnato (prima volta)
+    ld   a, (ix+8)         ; Old X
+    cp   $FF
+    jr   z, .do_draw_slot
+    
+    ; Controlla se si è mosso o se l'animazione/stato si è aggiornato
+    ld   a, (ix+8)         ; Old X
+    cp   (ix+2)            ; Current X
+    jr   nz, .do_draw_slot
+    ld   a, (ix+9)         ; Old Y
+    cp   (ix+3)            ; Current Y
+    jr   nz, .do_draw_slot
+    
+    ld   a, (enemy_was_updated)
+    or   a
+    jr   z, .next_draw     ; Nessuna modifica in questo frame, non ridisegnare!
+
 .do_draw_slot:
-    ; Ridisegna IMMEDIATAMENTE il nemico nella NUOVA posizione
+    push bc                ; Salva contatore ciclo
+    
+    ; Disegna il nemico nella NUOVA posizione (applica anche gli attributi colore)
     call Enemy_DrawSingleSlot
     
     ; Controlla se la NUOVA posizione del guardiano si sovrappone a Willy
@@ -413,15 +452,14 @@ Enemy_RenderRoom:
     ld   a, (ix+3)
     ld   (ix+9), a
 
-.skip_slot:
     pop  bc
-    
-.next_render:
+
+.next_draw:
     ld   de, 11
     add  ix, de            ; Prossimo slot (11 byte)
     dec  b
-    jr   nz, .render_loop
-    
+    jr   nz, .draw_loop
+
     xor  a
     ld   (enemy_was_updated), a
     

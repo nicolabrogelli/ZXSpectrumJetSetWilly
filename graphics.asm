@@ -360,8 +360,12 @@ Gfx_ErasePixelSprite8x8:
     and  $f8
     ld   e, a          ; E = X del primo byte schermo in pixel
     
+    ld   a, c
+    and  7
+    jr   z, .erase_1byte
+    
     ld   c, 8          ; 8 linee
-.erase_loop:
+.erase_loop_2:
     ld   a, e
     call Gfx_GetBackgroundByte
     ld   (hl), a
@@ -375,7 +379,24 @@ Gfx_ErasePixelSprite8x8:
     call Gfx_IncScreenLine
     inc  d
     dec  c
-    jr   nz, .erase_loop
+    jr   nz, .erase_loop_2
+    
+    pop  hl
+    pop  de
+    pop  bc
+    ret
+
+.erase_1byte:
+    ld   c, 8          ; 8 linee
+.erase_loop_1:
+    ld   a, e
+    call Gfx_GetBackgroundByte
+    ld   (hl), a
+    
+    call Gfx_IncScreenLine
+    inc  d
+    dec  c
+    jr   nz, .erase_loop_1
     
     pop  hl
     pop  de
@@ -466,7 +487,7 @@ Gfx_DrawPixelSprite16x16:
     ret
 
 ; -------------------------------------------------------------------
-; Cancella uno sprite 16x16 ripristinando lo sfondo statico su 3 colonne
+; Cancella uno sprite 16x16 ripristinando lo sfondo statico su 2 o 3 colonne
 ; Input: C = X, B = Y
 ; -------------------------------------------------------------------
 Gfx_ErasePixelSprite16x16:
@@ -483,8 +504,12 @@ Gfx_ErasePixelSprite16x16:
     and  $f8
     ld   e, a          ; E = X del primo byte schermo in pixel
     
+    ld   a, c
+    and  7
+    jr   z, .erase_2bytes
+    
     ld   c, 16          ; 16 linee
-.erase_loop:
+.erase_loop_3:
     ld   a, e
     call Gfx_GetBackgroundByte
     ld   (hl), a
@@ -504,7 +529,30 @@ Gfx_ErasePixelSprite16x16:
     call Gfx_IncScreenLine
     inc  d
     dec  c
-    jr   nz, .erase_loop
+    jr   nz, .erase_loop_3
+    
+    pop  hl
+    pop  de
+    pop  bc
+    ret
+
+.erase_2bytes:
+    ld   c, 16          ; 16 linee
+.erase_loop_2:
+    ld   a, e
+    call Gfx_GetBackgroundByte
+    ld   (hl), a
+    inc  hl
+    ld   a, e
+    add  a, 8
+    call Gfx_GetBackgroundByte
+    ld   (hl), a
+    dec  hl
+    
+    call Gfx_IncScreenLine
+    inc  d
+    dec  c
+    jr   nz, .erase_loop_2
     
     pop  hl
     pop  de
