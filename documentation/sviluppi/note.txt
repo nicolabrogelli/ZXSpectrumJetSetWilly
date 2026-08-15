@@ -1,0 +1,21 @@
+STANZE: The Off Licience                (00),
+        The Bridge                      (01),
+        At the Foot of the Mega Tree    (03),
+        Inside the Mega Trunk           (08),
+        On A Branch Over The Drive      (09),
+        Tree Top                        (12),
+
+
+STANZA Under The Mega Tree              (02):
+    a. Si riesce a reaccogliere l'item ma risulta difficile tornare verso la stanza ** At the Foot of the Mega Tree **
+
+STANZA CUCKOO'S NEXT                    (07):
+    a. Risulta diffice raccoglier l'items, basterebbe allungare il percorso dell'UOVO per semplificare il livello
+
+STANZA Out on a limb                    (13):
+    a. Risulta quasi impossibile raccogliere gli items in quanto l'UCCELLO viola ha un range di escursione troppo piccolo e ci da poca libertà di manovra.
+    b. l'item verde risulta molto diffice da raggiungere
+
+STANZA 14:  
+    a. Sono presenti delle "Rampe" ma fatte con le Tile Floor, quindi la gestione è diversa dal consueto. Verificare un video per vedere il comportamento di Willy.
+    b. Nella stanza sono presenti due items ma sono su un nastro trasportatore che scorre in senso opposto quindi non risultano raggiungibili.

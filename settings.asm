@@ -25,7 +25,7 @@ ENABLE_MUSIC EQU 0
 ; 1 = Abilita la morte e il decremento delle vite alla collisione con i guardiani
 ; 0 = Disabilita la morte
     IFNDEF ENABLE_GUARDIAN_COLLISION_DEATH
-ENABLE_GUARDIAN_COLLISION_DEATH EQU 0
+ENABLE_GUARDIAN_COLLISION_DEATH EQU 1
     ENDIF
 
 ; --- Bande colorate di debug per collisione con i guardiani ---

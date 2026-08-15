@@ -5,10 +5,10 @@ settings.asm|14||0|-1|0|D|ENABLE_EFFECTS
 settings.asm|14||0|-1|0|L|,ENABLE_EFFECTS,,+equ,+used
 settings.asm|21||0|-1|0|D|ENABLE_MUSIC
 settings.asm|21||0|-1|0|L|,ENABLE_MUSIC,,+equ,+used
-settings.asm|28||0|-1|0|D|ENABLE_GUARDIAN_COLLISION_DEATH
-settings.asm|28||0|-1|0|L|,ENABLE_GUARDIAN_COLLISION_DEATH,,+equ,+used
+settings.asm|28||0|-1|1|D|ENABLE_GUARDIAN_COLLISION_DEATH
+settings.asm|28||0|-1|1|L|,ENABLE_GUARDIAN_COLLISION_DEATH,,+equ,+used
 settings.asm|35||0|-1|1|D|ENABLE_GUARDIAN_DEBUG_BARS
-settings.asm|35||0|-1|1|L|,ENABLE_GUARDIAN_DEBUG_BARS,,+equ,+used
+settings.asm|35||0|-1|1|L|,ENABLE_GUARDIAN_DEBUG_BARS,,+equ
 settings.asm|42||0|-1|1|D|ENABLE_NASTY_COLLISION_DEATH
 settings.asm|42||0|-1|1|L|,ENABLE_NASTY_COLLISION_DEATH,,+equ,+used
 settings.asm|49||0|-1|0|D|ENABLE_ANIMATE_LIVES
@@ -6728,7 +6728,7 @@ jet set willy.asm|153||0|2|34523|T|
 jet set willy.asm|162||0|2|34525|T|
 jet set willy.asm|164||0|2|34528|F|Main_loop.guardian_collision_found
 jet set willy.asm|164||0|2|34528|L|,Main_loop,guardian_collision_found,+local,+used
-jet set willy.asm|171||0|2|34528|T|
+jet set willy.asm|168||0|2|34528|T|
 jet set willy.asm|177||0|2|34531|F|Main_loop.willy_dies
 jet set willy.asm|177||0|2|34531|L|,Main_loop,willy_dies,+local,+used
 jet set willy.asm|179||0|2|34531|T|
@@ -6781,7 +6781,7 @@ jet set willy.asm|239||0|2|34616|T|
 jet set willy.asm|240||0|2|34618|T|
 jet set willy.asm|243||0|2|34621|T|
 jet set willy.asm|245||0|2|34624|F|Main_loop.draw_raster_bars
-jet set willy.asm|245||0|2|34624|L|,Main_loop,draw_raster_bars,+local,+used
+jet set willy.asm|245||0|2|34624|L|,Main_loop,draw_raster_bars,+local
 jet set willy.asm|247||0|2|34624|T|
 jet set willy.asm|248||0|2|34627|T|
 jet set willy.asm|249||0|2|34629|T|

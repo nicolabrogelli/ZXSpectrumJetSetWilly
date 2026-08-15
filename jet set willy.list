@@ -38,7 +38,7 @@
   25+ 5DAD              ; 1 = Abilita la morte e il decremento delle vite alla collisione con i guardiani
   26+ 5DAD              ; 0 = Disabilita la morte
   27+ 5DAD                  IFNDEF ENABLE_GUARDIAN_COLLISION_DEATH
-  28+ 5DAD              ENABLE_GUARDIAN_COLLISION_DEATH EQU 0
+  28+ 5DAD              ENABLE_GUARDIAN_COLLISION_DEATH EQU 1
   29+ 5DAD                  ENDIF
   30+ 5DAD
   31+ 5DAD              ; --- Bande colorate di debug per collisione con i guardiani ---
@@ -9863,13 +9863,13 @@
  165  86E0                  ; C'è collisione con un guardiano!
  166  86E0                  ; Controlla se la morte per collisione con i guardiani è abilitata
  167  86E0                  IF ENABLE_GUARDIAN_COLLISION_DEATH != 0
- 168  86E0 ~                jp   .willy_dies
- 169  86E0                  ELSE
- 170  86E0                      IF ENABLE_GUARDIAN_DEBUG_BARS != 0
- 171  86E0 C3 40 87             jp   .draw_raster_bars ; disegna le raster bar per debug se abilitate
- 172  86E3                      ELSE
+ 168  86E0 C3 E3 86         jp   .willy_dies
+ 169  86E3                  ELSE
+ 170  86E3 ~                    IF ENABLE_GUARDIAN_DEBUG_BARS != 0
+ 171  86E3 ~                    jp   .draw_raster_bars ; disegna le raster bar per debug se abilitate
+ 172  86E3 ~                    ELSE
  173  86E3 ~                    jp   .no_collision
- 174  86E3                      ENDIF
+ 174  86E3 ~                    ENDIF
  175  86E3                  ENDIF
  176  86E3
  177  86E3              .willy_dies:
