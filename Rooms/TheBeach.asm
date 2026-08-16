@@ -54,7 +54,7 @@ TheBeachTile:
 
 ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
 TheBeachBackground:                    
-    DEFB 13,0,0,0,0,0,0,0,0	            ;Background
+    DEFB 15,0,0,0,0,0,0,0,0	            ;Background (Paper BLUE, Ink WHITE)
 
 TheBeachFloor:
     DEFB 50,0,0,64,4,0,16,0,1    ; Floor Solid

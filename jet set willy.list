@@ -20666,7 +20666,7 @@
   54++CA30
   55++CA30              ;The next 54 bytes are copied to 32928 and contain the attributes and graphic data for the tiles used to build the room.
   56++CA30              TheBeachBackground:
-  57++CA30 0D 00 00 00      DEFB 13,0,0,0,0,0,0,0,0	            ;Background
+  57++CA30 0F 00 00 00      DEFB 15,0,0,0,0,0,0,0,0	            ;Background (Paper BLUE, Ink WHITE)
   57++CA34 00 00 00 00
   57++CA38 00
   58++CA39
