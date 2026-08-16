@@ -20022,7 +20022,7 @@
  112++C60D D0 10 20 28      DEFB $D0, CANDELABRO, 32, 40, 56
  112++C611 38
  113++C612              WestWingEnemy3:
- 114++C612 80 02 00 50      DEFB $80, UCCELLO, 0, 80, 80
+ 114++C612 B0 02 00 50      DEFB $B0, UCCELLO, 0, 80, 80
  114++C616 50
  115++C617              WestWingEnemy4:
  116++C617 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -20291,7 +20291,7 @@
   47++C7C0 00 00 00 00
   48++C7C4 00 A0 00 00  	DEFB 0,160,0,0,0,0,0,0
   48++C7C8 00 00 00 00
-  49++C7CC 04 A5 55 55  	DEFB 4,165,85,85,85,85,85,5
+  49++C7CC 55 A5 55 55  	DEFB 85,165,85,85,85,85,85,5
   49++C7D0 55 55 55 05
   50++C7D4
   51++C7D4              WestWingRoofTile:
@@ -20471,8 +20471,8 @@
   47++C8DE 0C 00 00 00
   48++C8E2 00 00 00 00  	DEFB 0,0,0,0,160,0,0,0
   48++C8E6 A0 00 00 00
-  49++C8EA 00 00 10 00  	DEFB 0,0,16,0,160,85,85,0
-  49++C8EE A0 55 55 00
+  49++C8EA 00 00 10 00  	DEFB 0,0,16,0,160,85,85,64
+  49++C8EE A0 55 55 40
   50++C8F2
   51++C8F2              AbovetheWestBedroomTile:
   52++C8F2              ;The next 32 bytes are copied to 32896 and specify the room name.

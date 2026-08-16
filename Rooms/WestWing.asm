@@ -111,7 +111,7 @@ WestWingEnemy1:
 WestWingEnemy2:
     DEFB $D0, CANDELABRO, 32, 40, 56 
 WestWingEnemy3:
-    DEFB $80, UCCELLO, 0, 80, 80 
+    DEFB $B0, UCCELLO, 0, 80, 80 
 WestWingEnemy4:
     DEFB 0, 0, 0, 0, 0
 WestWingEnemy5:
