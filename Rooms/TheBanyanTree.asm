@@ -36,7 +36,7 @@ TheBanyanTreeLayout:
 	DEFB 0,0,0,144,0,0,0,0
 	DEFB 0,0,0,148,0,0,0,0
 	DEFB 0,0,0,149,80,0,0,0
-	DEFB 0,0,0,129,8,0,0,0
+	DEFB 0,0,0,129,4,0,0,0
 	DEFB 0,0,0,1,4,0,0,0
 	DEFB 0,0,0,0,4,0,0,0
 	DEFB 0,0,0,128,0,0,0,0
@@ -111,7 +111,7 @@ TheBanyanTreeEnemy1:
 TheBanyanTreeEnemy2:
     DEFB $D0, DIAVOLETTO, 104, 40, 80   
 TheBanyanTreeEnemy3:
-    DEFB $D0, CHIP, 128, 40, 80   
+    DEFB $F0, CHIP, 128, 40, 80   
 TheBanyanTreeEnemy4:
     DEFB $80, SEGA, 152, 80, 235 
 TheBanyanTreeEnemy5:
