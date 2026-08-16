@@ -42,7 +42,7 @@ OrangeryLayout:
 	DEFB 160,0,0,4,0,0,0,0
 	DEFB 0,0,0,0,1,0,0,0
 	DEFB 0,32,0,64,0,0,5,0
-	DEFB 0,37,0,0,64,0,0,85
+	DEFB 0,36,0,0,64,0,0,85
 	DEFB 0,32,0,0,0,0,16,0
 	DEFB 0,32,1,0,0,0,0,0
 	DEFB 0,32,0,0,0,64,0,0
@@ -103,7 +103,7 @@ OrangeryDirection:
 	ROOM RoomsListTable.SwimmingPoolLayout				;Room below (Swimming Pool)
 
 OrangeryUnused:
-    DEFB $26                          ; Padding byte to keep Enemy1 offset at 240
+    DEFB $0                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 OrangeryEnemy1:
