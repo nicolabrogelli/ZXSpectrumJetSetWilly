@@ -1634,6 +1634,10 @@ Gfx_UpdateItemsCollectedDisplay:
     ld   bc, 32            ; 32 byte
     ldir
 
+    IF ENABLE_ROOM_NUMBER != 0
+    call Gfx_UpdateRemainingItemsDisplay
+    ENDIF
+
     pop  hl
     pop  de
     pop  bc
@@ -1741,7 +1745,7 @@ status_line_attrs:
     db 65, 66, 67, 68, 69, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 70, 69, 68, 67, 66, 65
 
 ; -------------------------------------------------------------------
-; Disegna lo status della stanza ("Room: " + numero stanza) nell'ultima riga (Riga 23)
+; Disegna la riga di stato inferiore ("Room: XX  Remaining items: YY") nell'ultima riga (Riga 23)
 ; -------------------------------------------------------------------
     IF ENABLE_ROOM_NUMBER != 0
 Gfx_PrintRoomNumber:
@@ -1755,7 +1759,7 @@ Gfx_PrintRoomNumber:
     ; 1. Stampa la stringa label_room_str ("Room: ")
     ld   hl, label_room_str
     ld   b, 6              ; 6 caratteri ("Room: ")
-.print_label_loop:
+.print_room_label_loop:
     push bc
     ld   a, (hl)           ; A = carattere ASCII
     push hl
@@ -1764,7 +1768,7 @@ Gfx_PrintRoomNumber:
     inc  hl
     pop  bc
     inc  c                 ; Prossima colonna
-    djnz .print_label_loop
+    djnz .print_room_label_loop
 
     ; 2. Converti (current_room) in 2 cifre ASCII e stampale
     ld   a, (current_room)
@@ -1787,6 +1791,78 @@ Gfx_PrintRoomNumber:
     inc  c
 
     ; Stampa cifra unità
+    ld   a, e
+    add  a, '0'
+    call Gfx_DrawCharVRAM_Row23
+    inc  c
+
+    ; 3. Stampa la stringa label_remaining_str ("  Remaining items: ")
+    ld   hl, label_remaining_str
+    ld   b, 19             ; 19 caratteri ("  Remaining items: ")
+.print_rem_label_loop:
+    push bc
+    ld   a, (hl)           ; A = carattere ASCII
+    push hl
+    call Gfx_DrawCharVRAM_Row23
+    pop  hl
+    inc  hl
+    pop  bc
+    inc  c                 ; Prossima colonna
+    djnz .print_rem_label_loop
+
+    ; 4. Stampa il valore di remaining items
+    call Gfx_UpdateRemainingItemsDisplay
+
+    ; 5. Pulisci le colonne rimanenti 29..31 con spazi
+    ld   c, 29
+    ld   a, ' '
+    call Gfx_DrawCharVRAM_Row23
+    inc  c
+    ld   a, ' '
+    call Gfx_DrawCharVRAM_Row23
+    inc  c
+    ld   a, ' '
+    call Gfx_DrawCharVRAM_Row23
+
+    pop  hl
+    pop  de
+    pop  bc
+    pop  af
+    ret
+
+; -------------------------------------------------------------------
+; Aggiorna il conteggio di Remaining Items sulla Riga 23 (Colonna 27..28)
+; -------------------------------------------------------------------
+Gfx_UpdateRemainingItemsDisplay:
+    push af
+    push bc
+    push de
+    push hl
+
+    ; Calcola oggetti rimanenti: TOTAL_ITEMS - items_collected
+    ld   a, TOTAL_ITEMS
+    ld   hl, items_collected
+    sub  (hl)
+    jr   nc, .rem_valid
+    xor  a
+.rem_valid:
+    ld   b, 0              ; B = decine
+.loop_tens_rem:
+    cp   10
+    jr   c, .done_tens_rem
+    sub  10
+    inc  b
+    jr   .loop_tens_rem
+.done_tens_rem:
+    ld   e, a              ; E = unità
+
+    ld   c, 27             ; Colonna 27 per decine
+    ld   a, b
+    add  a, '0'
+    push de
+    call Gfx_DrawCharVRAM_Row23
+    pop  de
+    inc  c                 ; Colonna 28 per unità
     ld   a, e
     add  a, '0'
     call Gfx_DrawCharVRAM_Row23
@@ -1863,6 +1939,9 @@ Gfx_DrawCharVRAM_Row23:
 
 label_room_str:
     db "Room: "
+
+label_remaining_str:
+    db "  Remaining items: "
     ENDIF
 
 ; -------------------------------------------------------------------
