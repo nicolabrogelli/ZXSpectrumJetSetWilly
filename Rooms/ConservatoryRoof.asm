@@ -39,13 +39,13 @@ ConservatoryRoofLayout:
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,42,170,170
-	DEFB 0,0,0,0,0,48,195,12
+	DEFB 0,0,0,0,0,48,195,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
-	DEFB 0,0,0,0,0,0,80,0
-	DEFB 0,0,0,0,0,0,5,85
+	DEFB 0,0,0,0,0,0,85,85
+	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,4,0,0
 	
 ConservatoryRoofTile:
@@ -75,7 +75,7 @@ ConservatoryRoofConveyor:
 ConservatoryRoofConveyorData:
     DEFB 1	                                ;Direction (right)
     DEFW 24506	                                ;Location in the attribute buffer at 24064: (15,12)
-    DEFB 6	                                ;Length
+    DEFB 0	                                ;Length
 
 ;The next four bytes are copied to 32986 and specify the direction, location and length of the ramp.
 ConservatoryRoofRampData:
