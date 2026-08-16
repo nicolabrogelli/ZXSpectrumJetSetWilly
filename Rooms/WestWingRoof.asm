@@ -46,7 +46,7 @@ WestWingRoofLayout:
 	DEFB 0,160,0,0,0,0,0,0
 	DEFB 1,160,0,0,0,0,0,0
 	DEFB 0,160,0,0,0,0,0,0
-	DEFB 85,165,85,85,85,85,85,5
+	DEFB 85,165,85,85,85,85,80,5
 	
 WestWingRoofTile:
 ;The next 32 bytes are copied to 32896 and specify the room name.
@@ -109,7 +109,7 @@ WestWingRoofUnused:
 WestWingRoofEnemy1:
     DEFB $80, SEGA, 56, 104, 176         
 WestWingRoofEnemy2:
-    DEFB $80, UCCELLO, 104, 96, 232 
+    DEFB $80, UCCELLO, 104, 90, 232 
 WestWingRoofEnemy3:
     DEFB 0, 0, 0, 0, 0
 WestWingRoofEnemy4:

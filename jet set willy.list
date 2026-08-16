@@ -14814,16 +14814,16 @@
  107++A5A2
  108++A5A2              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A5A2              ColdStoreEnemy1:
- 110++A5A2 80 1F 00 68      DEFB $80, PINGUINO, 0, 104, 192
+ 110++A5A2 B0 1F 00 68      DEFB $B0, PINGUINO, 0, 104, 192
  110++A5A6 C0
  111++A5A7              ColdStoreEnemy2:
- 112++A5A7 80 1E 00 48      DEFB $80, GELATO, 0, 72, 40
+ 112++A5A7 B0 1E 00 48      DEFB $B0, GELATO, 0, 72, 40
  112++A5AB 28
  113++A5AC              ColdStoreEnemy3:
- 114++A5AC 80 1F 00 30      DEFB $80, PINGUINO, 0, 48, 48
+ 114++A5AC B0 1F 00 30      DEFB $B0, PINGUINO, 0, 48, 48
  114++A5B0 30
  115++A5B1              ColdStoreEnemy4:
- 116++A5B1 80 1E 00 18      DEFB $80, GELATO, 0, 24, 72
+ 116++A5B1 B0 1E 00 18      DEFB $B0, GELATO, 0, 24, 72
  116++A5B5 48
  117++A5B6              ColdStoreEnemy5:
  118++A5B6 00 00 00 00      DEFB 0, 0, 0, 0, 0
@@ -16873,7 +16873,7 @@
   40++B24E 00 04 00 40
   41++B252 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
   41++B256 00 00 00 00
-  42++B25A A0 00 00 04  	DEFB 160,0,0,4,0,0,0,0
+  42++B25A 80 00 00 04  	DEFB 128,0,0,4,0,0,0,0
   42++B25E 00 00 00 00
   43++B262 00 00 00 00  	DEFB 0,0,0,0,1,0,0,0
   43++B266 01 00 00 00
@@ -20291,8 +20291,8 @@
   47++C7C0 00 00 00 00
   48++C7C4 00 A0 00 00  	DEFB 0,160,0,0,0,0,0,0
   48++C7C8 00 00 00 00
-  49++C7CC 55 A5 55 55  	DEFB 85,165,85,85,85,85,85,5
-  49++C7D0 55 55 55 05
+  49++C7CC 55 A5 55 55  	DEFB 85,165,85,85,85,85,80,5
+  49++C7D0 55 55 50 05
   50++C7D4
   51++C7D4              WestWingRoofTile:
   52++C7D4              ;The next 32 bytes are copied to 32896 and specify the room name.
@@ -20379,7 +20379,7 @@
  110++C844 80 01 38 68      DEFB $80, SEGA, 56, 104, 176
  110++C848 B0
  111++C849              WestWingRoofEnemy2:
- 112++C849 80 02 68 60      DEFB $80, UCCELLO, 104, 96, 232
+ 112++C849 80 02 68 5A      DEFB $80, UCCELLO, 104, 90, 232
  112++C84D E8
  113++C84E              WestWingRoofEnemy3:
  114++C84E 00 00 00 00      DEFB 0, 0, 0, 0, 0
