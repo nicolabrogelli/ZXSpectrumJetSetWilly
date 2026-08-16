@@ -39,7 +39,7 @@ ABitOfTreeLayout:
 	DEFB 0,0,0,160,0,0,0,3
 	DEFB 0,20,0,160,0,1,64,3
 	DEFB 0,0,16,160,0,0,0,3
-	DEFB 0,0,0,160,0,0,0,3
+	DEFB 0,0,0,160,1,0,0,3
 	DEFB 0,0,20,160,0,0,64,3
 	DEFB 85,80,0,165,64,0,0,3
 	DEFB 0,0,0,160,0,0,1,3
@@ -81,7 +81,7 @@ ABitOfTreeConveyorData:
 ABitOfTreeRampData:
     DEFB 1	                                ;Direction (up to the right)
     DEFW 24372                              ;Location in the attribute buffer at 24064: (14,7)
-    DEFB 2	                                ;Length
+    DEFB 0	                                ;Length
 
 ;The next byte is copied to 32990 and specifies the border colour.
 ABitOfTreeBorderColor:

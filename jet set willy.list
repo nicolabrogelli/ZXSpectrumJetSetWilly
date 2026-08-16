@@ -16692,8 +16692,8 @@
   40++B130 00 01 40 03
   41++B134 00 00 10 A0  	DEFB 0,0,16,160,0,0,0,3
   41++B138 00 00 00 03
-  42++B13C 00 00 00 A0  	DEFB 0,0,0,160,0,0,0,3
-  42++B140 00 00 00 03
+  42++B13C 00 00 00 A0  	DEFB 0,0,0,160,1,0,0,3
+  42++B140 01 00 00 03
   43++B144 00 00 14 A0  	DEFB 0,0,20,160,0,0,64,3
   43++B148 00 00 40 03
   44++B14C 55 50 00 A5  	DEFB 85,80,0,165,64,0,0,3
@@ -16761,7 +16761,7 @@
   81++B1D6              ABitOfTreeRampData:
   82++B1D6 01               DEFB 1	                                ;Direction (up to the right)
   83++B1D7 34 5F            DEFW 24372                              ;Location in the attribute buffer at 24064: (14,7)
-  84++B1D9 02               DEFB 2	                                ;Length
+  84++B1D9 00               DEFB 0	                                ;Length
   85++B1DA
   86++B1DA              ;The next byte is copied to 32990 and specifies the border colour.
   87++B1DA              ABitOfTreeBorderColor:
