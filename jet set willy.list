@@ -17918,7 +17918,7 @@
   73++B8F3
   74++B8F3              ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
   75++B8F3              UnderTheRoofConveyorData:
-  76++B8F3 01               DEFB 1	                                ;Direction (right)
+  76++B8F3 00               DEFB 0	                                ;Direction (right)
   77++B8F4 CC 5E            DEFW 24268	                                ;Location in the attribute buffer at 24064: (15,12)
   78++B8F6 14               DEFB 20	                                ;Length
   79++B8F7

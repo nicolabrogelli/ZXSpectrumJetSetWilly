@@ -73,7 +73,7 @@ UnderTheRoofConveyor:
 
 ;The next four bytes are copied to 32982 and specify the direction, location and length of the conveyor.
 UnderTheRoofConveyorData:
-    DEFB 1	                                ;Direction (right)
+    DEFB 0	                                ;Direction (right)
     DEFW 24268	                                ;Location in the attribute buffer at 24064: (15,12)
     DEFB 20	                                ;Length
 
