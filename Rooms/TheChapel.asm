@@ -113,7 +113,7 @@ TheChapelEnemy2:
 TheChapelEnemy3:
     DEFB $C0, FACE_LL, 208, 16, 104      
 TheChapelEnemy4:
-    DEFB $80, FRATE, 0, 96, 120         
+    DEFB $B0, FRATE, 0, 96, 120         
 TheChapelEnemy5:
      DEFB $C0, MURO, 48, 56, 80
 TheChapelEnemy6:
