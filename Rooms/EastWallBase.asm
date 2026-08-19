@@ -109,7 +109,7 @@ EastWallBaseUnused:
 EastWallBaseEnemy1:
     DEFB $C0, FACCIA, 56, 0, 104
 EastWallBaseEnemy2:
-    DEFB $C0, MURO, 24, 0, 96         
+    DEFB $D0, MURO, 24, 0, 96         
 EastWallBaseEnemy3:
     DEFB 0, 0, 0, 0, 0          
 EastWallBaseEnemy4:

@@ -33,7 +33,7 @@
 HalfwayUpTheEastWallLayout:           
 	DEFB 160,0,10,0,0,0,0,0		;Room layout
 	DEFB 160,0,10,0,0,0,0,0
-	DEFB 160,0,10,0,0,0,0,0
+	DEFB 160,0,0,0,0,0,0,0
 	DEFB 160,8,0,0,0,0,0,0
 	DEFB 160,10,0,0,0,0,0,0
 	DEFB 164,26,128,0,0,0,0,0
