@@ -107,7 +107,7 @@ PriestsHoleUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 PriestsHoleEnemy1:
-    DEFB $80, UCCELLO, 176, 80, 24  
+    DEFB $90, UCCELLO, 176, 80, 24  
 PriestsHoleEnemy2:
     DEFB $C0, FACE_HL, 48, 0, 88    
 PriestsHoleEnemy3:
