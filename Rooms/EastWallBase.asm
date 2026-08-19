@@ -33,7 +33,7 @@
 EastWallBaseLayout:           
 	DEFB 160,0,10,0,0,0,0,0	;Room layout
 	DEFB 160,0,10,0,0,0,0,0
-	DEFB 160,0,10,0,0,0,0,0
+	DEFB 160,0,26,0,0,0,0,0
 	DEFB 160,0,10,0,0,0,0,0
 	DEFB 160,0,26,0,0,0,0,0
 	DEFB 160,4,10,0,0,0,0,0
@@ -103,7 +103,7 @@ EastWallBaseDirection:
 	ROOM RoomsListTable.BallRoomEastLayout					;Room below (Ballroom East)
 
 EastWallBaseUnused:
-    DEFB $0                          ; Padding byte to keep Enemy1 offset at 240
+    DEFB $15                          ; Padding byte to keep Enemy1 offset at 240
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 EastWallBaseEnemy1:

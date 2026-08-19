@@ -14966,7 +14966,7 @@
   34++A641 00 00 00 00
   35++A645 A0 00 0A 00  	DEFB 160,0,10,0,0,0,0,0
   35++A649 00 00 00 00
-  36++A64D A0 00 0A 00  	DEFB 160,0,10,0,0,0,0,0
+  36++A64D A0 00 1A 00  	DEFB 160,0,26,0,0,0,0,0
   36++A651 00 00 00 00
   37++A655 A0 00 0A 00  	DEFB 160,0,10,0,0,0,0,0
   37++A659 00 00 00 00
@@ -15073,7 +15073,7 @@
  103++A72B 14          >        db (RoomsListTable.BallRoomEastLayout - RoomsListTable) / 2
  104++A72C
  105++A72C              EastWallBaseUnused:
- 106++A72C 00               DEFB $0                          ; Padding byte to keep Enemy1 offset at 240
+ 106++A72C 15               DEFB $15                          ; Padding byte to keep Enemy1 offset at 240
  107++A72D
  108++A72D              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++A72D              EastWallBaseEnemy1:
