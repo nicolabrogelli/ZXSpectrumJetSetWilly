@@ -1232,6 +1232,9 @@ Gfx_DrawTitleScreen:
 game_over_str:
     db "GAME OVER"
 
+game_over_continue_str:
+    db "VUOI CONTINUARE? Y/N"
+
 game_over_color_table:
     db $42, $46, $47, $45, $44, $43, $46, $42
 
@@ -1242,6 +1245,7 @@ game_over_color_table:
 ; 2. Animazione di discesa fluida di PiedeSprite dall'alto (Y=0) fino a fermarsi sopra Willy (Y=80), prima del bordo alto della Botte.
 ; 3. Breve pausa con PiedeSprite fermo sopra Willy.
 ; 4. Stampa la scritta GAME OVER al centro dello schermo (riga 5) solo dopo la pausa.
+; 5. Stampa la richiesta "VUOI CONTINUARE? Y/N" a riga 8.
 ; -------------------------------------------------------------------
 Gfx_DrawGameOverScreen:
     push af
@@ -1418,6 +1422,30 @@ Gfx_DrawGameOverScreen:
     ld   (hl), a
     inc  hl
     djnz .init_go_attr
+
+    ; 10. Fa comparire la domanda "VUOI CONTINUARE? Y/N" a riga 8, colonna 6
+    ld   a, 22                 ; AT (22)
+    rst  $10
+    ld   a, 8                  ; Riga 8
+    rst  $10
+    ld   a, 6                  ; Colonna 6
+    rst  $10
+    
+    ld   a, YELLOW             ; Inchiostro Giallo
+    call Gfx_Ink
+
+    ld   hl, game_over_continue_str
+    ld   b, 20
+    call Gfx_PrintString
+
+    ; Imposta attributo per "VUOI CONTINUARE? Y/N" (Giallo Brillante)
+    ld   hl, $5906             ; Riga 8, Colonna 6 ($5800 + 8*32 + 6 = $5906)
+    ld   b, 20
+    ld   a, YELLOW | $40
+.init_continue_attr:
+    ld   (hl), a
+    inc  hl
+    djnz .init_continue_attr
 
     pop  ix
     pop  hl
