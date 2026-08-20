@@ -36,13 +36,13 @@ ColdStoreLayout:
 	DEFB 84,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,192,3,0
 	DEFB 0,0,0,0,0,0,0,0
-	DEFB 85,85,0,0,0,0,0,0
+	DEFB 85,85,80,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
-	DEFB 85,80,0,0,0,0,10,170
+	DEFB 85,85,80,0,0,0,10,170
 	DEFB 0,0,0,0,0,0,10,170
 	DEFB 0,0,0,0,0,85,10,170
-	DEFB 85,80,0,0,0,0,10,170
+	DEFB 85,85,80,0,0,0,10,170
 	DEFB 0,0,48,0,0,20,10,170
 	DEFB 0,0,0,0,85,0,10,170
 	DEFB 0,0,0,0,0,20,10,170
@@ -109,11 +109,11 @@ ColdStoreUnused:
 ColdStoreEnemy1:
     DEFB $B0, PINGUINO, 0, 104, 192
 ColdStoreEnemy2:
-    DEFB $B0, GELATO, 0, 72, 40         
+    DEFB $90, GELATO, 0, 72, 92         
 ColdStoreEnemy3:
-    DEFB $B0, PINGUINO, 0, 48, 48         
+    DEFB $A0, PINGUINO, 0, 48, 92         
 ColdStoreEnemy4:
-    DEFB $B0, GELATO, 0, 24, 72         
+    DEFB $B0, GELATO, 0, 24, 92         
 ColdStoreEnemy5:
     DEFB 0, 0, 0, 0, 0 
 ColdStoreEnemy6:

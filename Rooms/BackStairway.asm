@@ -46,7 +46,7 @@ BackStairwayLayout:
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
-	DEFB 84,85,85,85,85,85,85,85
+	DEFB 84,85,85,85,85,85,1,85
 	
 BackStairwayTile:
 ;The next 32 bytes are copied to 32896 and specify the room name.
