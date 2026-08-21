@@ -107,7 +107,7 @@ TheHallUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheHallEnemy1:
-    DEFB $80, MAIALE, 40, 24, 240         
+    DEFB $A0, MAIALE, 40, 24, 240         
 TheHallEnemy2:
     DEFB $C0, CANDELABRO, 80, 48, 60         
 TheHallEnemy3:
