@@ -34,12 +34,12 @@ WeMustPerformQuirkafleegLayout:
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
+	DEFB 0,0,0,1,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
+	DEFB 0,0,0,1,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
-	DEFB 0,0,0,0,0,0,0,0
-	DEFB 0,0,0,0,0,0,0,0
-	DEFB 0,0,0,0,0,0,0,0
-	DEFB 170,0,40,40,0,170,2 ,170
+	DEFB 0,0,0,1,0,0,0,0
+	DEFB 170,0,170,170,170,170,2 ,170
 	DEFB 170,64,0,0,0,0,2,170
 	DEFB 170,64,0,0,0,0,2,170
 	DEFB 170,64,0,0,0,0,2,170
@@ -89,9 +89,9 @@ WeMustPerformQuirkafleegItem:
 
 WeMustPerformQuirkafleegDirection:
 	ROOM RoomsListTable.UpOnTheBattlementsLayout			;Room to the left (We must perform a Quirkafleeg)
-	ROOM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout					;Room to the right (Rescue Esmerelda)
-	DEFB BLOCK				                                    ;Room above (The Off Licence)
-	DEFB BLOCK				                                    ;Room below (The Off Licence)
+	ROOM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout		;Room to the right (Rescue Esmerelda)
+	ROOM RoomsListTable.WatchTowerLayout				    ;Room above (The Off Licence)
+	DEFB BLOCK				                                 ;Room below (The Off Licence)
 
 WeMustPerformQuirkafleegUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
