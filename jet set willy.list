@@ -1675,1533 +1675,1534 @@
 1233+ 64A3 52
 1234+ 64A4
 1235+ 64A4              game_over_continue_str:
-1236+ 64A4 56 55 4F 49      db "VUOI CONTINUARE? Y/N"
-1236+ 64A8 20 43 4F 4E
-1236+ 64AC 54 49 4E 55
-1236+ 64B0 41 52 45 3F
-1236+ 64B4 20 59 2F 4E
-1237+ 64B8
-1238+ 64B8              game_over_color_table:
-1239+ 64B8 42 46 47 45      db $42, $46, $47, $45, $44, $43, $46, $42
-1239+ 64BC 44 43 46 42
-1240+ 64C0
-1241+ 64C0              ; -------------------------------------------------------------------
-1242+ 64C0              ; Gfx_DrawGameOverScreen
-1243+ 64C0              ; Esegue la sequenza animata di Game Over:
-1244+ 64C0              ; 1. Pulisce lo schermo a nero, mostra Willy (Y=96), BotteSprite (Y=112, Rosso), Nome Stanza (riga 16) e Status Line (riga 18).
-1245+ 64C0              ; 2. Animazione di discesa fluida di PiedeSprite dall'alto (Y=0) fino a fermarsi sopra Willy (Y=80), prima del bordo alto della Botte.
-1246+ 64C0              ; 3. Breve pausa con PiedeSprite fermo sopra Willy.
-1247+ 64C0              ; 4. Stampa la scritta GAME OVER al centro dello schermo (riga 5) solo dopo la pausa.
-1248+ 64C0              ; 5. Stampa la richiesta "VUOI CONTINUARE? Y/N" a riga 8.
-1249+ 64C0              ; -------------------------------------------------------------------
-1250+ 64C0              Gfx_DrawGameOverScreen:
-1251+ 64C0 F5               push af
-1252+ 64C1 C5               push bc
-1253+ 64C2 D5               push de
-1254+ 64C3 E5               push hl
-1255+ 64C4 DD E5            push ix
-1256+ 64C6
-1257+ 64C6                  ; 1. Bordo hardware e schermo a nero
-1258+ 64C6 AF               xor  a
-1259+ 64C7 D3 FE            out  ($fe), a              ; Bordo a nero
-1260+ 64C9 21 8D 5C         ld   hl, ATTR_P
-1261+ 64CC 77               ld   (hl), a               ; Paper/Ink = 0 (Nero)
-1262+ 64CD CD AF 0D         call CLS                   ; Pulisce tutti i pixel e gli attributi a nero
-1263+ 64D0 36 07            ld   (hl), $07             ; Ripristina ATTR_P a $07 (Inchiostro Bianco, Sfondo Nero)
-1264+ 64D2 3E 07            ld   a, $07
-1265+ 64D4 32 8F 5C         ld   (ATTR_T), a           ; Ripristina ATTR_T a $07
-1266+ 64D7
-1267+ 64D7                  ; 2. Disegna Willy (immobile, rivolto a destra) a X=124, Y=96
-1268+ 64D7                  ; 2a. Testa di Willy (8x8) a X=124, Y=96
-1269+ 64D7 01 7C 60         ld   bc, $607c             ; B = Y = 96 ($60), C = X = 124 ($7C)
-1270+ 64DA DD 21 81 CE      ld   ix, Willy + (0 * 8)   ; HEAD_GRAPH_RIGHT
-1271+ 64DE CD 3F 5E         call Gfx_DrawPixelSprite8x8
-1272+ 64E1
-1273+ 64E1                  ; 2b. Corpo di Willy (8x8) a X=124, Y=104
-1274+ 64E1 01 7C 68         ld   bc, $687c             ; B = Y = 104 ($68), C = X = 124 ($7C)
-1275+ 64E4 DD 21 89 CE      ld   ix, Willy + (1 * 8)   ; Body right frame 0
-1276+ 64E8 CD 3F 5E         call Gfx_DrawPixelSprite8x8
-1277+ 64EB
-1278+ 64EB                  ; 2c. Imposta attributi colore di Willy (Bianco Brillante) a X=124, Y=96
-1279+ 64EB 01 7C 60         ld   bc, $607c             ; B = Y = 96, C = X = 124
-1280+ 64EE 3E 47            ld   a, WHITE | $40        ; Bianco Brillante
-1281+ 64F0 CD 1F 6A         call Gfx_SetEnemyColorAttributes
-1282+ 64F3
-1283+ 64F3                  ; 3. Disegna BotteSprite (immobile, colore Rosso) a X=120, Y=112
-1284+ 64F3 01 78 70         ld   bc, $7078             ; B = Y = 112 ($70), C = X = 120 ($78)
-1285+ 64F6 DD 21 01 E9      ld   ix, BotteSprite       ; Frame 1 di BotteSprite
-1286+ 64FA CD 89 5F         call Gfx_DrawPixelSprite16x16
-1287+ 64FD
-1288+ 64FD                  ; 3b. Imposta attributi colore per BotteSprite (Rosso Brillante) a X=120, Y=112
-1289+ 64FD 01 78 70         ld   bc, $7078             ; B = Y = 112, C = X = 120
-1290+ 6500 3E 42            ld   a, RED | $40          ; Rosso Brillante
-1291+ 6502 CD 1F 6A         call Gfx_SetEnemyColorAttributes
-1292+ 6505
-1293+ 6505                  ; 4. Stampa il Nome della Stanza a riga 16
-1294+ 6505 3E 16            ld   a, 22                 ; Codice di controllo AT (22)
-1295+ 6507 D7               rst  $10
-1296+ 6508 3E 10            ld   a, 16                 ; Riga 16
-1297+ 650A D7               rst  $10
-1298+ 650B 3E 00            ld   a, 0                  ; Colonna 0
-1299+ 650D D7               rst  $10
-1300+ 650E
-1301+ 650E 3E 06            ld   a, YELLOW             ; Inchiostro Giallo
-1302+ 6510 CD 01 5E         call Gfx_Ink
-1303+ 6513
-1304+ 6513 2A 01 F0         ld   hl, (room_ptr)        ; HL = indirizzo stanza corrente
-1305+ 6516 11 80 00         ld   de, 128               ; Offset del nome stanza (32 byte)
-1306+ 6519 19               add  hl, de
-1307+ 651A 06 20            ld   b, 32
-1308+ 651C CD 7E 61         call Gfx_PrintString
-1309+ 651F
-1310+ 651F                  ; 5. Stampa la riga di stato a riga 18
-1311+ 651F 3E 16            ld   a, 22                 ; Codice di controllo AT (22)
-1312+ 6521 D7               rst  $10
-1313+ 6522 3E 12            ld   a, 18                 ; Riga 18
-1314+ 6524 D7               rst  $10
-1315+ 6525 3E 00            ld   a, 0                  ; Colonna 0
-1316+ 6527 D7               rst  $10
-1317+ 6528
-1318+ 6528 21 79 67         ld   hl, status_line       ; HL = indirizzo stringa di stato
-1319+ 652B 06 20            ld   b, 32                 ; B = 32 caratteri
-1320+ 652D CD 7E 61         call Gfx_PrintString
-1321+ 6530
-1322+ 6530                  ; 6. Applica i colori agli attributi di riga 18 ($5A40)
-1323+ 6530 21 99 67         ld   hl, status_line_attrs
-1324+ 6533 11 40 5A         ld   de, $5a40             ; Indirizzo attributi riga 18
-1325+ 6536 01 20 00         ld   bc, 32
-1326+ 6539 ED B0            ldir
-1327+ 653B
-1328+ 653B                  ; 7. Animazione: Discesa fluida di PiedeSprite dall'alto (Y=0) fino a Y=96 (alla parte alta della Botte)
-1329+ 653B 06 00            ld   b, 0                  ; B = Y iniziale (0)
-1330+ 653D              .foot_descent_loop:
-1331+ 653D C5               push bc                    ; Salva B = Y corrente
-1332+ 653E
-1333+ 653E                  ; 7a. Cancella l'intero blocco 16x16 della posizione precedente (Y - 2) se Y > 0
-1334+ 653E 78               ld   a, b
-1335+ 653F B7               or   a
-1336+ 6540 28 1F            jr   z, .skip_clear_prev
-1337+ 6542 D6 02            sub  2                     ; Y precedente (passo 2 pixel)
-1338+ 6544 47               ld   b, a
-1339+ 6545 0E 78            ld   c, 120                ; X = 120
-1340+ 6547 CD C1 61         call Gfx_Clear16x16_Black
-1341+ 654A
-1342+ 654A                  ; Pulisce l'attributo della riga lasciata indietro (Row = (Y - 2) / 8)
-1343+ 654A 78               ld   a, b
-1344+ 654B CB 3F            srl  a
-1345+ 654D CB 3F            srl  a
-1346+ 654F CB 3F            srl  a                     ; A = Row da azzerare
-1347+ 6551 6F               ld   l, a
-1348+ 6552 26 00            ld   h, 0
-1349+ 6554 29               add  hl, hl                ; * 2
-1350+ 6555 29               add  hl, hl                ; * 4
-1351+ 6556 29               add  hl, hl                ; * 8
-1352+ 6557 29               add  hl, hl                ; * 16
-1353+ 6558 29               add  hl, hl                ; * 32
-1354+ 6559 11 0F 58         ld   de, $580f             ; $5800 + 15
-1355+ 655C 19               add  hl, de
-1356+ 655D AF               xor  a
-1357+ 655E 77               ld   (hl), a               ; Col 15 = 0
-1358+ 655F 23               inc  hl
-1359+ 6560 77               ld   (hl), a               ; Col 16 = 0
-1360+ 6561
-1361+ 6561              .skip_clear_prev:
-1362+ 6561 C1               pop  bc                    ; Ripristina B = Y corrente
-1363+ 6562 C5               push bc
-1364+ 6563
-1365+ 6563                  ; Quando il Piede raggiunge Y = 96, cancella lo sprite di Willy a (124, 96) prima di disegnare il Piede
-1366+ 6563 78               ld   a, b
-1367+ 6564 FE 60            cp   96
-1368+ 6566 20 09            jr   nz, .draw_foot
-1369+ 6568 C5               push bc
-1370+ 6569 0E 78            ld   c, 120
-1371+ 656B 06 60            ld   b, 96
-1372+ 656D CD C1 61         call Gfx_Clear16x16_Black
-1373+ 6570 C1               pop  bc
-1374+ 6571
-1375+ 6571              .draw_foot:
-1376+ 6571                  ; 7b. Disegna PiedeSprite alla coordinata corrente (X=120, Y)
-1377+ 6571 0E 78            ld   c, 120
-1378+ 6573 DD 21 01 E8      ld   ix, PiedeSprite
-1379+ 6577 CD 89 5F         call Gfx_DrawPixelSprite16x16
-1380+ 657A
-1381+ 657A                  ; 7c. Imposta colore Giallo Brillante per PiedeSprite
-1382+ 657A 0E 78            ld   c, 120
-1383+ 657C 3E 46            ld   a, YELLOW | $40
-1384+ 657E CD 1F 6A         call Gfx_SetEnemyColorAttributes
-1385+ 6581
-1386+ 6581                  ; 7d. Pausa per movimento fluido a 50Hz
-1387+ 6581 76               halt
-1388+ 6582
-1389+ 6582 C1               pop  bc                    ; B = Y corrente
-1390+ 6583 78               ld   a, b
-1391+ 6584 C6 02            add  a, 2                  ; Avanza di 2 pixel
-1392+ 6586 47               ld   b, a
-1393+ 6587 FE 62            cp   98                    ; Si ferma a Y = 96 (incluso, il ciclo termina quando B=98)
-1394+ 6589 38 B2            jr   c, .foot_descent_loop
-1395+ 658B
-1396+ 658B                  ; 8. Breve pausa con PiedeSprite fermato sulla parte alta della Botte (~0.7s)
-1397+ 658B 06 23            ld   b, 35
-1398+ 658D              .pause_after_foot:
-1399+ 658D 76               halt
-1400+ 658E 10 FD            djnz .pause_after_foot
-1401+ 6590
-1402+ 6590                  ; 9. Solo DOPO la pausa, fa comparire GAME OVER al centro dello schermo a riga 5, colonna 11
-1403+ 6590 3E 16            ld   a, 22                 ; AT (22)
-1404+ 6592 D7               rst  $10
-1405+ 6593 3E 05            ld   a, 5                  ; Riga 5
-1406+ 6595 D7               rst  $10
-1407+ 6596 3E 0B            ld   a, 11                 ; Colonna 11
-1408+ 6598 D7               rst  $10
-1409+ 6599
-1410+ 6599 3E 02            ld   a, RED                ; Inchiostro Rosso
-1411+ 659B CD 01 5E         call Gfx_Ink
-1412+ 659E
-1413+ 659E 21 9B 64         ld   hl, game_over_str
-1414+ 65A1 06 09            ld   b, 9
-1415+ 65A3 CD 7E 61         call Gfx_PrintString
-1416+ 65A6
-1417+ 65A6                  ; Imposta attributo iniziale per GAME OVER (Rosso Brillante)
-1418+ 65A6 21 AB 58         ld   hl, $58ab             ; Riga 5, Colonna 11 ($5800 + 5*32 + 11 = $58AB)
-1419+ 65A9 06 09            ld   b, 9
-1420+ 65AB 3E 42            ld   a, RED | $40
-1421+ 65AD              .init_go_attr:
-1422+ 65AD 77               ld   (hl), a
-1423+ 65AE 23               inc  hl
-1424+ 65AF 10 FC            djnz .init_go_attr
-1425+ 65B1
-1426+ 65B1                  ; 10. Fa comparire la domanda "VUOI CONTINUARE? Y/N" a riga 8, colonna 6
-1427+ 65B1 3E 16            ld   a, 22                 ; AT (22)
-1428+ 65B3 D7               rst  $10
-1429+ 65B4 3E 08            ld   a, 8                  ; Riga 8
-1430+ 65B6 D7               rst  $10
-1431+ 65B7 3E 06            ld   a, 6                  ; Colonna 6
-1432+ 65B9 D7               rst  $10
-1433+ 65BA
-1434+ 65BA 3E 06            ld   a, YELLOW             ; Inchiostro Giallo
-1435+ 65BC CD 01 5E         call Gfx_Ink
-1436+ 65BF
-1437+ 65BF 21 A4 64         ld   hl, game_over_continue_str
-1438+ 65C2 06 14            ld   b, 20
-1439+ 65C4 CD 7E 61         call Gfx_PrintString
-1440+ 65C7
-1441+ 65C7                  ; Imposta attributo per "VUOI CONTINUARE? Y/N" (Giallo Brillante)
-1442+ 65C7 21 06 59         ld   hl, $5906             ; Riga 8, Colonna 6 ($5800 + 8*32 + 6 = $5906)
-1443+ 65CA 06 14            ld   b, 20
-1444+ 65CC 3E 46            ld   a, YELLOW | $40
-1445+ 65CE              .init_continue_attr:
-1446+ 65CE 77               ld   (hl), a
-1447+ 65CF 23               inc  hl
-1448+ 65D0 10 FC            djnz .init_continue_attr
-1449+ 65D2
-1450+ 65D2 DD E1            pop  ix
-1451+ 65D4 E1               pop  hl
-1452+ 65D5 D1               pop  de
-1453+ 65D6 C1               pop  bc
-1454+ 65D7 F1               pop  af
-1455+ 65D8 C9               ret
-1456+ 65D9
-1457+ 65D9              Gfx_PrintWillyLives:
-1458+ 65D9 E5               push hl
-1459+ 65DA C5               push bc
-1460+ 65DB D5               push de
-1461+ 65DC F5               push af
-1462+ 65DD
-1463+ 65DD                  ; Primo Willy (Colonna 0, giallo)
-1464+ 65DD 21 8E EC         ld   hl, willy_lives
-1465+ 65E0 7E               ld   a, (hl)
-1466+ 65E1 FE 01            cp   1
-1467+ 65E3 0E 00            ld   c, 0
-1468+ 65E5 38 07            jr   c, .erase_1
-1469+ 65E7 3E 46            ld   a, $40 | YELLOW
-1470+ 65E9 CD A0 68         call Gfx_DrawWillyLifeIcon
-1471+ 65EC 18 03            jr   .check_2
-1472+ 65EE              .erase_1:
-1473+ 65EE CD 68 66         call Gfx_EraseWillyLifeIcon
-1474+ 65F1
-1475+ 65F1              .check_2:
-1476+ 65F1 3A 8E EC         ld   a, (willy_lives)
-1477+ 65F4 FE 02            cp   2
-1478+ 65F6 0E 02            ld   c, 2
-1479+ 65F8 38 07            jr   c, .erase_2
-1480+ 65FA 3E 45            ld   a, $40 | CYAN
-1481+ 65FC CD A0 68         call Gfx_DrawWillyLifeIcon
-1482+ 65FF 18 03            jr   .check_3
-1483+ 6601              .erase_2:
-1484+ 6601 CD 68 66         call Gfx_EraseWillyLifeIcon
-1485+ 6604
-1486+ 6604              .check_3:
-1487+ 6604 3A 8E EC         ld   a, (willy_lives)
-1488+ 6607 FE 03            cp   3
-1489+ 6609 0E 04            ld   c, 4
-1490+ 660B 38 07            jr   c, .erase_3
-1491+ 660D 3E 44            ld   a, $40 | GREEN
-1492+ 660F CD A0 68         call Gfx_DrawWillyLifeIcon
-1493+ 6612 18 03            jr   .check_4
-1494+ 6614              .erase_3:
-1495+ 6614 CD 68 66         call Gfx_EraseWillyLifeIcon
-1496+ 6617
-1497+ 6617              .check_4:
-1498+ 6617 3A 8E EC         ld   a, (willy_lives)
-1499+ 661A FE 04            cp   4
-1500+ 661C 0E 06            ld   c, 6
-1501+ 661E 38 07            jr   c, .erase_4
-1502+ 6620 3E 43            ld   a, $40 | MAGENTA
-1503+ 6622 CD A0 68         call Gfx_DrawWillyLifeIcon
-1504+ 6625 18 03            jr   .check_5
-1505+ 6627              .erase_4:
-1506+ 6627 CD 68 66         call Gfx_EraseWillyLifeIcon
-1507+ 662A
-1508+ 662A              .check_5:
-1509+ 662A 3A 8E EC         ld   a, (willy_lives)
-1510+ 662D FE 05            cp   5
-1511+ 662F 0E 08            ld   c, 8
-1512+ 6631 38 07            jr   c, .erase_5
-1513+ 6633 3E 42            ld   a, $40 | RED
-1514+ 6635 CD A0 68         call Gfx_DrawWillyLifeIcon
-1515+ 6638 18 03            jr   .check_6
-1516+ 663A              .erase_5:
-1517+ 663A CD 68 66         call Gfx_EraseWillyLifeIcon
-1518+ 663D
-1519+ 663D              .check_6:
-1520+ 663D 3A 8E EC         ld   a, (willy_lives)
-1521+ 6640 FE 06            cp   6
-1522+ 6642 0E 0A            ld   c, 10
-1523+ 6644 38 07            jr   c, .erase_6
-1524+ 6646 3E 41            ld   a, $40 | BLUE
-1525+ 6648 CD A0 68         call Gfx_DrawWillyLifeIcon
-1526+ 664B 18 03            jr   .check_7
-1527+ 664D              .erase_6:
-1528+ 664D CD 68 66         call Gfx_EraseWillyLifeIcon
-1529+ 6650
-1530+ 6650              .check_7:
-1531+ 6650 3A 8E EC         ld   a, (willy_lives)
-1532+ 6653 FE 07            cp   7
-1533+ 6655 0E 0C            ld   c, 12
-1534+ 6657 38 07            jr   c, .erase_7
-1535+ 6659 3E 47            ld   a, $40 | WHITE
-1536+ 665B CD A0 68         call Gfx_DrawWillyLifeIcon
-1537+ 665E 18 03            jr   .done
-1538+ 6660              .erase_7:
-1539+ 6660 CD 68 66         call Gfx_EraseWillyLifeIcon
-1540+ 6663
-1541+ 6663              .done:
-1542+ 6663 F1               pop  af
-1543+ 6664 D1               pop  de
-1544+ 6665 C1               pop  bc
-1545+ 6666 E1               pop  hl
-1546+ 6667 C9               ret
-1547+ 6668
-1548+ 6668              Gfx_EraseWillyLifeIcon:
-1549+ 6668                  ; Input: C = Colonna (0..31)
-1550+ 6668 59               ld   e, c              ; E = Colonna
-1551+ 6669
-1552+ 6669                  ; 1. Cancella la testa a Row 20, Colonna E
-1553+ 6669 7B               ld   a, e
-1554+ 666A 87               add  a, a              ; *2
-1555+ 666B 87               add  a, a              ; *4
-1556+ 666C 87               add  a, a              ; *8
-1557+ 666D 4F               ld   c, a              ; C = X pixel
-1558+ 666E 06 A0            ld   b, 160            ; B = Y pixel (Row 20)
-1559+ 6670 CD 8F 66         call Gfx_ClearPixelSprite8x8
-1560+ 6673
-1561+ 6673                  ; 2. Cancella il corpo a Row 21, Colonna E
-1562+ 6673 06 A8            ld   b, 168            ; B = Y pixel (Row 21)
-1563+ 6675 CD 8F 66         call Gfx_ClearPixelSprite8x8
-1564+ 6678
-1565+ 6678                  ; 3. Resetta gli attributi a Row 20 e Row 21 per Colonna E a nero (0)
-1566+ 6678                  ; AttrAddr = $5A80 + E
-1567+ 6678 26 5A            ld   h, $5a
-1568+ 667A 3E 80            ld   a, $80
-1569+ 667C 83               add  a, e
-1570+ 667D 6F               ld   l, a
-1571+ 667E 30 01            jr   nc, .no_carry1
-1572+ 6680 24               inc  h
-1573+ 6681              .no_carry1:
-1574+ 6681 36 00            ld   (hl), 0           ; Scrivi colore testa a 0 (nero)
-1575+ 6683
-1576+ 6683                  ; AttrAddr = $5AA0 + E
-1577+ 6683 26 5A            ld   h, $5a
-1578+ 6685 3E A0            ld   a, $a0
-1579+ 6687 83               add  a, e
-1580+ 6688 6F               ld   l, a
-1581+ 6689 30 01            jr   nc, .no_carry2
-1582+ 668B 24               inc  h
-1583+ 668C              .no_carry2:
-1584+ 668C 36 00            ld   (hl), 0           ; Scrivi colore corpo a 0 (nero)
-1585+ 668E C9               ret
-1586+ 668F
-1587+ 668F              Gfx_ClearPixelSprite8x8:
-1588+ 668F C5               push bc
-1589+ 6690 D5               push de
-1590+ 6691 E5               push hl
-1591+ 6692
-1592+ 6692                  ; 1. Calcola indirizzo schermo
-1593+ 6692 60               ld   h, b
-1594+ 6693 69               ld   l, c
-1595+ 6694 CD 10 5E         call Gfx_GetScreenAddr ; HL = indirizzo schermo
-1596+ 6697
-1597+ 6697 0E 08            ld   c, 8          ; 8 linee
-1598+ 6699              .line_loop:
-1599+ 6699 36 00            ld   (hl), 0       ; Pulisci la cella dello schermo (imposta a zero)
-1600+ 669B CD 30 5E         call Gfx_IncScreenLine ; Prossima scanline sullo schermo
-1601+ 669E 0D               dec  c
-1602+ 669F 20 F8            jr   nz, .line_loop
-1603+ 66A1
-1604+ 66A1 E1               pop  hl
-1605+ 66A2 D1               pop  de
-1606+ 66A3 C1               pop  bc
-1607+ 66A4 C9               ret
-1608+ 66A5
-1609+ 66A5              Gfx_UpdateItemsCollectedDisplay:
-1610+ 66A5 F5               push af
-1611+ 66A6 C5               push bc
-1612+ 66A7 D5               push de
-1613+ 66A8 E5               push hl
-1614+ 66A9
-1615+ 66A9 3A 8B EC         ld   a, (items_collected)
-1616+ 66AC 0E 00            ld   c, 0              ; C = centinaia
-1617+ 66AE              .loop100:
-1618+ 66AE FE 64            cp   100
-1619+ 66B0 38 05            jr   c, .done100
-1620+ 66B2 D6 64            sub  100
-1621+ 66B4 0C               inc  c
-1622+ 66B5 18 F7            jr   .loop100
-1623+ 66B7              .done100:
-1624+ 66B7 5F               ld   e, a              ; Salva il resto in E
-1625+ 66B8 79               ld   a, c
-1626+ 66B9 C6 30            add  a, '0'
-1627+ 66BB 32 89 67         ld   (status_line + 16), a ; Centinaia
-1628+ 66BE
-1629+ 66BE 7B               ld   a, e              ; Ripristina il resto
-1630+ 66BF 0E 00            ld   c, 0              ; C = decine
-1631+ 66C1              .loop10:
-1632+ 66C1 FE 0A            cp   10
-1633+ 66C3 38 05            jr   c, .done10
-1634+ 66C5 D6 0A            sub  10
-1635+ 66C7 0C               inc  c
-1636+ 66C8 18 F7            jr   .loop10
-1637+ 66CA              .done10:
-1638+ 66CA 5F               ld   e, a              ; E = unità
-1639+ 66CB 79               ld   a, c
-1640+ 66CC C6 30            add  a, '0'
-1641+ 66CE 32 8A 67         ld   (status_line + 17), a ; Decine
-1642+ 66D1
-1643+ 66D1 7B               ld   a, e
-1644+ 66D2 C6 30            add  a, '0'
-1645+ 66D4 32 8B 67         ld   (status_line + 18), a ; Unità
-1646+ 66D7
-1647+ 66D7                  ; Ora ristampa la riga di stato a riga 18
-1648+ 66D7 3E 16            ld   a, 22             ; Codice di controllo AT (22)
-1649+ 66D9 D7               rst  $10
-1650+ 66DA 3E 12            ld   a, 18             ; Riga 18
-1651+ 66DC D7               rst  $10
-1652+ 66DD 3E 00            ld   a, 0              ; Colonna 0
-1653+ 66DF D7               rst  $10
-1654+ 66E0
-1655+ 66E0 21 79 67         ld   hl, status_line   ; HL = indirizzo stringa di stato
-1656+ 66E3 06 20            ld   b, 32             ; B = 32 caratteri
-1657+ 66E5 CD 7E 61         call Gfx_PrintString
-1658+ 66E8
-1659+ 66E8                  ; Ripristina i colori degli attributi di Riga 18 ($5A40)
-1660+ 66E8 21 99 67         ld   hl, status_line_attrs
-1661+ 66EB 11 40 5A         ld   de, $5a40         ; Indirizzo attributi Riga 18
-1662+ 66EE 01 20 00         ld   bc, 32            ; 32 byte
-1663+ 66F1 ED B0            ldir
-1664+ 66F3
-1665+ 66F3                  IF ENABLE_ROOM_NUMBER != 0
-1666+ 66F3 CD 1B 68         call Gfx_UpdateRemainingItemsDisplay
-1667+ 66F6                  ENDIF
-1668+ 66F6
-1669+ 66F6 E1               pop  hl
-1670+ 66F7 D1               pop  de
-1671+ 66F8 C1               pop  bc
-1672+ 66F9 F1               pop  af
-1673+ 66FA C9               ret
-1674+ 66FB
-1675+ 66FB              ; -------------------------------------------------------------------
-1676+ 66FB              ; Gfx_UpdateTimeDisplay
-1677+ 66FB              ; Formatta e visualizza l'orologio di gioco ("Time  7:00am")
-1678+ 66FB              ; nella riga di stato (Riga 18)
-1679+ 66FB              ; -------------------------------------------------------------------
-1680+ 66FB              Gfx_UpdateTimeDisplay:
-1681+ 66FB F5               push af
-1682+ 66FC C5               push bc
-1683+ 66FD D5               push de
-1684+ 66FE E5               push hl
-1685+ 66FF
-1686+ 66FF                  ; Formatta le ore (time_hours: 1..12)
-1687+ 66FF 3A 8E F0         ld   a, (time_hours)
-1688+ 6702 FE 0A            cp   10
-1689+ 6704 38 11            jr   c, .single_digit_hour
-1690+ 6706
-1691+ 6706                  ; Due cifre (10, 11, 12)
-1692+ 6706 3E 31            ld   a, '1'
-1693+ 6708 32 92 67         ld   (status_line + 25), a
-1694+ 670B 3A 8E F0         ld   a, (time_hours)
-1695+ 670E D6 0A            sub  10
-1696+ 6710 C6 30            add  a, '0'
-1697+ 6712 32 93 67         ld   (status_line + 26), a
-1698+ 6715 18 0D            jr   .hours_done
-1699+ 6717
-1700+ 6717              .single_digit_hour:
-1701+ 6717 3E 20            ld   a, ' '
-1702+ 6719 32 92 67         ld   (status_line + 25), a
-1703+ 671C 3A 8E F0         ld   a, (time_hours)
-1704+ 671F C6 30            add  a, '0'
-1705+ 6721 32 93 67         ld   (status_line + 26), a
-1706+ 6724
-1707+ 6724              .hours_done:
-1708+ 6724                  ; Due punti (:)
-1709+ 6724 3E 3A            ld   a, ':'
-1710+ 6726 32 94 67         ld   (status_line + 27), a
-1711+ 6729
-1712+ 6729                  ; Formatta i minuti (time_minutes: 0..59)
-1713+ 6729 3A 8F F0         ld   a, (time_minutes)
-1714+ 672C 0E 00            ld   c, 0
-1715+ 672E              .loop10_min:
-1716+ 672E FE 0A            cp   10
-1717+ 6730 38 05            jr   c, .done10_min
-1718+ 6732 D6 0A            sub  10
-1719+ 6734 0C               inc  c
-1720+ 6735 18 F7            jr   .loop10_min
-1721+ 6737              .done10_min:
-1722+ 6737 5F               ld   e, a                   ; E = unità dei minuti
-1723+ 6738 79               ld   a, c
-1724+ 6739 C6 30            add  a, '0'
-1725+ 673B 32 95 67         ld   (status_line + 28), a  ; Decine dei minuti
-1726+ 673E 7B               ld   a, e
-1727+ 673F C6 30            add  a, '0'
-1728+ 6741 32 96 67         ld   (status_line + 29), a  ; Unità dei minuti
-1729+ 6744
-1730+ 6744                  ; Suffisso "am" / "pm"
-1731+ 6744 3A 90 F0         ld   a, (time_period)
-1732+ 6747 B7               or   a
-1733+ 6748 20 04            jr   nz, .is_pm
-1734+ 674A 3E 61            ld   a, 'a'
-1735+ 674C 18 02            jr   .suffix_done
-1736+ 674E              .is_pm:
-1737+ 674E 3E 70            ld   a, 'p'
-1738+ 6750              .suffix_done:
-1739+ 6750 32 97 67         ld   (status_line + 30), a
-1740+ 6753 3E 6D            ld   a, 'm'
-1741+ 6755 32 98 67         ld   (status_line + 31), a
-1742+ 6758
-1743+ 6758                  ; Ristampa la riga di stato a riga 18
-1744+ 6758 3E 16            ld   a, 22                  ; AT (22)
-1745+ 675A D7               rst  $10
-1746+ 675B 3E 12            ld   a, 18                  ; Riga 18
-1747+ 675D D7               rst  $10
-1748+ 675E 3E 00            ld   a, 0                   ; Colonna 0
-1749+ 6760 D7               rst  $10
-1750+ 6761
-1751+ 6761 21 79 67         ld   hl, status_line
-1752+ 6764 06 20            ld   b, 32
-1753+ 6766 CD 7E 61         call Gfx_PrintString
-1754+ 6769
-1755+ 6769 21 99 67         ld   hl, status_line_attrs
-1756+ 676C 11 40 5A         ld   de, $5a40              ; Indirizzo attributi Riga 18
-1757+ 676F 01 20 00         ld   bc, 32
-1758+ 6772 ED B0            ldir
-1759+ 6774
-1760+ 6774 E1               pop  hl
-1761+ 6775 D1               pop  de
-1762+ 6776 C1               pop  bc
-1763+ 6777 F1               pop  af
-1764+ 6778 C9               ret
-1765+ 6779
-1766+ 6779              status_line:
-1767+ 6779 49 74 65 6D      db "Items collected 000 "
-1767+ 677D 73 20 63 6F
-1767+ 6781 6C 6C 65 63
-1767+ 6785 74 65 64 20
-1767+ 6789 30 30 30 20
-1768+ 678D
-1769+ 678D              status_line_time:
-1770+ 678D 54 69 6D 65      db "Time  7:00am"
-1770+ 6791 20 20 37 3A
-1770+ 6795 30 30 61 6D
-1771+ 6799
-1772+ 6799              status_line_attrs:
-1773+ 6799 41 42 43 44      db 65, 66, 67, 68, 69, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 70, 69, 68, 67, 66, 65
-1773+ 679D 45 47 47 47
-1773+ 67A1 47 47 47 47
-1773+ 67A5 47 47 47 47
-1773+ 67A9 47 47 47 47
-1773+ 67AD 47 47 47 47
-1773+ 67B1 47 47 46 45
-1773+ 67B5 44 43 42 41
-1774+ 67B9
-1775+ 67B9              ; -------------------------------------------------------------------
-1776+ 67B9              ; Disegna la riga di stato inferiore ("Room: XX  Remaining items: YY") nell'ultima riga (Riga 23)
-1777+ 67B9              ; -------------------------------------------------------------------
-1778+ 67B9                  IF ENABLE_ROOM_NUMBER != 0
-1779+ 67B9              Gfx_PrintRoomNumber:
-1780+ 67B9 F5               push af
-1781+ 67BA C5               push bc
-1782+ 67BB D5               push de
-1783+ 67BC E5               push hl
-1784+ 67BD
-1785+ 67BD 0E 00            ld   c, 0              ; C = colonna iniziale (0..31)
-1786+ 67BF
-1787+ 67BF                  ; 1. Stampa la stringa label_room_str ("Room: ")
-1788+ 67BF 21 87 68         ld   hl, label_room_str
-1789+ 67C2 06 06            ld   b, 6              ; 6 caratteri ("Room: ")
-1790+ 67C4              .print_room_label_loop:
-1791+ 67C4 C5               push bc
-1792+ 67C5 7E               ld   a, (hl)           ; A = carattere ASCII
-1793+ 67C6 E5               push hl
-1794+ 67C7 CD 4A 68         call Gfx_DrawCharVRAM_Row23
-1795+ 67CA E1               pop  hl
-1796+ 67CB 23               inc  hl
-1797+ 67CC C1               pop  bc
-1798+ 67CD 0C               inc  c                 ; Prossima colonna
-1799+ 67CE 10 F4            djnz .print_room_label_loop
-1800+ 67D0
-1801+ 67D0                  ; 2. Converti (current_room) in 2 cifre ASCII e stampale
-1802+ 67D0 3A A7 EF         ld   a, (current_room)
-1803+ 67D3 06 00            ld   b, 0              ; B = decine
-1804+ 67D5              .loop_tens:
-1805+ 67D5 FE 0A            cp   10
-1806+ 67D7 38 05            jr   c, .done_tens
-1807+ 67D9 D6 0A            sub  10
-1808+ 67DB 04               inc  b
-1809+ 67DC 18 F7            jr   .loop_tens
-1810+ 67DE              .done_tens:
-1811+ 67DE 5F               ld   e, a              ; E = unità
-1812+ 67DF
-1813+ 67DF                  ; Stampa cifra decine
-1814+ 67DF 78               ld   a, b
-1815+ 67E0 C6 30            add  a, '0'
-1816+ 67E2 D5               push de
-1817+ 67E3 CD 4A 68         call Gfx_DrawCharVRAM_Row23
-1818+ 67E6 D1               pop  de
-1819+ 67E7 0C               inc  c
-1820+ 67E8
-1821+ 67E8                  ; Stampa cifra unità
-1822+ 67E8 7B               ld   a, e
-1823+ 67E9 C6 30            add  a, '0'
-1824+ 67EB CD 4A 68         call Gfx_DrawCharVRAM_Row23
-1825+ 67EE 0C               inc  c
-1826+ 67EF
-1827+ 67EF                  ; 3. Stampa la stringa label_remaining_str ("  Remaining items: ")
-1828+ 67EF 21 8D 68         ld   hl, label_remaining_str
-1829+ 67F2 06 13            ld   b, 19             ; 19 caratteri ("  Remaining items: ")
-1830+ 67F4              .print_rem_label_loop:
-1831+ 67F4 C5               push bc
-1832+ 67F5 7E               ld   a, (hl)           ; A = carattere ASCII
-1833+ 67F6 E5               push hl
-1834+ 67F7 CD 4A 68         call Gfx_DrawCharVRAM_Row23
-1835+ 67FA E1               pop  hl
-1836+ 67FB 23               inc  hl
-1837+ 67FC C1               pop  bc
-1838+ 67FD 0C               inc  c                 ; Prossima colonna
-1839+ 67FE 10 F4            djnz .print_rem_label_loop
-1840+ 6800
-1841+ 6800                  ; 4. Stampa il valore di remaining items
-1842+ 6800 CD 1B 68         call Gfx_UpdateRemainingItemsDisplay
-1843+ 6803
-1844+ 6803                  ; 5. Pulisci le colonne rimanenti 29..31 con spazi
-1845+ 6803 0E 1D            ld   c, 29
-1846+ 6805 3E 20            ld   a, ' '
-1847+ 6807 CD 4A 68         call Gfx_DrawCharVRAM_Row23
-1848+ 680A 0C               inc  c
-1849+ 680B 3E 20            ld   a, ' '
-1850+ 680D CD 4A 68         call Gfx_DrawCharVRAM_Row23
-1851+ 6810 0C               inc  c
-1852+ 6811 3E 20            ld   a, ' '
-1853+ 6813 CD 4A 68         call Gfx_DrawCharVRAM_Row23
-1854+ 6816
-1855+ 6816 E1               pop  hl
-1856+ 6817 D1               pop  de
-1857+ 6818 C1               pop  bc
-1858+ 6819 F1               pop  af
-1859+ 681A C9               ret
-1860+ 681B
-1861+ 681B              ; -------------------------------------------------------------------
-1862+ 681B              ; Aggiorna il conteggio di Remaining Items sulla Riga 23 (Colonna 27..28)
-1863+ 681B              ; -------------------------------------------------------------------
-1864+ 681B              Gfx_UpdateRemainingItemsDisplay:
-1865+ 681B F5               push af
-1866+ 681C C5               push bc
-1867+ 681D D5               push de
-1868+ 681E E5               push hl
-1869+ 681F
-1870+ 681F                  ; Calcola oggetti rimanenti: TOTAL_ITEMS - items_collected
-1871+ 681F 3E 4D            ld   a, TOTAL_ITEMS
-1872+ 6821 21 8B EC         ld   hl, items_collected
-1873+ 6824 96               sub  (hl)
-1874+ 6825 30 01            jr   nc, .rem_valid
-1875+ 6827 AF               xor  a
-1876+ 6828              .rem_valid:
-1877+ 6828 06 00            ld   b, 0              ; B = decine
-1878+ 682A              .loop_tens_rem:
-1879+ 682A FE 0A            cp   10
-1880+ 682C 38 05            jr   c, .done_tens_rem
-1881+ 682E D6 0A            sub  10
-1882+ 6830 04               inc  b
-1883+ 6831 18 F7            jr   .loop_tens_rem
-1884+ 6833              .done_tens_rem:
-1885+ 6833 5F               ld   e, a              ; E = unità
-1886+ 6834
-1887+ 6834 0E 1B            ld   c, 27             ; Colonna 27 per decine
-1888+ 6836 78               ld   a, b
-1889+ 6837 C6 30            add  a, '0'
-1890+ 6839 D5               push de
-1891+ 683A CD 4A 68         call Gfx_DrawCharVRAM_Row23
-1892+ 683D D1               pop  de
-1893+ 683E 0C               inc  c                 ; Colonna 28 per unità
-1894+ 683F 7B               ld   a, e
-1895+ 6840 C6 30            add  a, '0'
-1896+ 6842 CD 4A 68         call Gfx_DrawCharVRAM_Row23
-1897+ 6845
-1898+ 6845 E1               pop  hl
-1899+ 6846 D1               pop  de
-1900+ 6847 C1               pop  bc
-1901+ 6848 F1               pop  af
-1902+ 6849 C9               ret
-1903+ 684A
-1904+ 684A              ; -------------------------------------------------------------------
-1905+ 684A              ; Disegna un carattere ASCII A alla colonna C (0..31) di Riga 23 direttamente in VRAM
-1906+ 684A              ; -------------------------------------------------------------------
-1907+ 684A              Gfx_DrawCharVRAM_Row23:
-1908+ 684A F5               push af
-1909+ 684B C5               push bc
-1910+ 684C D5               push de
-1911+ 684D E5               push hl
-1912+ 684E
-1913+ 684E                  ; C = colonna (0..31), A = carattere ASCII
-1914+ 684E 47               ld   b, a              ; B = salva carattere ASCII
-1915+ 684F 79               ld   a, c
-1916+ 6850 FE 20            cp   32
-1917+ 6852 30 2E            jr   nc, .exit_draw_char ; Se C >= 32, ignora per sicurezza!
-1918+ 6854
-1919+ 6854                  ; Check dei limiti ASCII (32..127) per non accedere a RAM fuori dal font
-1920+ 6854 78               ld   a, b              ; A = carattere ASCII
-1921+ 6855 FE 20            cp   32
-1922+ 6857 38 29            jr   c, .exit_draw_char ; Se CHAR < 32 (non stampabile), ignora!
-1923+ 6859 FE 80            cp   128
-1924+ 685B 30 25            jr   nc, .exit_draw_char ; Se CHAR >= 128 (fuori dal font RAM), ignora!
-1925+ 685D
-1926+ 685D                  ; 1. Indirizzo del font in RAM ($F100 + (ASCII - 32) * 8)
-1927+ 685D D6 20            sub  32                ; A = ASCII - 32
-1928+ 685F 6F               ld   l, a
-1929+ 6860 26 00            ld   h, 0
-1930+ 6862 29               add  hl, hl            ; *2
-1931+ 6863 29               add  hl, hl            ; *4
-1932+ 6864 29               add  hl, hl            ; *8
-1933+ 6865 11 00 F1         ld   de, $F100         ; Indirizzo base del font 8x8 in RAM ($F100)
-1934+ 6868 19               add  hl, de            ; HL = indirizzo pattern font 8x8 in RAM ($F100)
-1935+ 6869
-1936+ 6869                  ; 2. Imposta l'attributo colore a Riga 23, Colonna C ($5AE0 + C)
-1937+ 6869 E5               push hl                ; Salva indirizzo pattern font
-1938+ 686A 69               ld   l, c
-1939+ 686B 26 00            ld   h, 0
-1940+ 686D 11 E0 5A         ld   de, $5ae0
-1941+ 6870 19               add  hl, de            ; HL = indirizzo attributi Riga 23 ($5AE0 + C)
-1942+ 6871 36 46            ld   (hl), $46         ; Attributo: BRIGHT 1 + PAPER BLACK + INK YELLOW ($46)
-1943+ 6873 E1               pop  hl                ; Ripristina indirizzo pattern font in HL
-1944+ 6874
-1945+ 6874                  ; 3. Indirizzo VRAM Riga 23, Colonna C
-1946+ 6874                  ; Low byte VRAM: $E0 | C
-1947+ 6874 79               ld   a, c
-1948+ 6875 F6 E0            or   $e0
-1949+ 6877 5F               ld   e, a              ; E = Low byte VRAM ($E0 | C)
-1950+ 6878
-1951+ 6878                  ; Copia gli 8 byte di pattern nelle 8 linee di VRAM ($5000, $5100, ..., $5700)
-1952+ 6878 16 50            ld   d, $50            ; D = High byte iniziale VRAM ($50)
-1953+ 687A 06 08            ld   b, 8              ; B = 8 linee di pixel
-1954+ 687C              .loop_vram_lines:
-1955+ 687C 7E               ld   a, (hl)           ; Leggi byte dal font ROM
-1956+ 687D 12               ld   (de), a           ; Scrivi direttamente in VRAM bitmap
-1957+ 687E 23               inc  hl                ; Prossimo byte del font
-1958+ 687F 14               inc  d                 ; Prossima linea schermo ($50 -> $51 -> ... -> $57)
-1959+ 6880 10 FA            djnz .loop_vram_lines
-1960+ 6882
-1961+ 6882              .exit_draw_char:
-1962+ 6882 E1               pop  hl
-1963+ 6883 D1               pop  de
-1964+ 6884 C1               pop  bc
-1965+ 6885 F1               pop  af
-1966+ 6886 C9               ret
-1967+ 6887
-1968+ 6887              label_room_str:
-1969+ 6887 52 6F 6F 6D      db "Room: "
-1969+ 688B 3A 20
-1970+ 688D
-1971+ 688D              label_remaining_str:
-1972+ 688D 20 20 52 65      db "  Remaining items: "
-1972+ 6891 6D 61 69 6E
-1972+ 6895 69 6E 67 20
-1972+ 6899 69 74 65 6D
-1972+ 689D 73 3A 20
-1973+ 68A0                  ENDIF
-1974+ 68A0
-1975+ 68A0              ; -------------------------------------------------------------------
-1976+ 68A0              ; Disegna riga/pavimento sotto i piedi degli sprite (Riga 18, Y = 144)
-1977+ 68A0              ; -------------------------------------------------------------------
-1978+ 68A0              Gfx_DrawWillyLifeIcon:
-1979+ 68A0                  ; Input: C = Colonna (0..31), A = Colore Gfx_Ink (1..7 / bright color)
-1980+ 68A0                  ; D = Colore, E = Colonna
-1981+ 68A0 57               ld   d, a              ; D = Colore
-1982+ 68A1 59               ld   e, c              ; E = Colonna
-1983+ 68A2
-1984+ 68A2                  ; 0. Cancella la testa e il corpo per evitare artefatti da OR
-1985+ 68A2 C5               push bc
-1986+ 68A3 D5               push de
-1987+ 68A4 7B               ld   a, e
-1988+ 68A5 87               add  a, a              ; *2
-1989+ 68A6 87               add  a, a              ; *4
-1990+ 68A7 87               add  a, a              ; *8
-1991+ 68A8 4F               ld   c, a              ; C = X pixel
-1992+ 68A9 06 A0            ld   b, 160            ; B = Y pixel (Row 20 / head)
-1993+ 68AB CD 8F 66         call Gfx_ClearPixelSprite8x8
-1994+ 68AE 06 A8            ld   b, 168            ; B = Y pixel (Row 21 / body)
-1995+ 68B0 CD 8F 66         call Gfx_ClearPixelSprite8x8
-1996+ 68B3 D1               pop  de
-1997+ 68B4 C1               pop  bc
-1998+ 68B5
-1999+ 68B5                  ; 1. Disegna la testa a Row 20, Colonna E
-2000+ 68B5                  ; X pixel = E * 8
-2001+ 68B5 7B               ld   a, e
-2002+ 68B6 87               add  a, a              ; *2
-2003+ 68B7 87               add  a, a              ; *4
-2004+ 68B8 87               add  a, a              ; *8
-2005+ 68B9 4F               ld   c, a              ; C = X pixel
-2006+ 68BA 06 A0            ld   b, 160            ; B = Y pixel (Row 20)
-2007+ 68BC DD 21 81 CE      ld   ix, Willy + 0*8   ; IX = head facing right
-2008+ 68C0 CD 3F 5E         call Gfx_DrawPixelSprite8x8
-2009+ 68C3
-2010+ 68C3                  ; 2. Disegna il corpo a Row 21, Colonna E
-2011+ 68C3 06 A8            ld   b, 168            ; B = Y pixel (Row 21)
-2012+ 68C5
-2013+ 68C5 D5               push de                ; SALVA D = Colore, E = Colonna
-2014+ 68C6
-2015+ 68C6                  ; Determina il frame del corpo per le icone delle vite
-2016+ 68C6                  IF ENABLE_ANIMATE_LIVES != 0
-2017+ 68C6 ~                ; Calcola il frame animato dal contatore
-2018+ 68C6 ~                ld   a, (counter)
-2019+ 68C6 ~                rrca
+1236+ 64A4                  ;db "VUOI CONTINUARE? Y/N"
+1237+ 64A4 20 20 20 43      db "   CONTINUE? Y/N    "
+1237+ 64A8 4F 4E 54 49
+1237+ 64AC 4E 55 45 3F
+1237+ 64B0 20 59 2F 4E
+1237+ 64B4 20 20 20 20
+1238+ 64B8
+1239+ 64B8              game_over_color_table:
+1240+ 64B8 42 46 47 45      db $42, $46, $47, $45, $44, $43, $46, $42
+1240+ 64BC 44 43 46 42
+1241+ 64C0
+1242+ 64C0              ; -------------------------------------------------------------------
+1243+ 64C0              ; Gfx_DrawGameOverScreen
+1244+ 64C0              ; Esegue la sequenza animata di Game Over:
+1245+ 64C0              ; 1. Pulisce lo schermo a nero, mostra Willy (Y=96), BotteSprite (Y=112, Rosso), Nome Stanza (riga 16) e Status Line (riga 18).
+1246+ 64C0              ; 2. Animazione di discesa fluida di PiedeSprite dall'alto (Y=0) fino a fermarsi sopra Willy (Y=80), prima del bordo alto della Botte.
+1247+ 64C0              ; 3. Breve pausa con PiedeSprite fermo sopra Willy.
+1248+ 64C0              ; 4. Stampa la scritta GAME OVER al centro dello schermo (riga 5) solo dopo la pausa.
+1249+ 64C0              ; 5. Stampa la richiesta "VUOI CONTINUARE? Y/N" a riga 8.
+1250+ 64C0              ; -------------------------------------------------------------------
+1251+ 64C0              Gfx_DrawGameOverScreen:
+1252+ 64C0 F5               push af
+1253+ 64C1 C5               push bc
+1254+ 64C2 D5               push de
+1255+ 64C3 E5               push hl
+1256+ 64C4 DD E5            push ix
+1257+ 64C6
+1258+ 64C6                  ; 1. Bordo hardware e schermo a nero
+1259+ 64C6 AF               xor  a
+1260+ 64C7 D3 FE            out  ($fe), a              ; Bordo a nero
+1261+ 64C9 21 8D 5C         ld   hl, ATTR_P
+1262+ 64CC 77               ld   (hl), a               ; Paper/Ink = 0 (Nero)
+1263+ 64CD CD AF 0D         call CLS                   ; Pulisce tutti i pixel e gli attributi a nero
+1264+ 64D0 36 07            ld   (hl), $07             ; Ripristina ATTR_P a $07 (Inchiostro Bianco, Sfondo Nero)
+1265+ 64D2 3E 07            ld   a, $07
+1266+ 64D4 32 8F 5C         ld   (ATTR_T), a           ; Ripristina ATTR_T a $07
+1267+ 64D7
+1268+ 64D7                  ; 2. Disegna Willy (immobile, rivolto a destra) a X=124, Y=96
+1269+ 64D7                  ; 2a. Testa di Willy (8x8) a X=124, Y=96
+1270+ 64D7 01 7C 60         ld   bc, $607c             ; B = Y = 96 ($60), C = X = 124 ($7C)
+1271+ 64DA DD 21 81 CE      ld   ix, Willy + (0 * 8)   ; HEAD_GRAPH_RIGHT
+1272+ 64DE CD 3F 5E         call Gfx_DrawPixelSprite8x8
+1273+ 64E1
+1274+ 64E1                  ; 2b. Corpo di Willy (8x8) a X=124, Y=104
+1275+ 64E1 01 7C 68         ld   bc, $687c             ; B = Y = 104 ($68), C = X = 124 ($7C)
+1276+ 64E4 DD 21 89 CE      ld   ix, Willy + (1 * 8)   ; Body right frame 0
+1277+ 64E8 CD 3F 5E         call Gfx_DrawPixelSprite8x8
+1278+ 64EB
+1279+ 64EB                  ; 2c. Imposta attributi colore di Willy (Bianco Brillante) a X=124, Y=96
+1280+ 64EB 01 7C 60         ld   bc, $607c             ; B = Y = 96, C = X = 124
+1281+ 64EE 3E 47            ld   a, WHITE | $40        ; Bianco Brillante
+1282+ 64F0 CD 1F 6A         call Gfx_SetEnemyColorAttributes
+1283+ 64F3
+1284+ 64F3                  ; 3. Disegna BotteSprite (immobile, colore Rosso) a X=120, Y=112
+1285+ 64F3 01 78 70         ld   bc, $7078             ; B = Y = 112 ($70), C = X = 120 ($78)
+1286+ 64F6 DD 21 01 E9      ld   ix, BotteSprite       ; Frame 1 di BotteSprite
+1287+ 64FA CD 89 5F         call Gfx_DrawPixelSprite16x16
+1288+ 64FD
+1289+ 64FD                  ; 3b. Imposta attributi colore per BotteSprite (Rosso Brillante) a X=120, Y=112
+1290+ 64FD 01 78 70         ld   bc, $7078             ; B = Y = 112, C = X = 120
+1291+ 6500 3E 42            ld   a, RED | $40          ; Rosso Brillante
+1292+ 6502 CD 1F 6A         call Gfx_SetEnemyColorAttributes
+1293+ 6505
+1294+ 6505                  ; 4. Stampa il Nome della Stanza a riga 16
+1295+ 6505 3E 16            ld   a, 22                 ; Codice di controllo AT (22)
+1296+ 6507 D7               rst  $10
+1297+ 6508 3E 10            ld   a, 16                 ; Riga 16
+1298+ 650A D7               rst  $10
+1299+ 650B 3E 00            ld   a, 0                  ; Colonna 0
+1300+ 650D D7               rst  $10
+1301+ 650E
+1302+ 650E 3E 06            ld   a, YELLOW             ; Inchiostro Giallo
+1303+ 6510 CD 01 5E         call Gfx_Ink
+1304+ 6513
+1305+ 6513 2A 01 F0         ld   hl, (room_ptr)        ; HL = indirizzo stanza corrente
+1306+ 6516 11 80 00         ld   de, 128               ; Offset del nome stanza (32 byte)
+1307+ 6519 19               add  hl, de
+1308+ 651A 06 20            ld   b, 32
+1309+ 651C CD 7E 61         call Gfx_PrintString
+1310+ 651F
+1311+ 651F                  ; 5. Stampa la riga di stato a riga 18
+1312+ 651F 3E 16            ld   a, 22                 ; Codice di controllo AT (22)
+1313+ 6521 D7               rst  $10
+1314+ 6522 3E 12            ld   a, 18                 ; Riga 18
+1315+ 6524 D7               rst  $10
+1316+ 6525 3E 00            ld   a, 0                  ; Colonna 0
+1317+ 6527 D7               rst  $10
+1318+ 6528
+1319+ 6528 21 79 67         ld   hl, status_line       ; HL = indirizzo stringa di stato
+1320+ 652B 06 20            ld   b, 32                 ; B = 32 caratteri
+1321+ 652D CD 7E 61         call Gfx_PrintString
+1322+ 6530
+1323+ 6530                  ; 6. Applica i colori agli attributi di riga 18 ($5A40)
+1324+ 6530 21 99 67         ld   hl, status_line_attrs
+1325+ 6533 11 40 5A         ld   de, $5a40             ; Indirizzo attributi riga 18
+1326+ 6536 01 20 00         ld   bc, 32
+1327+ 6539 ED B0            ldir
+1328+ 653B
+1329+ 653B                  ; 7. Animazione: Discesa fluida di PiedeSprite dall'alto (Y=0) fino a Y=96 (alla parte alta della Botte)
+1330+ 653B 06 00            ld   b, 0                  ; B = Y iniziale (0)
+1331+ 653D              .foot_descent_loop:
+1332+ 653D C5               push bc                    ; Salva B = Y corrente
+1333+ 653E
+1334+ 653E                  ; 7a. Cancella l'intero blocco 16x16 della posizione precedente (Y - 2) se Y > 0
+1335+ 653E 78               ld   a, b
+1336+ 653F B7               or   a
+1337+ 6540 28 1F            jr   z, .skip_clear_prev
+1338+ 6542 D6 02            sub  2                     ; Y precedente (passo 2 pixel)
+1339+ 6544 47               ld   b, a
+1340+ 6545 0E 78            ld   c, 120                ; X = 120
+1341+ 6547 CD C1 61         call Gfx_Clear16x16_Black
+1342+ 654A
+1343+ 654A                  ; Pulisce l'attributo della riga lasciata indietro (Row = (Y - 2) / 8)
+1344+ 654A 78               ld   a, b
+1345+ 654B CB 3F            srl  a
+1346+ 654D CB 3F            srl  a
+1347+ 654F CB 3F            srl  a                     ; A = Row da azzerare
+1348+ 6551 6F               ld   l, a
+1349+ 6552 26 00            ld   h, 0
+1350+ 6554 29               add  hl, hl                ; * 2
+1351+ 6555 29               add  hl, hl                ; * 4
+1352+ 6556 29               add  hl, hl                ; * 8
+1353+ 6557 29               add  hl, hl                ; * 16
+1354+ 6558 29               add  hl, hl                ; * 32
+1355+ 6559 11 0F 58         ld   de, $580f             ; $5800 + 15
+1356+ 655C 19               add  hl, de
+1357+ 655D AF               xor  a
+1358+ 655E 77               ld   (hl), a               ; Col 15 = 0
+1359+ 655F 23               inc  hl
+1360+ 6560 77               ld   (hl), a               ; Col 16 = 0
+1361+ 6561
+1362+ 6561              .skip_clear_prev:
+1363+ 6561 C1               pop  bc                    ; Ripristina B = Y corrente
+1364+ 6562 C5               push bc
+1365+ 6563
+1366+ 6563                  ; Quando il Piede raggiunge Y = 96, cancella lo sprite di Willy a (124, 96) prima di disegnare il Piede
+1367+ 6563 78               ld   a, b
+1368+ 6564 FE 60            cp   96
+1369+ 6566 20 09            jr   nz, .draw_foot
+1370+ 6568 C5               push bc
+1371+ 6569 0E 78            ld   c, 120
+1372+ 656B 06 60            ld   b, 96
+1373+ 656D CD C1 61         call Gfx_Clear16x16_Black
+1374+ 6570 C1               pop  bc
+1375+ 6571
+1376+ 6571              .draw_foot:
+1377+ 6571                  ; 7b. Disegna PiedeSprite alla coordinata corrente (X=120, Y)
+1378+ 6571 0E 78            ld   c, 120
+1379+ 6573 DD 21 01 E8      ld   ix, PiedeSprite
+1380+ 6577 CD 89 5F         call Gfx_DrawPixelSprite16x16
+1381+ 657A
+1382+ 657A                  ; 7c. Imposta colore Giallo Brillante per PiedeSprite
+1383+ 657A 0E 78            ld   c, 120
+1384+ 657C 3E 46            ld   a, YELLOW | $40
+1385+ 657E CD 1F 6A         call Gfx_SetEnemyColorAttributes
+1386+ 6581
+1387+ 6581                  ; 7d. Pausa per movimento fluido a 50Hz
+1388+ 6581 76               halt
+1389+ 6582
+1390+ 6582 C1               pop  bc                    ; B = Y corrente
+1391+ 6583 78               ld   a, b
+1392+ 6584 C6 02            add  a, 2                  ; Avanza di 2 pixel
+1393+ 6586 47               ld   b, a
+1394+ 6587 FE 62            cp   98                    ; Si ferma a Y = 96 (incluso, il ciclo termina quando B=98)
+1395+ 6589 38 B2            jr   c, .foot_descent_loop
+1396+ 658B
+1397+ 658B                  ; 8. Breve pausa con PiedeSprite fermato sulla parte alta della Botte (~0.7s)
+1398+ 658B 06 23            ld   b, 35
+1399+ 658D              .pause_after_foot:
+1400+ 658D 76               halt
+1401+ 658E 10 FD            djnz .pause_after_foot
+1402+ 6590
+1403+ 6590                  ; 9. Solo DOPO la pausa, fa comparire GAME OVER al centro dello schermo a riga 5, colonna 11
+1404+ 6590 3E 16            ld   a, 22                 ; AT (22)
+1405+ 6592 D7               rst  $10
+1406+ 6593 3E 05            ld   a, 5                  ; Riga 5
+1407+ 6595 D7               rst  $10
+1408+ 6596 3E 0B            ld   a, 11                 ; Colonna 11
+1409+ 6598 D7               rst  $10
+1410+ 6599
+1411+ 6599 3E 02            ld   a, RED                ; Inchiostro Rosso
+1412+ 659B CD 01 5E         call Gfx_Ink
+1413+ 659E
+1414+ 659E 21 9B 64         ld   hl, game_over_str
+1415+ 65A1 06 09            ld   b, 9
+1416+ 65A3 CD 7E 61         call Gfx_PrintString
+1417+ 65A6
+1418+ 65A6                  ; Imposta attributo iniziale per GAME OVER (Rosso Brillante)
+1419+ 65A6 21 AB 58         ld   hl, $58ab             ; Riga 5, Colonna 11 ($5800 + 5*32 + 11 = $58AB)
+1420+ 65A9 06 09            ld   b, 9
+1421+ 65AB 3E 42            ld   a, RED | $40
+1422+ 65AD              .init_go_attr:
+1423+ 65AD 77               ld   (hl), a
+1424+ 65AE 23               inc  hl
+1425+ 65AF 10 FC            djnz .init_go_attr
+1426+ 65B1
+1427+ 65B1                  ; 10. Fa comparire la domanda "VUOI CONTINUARE? Y/N" a riga 8, colonna 6
+1428+ 65B1 3E 16            ld   a, 22                 ; AT (22)
+1429+ 65B3 D7               rst  $10
+1430+ 65B4 3E 08            ld   a, 8                  ; Riga 8
+1431+ 65B6 D7               rst  $10
+1432+ 65B7 3E 06            ld   a, 6                  ; Colonna 6
+1433+ 65B9 D7               rst  $10
+1434+ 65BA
+1435+ 65BA 3E 06            ld   a, YELLOW             ; Inchiostro Giallo
+1436+ 65BC CD 01 5E         call Gfx_Ink
+1437+ 65BF
+1438+ 65BF 21 A4 64         ld   hl, game_over_continue_str
+1439+ 65C2 06 14            ld   b, 20
+1440+ 65C4 CD 7E 61         call Gfx_PrintString
+1441+ 65C7
+1442+ 65C7                  ; Imposta attributo per "VUOI CONTINUARE? Y/N" (Giallo Brillante)
+1443+ 65C7 21 06 59         ld   hl, $5906             ; Riga 8, Colonna 6 ($5800 + 8*32 + 6 = $5906)
+1444+ 65CA 06 14            ld   b, 20
+1445+ 65CC 3E 46            ld   a, YELLOW | $40
+1446+ 65CE              .init_continue_attr:
+1447+ 65CE 77               ld   (hl), a
+1448+ 65CF 23               inc  hl
+1449+ 65D0 10 FC            djnz .init_continue_attr
+1450+ 65D2
+1451+ 65D2 DD E1            pop  ix
+1452+ 65D4 E1               pop  hl
+1453+ 65D5 D1               pop  de
+1454+ 65D6 C1               pop  bc
+1455+ 65D7 F1               pop  af
+1456+ 65D8 C9               ret
+1457+ 65D9
+1458+ 65D9              Gfx_PrintWillyLives:
+1459+ 65D9 E5               push hl
+1460+ 65DA C5               push bc
+1461+ 65DB D5               push de
+1462+ 65DC F5               push af
+1463+ 65DD
+1464+ 65DD                  ; Primo Willy (Colonna 0, giallo)
+1465+ 65DD 21 8E EC         ld   hl, willy_lives
+1466+ 65E0 7E               ld   a, (hl)
+1467+ 65E1 FE 01            cp   1
+1468+ 65E3 0E 00            ld   c, 0
+1469+ 65E5 38 07            jr   c, .erase_1
+1470+ 65E7 3E 46            ld   a, $40 | YELLOW
+1471+ 65E9 CD A0 68         call Gfx_DrawWillyLifeIcon
+1472+ 65EC 18 03            jr   .check_2
+1473+ 65EE              .erase_1:
+1474+ 65EE CD 68 66         call Gfx_EraseWillyLifeIcon
+1475+ 65F1
+1476+ 65F1              .check_2:
+1477+ 65F1 3A 8E EC         ld   a, (willy_lives)
+1478+ 65F4 FE 02            cp   2
+1479+ 65F6 0E 02            ld   c, 2
+1480+ 65F8 38 07            jr   c, .erase_2
+1481+ 65FA 3E 45            ld   a, $40 | CYAN
+1482+ 65FC CD A0 68         call Gfx_DrawWillyLifeIcon
+1483+ 65FF 18 03            jr   .check_3
+1484+ 6601              .erase_2:
+1485+ 6601 CD 68 66         call Gfx_EraseWillyLifeIcon
+1486+ 6604
+1487+ 6604              .check_3:
+1488+ 6604 3A 8E EC         ld   a, (willy_lives)
+1489+ 6607 FE 03            cp   3
+1490+ 6609 0E 04            ld   c, 4
+1491+ 660B 38 07            jr   c, .erase_3
+1492+ 660D 3E 44            ld   a, $40 | GREEN
+1493+ 660F CD A0 68         call Gfx_DrawWillyLifeIcon
+1494+ 6612 18 03            jr   .check_4
+1495+ 6614              .erase_3:
+1496+ 6614 CD 68 66         call Gfx_EraseWillyLifeIcon
+1497+ 6617
+1498+ 6617              .check_4:
+1499+ 6617 3A 8E EC         ld   a, (willy_lives)
+1500+ 661A FE 04            cp   4
+1501+ 661C 0E 06            ld   c, 6
+1502+ 661E 38 07            jr   c, .erase_4
+1503+ 6620 3E 43            ld   a, $40 | MAGENTA
+1504+ 6622 CD A0 68         call Gfx_DrawWillyLifeIcon
+1505+ 6625 18 03            jr   .check_5
+1506+ 6627              .erase_4:
+1507+ 6627 CD 68 66         call Gfx_EraseWillyLifeIcon
+1508+ 662A
+1509+ 662A              .check_5:
+1510+ 662A 3A 8E EC         ld   a, (willy_lives)
+1511+ 662D FE 05            cp   5
+1512+ 662F 0E 08            ld   c, 8
+1513+ 6631 38 07            jr   c, .erase_5
+1514+ 6633 3E 42            ld   a, $40 | RED
+1515+ 6635 CD A0 68         call Gfx_DrawWillyLifeIcon
+1516+ 6638 18 03            jr   .check_6
+1517+ 663A              .erase_5:
+1518+ 663A CD 68 66         call Gfx_EraseWillyLifeIcon
+1519+ 663D
+1520+ 663D              .check_6:
+1521+ 663D 3A 8E EC         ld   a, (willy_lives)
+1522+ 6640 FE 06            cp   6
+1523+ 6642 0E 0A            ld   c, 10
+1524+ 6644 38 07            jr   c, .erase_6
+1525+ 6646 3E 41            ld   a, $40 | BLUE
+1526+ 6648 CD A0 68         call Gfx_DrawWillyLifeIcon
+1527+ 664B 18 03            jr   .check_7
+1528+ 664D              .erase_6:
+1529+ 664D CD 68 66         call Gfx_EraseWillyLifeIcon
+1530+ 6650
+1531+ 6650              .check_7:
+1532+ 6650 3A 8E EC         ld   a, (willy_lives)
+1533+ 6653 FE 07            cp   7
+1534+ 6655 0E 0C            ld   c, 12
+1535+ 6657 38 07            jr   c, .erase_7
+1536+ 6659 3E 47            ld   a, $40 | WHITE
+1537+ 665B CD A0 68         call Gfx_DrawWillyLifeIcon
+1538+ 665E 18 03            jr   .done
+1539+ 6660              .erase_7:
+1540+ 6660 CD 68 66         call Gfx_EraseWillyLifeIcon
+1541+ 6663
+1542+ 6663              .done:
+1543+ 6663 F1               pop  af
+1544+ 6664 D1               pop  de
+1545+ 6665 C1               pop  bc
+1546+ 6666 E1               pop  hl
+1547+ 6667 C9               ret
+1548+ 6668
+1549+ 6668              Gfx_EraseWillyLifeIcon:
+1550+ 6668                  ; Input: C = Colonna (0..31)
+1551+ 6668 59               ld   e, c              ; E = Colonna
+1552+ 6669
+1553+ 6669                  ; 1. Cancella la testa a Row 20, Colonna E
+1554+ 6669 7B               ld   a, e
+1555+ 666A 87               add  a, a              ; *2
+1556+ 666B 87               add  a, a              ; *4
+1557+ 666C 87               add  a, a              ; *8
+1558+ 666D 4F               ld   c, a              ; C = X pixel
+1559+ 666E 06 A0            ld   b, 160            ; B = Y pixel (Row 20)
+1560+ 6670 CD 8F 66         call Gfx_ClearPixelSprite8x8
+1561+ 6673
+1562+ 6673                  ; 2. Cancella il corpo a Row 21, Colonna E
+1563+ 6673 06 A8            ld   b, 168            ; B = Y pixel (Row 21)
+1564+ 6675 CD 8F 66         call Gfx_ClearPixelSprite8x8
+1565+ 6678
+1566+ 6678                  ; 3. Resetta gli attributi a Row 20 e Row 21 per Colonna E a nero (0)
+1567+ 6678                  ; AttrAddr = $5A80 + E
+1568+ 6678 26 5A            ld   h, $5a
+1569+ 667A 3E 80            ld   a, $80
+1570+ 667C 83               add  a, e
+1571+ 667D 6F               ld   l, a
+1572+ 667E 30 01            jr   nc, .no_carry1
+1573+ 6680 24               inc  h
+1574+ 6681              .no_carry1:
+1575+ 6681 36 00            ld   (hl), 0           ; Scrivi colore testa a 0 (nero)
+1576+ 6683
+1577+ 6683                  ; AttrAddr = $5AA0 + E
+1578+ 6683 26 5A            ld   h, $5a
+1579+ 6685 3E A0            ld   a, $a0
+1580+ 6687 83               add  a, e
+1581+ 6688 6F               ld   l, a
+1582+ 6689 30 01            jr   nc, .no_carry2
+1583+ 668B 24               inc  h
+1584+ 668C              .no_carry2:
+1585+ 668C 36 00            ld   (hl), 0           ; Scrivi colore corpo a 0 (nero)
+1586+ 668E C9               ret
+1587+ 668F
+1588+ 668F              Gfx_ClearPixelSprite8x8:
+1589+ 668F C5               push bc
+1590+ 6690 D5               push de
+1591+ 6691 E5               push hl
+1592+ 6692
+1593+ 6692                  ; 1. Calcola indirizzo schermo
+1594+ 6692 60               ld   h, b
+1595+ 6693 69               ld   l, c
+1596+ 6694 CD 10 5E         call Gfx_GetScreenAddr ; HL = indirizzo schermo
+1597+ 6697
+1598+ 6697 0E 08            ld   c, 8          ; 8 linee
+1599+ 6699              .line_loop:
+1600+ 6699 36 00            ld   (hl), 0       ; Pulisci la cella dello schermo (imposta a zero)
+1601+ 669B CD 30 5E         call Gfx_IncScreenLine ; Prossima scanline sullo schermo
+1602+ 669E 0D               dec  c
+1603+ 669F 20 F8            jr   nz, .line_loop
+1604+ 66A1
+1605+ 66A1 E1               pop  hl
+1606+ 66A2 D1               pop  de
+1607+ 66A3 C1               pop  bc
+1608+ 66A4 C9               ret
+1609+ 66A5
+1610+ 66A5              Gfx_UpdateItemsCollectedDisplay:
+1611+ 66A5 F5               push af
+1612+ 66A6 C5               push bc
+1613+ 66A7 D5               push de
+1614+ 66A8 E5               push hl
+1615+ 66A9
+1616+ 66A9 3A 8B EC         ld   a, (items_collected)
+1617+ 66AC 0E 00            ld   c, 0              ; C = centinaia
+1618+ 66AE              .loop100:
+1619+ 66AE FE 64            cp   100
+1620+ 66B0 38 05            jr   c, .done100
+1621+ 66B2 D6 64            sub  100
+1622+ 66B4 0C               inc  c
+1623+ 66B5 18 F7            jr   .loop100
+1624+ 66B7              .done100:
+1625+ 66B7 5F               ld   e, a              ; Salva il resto in E
+1626+ 66B8 79               ld   a, c
+1627+ 66B9 C6 30            add  a, '0'
+1628+ 66BB 32 89 67         ld   (status_line + 16), a ; Centinaia
+1629+ 66BE
+1630+ 66BE 7B               ld   a, e              ; Ripristina il resto
+1631+ 66BF 0E 00            ld   c, 0              ; C = decine
+1632+ 66C1              .loop10:
+1633+ 66C1 FE 0A            cp   10
+1634+ 66C3 38 05            jr   c, .done10
+1635+ 66C5 D6 0A            sub  10
+1636+ 66C7 0C               inc  c
+1637+ 66C8 18 F7            jr   .loop10
+1638+ 66CA              .done10:
+1639+ 66CA 5F               ld   e, a              ; E = unità
+1640+ 66CB 79               ld   a, c
+1641+ 66CC C6 30            add  a, '0'
+1642+ 66CE 32 8A 67         ld   (status_line + 17), a ; Decine
+1643+ 66D1
+1644+ 66D1 7B               ld   a, e
+1645+ 66D2 C6 30            add  a, '0'
+1646+ 66D4 32 8B 67         ld   (status_line + 18), a ; Unità
+1647+ 66D7
+1648+ 66D7                  ; Ora ristampa la riga di stato a riga 18
+1649+ 66D7 3E 16            ld   a, 22             ; Codice di controllo AT (22)
+1650+ 66D9 D7               rst  $10
+1651+ 66DA 3E 12            ld   a, 18             ; Riga 18
+1652+ 66DC D7               rst  $10
+1653+ 66DD 3E 00            ld   a, 0              ; Colonna 0
+1654+ 66DF D7               rst  $10
+1655+ 66E0
+1656+ 66E0 21 79 67         ld   hl, status_line   ; HL = indirizzo stringa di stato
+1657+ 66E3 06 20            ld   b, 32             ; B = 32 caratteri
+1658+ 66E5 CD 7E 61         call Gfx_PrintString
+1659+ 66E8
+1660+ 66E8                  ; Ripristina i colori degli attributi di Riga 18 ($5A40)
+1661+ 66E8 21 99 67         ld   hl, status_line_attrs
+1662+ 66EB 11 40 5A         ld   de, $5a40         ; Indirizzo attributi Riga 18
+1663+ 66EE 01 20 00         ld   bc, 32            ; 32 byte
+1664+ 66F1 ED B0            ldir
+1665+ 66F3
+1666+ 66F3                  IF ENABLE_ROOM_NUMBER != 0
+1667+ 66F3 CD 1B 68         call Gfx_UpdateRemainingItemsDisplay
+1668+ 66F6                  ENDIF
+1669+ 66F6
+1670+ 66F6 E1               pop  hl
+1671+ 66F7 D1               pop  de
+1672+ 66F8 C1               pop  bc
+1673+ 66F9 F1               pop  af
+1674+ 66FA C9               ret
+1675+ 66FB
+1676+ 66FB              ; -------------------------------------------------------------------
+1677+ 66FB              ; Gfx_UpdateTimeDisplay
+1678+ 66FB              ; Formatta e visualizza l'orologio di gioco ("Time  7:00am")
+1679+ 66FB              ; nella riga di stato (Riga 18)
+1680+ 66FB              ; -------------------------------------------------------------------
+1681+ 66FB              Gfx_UpdateTimeDisplay:
+1682+ 66FB F5               push af
+1683+ 66FC C5               push bc
+1684+ 66FD D5               push de
+1685+ 66FE E5               push hl
+1686+ 66FF
+1687+ 66FF                  ; Formatta le ore (time_hours: 1..12)
+1688+ 66FF 3A 8E F0         ld   a, (time_hours)
+1689+ 6702 FE 0A            cp   10
+1690+ 6704 38 11            jr   c, .single_digit_hour
+1691+ 6706
+1692+ 6706                  ; Due cifre (10, 11, 12)
+1693+ 6706 3E 31            ld   a, '1'
+1694+ 6708 32 92 67         ld   (status_line + 25), a
+1695+ 670B 3A 8E F0         ld   a, (time_hours)
+1696+ 670E D6 0A            sub  10
+1697+ 6710 C6 30            add  a, '0'
+1698+ 6712 32 93 67         ld   (status_line + 26), a
+1699+ 6715 18 0D            jr   .hours_done
+1700+ 6717
+1701+ 6717              .single_digit_hour:
+1702+ 6717 3E 20            ld   a, ' '
+1703+ 6719 32 92 67         ld   (status_line + 25), a
+1704+ 671C 3A 8E F0         ld   a, (time_hours)
+1705+ 671F C6 30            add  a, '0'
+1706+ 6721 32 93 67         ld   (status_line + 26), a
+1707+ 6724
+1708+ 6724              .hours_done:
+1709+ 6724                  ; Due punti (:)
+1710+ 6724 3E 3A            ld   a, ':'
+1711+ 6726 32 94 67         ld   (status_line + 27), a
+1712+ 6729
+1713+ 6729                  ; Formatta i minuti (time_minutes: 0..59)
+1714+ 6729 3A 8F F0         ld   a, (time_minutes)
+1715+ 672C 0E 00            ld   c, 0
+1716+ 672E              .loop10_min:
+1717+ 672E FE 0A            cp   10
+1718+ 6730 38 05            jr   c, .done10_min
+1719+ 6732 D6 0A            sub  10
+1720+ 6734 0C               inc  c
+1721+ 6735 18 F7            jr   .loop10_min
+1722+ 6737              .done10_min:
+1723+ 6737 5F               ld   e, a                   ; E = unità dei minuti
+1724+ 6738 79               ld   a, c
+1725+ 6739 C6 30            add  a, '0'
+1726+ 673B 32 95 67         ld   (status_line + 28), a  ; Decine dei minuti
+1727+ 673E 7B               ld   a, e
+1728+ 673F C6 30            add  a, '0'
+1729+ 6741 32 96 67         ld   (status_line + 29), a  ; Unità dei minuti
+1730+ 6744
+1731+ 6744                  ; Suffisso "am" / "pm"
+1732+ 6744 3A 90 F0         ld   a, (time_period)
+1733+ 6747 B7               or   a
+1734+ 6748 20 04            jr   nz, .is_pm
+1735+ 674A 3E 61            ld   a, 'a'
+1736+ 674C 18 02            jr   .suffix_done
+1737+ 674E              .is_pm:
+1738+ 674E 3E 70            ld   a, 'p'
+1739+ 6750              .suffix_done:
+1740+ 6750 32 97 67         ld   (status_line + 30), a
+1741+ 6753 3E 6D            ld   a, 'm'
+1742+ 6755 32 98 67         ld   (status_line + 31), a
+1743+ 6758
+1744+ 6758                  ; Ristampa la riga di stato a riga 18
+1745+ 6758 3E 16            ld   a, 22                  ; AT (22)
+1746+ 675A D7               rst  $10
+1747+ 675B 3E 12            ld   a, 18                  ; Riga 18
+1748+ 675D D7               rst  $10
+1749+ 675E 3E 00            ld   a, 0                   ; Colonna 0
+1750+ 6760 D7               rst  $10
+1751+ 6761
+1752+ 6761 21 79 67         ld   hl, status_line
+1753+ 6764 06 20            ld   b, 32
+1754+ 6766 CD 7E 61         call Gfx_PrintString
+1755+ 6769
+1756+ 6769 21 99 67         ld   hl, status_line_attrs
+1757+ 676C 11 40 5A         ld   de, $5a40              ; Indirizzo attributi Riga 18
+1758+ 676F 01 20 00         ld   bc, 32
+1759+ 6772 ED B0            ldir
+1760+ 6774
+1761+ 6774 E1               pop  hl
+1762+ 6775 D1               pop  de
+1763+ 6776 C1               pop  bc
+1764+ 6777 F1               pop  af
+1765+ 6778 C9               ret
+1766+ 6779
+1767+ 6779              status_line:
+1768+ 6779 49 74 65 6D      db "Items collected 000 "
+1768+ 677D 73 20 63 6F
+1768+ 6781 6C 6C 65 63
+1768+ 6785 74 65 64 20
+1768+ 6789 30 30 30 20
+1769+ 678D
+1770+ 678D              status_line_time:
+1771+ 678D 54 69 6D 65      db "Time  7:00am"
+1771+ 6791 20 20 37 3A
+1771+ 6795 30 30 61 6D
+1772+ 6799
+1773+ 6799              status_line_attrs:
+1774+ 6799 41 42 43 44      db 65, 66, 67, 68, 69, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 70, 69, 68, 67, 66, 65
+1774+ 679D 45 47 47 47
+1774+ 67A1 47 47 47 47
+1774+ 67A5 47 47 47 47
+1774+ 67A9 47 47 47 47
+1774+ 67AD 47 47 47 47
+1774+ 67B1 47 47 46 45
+1774+ 67B5 44 43 42 41
+1775+ 67B9
+1776+ 67B9              ; -------------------------------------------------------------------
+1777+ 67B9              ; Disegna la riga di stato inferiore ("Room: XX  Remaining items: YY") nell'ultima riga (Riga 23)
+1778+ 67B9              ; -------------------------------------------------------------------
+1779+ 67B9                  IF ENABLE_ROOM_NUMBER != 0
+1780+ 67B9              Gfx_PrintRoomNumber:
+1781+ 67B9 F5               push af
+1782+ 67BA C5               push bc
+1783+ 67BB D5               push de
+1784+ 67BC E5               push hl
+1785+ 67BD
+1786+ 67BD 0E 00            ld   c, 0              ; C = colonna iniziale (0..31)
+1787+ 67BF
+1788+ 67BF                  ; 1. Stampa la stringa label_room_str ("Room: ")
+1789+ 67BF 21 87 68         ld   hl, label_room_str
+1790+ 67C2 06 06            ld   b, 6              ; 6 caratteri ("Room: ")
+1791+ 67C4              .print_room_label_loop:
+1792+ 67C4 C5               push bc
+1793+ 67C5 7E               ld   a, (hl)           ; A = carattere ASCII
+1794+ 67C6 E5               push hl
+1795+ 67C7 CD 4A 68         call Gfx_DrawCharVRAM_Row23
+1796+ 67CA E1               pop  hl
+1797+ 67CB 23               inc  hl
+1798+ 67CC C1               pop  bc
+1799+ 67CD 0C               inc  c                 ; Prossima colonna
+1800+ 67CE 10 F4            djnz .print_room_label_loop
+1801+ 67D0
+1802+ 67D0                  ; 2. Converti (current_room) in 2 cifre ASCII e stampale
+1803+ 67D0 3A A7 EF         ld   a, (current_room)
+1804+ 67D3 06 00            ld   b, 0              ; B = decine
+1805+ 67D5              .loop_tens:
+1806+ 67D5 FE 0A            cp   10
+1807+ 67D7 38 05            jr   c, .done_tens
+1808+ 67D9 D6 0A            sub  10
+1809+ 67DB 04               inc  b
+1810+ 67DC 18 F7            jr   .loop_tens
+1811+ 67DE              .done_tens:
+1812+ 67DE 5F               ld   e, a              ; E = unità
+1813+ 67DF
+1814+ 67DF                  ; Stampa cifra decine
+1815+ 67DF 78               ld   a, b
+1816+ 67E0 C6 30            add  a, '0'
+1817+ 67E2 D5               push de
+1818+ 67E3 CD 4A 68         call Gfx_DrawCharVRAM_Row23
+1819+ 67E6 D1               pop  de
+1820+ 67E7 0C               inc  c
+1821+ 67E8
+1822+ 67E8                  ; Stampa cifra unità
+1823+ 67E8 7B               ld   a, e
+1824+ 67E9 C6 30            add  a, '0'
+1825+ 67EB CD 4A 68         call Gfx_DrawCharVRAM_Row23
+1826+ 67EE 0C               inc  c
+1827+ 67EF
+1828+ 67EF                  ; 3. Stampa la stringa label_remaining_str ("  Remaining items: ")
+1829+ 67EF 21 8D 68         ld   hl, label_remaining_str
+1830+ 67F2 06 13            ld   b, 19             ; 19 caratteri ("  Remaining items: ")
+1831+ 67F4              .print_rem_label_loop:
+1832+ 67F4 C5               push bc
+1833+ 67F5 7E               ld   a, (hl)           ; A = carattere ASCII
+1834+ 67F6 E5               push hl
+1835+ 67F7 CD 4A 68         call Gfx_DrawCharVRAM_Row23
+1836+ 67FA E1               pop  hl
+1837+ 67FB 23               inc  hl
+1838+ 67FC C1               pop  bc
+1839+ 67FD 0C               inc  c                 ; Prossima colonna
+1840+ 67FE 10 F4            djnz .print_rem_label_loop
+1841+ 6800
+1842+ 6800                  ; 4. Stampa il valore di remaining items
+1843+ 6800 CD 1B 68         call Gfx_UpdateRemainingItemsDisplay
+1844+ 6803
+1845+ 6803                  ; 5. Pulisci le colonne rimanenti 29..31 con spazi
+1846+ 6803 0E 1D            ld   c, 29
+1847+ 6805 3E 20            ld   a, ' '
+1848+ 6807 CD 4A 68         call Gfx_DrawCharVRAM_Row23
+1849+ 680A 0C               inc  c
+1850+ 680B 3E 20            ld   a, ' '
+1851+ 680D CD 4A 68         call Gfx_DrawCharVRAM_Row23
+1852+ 6810 0C               inc  c
+1853+ 6811 3E 20            ld   a, ' '
+1854+ 6813 CD 4A 68         call Gfx_DrawCharVRAM_Row23
+1855+ 6816
+1856+ 6816 E1               pop  hl
+1857+ 6817 D1               pop  de
+1858+ 6818 C1               pop  bc
+1859+ 6819 F1               pop  af
+1860+ 681A C9               ret
+1861+ 681B
+1862+ 681B              ; -------------------------------------------------------------------
+1863+ 681B              ; Aggiorna il conteggio di Remaining Items sulla Riga 23 (Colonna 27..28)
+1864+ 681B              ; -------------------------------------------------------------------
+1865+ 681B              Gfx_UpdateRemainingItemsDisplay:
+1866+ 681B F5               push af
+1867+ 681C C5               push bc
+1868+ 681D D5               push de
+1869+ 681E E5               push hl
+1870+ 681F
+1871+ 681F                  ; Calcola oggetti rimanenti: TOTAL_ITEMS - items_collected
+1872+ 681F 3E 4D            ld   a, TOTAL_ITEMS
+1873+ 6821 21 8B EC         ld   hl, items_collected
+1874+ 6824 96               sub  (hl)
+1875+ 6825 30 01            jr   nc, .rem_valid
+1876+ 6827 AF               xor  a
+1877+ 6828              .rem_valid:
+1878+ 6828 06 00            ld   b, 0              ; B = decine
+1879+ 682A              .loop_tens_rem:
+1880+ 682A FE 0A            cp   10
+1881+ 682C 38 05            jr   c, .done_tens_rem
+1882+ 682E D6 0A            sub  10
+1883+ 6830 04               inc  b
+1884+ 6831 18 F7            jr   .loop_tens_rem
+1885+ 6833              .done_tens_rem:
+1886+ 6833 5F               ld   e, a              ; E = unità
+1887+ 6834
+1888+ 6834 0E 1B            ld   c, 27             ; Colonna 27 per decine
+1889+ 6836 78               ld   a, b
+1890+ 6837 C6 30            add  a, '0'
+1891+ 6839 D5               push de
+1892+ 683A CD 4A 68         call Gfx_DrawCharVRAM_Row23
+1893+ 683D D1               pop  de
+1894+ 683E 0C               inc  c                 ; Colonna 28 per unità
+1895+ 683F 7B               ld   a, e
+1896+ 6840 C6 30            add  a, '0'
+1897+ 6842 CD 4A 68         call Gfx_DrawCharVRAM_Row23
+1898+ 6845
+1899+ 6845 E1               pop  hl
+1900+ 6846 D1               pop  de
+1901+ 6847 C1               pop  bc
+1902+ 6848 F1               pop  af
+1903+ 6849 C9               ret
+1904+ 684A
+1905+ 684A              ; -------------------------------------------------------------------
+1906+ 684A              ; Disegna un carattere ASCII A alla colonna C (0..31) di Riga 23 direttamente in VRAM
+1907+ 684A              ; -------------------------------------------------------------------
+1908+ 684A              Gfx_DrawCharVRAM_Row23:
+1909+ 684A F5               push af
+1910+ 684B C5               push bc
+1911+ 684C D5               push de
+1912+ 684D E5               push hl
+1913+ 684E
+1914+ 684E                  ; C = colonna (0..31), A = carattere ASCII
+1915+ 684E 47               ld   b, a              ; B = salva carattere ASCII
+1916+ 684F 79               ld   a, c
+1917+ 6850 FE 20            cp   32
+1918+ 6852 30 2E            jr   nc, .exit_draw_char ; Se C >= 32, ignora per sicurezza!
+1919+ 6854
+1920+ 6854                  ; Check dei limiti ASCII (32..127) per non accedere a RAM fuori dal font
+1921+ 6854 78               ld   a, b              ; A = carattere ASCII
+1922+ 6855 FE 20            cp   32
+1923+ 6857 38 29            jr   c, .exit_draw_char ; Se CHAR < 32 (non stampabile), ignora!
+1924+ 6859 FE 80            cp   128
+1925+ 685B 30 25            jr   nc, .exit_draw_char ; Se CHAR >= 128 (fuori dal font RAM), ignora!
+1926+ 685D
+1927+ 685D                  ; 1. Indirizzo del font in RAM ($F100 + (ASCII - 32) * 8)
+1928+ 685D D6 20            sub  32                ; A = ASCII - 32
+1929+ 685F 6F               ld   l, a
+1930+ 6860 26 00            ld   h, 0
+1931+ 6862 29               add  hl, hl            ; *2
+1932+ 6863 29               add  hl, hl            ; *4
+1933+ 6864 29               add  hl, hl            ; *8
+1934+ 6865 11 00 F1         ld   de, $F100         ; Indirizzo base del font 8x8 in RAM ($F100)
+1935+ 6868 19               add  hl, de            ; HL = indirizzo pattern font 8x8 in RAM ($F100)
+1936+ 6869
+1937+ 6869                  ; 2. Imposta l'attributo colore a Riga 23, Colonna C ($5AE0 + C)
+1938+ 6869 E5               push hl                ; Salva indirizzo pattern font
+1939+ 686A 69               ld   l, c
+1940+ 686B 26 00            ld   h, 0
+1941+ 686D 11 E0 5A         ld   de, $5ae0
+1942+ 6870 19               add  hl, de            ; HL = indirizzo attributi Riga 23 ($5AE0 + C)
+1943+ 6871 36 46            ld   (hl), $46         ; Attributo: BRIGHT 1 + PAPER BLACK + INK YELLOW ($46)
+1944+ 6873 E1               pop  hl                ; Ripristina indirizzo pattern font in HL
+1945+ 6874
+1946+ 6874                  ; 3. Indirizzo VRAM Riga 23, Colonna C
+1947+ 6874                  ; Low byte VRAM: $E0 | C
+1948+ 6874 79               ld   a, c
+1949+ 6875 F6 E0            or   $e0
+1950+ 6877 5F               ld   e, a              ; E = Low byte VRAM ($E0 | C)
+1951+ 6878
+1952+ 6878                  ; Copia gli 8 byte di pattern nelle 8 linee di VRAM ($5000, $5100, ..., $5700)
+1953+ 6878 16 50            ld   d, $50            ; D = High byte iniziale VRAM ($50)
+1954+ 687A 06 08            ld   b, 8              ; B = 8 linee di pixel
+1955+ 687C              .loop_vram_lines:
+1956+ 687C 7E               ld   a, (hl)           ; Leggi byte dal font ROM
+1957+ 687D 12               ld   (de), a           ; Scrivi direttamente in VRAM bitmap
+1958+ 687E 23               inc  hl                ; Prossimo byte del font
+1959+ 687F 14               inc  d                 ; Prossima linea schermo ($50 -> $51 -> ... -> $57)
+1960+ 6880 10 FA            djnz .loop_vram_lines
+1961+ 6882
+1962+ 6882              .exit_draw_char:
+1963+ 6882 E1               pop  hl
+1964+ 6883 D1               pop  de
+1965+ 6884 C1               pop  bc
+1966+ 6885 F1               pop  af
+1967+ 6886 C9               ret
+1968+ 6887
+1969+ 6887              label_room_str:
+1970+ 6887 52 6F 6F 6D      db "Room: "
+1970+ 688B 3A 20
+1971+ 688D
+1972+ 688D              label_remaining_str:
+1973+ 688D 20 20 52 65      db "  Remaining items: "
+1973+ 6891 6D 61 69 6E
+1973+ 6895 69 6E 67 20
+1973+ 6899 69 74 65 6D
+1973+ 689D 73 3A 20
+1974+ 68A0                  ENDIF
+1975+ 68A0
+1976+ 68A0              ; -------------------------------------------------------------------
+1977+ 68A0              ; Disegna riga/pavimento sotto i piedi degli sprite (Riga 18, Y = 144)
+1978+ 68A0              ; -------------------------------------------------------------------
+1979+ 68A0              Gfx_DrawWillyLifeIcon:
+1980+ 68A0                  ; Input: C = Colonna (0..31), A = Colore Gfx_Ink (1..7 / bright color)
+1981+ 68A0                  ; D = Colore, E = Colonna
+1982+ 68A0 57               ld   d, a              ; D = Colore
+1983+ 68A1 59               ld   e, c              ; E = Colonna
+1984+ 68A2
+1985+ 68A2                  ; 0. Cancella la testa e il corpo per evitare artefatti da OR
+1986+ 68A2 C5               push bc
+1987+ 68A3 D5               push de
+1988+ 68A4 7B               ld   a, e
+1989+ 68A5 87               add  a, a              ; *2
+1990+ 68A6 87               add  a, a              ; *4
+1991+ 68A7 87               add  a, a              ; *8
+1992+ 68A8 4F               ld   c, a              ; C = X pixel
+1993+ 68A9 06 A0            ld   b, 160            ; B = Y pixel (Row 20 / head)
+1994+ 68AB CD 8F 66         call Gfx_ClearPixelSprite8x8
+1995+ 68AE 06 A8            ld   b, 168            ; B = Y pixel (Row 21 / body)
+1996+ 68B0 CD 8F 66         call Gfx_ClearPixelSprite8x8
+1997+ 68B3 D1               pop  de
+1998+ 68B4 C1               pop  bc
+1999+ 68B5
+2000+ 68B5                  ; 1. Disegna la testa a Row 20, Colonna E
+2001+ 68B5                  ; X pixel = E * 8
+2002+ 68B5 7B               ld   a, e
+2003+ 68B6 87               add  a, a              ; *2
+2004+ 68B7 87               add  a, a              ; *4
+2005+ 68B8 87               add  a, a              ; *8
+2006+ 68B9 4F               ld   c, a              ; C = X pixel
+2007+ 68BA 06 A0            ld   b, 160            ; B = Y pixel (Row 20)
+2008+ 68BC DD 21 81 CE      ld   ix, Willy + 0*8   ; IX = head facing right
+2009+ 68C0 CD 3F 5E         call Gfx_DrawPixelSprite8x8
+2010+ 68C3
+2011+ 68C3                  ; 2. Disegna il corpo a Row 21, Colonna E
+2012+ 68C3 06 A8            ld   b, 168            ; B = Y pixel (Row 21)
+2013+ 68C5
+2014+ 68C5 D5               push de                ; SALVA D = Colore, E = Colonna
+2015+ 68C6
+2016+ 68C6                  ; Determina il frame del corpo per le icone delle vite
+2017+ 68C6                  IF ENABLE_ANIMATE_LIVES != 0
+2018+ 68C6 ~                ; Calcola il frame animato dal contatore
+2019+ 68C6 ~                ld   a, (counter)
 2020+ 68C6 ~                rrca
 2021+ 68C6 ~                rrca
-2022+ 68C6 ~                and  %00000011         ; A = 0..3
-2023+ 68C6 ~                cp   3
-2024+ 68C6 ~                jr   nz, .not_3
-2025+ 68C6 ~                ld   a, 1              ; map 3 to 1 -> cycle is 0, 1, 2, 1
-2026+ 68C6 ~            .not_3:
-2027+ 68C6 ~                inc  a
-2028+ 68C6 ~                jr   .calc_ix
-2029+ 68C6                  ELSE
-2030+ 68C6 3E 01            ld   a, 1              ; frame statico 1
-2031+ 68C8                  ENDIF
-2032+ 68C8
-2033+ 68C8              .calc_ix:
-2034+ 68C8                  ; calcola IX = Willy + A * 8
-2035+ 68C8 87               add  a, a              ; *2
-2036+ 68C9 87               add  a, a              ; *4
-2037+ 68CA 87               add  a, a              ; *8
-2038+ 68CB 5F               ld   e, a
-2039+ 68CC 16 00            ld   d, 0
-2040+ 68CE DD 21 81 CE      ld   ix, Willy
-2041+ 68D2 DD 19            add  ix, de
-2042+ 68D4 CD 3F 5E         call Gfx_DrawPixelSprite8x8
-2043+ 68D7
-2044+ 68D7 D1               pop  de                ; RIPRISTINA D = Colore, E = Colonna
-2045+ 68D8
-2046+ 68D8                  ; 3. Imposta l'attributo colore per la testa (Row 20, Colonna E)
-2047+ 68D8                  ; AttrAddr = $5A80 + E
-2048+ 68D8 26 5A            ld   h, $5a
-2049+ 68DA 3E 80            ld   a, $80
-2050+ 68DC 83               add  a, e
-2051+ 68DD 6F               ld   l, a
-2052+ 68DE 30 01            jr   nc, .no_carry1
-2053+ 68E0 24               inc  h
-2054+ 68E1              .no_carry1:
-2055+ 68E1 72               ld   (hl), d           ; Scrivi colore testa
-2056+ 68E2
-2057+ 68E2                  ; 4. Imposta l'attributo colore per il corpo (Row 21, Colonna E)
-2058+ 68E2                  ; AttrAddr = $5AA0 + E
-2059+ 68E2 26 5A            ld   h, $5a
-2060+ 68E4 3E A0            ld   a, $A0
-2061+ 68E6 83               add  a, e
-2062+ 68E7 6F               ld   l, a
-2063+ 68E8 30 01            jr   nc, .no_carry2
-2064+ 68EA 24               inc  h
-2065+ 68EB              .no_carry2:
-2066+ 68EB 72               ld   (hl), d           ; Scrivi colore corpo
-2067+ 68EC C9               ret
-2068+ 68ED
-2069+ 68ED              ; -------------------------------------------------------------------
-2070+ 68ED              ; Disegna un tile 8x8 sullo schermo
-2071+ 68ED              ; Input: B = Row (0..23), C = Col (0..31), IX = Puntatore al Tile (9 byte: 1 attr + 8 bitmap)
-2072+ 68ED              ; -------------------------------------------------------------------
-2073+ 68ED              Gfx_DrawTile:
-2074+ 68ED C5               push bc
-2075+ 68EE D5               push de
-2076+ 68EF E5               push hl
-2077+ 68F0
-2078+ 68F0                  ; 1. Calcola indirizzo dello schermo (bitmap) per Row B, Col C, scanline 0
-2079+ 68F0                  ; HighByte = $40 + (B & $18)
-2080+ 68F0 78               ld   a, b
-2081+ 68F1 E6 18            and  $18
-2082+ 68F3 C6 40            add  a, $40
-2083+ 68F5 67               ld   h, a              ; H = High byte
-2084+ 68F6
-2085+ 68F6                  ; LowByte = ((B & 7) * 32) + C
-2086+ 68F6 78               ld   a, b
-2087+ 68F7 E6 07            and  7
-2088+ 68F9 87               add  a, a              ; *2
-2089+ 68FA 87               add  a, a              ; *4
-2090+ 68FB 87               add  a, a              ; *8
-2091+ 68FC 87               add  a, a              ; *16
-2092+ 68FD 87               add  a, a              ; *32
-2093+ 68FE 81               add  a, c              ; + Col C
-2094+ 68FF 6F               ld   l, a              ; L = Low byte
-2095+ 6900
-2096+ 6900                  ; 2. Copia gli 8 byte del bitmap
-2097+ 6900 16 08            ld   d, 8              ; 8 scanline
-2098+ 6902 DD E5            push ix
-2099+ 6904 DD 23            inc  ix                ; Salta l'attributo, vai al bitmap
-2100+ 6906              .line_loop:
-2101+ 6906 DD 7E 00         ld   a, (ix+0)
-2102+ 6909 77               ld   (hl), a
-2103+ 690A 24               inc  h                 ; Prossima scanline (stessa riga di caratteri)
-2104+ 690B DD 23            inc  ix
-2105+ 690D 15               dec  d
-2106+ 690E 20 F6            jr   nz, .line_loop
-2107+ 6910 DD E1            pop  ix
-2108+ 6912
-2109+ 6912                  ; 3. Scrivi l'attributo
-2110+ 6912                  ; AttrAddr = $5800 + B * 32 + C
-2111+ 6912 26 00            ld   h, 0
-2112+ 6914 68               ld   l, b              ; HL = B (Row)
-2113+ 6915 29               add  hl, hl            ; *2
-2114+ 6916 29               add  hl, hl            ; *4
-2115+ 6917 29               add  hl, hl            ; *8
-2116+ 6918 29               add  hl, hl            ; *16
-2117+ 6919 29               add  hl, hl            ; *32
-2118+ 691A 16 00            ld   d, 0
-2119+ 691C 59               ld   e, c              ; DE = C (Col)
-2120+ 691D 19               add  hl, de            ; HL = B * 32 + C
-2121+ 691E 11 00 58         ld   de, $5800
-2122+ 6921 19               add  hl, de            ; HL = AttrAddr
-2123+ 6922
-2124+ 6922 DD 7E 00         ld   a, (ix+0)         ; A = attribute byte
-2125+ 6925 77               ld   (hl), a           ; Scrivi in memoria attributi
-2126+ 6926
-2127+ 6926 E1               pop  hl
-2128+ 6927 D1               pop  de
-2129+ 6928 C1               pop  bc
-2130+ 6929 C9               ret
-2131+ 692A
-2132+ 692A              ; -------------------------------------------------------------------
-2133+ 692A              ; Disegna la stanza corrente leggendola dalla struttura dati
-2134+ 692A              ; -------------------------------------------------------------------
-2135+ 692A              Gfx_DrawRoom:
-2136+ 692A C5               push bc
-2137+ 692B D5               push de
-2138+ 692C E5               push hl
-2139+ 692D DD E5            push ix
-2140+ 692F
-2141+ 692F CD EF 75         call UnpackRoomLayout
-2142+ 6932
-2143+ 6932 06 00            ld   b, 0              ; B = layout row (0..15)
-2144+ 6934              .row_loop:
-2145+ 6934 0E 00            ld   c, 0              ; C = layout column group (0..7 bytes)
-2146+ 6936              .col_byte_loop:
-2147+ 6936 26 00            ld   h, 0
-2148+ 6938 68               ld   l, b
-2149+ 6939 29               add  hl, hl
-2150+ 693A 29               add  hl, hl
-2151+ 693B 29               add  hl, hl            ; HL = B * 8
-2152+ 693C 16 00            ld   d, 0
-2153+ 693E 59               ld   e, c              ; DE = C
-2154+ 693F 19               add  hl, de            ; HL = B * 8 + C
-2155+ 6940 ED 5B 01 F0      ld   de, (room_ptr)
-2156+ 6944 19               add  hl, de            ; HL = layout byte address
-2157+ 6945 7E               ld   a, (hl)           ; A = layout byte
-2158+ 6946 57               ld   d, a              ; D = salva il byte di layout
-2159+ 6947
-2160+ 6947 1E 04            ld   e, 4              ; 4 celle per byte
-2161+ 6949              .cell_loop:
-2162+ 6949 7A               ld   a, d
-2163+ 694A 07               rlca
-2164+ 694B 07               rlca
-2165+ 694C 57               ld   d, a              ; D ruotato di 2
-2166+ 694D E6 03            and  3                 ; A = cell type (0..3)
-2167+ 694F
-2168+ 694F D5               push de
-2169+ 6950 C5               push bc
-2170+ 6951
-2171+ 6951 ED 5B 01 F0      ld   de, (room_ptr)
-2172+ 6955 B7               or   a
-2173+ 6956 20 06            jr   nz, .not_bg
-2174+ 6958 21 A0 00         ld   hl, OFFSET_BG
-2175+ 695B 19               add  hl, de
-2176+ 695C 18 16            jr   .draw_cell
-2177+ 695E              .not_bg:
-2178+ 695E 3D               dec  a
-2179+ 695F 20 06            jr   nz, .not_floor
-2180+ 6961 21 A9 00         ld   hl, OFFSET_FLOOR
-2181+ 6964 19               add  hl, de
-2182+ 6965 18 0D            jr   .draw_cell
-2183+ 6967              .not_floor:
-2184+ 6967 3D               dec  a
-2185+ 6968 20 06            jr   nz, .not_wall
-2186+ 696A 21 B2 00         ld   hl, OFFSET_WALL
-2187+ 696D 19               add  hl, de
-2188+ 696E 18 04            jr   .draw_cell
-2189+ 6970              .not_wall:
-2190+ 6970 21 BB 00         ld   hl, OFFSET_NASTY
-2191+ 6973 19               add  hl, de
-2192+ 6974
-2193+ 6974              .draw_cell:
-2194+ 6974 E5               push hl
-2195+ 6975 DD E1            pop  ix                ; IX = tile pointer
-2196+ 6977
-2197+ 6977 C1               pop  bc                ; BC = original BC
-2198+ 6978 D1               pop  de                ; DE = original DE
-2199+ 6979 D5               push de                ; Save for next iteration
-2200+ 697A C5               push bc                ; Save for next iteration
-2201+ 697B
-2202+ 697B 78               ld   a, b
-2203+ 697C 67               ld   h, a
-2204+ 697D
-2205+ 697D 79               ld   a, c
-2206+ 697E 87               add  a, a              ; *2
-2207+ 697F 87               add  a, a              ; *4 (Col group * 4)
-2208+ 6980 6F               ld   l, a              ; L = Col group * 4
-2209+ 6981
-2210+ 6981 3E 04            ld   a, 4
-2211+ 6983 93               sub  e                 ; A = 4 - E (0..3)
-2212+ 6984 85               add  a, l              ; A = Col group * 4 + (4 - E)
-2213+ 6985 6F               ld   l, a              ; L = Col
-2214+ 6986
-2215+ 6986 44               ld   b, h
-2216+ 6987 4D               ld   c, l
-2217+ 6988 CD ED 68         call Gfx_DrawTile
-2218+ 698B
-2219+ 698B C1               pop  bc
-2220+ 698C D1               pop  de
-2221+ 698D 1D               dec  e
-2222+ 698E C2 49 69         jp   nz, .cell_loop
-2223+ 6991
-2224+ 6991 0C               inc  c
-2225+ 6992 79               ld   a, c
-2226+ 6993 FE 08            cp   8
-2227+ 6995 C2 36 69         jp   nz, .col_byte_loop
-2228+ 6998
-2229+ 6998 04               inc  b
-2230+ 6999 78               ld   a, b
-2231+ 699A FE 10            cp   16
-2232+ 699C C2 34 69         jp   nz, .row_loop
-2233+ 699F
-2234+ 699F DD E1            pop  ix
-2235+ 69A1 E1               pop  hl
-2236+ 69A2 D1               pop  de
-2237+ 69A3 C1               pop  bc
-2238+ 69A4 C9               ret
-2239+ 69A5
+2022+ 68C6 ~                rrca
+2023+ 68C6 ~                and  %00000011         ; A = 0..3
+2024+ 68C6 ~                cp   3
+2025+ 68C6 ~                jr   nz, .not_3
+2026+ 68C6 ~                ld   a, 1              ; map 3 to 1 -> cycle is 0, 1, 2, 1
+2027+ 68C6 ~            .not_3:
+2028+ 68C6 ~                inc  a
+2029+ 68C6 ~                jr   .calc_ix
+2030+ 68C6                  ELSE
+2031+ 68C6 3E 01            ld   a, 1              ; frame statico 1
+2032+ 68C8                  ENDIF
+2033+ 68C8
+2034+ 68C8              .calc_ix:
+2035+ 68C8                  ; calcola IX = Willy + A * 8
+2036+ 68C8 87               add  a, a              ; *2
+2037+ 68C9 87               add  a, a              ; *4
+2038+ 68CA 87               add  a, a              ; *8
+2039+ 68CB 5F               ld   e, a
+2040+ 68CC 16 00            ld   d, 0
+2041+ 68CE DD 21 81 CE      ld   ix, Willy
+2042+ 68D2 DD 19            add  ix, de
+2043+ 68D4 CD 3F 5E         call Gfx_DrawPixelSprite8x8
+2044+ 68D7
+2045+ 68D7 D1               pop  de                ; RIPRISTINA D = Colore, E = Colonna
+2046+ 68D8
+2047+ 68D8                  ; 3. Imposta l'attributo colore per la testa (Row 20, Colonna E)
+2048+ 68D8                  ; AttrAddr = $5A80 + E
+2049+ 68D8 26 5A            ld   h, $5a
+2050+ 68DA 3E 80            ld   a, $80
+2051+ 68DC 83               add  a, e
+2052+ 68DD 6F               ld   l, a
+2053+ 68DE 30 01            jr   nc, .no_carry1
+2054+ 68E0 24               inc  h
+2055+ 68E1              .no_carry1:
+2056+ 68E1 72               ld   (hl), d           ; Scrivi colore testa
+2057+ 68E2
+2058+ 68E2                  ; 4. Imposta l'attributo colore per il corpo (Row 21, Colonna E)
+2059+ 68E2                  ; AttrAddr = $5AA0 + E
+2060+ 68E2 26 5A            ld   h, $5a
+2061+ 68E4 3E A0            ld   a, $A0
+2062+ 68E6 83               add  a, e
+2063+ 68E7 6F               ld   l, a
+2064+ 68E8 30 01            jr   nc, .no_carry2
+2065+ 68EA 24               inc  h
+2066+ 68EB              .no_carry2:
+2067+ 68EB 72               ld   (hl), d           ; Scrivi colore corpo
+2068+ 68EC C9               ret
+2069+ 68ED
+2070+ 68ED              ; -------------------------------------------------------------------
+2071+ 68ED              ; Disegna un tile 8x8 sullo schermo
+2072+ 68ED              ; Input: B = Row (0..23), C = Col (0..31), IX = Puntatore al Tile (9 byte: 1 attr + 8 bitmap)
+2073+ 68ED              ; -------------------------------------------------------------------
+2074+ 68ED              Gfx_DrawTile:
+2075+ 68ED C5               push bc
+2076+ 68EE D5               push de
+2077+ 68EF E5               push hl
+2078+ 68F0
+2079+ 68F0                  ; 1. Calcola indirizzo dello schermo (bitmap) per Row B, Col C, scanline 0
+2080+ 68F0                  ; HighByte = $40 + (B & $18)
+2081+ 68F0 78               ld   a, b
+2082+ 68F1 E6 18            and  $18
+2083+ 68F3 C6 40            add  a, $40
+2084+ 68F5 67               ld   h, a              ; H = High byte
+2085+ 68F6
+2086+ 68F6                  ; LowByte = ((B & 7) * 32) + C
+2087+ 68F6 78               ld   a, b
+2088+ 68F7 E6 07            and  7
+2089+ 68F9 87               add  a, a              ; *2
+2090+ 68FA 87               add  a, a              ; *4
+2091+ 68FB 87               add  a, a              ; *8
+2092+ 68FC 87               add  a, a              ; *16
+2093+ 68FD 87               add  a, a              ; *32
+2094+ 68FE 81               add  a, c              ; + Col C
+2095+ 68FF 6F               ld   l, a              ; L = Low byte
+2096+ 6900
+2097+ 6900                  ; 2. Copia gli 8 byte del bitmap
+2098+ 6900 16 08            ld   d, 8              ; 8 scanline
+2099+ 6902 DD E5            push ix
+2100+ 6904 DD 23            inc  ix                ; Salta l'attributo, vai al bitmap
+2101+ 6906              .line_loop:
+2102+ 6906 DD 7E 00         ld   a, (ix+0)
+2103+ 6909 77               ld   (hl), a
+2104+ 690A 24               inc  h                 ; Prossima scanline (stessa riga di caratteri)
+2105+ 690B DD 23            inc  ix
+2106+ 690D 15               dec  d
+2107+ 690E 20 F6            jr   nz, .line_loop
+2108+ 6910 DD E1            pop  ix
+2109+ 6912
+2110+ 6912                  ; 3. Scrivi l'attributo
+2111+ 6912                  ; AttrAddr = $5800 + B * 32 + C
+2112+ 6912 26 00            ld   h, 0
+2113+ 6914 68               ld   l, b              ; HL = B (Row)
+2114+ 6915 29               add  hl, hl            ; *2
+2115+ 6916 29               add  hl, hl            ; *4
+2116+ 6917 29               add  hl, hl            ; *8
+2117+ 6918 29               add  hl, hl            ; *16
+2118+ 6919 29               add  hl, hl            ; *32
+2119+ 691A 16 00            ld   d, 0
+2120+ 691C 59               ld   e, c              ; DE = C (Col)
+2121+ 691D 19               add  hl, de            ; HL = B * 32 + C
+2122+ 691E 11 00 58         ld   de, $5800
+2123+ 6921 19               add  hl, de            ; HL = AttrAddr
+2124+ 6922
+2125+ 6922 DD 7E 00         ld   a, (ix+0)         ; A = attribute byte
+2126+ 6925 77               ld   (hl), a           ; Scrivi in memoria attributi
+2127+ 6926
+2128+ 6926 E1               pop  hl
+2129+ 6927 D1               pop  de
+2130+ 6928 C1               pop  bc
+2131+ 6929 C9               ret
+2132+ 692A
+2133+ 692A              ; -------------------------------------------------------------------
+2134+ 692A              ; Disegna la stanza corrente leggendola dalla struttura dati
+2135+ 692A              ; -------------------------------------------------------------------
+2136+ 692A              Gfx_DrawRoom:
+2137+ 692A C5               push bc
+2138+ 692B D5               push de
+2139+ 692C E5               push hl
+2140+ 692D DD E5            push ix
+2141+ 692F
+2142+ 692F CD EF 75         call UnpackRoomLayout
+2143+ 6932
+2144+ 6932 06 00            ld   b, 0              ; B = layout row (0..15)
+2145+ 6934              .row_loop:
+2146+ 6934 0E 00            ld   c, 0              ; C = layout column group (0..7 bytes)
+2147+ 6936              .col_byte_loop:
+2148+ 6936 26 00            ld   h, 0
+2149+ 6938 68               ld   l, b
+2150+ 6939 29               add  hl, hl
+2151+ 693A 29               add  hl, hl
+2152+ 693B 29               add  hl, hl            ; HL = B * 8
+2153+ 693C 16 00            ld   d, 0
+2154+ 693E 59               ld   e, c              ; DE = C
+2155+ 693F 19               add  hl, de            ; HL = B * 8 + C
+2156+ 6940 ED 5B 01 F0      ld   de, (room_ptr)
+2157+ 6944 19               add  hl, de            ; HL = layout byte address
+2158+ 6945 7E               ld   a, (hl)           ; A = layout byte
+2159+ 6946 57               ld   d, a              ; D = salva il byte di layout
+2160+ 6947
+2161+ 6947 1E 04            ld   e, 4              ; 4 celle per byte
+2162+ 6949              .cell_loop:
+2163+ 6949 7A               ld   a, d
+2164+ 694A 07               rlca
+2165+ 694B 07               rlca
+2166+ 694C 57               ld   d, a              ; D ruotato di 2
+2167+ 694D E6 03            and  3                 ; A = cell type (0..3)
+2168+ 694F
+2169+ 694F D5               push de
+2170+ 6950 C5               push bc
+2171+ 6951
+2172+ 6951 ED 5B 01 F0      ld   de, (room_ptr)
+2173+ 6955 B7               or   a
+2174+ 6956 20 06            jr   nz, .not_bg
+2175+ 6958 21 A0 00         ld   hl, OFFSET_BG
+2176+ 695B 19               add  hl, de
+2177+ 695C 18 16            jr   .draw_cell
+2178+ 695E              .not_bg:
+2179+ 695E 3D               dec  a
+2180+ 695F 20 06            jr   nz, .not_floor
+2181+ 6961 21 A9 00         ld   hl, OFFSET_FLOOR
+2182+ 6964 19               add  hl, de
+2183+ 6965 18 0D            jr   .draw_cell
+2184+ 6967              .not_floor:
+2185+ 6967 3D               dec  a
+2186+ 6968 20 06            jr   nz, .not_wall
+2187+ 696A 21 B2 00         ld   hl, OFFSET_WALL
+2188+ 696D 19               add  hl, de
+2189+ 696E 18 04            jr   .draw_cell
+2190+ 6970              .not_wall:
+2191+ 6970 21 BB 00         ld   hl, OFFSET_NASTY
+2192+ 6973 19               add  hl, de
+2193+ 6974
+2194+ 6974              .draw_cell:
+2195+ 6974 E5               push hl
+2196+ 6975 DD E1            pop  ix                ; IX = tile pointer
+2197+ 6977
+2198+ 6977 C1               pop  bc                ; BC = original BC
+2199+ 6978 D1               pop  de                ; DE = original DE
+2200+ 6979 D5               push de                ; Save for next iteration
+2201+ 697A C5               push bc                ; Save for next iteration
+2202+ 697B
+2203+ 697B 78               ld   a, b
+2204+ 697C 67               ld   h, a
+2205+ 697D
+2206+ 697D 79               ld   a, c
+2207+ 697E 87               add  a, a              ; *2
+2208+ 697F 87               add  a, a              ; *4 (Col group * 4)
+2209+ 6980 6F               ld   l, a              ; L = Col group * 4
+2210+ 6981
+2211+ 6981 3E 04            ld   a, 4
+2212+ 6983 93               sub  e                 ; A = 4 - E (0..3)
+2213+ 6984 85               add  a, l              ; A = Col group * 4 + (4 - E)
+2214+ 6985 6F               ld   l, a              ; L = Col
+2215+ 6986
+2216+ 6986 44               ld   b, h
+2217+ 6987 4D               ld   c, l
+2218+ 6988 CD ED 68         call Gfx_DrawTile
+2219+ 698B
+2220+ 698B C1               pop  bc
+2221+ 698C D1               pop  de
+2222+ 698D 1D               dec  e
+2223+ 698E C2 49 69         jp   nz, .cell_loop
+2224+ 6991
+2225+ 6991 0C               inc  c
+2226+ 6992 79               ld   a, c
+2227+ 6993 FE 08            cp   8
+2228+ 6995 C2 36 69         jp   nz, .col_byte_loop
+2229+ 6998
+2230+ 6998 04               inc  b
+2231+ 6999 78               ld   a, b
+2232+ 699A FE 10            cp   16
+2233+ 699C C2 34 69         jp   nz, .row_loop
+2234+ 699F
+2235+ 699F DD E1            pop  ix
+2236+ 69A1 E1               pop  hl
+2237+ 69A2 D1               pop  de
+2238+ 69A3 C1               pop  bc
+2239+ 69A4 C9               ret
 2240+ 69A5
-2241+ 69A5              ; -------------------------------------------------------------------
-2242+ 69A5              ; Ottiene l'attributo colore originale dello sfondo per una cella
-2243+ 69A5              ; Input: H = Row (0..23), B = Col (0..31)
-2244+ 69A5              ; Output: A = Attributo colore
-2245+ 69A5              ; -------------------------------------------------------------------
-2246+ 69A5              Gfx_GetCellAttribute:
-2247+ 69A5 E5               push hl
-2248+ 69A6 D5               push de
-2249+ 69A7 C5               push bc
-2250+ 69A8
-2251+ 69A8 D5               push de
-2252+ 69A9 C5               push bc
-2253+ 69AA 4C               ld   c, h              ; C = Row
-2254+ 69AB CD 40 86         call CheckActiveItemAtCell
-2255+ 69AE 30 06            jr   nc, .no_item_attr
-2256+ 69B0
-2257+ 69B0 C1               pop  bc
-2258+ 69B1 D1               pop  de
-2259+ 69B2 C1               pop  bc
-2260+ 69B3 D1               pop  de
-2261+ 69B4 E1               pop  hl
-2262+ 69B5 C9               ret
-2263+ 69B6
-2264+ 69B6              .no_item_attr:
-2265+ 69B6 C1               pop  bc
-2266+ 69B7 D1               pop  de
-2267+ 69B8
-2268+ 69B8                  ; 1. Controlla se Row (H) è fuori dal layout (H < 0 o H >= 16)
-2269+ 69B8 7C               ld   a, h
-2270+ 69B9 FE 00            cp   0
-2271+ 69BB 38 5C            jr   c, .blank
-2272+ 69BD FE 10            cp   16
-2273+ 69BF 30 58            jr   nc, .blank
-2274+ 69C1
-2275+ 69C1                  ; 2. Calcola riga di layout: r = H
-2276+ 69C1                  ; 3. HL = r * 8
-2277+ 69C1 6F               ld   l, a
-2278+ 69C2 26 00            ld   h, 0
-2279+ 69C4 29               add  hl, hl
-2280+ 69C5 29               add  hl, hl
-2281+ 69C6 29               add  hl, hl            ; HL = r * 8
-2282+ 69C7
-2283+ 69C7                  ; 4. HL = r * 8 + c / 4
-2284+ 69C7 78               ld   a, b              ; A = Col
-2285+ 69C8 CB 3F            srl  a
-2286+ 69CA CB 3F            srl  a                 ; A = c / 4
-2287+ 69CC 85               add  a, l
-2288+ 69CD 6F               ld   l, a              ; HL = r * 8 + c / 4
-2289+ 69CE
-2290+ 69CE ED 5B 01 F0      ld   de, (room_ptr)
-2291+ 69D2 19               add  hl, de            ; HL = layout byte address
-2292+ 69D3 7E               ld   a, (hl)           ; A = layout byte
-2293+ 69D4
-2294+ 69D4                  ; Estrai il bit-pair corrispondente a c % 4
-2295+ 69D4 4F               ld   c, a              ; C = layout byte
-2296+ 69D5 78               ld   a, b              ; A = Col
-2297+ 69D6 E6 03            and  3                 ; A = c % 4
-2298+ 69D8 28 15            jr   z, .shift_0
-2299+ 69DA 3D               dec  a
-2300+ 69DB 28 0B            jr   z, .shift_1
-2301+ 69DD 3D               dec  a
-2302+ 69DE 28 03            jr   z, .shift_2
-2303+ 69E0                  ; Case 3 (c % 4 = 3)
-2304+ 69E0 79               ld   a, c
-2305+ 69E1 18 0F            jr   .got_type
-2306+ 69E3              .shift_2:
-2307+ 69E3 79               ld   a, c
-2308+ 69E4 0F               rrca
-2309+ 69E5 0F               rrca
-2310+ 69E6 18 0A            jr   .got_type
-2311+ 69E8              .shift_1:
-2312+ 69E8 79               ld   a, c
-2313+ 69E9 0F               rrca
-2314+ 69EA 0F               rrca
-2315+ 69EB 0F               rrca
-2316+ 69EC 0F               rrca
-2317+ 69ED 18 03            jr   .got_type
-2318+ 69EF              .shift_0:
-2319+ 69EF 79               ld   a, c
-2320+ 69F0 07               rlca
-2321+ 69F1 07               rlca
-2322+ 69F2              .got_type:
-2323+ 69F2 E6 03            and  3                 ; A = cell type (0..3)
-2324+ 69F4
-2325+ 69F4                  ; Ottieni l'offset del tile corrispondente e leggi l'attributo (il primo byte del tile)
-2326+ 69F4 B7               or   a
-2327+ 69F5 20 05            jr   nz, .not_bg
-2328+ 69F7 21 A0 00         ld   hl, OFFSET_BG
-2329+ 69FA 18 13            jr   .load_attr
-2330+ 69FC              .not_bg:
-2331+ 69FC 3D               dec  a
-2332+ 69FD 20 05            jr   nz, .not_floor
-2333+ 69FF 21 A9 00         ld   hl, OFFSET_FLOOR
-2334+ 6A02 18 0B            jr   .load_attr
-2335+ 6A04              .not_floor:
-2336+ 6A04 3D               dec  a
-2337+ 6A05 20 05            jr   nz, .not_wall
-2338+ 6A07 21 B2 00         ld   hl, OFFSET_WALL
-2339+ 6A0A 18 03            jr   .load_attr
-2340+ 6A0C              .not_wall:
-2341+ 6A0C 21 BB 00         ld   hl, OFFSET_NASTY
-2342+ 6A0F
-2343+ 6A0F              .load_attr:
-2344+ 6A0F ED 5B 01 F0      ld   de, (room_ptr)
-2345+ 6A13 19               add  hl, de            ; HL = tile pointer
-2346+ 6A14 7E               ld   a, (hl)           ; A = primo byte del tile (l'attributo colore)
-2347+ 6A15
-2348+ 6A15 C1               pop  bc
-2349+ 6A16 D1               pop  de
-2350+ 6A17 E1               pop  hl
-2351+ 6A18 C9               ret
-2352+ 6A19
-2353+ 6A19              .blank:
-2354+ 6A19 3E 07            ld   a, $07            ; Sfondo di default (bianco su nero)
-2355+ 6A1B C1               pop  bc
-2356+ 6A1C D1               pop  de
-2357+ 6A1D E1               pop  hl
-2358+ 6A1E C9               ret
-2359+ 6A1F
-2360+ 6A1F              ; -------------------------------------------------------------------
-2361+ 6A1F              ; Imposta gli attributi colore per la cella occupata da un nemico 16x16
-2362+ 6A1F              ; Input: C = X pixel, B = Y pixel, A = Colore Gfx_Ink (0..7)
-2363+ 6A1F              ; -------------------------------------------------------------------
-2364+ 6A1F              Gfx_SetEnemyColorAttributes:
-2365+ 6A1F E5               push hl
-2366+ 6A20 D5               push de
-2367+ 6A21 C5               push bc
-2368+ 6A22
-2369+ 6A22 57               ld   d, a              ; D = Colore Gfx_Ink (salvato)
-2370+ 6A23
-2371+ 6A23                  ; Se Y è fuori dai limiti della griglia di gioco, non fare nulla
-2372+ 6A23 78               ld   a, b
-2373+ 6A24 FE 80            cp   128
-2374+ 6A26 30 54            jr   nc, .done
-2375+ 6A28
-2376+ 6A28                  ; Calcola ColStart: col = X / 8
-2377+ 6A28 79               ld   a, c
-2378+ 6A29 CB 3F            srl  a
-2379+ 6A2B CB 3F            srl  a
-2380+ 6A2D CB 3F            srl  a
-2381+ 6A2F 5F               ld   e, a              ; E = ColStart
-2382+ 6A30
-2383+ 6A30                  ; Calcola ColEnd: col_end = (X + 15) / 8
-2384+ 6A30 79               ld   a, c
-2385+ 6A31 C6 0F            add  a, 15
-2386+ 6A33 CB 3F            srl  a
-2387+ 6A35 CB 3F            srl  a
-2388+ 6A37 CB 3F            srl  a
-2389+ 6A39 4F               ld   c, a              ; C = ColEnd
-2390+ 6A3A
-2391+ 6A3A                  ; Calcola RowStart: row = Y / 8
-2392+ 6A3A 78               ld   a, b
-2393+ 6A3B CB 3F            srl  a
-2394+ 6A3D CB 3F            srl  a
-2395+ 6A3F CB 3F            srl  a
-2396+ 6A41 67               ld   h, a              ; H = RowStart
-2397+ 6A42
-2398+ 6A42                  ; Calcola RowEnd: row_end = (Y + 15) / 8
-2399+ 6A42 78               ld   a, b
-2400+ 6A43 C6 0F            add  a, 15
-2401+ 6A45 CB 3F            srl  a
-2402+ 6A47 CB 3F            srl  a
-2403+ 6A49 CB 3F            srl  a
-2404+ 6A4B 6F               ld   l, a              ; L = RowEnd
-2405+ 6A4C
-2406+ 6A4C                  ; Loop righe: Row corrente in H, fino a L
-2407+ 6A4C              .row_loop:
-2408+ 6A4C 7C               ld   a, h
-2409+ 6A4D BD               cp   l
-2410+ 6A4E 28 02            jr   z, .ok_row
-2411+ 6A50 30 2A            jr   nc, .done
-2412+ 6A52              .ok_row:
-2413+ 6A52 C5               push bc
-2414+ 6A53 D5               push de
-2415+ 6A54
-2416+ 6A54                  ; Col loop from E (ColStart) to C (ColEnd)
-2417+ 6A54 43               ld   b, e              ; B = Col corrente
-2418+ 6A55              .col_loop:
-2419+ 6A55 78               ld   a, b
-2420+ 6A56 B9               cp   c
-2421+ 6A57 28 02            jr   z, .ok_col
-2422+ 6A59 30 1C            jr   nc, .col_done
-2423+ 6A5B              .ok_col:
-2424+ 6A5B                  ; Processa la cella a H (Row), B (Col)
-2425+ 6A5B E5               push hl
-2426+ 6A5C 6C               ld   l, h
-2427+ 6A5D 26 00            ld   h, 0
-2428+ 6A5F 29               add  hl, hl
-2429+ 6A60 29               add  hl, hl
-2430+ 6A61 29               add  hl, hl
-2431+ 6A62 29               add  hl, hl
-2432+ 6A63 29               add  hl, hl            ; HL = Row * 32
-2433+ 6A64
-2434+ 6A64 78               ld   a, b              ; A = Col corrente
-2435+ 6A65 85               add  a, l
-2436+ 6A66 6F               ld   l, a
-2437+ 6A67 30 01            jr   nc, .no_c_s
-2438+ 6A69 24               inc  h
-2439+ 6A6A              .no_c_s:
-2440+ 6A6A 7C               ld   a, h
-2441+ 6A6B C6 58            add  a, $58
-2442+ 6A6D 67               ld   h, a              ; HL = Attribute screen address ($5800 + Row * 32 + Col)
-2443+ 6A6E
-2444+ 6A6E 7E               ld   a, (hl)
-2445+ 6A6F E6 F8            and  $f8
-2446+ 6A71 B2               or   d                 ; D has the enemy color
-2447+ 6A72 77               ld   (hl), a
-2448+ 6A73 E1               pop  hl
-2449+ 6A74
-2450+ 6A74 04               inc  b                 ; Prossima colonna
-2451+ 6A75 18 DE            jr   .col_loop
-2452+ 6A77
-2453+ 6A77              .col_done:
-2454+ 6A77 D1               pop  de
-2455+ 6A78 C1               pop  bc
-2456+ 6A79 24               inc  h                 ; Prossima riga
-2457+ 6A7A 18 D0            jr   .row_loop
-2458+ 6A7C
-2459+ 6A7C              .done:
-2460+ 6A7C C1               pop  bc
-2461+ 6A7D D1               pop  de
-2462+ 6A7E E1               pop  hl
-2463+ 6A7F C9               ret
-2464+ 6A80
-2465+ 6A80              ; -------------------------------------------------------------------
-2466+ 6A80              ; Ripristina gli attributi colore originali dello sfondo per la cella occupata da un nemico
-2467+ 6A80              ; Input: C = X pixel, B = Y pixel
-2468+ 6A80              ; -------------------------------------------------------------------
-2469+ 6A80              Gfx_RestoreEnemyColorAttributes:
-2470+ 6A80 E5               push hl
-2471+ 6A81 D5               push de
-2472+ 6A82 C5               push bc
-2473+ 6A83
-2474+ 6A83                  ; Se Y è fuori dai limiti della griglia di gioco, non fare nulla
-2475+ 6A83 78               ld   a, b
-2476+ 6A84 FE 80            cp   128
-2477+ 6A86 30 54            jr   nc, .done
-2478+ 6A88
-2479+ 6A88                  ; Calcola ColStart: col = X / 8
-2480+ 6A88 79               ld   a, c
-2481+ 6A89 CB 3F            srl  a
-2482+ 6A8B CB 3F            srl  a
-2483+ 6A8D CB 3F            srl  a
-2484+ 6A8F 5F               ld   e, a              ; E = ColStart
-2485+ 6A90
-2486+ 6A90                  ; Calcola ColEnd: col_end = (X + 15) / 8
-2487+ 6A90 79               ld   a, c
-2488+ 6A91 C6 0F            add  a, 15
-2489+ 6A93 CB 3F            srl  a
-2490+ 6A95 CB 3F            srl  a
-2491+ 6A97 CB 3F            srl  a
-2492+ 6A99 4F               ld   c, a              ; C = ColEnd
-2493+ 6A9A
-2494+ 6A9A                  ; Calcola RowStart: row = Y / 8
-2495+ 6A9A 78               ld   a, b
-2496+ 6A9B CB 3F            srl  a
-2497+ 6A9D CB 3F            srl  a
-2498+ 6A9F CB 3F            srl  a
-2499+ 6AA1 67               ld   h, a              ; H = RowStart
-2500+ 6AA2
-2501+ 6AA2                  ; Calcola RowEnd: row_end = (Y + 15) / 8
-2502+ 6AA2 78               ld   a, b
-2503+ 6AA3 C6 0F            add  a, 15
-2504+ 6AA5 CB 3F            srl  a
-2505+ 6AA7 CB 3F            srl  a
-2506+ 6AA9 CB 3F            srl  a
-2507+ 6AAB 6F               ld   l, a              ; L = RowEnd
-2508+ 6AAC
-2509+ 6AAC                  ; Loop righe: Row corrente in H, fino a L
-2510+ 6AAC              .row_loop:
-2511+ 6AAC 7C               ld   a, h
-2512+ 6AAD BD               cp   l
-2513+ 6AAE 28 02            jr   z, .ok_row
-2514+ 6AB0 30 2A            jr   nc, .done
-2515+ 6AB2              .ok_row:
-2516+ 6AB2 C5               push bc
-2517+ 6AB3 D5               push de
-2518+ 6AB4
-2519+ 6AB4                  ; Col loop from E (ColStart) to C (ColEnd)
-2520+ 6AB4 43               ld   b, e              ; B = Col corrente
-2521+ 6AB5              .col_loop:
-2522+ 6AB5 78               ld   a, b
-2523+ 6AB6 B9               cp   c
-2524+ 6AB7 28 02            jr   z, .ok_col
-2525+ 6AB9 30 1C            jr   nc, .col_done
-2526+ 6ABB              .ok_col:
-2527+ 6ABB                  ; Ottieni attributo originale dello sfondo per cella H (Row), B (Col)
-2528+ 6ABB CD A5 69         call Gfx_GetCellAttribute  ; A = attributo originale
-2529+ 6ABE 57               ld   d, a              ; D = attributo originale
-2530+ 6ABF
-2531+ 6ABF E5               push hl                ; Salva Row pointer
-2532+ 6AC0 6C               ld   l, h
-2533+ 6AC1 26 00            ld   h, 0
-2534+ 6AC3 29               add  hl, hl
-2535+ 6AC4 29               add  hl, hl
-2536+ 6AC5 29               add  hl, hl
-2537+ 6AC6 29               add  hl, hl
-2538+ 6AC7 29               add  hl, hl            ; HL = Row * 32
-2539+ 6AC8
-2540+ 6AC8 78               ld   a, b              ; A = Col corrente
-2541+ 6AC9 85               add  a, l
-2542+ 6ACA 6F               ld   l, a
-2543+ 6ACB 30 01            jr   nc, .no_c_r
-2544+ 6ACD 24               inc  h
-2545+ 6ACE              .no_c_r:
-2546+ 6ACE 7C               ld   a, h
-2547+ 6ACF C6 58            add  a, $58
-2548+ 6AD1 67               ld   h, a              ; HL = Attribute screen address ($5800 + Row * 32 + Col)
-2549+ 6AD2
-2550+ 6AD2 72               ld   (hl), d           ; Ripristina l'attributo colore dello sfondo
-2551+ 6AD3 E1               pop  hl                ; Ripristina Row pointer
-2552+ 6AD4
-2553+ 6AD4 04               inc  b                 ; Prossima colonna
-2554+ 6AD5 18 DE            jr   .col_loop
-2555+ 6AD7
-2556+ 6AD7              .col_done:
-2557+ 6AD7 D1               pop  de
-2558+ 6AD8 C1               pop  bc
-2559+ 6AD9 24               inc  h                 ; Prossima riga
-2560+ 6ADA 18 D0            jr   .row_loop
-2561+ 6ADC
-2562+ 6ADC              .done:
-2563+ 6ADC C1               pop  bc
-2564+ 6ADD D1               pop  de
-2565+ 6ADE E1               pop  hl
-2566+ 6ADF C9               ret
-2567+ 6AE0
-2568+ 6AE0              ; -------------------------------------------------------------------
-2569+ 6AE0              ; Disegna rampa e conveyor leggendo i dati della stanza corrente
-2570+ 6AE0              ; -------------------------------------------------------------------
-2571+ 6AE0              Gfx_DrawConveyorsAndRamps:
-2572+ 6AE0 E5               push hl
-2573+ 6AE1 D5               push de
-2574+ 6AE2 C5               push bc
-2575+ 6AE3 DD E5            push ix
-2576+ 6AE5
-2577+ 6AE5                  ; --- 1. Disegna Conveyor ---
-2578+ 6AE5 2A 01 F0         ld   hl, (room_ptr)
-2579+ 6AE8 11 D6 00         ld   de, OFFSET_CONVEYOR_DATA
-2580+ 6AEB 19               add  hl, de            ; HL = ConveyorData pointer
-2581+ 6AEC
-2582+ 6AEC 7E               ld   a, (hl)           ; A = Direction
-2583+ 6AED 32 A8 EF         ld   (conveyor_dir), a
-2584+ 6AF0 23               inc  hl
-2585+ 6AF1 5E               ld   e, (hl)
-2586+ 6AF2 23               inc  hl
-2587+ 6AF3 56               ld   d, (hl)           ; DE = Location
-2588+ 6AF4 23               inc  hl
-2589+ 6AF5 7E               ld   a, (hl)           ; A = Length
-2590+ 6AF6 32 A9 EF         ld   (conveyor_len), a
-2591+ 6AF9
-2592+ 6AF9                  ; Controlla se DE (Location) è 0
-2593+ 6AF9 7A               ld   a, d
-2594+ 6AFA B3               or   e
-2595+ 6AFB 28 44            jr   z, .draw_ramp     ; Se 0, salta conveyor
-2596+ 6AFD
-2597+ 6AFD                  ; Calcola Row e Col: Offset = DE - 24064
-2598+ 6AFD E5               push hl
-2599+ 6AFE 21 00 A2         ld   hl, -24064
-2600+ 6B01 19               add  hl, de            ; HL = Offset
-2601+ 6B02
-2602+ 6B02 54               ld   d, h
-2603+ 6B03 5D               ld   e, l              ; DE = Offset
-2604+ 6B04
-2605+ 6B04                  ; Col = Offset & 31
-2606+ 6B04 7B               ld   a, e
-2607+ 6B05 E6 1F            and  31
-2608+ 6B07 4F               ld   c, a              ; C = Col Start
-2609+ 6B08
-2610+ 6B08                  ; Row = Offset / 32
-2611+ 6B08 CB 3C            srl  h
-2612+ 6B0A CB 1D            rr   l
-2613+ 6B0C CB 3C            srl  h
-2614+ 6B0E CB 1D            rr   l
-2615+ 6B10 CB 3C            srl  h
-2616+ 6B12 CB 1D            rr   l
-2617+ 6B14 CB 3C            srl  h
-2618+ 6B16 CB 1D            rr   l
-2619+ 6B18 CB 3C            srl  h
-2620+ 6B1A CB 1D            rr   l
-2621+ 6B1C 7D               ld   a, l
-2622+ 6B1D 47               ld   b, a              ; B = Row
-2623+ 6B1E E1               pop  hl                ; HL = original pointer (Length)
-2624+ 6B1F
-2625+ 6B1F 78               ld   a, b
-2626+ 6B20 32 AA EF         ld   (conveyor_row), a
-2627+ 6B23 79               ld   a, c
-2628+ 6B24 32 AB EF         ld   (conveyor_col), a
-2629+ 6B27
-2630+ 6B27 3A A9 EF         ld   a, (conveyor_len) ; A = Length
-2631+ 6B2A B7               or   a
-2632+ 6B2B 28 14            jr   z, .draw_ramp
-2633+ 6B2D 57               ld   d, a              ; D = contatore lunghezza
-2634+ 6B2E
-2635+ 6B2E                  ; IX = room_ptr + OFFSET_CONVEYOR
-2636+ 6B2E 2A 01 F0         ld   hl, (room_ptr)
-2637+ 6B31 C5               push bc
-2638+ 6B32 01 CD 00         ld   bc, OFFSET_CONVEYOR
-2639+ 6B35 09               add  hl, bc
-2640+ 6B36 C1               pop  bc
-2641+ 6B37 E5               push hl
-2642+ 6B38 DD E1            pop  ix                ; IX = conveyor tile pointer
-2643+ 6B3A
-2644+ 6B3A              .conveyor_loop:
-2645+ 6B3A CD ED 68         call Gfx_DrawTile
-2646+ 6B3D 0C               inc  c                 ; Prossima colonna
-2647+ 6B3E 15               dec  d
-2648+ 6B3F 20 F9            jr   nz, .conveyor_loop
-2649+ 6B41
-2650+ 6B41              .draw_ramp:
-2651+ 6B41                  ; --- 2. Disegna Ramp ---
-2652+ 6B41 2A 01 F0         ld   hl, (room_ptr)
-2653+ 6B44 11 DA 00         ld   de, OFFSET_RAMP_DATA
-2654+ 6B47 19               add  hl, de            ; HL = RampData pointer
-2655+ 6B48
-2656+ 6B48 7E               ld   a, (hl)           ; A = Direction (0 = up-left, 1 = up-right)
-2657+ 6B49 32 AC EF         ld   (ramp_dir), a
-2658+ 6B4C 23               inc  hl
-2659+ 6B4D 5E               ld   e, (hl)
-2660+ 6B4E 23               inc  hl
-2661+ 6B4F 56               ld   d, (hl)           ; DE = Location
-2662+ 6B50 23               inc  hl
-2663+ 6B51 7E               ld   a, (hl)           ; A = Length
-2664+ 6B52 32 AD EF         ld   (ramp_len), a
-2665+ 6B55
-2666+ 6B55                  ; Controlla se DE (Location) è 0
-2667+ 6B55 7A               ld   a, d
-2668+ 6B56 B3               or   e
-2669+ 6B57 28 4E            jr   z, .done_ramp     ; Se 0, fine
-2670+ 6B59
-2671+ 6B59 E5               push hl
-2672+ 6B5A 21 00 A2         ld   hl, -24064
-2673+ 6B5D 19               add  hl, de            ; HL = Offset
-2674+ 6B5E
-2675+ 6B5E 54               ld   d, h
-2676+ 6B5F 5D               ld   e, l              ; DE = Offset
-2677+ 6B60
-2678+ 6B60                  ; Col = Offset & 31
-2679+ 6B60 7B               ld   a, e
-2680+ 6B61 E6 1F            and  31
-2681+ 6B63 4F               ld   c, a              ; C = Col Start
-2682+ 6B64
-2683+ 6B64                  ; Row = Offset / 32
-2684+ 6B64 CB 3C            srl  h
-2685+ 6B66 CB 1D            rr   l
-2686+ 6B68 CB 3C            srl  h
-2687+ 6B6A CB 1D            rr   l
-2688+ 6B6C CB 3C            srl  h
-2689+ 6B6E CB 1D            rr   l
-2690+ 6B70 CB 3C            srl  h
-2691+ 6B72 CB 1D            rr   l
-2692+ 6B74 CB 3C            srl  h
-2693+ 6B76 CB 1D            rr   l
-2694+ 6B78 7D               ld   a, l
-2695+ 6B79 47               ld   b, a              ; B = Row
-2696+ 6B7A E1               pop  hl                ; HL = original pointer (Length)
-2697+ 6B7B
-2698+ 6B7B 78               ld   a, b
-2699+ 6B7C 32 AE EF         ld   (ramp_row), a
-2700+ 6B7F 79               ld   a, c
-2701+ 6B80 32 AF EF         ld   (ramp_col), a
-2702+ 6B83
-2703+ 6B83 3A AD EF         ld   a, (ramp_len)     ; A = Length
-2704+ 6B86 B7               or   a
-2705+ 6B87 28 1E            jr   z, .done_ramp
-2706+ 6B89 57               ld   d, a              ; D = contatore lunghezza
-2707+ 6B8A
-2708+ 6B8A                  ; IX = room_ptr + OFFSET_RAMP
-2709+ 6B8A 2A 01 F0         ld   hl, (room_ptr)
-2710+ 6B8D C5               push bc
-2711+ 6B8E 01 C4 00         ld   bc, OFFSET_RAMP
-2712+ 6B91 09               add  hl, bc
-2713+ 6B92 C1               pop  bc
-2714+ 6B93 E5               push hl
-2715+ 6B94 DD E1            pop  ix                ; IX = ramp tile pointer
-2716+ 6B96
-2717+ 6B96              .ramp_loop:
-2718+ 6B96 CD ED 68         call Gfx_DrawTile
-2719+ 6B99
-2720+ 6B99 3A AC EF         ld   a, (ramp_dir)
-2721+ 6B9C B7               or   a
-2722+ 6B9D 28 03            jr   z, .up_left
-2723+ 6B9F              .up_right:
-2724+ 6B9F 0C               inc  c                 ; Prossima colonna a destra
-2725+ 6BA0 18 01            jr   .next_step
-2726+ 6BA2              .up_left:
-2727+ 6BA2 0D               dec  c                 ; Prossima colonna a sinistra
-2728+ 6BA3              .next_step:
-2729+ 6BA3 05               dec  b                 ; Riga sopra (sale)
-2730+ 6BA4 15               dec  d
-2731+ 6BA5 20 EF            jr   nz, .ramp_loop
-2732+ 6BA7
-2733+ 6BA7              .done_ramp:
-2734+ 6BA7 DD E1            pop  ix
-2735+ 6BA9 C1               pop  bc
-2736+ 6BAA D1               pop  de
-2737+ 6BAB E1               pop  hl
-2738+ 6BAC C9               ret
-2739+ 6BAD
+2241+ 69A5
+2242+ 69A5              ; -------------------------------------------------------------------
+2243+ 69A5              ; Ottiene l'attributo colore originale dello sfondo per una cella
+2244+ 69A5              ; Input: H = Row (0..23), B = Col (0..31)
+2245+ 69A5              ; Output: A = Attributo colore
+2246+ 69A5              ; -------------------------------------------------------------------
+2247+ 69A5              Gfx_GetCellAttribute:
+2248+ 69A5 E5               push hl
+2249+ 69A6 D5               push de
+2250+ 69A7 C5               push bc
+2251+ 69A8
+2252+ 69A8 D5               push de
+2253+ 69A9 C5               push bc
+2254+ 69AA 4C               ld   c, h              ; C = Row
+2255+ 69AB CD 40 86         call CheckActiveItemAtCell
+2256+ 69AE 30 06            jr   nc, .no_item_attr
+2257+ 69B0
+2258+ 69B0 C1               pop  bc
+2259+ 69B1 D1               pop  de
+2260+ 69B2 C1               pop  bc
+2261+ 69B3 D1               pop  de
+2262+ 69B4 E1               pop  hl
+2263+ 69B5 C9               ret
+2264+ 69B6
+2265+ 69B6              .no_item_attr:
+2266+ 69B6 C1               pop  bc
+2267+ 69B7 D1               pop  de
+2268+ 69B8
+2269+ 69B8                  ; 1. Controlla se Row (H) è fuori dal layout (H < 0 o H >= 16)
+2270+ 69B8 7C               ld   a, h
+2271+ 69B9 FE 00            cp   0
+2272+ 69BB 38 5C            jr   c, .blank
+2273+ 69BD FE 10            cp   16
+2274+ 69BF 30 58            jr   nc, .blank
+2275+ 69C1
+2276+ 69C1                  ; 2. Calcola riga di layout: r = H
+2277+ 69C1                  ; 3. HL = r * 8
+2278+ 69C1 6F               ld   l, a
+2279+ 69C2 26 00            ld   h, 0
+2280+ 69C4 29               add  hl, hl
+2281+ 69C5 29               add  hl, hl
+2282+ 69C6 29               add  hl, hl            ; HL = r * 8
+2283+ 69C7
+2284+ 69C7                  ; 4. HL = r * 8 + c / 4
+2285+ 69C7 78               ld   a, b              ; A = Col
+2286+ 69C8 CB 3F            srl  a
+2287+ 69CA CB 3F            srl  a                 ; A = c / 4
+2288+ 69CC 85               add  a, l
+2289+ 69CD 6F               ld   l, a              ; HL = r * 8 + c / 4
+2290+ 69CE
+2291+ 69CE ED 5B 01 F0      ld   de, (room_ptr)
+2292+ 69D2 19               add  hl, de            ; HL = layout byte address
+2293+ 69D3 7E               ld   a, (hl)           ; A = layout byte
+2294+ 69D4
+2295+ 69D4                  ; Estrai il bit-pair corrispondente a c % 4
+2296+ 69D4 4F               ld   c, a              ; C = layout byte
+2297+ 69D5 78               ld   a, b              ; A = Col
+2298+ 69D6 E6 03            and  3                 ; A = c % 4
+2299+ 69D8 28 15            jr   z, .shift_0
+2300+ 69DA 3D               dec  a
+2301+ 69DB 28 0B            jr   z, .shift_1
+2302+ 69DD 3D               dec  a
+2303+ 69DE 28 03            jr   z, .shift_2
+2304+ 69E0                  ; Case 3 (c % 4 = 3)
+2305+ 69E0 79               ld   a, c
+2306+ 69E1 18 0F            jr   .got_type
+2307+ 69E3              .shift_2:
+2308+ 69E3 79               ld   a, c
+2309+ 69E4 0F               rrca
+2310+ 69E5 0F               rrca
+2311+ 69E6 18 0A            jr   .got_type
+2312+ 69E8              .shift_1:
+2313+ 69E8 79               ld   a, c
+2314+ 69E9 0F               rrca
+2315+ 69EA 0F               rrca
+2316+ 69EB 0F               rrca
+2317+ 69EC 0F               rrca
+2318+ 69ED 18 03            jr   .got_type
+2319+ 69EF              .shift_0:
+2320+ 69EF 79               ld   a, c
+2321+ 69F0 07               rlca
+2322+ 69F1 07               rlca
+2323+ 69F2              .got_type:
+2324+ 69F2 E6 03            and  3                 ; A = cell type (0..3)
+2325+ 69F4
+2326+ 69F4                  ; Ottieni l'offset del tile corrispondente e leggi l'attributo (il primo byte del tile)
+2327+ 69F4 B7               or   a
+2328+ 69F5 20 05            jr   nz, .not_bg
+2329+ 69F7 21 A0 00         ld   hl, OFFSET_BG
+2330+ 69FA 18 13            jr   .load_attr
+2331+ 69FC              .not_bg:
+2332+ 69FC 3D               dec  a
+2333+ 69FD 20 05            jr   nz, .not_floor
+2334+ 69FF 21 A9 00         ld   hl, OFFSET_FLOOR
+2335+ 6A02 18 0B            jr   .load_attr
+2336+ 6A04              .not_floor:
+2337+ 6A04 3D               dec  a
+2338+ 6A05 20 05            jr   nz, .not_wall
+2339+ 6A07 21 B2 00         ld   hl, OFFSET_WALL
+2340+ 6A0A 18 03            jr   .load_attr
+2341+ 6A0C              .not_wall:
+2342+ 6A0C 21 BB 00         ld   hl, OFFSET_NASTY
+2343+ 6A0F
+2344+ 6A0F              .load_attr:
+2345+ 6A0F ED 5B 01 F0      ld   de, (room_ptr)
+2346+ 6A13 19               add  hl, de            ; HL = tile pointer
+2347+ 6A14 7E               ld   a, (hl)           ; A = primo byte del tile (l'attributo colore)
+2348+ 6A15
+2349+ 6A15 C1               pop  bc
+2350+ 6A16 D1               pop  de
+2351+ 6A17 E1               pop  hl
+2352+ 6A18 C9               ret
+2353+ 6A19
+2354+ 6A19              .blank:
+2355+ 6A19 3E 07            ld   a, $07            ; Sfondo di default (bianco su nero)
+2356+ 6A1B C1               pop  bc
+2357+ 6A1C D1               pop  de
+2358+ 6A1D E1               pop  hl
+2359+ 6A1E C9               ret
+2360+ 6A1F
+2361+ 6A1F              ; -------------------------------------------------------------------
+2362+ 6A1F              ; Imposta gli attributi colore per la cella occupata da un nemico 16x16
+2363+ 6A1F              ; Input: C = X pixel, B = Y pixel, A = Colore Gfx_Ink (0..7)
+2364+ 6A1F              ; -------------------------------------------------------------------
+2365+ 6A1F              Gfx_SetEnemyColorAttributes:
+2366+ 6A1F E5               push hl
+2367+ 6A20 D5               push de
+2368+ 6A21 C5               push bc
+2369+ 6A22
+2370+ 6A22 57               ld   d, a              ; D = Colore Gfx_Ink (salvato)
+2371+ 6A23
+2372+ 6A23                  ; Se Y è fuori dai limiti della griglia di gioco, non fare nulla
+2373+ 6A23 78               ld   a, b
+2374+ 6A24 FE 80            cp   128
+2375+ 6A26 30 54            jr   nc, .done
+2376+ 6A28
+2377+ 6A28                  ; Calcola ColStart: col = X / 8
+2378+ 6A28 79               ld   a, c
+2379+ 6A29 CB 3F            srl  a
+2380+ 6A2B CB 3F            srl  a
+2381+ 6A2D CB 3F            srl  a
+2382+ 6A2F 5F               ld   e, a              ; E = ColStart
+2383+ 6A30
+2384+ 6A30                  ; Calcola ColEnd: col_end = (X + 15) / 8
+2385+ 6A30 79               ld   a, c
+2386+ 6A31 C6 0F            add  a, 15
+2387+ 6A33 CB 3F            srl  a
+2388+ 6A35 CB 3F            srl  a
+2389+ 6A37 CB 3F            srl  a
+2390+ 6A39 4F               ld   c, a              ; C = ColEnd
+2391+ 6A3A
+2392+ 6A3A                  ; Calcola RowStart: row = Y / 8
+2393+ 6A3A 78               ld   a, b
+2394+ 6A3B CB 3F            srl  a
+2395+ 6A3D CB 3F            srl  a
+2396+ 6A3F CB 3F            srl  a
+2397+ 6A41 67               ld   h, a              ; H = RowStart
+2398+ 6A42
+2399+ 6A42                  ; Calcola RowEnd: row_end = (Y + 15) / 8
+2400+ 6A42 78               ld   a, b
+2401+ 6A43 C6 0F            add  a, 15
+2402+ 6A45 CB 3F            srl  a
+2403+ 6A47 CB 3F            srl  a
+2404+ 6A49 CB 3F            srl  a
+2405+ 6A4B 6F               ld   l, a              ; L = RowEnd
+2406+ 6A4C
+2407+ 6A4C                  ; Loop righe: Row corrente in H, fino a L
+2408+ 6A4C              .row_loop:
+2409+ 6A4C 7C               ld   a, h
+2410+ 6A4D BD               cp   l
+2411+ 6A4E 28 02            jr   z, .ok_row
+2412+ 6A50 30 2A            jr   nc, .done
+2413+ 6A52              .ok_row:
+2414+ 6A52 C5               push bc
+2415+ 6A53 D5               push de
+2416+ 6A54
+2417+ 6A54                  ; Col loop from E (ColStart) to C (ColEnd)
+2418+ 6A54 43               ld   b, e              ; B = Col corrente
+2419+ 6A55              .col_loop:
+2420+ 6A55 78               ld   a, b
+2421+ 6A56 B9               cp   c
+2422+ 6A57 28 02            jr   z, .ok_col
+2423+ 6A59 30 1C            jr   nc, .col_done
+2424+ 6A5B              .ok_col:
+2425+ 6A5B                  ; Processa la cella a H (Row), B (Col)
+2426+ 6A5B E5               push hl
+2427+ 6A5C 6C               ld   l, h
+2428+ 6A5D 26 00            ld   h, 0
+2429+ 6A5F 29               add  hl, hl
+2430+ 6A60 29               add  hl, hl
+2431+ 6A61 29               add  hl, hl
+2432+ 6A62 29               add  hl, hl
+2433+ 6A63 29               add  hl, hl            ; HL = Row * 32
+2434+ 6A64
+2435+ 6A64 78               ld   a, b              ; A = Col corrente
+2436+ 6A65 85               add  a, l
+2437+ 6A66 6F               ld   l, a
+2438+ 6A67 30 01            jr   nc, .no_c_s
+2439+ 6A69 24               inc  h
+2440+ 6A6A              .no_c_s:
+2441+ 6A6A 7C               ld   a, h
+2442+ 6A6B C6 58            add  a, $58
+2443+ 6A6D 67               ld   h, a              ; HL = Attribute screen address ($5800 + Row * 32 + Col)
+2444+ 6A6E
+2445+ 6A6E 7E               ld   a, (hl)
+2446+ 6A6F E6 F8            and  $f8
+2447+ 6A71 B2               or   d                 ; D has the enemy color
+2448+ 6A72 77               ld   (hl), a
+2449+ 6A73 E1               pop  hl
+2450+ 6A74
+2451+ 6A74 04               inc  b                 ; Prossima colonna
+2452+ 6A75 18 DE            jr   .col_loop
+2453+ 6A77
+2454+ 6A77              .col_done:
+2455+ 6A77 D1               pop  de
+2456+ 6A78 C1               pop  bc
+2457+ 6A79 24               inc  h                 ; Prossima riga
+2458+ 6A7A 18 D0            jr   .row_loop
+2459+ 6A7C
+2460+ 6A7C              .done:
+2461+ 6A7C C1               pop  bc
+2462+ 6A7D D1               pop  de
+2463+ 6A7E E1               pop  hl
+2464+ 6A7F C9               ret
+2465+ 6A80
+2466+ 6A80              ; -------------------------------------------------------------------
+2467+ 6A80              ; Ripristina gli attributi colore originali dello sfondo per la cella occupata da un nemico
+2468+ 6A80              ; Input: C = X pixel, B = Y pixel
+2469+ 6A80              ; -------------------------------------------------------------------
+2470+ 6A80              Gfx_RestoreEnemyColorAttributes:
+2471+ 6A80 E5               push hl
+2472+ 6A81 D5               push de
+2473+ 6A82 C5               push bc
+2474+ 6A83
+2475+ 6A83                  ; Se Y è fuori dai limiti della griglia di gioco, non fare nulla
+2476+ 6A83 78               ld   a, b
+2477+ 6A84 FE 80            cp   128
+2478+ 6A86 30 54            jr   nc, .done
+2479+ 6A88
+2480+ 6A88                  ; Calcola ColStart: col = X / 8
+2481+ 6A88 79               ld   a, c
+2482+ 6A89 CB 3F            srl  a
+2483+ 6A8B CB 3F            srl  a
+2484+ 6A8D CB 3F            srl  a
+2485+ 6A8F 5F               ld   e, a              ; E = ColStart
+2486+ 6A90
+2487+ 6A90                  ; Calcola ColEnd: col_end = (X + 15) / 8
+2488+ 6A90 79               ld   a, c
+2489+ 6A91 C6 0F            add  a, 15
+2490+ 6A93 CB 3F            srl  a
+2491+ 6A95 CB 3F            srl  a
+2492+ 6A97 CB 3F            srl  a
+2493+ 6A99 4F               ld   c, a              ; C = ColEnd
+2494+ 6A9A
+2495+ 6A9A                  ; Calcola RowStart: row = Y / 8
+2496+ 6A9A 78               ld   a, b
+2497+ 6A9B CB 3F            srl  a
+2498+ 6A9D CB 3F            srl  a
+2499+ 6A9F CB 3F            srl  a
+2500+ 6AA1 67               ld   h, a              ; H = RowStart
+2501+ 6AA2
+2502+ 6AA2                  ; Calcola RowEnd: row_end = (Y + 15) / 8
+2503+ 6AA2 78               ld   a, b
+2504+ 6AA3 C6 0F            add  a, 15
+2505+ 6AA5 CB 3F            srl  a
+2506+ 6AA7 CB 3F            srl  a
+2507+ 6AA9 CB 3F            srl  a
+2508+ 6AAB 6F               ld   l, a              ; L = RowEnd
+2509+ 6AAC
+2510+ 6AAC                  ; Loop righe: Row corrente in H, fino a L
+2511+ 6AAC              .row_loop:
+2512+ 6AAC 7C               ld   a, h
+2513+ 6AAD BD               cp   l
+2514+ 6AAE 28 02            jr   z, .ok_row
+2515+ 6AB0 30 2A            jr   nc, .done
+2516+ 6AB2              .ok_row:
+2517+ 6AB2 C5               push bc
+2518+ 6AB3 D5               push de
+2519+ 6AB4
+2520+ 6AB4                  ; Col loop from E (ColStart) to C (ColEnd)
+2521+ 6AB4 43               ld   b, e              ; B = Col corrente
+2522+ 6AB5              .col_loop:
+2523+ 6AB5 78               ld   a, b
+2524+ 6AB6 B9               cp   c
+2525+ 6AB7 28 02            jr   z, .ok_col
+2526+ 6AB9 30 1C            jr   nc, .col_done
+2527+ 6ABB              .ok_col:
+2528+ 6ABB                  ; Ottieni attributo originale dello sfondo per cella H (Row), B (Col)
+2529+ 6ABB CD A5 69         call Gfx_GetCellAttribute  ; A = attributo originale
+2530+ 6ABE 57               ld   d, a              ; D = attributo originale
+2531+ 6ABF
+2532+ 6ABF E5               push hl                ; Salva Row pointer
+2533+ 6AC0 6C               ld   l, h
+2534+ 6AC1 26 00            ld   h, 0
+2535+ 6AC3 29               add  hl, hl
+2536+ 6AC4 29               add  hl, hl
+2537+ 6AC5 29               add  hl, hl
+2538+ 6AC6 29               add  hl, hl
+2539+ 6AC7 29               add  hl, hl            ; HL = Row * 32
+2540+ 6AC8
+2541+ 6AC8 78               ld   a, b              ; A = Col corrente
+2542+ 6AC9 85               add  a, l
+2543+ 6ACA 6F               ld   l, a
+2544+ 6ACB 30 01            jr   nc, .no_c_r
+2545+ 6ACD 24               inc  h
+2546+ 6ACE              .no_c_r:
+2547+ 6ACE 7C               ld   a, h
+2548+ 6ACF C6 58            add  a, $58
+2549+ 6AD1 67               ld   h, a              ; HL = Attribute screen address ($5800 + Row * 32 + Col)
+2550+ 6AD2
+2551+ 6AD2 72               ld   (hl), d           ; Ripristina l'attributo colore dello sfondo
+2552+ 6AD3 E1               pop  hl                ; Ripristina Row pointer
+2553+ 6AD4
+2554+ 6AD4 04               inc  b                 ; Prossima colonna
+2555+ 6AD5 18 DE            jr   .col_loop
+2556+ 6AD7
+2557+ 6AD7              .col_done:
+2558+ 6AD7 D1               pop  de
+2559+ 6AD8 C1               pop  bc
+2560+ 6AD9 24               inc  h                 ; Prossima riga
+2561+ 6ADA 18 D0            jr   .row_loop
+2562+ 6ADC
+2563+ 6ADC              .done:
+2564+ 6ADC C1               pop  bc
+2565+ 6ADD D1               pop  de
+2566+ 6ADE E1               pop  hl
+2567+ 6ADF C9               ret
+2568+ 6AE0
+2569+ 6AE0              ; -------------------------------------------------------------------
+2570+ 6AE0              ; Disegna rampa e conveyor leggendo i dati della stanza corrente
+2571+ 6AE0              ; -------------------------------------------------------------------
+2572+ 6AE0              Gfx_DrawConveyorsAndRamps:
+2573+ 6AE0 E5               push hl
+2574+ 6AE1 D5               push de
+2575+ 6AE2 C5               push bc
+2576+ 6AE3 DD E5            push ix
+2577+ 6AE5
+2578+ 6AE5                  ; --- 1. Disegna Conveyor ---
+2579+ 6AE5 2A 01 F0         ld   hl, (room_ptr)
+2580+ 6AE8 11 D6 00         ld   de, OFFSET_CONVEYOR_DATA
+2581+ 6AEB 19               add  hl, de            ; HL = ConveyorData pointer
+2582+ 6AEC
+2583+ 6AEC 7E               ld   a, (hl)           ; A = Direction
+2584+ 6AED 32 A8 EF         ld   (conveyor_dir), a
+2585+ 6AF0 23               inc  hl
+2586+ 6AF1 5E               ld   e, (hl)
+2587+ 6AF2 23               inc  hl
+2588+ 6AF3 56               ld   d, (hl)           ; DE = Location
+2589+ 6AF4 23               inc  hl
+2590+ 6AF5 7E               ld   a, (hl)           ; A = Length
+2591+ 6AF6 32 A9 EF         ld   (conveyor_len), a
+2592+ 6AF9
+2593+ 6AF9                  ; Controlla se DE (Location) è 0
+2594+ 6AF9 7A               ld   a, d
+2595+ 6AFA B3               or   e
+2596+ 6AFB 28 44            jr   z, .draw_ramp     ; Se 0, salta conveyor
+2597+ 6AFD
+2598+ 6AFD                  ; Calcola Row e Col: Offset = DE - 24064
+2599+ 6AFD E5               push hl
+2600+ 6AFE 21 00 A2         ld   hl, -24064
+2601+ 6B01 19               add  hl, de            ; HL = Offset
+2602+ 6B02
+2603+ 6B02 54               ld   d, h
+2604+ 6B03 5D               ld   e, l              ; DE = Offset
+2605+ 6B04
+2606+ 6B04                  ; Col = Offset & 31
+2607+ 6B04 7B               ld   a, e
+2608+ 6B05 E6 1F            and  31
+2609+ 6B07 4F               ld   c, a              ; C = Col Start
+2610+ 6B08
+2611+ 6B08                  ; Row = Offset / 32
+2612+ 6B08 CB 3C            srl  h
+2613+ 6B0A CB 1D            rr   l
+2614+ 6B0C CB 3C            srl  h
+2615+ 6B0E CB 1D            rr   l
+2616+ 6B10 CB 3C            srl  h
+2617+ 6B12 CB 1D            rr   l
+2618+ 6B14 CB 3C            srl  h
+2619+ 6B16 CB 1D            rr   l
+2620+ 6B18 CB 3C            srl  h
+2621+ 6B1A CB 1D            rr   l
+2622+ 6B1C 7D               ld   a, l
+2623+ 6B1D 47               ld   b, a              ; B = Row
+2624+ 6B1E E1               pop  hl                ; HL = original pointer (Length)
+2625+ 6B1F
+2626+ 6B1F 78               ld   a, b
+2627+ 6B20 32 AA EF         ld   (conveyor_row), a
+2628+ 6B23 79               ld   a, c
+2629+ 6B24 32 AB EF         ld   (conveyor_col), a
+2630+ 6B27
+2631+ 6B27 3A A9 EF         ld   a, (conveyor_len) ; A = Length
+2632+ 6B2A B7               or   a
+2633+ 6B2B 28 14            jr   z, .draw_ramp
+2634+ 6B2D 57               ld   d, a              ; D = contatore lunghezza
+2635+ 6B2E
+2636+ 6B2E                  ; IX = room_ptr + OFFSET_CONVEYOR
+2637+ 6B2E 2A 01 F0         ld   hl, (room_ptr)
+2638+ 6B31 C5               push bc
+2639+ 6B32 01 CD 00         ld   bc, OFFSET_CONVEYOR
+2640+ 6B35 09               add  hl, bc
+2641+ 6B36 C1               pop  bc
+2642+ 6B37 E5               push hl
+2643+ 6B38 DD E1            pop  ix                ; IX = conveyor tile pointer
+2644+ 6B3A
+2645+ 6B3A              .conveyor_loop:
+2646+ 6B3A CD ED 68         call Gfx_DrawTile
+2647+ 6B3D 0C               inc  c                 ; Prossima colonna
+2648+ 6B3E 15               dec  d
+2649+ 6B3F 20 F9            jr   nz, .conveyor_loop
+2650+ 6B41
+2651+ 6B41              .draw_ramp:
+2652+ 6B41                  ; --- 2. Disegna Ramp ---
+2653+ 6B41 2A 01 F0         ld   hl, (room_ptr)
+2654+ 6B44 11 DA 00         ld   de, OFFSET_RAMP_DATA
+2655+ 6B47 19               add  hl, de            ; HL = RampData pointer
+2656+ 6B48
+2657+ 6B48 7E               ld   a, (hl)           ; A = Direction (0 = up-left, 1 = up-right)
+2658+ 6B49 32 AC EF         ld   (ramp_dir), a
+2659+ 6B4C 23               inc  hl
+2660+ 6B4D 5E               ld   e, (hl)
+2661+ 6B4E 23               inc  hl
+2662+ 6B4F 56               ld   d, (hl)           ; DE = Location
+2663+ 6B50 23               inc  hl
+2664+ 6B51 7E               ld   a, (hl)           ; A = Length
+2665+ 6B52 32 AD EF         ld   (ramp_len), a
+2666+ 6B55
+2667+ 6B55                  ; Controlla se DE (Location) è 0
+2668+ 6B55 7A               ld   a, d
+2669+ 6B56 B3               or   e
+2670+ 6B57 28 4E            jr   z, .done_ramp     ; Se 0, fine
+2671+ 6B59
+2672+ 6B59 E5               push hl
+2673+ 6B5A 21 00 A2         ld   hl, -24064
+2674+ 6B5D 19               add  hl, de            ; HL = Offset
+2675+ 6B5E
+2676+ 6B5E 54               ld   d, h
+2677+ 6B5F 5D               ld   e, l              ; DE = Offset
+2678+ 6B60
+2679+ 6B60                  ; Col = Offset & 31
+2680+ 6B60 7B               ld   a, e
+2681+ 6B61 E6 1F            and  31
+2682+ 6B63 4F               ld   c, a              ; C = Col Start
+2683+ 6B64
+2684+ 6B64                  ; Row = Offset / 32
+2685+ 6B64 CB 3C            srl  h
+2686+ 6B66 CB 1D            rr   l
+2687+ 6B68 CB 3C            srl  h
+2688+ 6B6A CB 1D            rr   l
+2689+ 6B6C CB 3C            srl  h
+2690+ 6B6E CB 1D            rr   l
+2691+ 6B70 CB 3C            srl  h
+2692+ 6B72 CB 1D            rr   l
+2693+ 6B74 CB 3C            srl  h
+2694+ 6B76 CB 1D            rr   l
+2695+ 6B78 7D               ld   a, l
+2696+ 6B79 47               ld   b, a              ; B = Row
+2697+ 6B7A E1               pop  hl                ; HL = original pointer (Length)
+2698+ 6B7B
+2699+ 6B7B 78               ld   a, b
+2700+ 6B7C 32 AE EF         ld   (ramp_row), a
+2701+ 6B7F 79               ld   a, c
+2702+ 6B80 32 AF EF         ld   (ramp_col), a
+2703+ 6B83
+2704+ 6B83 3A AD EF         ld   a, (ramp_len)     ; A = Length
+2705+ 6B86 B7               or   a
+2706+ 6B87 28 1E            jr   z, .done_ramp
+2707+ 6B89 57               ld   d, a              ; D = contatore lunghezza
+2708+ 6B8A
+2709+ 6B8A                  ; IX = room_ptr + OFFSET_RAMP
+2710+ 6B8A 2A 01 F0         ld   hl, (room_ptr)
+2711+ 6B8D C5               push bc
+2712+ 6B8E 01 C4 00         ld   bc, OFFSET_RAMP
+2713+ 6B91 09               add  hl, bc
+2714+ 6B92 C1               pop  bc
+2715+ 6B93 E5               push hl
+2716+ 6B94 DD E1            pop  ix                ; IX = ramp tile pointer
+2717+ 6B96
+2718+ 6B96              .ramp_loop:
+2719+ 6B96 CD ED 68         call Gfx_DrawTile
+2720+ 6B99
+2721+ 6B99 3A AC EF         ld   a, (ramp_dir)
+2722+ 6B9C B7               or   a
+2723+ 6B9D 28 03            jr   z, .up_left
+2724+ 6B9F              .up_right:
+2725+ 6B9F 0C               inc  c                 ; Prossima colonna a destra
+2726+ 6BA0 18 01            jr   .next_step
+2727+ 6BA2              .up_left:
+2728+ 6BA2 0D               dec  c                 ; Prossima colonna a sinistra
+2729+ 6BA3              .next_step:
+2730+ 6BA3 05               dec  b                 ; Riga sopra (sale)
+2731+ 6BA4 15               dec  d
+2732+ 6BA5 20 EF            jr   nz, .ramp_loop
+2733+ 6BA7
+2734+ 6BA7              .done_ramp:
+2735+ 6BA7 DD E1            pop  ix
+2736+ 6BA9 C1               pop  bc
+2737+ 6BAA D1               pop  de
+2738+ 6BAB E1               pop  hl
+2739+ 6BAC C9               ret
+2740+ 6BAD
 # file closed: graphics.asm
   17  6BAD                  include "player.asm"
 # file opened: player.asm

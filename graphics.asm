@@ -1233,7 +1233,8 @@ game_over_str:
     db "GAME OVER"
 
 game_over_continue_str:
-    db "VUOI CONTINUARE? Y/N"
+    ;db "VUOI CONTINUARE? Y/N"
+    db "   CONTINUE? Y/N    "
 
 game_over_color_table:
     db $42, $46, $47, $45, $44, $43, $46, $42
