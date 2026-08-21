@@ -98,7 +98,7 @@ OutALimbUnused:
     DEFB $16                          ; Salto = 6 (standard JSW), Gravità = 0.75 (Standard) - Permette di raggiungere la foglia verde a Y=1
 
 OutALimbEnemy1:
-    DEFB $80, UCCELLO, 112, 56, 184  
+    DEFB $80, UCCELLO, 80, 56, 190  
 OutALimbEnemy2:
     DEFB $C0, FACCIA, 96, 0, 104   
 OutALimbEnemy3:

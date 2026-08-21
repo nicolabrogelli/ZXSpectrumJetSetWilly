@@ -12982,8 +12982,8 @@
   98++99D0 16               DEFB $16                          ; Salto = 6 (standard JSW), Gravità = 0.75 (Standard) - Permette di raggiungere la foglia verde a Y=1
   99++99D1
  100++99D1              OutALimbEnemy1:
- 101++99D1 80 02 70 38      DEFB $80, UCCELLO, 112, 56, 184
- 101++99D5 B8
+ 101++99D1 80 02 50 38      DEFB $80, UCCELLO, 80, 56, 190
+ 101++99D5 BE
  102++99D6              OutALimbEnemy2:
  103++99D6 C0 06 60 00      DEFB $C0, FACCIA, 96, 0, 104
  103++99DA 68
