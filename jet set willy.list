@@ -103,7 +103,15 @@
   90+ 5DAD              CLOCK_TICKS_PER_MINUTE EQU 2000  ; Normale: 40 secondi reali = 1 minuto di gioco
   91+ 5DAD                  ENDIF
   92+ 5DAD
-  93+ 5DAD
+  93+ 5DAD              ; --- Sprite Vecchia (Maria) nella Master Bedroom ---
+  94+ 5DAD              ; 1 = Mostra lo sprite della Vecchia nella stanza Master Bedroom (comportamento originale)
+  95+ 5DAD              ; 0 = Non far comparire lo sprite della Vecchia nella Master Bedroom
+  96+ 5DAD                  IFNDEF ENABLE_MASTER_BEDROOM_VECCHIA
+  97+ 5DAD              ENABLE_MASTER_BEDROOM_VECCHIA EQU 1
+  98+ 5DAD                  ENDIF
+  99+ 5DAD
+ 100+ 5DAD
+ 101+ 5DAD
 # file closed: settings.asm
   12  5DAD                  include "physics_config.asm"
 # file opened: physics_config.asm
@@ -16874,34 +16882,38 @@
  104++B265
  105++B265              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  106++B265              MastreBedRoomEnemy1:
- 107++B265 80 22 6E 58      DEFB $80, VECCHIA, 110, 88, 110
- 107++B269 6E
- 108++B26A              MastreBedRoomEnemy2:
- 109++B26A 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 109++B26E 00
- 110++B26F              MastreBedRoomEnemy3:
- 111++B26F 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 111++B273 00
- 112++B274              MastreBedRoomEnemy4:
- 113++B274 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
- 113++B278 00
- 114++B279              MastreBedRoomEnemy5:
- 115++B279 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 115++B27D 00
- 116++B27E              MastreBedRoomEnemy6:
- 117++B27E 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 117++B282 00
- 118++B283              MastreBedRoomEnemy7:
- 119++B283 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 119++B287 00
- 120++B288              MastreBedRoomEnemy8:
- 121++B288 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 121++B28C 00
- 122++B28D
- 123++B28D              MastreBedRoomPosWilly:
- 124++B28D C8 68            db 200, 104                   ; Posizione di Willy
- 125++B28F              MastreBedRoomEnemyColors5_8:
- 126++B28F 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
+ 107++B265                  IF ENABLE_MASTER_BEDROOM_VECCHIA != 0
+ 108++B265 80 22 6E 58      DEFB $80, VECCHIA, 110, 88, 110
+ 108++B269 6E
+ 109++B26A                  ELSE
+ 110++B26A ~                DEFB 0, 0, 0, 0, 0
+ 111++B26A                  ENDIF
+ 112++B26A              MastreBedRoomEnemy2:
+ 113++B26A 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 113++B26E 00
+ 114++B26F              MastreBedRoomEnemy3:
+ 115++B26F 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 115++B273 00
+ 116++B274              MastreBedRoomEnemy4:
+ 117++B274 00 00 00 00      DEFB 0, 0, 0, 0, 0         ; Empty slot
+ 117++B278 00
+ 118++B279              MastreBedRoomEnemy5:
+ 119++B279 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 119++B27D 00
+ 120++B27E              MastreBedRoomEnemy6:
+ 121++B27E 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 121++B282 00
+ 122++B283              MastreBedRoomEnemy7:
+ 123++B283 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 123++B287 00
+ 124++B288              MastreBedRoomEnemy8:
+ 125++B288 00 00 00 00      DEFB 0, 0, 0, 0, 0
+ 125++B28C 00
+ 126++B28D
+ 127++B28D              MastreBedRoomPosWilly:
+ 128++B28D C8 68            db 200, 104                   ; Posizione di Willy
+ 129++B28F              MastreBedRoomEnemyColors5_8:
+ 130++B28F 00 00 00 00      DEFB NONE, NONE, NONE, NONE               ; Colori per nemici 5-8
 # file closed: rooms/MasterBedRoom.asm
   45+ B293                  include "rooms/ABitOfTree.asm"                  ; ID 36
 # file opened: rooms/ABitOfTree.asm

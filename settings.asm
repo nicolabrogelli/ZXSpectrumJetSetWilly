@@ -90,4 +90,12 @@ CLOCK_TICKS_PER_MINUTE EQU 50    ; Test rapido: 1 secondo reale = 1 minuto di gi
 CLOCK_TICKS_PER_MINUTE EQU 2000  ; Normale: 40 secondi reali = 1 minuto di gioco
     ENDIF
 
+; --- Sprite Vecchia (Maria) nella Master Bedroom ---
+; 1 = Mostra lo sprite della Vecchia nella stanza Master Bedroom (comportamento originale)
+; 0 = Non far comparire lo sprite della Vecchia nella Master Bedroom
+    IFNDEF ENABLE_MASTER_BEDROOM_VECCHIA
+ENABLE_MASTER_BEDROOM_VECCHIA EQU 1
+    ENDIF
+
+
 

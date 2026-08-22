@@ -104,7 +104,11 @@ MastreBedRoomUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 MastreBedRoomEnemy1:
+    IF ENABLE_MASTER_BEDROOM_VECCHIA != 0
     DEFB $80, VECCHIA, 110, 88, 110  
+    ELSE
+    DEFB 0, 0, 0, 0, 0
+    ENDIF
 MastreBedRoomEnemy2:
     DEFB 0, 0, 0, 0, 0
 MastreBedRoomEnemy3:
