@@ -69,7 +69,7 @@ UpOnTheBattlementsConveyor:                      ; Conveyor Solid
     DEFB 66,40,170,10,0,85,85,85,255                      ; Conveyor Solid
 
 UpOnTheBattlementsConveyorData:
-    DEFB 0
+    DEFB 1
     DEFW 24365
     DEFB 5
 

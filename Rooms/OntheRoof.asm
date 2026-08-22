@@ -37,14 +37,14 @@ OntheRoofLayout:
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
-	DEFB 0,0,0,0,0,0,10,64
-	DEFB 0,0,0,0,0,0,10,208
-	DEFB 170,64,170,64,170,64,10,170
-	DEFB 170,192,170,192,170,192,10,170
-	DEFB 170,192,170,192,170,192,10,170
-	DEFB 170,144,170,144,170,144,10,170
-	DEFB 170,176,170,176,170,176,10,170
-	DEFB 170,176,170,176,170,176,10,170
+	DEFB 0,0,0,0,0,0,0,0
+	DEFB 0,0,0,0,0,0,0,0
+	DEFB 170,64,170,64,170,64,42,170
+	DEFB 170,192,170,192,170,192,42,170
+	DEFB 170,192,170,192,170,192,42,170
+	DEFB 170,144,170,144,170,144,42,170
+	DEFB 170,176,170,176,170,176,42,170
+	DEFB 170,176,170,176,170,176,42,170
 	DEFB 170,170,170,170,170,170,170,170
 
 OntheRoofTile:
@@ -97,7 +97,7 @@ OntheRoofUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 OntheRoofEnemy1:
-    DEFB $80, UCCELLO, 10, 20, 192  
+    DEFB $80, UCCELLO, 10, 30, 192  
 OntheRoofEnemy2:
     DEFB 0, 0, 0, 0, 0  
 OntheRoofEnemy3:
@@ -114,6 +114,6 @@ OntheRoofEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 OntheRoofPosWilly:
-    db 200, 101                     ; Posizione di Willy
+    db 200, 20                     ; Posizione di Willy
 OntheRoofEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
