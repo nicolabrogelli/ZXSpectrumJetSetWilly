@@ -13121,9 +13121,9 @@
   70++9AD4 BB
   71++9AD5
   72++9AD5              RescueEsmereldaConveyorData:
-  73++9AD5 01               DEFB 1
+  73++9AD5 00               DEFB 0
   74++9AD6 98 5E            DEFW 24216
-  75++9AD8 04               DEFB 4
+  75++9AD8 00               DEFB 0
   76++9AD9
   77++9AD9              RescueEsmereldaRampData:
   78++9AD9 01               DEFB 1

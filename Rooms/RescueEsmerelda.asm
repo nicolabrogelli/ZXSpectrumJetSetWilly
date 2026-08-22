@@ -70,9 +70,9 @@ RescueEsmereldaConveyor:                        ; Conveyor Solid
     DEFB 22,241,170,248,170,0,238,0,187         ; Conveyor Solid
 
 RescueEsmereldaConveyorData:
-    DEFB 1
+    DEFB 0
     DEFW 24216
-    DEFB 4
+    DEFB 0
 
 RescueEsmereldaRampData:
     DEFB 1
