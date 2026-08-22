@@ -13381,44 +13381,44 @@
   25++9C3B              ; WeMustPerformQuirkafleegEnemy7       Size   5 Byte, Start Byte 270
   26++9C3B              ; WeMustPerformQuirkafleegEnemy8       Size   5 Byte, Start Byte 275
   27++9C3B              ; WeMustPerformQuirkafleegPosWilly     Size   2 Byte, Start Byte 280
-  28++9C3B              ;
-  29++9C3B              ;===========================================================================
-  30++9C3B
-  31++9C3B              ; Room layout for Room  (We must perform a Quirkafleeg)
-  32++9C3B              WeMustPerformQuirkafleegLayout:
-  33++9C3B 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0			;Room layout
-  33++9C3F 00 00 00 00
-  34++9C43 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  34++9C47 00 00 00 00
-  35++9C4B 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  35++9C4F 00 00 00 00
-  36++9C53 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  36++9C57 00 00 00 00
-  37++9C5B 00 00 00 01  	DEFB 0,0,0,1,0,0,0,0
-  37++9C5F 00 00 00 00
-  38++9C63 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  38++9C67 00 00 00 00
-  39++9C6B 00 00 00 01  	DEFB 0,0,0,1,0,0,0,0
-  39++9C6F 00 00 00 00
-  40++9C73 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
-  40++9C77 00 00 00 00
-  41++9C7B 00 00 00 01  	DEFB 0,0,0,1,0,0,0,0
-  41++9C7F 00 00 00 00
-  42++9C83 AA 00 AA AA  	DEFB 170,0,170,170,170,170,2 ,170
-  42++9C87 AA AA 02 AA
-  43++9C8B AA 40 00 00  	DEFB 170,64,0,0,0,0,2,170
-  43++9C8F 00 00 02 AA
-  44++9C93 AA 40 00 00  	DEFB 170,64,0,0,0,0,2,170
-  44++9C97 00 00 02 AA
-  45++9C9B AA 40 00 00  	DEFB 170,64,0,0,0,0,2,170
-  45++9C9F 00 00 02 AA
-  46++9CA3 AA 40 00 00  	DEFB 170,64,0,0,0,0,2,170
-  46++9CA7 00 00 02 AA
-  47++9CAB AA 40 00 00  	DEFB 170,64,0,0,0,0,2,170
-  47++9CAF 00 00 02 AA
-  48++9CB3 AA 7F FF FF  	DEFB 170,127,255,255,255,255,254,170
-  48++9CB7 FF FF FE AA
-  49++9CBB
+  28++9C3B              ; WeMustPerformQuirkafleegEnemyColors5_8 Size 4 Byte, Start Byte 282
+  29++9C3B              ;
+  30++9C3B              ;===========================================================================
+  31++9C3B
+  32++9C3B              ; Room layout for Room (We must perform a Quirkafleeg)
+  33++9C3B              WeMustPerformQuirkafleegLayout:
+  34++9C3B 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0	;Room layout
+  34++9C3F 00 00 00 00
+  35++9C43 00 00 00 00  	DEFB 0,0,0,0,1,0,0,0
+  35++9C47 01 00 00 00
+  36++9C4B 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  36++9C4F 00 00 00 00
+  37++9C53 00 00 00 01  	DEFB 0,0,0,1,0,0,0,0
+  37++9C57 00 00 00 00
+  38++9C5B 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  38++9C5F 00 00 00 00
+  39++9C63 00 00 00 00  	DEFB 0,0,0,0,1,0,0,0
+  39++9C67 01 00 00 00
+  40++9C6B 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  40++9C6F 00 00 00 00
+  41++9C73 00 00 00 00  	DEFB 0,0,0,0,0,1,0,0
+  41++9C77 00 01 00 00
+  42++9C7B 00 00 00 00  	DEFB 0,0,0,0,0,0,0,0
+  42++9C7F 00 00 00 00
+  43++9C83 AA 42 A4 2A  	DEFB 170,66,164,42,164,42,66,170
+  43++9C87 A4 2A 42 AA
+  44++9C8B AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
+  44++9C8F AC 2A C2 AA
+  45++9C93 AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
+  45++9C97 AC 2A C2 AA
+  46++9C9B AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
+  46++9C9F AC 2A C2 AA
+  47++9CA3 AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
+  47++9CA7 AC 2A C2 AA
+  48++9CAB AA C2 AC 2A  	DEFB 170,194,172,42,172,42,194,170
+  48++9CAF AC 2A C2 AA
+  49++9CB3 AA AA AA AA  	DEFB 170,170,170,170,170,170,170,170
+  49++9CB7 AA AA AA AA
   50++9CBB              WeMustPerformQuirkafleegTile:
   51++9CBB 20 20 57 65      DEFM "  We must perform a Quirkafleeg "
   51++9CBF 20 6D 75 73
@@ -13480,13 +13480,13 @@
   88++9D22 5E 5E E7 66
   89++9D26
   90++9D26              WeMustPerformQuirkafleegDirection:
-  91++9D26              	ROOM RoomsListTable.UpOnTheBattlementsLayout			;Room to the left (We must perform a Quirkafleeg)
+  91++9D26              	ROOM RoomsListTable.UpOnTheBattlementsLayout			;Room to the left (Up on the Battlements)
   91++9D26 11          >        db (RoomsListTable.UpOnTheBattlementsLayout - RoomsListTable) / 2
-  92++9D27              	ROOM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout		;Room to the right (Rescue Esmerelda)
+  92++9D27              	ROOM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout		;Room to the right (I'm sure I've seen this before..)
   92++9D27 0F          >        db (RoomsListTable.IAmSureIHaveSeenThiBeforeLayout - RoomsListTable) / 2
-  93++9D28              	ROOM RoomsListTable.WatchTowerLayout				    ;Room above (The Off Licence)
+  93++9D28              	ROOM RoomsListTable.WatchTowerLayout				    ;Room above (Watch Tower)
   93++9D28 32          >        db (RoomsListTable.WatchTowerLayout - RoomsListTable) / 2
-  94++9D29 FF           	DEFB BLOCK				                                 ;Room below (The Off Licence)
+  94++9D29 FF           	DEFB BLOCK				                                 ;Room below (Block)
   95++9D2A
   96++9D2A              WeMustPerformQuirkafleegUnused:
   97++9D2A 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
@@ -14549,7 +14549,7 @@
  116++A3EE 80 0A 10 48      DEFB $80, DOUBLE_BALL, 16, 72, 48
  116++A3F2 30
  117++A3F3              TotheKitchensMainStairwayEnemy5:
- 118++A3F3 80 04 05 60      DEFB $80, UOVO, 5, 96, 235
+ 118++A3F3 A0 04 05 60      DEFB $A0, UOVO, 5, 96, 235
  118++A3F7 EB
  119++A3F8              TotheKitchensMainStairwayEnemy6:
  120++A3F8 80 02 48 50      DEFB $80, UCCELLO, 72, 80, 136

@@ -8000,8 +8000,8 @@ rooms/IAmSureIHaveSeenThiBefore.asm|117||0|2|39989|F|IAmSureIHaveSeenThiBeforePo
 rooms/IAmSureIHaveSeenThiBefore.asm|117||0|2|39989|L|,IAmSureIHaveSeenThiBeforePosWilly,
 rooms/IAmSureIHaveSeenThiBefore.asm|119||0|2|39991|F|IAmSureIHaveSeenThiBeforeEnemyColors5_8
 rooms/IAmSureIHaveSeenThiBefore.asm|119||0|2|39991|L|,IAmSureIHaveSeenThiBeforeEnemyColors5_8,
-rooms/WeMustPerformQuirkafleeg.asm|32||0|2|39995|F|WeMustPerformQuirkafleegLayout
-rooms/WeMustPerformQuirkafleeg.asm|32||0|2|39995|L|,WeMustPerformQuirkafleegLayout,,+used
+rooms/WeMustPerformQuirkafleeg.asm|33||0|2|39995|F|WeMustPerformQuirkafleegLayout
+rooms/WeMustPerformQuirkafleeg.asm|33||0|2|39995|L|,WeMustPerformQuirkafleegLayout,,+used
 rooms/WeMustPerformQuirkafleeg.asm|50||0|2|40123|F|WeMustPerformQuirkafleegTile
 rooms/WeMustPerformQuirkafleeg.asm|50||0|2|40123|L|,WeMustPerformQuirkafleegTile,
 rooms/WeMustPerformQuirkafleeg.asm|53||0|2|40155|F|WeMustPerformQuirkafleegBackground

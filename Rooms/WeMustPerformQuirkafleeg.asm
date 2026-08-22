@@ -25,28 +25,28 @@
 ; WeMustPerformQuirkafleegEnemy7       Size   5 Byte, Start Byte 270
 ; WeMustPerformQuirkafleegEnemy8       Size   5 Byte, Start Byte 275
 ; WeMustPerformQuirkafleegPosWilly     Size   2 Byte, Start Byte 280
+; WeMustPerformQuirkafleegEnemyColors5_8 Size 4 Byte, Start Byte 282
 ;
 ;===========================================================================
 
-; Room layout for Room  (We must perform a Quirkafleeg)
+; Room layout for Room (We must perform a Quirkafleeg)
 WeMustPerformQuirkafleegLayout:
-	DEFB 0,0,0,0,0,0,0,0			;Room layout
-	DEFB 0,0,0,0,0,0,0,0
-	DEFB 0,0,0,0,0,0,0,0
-	DEFB 0,0,0,0,0,0,0,0
-	DEFB 0,0,0,1,0,0,0,0
+	DEFB 0,0,0,0,0,0,0,0	;Room layout
+	DEFB 0,0,0,0,1,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
 	DEFB 0,0,0,1,0,0,0,0
 	DEFB 0,0,0,0,0,0,0,0
-	DEFB 0,0,0,1,0,0,0,0
-	DEFB 170,0,170,170,170,170,2 ,170
-	DEFB 170,64,0,0,0,0,2,170
-	DEFB 170,64,0,0,0,0,2,170
-	DEFB 170,64,0,0,0,0,2,170
-	DEFB 170,64,0,0,0,0,2,170
-	DEFB 170,64,0,0,0,0,2,170
-	DEFB 170,127,255,255,255,255,254,170
-
+	DEFB 0,0,0,0,1,0,0,0
+	DEFB 0,0,0,0,0,0,0,0
+	DEFB 0,0,0,0,0,1,0,0
+	DEFB 0,0,0,0,0,0,0,0
+	DEFB 170,66,164,42,164,42,66,170
+	DEFB 170,194,172,42,172,42,194,170
+	DEFB 170,194,172,42,172,42,194,170
+	DEFB 170,194,172,42,172,42,194,170
+	DEFB 170,194,172,42,172,42,194,170
+	DEFB 170,194,172,42,172,42,194,170
+	DEFB 170,170,170,170,170,170,170,170
 WeMustPerformQuirkafleegTile:
     DEFM "  We must perform a Quirkafleeg "
 
@@ -88,10 +88,10 @@ WeMustPerformQuirkafleegItem:
     DEFB 24,36,24,44,94,94,231,102
 
 WeMustPerformQuirkafleegDirection:
-	ROOM RoomsListTable.UpOnTheBattlementsLayout			;Room to the left (We must perform a Quirkafleeg)
-	ROOM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout		;Room to the right (Rescue Esmerelda)
-	ROOM RoomsListTable.WatchTowerLayout				    ;Room above (The Off Licence)
-	DEFB BLOCK				                                 ;Room below (The Off Licence)
+	ROOM RoomsListTable.UpOnTheBattlementsLayout			;Room to the left (Up on the Battlements)
+	ROOM RoomsListTable.IAmSureIHaveSeenThiBeforeLayout		;Room to the right (I'm sure I've seen this before..)
+	ROOM RoomsListTable.WatchTowerLayout				    ;Room above (Watch Tower)
+	DEFB BLOCK				                                 ;Room below (Block)
 
 WeMustPerformQuirkafleegUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
