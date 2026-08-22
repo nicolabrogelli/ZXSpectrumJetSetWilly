@@ -107,7 +107,7 @@ UnderTheMegaTreeUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 UnderTheMegaTreeEnemy1:
-    DEFB $80, CANGURO, 8, 104, 200        
+    DEFB $A0, CANGURO, 8, 104, 200        
 UnderTheMegaTreeEnemy2:
     DEFB $C0, FACCIA, 112, 48, 87      
 UnderTheMegaTreeEnemy3:

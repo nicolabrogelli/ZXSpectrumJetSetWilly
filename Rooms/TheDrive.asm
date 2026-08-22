@@ -109,7 +109,7 @@ TheDriveUnused:
 TheDriveEnemy1:
     DEFB $80, UCCELLO, 112, 80, 232         
 TheDriveEnemy2:
-    DEFB $A0, UCCELLO, 128, 88, 232       
+    DEFB $B0, UCCELLO, 128, 88, 232       
 TheDriveEnemy3:
     DEFB $80, UCCELLO, 40, 64, 232       
 TheDriveEnemy4:

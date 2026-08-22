@@ -11024,7 +11024,7 @@
  107++8D87
  108++8D87              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++8D87              UnderTheMegaTreeEnemy1:
- 110++8D87 80 0D 08 68      DEFB $80, CANGURO, 8, 104, 200
+ 110++8D87 A0 0D 08 68      DEFB $A0, CANGURO, 8, 104, 200
  110++8D8B C8
  111++8D8C              UnderTheMegaTreeEnemy2:
  112++8D8C C0 06 70 30      DEFB $C0, FACCIA, 112, 48, 87
@@ -11388,7 +11388,7 @@
  110++8FC3 80 02 70 50      DEFB $80, UCCELLO, 112, 80, 232
  110++8FC7 E8
  111++8FC8              TheDriveEnemy2:
- 112++8FC8 A0 02 80 58      DEFB $A0, UCCELLO, 128, 88, 232
+ 112++8FC8 B0 02 80 58      DEFB $B0, UCCELLO, 128, 88, 232
  112++8FCC E8
  113++8FCD              TheDriveEnemy3:
  114++8FCD 80 02 28 40      DEFB $80, UCCELLO, 40, 64, 232
