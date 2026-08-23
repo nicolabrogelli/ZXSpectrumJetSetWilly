@@ -63,6 +63,8 @@ OFFSET_COLORS_5_8:   EQU 282
 
 BLOCK:          EQU $FF
 
+ROOM_MASTER_BEDROOM: EQU 35
+
 
 LAMETTA:  		EQU 0   ;(Lametta)
 SEGA: 			EQU 1   ;(Sega)

@@ -97,5 +97,12 @@ CLOCK_TICKS_PER_MINUTE EQU 2000  ; Normale: 40 secondi reali = 1 minuto di gioco
 ENABLE_MASTER_BEDROOM_VECCHIA EQU 1
     ENDIF
 
+; --- Schermata di vittoria al completamento del gioco ---
+; 1 = Abilita la schermata di vittoria quando Willy raccoglie tutti gli item ed entra nel letto (conveyor) in Master Bedroom
+; 0 = Disabilita la schermata di vittoria
+    IFNDEF ENABLE_VICTORY_SCREEN
+ENABLE_VICTORY_SCREEN EQU 1
+    ENDIF
+
 
 

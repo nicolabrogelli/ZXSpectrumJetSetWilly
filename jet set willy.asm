@@ -142,6 +142,12 @@ Main_loop:
     call Enemy_Update
     call Items_CheckCollision
     
+    ; Controlla condizione di vittoria (Tutti gli item + Master Bedroom + Conveyor)
+    IF ENABLE_VICTORY_SCREEN != 0
+    call CheckVictoryCondition
+    jp   c, TriggerVictory
+    ENDIF
+
     ; Controlla collisione con Nasties (morte di Willy)
     IF ENABLE_NASTY_COLLISION_DEATH != 0
     call Phys_CheckNastyCollision
@@ -542,6 +548,315 @@ TriggerGameOver:
 
     ; - Ricarica e riavvia la stanza corrente mantenendo tutti gli items raccolti
     jp   LoadRoomAndRestart
+
+; -------------------------------------------------------------------
+; TriggerVictory
+; Scatena la schermata di vittoria (Victory Screen) per la partita completata.
+; - Pulisce gli elementi di gioco della stanza.
+; - Esegue l'animazione di Maria (VecchiaSprite) che cammina verso Willy.
+; - Fa comparire le scritte "YOU HAVE WON!" e "CONGRATULATIONS!" ed anima i colori.
+; - Fa comparire la domanda "PLAY AGAIN? Y/N" a riga 8.
+; - Mantiene visibile il Nome della Stanza (Master Bedroom) e la Riga di Stato.
+; - Se il giocatore preme 'Y': resetta completamente la partita e avvia una nuova partita.
+; - Se il giocatore preme 'N' (o ENTER): ritorna alla schermata iniziale (Title Screen).
+; -------------------------------------------------------------------
+TriggerVictory:
+    ; 1. Disegna la schermata di vittoria ed esegue l'animazione di Maria, CONGRATULATIONS e prompt
+    call Gfx_DrawVictoryScreen
+
+    ; 2. Attende il rilascio dei tasti Y, N ed ENTER se erano già premuti
+.wait_keys_release:
+    halt
+    ; Controlla tasto Y (Porta $DF, bit 4)
+    ld   bc, $dffe
+    in   a, (c)
+    bit  4, a
+    jr   z, .wait_keys_release
+
+    ; Controlla tasto N (Porta $7F, bit 3)
+    ld   bc, $7ffe
+    in   a, (c)
+    bit  3, a
+    jr   z, .wait_keys_release
+
+    ; Controlla tasto ENTER (Porta $BF, bit 0)
+    ld   bc, $bffe
+    in   a, (c)
+    bit  0, a
+    jr   z, .wait_keys_release
+
+    ; 3. Attesa della scelta del giocatore con animazione ciclo colore su CONGRATULATIONS!
+    ld   c, 0                  ; C = contatore frame per animazione colore
+.wait_choice_loop:
+    halt
+
+    ; Animazione ciclo colore per CONGRATULATIONS! (Riga 5, Colonna 8..23, $58A8)
+    inc  c
+    ld   a, c
+    srl  a
+    srl  a                     ; Cambia colore ogni 4 frame (~80ms)
+    and  7
+    ld   e, a
+    ld   d, 0
+    ld   hl, victory_color_table
+    add  hl, de
+    ld   a, (hl)               ; A = nuovo colore attributo
+    ld   hl, $58a8             ; Indirizzo attributi riga 5, col 8 ($5800 + 5*32 + 8 = $58A8)
+    ld   b, 16                 ; 16 caratteri "CONGRATULATIONS!"
+.color_cycle_loop:
+    ld   (hl), a
+    inc  hl
+    djnz .color_cycle_loop
+
+    ; Controlla se il tasto Y è premuto (Porta $DF, bit 4 = 0)
+    ld   bc, $dffe
+    in   a, (c)
+    bit  4, a
+    jr   z, .play_again_chosen
+
+    ; Controlla se il tasto N è premuto (Porta $7F, bit 3 = 0)
+    ld   bc, $7ffe
+    in   a, (c)
+    bit  3, a
+    jr   z, .quit_chosen
+
+    ; Controlla se il tasto ENTER è premuto (Porta $BF, bit 0 = 0)
+    ld   bc, $bffe
+    in   a, (c)
+    bit  0, a
+    jr   z, .quit_chosen
+
+    jr   .wait_choice_loop
+
+.quit_chosen:
+    ; 4a. Attende il rilascio di N ed ENTER per evitare doppi scatti
+.wait_quit_release:
+    halt
+    ld   bc, $7ffe
+    in   a, (c)
+    bit  3, a
+    jr   z, .wait_quit_release
+    ld   bc, $bffe
+    in   a, (c)
+    bit  0, a
+    jr   z, .wait_quit_release
+
+    ; 5a. Esegue il normale flusso di uscita (ritorno a Title Screen)
+    jp   ShowTitleScreen
+
+.play_again_chosen:
+    ; 4b. Attende il rilascio del tasto Y per evitare doppi scatti
+.wait_play_again_release:
+    halt
+    ld   bc, $dffe
+    in   a, (c)
+    bit  4, a
+    jr   z, .wait_play_again_release
+
+    ; 5b. Reset completo dello stato di gioco e avvio di una nuova partita
+    call ResetFullGameState
+    jp   LoadRoomAndRestart
+
+; -------------------------------------------------------------------
+; CheckVictoryCondition
+; Verifica se si verificano contemporaneamente tutte le 3 condizioni di vittoria:
+; 1. Willy ha raccolto tutti gli oggetti collezionabili del gioco (tutti i flag in ItemsTable = 1);
+; 2. Willy si trova nella stanza Master Bedroom;
+; 3. Willy collide con un oggetto/tag di tipo Conveyor in quella stanza.
+;
+; Output:
+;   Carry Flag = 1 se la vittoria è attivata
+;   Carry Flag = 0 altrimenti
+; -------------------------------------------------------------------
+CheckVictoryCondition:
+    push bc
+    push de
+    push hl
+
+    ; 1. Condizione: tutti gli item raccolti?
+    call CheckAllItemsCollected
+    jr   nc, .no_victory
+
+    ; 2. Condizione: Willy è nella Master Bedroom?
+    call CheckInMasterBedroom
+    jr   nc, .no_victory
+
+    ; 3. Condizione: Willy collide con il conveyor?
+    call CheckWillyConveyorCollision
+    jr   nc, .no_victory
+
+    ; Tutte le condizioni sono soddisfatte contemporaneamente!
+    pop  hl
+    pop  de
+    pop  bc
+    scf
+    ret
+
+.no_victory:
+    pop  hl
+    pop  de
+    pop  bc
+    or   a
+    ret
+
+; -------------------------------------------------------------------
+; CheckAllItemsCollected
+; Verifica che tutti gli item del gioco siano stati raccolti.
+; - Controllo preliminare sul conteggio/flag globale
+; - Verifica puntuale che ogni record in ItemsTable abbia flag = 1 (raccolto)
+; Output: Carry = 1 se tutti raccolti, Carry = 0 altrimenti
+; -------------------------------------------------------------------
+CheckAllItemsCollected:
+    push hl
+    ld   a, (game_objective_completed)
+    or   a
+    jr   nz, .verify_flags
+    ld   a, (items_collected)
+    cp   TOTAL_ITEMS
+    jr   c, .not_all
+
+.verify_flags:
+    ld   hl, ItemsTable
+.loop:
+    ld   a, (hl)
+    cp   $FF
+    jr   z, .done_all
+    inc  hl                    ; +1 X
+    inc  hl                    ; +2 Y
+    inc  hl                    ; +3 Color
+    inc  hl                    ; +4 Collected flag
+    ld   a, (hl)
+    or   a
+    jr   z, .not_all           ; Trovato un item non raccolto -> fail
+    inc  hl                    ; Prossimo record
+    jr   .loop
+
+.done_all:
+    pop  hl
+    scf
+    ret
+
+.not_all:
+    pop  hl
+    or   a
+    ret
+
+; -------------------------------------------------------------------
+; CheckInMasterBedroom
+; Verifica se la stanza corrente è Master Bedroom (ID 35 / MastreBedRoomLayout)
+; Output: Carry = 1 se Master Bedroom, Carry = 0 altrimenti
+; -------------------------------------------------------------------
+CheckInMasterBedroom:
+    push hl
+    push de
+    ld   hl, (room_ptr)
+    ld   de, MastreBedRoomLayout
+    or   a
+    sbc  hl, de
+    jr   z, .is_master
+    ld   a, (current_room)
+    cp   ROOM_MASTER_BEDROOM
+    jr   z, .is_master
+    pop  de
+    pop  hl
+    or   a
+    ret
+.is_master:
+    pop  de
+    pop  hl
+    scf
+    ret
+
+; -------------------------------------------------------------------
+; CheckWillyConveyorCollision
+; Verifica se Willy collide o si trova sul blocco Conveyor attivo nella stanza.
+; Output: Carry = 1 se collide con conveyor, Carry = 0 altrimenti
+; -------------------------------------------------------------------
+CheckWillyConveyorCollision:
+    push bc
+    push de
+    push hl
+
+    ; 1. Se Willy è in piedi / cammina sul conveyor (check solido da fisica)
+    call CheckWillyOnConveyor
+    jr   c, .collision_detected
+
+    ; 2. Controlla anche intersezione tra Bounding Box di Willy (16x16) e blocco Conveyor
+    ld   a, (conveyor_len)
+    or   a
+    jr   z, .no_conv_collision ; Nessun conveyor presente
+
+    ; B = WillyY, C = WillyX
+    ld   bc, (PlayerPos)
+
+    ; ConveyorTop = conveyor_row * 8, ConveyorBottom = ConveyorTop + 7
+    ld   a, (conveyor_row)
+    add  a, a                  ; *2
+    add  a, a                  ; *4
+    add  a, a                  ; *8
+    ld   e, a                  ; E = ConveyorTop
+    add  a, 7
+    ld   d, a                  ; D = ConveyorBottom
+
+    ; WillyTop = WillyY (B), WillyBottom = WillyY + 15
+    ld   a, b                  ; WillyTop
+    cp   d
+    jr   z, .y_overlap
+    jr   c, .y_overlap         ; WillyTop <= ConveyorBottom
+    jr   .no_conv_collision
+
+.y_overlap:
+    add  a, 15                 ; WillyBottom
+    cp   e
+    jr   z, .x_check
+    jr   nc, .x_check          ; WillyBottom >= ConveyorTop
+    jr   .no_conv_collision
+
+.x_check:
+    ; ConveyorLeft = conveyor_col * 8
+    ld   a, (conveyor_col)
+    add  a, a                  ; *2
+    add  a, a                  ; *4
+    add  a, a                  ; *8
+    ld   e, a                  ; E = ConveyorLeft
+
+    ; ConveyorRight = (conveyor_col + conveyor_len) * 8 - 1
+    ld   hl, conveyor_len
+    ld   a, (conveyor_col)
+    add  a, (hl)
+    add  a, a                  ; *2
+    add  a, a                  ; *4
+    add  a, a                  ; *8
+    dec  a                     ; ConveyorRight
+    ld   d, a                  ; D = ConveyorRight
+
+    ; WillyLeft = WillyX (C), WillyRight = WillyX + 15
+    ld   a, c                  ; WillyLeft
+    cp   d
+    jr   z, .x_overlap
+    jr   c, .x_overlap         ; WillyLeft <= ConveyorRight
+    jr   .no_conv_collision
+
+.x_overlap:
+    add  a, 15                 ; WillyRight
+    cp   e
+    jr   z, .collision_detected
+    jr   nc, .collision_detected ; WillyRight >= ConveyorLeft
+    jr   .no_conv_collision
+
+.collision_detected:
+    pop  hl
+    pop  de
+    pop  bc
+    scf
+    ret
+
+.no_conv_collision:
+    pop  hl
+    pop  de
+    pop  bc
+    or   a
+    ret
 
 ; -------------------------------------------------------------------
 ; ResetFullGameState

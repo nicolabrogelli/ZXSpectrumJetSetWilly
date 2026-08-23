@@ -70,5 +70,8 @@ RoomsStart:
 
     include "data/datasprite.asm"
 
+font_buffer:
+    .1024 db 0
+
 items_grid:
     .512 db 0

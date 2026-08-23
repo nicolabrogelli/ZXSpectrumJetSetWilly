@@ -6,22 +6,22 @@
 ; Copia il set dei caratteri dalla ROM alla RAM
 ; -------------------------------------------------------------------
 Gfx_CopyChars:
-    ld hl, $3D00  ; Indirizzo del set di caratteri originale in ROM (ASCII 32)
-    ld de, $F100  ; Indirizzo in RAM per ASCII 32..127 ($F000 + 32*8)
-    ld bc, 768    ; Numero di byte da copiare (96 caratteri * 8 byte ciascuno)
-    ldir          ; Copiare i dati
+    ld   hl, $3D00             ; Indirizzo del set di caratteri originale in ROM (ASCII 32)
+    ld   de, font_buffer + 256 ; Indirizzo in RAM per ASCII 32..127 (font_buffer + 32*8)
+    ld   bc, 768               ; Numero di byte da copiare (96 caratteri * 8 byte ciascuno)
+    ldir                       ; Copiare i dati
     ret
 
 ; -------------------------------------------------------------------
 ; Ridefinisci i caratteri (incluso quello per i bordi)
 ; -------------------------------------------------------------------
 Gfx_DefineChars:
-    ld hl, Willy             ; Indirizzo dei dati del nuovo carattere
-    ld de, $F008             ; Indirizzo di ASCII 1 nel nuovo set di caratteri ($F000 + 1*8)
-    ld bc, 72                ; Numero di byte da copiare (9 caratteri * 8 byte)
-    ldir                        ; Effettua la copia dei caratteri
-    ld hl, $F000                ; Indirizzo del nuovo set di caratteri in RAM (font base ASCII 0)
-    ld ($5C36), hl              ; Aggiornare la variabile di sistema CHARS
+    ld   hl, Willy             ; Indirizzo dei dati del nuovo carattere
+    ld   de, font_buffer + 8   ; Indirizzo di ASCII 1 nel nuovo set di caratteri (font_buffer + 1*8)
+    ld   bc, 72                ; Numero di byte da copiare (9 caratteri * 8 byte)
+    ldir                       ; Effettua la copia dei caratteri
+    ld   hl, font_buffer       ; Indirizzo del nuovo set di caratteri in RAM (font base ASCII 0)
+    ld   ($5C36), hl           ; Aggiornare la variabile di sistema CHARS
     ret
 
 ; -------------------------------------------------------------------
@@ -1239,6 +1239,18 @@ game_over_continue_str:
 game_over_color_table:
     db $42, $46, $47, $45, $44, $43, $46, $42
 
+victory_str:
+    db "CONGRATULATIONS!"
+
+victory_sub_str:
+    db " YOU HAVE WON!  "
+
+victory_continue_str:
+    db "  PLAY AGAIN? Y/N   "
+
+victory_color_table:
+    db $46, $44, $45, $47, $46, $43, $45, $47
+
 ; -------------------------------------------------------------------
 ; Gfx_DrawGameOverScreen
 ; Esegue la sequenza animata di Game Over:
@@ -1447,6 +1459,247 @@ Gfx_DrawGameOverScreen:
     ld   (hl), a
     inc  hl
     djnz .init_continue_attr
+
+    pop  ix
+    pop  hl
+    pop  de
+    pop  bc
+    pop  af
+    ret
+
+; -------------------------------------------------------------------
+; Gfx_DrawVictoryScreen
+; Esegue la sequenza animata della schermata di vittoria:
+; 1. Pulisce lo schermo a nero, mostra Willy (Y=96), Nome Stanza (riga 16) e Status Line (riga 18).
+; 2. Animazione di Maria (VecchiaSprite): cammina verso sinistra da X=168 fino a X=128 (accanto a Willy).
+; 3. Breve pausa con Maria fermata accanto a Willy.
+; 4. Stampa la scritta di sottotitolo "YOU HAVE WON!" a riga 3.
+; 5. Stampa la scritta di vittoria "CONGRATULATIONS!" a riga 5.
+; 6. Stampa la richiesta "PLAY AGAIN? Y/N" a riga 8.
+; -------------------------------------------------------------------
+Gfx_DrawVictoryScreen:
+    push af
+    push bc
+    push de
+    push hl
+    push ix
+
+    ; 1. Bordo hardware e schermo a nero
+    xor  a
+    out  ($fe), a              ; Bordo a nero
+    ld   hl, ATTR_P
+    ld   (hl), a               ; Paper/Ink = 0 (Nero)
+    call CLS                   ; Pulisce tutti i pixel e gli attributi a nero
+    ld   (hl), $07             ; Ripristina ATTR_P a $07 (Inchiostro Bianco, Sfondo Nero)
+    ld   a, $07
+    ld   (ATTR_T), a           ; Ripristina ATTR_T a $07
+
+    ; 2. Disegna Willy (immobile, rivolto a destra) a X=104, Y=96
+    ; 2a. Testa di Willy (8x8) a X=104, Y=96
+    ld   bc, $6068             ; B = Y = 96 ($60), C = X = 104 ($68)
+    ld   ix, Willy + (0 * 8)   ; HEAD_GRAPH_RIGHT
+    call Gfx_DrawPixelSprite8x8
+
+    ; 2b. Corpo di Willy (8x8) a X=104, Y=104
+    ld   bc, $6868             ; B = Y = 104 ($68), C = X = 104 ($68)
+    ld   ix, Willy + (1 * 8)   ; Body right frame 0
+    call Gfx_DrawPixelSprite8x8
+
+    ; 2c. Imposta attributi colore di Willy (Bianco Brillante) a X=104, Y=96
+    ld   bc, $6068             ; B = Y = 96, C = X = 104
+    ld   a, WHITE | $40        ; Bianco Brillante
+    call Gfx_SetEnemyColorAttributes
+
+    ; 3. Stampa il Nome della Stanza a riga 16
+    ld   a, 22                 ; Codice di controllo AT (22)
+    rst  $10
+    ld   a, 16                 ; Riga 16
+    rst  $10
+    ld   a, 0                  ; Colonna 0
+    rst  $10
+    
+    ld   a, YELLOW             ; Inchiostro Giallo
+    call Gfx_Ink
+    
+    ld   hl, (room_ptr)        ; HL = indirizzo stanza corrente
+    ld   de, 128               ; Offset del nome stanza (32 byte)
+    add  hl, de
+    ld   b, 32
+    call Gfx_PrintString
+
+    ; 4. Stampa la riga di stato a riga 18
+    ld   a, 22                 ; Codice di controllo AT (22)
+    rst  $10
+    ld   a, 18                 ; Riga 18
+    rst  $10
+    ld   a, 0                  ; Colonna 0
+    rst  $10
+    
+    ld   hl, status_line       ; HL = indirizzo stringa di stato
+    ld   b, 32                 ; B = 32 caratteri
+    call Gfx_PrintString
+
+    ; 5. Applica i colori agli attributi di riga 18 ($5A40)
+    ld   hl, status_line_attrs
+    ld   de, $5a40             ; Indirizzo attributi riga 18
+    ld   bc, 32
+    ldir
+
+    ; 6. Animazione: Maria cammina verso sinistra da X=168 fino a fermarsi a X=128 (accanto a Willy)
+    ld   b, 96                 ; B = Y = 96
+    ld   c, 168                ; C = X iniziale (168)
+    ld   d, 0                  ; D = contatore frame/passo
+
+.maria_walk_loop:
+    push bc                    ; Salva B = 96, C = X corrente
+    push de                    ; Salva D = passo
+
+    ; Cancella la posizione precedente (X + 2) se non siamo alla posizione di partenza (168)
+    ld   a, c
+    cp   168
+    jr   z, .skip_clear_maria_prev
+    add  a, 2                  ; X precedente
+    ld   c, a
+    ld   b, 96
+    call Gfx_Clear16x16_Black
+
+    ; Pulisce gli attributi della colonna lasciata indietro a destra: Colonna = (C + 15) / 8
+    ld   a, c
+    add  a, 15
+    srl  a
+    srl  a
+    srl  a                     ; A = colonna attributi da pulire
+    ld   e, a
+    ld   d, 0
+    ld   hl, $5980             ; Riga 12 ($5800 + 12*32 = $5980)
+    add  hl, de
+    xor  a
+    ld   (hl), a               ; Riga 12 = 0
+    ld   de, 32
+    add  hl, de
+    ld   (hl), a               ; Riga 13 = 0
+
+.skip_clear_maria_prev:
+    pop  de                    ; Ripristina D = passo
+    pop  bc                    ; Ripristina C = X corrente, B = 96
+    push bc
+    push de
+
+    ; Calcola il frame di animazione di VecchiaSprite (4 frame da 32 byte ciascuno)
+    ; Frame index = (D / 2) & 3
+    ld   a, d
+    srl  a
+    and  3                     ; A = 0..3
+    ld   l, a
+    ld   h, 0
+    add  hl, hl                ; * 2
+    add  hl, hl                ; * 4
+    add  hl, hl                ; * 8
+    add  hl, hl                ; * 16
+    add  hl, hl                ; * 32 (HL = offset frame in byte)
+    ld   de, VecchiaSprite
+    add  hl, de
+    push hl
+    pop  ix                    ; IX = puntatore al frame corrente
+
+    ; Disegna VecchiaSprite a (C=X, B=96)
+    ld   b, 96
+    call Gfx_DrawPixelSprite16x16
+
+    ; Imposta colore Giallo Brillante per VecchiaSprite
+    ld   b, 96
+    ld   a, YELLOW | $40
+    call Gfx_SetEnemyColorAttributes
+
+    ; Pausa frame a 50Hz per animazione fluida
+    halt
+
+    pop  de                    ; D = passo
+    pop  bc                    ; C = X corrente, B = 96
+    inc  d                     ; D++
+    ld   a, c
+    sub  2                     ; Avanza di 2 pixel verso sinistra
+    ld   c, a
+    cp   126                   ; Si ferma a X = 128 (il ciclo termina quando C < 128, ossia C=126)
+    jr   nc, .maria_walk_loop
+
+    ; 7. Breve pausa con Maria fermata accanto a Willy (~0.7s)
+    ld   b, 35
+.pause_after_walk:
+    halt
+    djnz .pause_after_walk
+
+    ; 8. Stampa la scritta di sottotitolo " YOU HAVE WON!  " a riga 3, colonna 8
+    ld   a, 22                 ; AT (22)
+    rst  $10
+    ld   a, 3                  ; Riga 3
+    rst  $10
+    ld   a, 8                  ; Colonna 8
+    rst  $10
+    
+    ld   a, CYAN               ; Inchiostro Ciano
+    call Gfx_Ink
+
+    ld   hl, victory_sub_str
+    ld   b, 16
+    call Gfx_PrintString
+
+    ; Imposta attributi riga 3 (Ciano Brillante)
+    ld   hl, $5868             ; Riga 3, Colonna 8 ($5800 + 3*32 + 8 = $5868)
+    ld   b, 16
+    ld   a, CYAN | $40
+.init_sub_attr:
+    ld   (hl), a
+    inc  hl
+    djnz .init_sub_attr
+
+    ; 9. Stampa la scritta "CONGRATULATIONS!" a riga 5, colonna 8
+    ld   a, 22                 ; AT (22)
+    rst  $10
+    ld   a, 5                  ; Riga 5
+    rst  $10
+    ld   a, 8                  ; Colonna 8
+    rst  $10
+    
+    ld   a, YELLOW             ; Inchiostro Giallo
+    call Gfx_Ink
+
+    ld   hl, victory_str
+    ld   b, 16
+    call Gfx_PrintString
+
+    ; Imposta attributo iniziale per "CONGRATULATIONS!" (Giallo Brillante)
+    ld   hl, $58a8             ; Riga 5, Colonna 8 ($5800 + 5*32 + 8 = $58A8)
+    ld   b, 16
+    ld   a, YELLOW | $40
+.init_vic_attr:
+    ld   (hl), a
+    inc  hl
+    djnz .init_vic_attr
+
+    ; 10. Stampa la richiesta "  PLAY AGAIN? Y/N   " a riga 8, colonna 6
+    ld   a, 22                 ; AT (22)
+    rst  $10
+    ld   a, 8                  ; Riga 8
+    rst  $10
+    ld   a, 6                  ; Colonna 6
+    rst  $10
+    
+    ld   a, GREEN              ; Inchiostro Verde
+    call Gfx_Ink
+
+    ld   hl, victory_continue_str
+    ld   b, 20
+    call Gfx_PrintString
+
+    ; Imposta attributo per "  PLAY AGAIN? Y/N   " (Verde Brillante)
+    ld   hl, $5906             ; Riga 8, Colonna 6 ($5800 + 8*32 + 6 = $5906)
+    ld   b, 20
+    ld   a, GREEN | $40
+.init_continue_vic_attr:
+    ld   (hl), a
+    inc  hl
+    djnz .init_continue_vic_attr
 
     pop  ix
     pop  hl
@@ -1924,15 +2177,15 @@ Gfx_DrawCharVRAM_Row23:
     cp   128
     jr   nc, .exit_draw_char ; Se CHAR >= 128 (fuori dal font RAM), ignora!
 
-    ; 1. Indirizzo del font in RAM ($F100 + (ASCII - 32) * 8)
+    ; 1. Indirizzo del font in RAM (font_buffer + 256 + (ASCII - 32) * 8)
     sub  32                ; A = ASCII - 32
     ld   l, a
     ld   h, 0
     add  hl, hl            ; *2
     add  hl, hl            ; *4
     add  hl, hl            ; *8
-    ld   de, $F100         ; Indirizzo base del font 8x8 in RAM ($F100)
-    add  hl, de            ; HL = indirizzo pattern font 8x8 in RAM ($F100)
+    ld   de, font_buffer + 256 ; Indirizzo base del font 8x8 in RAM (ASCII 32)
+    add  hl, de            ; HL = indirizzo pattern font 8x8 in RAM
 
     ; 2. Imposta l'attributo colore a Riga 23, Colonna C ($5AE0 + C)
     push hl                ; Salva indirizzo pattern font
