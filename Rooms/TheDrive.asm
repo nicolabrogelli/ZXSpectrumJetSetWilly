@@ -113,7 +113,7 @@ TheDriveEnemy2:
 TheDriveEnemy3:
     DEFB $80, UCCELLO, 40, 64, 232       
 TheDriveEnemy4:
-    DEFB $B0, UCCELLO, 0, 40, 80       
+    DEFB $A0, UCCELLO, 0, 40, 80       
 TheDriveEnemy5:
     DEFB $80, UOVO, 80, 104, 240        
 TheDriveEnemy6:
