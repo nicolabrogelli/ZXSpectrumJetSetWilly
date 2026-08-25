@@ -104,7 +104,7 @@ TheBathroomUnused:
 TheBathroomEnemy1:
     DEFB $80, UCCELLO, 8, 23, 200         
 TheBathroomEnemy2:
-    DEFB $80, VATER, 210, 104, 225       
+    DEFB $B0, VATER, 225, 104, 225       
 TheBathroomEnemy3:
     DEFB 0, 0, 0, 0, 0         
 TheBathroomEnemy4:

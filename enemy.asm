@@ -940,6 +940,11 @@ Enemy_Update:
     jp   nz, .vertical
     
 .horizontal:
+    ; Se Min Limit == Max Limit, nemico fisso/stazionario: non muovere né invertire
+    ld   a, (ix+4)         ; Min Limit
+    cp   (ix+5)            ; Max Limit
+    jp   z, .next
+    
     ld   a, (ix+6)         ; Direction (1=Left, 2=Right) (Offset 6)
     cp   1
     jr   nz, .horiz_right
@@ -977,6 +982,11 @@ Enemy_Update:
     jp   .next
 
 .vertical:
+    ; Se Min Limit == Max Limit, nemico fisso/stazionario: non muovere né invertire
+    ld   a, (ix+4)         ; Min Limit
+    cp   (ix+5)            ; Max Limit
+    jp   z, .next
+    
     ld   a, (ix+6)         ; Direction (1=Up, 2=Down)
     cp   1
     jr   nz, .vert_down
