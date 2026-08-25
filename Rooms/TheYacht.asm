@@ -124,7 +124,7 @@ TheYachtEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 TheYachtPosWilly:
-    db 60, 101                     ; Posizione di Willy
+    db 15, 101                     ; Posizione di Willy
     
 TheYachtEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

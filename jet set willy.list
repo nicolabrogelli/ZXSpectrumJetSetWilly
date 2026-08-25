@@ -21801,7 +21801,7 @@
  124++D00A 00
  125++D00B
  126++D00B              TheYachtPosWilly:
- 127++D00B 3C 65            db 60, 101                     ; Posizione di Willy
+ 127++D00B 0F 65            db 15, 101                     ; Posizione di Willy
  128++D00D
  129++D00D              TheYachtEnemyColors5_8:
  130++D00D 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
