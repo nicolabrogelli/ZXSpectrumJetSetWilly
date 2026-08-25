@@ -51,8 +51,8 @@ physics_config.asm|62||0|-1|11|D|COLLISION_OFFSET_Y
 physics_config.asm|62||0|-1|11|L|,COLLISION_OFFSET_Y,,+equ,+used
 physics_config.asm|63||0|-1|23|D|COLLISION_THRESHOLD_Y
 physics_config.asm|63||0|-1|23|L|,COLLISION_THRESHOLD_Y,,+equ,+used
-physics_config.asm|72||0|-1|50|D|RESPAWN_SAFETY_TIME
-physics_config.asm|72||0|-1|50|L|,RESPAWN_SAFETY_TIME,,+equ,+used
+physics_config.asm|72||0|-1|0|D|RESPAWN_SAFETY_TIME
+physics_config.asm|72||0|-1|0|L|,RESPAWN_SAFETY_TIME,,+equ,+used
 physics_config.asm|78||0|-1|4|D|COYOTE_TIME_FRAMES
 physics_config.asm|78||0|-1|4|L|,COYOTE_TIME_FRAMES,,+equ,+used
 physics_config.asm|85||0|-1|5|D|JUMP_BUFFER_FRAMES

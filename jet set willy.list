@@ -193,7 +193,7 @@
   69+ 5DAD              ;  75  = 1.5 secondi
   70+ 5DAD              ; 100  = 2 secondi
   71+ 5DAD                  IFNDEF RESPAWN_SAFETY_TIME
-  72+ 5DAD              RESPAWN_SAFETY_TIME EQU 50
+  72+ 5DAD              RESPAWN_SAFETY_TIME EQU 0
   73+ 5DAD                  ENDIF
   74+ 5DAD
   75+ 5DAD              ; --- Coyote Time (Tempo Coyote per Salto da Bordo) ---
@@ -10326,7 +10326,7 @@
  226  8935 3E 01            ld   a, 1
  227  8937 32 3E F3         ld   (on_ground), a
  228  893A
- 229  893A 3E 32            ld   a, RESPAWN_SAFETY_TIME
+ 229  893A 3E 00            ld   a, RESPAWN_SAFETY_TIME
  230  893C 32 39 F7         ld   (willy_safety_timer), a
  231  893F
  232  893F                  ; 5. Riposiziona Willy nel punto di ingresso dell'ultima stanza raggiunta
@@ -10606,7 +10606,7 @@
  506  8AB7 32 38 F7         ld   (enemy_was_updated), a
  507  8ABA
  508  8ABA                  ; - Timer di sicurezza post-respawn (invulnerabilità)
- 509  8ABA 3E 32            ld   a, RESPAWN_SAFETY_TIME
+ 509  8ABA 3E 00            ld   a, RESPAWN_SAFETY_TIME
  510  8ABC 32 39 F7         ld   (willy_safety_timer), a
  511  8ABF
  512  8ABF                  ; - Ripristina lo stato audio
@@ -14088,7 +14088,7 @@
   97++9FD8 00               DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
   98++9FD9
   99++9FD9              WeMustPerformQuirkafleegEnemy1:
- 100++9FD9 80 02 00 20      DEFB $80, UCCELLO, 0, 32, 72
+ 100++9FD9 B0 02 00 20      DEFB $B0, UCCELLO, 0, 32, 72
  100++9FDD 48
  101++9FDE              WeMustPerformQuirkafleegEnemy2:
  102++9FDE 00 00 00 00      DEFB 0, 0, 0, 0, 0

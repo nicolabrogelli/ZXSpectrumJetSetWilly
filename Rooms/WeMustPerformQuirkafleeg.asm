@@ -97,7 +97,7 @@ WeMustPerformQuirkafleegUnused:
     DEFB 0                          ; Padding byte to keep Enemy1 offset at 240
 
 WeMustPerformQuirkafleegEnemy1:
-    DEFB $80, UCCELLO, 0, 32, 72
+    DEFB $B0, UCCELLO, 0, 32, 72
 WeMustPerformQuirkafleegEnemy2:
     DEFB 0, 0, 0, 0, 0     
 WeMustPerformQuirkafleegEnemy3:
