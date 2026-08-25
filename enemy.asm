@@ -567,6 +567,8 @@ Enemy_DrawSingleSlot:
     jp   z, .got_palazzo
     cp   VATER
     jp   z, .got_vater
+    cp   WC
+    jp   z, .got_wc
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -775,6 +777,11 @@ Enemy_DrawSingleSlot:
     jp   z, .got_sprite
     ld   hl, VaterSpriteRight
     jp   .got_sprite
+
+.got_wc:
+    ld   hl, WCSprite
+    jp   .got_sprite
+
 
 
 .got_sprite:
