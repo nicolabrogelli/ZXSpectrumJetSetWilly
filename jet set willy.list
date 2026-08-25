@@ -11440,7 +11440,7 @@
  106++8F17
  107++8F17              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  108++8F17              TheBridgeEnemy1:
- 109++8F17 80 02 00 50      DEFB $80, UCCELLO, 0, 80, 80
+ 109++8F17 90 02 00 50      DEFB $90, UCCELLO, 0, 80, 80
  109++8F1B 50
  110++8F1C              TheBridgeEnemy2:
  111++8F1C 80 02 70 50      DEFB $80, UCCELLO, 112, 80, 232
