@@ -106,7 +106,7 @@ IAmSureIHaveSeenThiBeforeEnemy3:
 IAmSureIHaveSeenThiBeforeEnemy4:
     DEFB $F0, SOLDATO, 200, 48, 96  
 IAmSureIHaveSeenThiBeforeEnemy5:
-    DEFB $80, UCCELLO, 0, 32, 72  
+    DEFB $B0, UCCELLO, 0, 32, 72  
 IAmSureIHaveSeenThiBeforeEnemy6:
     DEFB 0, 0, 0, 0, 0
 IAmSureIHaveSeenThiBeforeEnemy7:

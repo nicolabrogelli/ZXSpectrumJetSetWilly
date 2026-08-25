@@ -13931,7 +13931,7 @@
  107++9ECA F0 0B C8 30      DEFB $F0, SOLDATO, 200, 48, 96
  107++9ECE 60
  108++9ECF              IAmSureIHaveSeenThiBeforeEnemy5:
- 109++9ECF 80 02 00 20      DEFB $80, UCCELLO, 0, 32, 72
+ 109++9ECF B0 02 00 20      DEFB $B0, UCCELLO, 0, 32, 72
  109++9ED3 48
  110++9ED4              IAmSureIHaveSeenThiBeforeEnemy6:
  111++9ED4 00 00 00 00      DEFB 0, 0, 0, 0, 0
