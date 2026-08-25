@@ -20181,7 +20181,7 @@
  124++C5FC 00
  125++C5FD
  126++C5FD              WatchTowerPosWilly:
- 127++C5FD 64 46            db 100, 70                     ; Posizione di Willy
+ 127++C5FD 78 46            db 120, 70                     ; Posizione di Willy
  128++C5FF
  129++C5FF              WatchTowerEnemyColors5_8:
  130++C5FF 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

@@ -124,7 +124,7 @@ WatchTowerEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 WatchTowerPosWilly:
-    db 100, 70                     ; Posizione di Willy
+    db 120, 70                     ; Posizione di Willy
     
 WatchTowerEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
