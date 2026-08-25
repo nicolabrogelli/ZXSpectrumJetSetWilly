@@ -17099,7 +17099,7 @@
   84++B2DC
   85++B2DC              ;The next two bytes are copied to 32991, but are not used.
   86++B2DC              TheBathroomReserved:
-  87++B2DC 04 00 00 00      DEFB 4, 0, 0, 0     ; Enemy colors
+  87++B2DC 04 07 00 00      DEFB 4, WHITE, 0, 0     ; Enemy colors
   88++B2E0
   89++B2E0              ;The next eight bytes are copied to 32993 and define the item graphic.
   90++B2E0              TheBathroomItem:
@@ -17125,8 +17125,8 @@
  105++B2ED 80 02 08 17      DEFB $80, UCCELLO, 8, 23, 200
  105++B2F1 C8
  106++B2F2              TheBathroomEnemy2:
- 107++B2F2 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 107++B2F6 00
+ 107++B2F2 80 2A D2 68      DEFB $80, VATER, 210, 104, 225
+ 107++B2F6 E1
  108++B2F7              TheBathroomEnemy3:
  109++B2F7 00 00 00 00      DEFB 0, 0, 0, 0, 0
  109++B2FB 00

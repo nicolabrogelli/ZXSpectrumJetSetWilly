@@ -84,7 +84,7 @@ TheBathroomBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheBathroomReserved:
-    DEFB 4, 0, 0, 0     ; Enemy colors
+    DEFB 4, WHITE, 0, 0     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheBathroomItem:
@@ -104,7 +104,7 @@ TheBathroomUnused:
 TheBathroomEnemy1:
     DEFB $80, UCCELLO, 8, 23, 200         
 TheBathroomEnemy2:
-    DEFB 0, 0, 0, 0, 0       
+    DEFB $80, VATER, 210, 104, 225       
 TheBathroomEnemy3:
     DEFB 0, 0, 0, 0, 0         
 TheBathroomEnemy4:
