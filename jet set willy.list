@@ -20542,7 +20542,7 @@
  124++C838 00
  125++C839
  126++C839              BackStairwayPosWilly:
- 127++C839 64 65            db 100, 101                     ; Posizione di Willy
+ 127++C839 AA 65            db 170, 101                     ; Posizione di Willy
  128++C83B
  129++C83B              BackStairwayEnemyColors5_8:
  130++C83B 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
