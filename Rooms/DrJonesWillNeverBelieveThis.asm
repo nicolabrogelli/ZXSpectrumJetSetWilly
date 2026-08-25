@@ -125,7 +125,7 @@ DrJonesWillNeverBelieveThisEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 DrJonesWillNeverBelieveThisPosWilly:
-    db 20, 104                     ; Posizione sicura di Willy sul pavimento
+    db 225, 104                     ; Posizione sicura di Willy sul pavimento
     
 DrJonesWillNeverBelieveThisEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

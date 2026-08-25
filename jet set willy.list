@@ -18400,7 +18400,7 @@
  125++BAD0 00
  126++BAD1
  127++BAD1              DrJonesWillNeverBelieveThisPosWilly:
- 128++BAD1 14 68            db 20, 104                     ; Posizione sicura di Willy sul pavimento
+ 128++BAD1 E1 68            db 225, 104                     ; Posizione sicura di Willy sul pavimento
  129++BAD3
  130++BAD3              DrJonesWillNeverBelieveThisEnemyColors5_8:
  131++BAD3 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
