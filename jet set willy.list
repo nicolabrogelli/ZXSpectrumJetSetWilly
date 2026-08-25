@@ -12709,14 +12709,14 @@
  120++9702 A0 02 80 58      DEFB $A0, UCCELLO, 128, 88, 232
  120++9706 E8
  121++9707              InsideTheMegaTrunkEnemy7:
- 122++9707 80 0E 88 18      DEFB $80, FIORE, 136, 24, 240         ; Enemy 7 (Fiore)
+ 122++9707 B0 0E 88 18      DEFB $B0, FIORE, 136, 24, 240         ; Enemy 7 (Fiore)
  122++970B F0
  123++970C              InsideTheMegaTrunkEnemy8:
  124++970C 00 00 00 00      DEFB 0, 0, 0, 0, 0
  124++9710 00
  125++9711
  126++9711              InsideTheMegaTrunkPosWilly:
- 127++9711 AA 58            db 170, 88                     ; Posizione di Willy
+ 127++9711 82 58            db 130, 88                     ; Posizione di Willy
  128++9713
  129++9713              InsideTheMegaTrunkEnemyColors5_8:
  130++9713 05 04 06 00      DEFB CYAN, GREEN, YELLOW, NONE     ; Colori per nemici 5-8

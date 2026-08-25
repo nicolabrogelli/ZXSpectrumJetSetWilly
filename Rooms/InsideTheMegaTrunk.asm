@@ -119,12 +119,12 @@ InsideTheMegaTrunkEnemy5:
 InsideTheMegaTrunkEnemy6:           
     DEFB $A0, UCCELLO, 128, 88, 232    
 InsideTheMegaTrunkEnemy7:
-    DEFB $80, FIORE, 136, 24, 240         ; Enemy 7 (Fiore)
+    DEFB $B0, FIORE, 136, 24, 240         ; Enemy 7 (Fiore)
 InsideTheMegaTrunkEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 InsideTheMegaTrunkPosWilly:
-    db 170, 88                     ; Posizione di Willy
+    db 130, 88                     ; Posizione di Willy
 
 InsideTheMegaTrunkEnemyColors5_8:
     DEFB CYAN, GREEN, YELLOW, NONE     ; Colori per nemici 5-8
