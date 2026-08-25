@@ -124,7 +124,7 @@ HalfwayUpTheEastWallEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 HalfwayUpTheEastWallPosWilly:
-    db 25, 35                     ; Posizione di Willy
+    db 20, 20                     ; Posizione di Willy
     
 HalfwayUpTheEastWallEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

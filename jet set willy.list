@@ -16239,7 +16239,7 @@
  124++AD68 00
  125++AD69
  126++AD69              FirstLandingPosWilly:
- 127++AD69 C8 5F            db 200, 95                     ; Posizione di Willy
+ 127++AD69 96 5F            db 150, 95                     ; Posizione di Willy
  128++AD6B
  129++AD6B              FirstLandingEnemyColors5_8:
  130++AD6B 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
@@ -16960,7 +16960,7 @@
  124++B1E0 00
  125++B1E1
  126++B1E1              HalfwayUpTheEastWallPosWilly:
- 127++B1E1 19 23            db 25, 35                     ; Posizione di Willy
+ 127++B1E1 14 14            db 20, 20                     ; Posizione di Willy
  128++B1E3
  129++B1E3              HalfwayUpTheEastWallEnemyColors5_8:
  130++B1E3 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
