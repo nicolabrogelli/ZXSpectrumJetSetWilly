@@ -11990,7 +11990,7 @@
  114++927B 80 02 28 40      DEFB $80, UCCELLO, 40, 64, 232
  114++927F E8
  115++9280              TheDriveEnemy4:
- 116++9280 B0 02 00 28      DEFB $B0, UCCELLO, 0, 40, 80
+ 116++9280 A0 02 00 28      DEFB $A0, UCCELLO, 0, 40, 80
  116++9284 50
  117++9285              TheDriveEnemy5:
  118++9285 80 04 50 68      DEFB $80, UOVO, 80, 104, 240
@@ -15697,7 +15697,7 @@
  124++AA0E 00
  125++AA0F
  126++AA0F              ColdStorePosWilly:
- 127++AA0F C8 68            db 200, 104                     ; Posizione di Willy
+ 127++AA0F B4 50            db 180, 80                     ; Posizione di Willy
  128++AA11
  129++AA11              ColdStoreEnemyColors5_8:
  130++AA11 03 00 00 00      DEFB MAGENTA, NONE, NONE, NONE     ; Colori per nemici 5-8

@@ -124,7 +124,7 @@ ColdStoreEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 ColdStorePosWilly:
-    db 200, 104                     ; Posizione di Willy
+    db 180, 80                     ; Posizione di Willy
     
 ColdStoreEnemyColors5_8:
     DEFB MAGENTA, NONE, NONE, NONE     ; Colori per nemici 5-8
