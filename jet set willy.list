@@ -20903,7 +20903,7 @@
  124++CA74 00
  125++CA75
  126++CA75              WestWingPosWilly:
- 127++CA75 50 3C            db 80, 60                     ; Posizione di Willy
+ 127++CA75 0F 3C            db 15, 60                     ; Posizione di Willy
  128++CA77
  129++CA77              WestWingEnemyColors5_8:
  130++CA77 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8

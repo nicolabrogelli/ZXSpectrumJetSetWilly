@@ -124,7 +124,7 @@ WestWingEnemy8:
     DEFB 0, 0, 0, 0, 0
 
 WestWingPosWilly:
-    db 80, 60                     ; Posizione di Willy
+    db 15, 60                     ; Posizione di Willy
     
 WestWingEnemyColors5_8:
     DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
