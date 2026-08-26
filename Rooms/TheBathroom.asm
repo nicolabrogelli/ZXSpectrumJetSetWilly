@@ -102,7 +102,7 @@ TheBathroomUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheBathroomEnemy1:
-    DEFB $80, UCCELLO, 8, 23, 200         
+    DEFB $B0, UCCELLO, 8, 23, 200         
 TheBathroomEnemy2:
     DEFB $B0, WC, 223, 104, 223       
 TheBathroomEnemy3:
