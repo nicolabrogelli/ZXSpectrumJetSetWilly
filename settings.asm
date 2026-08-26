@@ -11,14 +11,14 @@
 ; 1 = Effetti abilitati
 ; 0 = Effetti disabilitati
     IFNDEF ENABLE_EFFECTS
-ENABLE_EFFECTS EQU 0
+ENABLE_EFFECTS EQU 1
     ENDIF
 
 ; --- Musica di sottofondo ---
 ; 1 = Musica abilitata
 ; 0 = Musica disabilitata
     IFNDEF ENABLE_MUSIC
-ENABLE_MUSIC EQU 0
+ENABLE_MUSIC EQU 1
     ENDIF
 
 ; --- Morte per collisione con i guardiani (nemici) ---

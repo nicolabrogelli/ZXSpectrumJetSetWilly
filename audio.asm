@@ -72,7 +72,11 @@ Audio_JumpSoundDelays:
 ; Audio_UpdateMusic
 ;
 ; Gestisce la riproduzione della musica di sottofondo frame-by-frame.
-; Viene chiamata a ogni frame.
+; Riproduce "If I Were a Rich Man" fedele alla routine originale di Jet Set Willy:
+; - Tabella di 64 note (128 burst per ciclo completo)
+; - Cadenza temporizzata a 2 frame per burst (80ms) per rispettare il tempo reale
+; - Generazione tono con ciclo beeper originale (768 passaggi)
+; - Variazione dinamica dell'intonazione in base alle vite rimaste
 ; -------------------------------------------------------------------
 Audio_UpdateMusic:
     push af
@@ -80,81 +84,60 @@ Audio_UpdateMusic:
     push de
     push hl
 
-    ; Se il salto sta riproducendo un effetto sonoro, non suonare la musica
-    ld   a, (Audio_jump_sound_note)
-    cp   18
-    jr   c, .done                 ; Salto attivo -> niente musica
-
-    ; Decrementa il contatore dei frame della nota corrente
+    ; Gestione del tempo (suona 1 burst ogni 2 frame = 80ms per frame rate a 25FPS)
     ld   a, (Audio_music_frame_counter)
     dec  a
     ld   (Audio_music_frame_counter), a
-    jr   nz, .play_current_note   ; Se non è zero, continua a suonare
+    jr   nz, .done
 
-    ; Altrimenti carica la nota successiva
-    ld   a, (Audio_music_note_idx)
-    inc  a
-    cp   35                       ; Abbiamo 35 note in totale
-    jr   c, .no_wrap
-    xor  a                        ; Torna a 0 se raggiunge la fine (loop)
-.no_wrap:
-    ld   (Audio_music_note_idx), a
-
-    ; Carica la durata e impostala come nuovo contatore di frame
-    ld   e, a
-    ld   d, 0
-    ld   hl, Audio_MusicSheet
-    add  hl, de
-    add  hl, de                   ; Ogni nota prende 2 byte (delay, duration)
-    
-    ; Leggi durata (secondo byte)
-    inc  hl
-    ld   a, (hl)
-    srl  a                        ; Divide per 2 (velocizza 2x, quattro volte più lento rispetto all'inizio)
-    jr   nz, .dur_ok
-    ld   a, 1
-.dur_ok:
+    ld   a, 2                     ; Reimposta contatore a 2 frame
     ld   (Audio_music_frame_counter), a
 
-.play_current_note:
-    ; Ottieni il delay della nota corrente (primo byte)
+    ; Incrementa l'indice delle note (0..127) e calcola l'offset nota (0..63)
     ld   a, (Audio_music_note_idx)
+    inc  a
+    ld   (Audio_music_note_idx), a
+    and  126                      ; Maschera bit 1..6 (2 burst per nota)
+    rrca                          ; A = indice nota nella tabella (0..63)
     ld   e, a
     ld   d, 0
-    ld   hl, Audio_MusicSheet
+    ld   hl, Audio_MusicTune
     add  hl, de
-    add  hl, de                   ; hl punta al primo byte della nota
-    ld   a, (hl)                  ; A = delay
-    or   a
-    jr   z, .done                 ; Se delay è 0, è una pausa (Rest)
 
-    ; Suona la nota: 2 cicli
-    ld   d, a                     ; D = delay
-    ld   b, 2                     ; 2 cicli per frame
-.note_loop:
-    ; Speaker ON
+    ; Variazione di intonazione in base alle vite rimaste (come nell'originale)
+    ld   a, (willy_lives)         ; Vite di Willy (0..7)
+    cp   8
+    jr   c, .lives_ok
+    ld   a, 7
+.lives_ok:
+    rlca
+    rlca
+    sub  28
+    neg                           ; A = 28 - (willy_lives * 4) -> 0 a 7 vite
+    add  a, (hl)                  ; A = ritardo tono base + offset vite
+    ld   d, a                     ; D = periodo semionda
+
+    ; Generazione del tono con il beeper (768 passaggi identici all'originale)
     ld   a, (room_border_color)
-    or   $10
-    out  ($fe), a
-    ld   c, d
-.d1:
-    push af
-    pop  af
-    dec  c
-    jr   nz, .d1
+    and  $07                      ; Mantiene i bit del bordo hardware puliti
+    ld   e, d                     ; E = contatore semionda
+    ld   b, 0                     ; B = 0 (256 iterazioni djnz)
+    ld   c, 3                     ; C = 3 (3 * 256 = 768 passaggi totali, ~8.7ms)
+.tone_loop:
+    out  ($fe), a                 ; 11 T-states
+    dec  e                        ; 4 T-states
+    jr   nz, .no_toggle           ; 12 T-states
+    ld   e, d                     ; 4 T-states
+    xor  $18                      ; 7 T-states (toggle EAR bit 4 e MIC bit 3)
+.no_toggle:
+    djnz .tone_loop               ; 13 T-states
+    dec  c                        ; 4 T-states
+    jr   nz, .tone_loop           ; 12 T-states
 
-    ; Speaker OFF
+    ; Ripristina speaker OFF mantenendo il colore del bordo
     ld   a, (room_border_color)
-    and  $ef
+    and  $07
     out  ($fe), a
-    ld   c, d
-.d2:
-    push af
-    pop  af
-    dec  c
-    jr   nz, .d2
-
-    djnz .note_loop
 
 .done:
     pop  hl
@@ -163,13 +146,12 @@ Audio_UpdateMusic:
     pop  af
     ret
 
-Audio_MusicSheet:
-    ; Formato: db delay, durata (in frame a 50Hz)
-    db 96, 5, 101, 15, 96, 5, 107, 25, 152, 5, 143, 35, 107, 15, 96, 10
-    db 107, 10, 96, 10, 107, 25, 96, 10, 85, 10, 81, 10, 85, 5, 81, 10
-    db 85, 10, 96, 70, 72, 40, 81, 10, 76, 5, 85, 20, 96, 10, 107, 25
-    db 90, 20, 114, 5, 107, 10, 90, 10, 96, 10, 107, 10, 96, 10, 85, 5
-    db 90, 10, 107, 20, 68, 65
+Audio_MusicTune:
+    ; Spartito originale in-game "If I Were a Rich Man" (64 note)
+    db 86, 96, 86, 96, 102, 102, 128, 128, 128, 128, 102, 96, 86, 96, 86, 96
+    db 102, 96, 86, 76,  72,  76,  72,  76,  86,  86,  86,  86, 86, 86, 86, 86
+    db  64, 64, 64, 64,  68,  68,  76,  76,  86,  96, 102,  96, 86, 86, 102, 102
+    db  81, 86, 96, 86,  81,  81,  96,  96,  64,  64,  64,  64, 64, 64, 64, 64
     ELSE
 Audio_UpdateMusic:
     ret
