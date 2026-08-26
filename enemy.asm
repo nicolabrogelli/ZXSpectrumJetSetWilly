@@ -569,6 +569,10 @@ Enemy_DrawSingleSlot:
     jp   z, .got_vater
     cp   WC
     jp   z, .got_wc
+    cp   PACMAN
+    jp   z, .got_pacman
+    cp   BERSAGLIO
+    jp   z, .got_bersaglio
 
     ; Fallback in caso di tipo sconosciuto
     ld   hl, LamettaSpriteLeft
@@ -782,6 +786,22 @@ Enemy_DrawSingleSlot:
     ld   hl, WCSprite
     jp   .got_sprite
 
+.got_pacman:
+    ld   a, (ix+6)         ; Direction (1=Left, 2=Right)
+    cp   1
+    ld   hl, PacManSpriteLeft
+    jp   z, .got_sprite
+    ld   hl, PacManSpriteRight
+    jp   .got_sprite
+
+.got_bersaglio:
+    ld   a, (ix+6)         ; Direction (1=Left, 2=Right)
+    cp   1
+    ld   hl, BersaglioSpriteLeft
+    jp   z, .got_sprite
+    ld   hl, BersaglioSpriteRight
+    jp   .got_sprite
+
 
 
 .got_sprite:
@@ -918,6 +938,10 @@ Enemy_Update:
     cp   21                ; Tipo 21 = Parrucca?
     jr   z, .soldato_anim
     cp   29                ; Tipo 29 = Saliera?
+    jr   z, .soldato_anim
+    cp   PACMAN            ; Tipo 44 = PacMan?
+    jr   z, .soldato_anim
+    cp   BERSAGLIO         ; Tipo 45 = Bersaglio?
     jr   z, .soldato_anim
     
     ld   a, (ix+7)         ; Anim State (Offset 7)

@@ -89,7 +89,7 @@ TheAtticBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheAtticReserved:
-    DEFB CYAN, CYAN, RED, MAGENTA     ; Enemy colors
+    DEFB MAGENTA, YELLOW, BLUE, GREEN     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheAtticItem:
@@ -107,17 +107,17 @@ TheAtticUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheAtticEnemy1:
-    DEFB $80, SWISSARMKIFE, 96, 64, 144  
+    DEFB $C0, BERSAGLIO, 32, 56, 88  
 TheAtticEnemy2:
-    DEFB 0, 0, 0, 0, 0
+    DEFB 0, 0, 0, 0, 0; DEFB $D0, BERSAGLIO, 48, 56, 88 
 TheAtticEnemy3:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $E0, BERSAGLIO, 64, 56, 88 
 TheAtticEnemy4:
-    DEFB 0, 0, 0, 0, 0
+    DEFB 0, 0, 0, 0, 0;DEFB $F0, BERSAGLIO, 80, 56, 88 
 TheAtticEnemy5:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $C0, BERSAGLIO, 96, 56, 88 
 TheAtticEnemy6:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $E0, PACMAN, 128, 56, 88
 TheAtticEnemy7:
     DEFB 0, 0, 0, 0, 0
 TheAtticEnemy8:
@@ -127,4 +127,4 @@ TheAtticPosWilly:
     db 200, 101                     ; Posizione di Willy
     
 TheAtticEnemyColors5_8:
-    DEFB NONE, NONE, NONE, NONE     ; Colori per nemici 5-8
+    DEFB RED, CYAN, NONE, NONE     ; Colori per nemici 5-8
