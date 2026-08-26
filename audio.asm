@@ -274,6 +274,72 @@ Audio_PlayGameOverFootSound:
     pop  bc
     pop  af
     ret
+
+; -------------------------------------------------------------------
+; Audio_PlayDieSound
+;
+; Riproduce l'effetto sonoro originale di morte di Willy (music/die.wav).
+; Esegue 8 passi di frequenza decrescente sfumando gli attributi schermo
+; dei primi due terzi ($5800..$59FF) da INK 7 a INK 0 (routine originale 35841).
+; -------------------------------------------------------------------
+Audio_PlayDieSound:
+    push af
+    push bc
+    push de
+    push hl
+
+    ld   a, 71                 ; Inizia da $47 (Bright 1, Paper 0, Ink 7)
+
+.die_loop:
+    ; Riempe gli attributi dei primi due terzi ($5800..$59FF, 512 byte)
+    ld   hl, $5800
+    ld   de, $5801
+    ld   bc, 511
+    ld   (hl), a
+    ldir
+
+    ld   e, a                  ; Salva attributo in E (da 71 a 64)
+
+    ; Calcola delay semionda D = 63 - 8 * (E & 7) -> da 7 a 63
+    cpl
+    and  7
+    rlca
+    rlca
+    rlca
+    or   7
+    ld   d, a                  ; D = delay semionda
+
+    ; Calcola conteggio cicli C = 8 + 32 * (E & 7) -> da 232 a 8
+    ld   c, e
+    rrc  c
+    rrc  c
+    rrc  c
+
+    xor  a                     ; A = 0 (bordo nero, speaker low)
+
+.tone_loop:
+    out  ($fe), a              ; Output al beeper
+    xor  $18                   ; Toggle EAR (bit 4) e MIC (bit 3)
+    ld   b, d                  ; B = delay semionda
+.d1:
+    djnz .d1
+    dec  c
+    jr   nz, .tone_loop
+
+    ld   a, e
+    dec  a
+    cp   63                    ; Ha completato Ink 0 ($40 = 64)?
+    jr   nz, .die_loop
+
+    ; Spegne lo speaker e assicura bordo nero
+    xor  a
+    out  ($fe), a
+
+    pop  hl
+    pop  de
+    pop  bc
+    pop  af
+    ret
     ELSE
 Audio_UpdateMusic:
     ret
@@ -282,6 +348,8 @@ Audio_PlayTitleNote:
     ret
 Audio_PlayGameOverFootSound:
     halt
+    ret
+Audio_PlayDieSound:
     ret
     ENDIF
 

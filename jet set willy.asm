@@ -181,7 +181,10 @@ Main_loop:
     ENDIF
     
 .willy_dies:
-    ; 1. Decrementa le vite
+    ; 1. Riproduce l'effetto sonoro originale di morte (music/die.wav)
+    call Audio_PlayDieSound
+
+    ; 2. Decrementa le vite
     ld   hl, willy_lives
     ld   a, (hl)
     or   a
