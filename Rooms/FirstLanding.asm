@@ -89,7 +89,7 @@ FirstLandingBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 FirstLandingReserved:
-    DEFB YELLOW, NONE, NONE, NONE     ; Enemy colors
+    DEFB YELLOW, RED, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 FirstLandingItem:
@@ -109,7 +109,7 @@ FirstLandingUnused:
 FirstLandingEnemy1:
     DEFB $80, FRATE, 192, 96, 235  
 FirstLandingEnemy2:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, UCCELLO, 50, 70, 120  
 FirstLandingEnemy3:
     DEFB 0, 0, 0, 0, 0
 FirstLandingEnemy4:
