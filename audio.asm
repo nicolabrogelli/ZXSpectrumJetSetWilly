@@ -235,11 +235,53 @@ Audio_TitleMusicSheet:
     db 54, 45, 81, 54, 45, 40, 54, 40, 40, 60, 51, 81, 60, 51, 38, 60
     db 45, 76, 60, 45, 40, 64, 51, 81, 64, 51, 45, 64, 54, 32, 64, 54
     db 61, 121, 61, 255
+
+; -------------------------------------------------------------------
+; Audio_PlayGameOverFootSound
+;
+; Genera l'effetto sonoro originale a frequenza crescente durante la
+; discesa del Piede nella schermata di Game Over (come in music/game-over.ogg).
+; Input: B = coordinata Y del Piede (0..96)
+; -------------------------------------------------------------------
+Audio_PlayGameOverFootSound:
+    push af
+    push bc
+    push de
+
+    ; Calcola il ritardo del semionda E = 255 - (2 * Y)
+    ld   a, b                  ; A = Y (0..96)
+    add  a, a                  ; A = 2 * Y (0..192)
+    cpl                        ; A = 255 - (2 * Y) -> da 255 (tono grave) a 63 (tono acuto)
+    ld   e, a                  ; E = periodo delay semionda
+
+    xor  a                     ; A = 0 (bordo nero, speaker low)
+    ld   c, 64                 ; C = 64 semicicli di commutazione beeper
+
+.sound_loop:
+    out  ($fe), a              ; Output beeper
+    xor  $18                   ; Toggle EAR (bit 4) e MIC (bit 3)
+    ld   b, e                  ; B = delay semionda
+.d1:
+    djnz .d1
+    dec  c
+    jr   nz, .sound_loop
+
+    ; Spegne lo speaker
+    xor  a
+    out  ($fe), a
+
+    pop  de
+    pop  bc
+    pop  af
+    ret
     ELSE
 Audio_UpdateMusic:
     ret
 Audio_PlayTitleNote:
     or   1
+    ret
+Audio_PlayGameOverFootSound:
+    halt
     ret
     ENDIF
 

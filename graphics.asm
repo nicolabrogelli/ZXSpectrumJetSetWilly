@@ -1396,8 +1396,8 @@ Gfx_DrawGameOverScreen:
     ld   a, YELLOW | $40
     call Gfx_SetEnemyColorAttributes
 
-    ; 7d. Pausa per movimento fluido a 50Hz
-    halt
+    ; 7d. Emette il suono originale a frequenza crescente (game-over.ogg)
+    call Audio_PlayGameOverFootSound
 
     pop  bc                    ; B = Y corrente
     ld   a, b
