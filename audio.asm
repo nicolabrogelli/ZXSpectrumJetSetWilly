@@ -152,8 +152,94 @@ Audio_MusicTune:
     db 102, 96, 86, 76,  72,  76,  72,  76,  86,  86,  86,  86, 86, 86, 86, 86
     db  64, 64, 64, 64,  68,  68,  76,  76,  86,  96, 102,  96, 86, 86, 102, 102
     db  81, 86, 96, 86,  81,  81,  96,  96,  64,  64,  64,  64, 64, 64, 64, 64
+
+; -------------------------------------------------------------------
+; Audio_PlayTitleNote
+;
+; Suona una nota della melodia del titolo (Moonlight Sonata).
+; HL = puntatore al byte della nota in Audio_TitleMusicSheet
+; Ritorna:
+;   Z flag SET   -> Tasto ENTER premuto (interrompi e avvia il gioco)
+;   Z flag RESET -> Nota completata regolarmente senza pressione di ENTER
+; -------------------------------------------------------------------
+Audio_PlayTitleNote:
+    push bc
+    push de
+    push hl
+
+    ld   e, (hl)               ; E = ritardo periodo nota
+    ld   d, e                  ; D = contatore ritardo
+    ld   b, 0                  ; B = 0 (256 iterazioni djnz)
+    ld   c, 100                ; C = 100 passaggi di ciclo (50 alti, 50 bassi)
+    xor  a                     ; Bordo nero, speaker off
+
+.tone_loop:
+    out  ($fe), a              ; 11 T-states
+    dec  d                     ; 4 T-states
+    jr   nz, .no_toggle        ; 12 T-states
+    ld   d, e                  ; 4 T-states
+    xor  $18                   ; 7 T-states (toggle EAR bit 4 e MIC bit 3)
+.no_toggle:
+    djnz .tone_loop            ; 13 T-states
+
+    ; A metà nota (C = 50), dimezza la frequenza (raddoppia E) e controlla ENTER
+    ex   af, af'
+    ld   a, c
+    cp   50
+    jr   nz, .no_octave_drop
+    rl   e                     ; Scala di un'ottava verso il basso
+
+    ; Controllo reattivo di ENTER a metà nota (Porta $BFFE, Bit 0)
+    ld   a, $bf
+    in   a, ($fe)
+    rra
+    jr   nc, .enter_hit        ; Carry = 0 -> tasto premuto!
+
+.no_octave_drop:
+    ex   af, af'
+    dec  c
+    jr   nz, .tone_loop
+
+    ; Controllo a fine nota
+    xor  a
+    out  ($fe), a              ; Spegne lo speaker
+    ld   a, $bf
+    in   a, ($fe)
+    rra
+    jr   nc, .enter_hit_clean
+
+    ; Nota completata senza tasti premuti
+    pop  hl
+    pop  de
+    pop  bc
+    or   1                     ; Forza flag NZ (Zero = 0)
+    ret
+
+.enter_hit:
+    ex   af, af'
+.enter_hit_clean:
+    xor  a
+    out  ($fe), a              ; Spegne lo speaker
+    pop  hl
+    pop  de
+    pop  bc
+    cp   a                     ; Forza flag Z (Zero = 1)
+    ret
+
+Audio_TitleMusicSheet:
+    ; Melodia dello start screen (Moonlight Sonata - Beethoven, come in JSW originale)
+    db 81, 60, 51, 81, 60, 51, 81, 60, 51, 81, 60, 51, 81, 60, 51, 81
+    db 60, 51, 81, 60, 51, 81, 60, 51, 76, 60, 51, 76, 60, 51, 76, 57
+    db 45, 76, 57, 45, 81, 64, 45, 81, 60, 51, 81, 60, 54, 91, 64, 54
+    db 102, 81, 60, 81, 60, 51, 81, 60, 51, 40, 60, 40, 40, 54, 45, 81
+    db 54, 45, 81, 54, 45, 40, 54, 40, 40, 60, 51, 81, 60, 51, 38, 60
+    db 45, 76, 60, 45, 40, 64, 51, 81, 64, 51, 45, 64, 54, 32, 64, 54
+    db 61, 121, 61, 255
     ELSE
 Audio_UpdateMusic:
+    ret
+Audio_PlayTitleNote:
+    or   1
     ret
     ENDIF
 

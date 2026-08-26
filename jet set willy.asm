@@ -294,20 +294,21 @@ ShowTitleScreen:
     rra
     jr   nc, .wait_title_enter_release
 
-    ; 3. Ciclo di attesa pressione ENTER con animazione colore
+    ; 3. Ciclo di attesa pressione ENTER con animazione colore e musica (Moonlight Sonata)
+    IF ENABLE_MUSIC != 0
+    ld   hl, Audio_TitleMusicSheet
+    ENDIF
     ld   c, 0                  ; C = contatore frame per animazione colore
 .title_loop:
-    halt
-
     ; Animazione ciclo colore su "PRESS ENTER TO START" (Riga 12, Col 0..31, $5980)
     inc  c
     ld   a, c
-    srl  a
-    srl  a
-    srl  a                     ; Cambia colore ogni 8 frame (~160ms)
     and  7
     ld   e, a
     ld   d, 0
+    IF ENABLE_MUSIC != 0
+    push hl
+    ENDIF
     ld   hl, title_color_table
     add  hl, de
     ld   a, (hl)               ; A = nuovo colore
@@ -317,12 +318,32 @@ ShowTitleScreen:
     ld   (hl), a
     inc  hl
     djnz .color_title_loop
+    IF ENABLE_MUSIC != 0
+    pop  hl
 
+    ; Controlla se la melodia è finita (terminatore 255): se sì, ricomincia in loop
+    ld   a, (hl)
+    cp   255
+    jr   nz, .play_title_note
+    ld   hl, Audio_TitleMusicSheet
+.play_title_note:
+    call Audio_PlayTitleNote   ; Suona una nota della melodia e controlla ENTER
+    jr   z, .enter_pressed     ; Z flag = 1 -> ENTER premuto!
+    inc  hl
+    jr   .title_loop
+    ELSE
+    halt
     ; Controlla se il tasto ENTER è premuto (Porta $BFFE, Bit 0)
     ld   a, $bf
     in   a, ($fe)
     rra
     jr   c, .title_loop        ; Carry = 1 (non premuto) -> continua loop
+    ENDIF
+
+.enter_pressed:
+    ; Spegne lo speaker
+    xor  a
+    out  ($fe), a
 
     ; 4. Attende il rilascio del tasto ENTER per evitare doppi scatti
 .wait_title_enter_release_after:
