@@ -89,7 +89,7 @@ TheFrontDoorBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 TheFrontDoorReserved:
-    DEFB NONE, NONE, NONE, NONE     ; Enemy colors
+    DEFB RED, NONE, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 TheFrontDoorItem:
@@ -107,7 +107,7 @@ TheFrontDoorUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 TheFrontDoorEnemy1:
-    DEFB 0, 0, 0, 0, 0              ; Empty slot
+    DEFB $80, UCCELLO, 8, 50, 200  
 TheFrontDoorEnemy2:
     DEFB 0, 0, 0, 0, 0              ; Empty slot
 TheFrontDoorEnemy3:

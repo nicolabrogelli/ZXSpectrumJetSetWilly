@@ -13084,7 +13084,7 @@
   89++997B
   90++997B              ;The next two bytes are copied to 32991, but are not used.
   91++997B              TheFrontDoorReserved:
-  92++997B 00 00 00 00      DEFB NONE, NONE, NONE, NONE     ; Enemy colors
+  92++997B 02 00 00 00      DEFB RED, NONE, NONE, NONE     ; Enemy colors
   93++997F
   94++997F              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++997F              TheFrontDoorItem:
@@ -13107,8 +13107,8 @@
  107++998C
  108++998C              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++998C              TheFrontDoorEnemy1:
- 110++998C 00 00 00 00      DEFB 0, 0, 0, 0, 0              ; Empty slot
- 110++9990 00
+ 110++998C 80 02 08 32      DEFB $80, UCCELLO, 8, 50, 200
+ 110++9990 C8
  111++9991              TheFrontDoorEnemy2:
  112++9991 00 00 00 00      DEFB 0, 0, 0, 0, 0              ; Empty slot
  112++9995 00
