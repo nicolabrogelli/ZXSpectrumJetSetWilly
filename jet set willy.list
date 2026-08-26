@@ -16787,7 +16787,7 @@
   89++B0F1
   90++B0F1              ;The next two bytes are copied to 32991, but are not used.
   91++B0F1              SwimmingPoolReserved:
-  92++B0F1 06 00 00 00      DEFB YELLOW, NONE, NONE, NONE     ; Enemy colors
+  92++B0F1 06 02 00 00      DEFB YELLOW, RED, NONE, NONE     ; Enemy colors
   93++B0F5
   94++B0F5              ;The next eight bytes are copied to 32993 and define the item graphic.
   95++B0F5              SwimmingPoolItem:
@@ -16813,8 +16813,8 @@
  110++B102 80 16 28 68      DEFB $80, FRATE, 40, 104, 96
  110++B106 60
  111++B107              SwimmingPoolEnemy2:
- 112++B107 00 00 00 00      DEFB 0, 0, 0, 0, 0
- 112++B10B 00
+ 112++B107 80 16 28 68      DEFB $80, FRATE, 40, 104, 96
+ 112++B10B 60
  113++B10C              SwimmingPoolEnemy3:
  114++B10C 00 00 00 00      DEFB 0, 0, 0, 0, 0
  114++B110 00

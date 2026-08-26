@@ -89,7 +89,7 @@ SwimmingPoolBorderColor:
 
 ;The next two bytes are copied to 32991, but are not used.
 SwimmingPoolReserved:
-    DEFB YELLOW, NONE, NONE, NONE     ; Enemy colors
+    DEFB YELLOW, RED, NONE, NONE     ; Enemy colors
 
 ;The next eight bytes are copied to 32993 and define the item graphic.
 SwimmingPoolItem:
@@ -109,7 +109,7 @@ SwimmingPoolUnused:
 SwimmingPoolEnemy1:
     DEFB $80, FRATE, 40, 104, 96    
 SwimmingPoolEnemy2:
-    DEFB 0, 0, 0, 0, 0
+    DEFB $80, FRATE, 40, 104, 96 
 SwimmingPoolEnemy3:
     DEFB 0, 0, 0, 0, 0
 SwimmingPoolEnemy4:
