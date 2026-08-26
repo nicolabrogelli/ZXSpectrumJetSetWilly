@@ -34,7 +34,7 @@ EastWallBaseLayout:
 	DEFB 160,0,10,0,0,0,0,0	;Room layout
 	DEFB 160,0,10,0,0,0,0,0
 	DEFB 160,0,26,0,0,0,0,0
-	DEFB 160,0,10,0,0,0,0,0
+	DEFB 161,0,74,0,0,0,0,0
 	DEFB 160,0,26,0,0,0,0,0
 	DEFB 160,4,10,0,0,0,0,0
 	DEFB 160,0,10,0,0,0,0,0
@@ -107,9 +107,9 @@ EastWallBaseUnused:
 
 ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
 EastWallBaseEnemy1:
-    DEFB $C0, FACCIA, 56, 0, 104
+    DEFB $C0, FACCIA, 56, 20, 104
 EastWallBaseEnemy2:
-    DEFB $D0, MURO, 24, 0, 96         
+    DEFB $D0, MURO, 24, 20, 96           
 EastWallBaseEnemy3:
     DEFB 0, 0, 0, 0, 0          
 EastWallBaseEnemy4:

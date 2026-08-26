@@ -15798,7 +15798,7 @@
   35++AA88 00 00 00 00
   36++AA8C A0 00 1A 00  	DEFB 160,0,26,0,0,0,0,0
   36++AA90 00 00 00 00
-  37++AA94 A0 00 0A 00  	DEFB 160,0,10,0,0,0,0,0
+  37++AA94 A1 00 4A 00  	DEFB 161,0,74,0,0,0,0,0
   37++AA98 00 00 00 00
   38++AA9C A0 00 1A 00  	DEFB 160,0,26,0,0,0,0,0
   38++AAA0 00 00 00 00
@@ -15907,10 +15907,10 @@
  107++AB6C
  108++AB6C              ;The next eight pairs of bytes are copied to 33008 and specify the entities (ropes, arrows, guardians) in this room.
  109++AB6C              EastWallBaseEnemy1:
- 110++AB6C C0 06 38 00      DEFB $C0, FACCIA, 56, 0, 104
+ 110++AB6C C0 06 38 14      DEFB $C0, FACCIA, 56, 20, 104
  110++AB70 68
  111++AB71              EastWallBaseEnemy2:
- 112++AB71 D0 20 18 00      DEFB $D0, MURO, 24, 0, 96
+ 112++AB71 D0 20 18 14      DEFB $D0, MURO, 24, 20, 96
  112++AB75 60
  113++AB76              EastWallBaseEnemy3:
  114++AB76 00 00 00 00      DEFB 0, 0, 0, 0, 0
