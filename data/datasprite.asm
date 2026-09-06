@@ -255,7 +255,7 @@ SoldatoSprite: ; This guardian (page 191, sprites 4-5) appears in The Security G
     db 8,128,7,4,21,82,42,172,85,64,170,132,69,4,29,196
 
 
-MaialeSpriteRight: ; This guardian (page 182, sprites 0-7) appears in Under the MegaTree, The Hall, Tree Top and Emergency Generator.
+MaialeSpriteLeft: ; This guardian (page 182, sprites 0-3) appears in Under the MegaTree, The Hall, Tree Top and Emergency Generator.
     db 0,0,0,0,0,0,0,0,0,0,19,64,23,128,63,192
     db 85,64,250,160,253,64,31,160,8,128,5,0,0,0,0,0
     db 0,0,0,0,0,0,0,0,0,0,35,64,23,128,63,192
@@ -265,7 +265,7 @@ MaialeSpriteRight: ; This guardian (page 182, sprites 0-7) appears in Under the 
     db 0,192,2,128,5,64,2,128,5,64,42,192,21,128,58,192
     db 85,64,250,192,255,192,31,128,8,128,8,128,0,0,0,0
 
-MaialeSpriteLeft: ; This guardian (page 182, sprites 0-7) appears in Under the MegaTree, The Hall, Tree Top and Emergency Generator.
+MaialeSpriteRight: ; This guardian (page 182, sprites 4-7) appears in Under the MegaTree, The Hall, Tree Top and Emergency Generator.
     db 128,0,80,0,168,0,80,0,168,0,213,0,106,0,215,0
     db 170,128,215,192,255,192,126,0,68,0,68,0,0,0,0,0
     db 0,0,0,0,0,0,0,0,0,0,88,128,61,0,127,128

@@ -978,12 +978,12 @@
  581+ 6041 20 05            jr   nz, .maiale_right
  582+ 6043
  583+ 6043                  ; Maiale a sinistra
- 584+ 6043 21 C4 DF         ld   hl, MaialeSpriteLeft
+ 584+ 6043 21 44 DF         ld   hl, MaialeSpriteLeft
  585+ 6046 18 03            jr   .calc_maiale_frame
  586+ 6048
  587+ 6048              .maiale_right:
  588+ 6048                  ; Maiale a destra
- 589+ 6048 21 44 DF         ld   hl, MaialeSpriteRight
+ 589+ 6048 21 C4 DF         ld   hl, MaialeSpriteRight
  590+ 604B
  591+ 604B              .calc_maiale_frame:
  592+ 604B 3A 4A F8         ld   a, (body_state)   ; 0, 1, 2
@@ -7281,9 +7281,9 @@
  649+ 7E52              .got_maiale:
  650+ 7E52 DD 7E 06         ld   a, (ix+6)         ; Direction
  651+ 7E55 FE 01            cp   1
- 652+ 7E57 21 C4 DF         ld   hl, MaialeSpriteLeft
+ 652+ 7E57 21 44 DF         ld   hl, MaialeSpriteLeft
  653+ 7E5A CA 69 7F         jp   z, .got_sprite
- 654+ 7E5D 21 44 DF         ld   hl, MaialeSpriteRight
+ 654+ 7E5D 21 C4 DF         ld   hl, MaialeSpriteRight
  655+ 7E60 C3 69 7F         jp   .got_sprite
  656+ 7E63
  657+ 7E63              .got_canguro:
@@ -23103,7 +23103,7 @@
  255++DF40 45 04 1D C4
  256++DF44
  257++DF44
- 258++DF44              MaialeSpriteRight: ; This guardian (page 182, sprites 0-7) appears in Under the MegaTree, The Hall, Tree Top and Emergency Generator.
+ 258++DF44              MaialeSpriteLeft: ; This guardian (page 182, sprites 0-3) appears in Under the MegaTree, The Hall, Tree Top and Emergency Generator.
  259++DF44 00 00 00 00      db 0,0,0,0,0,0,0,0,0,0,19,64,23,128,63,192
  259++DF48 00 00 00 00
  259++DF4C 00 00 13 40
@@ -23137,7 +23137,7 @@
  266++DFBC 08 80 08 80
  266++DFC0 00 00 00 00
  267++DFC4
- 268++DFC4              MaialeSpriteLeft: ; This guardian (page 182, sprites 0-7) appears in Under the MegaTree, The Hall, Tree Top and Emergency Generator.
+ 268++DFC4              MaialeSpriteRight: ; This guardian (page 182, sprites 4-7) appears in Under the MegaTree, The Hall, Tree Top and Emergency Generator.
  269++DFC4 80 00 50 00      db 128,0,80,0,168,0,80,0,168,0,213,0,106,0,215,0
  269++DFC8 A8 00 50 00
  269++DFCC A8 00 D5 00

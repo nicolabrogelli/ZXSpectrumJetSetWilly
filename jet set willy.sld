@@ -10985,10 +10985,10 @@ data/datasprite.asm|233||0|3|56836|F|SegaSprite
 data/datasprite.asm|233||0|3|56836|L|,SegaSprite,,+used
 data/datasprite.asm|251||0|3|57092|F|SoldatoSprite
 data/datasprite.asm|251||0|3|57092|L|,SoldatoSprite,,+used
-data/datasprite.asm|258||0|3|57156|F|MaialeSpriteRight
-data/datasprite.asm|258||0|3|57156|L|,MaialeSpriteRight,,+used
-data/datasprite.asm|268||0|3|57284|F|MaialeSpriteLeft
-data/datasprite.asm|268||0|3|57284|L|,MaialeSpriteLeft,,+used
+data/datasprite.asm|258||0|3|57156|F|MaialeSpriteLeft
+data/datasprite.asm|258||0|3|57156|L|,MaialeSpriteLeft,,+used
+data/datasprite.asm|268||0|3|57284|F|MaialeSpriteRight
+data/datasprite.asm|268||0|3|57284|L|,MaialeSpriteRight,,+used
 data/datasprite.asm|278||0|3|57412|F|CanguroSpriteLeft
 data/datasprite.asm|278||0|3|57412|L|,CanguroSpriteLeft,,+used
 data/datasprite.asm|296||0|3|57668|F|CanguroSpriteRight
